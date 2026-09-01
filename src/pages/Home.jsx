@@ -58,7 +58,7 @@ function Home({ onNavigate }) {
           </div>
           <div className="ll-stats-row" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>
             {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
-              <div key={l} style={{ flex: 1, padding: '24px 0 44px', paddingLeft: i ? 24 : 0,
+              <div key={l} style={{ flex: 1, padding: '20px 0 32px', paddingLeft: i ? 24 : 0,
                 borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
                 <Stat label={l} value={v} unit={u} />
               </div>

@@ -319,9 +319,9 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-nav-burger { display: flex !important; align-items: center; justify-content: center; margin-left: auto; }
 
   /* Inline-style grid overrides for GrowCFL and Mission stat rows */
-  .ll-stats-row  { flex-direction: column !important; }
-  .ll-stats-row > * { padding-left: 0 !important; border-left: none !important; padding-top: 20px; border-top: 1px solid rgba(216,211,198,0.10); }
-  .ll-stats-row > *:first-child { border-top: none; padding-top: 0; }
+  .ll-stats-row  { flex-direction: column !important; margin-top: 32px !important; }
+  .ll-stats-row > * { padding: 12px 0 !important; border-left: none !important; border-top: 1px solid rgba(216,211,198,0.10); }
+  .ll-stats-row > *:first-child { border-top: none; padding-top: 0 !important; }
 
   .ll-step-row > * { padding-left: 0 !important; border-left: none !important; padding-bottom: 28px; border-bottom: 1px solid rgba(216,211,198,0.10); }
   .ll-step-row > *:last-child { border-bottom: none; padding-bottom: 0; }
