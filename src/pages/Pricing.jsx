@@ -40,7 +40,7 @@ const plans = [
   },
   {
     name: 'Platinum',
-    price: 297,
+    price: 497,
     unit: 'per month',
     lines: [
       'Everything in Pro',
