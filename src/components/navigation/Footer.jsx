@@ -3,6 +3,7 @@ import { BOOKING_URL } from '../../lib/booking';
 
 const pageMap = {
   'Mission': 'Mission',
+  'Pricing': 'Pricing',
   'LoogoNews': 'LoogoNews',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
