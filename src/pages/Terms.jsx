@@ -1,4 +1,5 @@
 import React from 'react';
+import { BOOKING_URL } from '../lib/booking';
 
 export default function Terms({ onNavigate }) {
   return (
@@ -47,7 +48,7 @@ export default function Terms({ onNavigate }) {
         <Section title="4. Intellectual Property">
           <P>All original content published on loogolabs.com — including blog posts, copy, design, and branding — is created by Loogo Labs. While we do not restrict sharing or referencing our content, we ask that you credit us when quoting or linking to it.</P>
           <P>The Loogo Labs name, logo, and brand marks are owned by Loogo Labs LLC. You may not use them without prior written consent.</P>
-          <P>We do not reproduce or distribute content owned by third parties without authorization. If you believe any content on our site infringes your intellectual property rights, contact us at <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a> and we will investigate promptly.</P>
+          <P>We do not reproduce or distribute content owned by third parties without authorization. If you believe any content on our site infringes your intellectual property rights, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a> and we will investigate promptly.</P>
         </Section>
 
         <Section title="5. Disclaimer of Warranties">
@@ -67,7 +68,7 @@ export default function Terms({ onNavigate }) {
 
         <Section title="8. Payments and Refunds">
           <P>Pricing for our managed services is as listed on our website or as agreed in a signed service agreement. All fees are due as specified. We do not offer refunds for services already rendered.</P>
-          <P>If you have a billing dispute, contact us within 14 days of the charge at <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a> and we will work to resolve it in good faith.</P>
+          <P>If you have a billing dispute, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a> within 14 days of the charge and we will work to resolve it in good faith.</P>
         </Section>
 
         <Section title="9. Termination">
@@ -83,9 +84,8 @@ export default function Terms({ onNavigate }) {
         </Section>
 
         <Section title="12. Contact">
-          <P>For questions about these terms, contact us at:</P>
-          <P><strong>Loogo Labs LLC</strong><br />
-          <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a></P>
+          <P>For questions about these terms, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
+          <P><strong>Loogo Labs LLC</strong></P>
         </Section>
 
         <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>

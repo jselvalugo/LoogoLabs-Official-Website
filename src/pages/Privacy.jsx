@@ -1,4 +1,5 @@
 import React from 'react';
+import { BOOKING_URL } from '../lib/booking';
 
 export default function Privacy({ onNavigate }) {
   return (
@@ -24,7 +25,7 @@ export default function Privacy({ onNavigate }) {
 
         <Section title="1. Who We Are">
           <P>Loogo Labs LLC ("Loogo Labs," "we," "us," or "our") operates the website loogolabs.com and provides marketing automation and business platform services to small and mid-size businesses. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website or interact with our services.</P>
-          <P>If you have questions about this policy, contact us at <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a>.</P>
+          <P>If you have questions about this policy, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
         </Section>
 
         <Section title="2. Information We Collect">
@@ -80,7 +81,7 @@ export default function Privacy({ onNavigate }) {
 
         <Section title="6. Data Retention">
           <P>We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy — generally as long as we have an active or potential business relationship with you, or as required by law.</P>
-          <P>If you would like us to delete your information, contact us at <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a> and we will process your request within 30 days.</P>
+          <P>If you would like us to delete your information, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a> and we will process your request within 30 days.</P>
         </Section>
 
         <Section title="7. Data Security">
@@ -97,7 +98,7 @@ export default function Privacy({ onNavigate }) {
             'Opt out of marketing communications at any time by replying "stop" or emailing us',
             'Lodge a complaint with a data protection authority in your jurisdiction',
           ]} />
-          <P>To exercise any of these rights, contact us at <a href="mailto:david@loogolabs.com" style={linkStyle}>david@loogolabs.com</a>.</P>
+          <P>To exercise any of these rights, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
         </Section>
 
         <Section title="9. Children's Privacy">
