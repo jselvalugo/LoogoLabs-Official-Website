@@ -318,10 +318,17 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-nav-links  { display: none !important; }
   .ll-nav-burger { display: flex !important; align-items: center; justify-content: center; margin-left: auto; }
 
-  /* Inline-style grid overrides for GrowCFL and Mission stat rows */
+  /* Inline-style grid override for GrowCFL's stat row */
   .ll-stats-row  { flex-direction: column !important; margin-top: 32px !important; }
   .ll-stats-row > * { padding: 12px 0 !important; border-left: none !important; border-top: 1px solid rgba(216,211,198,0.10); }
   .ll-stats-row > *:first-child { border-top: none; padding-top: 0 !important; }
+
+  /* Home/Mission hero stats — kept side-by-side on mobile, just compacted */
+  .ll-hero-stats { margin-top: 28px !important; }
+  .ll-hero-stats > * { padding: 14px 0 !important; }
+  .ll-hero-stats > *:not(:first-child) { padding-left: 14px !important; border-left: 1px solid var(--border-hair-inverse) !important; }
+  .ll-hero-stats .ll-eyebrow { font-size: 9px !important; letter-spacing: 0.06em !important; }
+  .ll-hero-stats .ll-stat-value { font-size: 18px !important; }
 
   .ll-step-row > * { padding-left: 0 !important; border-left: none !important; padding-bottom: 28px; border-bottom: 1px solid rgba(216,211,198,0.10); }
   .ll-step-row > *:last-child { border-bottom: none; padding-bottom: 0; }

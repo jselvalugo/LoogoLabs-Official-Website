@@ -59,7 +59,7 @@ function Mission({ onNavigate }) {
 
       <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)' }}>
         <Wrap style={{ padding: '64px 24px' }}>
-          <div className="ll-stats-row" style={{ display: 'flex', gap: 0 }}>
+          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0 }}>
             {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
               <div key={l} style={{ flex: 1, paddingLeft: i ? 24 : 0, borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
                 <Stat label={l} value={v} unit={u} />

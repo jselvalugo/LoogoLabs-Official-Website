@@ -56,7 +56,7 @@ function Home({ onNavigate }) {
             <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
             <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
           </div>
-          <div className="ll-stats-row" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>
+          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>
             {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
               <div key={l} style={{ flex: 1, padding: '20px 0 32px', paddingLeft: i ? 24 : 0,
                 borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
