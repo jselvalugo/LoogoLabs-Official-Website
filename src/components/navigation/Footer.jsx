@@ -3,7 +3,9 @@ import React from 'react';
 const pageMap = {
   'Mission': 'Mission',
   'Contact': 'Contact',
-  'Launch notes': 'Launch',
+  'LoogoNews': 'LoogoNews',
+  'Privacy Policy': 'Privacy',
+  'Terms of Service': 'Terms',
   'PropIQ': 'Products',
   'CartCaddy': 'Products',
 };
@@ -16,7 +18,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
   return (
     <footer className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '64px 24px 32px', ...style }}>
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto' }}>
-        <div style={{ display: 'flex', gap: 64, flexWrap: 'wrap', borderBottom: '1px solid var(--border-hair-inverse)', paddingBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 32, borderBottom: '1px solid var(--border-hair-inverse)', paddingBottom: 36 }}>
           <div style={{ minWidth: 220, flex: 1 }}>
             <span style={{ fontWeight: 700, fontSize: 24, letterSpacing: '-0.03em' }}>{wordmark}<span style={{ color: 'var(--cyan-500)' }}>.</span></span>
             {note ? <p style={{ margin: '10px 0 0', maxWidth: '32ch', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-300)' }}>{note}</p> : null}
@@ -39,7 +41,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap', paddingTop: 20,
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingTop: 20,
           fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
           <span>{copyright}</span>
           <span>{strap}</span>

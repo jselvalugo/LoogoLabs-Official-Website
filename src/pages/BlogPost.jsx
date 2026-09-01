@@ -1,10 +1,5 @@
 import React from 'react';
 
-const GRID_BG = {
-  backgroundImage: `linear-gradient(rgba(11,15,18,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(11,15,18,0.07) 1px, transparent 1px)`,
-  backgroundSize: '32px 32px',
-};
-
 export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
@@ -16,24 +11,30 @@ export default function BlogPost({ slug, onNavigate }) {
     setNotFound(false);
     fetch(`/.netlify/functions/get-post?slug=${encodeURIComponent(slug)}`)
       .then(r => { if (r.status === 404) { setNotFound(true); return null; } return r.json(); })
-      .then(data => { if (data) setPost(data); })
+      .then(data => {
+        if (data) {
+          setPost(data);
+          fetch('/.netlify/functions/track-view', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug }) });
+        }
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 
   if (loading) {
     return (
-      <div style={{ ...GRID_BG, minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>Loading…</div>
+      <div style={{ minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.1em' }}>Loading…</div>
       </div>
     );
   }
 
   if (notFound || !post) {
     return (
-      <div style={{ ...GRID_BG, minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 'var(--fs-h1)', fontWeight: 700, marginBottom: 16 }}>Post not found.</div>
-          <button onClick={() => onNavigate('Blog')} style={linkBtn}>← Back to Signal</button>
+      <div style={{ minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', padding: '0 24px' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 16 }}>404</div>
+          <div style={{ fontSize: 'var(--fs-h2)', fontWeight: 700, marginBottom: 24, color: 'var(--ink-900)' }}>Post not found.</div>
+          <button onClick={() => onNavigate('LoogoNews')} style={backBtn}>← Back to Launch</button>
         </div>
       </div>
     );
@@ -43,43 +44,98 @@ export default function BlogPost({ slug, onNavigate }) {
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
   return (
-    <div style={{ ...GRID_BG, minHeight: '100vh', background: 'var(--paper-100)', paddingBottom: 120 }}>
-      <div style={{ maxWidth: 760, margin: '0 auto', padding: '64px 32px 0' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
 
-        <button onClick={() => onNavigate('Blog')} style={{ ...linkBtn, marginBottom: 40 }}>← Signal</button>
+      {/* ── HERO HEADER ── */}
+      <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
 
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-          {tags.map(tag => (
-            <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-700)', background: 'rgba(0,229,255,0.07)', border: '1px solid rgba(0,229,255,0.2)', borderRadius: 'var(--radius-1)', padding: '2px 7px' }}>
-              {tag}
-            </span>
-          ))}
+          {/* Back nav */}
+          <div style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
+            <button onClick={() => onNavigate('LoogoNews')} style={backBtnInverse}>
+              ← LoogoNews
+            </button>
+          </div>
+
+          {/* Hero content */}
+          <div style={{ maxWidth: 800, padding: 'clamp(36px,5vw,64px) 0 clamp(40px,5vw,72px)' }}>
+            {/* Tags */}
+            {tags.length > 0 && (
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 28 }}>
+                {tags.map(tag => (
+                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-300)', background: 'rgba(216,211,198,0.08)', border: '1px solid rgba(216,211,198,0.15)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Title */}
+            <h1 style={{ margin: '0 0 32px', fontWeight: 800, fontSize: 'clamp(28px,4.5vw,58px)', lineHeight: 1.08, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
+              {post.title}
+            </h1>
+
+            {/* Meta row */}
+            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--ink-700)', border: '1px solid rgba(216,211,198,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'var(--paper-200)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+                  {post.author ? post.author[0].toUpperCase() : 'L'}
+                </div>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)', letterSpacing: '0.06em' }}>{post.author}</span>
+              </div>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{date}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{post.read_time} min read</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <h1 style={{ fontSize: 'var(--fs-display-3)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1, margin: '0 0 20px', color: 'var(--ink-900)' }}>
-          {post.title}
-        </h1>
+      {/* ── BODY ── */}
+      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
+        <div className="ll-post-layout">
 
-        <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 48, paddingBottom: 32, borderBottom: '1px solid var(--border-hair)' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{post.author}</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)' }}>·</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{date}</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)' }}>·</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{post.read_time} min read</span>
-          {post.views > 0 && (
-            <>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)' }}>·</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)' }}>{post.views} views</span>
-            </>
-          )}
-        </div>
+          {/* Article content */}
+          <article style={{ paddingTop: 'clamp(40px,5vw,64px)', paddingBottom: 'clamp(56px,7vw,96px)' }}>
+            {post.excerpt && (
+              <p style={{ margin: '0 0 40px', fontSize: 20, lineHeight: 1.65, color: 'var(--ink-500)', fontWeight: 400, borderLeft: '3px solid var(--ink-700)', paddingLeft: 20 }}>
+                {post.excerpt}
+              </p>
+            )}
 
-        <div style={{ color: 'var(--ink-900)' }}>
-          {renderMarkdown(post.content)}
-        </div>
+            <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>
+              {renderMarkdown(post.content)}
+            </div>
 
-        <div style={{ marginTop: 80, paddingTop: 32, borderTop: '1px solid var(--border-hair)' }}>
-          <button onClick={() => onNavigate('Blog')} style={linkBtn}>← Back to Signal</button>
+            {/* CTA box */}
+            <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 14 }}>
+                Loogo Labs · Get started
+              </div>
+              <h3 style={{ margin: '0 0 14px', fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, lineHeight: 1.2, color: 'var(--paper-100)', letterSpacing: '-0.02em' }}>
+                Want this running in your business?
+              </h3>
+              <p style={{ margin: '0 0 24px', fontSize: 15, lineHeight: 1.65, color: 'var(--ink-300)' }}>
+                We set it up, run it, and optimize it every month. You just run your business.
+              </p>
+              <a
+                href="https://api.leadconnectorhq.com/widget/bookings/outbound-reach-aoFaC"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'var(--paper-100)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'var(--paper-200)'; }}
+              >
+                Book a free strategy call →
+              </a>
+            </div>
+
+            {/* Back link */}
+            <div style={{ marginTop: 48, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>
+              <button onClick={() => onNavigate('LoogoNews')} style={backBtn}>← Back to LoogoNews</button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -92,19 +148,14 @@ function renderMarkdown(text) {
   return blocks.map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
-
-    if (trimmed.startsWith('## ')) {
-      return <h2 key={i} style={h2Style}>{inlineRender(trimmed.slice(3))}</h2>;
-    }
-    if (trimmed.startsWith('### ')) {
-      return <h3 key={i} style={h3Style}>{inlineRender(trimmed.slice(4))}</h3>;
-    }
+    if (trimmed.startsWith('## ')) return <h2 key={i} style={h2Style}>{inlineRender(trimmed.slice(3))}</h2>;
+    if (trimmed.startsWith('### ')) return <h3 key={i} style={h3Style}>{inlineRender(trimmed.slice(4))}</h3>;
     const lines = trimmed.split('\n');
     if (lines.every(l => l.trim().startsWith('- ') || l.trim().startsWith('* '))) {
       return (
-        <ul key={i} style={{ margin: '0 0 24px', paddingLeft: 24, lineHeight: 1.7 }}>
+        <ul key={i} style={{ margin: '0 0 28px', paddingLeft: 24, lineHeight: 1.8 }}>
           {lines.map((l, j) => (
-            <li key={j} style={{ fontSize: 'var(--fs-body)', color: 'var(--ink-700)', marginBottom: 6 }}>
+            <li key={j} style={{ fontSize: 17, color: 'var(--ink-700)', marginBottom: 8 }}>
               {inlineRender(l.trim().slice(2))}
             </li>
           ))}
@@ -113,12 +164,12 @@ function renderMarkdown(text) {
     }
     if (trimmed.startsWith('> ')) {
       return (
-        <blockquote key={i} style={{ margin: '0 0 24px', paddingLeft: 20, borderLeft: '3px solid var(--cyan-500)', color: 'var(--ink-500)', fontSize: 'var(--fs-body-lg)', fontStyle: 'italic', lineHeight: 1.6 }}>
+        <blockquote key={i} style={{ margin: '0 0 28px', paddingLeft: 20, borderLeft: '3px solid var(--ink-600)', color: 'var(--ink-500)', fontSize: 19, fontStyle: 'italic', lineHeight: 1.65 }}>
           {inlineRender(trimmed.slice(2))}
         </blockquote>
       );
     }
-    return <p key={i} style={{ margin: '0 0 24px', fontSize: 'var(--fs-body)', lineHeight: 1.7, color: 'var(--ink-700)' }}>{inlineRender(trimmed)}</p>;
+    return <p key={i} style={{ margin: '0 0 28px', fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>{inlineRender(trimmed)}</p>;
   });
 }
 
@@ -128,15 +179,16 @@ function inlineRender(text) {
   let last = 0, match;
   while ((match = re.exec(text)) !== null) {
     if (match.index > last) parts.push(text.slice(last, match.index));
-    if (match[1]) parts.push(<strong key={match.index}>{match[2]}</strong>);
+    if (match[1]) parts.push(<strong key={match.index} style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{match[2]}</strong>);
     else if (match[3]) parts.push(<em key={match.index}>{match[4]}</em>);
-    else if (match[5]) parts.push(<code key={match.index} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9em', background: 'var(--paper-200)', padding: '1px 5px', borderRadius: 3 }}>{match[6]}</code>);
+    else if (match[5]) parts.push(<code key={match.index} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88em', background: 'var(--paper-200)', padding: '2px 6px', borderRadius: 3, color: 'var(--ink-800)' }}>{match[6]}</code>);
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
   return parts.length === 1 ? parts[0] : parts;
 }
 
-const linkBtn = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', color: 'var(--ink-400)', padding: 0, textTransform: 'uppercase' };
-const h2Style = { fontSize: 'var(--fs-h2)', fontWeight: 700, letterSpacing: 'var(--ls-h2)', margin: '48px 0 16px', color: 'var(--ink-900)' };
-const h3Style = { fontSize: 'var(--fs-h3)', fontWeight: 600, letterSpacing: 'var(--ls-h3)', margin: '36px 0 12px', color: 'var(--ink-900)' };
+const backBtn = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', padding: 0, transition: 'color 120ms ease' };
+const backBtnInverse = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', padding: 0, transition: 'color 120ms ease' };
+const h2Style = { fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', margin: '48px 0 16px', color: 'var(--ink-900)', lineHeight: 1.2 };
+const h3Style = { fontSize: 'clamp(17px,2vw,22px)', fontWeight: 600, letterSpacing: '-0.015em', margin: '36px 0 12px', color: 'var(--ink-900)', lineHeight: 1.25 };

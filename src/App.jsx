@@ -4,92 +4,92 @@ import Button from './components/core/Button';
 import Footer from './components/navigation/Footer';
 import Home from './pages/Home';
 import Mission from './pages/Mission';
-import LaunchPost from './pages/LaunchPost';
-import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
-import Admin from './pages/Admin';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Pricing from './pages/Pricing';
+
+const Admin = React.lazy(() => import('./pages/Admin'));
+const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
+
+function getInitialState() {
+  const path = window.location.pathname;
+  if (path === '/admin') return { page: 'Admin', slug: null };
+  if (path.startsWith('/news/')) return { page: 'BlogPost', slug: path.slice(6) };
+  if (path === '/privacy') return { page: 'Privacy', slug: null };
+  if (path === '/terms') return { page: 'Terms', slug: null };
+  if (window.location.hash === '#grow') return { page: 'GrowCFL', slug: null };
+  return { page: 'Home', slug: null };
+}
 
 function App() {
-  const [page, setPage] = React.useState('Home');
-  const [blogSlug, setBlogSlug] = React.useState(null);
+  const init = getInitialState();
+  const [page, setPage] = React.useState(init.page);
+  const [postSlug, setPostSlug] = React.useState(init.slug);
 
-  if (page === 'Admin') return <Admin />;
+  if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
+  if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
 
   function handleNavigate(target, param) {
     if (target === 'BlogPost' && param) {
-      setBlogSlug(param);
+      setPostSlug(param);
       setPage('BlogPost');
+      window.history.pushState({}, '', `/news/${param}`);
     } else {
       setPage(target);
+      window.history.pushState({}, '', target === 'Home' ? '/' : `/${target.toLowerCase()}`);
     }
   }
 
-  const nav = ['Home', 'Mission', 'Launch'];
+  const nav = ['Home', 'Mission', 'Pricing', 'LoogoNews'];
   let body;
   if (page === 'Home') body = <Home onNavigate={handleNavigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={handleNavigate} />;
-  else if (page === 'Launch') body = <LaunchPost onNavigate={handleNavigate} />;
-  else if (page === 'Blog') body = <Blog onNavigate={handleNavigate} />;
-  else if (page === 'BlogPost') body = <BlogPost slug={blogSlug} onNavigate={handleNavigate} />;
+  else if (page === 'Pricing') body = <Pricing onNavigate={handleNavigate} />;
+  else if (page === 'LoogoNews') body = <Blog onNavigate={handleNavigate} />;
+  else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={handleNavigate} />;
   else if (page === 'Contact') body = <Contact />;
+  else if (page === 'Privacy') body = <Privacy onNavigate={handleNavigate} />;
+  else if (page === 'Terms') body = <Terms onNavigate={handleNavigate} />;
   else body = <Home onNavigate={handleNavigate} />;
-
-  const isBlog = page === 'Blog' || page === 'BlogPost';
 
   return (
     <div>
-      <NavBar items={nav} active={isBlog ? null : page} onNavigate={handleNavigate}
-        cta={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <button
-              onClick={() => handleNavigate('Blog')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                padding: '6px 13px',
-                background: isBlog ? 'rgba(0,229,255,0.08)' : 'transparent',
-                border: `1px solid ${isBlog ? 'var(--cyan-500)' : 'rgba(0,229,255,0.45)'}`,
-                borderRadius: 'var(--radius-2)',
-                boxShadow: isBlog ? '2px 2px 0 var(--cyan-500)' : 'none',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-mono)',
-                fontSize: 11,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: isBlog ? 'var(--cyan-700)' : 'var(--ink-400)',
-                transition: 'all 90ms ease',
-              }}
-              onMouseEnter={e => {
-                if (!isBlog) {
-                  e.currentTarget.style.borderColor = 'var(--cyan-500)';
-                  e.currentTarget.style.color = 'var(--cyan-700)';
-                  e.currentTarget.style.boxShadow = '2px 2px 0 var(--cyan-500)';
-                  e.currentTarget.style.background = 'rgba(0,229,255,0.05)';
-                }
-              }}
-              onMouseLeave={e => {
-                if (!isBlog) {
-                  e.currentTarget.style.borderColor = 'rgba(0,229,255,0.45)';
-                  e.currentTarget.style.color = 'var(--ink-400)';
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.background = 'transparent';
-                }
-              }}
-            >
-              <span style={{ color: 'var(--cyan-500)', fontSize: 14, lineHeight: 1 }}>●</span>
-              Signal
-            </button>
-            <Button size="sm" variant="primary" onClick={() => setPage('Contact')}>Talk to us</Button>
-          </div>
-        } />
+      <a
+        href="https://api.leadconnectorhq.com/widget/bookings/outbound-reach-aoFaC"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          height: 36, background: 'var(--ink-900)',
+          borderBottom: '1px solid rgba(216,211,198,0.25)',
+          textDecoration: 'none',
+          fontFamily: 'var(--font-mono)', fontSize: 11,
+          letterSpacing: '0.12em', textTransform: 'uppercase',
+          color: 'var(--ink-300)',
+          transition: 'background 160ms ease',
+          overflow: 'hidden',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(216,211,198,0.08)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}
+      >
+        <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
+        Book a free strategy call
+        <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
+      </a>
+      <NavBar items={nav} active={page} onNavigate={handleNavigate}
+        cta={<Button size="sm" variant="primary" onClick={() => setPage('Contact')}>Book a free call</Button>}
+      />
       <div onClick={e => { if (e.target.closest('a') && !e.target.closest('nav')) e.preventDefault(); }}>{body}</div>
-      <Footer note="Operational software for analysis and reporting in industries that enterprise vendors left behind."
+      <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
           { title: 'Company', links: ['Mission', 'Contact'] },
-          { title: 'Products', links: ['Distillr'] },
-          { title: 'Updates', links: ['Signal', 'Launch notes'] },
+          { title: 'Platform', links: ['Pricing', 'LoogoNews'] },
+          { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
         ]}
-        onNavigate={p => handleNavigate(p === 'Signal' ? 'Blog' : p === 'Launch notes' ? 'Launch' : p)}
+        onNavigate={p => handleNavigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => setPage('Admin')} />
     </div>
   );

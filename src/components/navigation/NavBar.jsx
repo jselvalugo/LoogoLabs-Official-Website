@@ -1,30 +1,68 @@
 import React from 'react';
 
-function NavBar({ items = [], active, onNavigate, cta, tone = 'paper', wordmark = 'Loogo Labs', style }) {
-  const inverse = tone === 'inverse';
+function NavBar({ items = [], active, onNavigate, cta, style }) {
+  const [open, setOpen] = React.useState(false);
+
+  function handleNav(item) {
+    setOpen(false);
+    onNavigate && onNavigate(item);
+  }
+
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 20, height: 56,
-      background: inverse ? 'rgba(11,15,18,0.85)' : 'rgba(245,247,248,0.85)',
+    <header style={{
+      position: 'sticky', top: 0, zIndex: 20, height: 56,
+      background: 'var(--paper-200)',
       backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid ' + (inverse ? 'var(--border-hair-inverse)' : 'var(--border-hair)'), ...style }}>
+      borderBottom: '1px solid rgba(38,53,23,0.15)',
+      ...style
+    }}>
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', height: '100%', padding: '0 24px',
-        display: 'flex', alignItems: 'center', gap: 32 }}>
-        <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.03em', color: inverse ? 'var(--paper-100)' : 'var(--ink-900)' }}>
-          {wordmark}<span style={{ color: 'var(--cyan-500)' }}>.</span>
-        </span>
-        <nav style={{ display: 'flex', gap: 24, marginRight: 'auto' }}>
+        display: 'flex', alignItems: 'center', gap: 32, position: 'relative' }}>
+
+        {/* Logo */}
+        <img
+          src="/logo.png"
+          alt="Loogo Labs"
+          onClick={() => handleNav('Home')}
+          style={{ height: 36, width: 'auto', flexShrink: 0, cursor: 'pointer' }}
+        />
+
+        <nav className="ll-nav-links">
           {items.map(it => {
             const on = it === active;
             return (
-              <a key={it} href="#" onClick={e => { e.preventDefault(); onNavigate && onNavigate(it); }}
+              <a key={it} href="#" onClick={e => { e.preventDefault(); handleNav(it); }}
                 style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase',
                   textDecoration: 'none', paddingBottom: 2,
-                  color: on ? (inverse ? 'var(--paper-000)' : 'var(--ink-900)') : (inverse ? 'var(--ink-300)' : 'var(--ink-400)'),
-                  borderBottom: '2px solid ' + (on ? 'var(--cyan-500)' : 'transparent') }}>{it}</a>
+                  color: on ? 'var(--ink-900)' : 'var(--ink-500)',
+                  borderBottom: '2px solid ' + (on ? 'var(--ink-700)' : 'transparent') }}>{it}</a>
             );
           })}
         </nav>
-        {cta}
+
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ display: 'contents' }} className="ll-cta-desktop">
+            {cta}
+          </div>
+          <button className="ll-nav-burger" onClick={() => setOpen(o => !o)} aria-label="Menu"
+            style={{ color: 'var(--ink-700)' }}>
+            {open
+              ? <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+              : <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+            }
+          </button>
+        </div>
+
+        <div className={`ll-nav-mobile${open ? ' open' : ''}`}
+          style={{ background: 'var(--paper-200)', borderBottom: '1px solid rgba(38,53,23,0.15)' }}>
+          {items.map(it => (
+            <a key={it} href="#" onClick={e => { e.preventDefault(); handleNav(it); }}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase',
+                textDecoration: 'none', color: it === active ? 'var(--ink-900)' : 'var(--ink-500)',
+                padding: '12px 0', borderBottom: '1px solid rgba(38,53,23,0.08)' }}>{it}</a>
+          ))}
+          <div style={{ paddingTop: 16 }}>{cta}</div>
+        </div>
       </div>
     </header>
   );

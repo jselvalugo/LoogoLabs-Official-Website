@@ -13,68 +13,71 @@ const Wrap = ({ children, style }) => (
 function Mission({ onNavigate }) {
   return (
     <main>
-      <Wrap style={{ padding: '80px 24px 64px', borderBottom: '1px solid var(--border-hair)' }}>
+      <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
         <Badge tone="accent">Mission</Badge>
         <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
           letterSpacing: 'var(--ls-display-2)', maxWidth: '24ch' }}>
-          The data already exists. The problem is it was never meant to be read.
+          We believe running a business should not require 15 different tools.
         </h1>
         <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-          Most businesses are sitting on years of operational data — exports, documents, system logs —
-          that nobody has ever been able to query in a useful way. The people who need answers from
-          that data are the same ones without time to clean it. That is the gap Loogo Labs works in.
+          Most business owners are logging into 10–15 different platforms every single day just to
+          run basic operations. We built a better way — and we handle every step of getting you
+          set up, trained, and growing on it.
         </p>
       </Wrap>
 
-      <Wrap style={{ padding: '72px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
+      <Wrap style={{ padding: '64px 24px' }}>
+        <div className="ll-2col" style={{ gap: 48 }}>
           <div>
-            <SectionHeading eyebrow="What we believe" title="An answer without its reasoning is not an answer" rule={false} level={2} />
+            <SectionHeading eyebrow="What we believe" title="Software should make you more money, not cost more of it" rule={false} level={2} />
             <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 20 }}>
-              Every output Loogo produces carries the inputs and logic behind it. Operators need to
-              be able to explain their decisions to boards, lenders, and regulators — a number with
-              no lineage is useless to them. We would rather be inspectable than impressive.
+              We got tired of watching good businesses overpay for disconnected tools that barely
+              talk to each other. A CRM here. An email platform there. A course tool on top of
+              that. A scheduling app. A social media scheduler. It adds up fast — and none of
+              them work together.
             </p>
             <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
-              We also believe software should be removable. Loogo connects read-only, writes back
-              only where you permit it, and can be taken out in an afternoon. Lock-in is not a
-              product strategy — it is a failure of confidence.
+              We brought it all under one roof and made sure the math works from day one. Most
+              clients replace more than $400 a month in subscriptions the moment they switch.
             </p>
           </div>
           <div>
-            <SectionHeading eyebrow="How we choose what to build" title="We start with the data problem, not the industry" rule={false} level={2} />
+            <SectionHeading eyebrow="What we build toward" title="Your business, fully automated and fully owned" rule={false} level={2} />
             <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 20 }}>
-              We look for three things: records that exist but cannot be read, a decision downstream
-              worth real money, and operators willing to work closely with us while we get it right.
-              When all three align, there is a product. Industry comes second.
+              The goal is never the software — it is the outcome. More leads followed up. More
+              deals closed. More content published without burning hours. More time back in your
+              week to work on the business instead of inside it.
             </p>
             <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
-              The underlying engine does not change between deployments. Only the vocabulary does —
-              the data formats, the entity types, the outputs that matter. The hard part is built once.
+              We are not done until your operations run themselves. And we stay close — with 24/7
+              support included — until that is exactly what is happening.
             </p>
           </div>
         </div>
       </Wrap>
 
       <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)' }}>
-        <Wrap style={{ padding: '72px 24px', display: 'flex', gap: 0 }}>
-          {[['Founded', '2026', ''], ['Customers served', '10', ''], ['Industries live', '3+', '']].map(([l, v, u], i) => (
-            <div key={l} style={{ flex: 1, paddingLeft: i ? 24 : 0, borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
-              <Stat label={l} value={v} unit={u} />
-            </div>
-          ))}
+        <Wrap style={{ padding: '64px 24px' }}>
+          <div className="ll-stats-row" style={{ display: 'flex', gap: 0 }}>
+            {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
+              <div key={l} style={{ flex: 1, paddingLeft: i ? 24 : 0, borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
+                <Stat label={l} value={v} unit={u} />
+              </div>
+            ))}
+          </div>
         </Wrap>
       </section>
 
-      <Wrap style={{ padding: '72px 24px', borderBottom: '1px solid var(--border-hair)' }}>
-        <SectionHeading eyebrow="How every engagement runs" title="Five phases. The same every time." description="Every product we have built came out of this process. The phases do not change. The vocabulary does." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16, marginTop: 36 }}>
+      <Wrap style={{ padding: '64px 24px', borderBottom: '1px solid var(--border-hair)' }}>
+        <SectionHeading eyebrow="How onboarding works" title="Five steps. Done for you every time."
+          description="Every client goes through the same proven process. You never have to figure it out alone — we are with you from day one." />
+        <div className="ll-grid-5" style={{ gap: 16, marginTop: 36 }}>
           {[
-            ['01', 'Discovery', 'We map what records exist, where they live, and what decision they are meant to feed. We look before we plan.'],
-            ['02', 'Readiness', 'We audit your data access, confirm system reach, and make sure we fully understand the project. Nothing moves to build until we can answer the problem without guessing.'],
-            ['03', 'Buildout', 'The engine is configured for your vocabulary — your entity types, data formats, and output definitions. The underlying logic does not change; only the layer on top of it does.'],
-            ['04', 'Testing', 'Outputs are checked against known data. Operators review edge cases. Confidence bands are stress-tested before anything touches production.'],
-            ['05', 'Go-Live', 'The answer lands in the tool your team already uses. We stay close through the first weeks and adjust as real data comes in.'],
+            ['01', 'Discovery', 'We learn your business — what tools you are currently paying for, what is costing you the most, and exactly what you need the platform to do first.'],
+            ['02', 'Setup', 'We configure your account, build your pipelines, import your contacts, and connect your existing systems. Nothing is left for you to figure out alone.'],
+            ['03', 'Automations', 'We build the workflows that matter most first — lead follow-up, appointment reminders, review requests, and anything else that should be running on autopilot.'],
+            ['04', 'Training', 'We walk you and your team through the platform until everyone is confident. You get recordings, guides, and a direct line back to us anytime.'],
+            ['05', 'Ongoing Support', '24/7 support is included — always. As your business grows, the platform grows with it, and we are here every step of the way to make sure it does.'],
           ].map(([n, t, d]) => (
             <Card key={n} padding={22} tone="inverse" style={{ display: 'grid', gap: 10, alignContent: 'start' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--cyan-500)' }}>{n}</div>
@@ -85,20 +88,20 @@ function Mission({ onNavigate }) {
         </div>
       </Wrap>
 
-      <Wrap style={{ padding: '72px 24px 96px' }}>
-        <SectionHeading eyebrow="The company" title="We stay close to the problem" />
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 36 }}>
+      <Wrap style={{ padding: '64px 24px 88px' }}>
+        <SectionHeading eyebrow="The company" title="We stay close to every client" />
+        <div className="ll-2col" style={{ gap: 24, marginTop: 36 }}>
           <Placeholder label="TEAM PHOTO — SUPPLY REAL ASSET" height={300} />
           <Card emphasis="strong" padding={28} style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <span className="ll-eyebrow">Working with us</span>
             <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)' }}>
-              We take on a small number of engagements per year and stay close to each one. The
-              work is only useful if the outputs are trusted — and trust takes time. If your
-              operational data is a mess and the decisions it feeds are expensive, that is exactly
-              the conversation we want to have.
+              We keep our client list intentional. Not everyone is a fit — but if you are a local
+              business, service provider, or online brand tired of the tool chaos, this
+              conversation is worth 15 minutes. We will tell you exactly what the platform can do
+              for your specific situation, no pitch deck required.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Talk to us</Button>
+              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Book a free strategy call</Button>
               <Button variant="secondary" onClick={() => onNavigate('Home')}>Back to home</Button>
             </div>
           </Card>

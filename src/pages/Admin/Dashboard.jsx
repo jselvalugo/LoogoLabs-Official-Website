@@ -4,37 +4,110 @@ import { StatusBadge, formatDate } from './shared';
 
 export default function Dashboard({ onViewLeads }) {
   const [leads, setLeads] = React.useState(null);
+  const [posts, setPosts] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    apiFetch('/.netlify/functions/get-leads')
-      .then(r => r?.json())
-      .then(data => { if (Array.isArray(data)) setLeads(data); })
-      .finally(() => setLoading(false));
+    Promise.all([
+      apiFetch('/.netlify/functions/get-leads').then(r => r?.json()),
+      apiFetch('/.netlify/functions/get-posts').then(r => r?.json()),
+    ]).then(([leadsData, postsData]) => {
+      if (Array.isArray(leadsData)) setLeads(leadsData);
+      if (Array.isArray(postsData)) setPosts(postsData);
+      setLoading(false);
+    });
   }, []);
 
   const count = s => (leads || []).filter(l => l.status === s).length;
 
+  const totalViews = (posts || []).reduce((sum, p) => sum + (p.views || 0), 0);
+  const publishedPosts = (posts || []).filter(p => p.status === 'published');
+
+  const sourceCounts = (leads || []).reduce((acc, l) => {
+    const key = l.referral || 'not specified';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+  const topSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const maxSource = topSources[0]?.[1] || 1;
+
+  const thisWeek = (leads || []).filter(l => {
+    const d = new Date(l.created_at);
+    const now = new Date();
+    const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+    return d >= weekAgo;
+  }).length;
+
   return (
-    <div style={{ padding: '36px 40px', maxWidth: 960, overflowY: 'auto', flex: 1 }}>
+    <div style={{ padding: '36px 40px', overflowY: 'auto', flex: 1 }}>
       <h1 style={{ margin: '0 0 28px', fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Dashboard</h1>
 
       {loading ? <Spinner /> : (
         <>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 40 }}>
+          {/* ── LEAD STATS ── */}
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 12 }}>Leads</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 36 }}>
             {[
-              { label: 'Total leads',  value: leads.length,       accent: false },
-              { label: 'New',          value: count('new'),        accent: true  },
-              { label: 'Contacted',    value: count('contacted'),  accent: false },
-              { label: 'Converted',    value: count('converted'),  accent: false },
+              { label: 'Total',     value: leads.length,      accent: false },
+              { label: 'This week', value: thisWeek,          accent: true  },
+              { label: 'New',       value: count('new'),       accent: false },
+              { label: 'Contacted', value: count('contacted'), accent: false },
+              { label: 'Converted', value: count('converted'), accent: false },
             ].map(({ label, value, accent }) => (
-              <div key={label} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '20px 22px' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</div>
-                <div style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 8, color: accent ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{value}</div>
+              <div key={label} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '18px 20px' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</div>
+                <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 6, color: accent ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{value}</div>
               </div>
             ))}
           </div>
 
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 36 }}>
+            {/* Lead sources */}
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '20px 22px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 18 }}>Lead sources</div>
+              {topSources.length === 0 ? (
+                <div style={{ fontSize: 13, color: 'var(--ink-400)' }}>No data yet.</div>
+              ) : (
+                <div style={{ display: 'grid', gap: 12 }}>
+                  {topSources.map(([source, n]) => (
+                    <div key={source}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                        <span style={{ fontSize: 13, color: 'var(--ink-700)', textTransform: 'capitalize' }}>{source.replace(/-/g, ' ')}</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>{n}</span>
+                      </div>
+                      <div style={{ height: 4, background: 'var(--paper-200)', borderRadius: 2 }}>
+                        <div style={{ height: '100%', width: `${(n / maxSource) * 100}%`, background: 'var(--ink-700)', borderRadius: 2 }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* LoogoNews stats */}
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '20px 22px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 18 }}>LoogoNews</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+                {[
+                  { label: 'Published', value: publishedPosts.length },
+                  { label: 'Total views', value: totalViews },
+                ].map(({ label, value }) => (
+                  <div key={label} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '14px 16px' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</div>
+                    <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 4, color: 'var(--ink-900)' }}>{value}</div>
+                  </div>
+                ))}
+              </div>
+              {publishedPosts.slice(0, 3).map(p => (
+                <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid var(--border-hair)' }}>
+                  <span style={{ fontSize: 13, color: 'var(--ink-700)', flex: 1, marginRight: 12, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.title}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{p.views || 0} views</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent leads table */}
           <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '18px 22px', borderBottom: '1px solid var(--border-hair)' }}>
               <span style={{ fontWeight: 600, fontSize: 'var(--fs-body)' }}>Recent leads</span>

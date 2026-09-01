@@ -17,7 +17,6 @@ const REFERRAL_OPTIONS = [
   { value: 'other', label: 'Other' },
 ];
 
-
 function Textarea({ label, hint, error, value, onChange, placeholder, rows = 4, id, style }) {
   const [focus, setFocus] = React.useState(false);
   const inputId = id || React.useId();
@@ -30,7 +29,7 @@ function Textarea({ label, hint, error, value, onChange, placeholder, rows = 4, 
           fontFamily: 'var(--font-body)', fontSize: 15, lineHeight: 1.5, color: 'var(--ink-900)',
           background: 'var(--paper-000)', padding: '10px 12px', borderRadius: 'var(--radius-2)',
           border: '1px solid ' + (error ? 'var(--status-danger)' : focus ? 'var(--ink-900)' : 'var(--border-hair)'),
-          outline: focus ? '2px solid var(--cyan-500)' : 'none', outlineOffset: 2,
+          outline: focus ? '2px solid var(--focus-ring)' : 'none', outlineOffset: 2,
           resize: 'vertical', transition: 'border-color var(--dur-fast) var(--ease-standard)',
         }} />
       {error ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--status-danger)' }}>{error}</span>
@@ -44,11 +43,9 @@ const EMPTY = { fullName: '', company: '', email: '', industry: '', dataProblem:
 function Contact() {
   const [fields, setFields] = React.useState(EMPTY);
   const [errors, setErrors] = React.useState({});
-  const [status, setStatus] = React.useState('idle'); // idle | submitting | success | error
+  const [status, setStatus] = React.useState('idle');
 
-  function set(key) {
-    return e => setFields(f => ({ ...f, [key]: e.target.value }));
-  }
+  function set(key) { return e => setFields(f => ({ ...f, [key]: e.target.value })); }
 
   function validate() {
     const e = {};
@@ -81,57 +78,54 @@ function Contact() {
         }),
       });
       setStatus(res.ok ? 'success' : 'error');
-    } catch {
-      setStatus('error');
-    }
+    } catch { setStatus('error'); }
   }
 
   return (
     <main>
-      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 72px' }}>
+      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '72px 0 64px' }}>
         <Wrap>
-          <Badge tone="inverse">Work with us</Badge>
+          <Badge tone="inverse">Book a free strategy call</Badge>
           <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
             letterSpacing: 'var(--ls-display-2)', maxWidth: '22ch' }}>
-            Tell us about your data problem.
+            Let's talk about your business.
           </h1>
           <p style={{ maxWidth: '52ch', margin: '20px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
-            We read every submission. If there is a fit, we will reach out directly — no sales
-            funnel, no automated sequence. Just a real conversation about whether we can help.
+            Tell us a little about what you are running and what tools you are currently paying
+            for. We will show you exactly what the platform replaces and what it would save you
+            every month — no pressure, no pitch deck.
           </p>
         </Wrap>
       </section>
 
-      <Wrap style={{ padding: '72px 24px 96px' }}>
+      <Wrap style={{ padding: '64px 24px 88px' }}>
         {status === 'success' ? (
           <Success />
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: 64, alignItems: 'start' }}>
+          <div className="ll-form-layout">
             <form onSubmit={handleSubmit} noValidate style={{ display: 'grid', gap: 24 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="ll-form-row">
                 <Input label="Full name" placeholder="Jane Smith" value={fields.fullName} onChange={set('fullName')} error={errors.fullName} />
-                <Input label="Company" placeholder="Acme Corp" value={fields.company} onChange={set('company')} error={errors.company} />
+                <Input label="Business name" placeholder="Acme Salon" value={fields.company} onChange={set('company')} error={errors.company} />
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="ll-form-row">
                 <Input label="Work email" type="email" placeholder="jane@acme.com" value={fields.email} onChange={set('email')} error={errors.email} />
-                <Input label="Industry or sector" placeholder="e.g. Hospitality, Logistics…" value={fields.industry} onChange={set('industry')}
-                  hint="Helps us understand your context" />
+                <Input label="Type of business" placeholder="e.g. Salon, Real estate, Coaching…" value={fields.industry} onChange={set('industry')}
+                  hint="Helps us tailor the call to your situation" />
               </div>
-              <Textarea label="What is the data problem you are trying to solve?"
-                placeholder="Describe the records, systems, or formats you are working with and what makes them hard to use…"
+              <Textarea label="What tools are you currently paying for?"
+                placeholder="e.g. Mailchimp, ClickFunnels, Calendly, Teachable, Hootsuite, a separate CRM… list them out"
                 rows={5} value={fields.dataProblem} onChange={set('dataProblem')} error={errors.dataProblem} />
-              <Textarea label="What decision does that data feed?"
-                placeholder="e.g. Pricing, inventory planning, valuation, compliance reporting…"
+              <Textarea label="What is your biggest challenge running your business right now?"
+                placeholder="e.g. Following up with leads, staying consistent on social, keeping clients organized…"
                 rows={3} value={fields.decisionItFeeds} onChange={set('decisionItFeeds')}
                 hint="Optional, but helpful" />
               <Select label="How did you hear about us?" options={REFERRAL_OPTIONS} value={fields.referral} onChange={set('referral')} />
-
               {status === 'error' && (
                 <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', color: 'var(--status-danger)' }}>
                   Something went wrong. Try again or email us directly.
                 </p>
               )}
-
               <div>
                 <Button variant="primary" size="lg" iconRight={<span>→</span>} disabled={status === 'submitting'}>
                   {status === 'submitting' ? 'Sending…' : 'Send it'}
@@ -144,9 +138,9 @@ function Contact() {
                 <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>What happens next</span>
                 <div style={{ display: 'grid', gap: 16, marginTop: 16 }}>
                   {[
-                    ['We read it', 'Every submission is reviewed by the team, not a bot. If the problem fits what we build, you will hear from us within a few days.'],
-                    ['One real conversation', 'No demo deck, no pitch. We ask questions, you ask questions, and we figure out together whether there is a fit.'],
-                    ['We move fast if there is a match', 'We keep a short list of active engagements. If we take it on, we start quickly and stay close.'],
+                    ['We read every submission', 'A real person reviews what you send — not a bot. Expect a response within one business day.'],
+                    ['One real conversation', 'No demo deck, no pressure. We walk you through what the platform does for your specific business and what it would save you.'],
+                    ['We set everything up for you', 'If you decide to move forward, we handle the full onboarding. You do not touch a setting until we hand it over ready to go.'],
                   ].map(([title, body]) => (
                     <div key={title} style={{ paddingTop: 16, borderTop: '1px solid var(--border-hair)' }}>
                       <div style={{ fontWeight: 600, fontSize: 'var(--fs-body-sm)' }}>{title}</div>
@@ -158,7 +152,7 @@ function Contact() {
               <div style={{ padding: '20px', background: 'var(--paper-200)', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)' }}>
                 <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Not ready to fill this out?</span>
                 <p style={{ margin: '10px 0 0', fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-600)' }}>
-                  Read our <strong>Mission</strong> to understand how we pick what we build — it is the fastest way to know whether we are the right fit before getting in touch.
+                  Read our <strong>Mission</strong> to understand what the platform does and why clients switch — it is the fastest way to know if this is right for your business.
                 </p>
               </div>
             </aside>
@@ -172,14 +166,14 @@ function Contact() {
 function Success() {
   return (
     <div style={{ maxWidth: 560 }}>
-      <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--cyan-500)', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontSize: 20, marginBottom: 24 }}>✓</div>
+      <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--ink-600)', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', fontSize: 20, color: 'var(--paper-100)', marginBottom: 24 }}>✓</div>
       <h2 style={{ margin: 0, fontSize: 'var(--fs-display-3)', fontWeight: 700, letterSpacing: 'var(--ls-display-3)' }}>
-        We have it.
+        You're on our list.
       </h2>
       <p style={{ margin: '16px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-        Your submission came through. If there is a fit, someone from the team will reach out
-        directly within a few days. No automated emails in the meantime.
+        Your submission came through. Someone from the team will reach out within one business
+        day to schedule your free strategy call. No automated emails, no runaround.
       </p>
     </div>
   );

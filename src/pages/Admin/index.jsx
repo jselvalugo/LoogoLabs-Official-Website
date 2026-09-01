@@ -8,7 +8,7 @@ import BlogAdmin from './BlogAdmin';
 const NAV = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'leads', label: 'Leads' },
-  { id: 'blog', label: 'Signal Blog' },
+  { id: 'blog', label: 'LoogoNews' },
 ];
 
 export default function Admin() {
@@ -25,7 +25,7 @@ export default function Admin() {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--paper-100)', fontFamily: 'var(--font-body)' }}>
       <aside style={{ width: 220, background: 'var(--ink-900)', color: 'var(--paper-100)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-        <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
           <div style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em' }}>
             Loogo Labs<span style={{ color: 'var(--cyan-500)' }}>.</span>
           </div>
@@ -40,7 +40,7 @@ export default function Admin() {
             return (
               <button key={id} onClick={() => setSubpage(id)}
                 style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 20px',
-                  background: active ? 'rgba(255,255,255,0.06)' : 'transparent',
+                  background: active ? 'rgba(216,211,198,0.08)' : 'transparent',
                   border: 'none', borderLeft: `2px solid ${active ? 'var(--cyan-500)' : 'transparent'}`,
                   cursor: 'pointer', color: active ? 'var(--paper-100)' : 'var(--ink-300)',
                   fontSize: 14, fontFamily: 'var(--font-body)', fontWeight: active ? 500 : 400 }}>
@@ -50,7 +50,7 @@ export default function Admin() {
           })}
         </nav>
 
-        <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(216,211,198,0.10)' }}>
           <button onClick={handleLogout}
             style={{ fontSize: 13, color: 'var(--ink-400)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'var(--font-body)' }}>
             Sign out

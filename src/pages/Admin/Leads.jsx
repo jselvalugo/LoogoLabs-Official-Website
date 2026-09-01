@@ -9,6 +9,8 @@ export default function Leads() {
   const [loading, setLoading] = React.useState(true);
   const [filter, setFilter] = React.useState('all');
   const [selectedId, setSelectedId] = React.useState(null);
+  const [pushing, setPushing] = React.useState(false);
+  const [pushResult, setPushResult] = React.useState(null);
 
   async function fetchLeads() {
     const res = await apiFetch('/.netlify/functions/get-leads');
@@ -33,6 +35,19 @@ export default function Leads() {
     return updated;
   }
 
+  async function pushToGHL() {
+    setPushing(true);
+    setPushResult(null);
+    try {
+      const res = await apiFetch('/.netlify/functions/push-to-ghl', { method: 'POST' });
+      const data = await res?.json();
+      setPushResult(data);
+    } catch {
+      setPushResult({ error: 'Request failed' });
+    }
+    setPushing(false);
+  }
+
   async function deleteLead(id) {
     await apiFetch('/.netlify/functions/delete-lead', {
       method: 'DELETE',
@@ -47,7 +62,23 @@ export default function Leads() {
       {/* List */}
       <div style={{ flex: selectedId ? '0 0 55%' : '1', display: 'flex', flexDirection: 'column', borderRight: selectedId ? '1px solid var(--border-hair)' : 'none', overflow: 'hidden' }}>
         <div style={{ padding: '28px 32px 0', flexShrink: 0 }}>
-          <h1 style={{ margin: '0 0 20px', fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Leads</h1>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, gap: 16, flexWrap: 'wrap' }}>
+            <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Leads</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              {pushResult && !pushResult.error && (
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: pushResult.skipped > 0 ? '#92400E' : '#065F46' }}>
+                  ✓ {pushResult.pushed} pushed{pushResult.skipped > 0 ? `, ${pushResult.skipped} skipped` : ''}
+                </span>
+              )}
+              {pushResult?.error && (
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#DC2626' }}>✗ {pushResult.error}</span>
+              )}
+              <button onClick={pushToGHL} disabled={pushing || loading}
+                style={{ padding: '8px 16px', background: pushing ? 'var(--ink-400)' : 'var(--ink-900)', color: 'var(--paper-100)', border: 'none', borderRadius: 'var(--radius-2)', fontSize: 13, fontWeight: 600, cursor: pushing ? 'default' : 'pointer', fontFamily: 'var(--font-body)', display: 'flex', alignItems: 'center', gap: 7, whiteSpace: 'nowrap' }}>
+                {pushing ? 'Pushing…' : '↑ Push all to GHL'}
+              </button>
+            </div>
+          </div>
           <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid var(--border-hair)' }}>
             {FILTERS.map(f => (
               <button key={f} onClick={() => setFilter(f)}

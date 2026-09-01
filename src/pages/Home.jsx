@@ -9,33 +9,33 @@ const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
 );
 
-const engine = [
-  ['01', 'Analysis', 'We turn operational records into clear, defensible answers — not dashboards nobody checks, but outputs operators can act on and explain to anyone who asks.'],
-  ['02', 'Reporting', 'Audit-ready outputs generated from the same data that runs the operation. No manual prep, no reconciliation before the deadline.'],
-  ['03', 'Operations', 'Built around the workflows your team already runs. Nothing requires a migration or a change in how the business operates day to day.'],
-  ['04', 'Industry fit', 'Deployed in sectors where enterprise software has historically been absent or wrong — where the gap between what exists and what is needed is widest.'],
+const features = [
+  ['01', 'CRM & Contacts', 'Manage every lead, client, and conversation in one place. No more juggling spreadsheets and disconnected inboxes — every contact, every pipeline stage, fully organized.'],
+  ['02', 'Email & SMS Marketing', 'Send campaigns, automate follow-ups, and reach your audience where they are. Build sequences that run while you sleep and never miss a lead again.'],
+  ['03', 'Social Media & AI Content', 'Schedule posts across every platform and generate content with 60+ AI-powered prompts. Stay consistent and visible without spending hours online every week.'],
+  ['04', 'Courses, Payments & Automation', 'Sell courses, build membership communities, collect payments, and automate your entire workflow — all without duct-taping a dozen apps together.'],
 ];
 
 function Home({ onNavigate }) {
   return (
     <main>
-      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '104px 0 0' }}>
+      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 0' }}>
         <Wrap>
-          <Badge tone="inverse">Loogo Labs · Applied AI</Badge>
+          <Badge tone="inverse">Loogo Labs · All-In-One Platform</Badge>
           <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
-            letterSpacing: 'var(--ls-display-1)', maxWidth: '17ch' }}>
-            Your data exists. We make it <span style={{ color: 'var(--cyan-500)' }}>work</span>.
+            letterSpacing: 'var(--ls-display-1)', maxWidth: '20ch' }}>
+            Launch, Grow & Automate Your Business — <span style={{ color: 'var(--cyan-500)' }}>All in One Place</span>.
           </h1>
-          <p style={{ maxWidth: '56ch', margin: '26px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
-            Most businesses already have the data they need to make better decisions — it is just
-            trapped in formats nobody can read. Loogo Labs builds the engine that unlocks it, and
-            deploys it where the records are worst and the stakes are highest.
+          <p style={{ maxWidth: '52ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
+            Stop paying for 10–15 different tools that barely talk to each other. Our all-in-one
+            platform gives you CRM, email & SMS marketing, social media, courses, and automation — in one dashboard.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => onNavigate('Mission')}>Read our mission</Button>
+            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Book a free strategy call</Button>
+            <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
           </div>
-          <div style={{ display: 'flex', gap: 0, marginTop: 80, borderTop: '1px solid var(--border-hair-inverse)' }}>
-            {[['Founded', '2026', ''], ['Customers served', '10', ''], ['Industries live', '3+', '']].map(([l, v, u], i) => (
+          <div className="ll-stats-row" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>
+            {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
               <div key={l} style={{ flex: 1, padding: '24px 0 44px', paddingLeft: i ? 24 : 0,
                 borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
                 <Stat label={l} value={v} unit={u} />
@@ -45,11 +45,11 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Wrap style={{ padding: '96px 24px 0' }}>
-        <SectionHeading eyebrow="What we do" title="Software for analysis and reporting in industries that were left behind"
-          description="We build operational applications for sectors where enterprise vendors never showed up. The outputs are built for the people running the business — not the people selling to them." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 36 }}>
-          {engine.map(([n, t, d]) => (
+      <Wrap style={{ padding: '72px 24px 0' }}>
+        <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"
+          description="We built one platform that replaces your CRM, your email tool, your scheduling app, your course platform, your social scheduler, and more. One login. One monthly bill." />
+        <div className="ll-grid-4" style={{ gap: 16, marginTop: 36 }}>
+          {features.map(([n, t, d]) => (
             <Card key={n} padding={24} tone="inverse" style={{ display: 'grid', gap: 12, alignContent: 'start' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--cyan-500)' }}>{n}</div>
               <h3 style={{ margin: 0, fontSize: 'var(--fs-h3)', letterSpacing: 'var(--ls-h3)', color: 'var(--paper-100)' }}>{t}</h3>
@@ -59,13 +59,13 @@ function Home({ onNavigate }) {
         </div>
       </Wrap>
 
-      <Wrap style={{ padding: '96px 24px' }}>
-        <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>How we work</span>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginTop: 24 }}>
-          {[['Explainable by default', 'Every output ships with the inputs that produced it. Operators can check the work — and so can their auditors.'],
-            ['Read before write', 'We connect read-only first. Nothing writes back to your systems until you explicitly allow it.'],
-            ['No lock-in', 'No migration project required to get started, and no hostage situation if you want to leave. Loogo can be removed in an afternoon.'],
-            ['Priced per real thing', 'Billed on units your business already counts, not on seats or API calls that nobody can explain to finance.']].map(([k, v]) => (
+      <Wrap style={{ padding: '72px 24px' }}>
+        <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>
+        <div className="ll-grid-2" style={{ gap: 24, marginTop: 24 }}>
+          {[['Replace 10–15+ tools', 'One login. One dashboard. One monthly bill. Stop paying for Mailchimp, ClickFunnels, Teachable, Calendly, and 10 other tools separately.'],
+            ['Save $400–$500 a month', 'Most clients cut more than $400 in monthly subscriptions on day one. The platform pays for itself before your first campaign goes out.'],
+            ['24/7 real support included', 'Live support from people who actually know the platform — not a chatbot, not a ticket queue. A real person who picks up and gets it done.'],
+            ['Done-for-you setup', 'We handle the full onboarding. You walk in on day one with your account configured, your automations live, and your first campaign ready to send.']].map(([k, v]) => (
             <Card key={k} padding={24} emphasis="strong">
               <div style={{ fontSize: 'var(--fs-body)', fontWeight: 600 }}>{k}</div>
               <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-400)', marginTop: 6 }}>{v}</div>
@@ -73,7 +73,6 @@ function Home({ onNavigate }) {
           ))}
         </div>
       </Wrap>
-
     </main>
   );
 }
