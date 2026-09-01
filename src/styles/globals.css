@@ -233,6 +233,16 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-2col        { display: grid; grid-template-columns: 1fr 1fr; }
 .ll-post-layout { display: grid; grid-template-columns: min(680px, 100%); }
 
+.ll-live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--cyan-500);
+  animation: ll-live-pulse 2.4s ease-out infinite;
+}
+@keyframes ll-live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(216, 211, 198, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(216, 211, 198, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(216, 211, 198, 0); }
+}
+
 /* ── References ticker ("In good company" strip) ── */
 .ll-ticker-bar {
   --ticker-gold: #EB8226;

@@ -17,6 +17,52 @@ const features = [
   ['04', 'Courses, Payments & Automation', 'Sell courses, build membership communities, collect payments, and automate your entire workflow — all without duct-taping a dozen apps together.'],
 ];
 
+const voiceBotFeatures = [
+  ['Answers every call', 'No voicemail, no hold music. It picks up in seconds — nights, weekends, and everything in between.'],
+  ['Books straight to your calendar', 'It checks your real availability and gets the caller on the books, no back-and-forth required.'],
+  ['Qualifies & routes leads', 'Asks the right questions, flags who’s ready to buy, and hands your team a clean summary.'],
+  ['Texts back missed calls', 'Can’t take the call? It follows up by SMS instantly so the lead never goes cold.'],
+];
+
+function VoiceBotSection() {
+  return (
+    <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)' }}>
+      <Wrap style={{ padding: '72px 24px' }}>
+        <div className="ll-grid-2" style={{ gap: 48, alignItems: 'center' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="ll-live-dot" aria-hidden="true" />
+              <Badge tone="inverse">AI Voice Bot · Try it live</Badge>
+            </div>
+            <h2 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-h1)', lineHeight: 'var(--lh-h1)',
+              letterSpacing: 'var(--ls-h1)', maxWidth: '18ch' }}>
+              It answers the phone <span style={{ color: 'var(--cyan-500)' }}>so you don't have to.</span>
+            </h2>
+            <p style={{ maxWidth: '48ch', margin: '18px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
+              Our AI Voice Bot picks up every call, answers questions in your voice and tone, books the appointment, and
+              follows up with anyone it misses — around the clock, without hiring another employee.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
+              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Test the AI Voice Bot</Button>
+            </div>
+            <p style={{ margin: '14px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
+              Grab a slot on our booking page and we'll set up a live call so you can hear it answer, qualify, and book — in real time.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gap: 12 }}>
+            {voiceBotFeatures.map(([t, d]) => (
+              <Card key={t} tone="inverse" padding={20} style={{ display: 'grid', gap: 6 }}>
+                <div style={{ fontWeight: 600, fontSize: 'var(--fs-body)' }}>{t}</div>
+                <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-300)' }}>{d}</div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Wrap>
+    </section>
+  );
+}
+
 const REFERENCES = ['Feche Consulting', 'DaLife, LLC', 'House of Cars', 'Reef Ntwrks', 'Lugo’s Craft Distillery'];
 
 function ReferencesTicker() {
@@ -80,6 +126,8 @@ function Home({ onNavigate }) {
           ))}
         </div>
       </Wrap>
+
+      <VoiceBotSection />
 
       <Wrap style={{ padding: '72px 24px' }}>
         <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>
