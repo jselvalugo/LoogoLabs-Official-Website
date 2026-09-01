@@ -17,6 +17,27 @@ const features = [
   ['04', 'Courses, Payments & Automation', 'Sell courses, build membership communities, collect payments, and automate your entire workflow — all without duct-taping a dozen apps together.'],
 ];
 
+const REFERENCES = ['Feche Consulting', 'DaLife, LLC', 'House of Cars', 'Reef Ntwrks', 'Lugo’s Craft Distillery'];
+
+function ReferencesTicker() {
+  const items = [...REFERENCES, ...REFERENCES];
+  return (
+    <div className="ll-ticker-bar" role="region" aria-label="Selected clients">
+      <div className="ll-ticker-label"><span className="ll-ticker-live" aria-hidden="true" />In good company</div>
+      <div className="ll-ticker-belt">
+        <div className="ll-ticker-track">
+          {items.map((name, i) => (
+            <React.Fragment key={i}>
+              <span className="ll-ticker-ref">{name}</span>
+              <span className="ll-ticker-sep" aria-hidden="true" />
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Home({ onNavigate }) {
   return (
     <main>
@@ -45,6 +66,8 @@ function Home({ onNavigate }) {
           </div>
         </Wrap>
       </section>
+
+      <ReferencesTicker />
 
       <Wrap style={{ padding: '72px 24px 0' }}>
         <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"

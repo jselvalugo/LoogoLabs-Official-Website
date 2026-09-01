@@ -233,6 +233,61 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-2col        { display: grid; grid-template-columns: 1fr 1fr; }
 .ll-post-layout { display: grid; grid-template-columns: min(680px, 100%); }
 
+/* ── References ticker ("In good company" strip) ── */
+.ll-ticker-bar {
+  --ticker-gold: #EB8226;
+  box-sizing: border-box; width: 100%; height: 52px;
+  display: flex; align-items: stretch;
+  background: var(--ink-900);
+  border-top: 1px solid rgba(235, 130, 38, 0.18);
+  border-bottom: 1px solid rgba(235, 130, 38, 0.18);
+  overflow: hidden;
+}
+.ll-ticker-bar * { box-sizing: border-box; }
+.ll-ticker-label {
+  flex: none; display: flex; align-items: center; gap: 10px;
+  padding: 0 24px 0 26px; height: 100%;
+  background: var(--ink-800);
+  border-right: 1px solid rgba(235, 130, 38, 0.22);
+  font-family: var(--font-mono); font-weight: 600;
+  font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--ticker-gold); white-space: nowrap;
+}
+.ll-ticker-live {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--ticker-gold);
+  animation: ll-ticker-pulse 2.4s ease-out infinite;
+}
+@keyframes ll-ticker-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(235, 130, 38, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(235, 130, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 130, 38, 0); }
+}
+.ll-ticker-belt {
+  position: relative; flex: 1 1 auto; min-width: 0; display: flex; align-items: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.ll-ticker-track {
+  display: flex; align-items: center; width: max-content;
+  animation: ll-ticker-scroll 30s linear infinite; will-change: transform; padding-left: 40px;
+}
+.ll-ticker-belt:hover .ll-ticker-track { animation-play-state: paused; }
+.ll-ticker-ref {
+  font-family: var(--font-body); font-weight: 600; font-style: italic;
+  font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--paper-000); white-space: nowrap;
+}
+.ll-ticker-sep {
+  flex: none; width: 5px; height: 5px; margin: 0 34px;
+  background: var(--ticker-gold); transform: rotate(45deg);
+}
+@keyframes ll-ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ll-ticker-track { animation: none; } }
+@media (max-width: 640px) {
+  .ll-ticker-label { font-size: 10px; letter-spacing: 0.2em; padding: 0 16px; }
+  .ll-ticker-sep { margin: 0 22px; }
+}
+
 /* ── Tables that must never break page width ── */
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
