@@ -18,45 +18,44 @@ const features = [
 ];
 
 const voiceBotFeatures = [
-  ['Answers every call', 'No voicemail, no hold music. It picks up in seconds — nights, weekends, and everything in between.'],
-  ['Books straight to your calendar', 'It checks your real availability and gets the caller on the books, no back-and-forth required.'],
-  ['Qualifies & routes leads', 'Asks the right questions, flags who’s ready to buy, and hands your team a clean summary.'],
-  ['Texts back missed calls', 'Can’t take the call? It follows up by SMS instantly so the lead never goes cold.'],
+  'Answers every call',
+  'Books straight to your calendar',
+  'Qualifies & routes leads',
+  'Texts back missed calls',
 ];
 
 function VoiceBotSection() {
   return (
-    <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)' }}>
-      <Wrap style={{ padding: '72px 24px' }}>
-        <div className="ll-grid-2" style={{ gap: 48, alignItems: 'center' }}>
+    <section className="ll-voicebot" style={{ position: 'relative', overflow: 'hidden', color: 'var(--paper-100)' }}>
+      <div className="ll-voicebot-glow" aria-hidden="true" />
+      <Wrap style={{ padding: '44px 24px', position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span className="ll-live-dot" aria-hidden="true" />
+          <Badge tone="inverse">AI Voice Bot · Try it live</Badge>
+        </div>
+        <div className="ll-grid-2" style={{ gap: 24, alignItems: 'center', marginTop: 14 }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="ll-live-dot" aria-hidden="true" />
-              <Badge tone="inverse">AI Voice Bot · Try it live</Badge>
-            </div>
-            <h2 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-h1)', lineHeight: 'var(--lh-h1)',
-              letterSpacing: 'var(--ls-h1)', maxWidth: '18ch' }}>
+            <h2 style={{ margin: 0, fontWeight: 700, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', maxWidth: '24ch' }}>
               It answers the phone <span style={{ color: 'var(--cyan-500)' }}>so you don't have to.</span>
             </h2>
-            <p style={{ maxWidth: '48ch', margin: '18px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
-              Our AI Voice Bot picks up every call, answers questions in your voice and tone, books the appointment, and
-              follows up with anyone it misses — around the clock, without hiring another employee.
-            </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Test the AI Voice Bot</Button>
-            </div>
-            <p style={{ margin: '14px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-              Grab a slot on our booking page and we'll set up a live call so you can hear it answer, qualify, and book — in real time.
+            <p style={{ maxWidth: '50ch', margin: '10px 0 0', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
+              Picks up every call, books the appointment, and texts back anyone it misses — 24/7, without hiring another employee.
             </p>
           </div>
-          <div style={{ display: 'grid', gap: 12 }}>
-            {voiceBotFeatures.map(([t, d]) => (
-              <Card key={t} tone="inverse" padding={20} style={{ display: 'grid', gap: 6 }}>
-                <div style={{ fontWeight: 600, fontSize: 'var(--fs-body)' }}>{t}</div>
-                <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-300)' }}>{d}</div>
-              </Card>
-            ))}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
+            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Test the AI Voice Bot</Button>
+            <span style={{ fontSize: 12, lineHeight: 1.4, color: 'var(--ink-300)' }}>
+              Book a slot and we'll set up a live call so you can hear it in action.
+            </span>
           </div>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 28px', marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--border-hair-inverse)' }}>
+          {voiceBotFeatures.map((t) => (
+            <span key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--ink-200)' }}>
+              <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--cyan-500)', flex: 'none' }} />
+              {t}
+            </span>
+          ))}
         </div>
       </Wrap>
     </section>

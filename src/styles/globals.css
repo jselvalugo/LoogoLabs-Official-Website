@@ -233,6 +233,13 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-2col        { display: grid; grid-template-columns: 1fr 1fr; }
 .ll-post-layout { display: grid; grid-template-columns: min(680px, 100%); }
 
+.ll-voicebot {
+  background: linear-gradient(115deg, var(--ink-900) 0%, var(--ink-700) 55%, var(--ink-600) 100%);
+}
+.ll-voicebot-glow {
+  position: absolute; top: -140px; right: -80px; width: 380px; height: 380px; pointer-events: none;
+  background: radial-gradient(circle, rgba(216, 211, 198, 0.16), transparent 70%);
+}
 .ll-live-dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--cyan-500);
   animation: ll-live-pulse 2.4s ease-out infinite;
