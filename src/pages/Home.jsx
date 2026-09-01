@@ -85,7 +85,7 @@ function ReferencesTicker() {
 
 function Home({ onNavigate }) {
   return (
-    <main style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+    <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <section style={{ position: 'relative', backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 0' }}>
         <div className="ll-hero-grid-bg" aria-hidden="true" />
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
@@ -113,7 +113,7 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Wrap style={{ padding: '56px 24px 0' }}>
+      <Wrap style={{ padding: '40px 24px 0' }}>
         <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"
           description="We built one platform that replaces your CRM, your email tool, your scheduling app, your course platform, your social scheduler, and more. One login. One monthly bill." />
         <div className="ll-grid-4" style={{ gap: 16, marginTop: 36 }}>
@@ -129,7 +129,7 @@ function Home({ onNavigate }) {
 
       <VoiceBotSection />
 
-      <Wrap style={{ padding: '56px 24px' }}>
+      <Wrap style={{ padding: '40px 24px' }}>
         <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>
         <div className="ll-grid-2" style={{ gap: 24, marginTop: 24 }}>
           {[['Replace 10–15+ tools', 'One login. One dashboard. One monthly bill. Stop paying for Mailchimp, ClickFunnels, Teachable, Calendly, and 10 other tools separately.'],
