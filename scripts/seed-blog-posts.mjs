@@ -4,7 +4,7 @@
 
 import { getDatabase } from '@netlify/database';
 
-const posts = [
+export const posts = [
   {
     title: 'The Missed Call That Cost an HVAC Company $4,200',
     slug: 'missed-call-text-back-hvac',
@@ -218,12 +218,14 @@ async function seed() {
   }
 }
 
-seed()
-  .then(() => {
-    console.log('Done. Posts were inserted as drafts — review and publish from the Signal Blog admin.');
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error('Seed failed:', err);
-    process.exit(1);
-  });
+if (import.meta.url === `file://${process.argv[1]}`) {
+  seed()
+    .then(() => {
+      console.log('Done. Posts were inserted as drafts — review and publish from the admin panel.');
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error('Seed failed:', err);
+      process.exit(1);
+    });
+}
