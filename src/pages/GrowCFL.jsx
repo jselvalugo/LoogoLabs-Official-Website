@@ -1,6 +1,5 @@
 import React from 'react';
-
-const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/bookings/outbound-reach-aoFaC';
+import { BOOKING_URL } from '../lib/booking';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -540,7 +539,7 @@ function GrowCFL() {
               Free. No obligation. 30 minutes.
             </span>
           </div>
-          <h2 style={{ margin: 0, fontSize: 'clamp(32px, 5vw, 58px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.08, maxWidth: '22ch', margin: '0 auto' }}>
+          <h2 style={{ margin: '0 auto', fontSize: 'clamp(32px, 5vw, 58px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.08, maxWidth: '22ch' }}>
             Let's find out exactly what your business is leaving on the table.
           </h2>
           <p style={{ margin: '28px auto 0', maxWidth: '54ch', fontSize: 17, lineHeight: 1.7, color: 'var(--ink-300)' }}>

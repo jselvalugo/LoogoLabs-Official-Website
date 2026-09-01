@@ -1,4 +1,5 @@
 import React from 'react';
+import { BOOKING_URL } from '../lib/booking';
 
 export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
@@ -120,7 +121,7 @@ export default function BlogPost({ slug, onNavigate }) {
                 We set it up, run it, and optimize it every month. You just run your business.
               </p>
               <a
-                href="https://api.leadconnectorhq.com/widget/bookings/outbound-reach-aoFaC"
+                href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}

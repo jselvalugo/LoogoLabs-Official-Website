@@ -6,10 +6,10 @@ import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
-import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Pricing from './pages/Pricing';
+import { BOOKING_URL, openBooking } from './lib/booking';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
@@ -50,7 +50,6 @@ function App() {
   else if (page === 'Pricing') body = <Pricing onNavigate={handleNavigate} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={handleNavigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={handleNavigate} />;
-  else if (page === 'Contact') body = <Contact />;
   else if (page === 'Privacy') body = <Privacy onNavigate={handleNavigate} />;
   else if (page === 'Terms') body = <Terms onNavigate={handleNavigate} />;
   else body = <Home onNavigate={handleNavigate} />;
@@ -58,7 +57,7 @@ function App() {
   return (
     <div>
       <a
-        href="https://api.leadconnectorhq.com/widget/bookings/outbound-reach-aoFaC"
+        href={BOOKING_URL}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -80,12 +79,12 @@ function App() {
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={handleNavigate}
-        cta={<Button size="sm" variant="primary" onClick={() => setPage('Contact')}>Book a free call</Button>}
+        cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
       />
       <div onClick={e => { if (e.target.closest('a') && !e.target.closest('nav')) e.preventDefault(); }}>{body}</div>
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
-          { title: 'Company', links: ['Mission', 'Contact'] },
+          { title: 'Company', links: ['Mission', 'Book a Call'] },
           { title: 'Platform', links: ['Pricing', 'LoogoNews'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
         ]}

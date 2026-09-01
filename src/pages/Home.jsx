@@ -4,6 +4,7 @@ import Button from '../components/core/Button';
 import Stat from '../components/surfaces/Stat';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
+import { openBooking } from '../lib/booking';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -31,7 +32,7 @@ function Home({ onNavigate }) {
             platform gives you CRM, email & SMS marketing, social media, courses, and automation — in one dashboard.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Book a free strategy call</Button>
+            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
             <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
           </div>
           <div className="ll-stats-row" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>

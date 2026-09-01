@@ -16,26 +16,14 @@ function formatDate(iso) {
 // ─── Main Component ────────────────────────────────────────────────────────────
 
 export default function BlogAdmin() {
-  const [tab, setTab] = React.useState('posts');
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-      <div style={{ padding: '20px 32px 0', borderBottom: '1px solid var(--border-hair)', flexShrink: 0, background: 'var(--paper-100)' }}>
-        <h1 style={{ margin: '0 0 16px', fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Signal Blog</h1>
-        <div style={{ display: 'flex', gap: 0 }}>
-          {[['posts', 'Posts'], ['analytics', 'Analytics']].map(([id, label]) => (
-            <button key={id} onClick={() => setTab(id)}
-              style={{ padding: '8px 16px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: 14,
-                fontWeight: tab === id ? 600 : 400, color: tab === id ? 'var(--ink-900)' : 'var(--ink-400)',
-                borderBottom: tab === id ? '2px solid var(--ink-900)' : '2px solid transparent', marginBottom: -1 }}>
-              {label}
-            </button>
-          ))}
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+      <div className="ll-admin-content-header" style={{ padding: '20px 32px 16px', borderBottom: '1px solid var(--border-hair)', flexShrink: 0, background: 'var(--paper-100)' }}>
+        <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>LoogoNews Posts</h1>
       </div>
 
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
-        {tab === 'posts' ? <PostsTab /> : <AnalyticsTab />}
+        <PostsTab />
       </div>
     </div>
   );
@@ -83,12 +71,12 @@ function PostsTab() {
   }
 
   return (
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+    <div className={`ll-admin-split${showPanel ? ' has-panel' : ''}`} style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
       {/* List panel */}
-      <div style={{ flex: showPanel ? '0 0 52%' : '1', display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: showPanel ? '1px solid var(--border-hair)' : 'none' }}>
+      <div className="ll-admin-split-list" style={{ flex: showPanel ? '0 0 52%' : '1', display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: showPanel ? '1px solid var(--border-hair)' : 'none' }}>
         <div style={{ padding: '20px 28px 0', flexShrink: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid var(--border-hair)', flex: 1 }}>
+          <div className="ll-admin-posts-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, gap: 12, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 0, flexWrap: 'wrap', borderBottom: '1px solid var(--border-hair)', flex: '1 1 auto' }}>
               {FILTERS.map(f => (
                 <button key={f} onClick={() => setFilter(f)}
                   style={{ padding: '7px 12px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: 13,
@@ -100,7 +88,7 @@ function PostsTab() {
               ))}
             </div>
             <button onClick={() => { setCreating(true); setSelectedId(null); }}
-              style={{ marginLeft: 16, padding: '8px 16px', background: 'var(--ink-900)', color: 'var(--paper-100)', border: 'none', borderRadius: 'var(--radius-2)', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-body)', flexShrink: 0 }}>
+              style={{ padding: '8px 16px', background: 'var(--ink-900)', color: 'var(--paper-100)', border: 'none', borderRadius: 'var(--radius-2)', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-body)', flexShrink: 0 }}>
               + New post
             </button>
           </div>
@@ -112,29 +100,31 @@ function PostsTab() {
           ) : visible.length === 0 ? (
             <div style={{ padding: '32px 28px', color: 'var(--ink-400)', fontSize: 13 }}>No posts with this status.</div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 1 }}>
-                <tr style={{ borderBottom: '1px solid var(--border-hair)' }}>
-                  {['Title', 'Status', 'Views', 'Date'].map(h => (
-                    <th key={h} style={thStyle}>{h}</th>
+            <div className="ll-table-scroll">
+              <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 420 }}>
+                <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 1 }}>
+                  <tr style={{ borderBottom: '1px solid var(--border-hair)' }}>
+                    {['Title', 'Status', 'Views', 'Date'].map(h => (
+                      <th key={h} style={thStyle}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {visible.map(post => (
+                    <PostRow key={post.id} post={post}
+                      selected={post.id === selectedId && !creating}
+                      onClick={() => { setSelectedId(post.id); setCreating(false); }} />
                   ))}
-                </tr>
-              </thead>
-              <tbody>
-                {visible.map(post => (
-                  <PostRow key={post.id} post={post}
-                    selected={post.id === selectedId && !creating}
-                    onClick={() => { setSelectedId(post.id); setCreating(false); }} />
-                ))}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
 
       {/* Editor panel */}
       {showPanel && (
-        <div style={{ flex: '0 0 48%', overflowY: 'auto', background: 'var(--paper-000)', borderLeft: '1px solid var(--border-hair)' }}>
+        <div className="ll-admin-split-editor" style={{ flex: '0 0 48%', overflowY: 'auto', background: 'var(--paper-000)', borderLeft: '1px solid var(--border-hair)' }}>
           <PostEditor
             key={creating ? 'new' : selectedId}
             post={creating ? null : selected}
@@ -260,79 +250,6 @@ function PostEditor({ post, onSave, onDelete, onClose }) {
               </div>
             )}
           </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Analytics Tab ─────────────────────────────────────────────────────────────
-
-function AnalyticsTab() {
-  const [posts, setPosts] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    apiFetch('/.netlify/functions/get-posts')
-      .then(r => r?.json())
-      .then(data => { if (Array.isArray(data)) setPosts(data); })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <div style={{ padding: '40px 32px', color: 'var(--ink-400)', fontSize: 13 }}>Loading…</div>;
-
-  const published = (posts || []).filter(p => p.status === 'published');
-  const drafts = (posts || []).filter(p => p.status === 'draft');
-  const totalViews = (posts || []).reduce((sum, p) => sum + (Number(p.views) || 0), 0);
-  const topPosts = [...(posts || [])].sort((a, b) => (Number(b.views) || 0) - (Number(a.views) || 0)).slice(0, 10);
-
-  return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '32px 40px', maxWidth: 900 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 40 }}>
-        {[
-          { label: 'Total posts', value: (posts || []).length },
-          { label: 'Published', value: published.length, accent: true },
-          { label: 'Drafts', value: drafts.length },
-          { label: 'Total views', value: totalViews },
-        ].map(({ label, value, accent }) => (
-          <div key={label} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '20px 22px' }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</div>
-            <div style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 8, color: accent ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{value}</div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', marginBottom: 24 }}>
-        <div style={{ padding: '16px 22px', borderBottom: '1px solid var(--border-hair)' }}>
-          <span style={{ fontWeight: 600, fontSize: 14 }}>Top posts by views</span>
-        </div>
-        {topPosts.length === 0 ? (
-          <div style={{ padding: '32px 22px', color: 'var(--ink-400)', fontSize: 13, textAlign: 'center' }}>No posts yet.</div>
-        ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: 'var(--paper-200)' }}>
-                {['Title', 'Status', 'Views', 'Published'].map(h => (
-                  <th key={h} style={thStyle}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {topPosts.map(post => (
-                <tr key={post.id} style={{ borderTop: '1px solid var(--border-hair)' }}>
-                  <td style={tdStyle}>
-                    <div style={{ fontWeight: 500 }}>{post.title}</div>
-                    <div style={{ fontSize: 11, color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', marginTop: 2 }}>{post.slug}</div>
-                  </td>
-                  <td style={tdStyle}><StatusPill status={post.status} /></td>
-                  <td style={{ ...tdStyle, fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600, color: Number(post.views) > 0 ? 'var(--cyan-700)' : 'var(--ink-400)' }}>
-                    {post.views || 0}
-                  </td>
-                  <td style={{ ...tdStyle, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>{formatDate(post.published_at)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import Stat from '../components/surfaces/Stat';
 import Placeholder from '../components/website/Placeholder';
 import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
+import { openBooking } from '../lib/booking';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -101,7 +102,7 @@ function Mission({ onNavigate }) {
               for your specific situation, no pitch deck required.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Book a free strategy call</Button>
+              <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
               <Button variant="secondary" onClick={() => onNavigate('Home')}>Back to home</Button>
             </div>
           </Card>

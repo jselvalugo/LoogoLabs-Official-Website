@@ -4,6 +4,7 @@ import Switch from '../components/forms/Switch';
 import Card from '../components/surfaces/Card';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
+import { openBooking } from '../lib/booking';
 
 const plans = [
   {
@@ -84,7 +85,7 @@ function Pricing({ onNavigate }) {
               ))}
             </div>
             <Button variant={p.featured ? 'primary' : 'secondary'} fullWidth iconRight={<span>→</span>}
-              onClick={() => onNavigate && onNavigate('Contact')}>
+              onClick={openBooking}>
               Get started
             </Button>
           </Card>

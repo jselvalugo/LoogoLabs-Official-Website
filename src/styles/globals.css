@@ -233,6 +233,9 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-2col        { display: grid; grid-template-columns: 1fr 1fr; }
 .ll-post-layout { display: grid; grid-template-columns: min(680px, 100%); }
 
+/* ── Tables that must never break page width ── */
+.ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
 /* ── NavBar mobile ── */
 .ll-nav-links    { display: flex; gap: 24px; margin-right: auto; }
 .ll-nav-burger   { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink-300); }
@@ -272,6 +275,53 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   /* Section padding reduction */
   .ll-section-y { padding-top: 56px !important; padding-bottom: 56px !important; }
   .ll-hero-pad  { padding-top: 64px !important; padding-bottom: 48px !important; }
+
+  /* ── Admin panel ── */
+  .ll-admin-shell {
+    flex-direction: column !important;
+    height: 100dvh !important;
+  }
+  .ll-admin-sidebar {
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .ll-admin-sidebar-brand {
+    padding: 12px 14px !important;
+    border-bottom: none !important;
+  }
+  .ll-admin-nav {
+    display: flex !important;
+    flex: 1;
+    flex-direction: row !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 !important;
+  }
+  .ll-admin-nav-item {
+    border-left: none !important;
+    border-bottom: 2px solid transparent;
+    padding: 12px 14px !important;
+    flex-shrink: 0;
+  }
+  .ll-admin-sidebar-footer {
+    border-top: none !important;
+    padding: 10px 14px !important;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .ll-admin-main { overflow-y: auto !important; }
+
+  .ll-admin-split { flex-direction: column !important; }
+  .ll-admin-split.has-panel .ll-admin-split-list { display: none !important; }
+  .ll-admin-split-list, .ll-admin-split-editor {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    border-right: none !important;
+    border-left: none !important;
+  }
 }
 
 @media (max-width: 480px) {

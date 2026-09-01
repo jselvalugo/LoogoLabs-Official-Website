@@ -1,8 +1,8 @@
 import React from 'react';
+import { BOOKING_URL } from '../../lib/booking';
 
 const pageMap = {
   'Mission': 'Mission',
-  'Contact': 'Contact',
   'LoogoNews': 'LoogoNews',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
@@ -12,6 +12,7 @@ const pageMap = {
 
 const externalLinks = {
   'Distillr': 'https://www.distillrsoftware.com',
+  'Book a Call': BOOKING_URL,
 };
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operational software for underserved industries', copyright = '© 2026 Loogo Labs', style, onNavigate, onAdmin }) {

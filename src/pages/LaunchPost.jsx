@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Callout from '../components/feedback/Callout';
+import { openBooking } from '../lib/booking';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '72px 24px 96px', ...style }}>{children}</div>
@@ -56,11 +57,9 @@ function LaunchPost({ onNavigate }) {
             ))}
           </div>
           <Callout tone="info" title="See it live" style={{ marginTop: 28 }}>{p.availability}</Callout>
-          {onNavigate && (
-            <div style={{ marginTop: 32 }}>
-              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Contact')}>Book a free strategy call</Button>
-            </div>
-          )}
+          <div style={{ marginTop: 32 }}>
+            <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
+          </div>
         </article>
       </div>
     </Wrap>
