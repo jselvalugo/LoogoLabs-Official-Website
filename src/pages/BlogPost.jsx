@@ -7,6 +7,10 @@ export default function BlogPost({ slug, onNavigate }) {
   const [notFound, setNotFound] = React.useState(false);
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  React.useEffect(() => {
     if (!slug) return;
     setLoading(true);
     setNotFound(false);
