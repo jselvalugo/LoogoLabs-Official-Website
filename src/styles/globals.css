@@ -233,6 +233,15 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-2col        { display: grid; grid-template-columns: 1fr 1fr; }
 .ll-post-layout { display: grid; grid-template-columns: min(680px, 100%); }
 
+/* Home hero — softer dot texture instead of the solid square grid, on its own
+   layer behind the content so the fade mask never touches the text/buttons */
+.ll-hero-grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(var(--grid-line-inverse) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 92%);
+          mask-image: linear-gradient(to bottom, #000, transparent 92%);
+}
 .ll-voicebot {
   background: linear-gradient(115deg, var(--ink-900) 0%, var(--ink-700) 55%, var(--ink-600) 100%);
 }
