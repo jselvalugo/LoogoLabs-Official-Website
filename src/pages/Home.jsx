@@ -85,9 +85,10 @@ function ReferencesTicker() {
 
 function Home({ onNavigate }) {
   return (
-    <main>
-      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 0' }}>
-        <Wrap>
+    <main style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <section style={{ position: 'relative', backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 0' }}>
+        <div className="ll-hero-grid-bg" aria-hidden="true" />
+        <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <Badge tone="inverse">Loogo Labs · All-In-One Platform</Badge>
           <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
             letterSpacing: 'var(--ls-display-1)', maxWidth: '20ch' }}>
@@ -112,7 +113,7 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Wrap style={{ padding: '72px 24px 0' }}>
+      <Wrap style={{ padding: '56px 24px 0' }}>
         <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"
           description="We built one platform that replaces your CRM, your email tool, your scheduling app, your course platform, your social scheduler, and more. One login. One monthly bill." />
         <div className="ll-grid-4" style={{ gap: 16, marginTop: 36 }}>
@@ -128,7 +129,7 @@ function Home({ onNavigate }) {
 
       <VoiceBotSection />
 
-      <Wrap style={{ padding: '72px 24px' }}>
+      <Wrap style={{ padding: '56px 24px' }}>
         <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>
         <div className="ll-grid-2" style={{ gap: 24, marginTop: 24 }}>
           {[['Replace 10–15+ tools', 'One login. One dashboard. One monthly bill. Stop paying for Mailchimp, ClickFunnels, Teachable, Calendly, and 10 other tools separately.'],
