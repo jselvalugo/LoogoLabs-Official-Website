@@ -67,8 +67,6 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <ReferencesTicker />
-
       <Wrap style={{ padding: '72px 24px 0' }}>
         <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"
           description="We built one platform that replaces your CRM, your email tool, your scheduling app, your course platform, your social scheduler, and more. One login. One monthly bill." />
@@ -97,6 +95,8 @@ function Home({ onNavigate }) {
           ))}
         </div>
       </Wrap>
+
+      <ReferencesTicker />
     </main>
   );
 }
