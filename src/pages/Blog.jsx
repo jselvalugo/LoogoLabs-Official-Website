@@ -25,7 +25,7 @@ export default function Blog({ onNavigate }) {
           </div>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(48px,7vw,96px)', lineHeight: 0.9, letterSpacing: '-0.04em', color: 'var(--paper-100)' }}>
-              Platform<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>Playbooks.</span>
+              Marketing<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
             </h1>
             <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)', paddingBottom: 6 }}>
               Operational guides, automation strategies, and platform updates — written for business owners running on our system.
@@ -52,7 +52,7 @@ export default function Blog({ onNavigate }) {
               <div style={{ marginTop: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '36px 0 24px', borderTop: '1px solid var(--border-hair)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-                    All playbooks
+                    All posts
                   </span>
                   <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
                 </div>
@@ -85,7 +85,7 @@ function FeaturedCard({ post, onNavigate }) {
       {/* Label row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 0 }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-          Latest playbook
+          Latest post
         </span>
         <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
       </div>
@@ -124,7 +124,7 @@ function FeaturedCard({ post, onNavigate }) {
             )}
           </div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-700)', fontWeight: 600 }}>
-            Read the playbook
+            Read the post
             <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, background: 'var(--ink-900)', color: 'var(--paper-100)', borderRadius: '50%', fontSize: 13, transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
           </div>
         </div>
@@ -180,7 +180,7 @@ function EmptyState() {
       <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>✦</div>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Coming soon</div>
       <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-500)', maxWidth: '30ch', lineHeight: 1.65 }}>
-        First playbook is being written. Check back soon.
+        First post is being written. Check back soon.
       </p>
     </div>
   );
