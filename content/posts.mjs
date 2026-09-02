@@ -788,7 +788,7 @@ I don't think that's an exaggeration. To the next diner, silence reads as either
 - Arrives within a day or two, while the review is still near the top
 - Names the specific thing — the forty-minute wait, the cold pasta, the server who vanished — instead of sorry you didn't enjoy your experience
 - Says what changed, if anything did
-- Stops. No paragraph of defence, no invitation to continue the argument in public
+- Stops. No paragraph of defense, no invitation to continue the argument in public
 
 Answer some of the good ones too. A page where only complaints get a response tells its own story about what gets your attention.
 
@@ -907,5 +907,246 @@ That is a policy decision, not a configuration one, and it only holds if the com
 Take your most complicated open job. If the person running it gave notice this afternoon, could somebody else pick it up tomorrow from what is in the system?
 
 If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.`,
+  },
+  {
+    slug: `chiropractic-lead-assignment-ownership`,
+    title: `A Lead That Belongs to Everyone Belongs to Nobody`,
+    excerpt: `In a three-provider clinic the new patient inquiry doesn't get lost because you were slow. It gets lost because nobody's name was on it.`,
+    tags: `Lead Assignment, Chiropractic, Multi-Provider Clinics`,
+    content: `Who owns the inquiry that came in at 4:50 yesterday?
+
+Not who saw it. Not who could handle it. Whose name is on it, so that if nobody has called her back by tomorrow, one specific person has to explain why.
+
+In a single-provider clinic that question is trivial. In a clinic with three chiropractors and a front desk, it is usually unanswerable — and that is where new patients quietly go missing.
+
+## Slow isn't the only way to lose a lead
+
+Most of what gets written about lead response is about speed, and I have written some of it myself. But speed assumes somebody is trying. The failure I see in multi-provider clinics is a different one: everybody assumed somebody else had it.
+
+The inquiry lands in a shared inbox. Three people see it. Each one reasons, perfectly sensibly, that a colleague is closer to it — she mentioned Dr. Ellis, or it's a sports injury and that's the other guy's thing, or the front desk normally picks these up.
+
+Nobody is being lazy. The lead simply has no owner, so it has no next action. Two days later it is twelve messages down the inbox and everyone has forgotten it existed.
+
+## What assignment has to actually do
+
+Putting a name on a lead is not the same as routing it. Four things have to happen:
+
+- Assign inside a minute, automatically, before anybody has to exercise judgment
+- Assign to a person, never to a role or a team
+- Notify that person on the device they actually look at
+- Escalate visibly if nothing has happened inside a defined window
+
+That last one is what makes the other three real. An assignment nobody checks is a label. If an unworked lead doesn't surface to somebody by end of day, your system is decoration.
+
+### The rules worth setting first
+
+- Round-robin by default, so the load spreads without anybody negotiating over it
+- An override for a named request — if she asked for Dr. Ellis, she goes to Dr. Ellis
+- One fallback owner for anything arriving after hours, so nothing sits ownerless overnight
+
+## The part nobody wants to discuss
+
+Assignment exposes something clinics generally avoid looking at: providers convert at different rates.
+
+Once every lead carries a name, you can see that one practitioner books seventy percent of what she's handed and another books thirty. That is uncomfortable, and I have watched owners quietly switch assignment off rather than deal with what it showed them.
+
+I'd argue the opposite. That gap was always there. You just couldn't see it, and you were paying for the leads either way. It is a coaching conversation, not an indictment, and the answer is worth more than the leads that surfaced it.
+
+## Name an owner for every lead this week
+
+Take the inquiries from the last seven days and write down, for each one, the person responsible for it.
+
+If you find yourself writing "the front desk" or "whoever was on," you have found the leak. It isn't a speed problem, which means a faster auto-reply won't touch it.`,
+  },
+  {
+    slug: `barbershop-online-booking-interruptions`,
+    title: `Every Call You Take Mid-Cut Costs You Twice`,
+    excerpt: `Phone-only booking doesn't just cap your bookings. It taxes the haircut you're already being paid for.`,
+    tags: `Booking & Scheduling, Barbershops, Online Booking`,
+    content: `You're eleven minutes into a skin fade. The phone rings.
+
+Let it go and you lose the booking, because the man calling on a Saturday afternoon isn't leaving a voicemail — he's calling the next shop on the list. Take it, and you put your clippers down while the client in your chair watches you arrange somebody else's appointment.
+
+Both cost money. That's what phone-only booking hides. You aren't choosing between a booking and no booking. You're choosing which customer to underserve.
+
+## The tax you pay twice
+
+The first cost is the obvious one: missed calls are missed cuts.
+
+The second is quieter and probably larger. The client who sat through you juggling the phone had a worse appointment than the man before him, and he is the one whose rebooking you actually needed. Regulars are the business. Interrupting them to chase a walk-in is a bad trade you make several times a day without noticing.
+
+Multiply across a Saturday — six or seven interruptions, each taxing whoever is in the chair, plus however many rang out while your hands were busy.
+
+## Nobody calls to book any more
+
+I want to put this carefully, because barbers hear it as a complaint about the younger generation and it isn't that.
+
+It's arithmetic. Somebody deciding at nine at night whether to get cut tomorrow cannot call you — you're shut. That is not a preference for apps. It is a mismatch between when the decision gets made and when your phone is answered.
+
+Booking that only exists during opening hours can only ever capture decisions made during opening hours.
+
+## What self-booking has to get right in a barbershop
+
+Generic scheduling tools break on the specifics of this trade. The parts that matter:
+
+- Honest service durations — a skin fade and a beard tidy are not the same slot, and pretending otherwise wrecks the afternoon
+- Per-barber calendars, because clients book a person, not a shop
+- A card on file or deposit for the slots you cannot afford to lose
+- Reminders that let somebody move an appointment instead of only cancelling it
+
+### Where this usually gets configured wrong
+
+Shops load in one generic thirty-minute haircut and then wonder why they're running forty minutes behind by noon. Your slot lengths are the entire configuration. Get those honest and the rest is cosmetic.
+
+## What it will not fix
+
+Online booking does not fill an empty Tuesday. It captures demand that already exists and was leaking away. It does not create demand that wasn't there.
+
+If your chair is genuinely quiet midweek, this is not the first thing to fix — that's a marketing question, and a booking link is not an answer to it.
+
+## Count the calls you take mid-cut
+
+This Saturday, keep a tally on the mirror. Every time the phone rings while somebody is in your chair, make a mark.
+
+At close, multiply that number by your average ticket and decide which cost you would rather stop paying — the calls you missed, or the cuts you interrupted. For most shops the answer is both, and it is the same fix.`,
+  },
+  {
+    slug: `physical-therapy-home-program-discharge`,
+    title: `Care Ends at Discharge. Recovery Doesn't.`,
+    excerpt: `The exercises you hand over on a printed sheet are the part that has to work, and nobody is checking whether they happened.`,
+    tags: `Courses & Content, Physical Therapy, Patient Retention`,
+    content: `A patient finishes twelve visits, takes a printed sheet of six exercises, shakes your hand and leaves.
+
+What happens over the following eight weeks decides whether those twelve visits held. All of it happens out of your sight, governed by a photocopy that is in a kitchen drawer by Thursday.
+
+I'm not going to tell you how to practice. But the delivery mechanism for the most important stretch of the plan of care is a sheet of paper, and that is an operations problem I can talk about.
+
+## The sheet is the weakest link
+
+Line drawings of somebody doing a bridge, a few rep counts, a clinic logo in the corner. That artifact is carrying everything the patient is meant to do for two months, unsupervised.
+
+It can't show movement. It can't answer am I doing this right. It can't remind anybody it exists. And it can't tell you whether it was ever opened.
+
+Now picture the same content as a structured program: short videos of the therapist who actually treated them, released over weeks rather than dumped on day one, with a check-in that asks a question and expects a reply.
+
+### What that program needs
+
+- The therapist the patient already worked with, not a stock exercise library — familiarity carries most of the adherence
+- Short segments released on a schedule, so week six arrives in week six
+- A weekly check-in with a reply somebody reads
+- A way back in — one tap to book a review if something is flaring up
+
+## Why this is a business problem too
+
+Discharge is where a practice loses its relationship with the person, and with it most of the referral value it just earned.
+
+A patient who came off a structured program, felt looked after for two months past their last appointment, and had an easy route back is a different asset to one who left with a photocopy. Both received good care. Only one of them is still in contact with you when their neighbor asks who to see.
+
+Practices consistently undervalue that. The follow-through is also the best marketing you have, and it is aimed at people who already trust you.
+
+## What I would not automate
+
+The reply. If a patient writes back to say something hurts more than it did last week, that has to reach a clinician the same day, not sit in a marketing inbox until somebody runs a report.
+
+Build the delivery on rails and leave the response to a person. A system that sends encouragement on a schedule but can't route a real problem to a human is worse than the photocopy, because it looks like care while nobody is actually watching.
+
+## Ask three discharged patients
+
+Ring three people you discharged six weeks ago and ask one question: are you still doing the exercises?
+
+Their answers tell you what your current handout is worth, and whether that last visit was the end of the treatment or just the end of the billing.`,
+  },
+  {
+    slug: `self-storage-message-testing`,
+    title: `Most A/B Tests Are a Way to Look Busy`,
+    excerpt: `If you can't say what you would do differently depending on the result, you aren't running a test. You're collecting trivia.`,
+    tags: `Email & SMS Marketing, Self-Storage, Message Testing`,
+    content: `Ask somebody what they're testing and you'll usually hear: subject line A against subject line B.
+
+Ask what they'll do if B wins by four percent and the conversation stops. That pause is the tell. If the result doesn't change a decision, it isn't a test. It's trivia with a spreadsheet attached.
+
+## The question that kills most tests
+
+Before you set anything up, finish this sentence: if version B wins, I will ______.
+
+If the honest ending is "use version B in this one email," the test is worth close to nothing. You will have spent two weeks learning a fact about a message you'll never send again.
+
+If the ending is "change how we word every rate increase notice from now on," you have a real test, because the answer transfers to everything that comes after it.
+
+## What's worth testing at a storage facility
+
+Self-storage is a good place to do this properly, because the volume is there and the decisions repeat. The same handful of messages fire off the same triggers, hundreds of times a month.
+
+### The three that pay
+
+- **The abandoned inquiry.** Somebody priced up a 10x10 and didn't reserve. What you send an hour later is the highest-value message you own.
+- **The rate increase notice.** This decides whether a tenant shrugs or starts pricing up the competitor down the road. Wording and notice period are both live variables, and you send it constantly.
+- **The past-due sequence.** Tone here has a direct dollar value, and most facilities have never tried an alternative to whatever somebody wrote once in 2019.
+
+Not worth it: emoji in subject lines, shifting send time by fifteen minutes, or picking between two nearly identical headlines. Those get tested because they're easy to set up, not because anybody would act on the answer.
+
+## Sample size, without the lecture
+
+You don't need statistics training for this. You need one rule: if a difference wouldn't survive being wrong, don't act on it.
+
+Forty people saw each version and one converted better — that's noise. Decide on the back of a handful of conversions and you'll be changing your messaging back next quarter when the noise falls the other way.
+
+Run it long enough that the result is boring and obvious, or don't run it at all.
+
+## The test I'd run first
+
+The abandoned inquiry, and not on wording. On timing.
+
+An hour versus the following morning is a real question with an answer that applies to every inquiry you receive from now on. That's the shape a good test has: one variable, a result you'd act on permanently, and enough volume behind it to believe.
+
+## Pick one test you'd act on
+
+Write down the message you send most often. Underneath it, write what you would change permanently depending on how a test came out.
+
+If you can't finish that second line, choose a different message. That is the entire filter, and it will spare you most of what passes for optimization.`,
+  },
+  {
+    slug: `pool-service-seasonal-content-calendar`,
+    title: `Your Whole Year Is Decided in Eight Weeks. Your Posting Schedule Doesn't Know That.`,
+    excerpt: `Posting when you have time means posting in the off-season, which is precisely when nobody is buying.`,
+    tags: `Social Media, Pool Service, Seasonal Marketing`,
+    content: `A pool company's year is largely settled in about eight weeks — the stretch where the weather turns and every homeowner in the county thinks about their pool on the same weekend.
+
+Everything after that is service revenue and waiting for next spring.
+
+Now look at when most pool companies actually post. Steadily through the winter, when there's time. Then almost nothing through April and May, because the crews are drowning and nobody has a spare hour to write anything.
+
+That is exactly backwards, and it isn't a discipline problem.
+
+## Posting when you have time is the problem
+
+Content advice is built around consistency. Show up regularly, stay visible, frequency gets rewarded. That's fine for a business with flat demand.
+
+You don't have flat demand. You have a spike, and the whole job of your posting schedule is to be loudest immediately before and during it. A steady drumbeat that goes silent exactly when buying decisions are being made has optimized for the wrong thing.
+
+## The fix is scheduling, not writing more
+
+This is the clearest case for a content calendar I deal with, because the constraint was never ideas. It's that your available hours and your selling window don't overlap at all.
+
+So you write in the off-season and publish in the season. February is when you produce April's content. That isn't a productivity trick, it's the only arrangement that works when your busiest period is also your only real sales period.
+
+### What that looks like in practice
+
+- Opening-season content — cover removal, first clean, what recovering a green pool actually costs — written in January, scheduled for late March
+- Before-and-afters shot all summer, banked, and released the following spring when they'll convert
+- Maintenance-plan content pushed just as the first heat wave reminds everybody how much work this is
+- Nothing scheduled for the weeks your phone is already ringing off the hook, because you can't service that demand anyway
+
+## The off-season is for retention, not selling
+
+The winter posts still matter. They're just doing a different job, and judging them by the same measure is how owners talk themselves out of the whole exercise.
+
+Nobody is buying a pool opening in November. But your existing customers are deciding whether to renew a maintenance plan, and the neighbor who has been thinking about it is deciding who to remember in March. Winter content keeps you in the frame. It doesn't close anything, and it shouldn't be asked to.
+
+## Build next season's calendar in October
+
+Sit down before the season is fully over, while you still remember which questions customers actually asked this year.
+
+Map the eight weeks that matter, decide what goes out each week, and schedule it there and then. The version of you who is elbow-deep in a pump housing next May is not going to write a word of it.`,
   },
 ];
