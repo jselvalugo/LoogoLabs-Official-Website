@@ -851,4 +851,61 @@ Pull your check-in export for the last ninety days and cross it against your act
 
 Count the members paying you right now who have not been in for three weeks. That number is your next quarter of cancellations, visible today — and unlike the ones on the dashboard, every single one is still reachable.`,
   },
+  {
+    slug: `roofing-unified-inbox-conversation-history`,
+    title: `When Your Best Salesman Quits, the Customer History Walks Out With Him`,
+    excerpt: `A roofing job is a six-month thread, and most of it is sitting on one employee's personal phone.`,
+    tags: `Unified Inbox, Roofing, Customer Records`,
+    content: `Your best salesperson gives notice on a Monday. By Friday, four months of customer conversations leave with him.
+
+Every text about the Vance roof. The hail photos the homeowner sent at nine at night. The adjuster's direct line. What he promised her about the ridge vent, in a Messenger thread on an account nobody else can open.
+
+Your pipeline says: Vance — awaiting supplement approval. That is now the sum total of what the company knows about a job worth twenty thousand dollars.
+
+## A roofing job isn't a lead, it's a six-month thread
+
+Most lead-management advice is built for businesses where the sale is a conversation or two. Roofing isn't one of those.
+
+An insurance job runs inspection, claim filed, adjuster meeting, scope disagreement, supplement, approval, color selection, scheduling around weather, install, punch list, final invoice. Months of it. Dozens of exchanges, and half of them concern details that only matter later, when something is disputed.
+
+So the value isn't knowing what stage the job is at. It's being able to reconstruct what was said, when, and by whom.
+
+## Count where those conversations land
+
+I run this exercise with owners and we usually reach five before anybody remembers email:
+
+- The office line
+- The salesperson's personal cell, by text
+- Facebook and Instagram messages, from the storm-season ads
+- The web form, landing in somebody's inbox
+- Email with the adjuster, often on one person's account only
+
+Five systems, none of them talking to each other, and at least one personally owned by an employee. There is no version of check the file that works here.
+
+### The handover problem
+
+This is where it costs real money. When that salesperson leaves — or is out sick during the week after a hailstorm, or hands off to a project manager — everything he knows has to move by memory, in a conversation, assuming somebody thinks to have it.
+
+Usually nobody does. So the homeowner explains her own roof to a stranger, which is the exact moment she starts wondering whether this company has its act together.
+
+## What one inbox has to actually mean
+
+The phrase gets thrown around loosely, so here is the version worth having: every channel lands in one place, threaded against the customer rather than the employee.
+
+Anyone with permission opens the Vance job and reads the whole history in order — texts, social messages, calls, emails — including the ones sent from a phone on a roof.
+
+Two consequences matter more than the tidiness. The record survives staff turnover, because it was never stored inside a person. And when a supplement gets challenged six weeks later, the conversation is right there instead of being somebody's recollection of it.
+
+## The part that isn't a software problem
+
+I have watched companies put all of this in and still lose the history, because texting from a personal phone stayed the norm — it was faster, and nobody enforced anything.
+
+That is a policy decision, not a configuration one, and it only holds if the company number is genuinely as easy to use: on a phone, on a roof, with gloves on. If your system is slower than the habit it replaces, the crew routes around it and you have paid for an empty inbox.
+
+## The two-week notice test
+
+Take your most complicated open job. If the person running it gave notice this afternoon, could somebody else pick it up tomorrow from what is in the system?
+
+If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.`,
+  },
 ];

@@ -32,3 +32,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-02 | pest-control-list-segmentation | Pest control | Segmentation, tags & smart lists
 - 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
+- 2026-09-02 | roofing-unified-inbox-conversation-history | Roofing | Unified inbox — conversation history & handover
