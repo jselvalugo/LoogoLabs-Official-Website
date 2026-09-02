@@ -1,22 +1,42 @@
-# Loogo Labs — AI Blog Voice & Editorial Guide
+# Loogo Labs — LoogoNews Voice & Editorial Guide
+
+> This guide governs *how* a post is written. `CONTENT-POLICY.md` governs what we
+> publish and who owns it; `GHL-CONTEXT.md` covers what we may say about the
+> platform. Where they disagree, CONTENT-POLICY wins and this file gets fixed.
 
 ---
 
-## The Blog: "Signal"
+## The Blog: LoogoNews
 
-**Tagline:** Intelligence on AI in operations. No hype. No noise. Just signal.
-
-**Purpose:** Position Loogo Labs as the practitioner's guide to AI in business operations. Not a tech blog. Not a think piece factory. A reference point for operators who need to make real decisions about AI — today.
+**Purpose:** Position Loogo Labs as the practitioner's guide to running a local
+service business better. Not a tech blog. Not a think piece factory. A reference
+point for owners making real operational decisions this quarter.
 
 ---
 
 ## The Reader
 
-Our reader runs something. A team, a department, a company. They are not academic about AI. They do not have time for wonder. They are asking one question every time they open a post:
+Our reader runs a local service business — an HVAC shop, a dental practice, a salon, a landscaping crew. They are not academic about software. They do not have time for wonder. They are asking one question every time they open a post:
 
-> "What does this mean for how we actually work?"
+> "What does this mean for how I actually work?"
 
 Write for that person. They are sharp, skeptical, and busy. They will close the tab in 8 seconds if you waste their time.
+
+---
+
+## The Byline
+
+Every post is written in **first person, as David Selva** — practitioner, not pundit. Not a faceless brand voice, and not "we" standing in for a company.
+
+That means the post is allowed to know things from experience, and is allowed to admit what it does not know:
+
+> **Wrong:** "Businesses often find that response times affect conversion."
+> **Right:** "I pull the call log in the first week, and owners are always surprised by the same number."
+
+> **Wrong:** "Studies show automated reminders reduce no-shows significantly."
+> **Right:** "I am not going to hand you a percentage, because it depends on how bad your starting point is. Here is how to measure your own."
+
+First person is also what keeps us honest about sourcing. If a claim cannot be traced to something we have actually seen running, it either gets cut or gets framed as the open question it is. We do not borrow authority from studies we have not read.
 
 ---
 
@@ -104,6 +124,21 @@ No motivational finales. No "the future is bright." Close with one of:
 2. **The honest open question** — What remains unresolved? What are we still watching?
 3. **The invitation** — If this friction is familiar, we should talk.
 
+### Do not template the blog
+
+Each of the moves above is one option out of three, not a house format. Reading
+three posts in a row should not feel like reading the same post three times.
+
+Before publishing, check the new post against the last five:
+
+- **Openings must vary.** If the last three posts all opened on a third-person vignette ("A salon owner finishes a color correction..."), open this one on a number or a direct question instead.
+- **Closing headers must be unique.** Never reuse a closing header verbatim. "The next step" fifteen times in a row is a tell.
+- **Retire a header shape once it repeats.** "What X actually looks like" and "What this is worth" are useful once and formulaic by the fourth time.
+- **No two posts make the same argument in different verticals.** Same topic in a new vertical is fine; the *reason it matters* has to be genuinely different, or one of them is filler.
+
+This applies double to automated batches, which drift toward a single template
+faster than a human writer would.
+
 ---
 
 ## Topic Territories
@@ -139,8 +174,8 @@ When automation creates more overhead than it saves. The hidden cost of handoffs
 
 ## Formatting Conventions
 
-- **Publication name:** Signal (no tagline needed after the first reference)
-- **Author byline:** Loogo Labs (not an individual name unless a specific expert guest piece)
+- **Publication name:** LoogoNews
+- **Author byline:** David Selva (always — see The Byline above)
 - **Tags:** 2–4 per post, title case, specific (e.g., "Reporting Automation", "Property Management", "Data Quality")
 - **Read time:** Honest. If it takes 7 minutes, say 7.
 - **Excerpts:** One sentence. The sharpest sentence from the first two paragraphs.

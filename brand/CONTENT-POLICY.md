@@ -4,7 +4,11 @@
 
 Every post on LoogoNews is written by us, from scratch. We do not copy, reproduce, or adapt content from any other source — no articles, no blog posts, no social media content, no AI-generated text passed off as our own. Everything published here is original.
 
-We do not copyright our content. Everything we write is meant to be read, shared, and learned from. If it helps a business owner, it did its job.
+Our content is copyrighted — automatically, the moment it is written, whether we want it or not. That is how copyright works everywhere; there is no box to leave unticked. What we *can* do is give it away on purpose, and we do.
+
+Everything we publish is released under **CC BY 4.0**: anyone may copy, republish, translate, or build on it, commercially included, as long as they credit Loogo Labs. See `LICENSE-CONTENT.md` for the full terms. Everything we write is meant to be read, shared, and learned from. If it helps a business owner, it did its job.
+
+Two things this does not license: our name and logo (`brand/`), and the site's source code. Those stay ours.
 
 We will never gate content behind a form, a paywall, or an email capture. Posts are public and free — always.
 

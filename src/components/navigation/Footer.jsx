@@ -47,6 +47,18 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
           fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
           <span>{copyright}</span>
           <span>{strap}</span>
+          <span style={{ textTransform: 'none', letterSpacing: '0.04em', color: 'var(--ink-500)' }}>
+            LoogoNews posts are free to republish under{' '}
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer license"
+              style={{ color: 'var(--ink-300)', textDecoration: 'underline' }}
+            >
+              CC BY 4.0
+            </a>
+            {' '}— credit Loogo Labs and take it.
+          </span>
           {onAdmin && (
             <button onClick={onAdmin} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-600)', padding: 0 }}>
               Admin
