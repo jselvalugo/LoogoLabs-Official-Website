@@ -750,4 +750,105 @@ Open your system this afternoon and try to produce three lists: recurring custom
 
 If they come out in a couple of minutes, you're most of the way there and the campaigns are the easy part. If they don't, that is the actual work — and it's worth doing before you write another word of marketing.`,
   },
+  {
+    slug: `restaurant-review-response-reputation`,
+    title: `You Can't Out-Review Your History. You Can Only Answer It.`,
+    excerpt: `A restaurant with four hundred reviews can't move its average. What it can control is what the recent ones say, and whether anybody replied.`,
+    tags: `Reputation Management, Restaurants, Google Reviews`,
+    content: `Four hundred reviews. A 4.6 average. Nothing you do this month will move that number, and most owners don't work that out until they have spent a season trying.
+
+Here's the arithmetic. At four hundred reviews averaging 4.6, ten new five-star reviews take you to roughly 4.61. Ten one-stars barely dent it in the other direction either. Your average is frozen. It is a historical record, not a lever.
+
+That is the bad news and the good news in the same sentence.
+
+## Restaurants don't have a review volume problem
+
+This is where restaurant reputation splits from nearly every other local business I work with. A salon has to generate reviews, because a delighted client walks out and never thinks about it again.
+
+A restaurant gets reviewed unprompted, constantly, by people nobody asked. Two hundred covers on a Saturday produces reviews whether you want them or not.
+
+So the entire get-more-reviews playbook is aimed at a problem you do not have. Yours is downstream of it.
+
+## What a diner actually reads
+
+Nobody reads four hundred reviews. She sorts by most recent, reads four or five, and looks at how the restaurant answered the worst one.
+
+That is the whole decision. Your rating gets her to open the page. The last month of reviews, and your replies underneath them, decide whether she books.
+
+Which means the reputation you can actually control is about six reviews wide and thirty days deep.
+
+## The reply is the product
+
+An unanswered one-star review is the restaurant agreeing with it.
+
+I don't think that's an exaggeration. To the next diner, silence reads as either we didn't notice or we don't care, and both land worse than the original complaint. A reply doesn't need to win the argument. It needs to show that a person runs this place and is paying attention.
+
+### What a good reply does
+
+- Arrives within a day or two, while the review is still near the top
+- Names the specific thing — the forty-minute wait, the cold pasta, the server who vanished — instead of sorry you didn't enjoy your experience
+- Says what changed, if anything did
+- Stops. No paragraph of defence, no invitation to continue the argument in public
+
+Answer some of the good ones too. A page where only complaints get a response tells its own story about what gets your attention.
+
+## What to automate here, and what to leave alone
+
+Automate the alerting. A new review on any platform should reach a real person the same day, not whenever somebody thinks to look. That is the part that fails silently and the part we set up most often for restaurants.
+
+Do not automate the reply itself. The same three sentences pasted under six different complaints is visible from orbit, and it is worse than staying silent, because now the indifference is documented in writing. Start from a draft if it helps you get moving. The specific detail has to come from somebody who knows what happened that night.
+
+## Read your last ten reviews
+
+Sort your page by most recent and read the last ten the way a stranger choosing dinner would.
+
+Count how many have a reply, and how long each one took to get there. If half of them are sitting unanswered, that is your reputation work this week — not your average, and not another round of ads.`,
+  },
+  {
+    slug: `gym-membership-retention-management`,
+    title: `Your Members Quit Six Weeks Before They Cancel`,
+    excerpt: `Cancellation is paperwork. The decision happened weeks earlier, and your door scans already told you it was coming.`,
+    tags: `Membership Management, Gyms & Fitness, Retention`,
+    content: `A member doesn't quit your gym on the day she cancels. She quit about six weeks earlier. The cancellation is the paperwork catching up.
+
+That gap is the entire opportunity, and most gyms never look into it, because the only retention number on the dashboard is monthly cancellations — which reports on decisions that were made a month and a half ago.
+
+## Cancellation is a lagging indicator
+
+By the time she fills in the form or calls the desk, the argument is over. She has stopped coming, stopped thinking of herself as a member, and mentally reallocated the money.
+
+Offering a discount at that moment is the most expensive and least effective retention there is. You are negotiating with somebody who has finished deciding.
+
+## You are already collecting the signal
+
+Here is what makes a gym different from most recurring-revenue businesses I work with: you know, every single day, exactly who walked through the door.
+
+Almost nobody uses it. Check-in data sits in the access system being treated as a security log, when it is the best churn predictor in the building. A member who came three times a week in January and hasn't scanned in eighteen days has told you something. She just hasn't told the front desk yet.
+
+### The thresholds worth watching
+
+- **Ten days without a scan from a regular.** Not a lapsed member — a habit coming apart. This is the cheapest moment you will ever get to intervene.
+- **A drop in frequency, not just absence.** Four visits a week falling to one is a louder warning than a member who has always come twice a month.
+- **Members who never started.** Anyone who joined three weeks ago and has been in fewer than three times. They are already gone. They just haven't cancelled.
+
+That third group is the one gyms consistently ignore, and it is where January signups quietly go to die in March.
+
+## The money that leaves without anybody deciding
+
+Then there is the churn nobody chose. A card expires, a payment declines, the membership stops, and she finds out weeks later — or never, because she had drifted anyway.
+
+That is revenue lost to an administrative failure rather than a customer decision, which makes it the easiest thing on this page to fix. Catch the decline the day it happens, message her before she has noticed, make updating a card a single tap rather than a phone call during staffed hours. Most gyms I look at are writing off a meaningful number of memberships a year this way and counting them as ordinary churn.
+
+## The part that shouldn't be automated
+
+The message at day ten should not be a broadcast and should not mention billing. A member who has missed two weeks doesn't need a promotion. She needs a reason to come in on Thursday, ideally from a coach who knows her name and can mention the class she used to take.
+
+The system's job is to tell that coach who to text, and when. Not to write the text for him.
+
+## Start with the door data
+
+Pull your check-in export for the last ninety days and cross it against your active membership list.
+
+Count the members paying you right now who have not been in for three weeks. That number is your next quarter of cancellations, visible today — and unlike the ones on the dashboard, every single one is still reachable.`,
+  },
 ];
