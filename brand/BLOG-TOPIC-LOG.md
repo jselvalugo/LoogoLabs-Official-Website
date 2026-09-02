@@ -18,3 +18,8 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-01 | property-management-workflow-automation | Property management | Workflow automation
 - 2026-09-01 | med-spa-marketing-channel-roi | Med spas | Marketing channel ROI / reporting
 - 2026-09-01 | landscaping-payments-invoicing | Landscaping | Payments & invoicing
+- 2026-09-02 | ai-voice-after-hours-plumbing | Plumbing | AI voice agent — after-hours call coverage
+- 2026-09-02 | ai-voice-booking-auto-repair | Auto repair | AI voice agent — booking to the live calendar
+- 2026-09-02 | ai-voice-intake-law-firm | Law firms | AI voice agent — intake qualification & routing
+- 2026-09-02 | ai-voice-handoff-veterinary-clinic | Veterinary clinics | AI voice agent — handoff rules & automation limits
+- 2026-09-02 | ai-follow-up-messaging-gym | Gyms & fitness studios | AI content tools — follow-up messaging
