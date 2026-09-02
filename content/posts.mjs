@@ -697,4 +697,57 @@ Take your last twenty trial signups. How many got a first response inside five m
 
 Those two numbers tell you whether you have a writing problem or a system problem, and I'd bet on the second.`,
   },
+  {
+    slug: `pest-control-list-segmentation`,
+    title: `You Don't Have a Customer List. You Have Five of Them.`,
+    excerpt: `A quarterly contract customer and a guy who paid once for a wasp nest should never get the same email, and right now they do.`,
+    tags: `Email & SMS Marketing, Pest Control, Segmentation`,
+    content: `You don't have a customer list. You have about five, and every one of them is getting the same email.
+
+Here is what that looks like in a pest control business. Sitting in one export: a homeowner on a quarterly contract three years running, a guy who paid once for a wasp nest in 2023, a commercial account that needs monthly documentation for its health inspector, a customer who quietly lapsed last spring, and a lead who called in March and never booked.
+
+Send all five "spring is here, time to think about pests" and you have written a message for nobody.
+
+## Everybody on that list is standing somewhere different
+
+The quarterly customer doesn't need convincing that pests exist. She needs to know her next service is already scheduled and handled.
+
+The wasp guy needs a reason to think of you before he searches again, because as far as he knows you are a company that removes wasps — not one that could have been handling the thing currently in his crawlspace.
+
+The commercial account needs paperwork, not marketing. And the lapsed customer needs to be asked why she left, which almost nobody does.
+
+Four people, four different messages. One broadcast can't be all of them, so it ends up being none of them.
+
+## What a tag is actually for
+
+A tag isn't tidiness for its own sake. It is a promise that the next message this person gets will make sense for where they actually are.
+
+Before I build any campaign with an owner, I ask for one thing: pull me a list of everyone whose contract renews in the next 60 days. If that takes longer than a few seconds, better copy won't fix the follow-up — you can't send the right message to a group you can't name.
+
+### Three splits worth making first
+
+- **Recurring contract versus one-time job.** This is the big one. Nearly everything else is detail.
+- **Service type** — termite, rodent, mosquito, bed bug. What you'd sensibly say next is completely different for each.
+- **Active versus lapsed, with a date attached.** "Hasn't been serviced in fourteen months" is a campaign. "Inactive" is a shrug.
+
+Three tags. Not thirty.
+
+## Where the renewal money leaks out
+
+Recurring revenue businesses lose customers quietly. Almost nobody calls to cancel a quarterly plan. They stop answering the scheduling text, or the card on file expires in November and nothing catches it until March.
+
+So that is the segment I'd build first, before any marketing campaign at all: contracts renewing soon, and cards expiring soon. Both are short lists. Both are worth real money. Neither needs clever writing — it needs a message that arrives before the lapse instead of a phone call after it.
+
+## The mistake that comes right after this clicks
+
+Owners who get segmentation immediately want twelve segments with a different sequence for each. Then nothing ships, because there are now twelve things to write instead of one, and the season starts.
+
+Start with three. Run them for a quarter. The fourth segment earns its place only when you catch yourself wanting to message a group you can't currently pull.
+
+## Split the list in three
+
+Open your system this afternoon and try to produce three lists: recurring customers, one-time customers, and anyone lapsed more than a year.
+
+If they come out in a couple of minutes, you're most of the way there and the campaigns are the easy part. If they don't, that is the actual work — and it's worth doing before you write another word of marketing.`,
+  },
 ];

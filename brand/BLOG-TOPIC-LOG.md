@@ -23,3 +23,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-02 | ai-voice-intake-law-firm | Law firms | AI voice agent — intake qualification & routing
 - 2026-09-02 | ai-voice-handoff-veterinary-clinic | Veterinary clinics | AI voice agent — handoff rules & automation limits
 - 2026-09-02 | ai-follow-up-messaging-gym | Gyms & fitness studios | AI content tools — follow-up messaging
+- 2026-09-02 | pest-control-list-segmentation | Pest control | Segmentation, tags & smart lists
