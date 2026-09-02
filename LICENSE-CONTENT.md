@@ -29,9 +29,12 @@ You do not need permission. You do not need to email us. Take it and use it.
 - **Trademarks and brand assets** — the Loogo Labs name, logo, and the files in
   `brand/` are not licensed for reuse. Attribution under CC BY does not imply
   endorsement by us, and does not grant permission to use our branding.
-- **Third-party material** — we do not publish other people's work, so there
-  should never be any. If you find something on our site that you believe is
-  yours, tell us and we will correct it.
+- **Third-party material** — there is none. Every post is written by us, word
+  for word, from a blank page. We do not copy, excerpt, paraphrase, or spin
+  material from other sites, so we are never licensing out something that was
+  not ours to license. See `brand/CONTENT-POLICY.md` for the full standard. If
+  you nonetheless find something on our site that you believe is yours, tell us
+  and we will take it down the same day.
 
 ## Why we bothered writing this down
 
