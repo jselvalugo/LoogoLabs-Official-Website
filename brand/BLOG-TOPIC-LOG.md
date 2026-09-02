@@ -1,10 +1,16 @@
 # LoogoNews — Published Topic Log
 
-Tracks every topic + vertical pairing already published, so the daily
-automation (see the "Daily LoogoNews Blog Automation" Routine) doesn't
-repeat itself. Each automated run reads this file, picks 5 new
-topic+vertical combinations not listed here, and appends its own 5
-entries before pushing.
+Tracks every topic + vertical pairing already published, so we never run
+the same argument twice in a new vertical.
+
+Read this before writing anything. Pick a pairing that is not listed,
+then append a row for it in the same commit that publishes the post.
+
+The scheduled automation that used to append five rows a night is
+disabled — posts are now written and published one at a time, on
+request. If it is ever switched back on, its prompt needs repointing at
+`content/posts.mjs` and `scripts/generate-post-migration.mjs` first; the
+version stored on the Routine hand-writes SQL and predates both.
 
 Format: `- YYYY-MM-DD | slug | vertical | topic`
 
