@@ -18,7 +18,7 @@ What we publish instead: what we have actually seen in the businesses we work wi
 
 ### How we verify it
 
-Before a batch publishes, we check the drafts against every post already live for repeated sentences and overlapping phrasing, and we read any claim that sounds like it came from somewhere else. A post that trips either check goes back for a rewrite rather than a citation.
+Before a post publishes, we check the draft against every post already live for repeated sentences and overlapping phrasing, and we read any claim that sounds like it came from somewhere else. A post that trips either check goes back for a rewrite rather than a citation.
 
 If you ever find something on our site that you believe is yours, tell us. We will take it down the same day and correct the record publicly. We would rather be embarrassed once than be the kind of publication this policy exists to prevent.
 
@@ -47,11 +47,13 @@ Every post goes through a rewrite pass before it publishes. The goal is simple: 
 
 ## Cadence
 
-We publish every day. One post per day, minimum.
+We publish on request, not on a timer. Posts are commissioned one at a time and go out when they are ready.
 
-Posts do not need to be long. A tight 400-word piece that solves one real problem beats a 2,000-word overview that covers nothing deeply. Depth over breadth, always.
+We ran a scheduled pipeline publishing five posts a day, and it taught us what that costs. Five a day burns through the topic+vertical pairings worth writing about inside a couple of weeks, and once the good ones are gone the posts start making each other's arguments in a new vertical. Volume is the easiest thing to fake and the fastest way to make a blog worth ignoring.
 
-If the day's post isn't ready, we still publish — even if it's a short operational note, a stat worth knowing, or a reframe of a question we heard from a client that week.
+So there is no quota to hit and no empty slot to fill. A week with one genuinely useful post beats a week with seven that repeat each other.
+
+Posts do not need to be long, either. A tight 400-word piece that solves one real problem beats a 2,000-word overview that covers nothing deeply. Depth over breadth, always.
 
 ## Topics
 
