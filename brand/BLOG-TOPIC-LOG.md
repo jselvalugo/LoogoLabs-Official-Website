@@ -33,3 +33,8 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
 - 2026-09-02 | roofing-unified-inbox-conversation-history | Roofing | Unified inbox — conversation history & handover
+- 2026-09-02 | chiropractic-lead-assignment-ownership | Chiropractic | Round-robin lead assignment & ownership
+- 2026-09-02 | barbershop-online-booking-interruptions | Barbershops | Online booking & self-scheduling
+- 2026-09-02 | physical-therapy-home-program-discharge | Physical therapy | Courses & content — post-discharge programs
+- 2026-09-02 | self-storage-message-testing | Self-storage | A/B testing & message optimization
+- 2026-09-02 | pool-service-seasonal-content-calendar | Pool service | Social scheduling & seasonal content calendar
