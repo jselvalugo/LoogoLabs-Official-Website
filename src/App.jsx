@@ -126,9 +126,10 @@ function App() {
       <div onClick={handleLinkClick}>{body}</div>
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
-          { title: 'Company', links: ['Mission', 'Book a Call', 'Facebook'] },
+          { title: 'Company', links: ['Mission', 'Book a Call'] },
           { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
+          { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />

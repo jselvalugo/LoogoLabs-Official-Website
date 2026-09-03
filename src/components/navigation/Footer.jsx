@@ -15,11 +15,14 @@ const externalLinks = {
   'Distillr': 'https://www.distillrsoftware.com',
   'Book a Call': BOOKING_URL,
   'Facebook': 'https://www.facebook.com/loogolabs',
+  'Instagram': 'https://www.instagram.com/loogolabs.ai',
+  'LinkedIn': 'https://www.linkedin.com/company/loogolabs/',
 };
 
-// Profile links corroborate the sameAs entries in the Organization schema, so
-// they are followable rather than nofollowed.
-const PROFILE_LINKS = new Set(['Facebook']);
+// These mirror SITE.sameAs in lib/seo.js. Keep the two lists in step: a sameAs
+// entry corroborated by a visible rel="me" link is a stronger entity signal
+// than the schema claim on its own.
+const PROFILE_LINKS = new Set(['Facebook', 'Instagram', 'LinkedIn']);
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operational software for underserved industries', copyright = '© 2026 Loogo Labs', style, onNavigate, onAdmin }) {
   return (

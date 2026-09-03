@@ -30,8 +30,14 @@ export const SITE = {
   // and the Google Business Profile URL here as they go live — each one should
   // be a page that actually loads, since a sameAs pointing somewhere dead is a
   // weak negative signal rather than a neutral one.
+  // Canonical profile URLs only — no share or campaign parameters. The Instagram
+  // link is commonly copied from a QR share as ...?igsi=…&utm_source=qr; those
+  // identify the share, not the profile, and would make this a non-canonical URL
+  // for something whose whole job is to be the profile's stable identity.
   sameAs: [
     'https://www.facebook.com/loogolabs',
+    'https://www.instagram.com/loogolabs.ai',
+    'https://www.linkedin.com/company/loogolabs/',
   ],
 };
 
