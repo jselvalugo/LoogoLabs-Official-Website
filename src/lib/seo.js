@@ -8,6 +8,13 @@
 // so the rendered page and the pre-rendered page can never disagree.
 
 import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, SERVICE_AREA } from './content.js';
+import {
+  TOPICS, TOPIC_BASE, isTopicIndexable, postsInTopic, primaryTopicForPost,
+  splitTags, topicBySlug, topicPath,
+} from './topics.js';
+
+// Re-exported so a consumer needs one import for "everything a crawler reads".
+export { TOPICS, TOPIC_BASE, splitTags, topicBySlug, topicPath };
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -51,6 +58,7 @@ export const url = (path = '/') => new URL(path, SITE.origin).href;
 export const ROUTES = [
   {
     page: 'Home',
+    label: 'Home',
     path: '/',
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
@@ -59,6 +67,7 @@ export const ROUTES = [
   },
   {
     page: 'Mission',
+    label: 'Mission',
     path: '/mission',
     title: `Our Mission — One Platform, Not 15 Tools | ${SITE.name}`,
     description:
@@ -68,6 +77,7 @@ export const ROUTES = [
   },
   {
     page: 'Pricing',
+    label: 'Pricing',
     path: '/pricing',
     title: `Pricing — Plans From $97/Month | ${SITE.name}`,
     description:
@@ -77,6 +87,7 @@ export const ROUTES = [
   },
   {
     page: 'LoogoNews',
+    label: 'LoogoNews',
     path: '/loogonews',
     title: `LoogoNews — Automation Guides for Local Business | ${SITE.name}`,
     description:
@@ -86,6 +97,7 @@ export const ROUTES = [
   },
   {
     page: 'GrowCFL',
+    label: 'Central Florida',
     path: '/grow',
     title: `Central Florida Marketing Systems | ${SITE.name}`,
     description:
@@ -95,6 +107,7 @@ export const ROUTES = [
   },
   {
     page: 'Privacy',
+    label: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,
     description: `How ${SITE.name} collects, uses, and protects the information you share with us.`,
@@ -103,6 +116,7 @@ export const ROUTES = [
   },
   {
     page: 'Terms',
+    label: 'Terms',
     path: '/terms',
     title: `Terms of Service | ${SITE.name}`,
     description: `The terms that govern your use of ${SITE.name} services and this website.`,
@@ -130,6 +144,13 @@ export function normalizePath(pathname = '/') {
 export function routeForPath(pathname) {
   const p = normalizePath(pathname);
   if (p === '/admin') return { page: 'Admin', slug: null };
+  // Checked before the exact-path table: TOPIC_BASE sits under /loogonews, and a
+  // hub slug is a path segment rather than a route of its own.
+  if (p === TOPIC_BASE) return { page: 'LoogoNews', slug: null };
+  if (p.startsWith(`${TOPIC_BASE}/`)) {
+    const slug = p.slice(TOPIC_BASE.length + 1);
+    return slug ? { page: 'TopicHub', slug } : { page: 'LoogoNews', slug: null };
+  }
   if (p.startsWith(`${BLOG_BASE}/`)) {
     const slug = p.slice(BLOG_BASE.length + 1);
     return slug ? { page: 'BlogPost', slug } : { page: 'LoogoNews', slug: null };
@@ -147,12 +168,19 @@ const UNLISTED_PATHS = { Admin: '/admin' };
 /** Canonical path for an internal page key. */
 export function pathForPage(page, slug) {
   if (page === 'BlogPost' && slug) return `${BLOG_BASE}/${slug}`;
+  if (page === 'TopicHub' && slug) return topicPath(slug);
   return BY_PAGE.get(page)?.path ?? UNLISTED_PATHS[page] ?? '/';
 }
 
 export const routeMeta = (page) => BY_PAGE.get(page) ?? null;
 
 // ── Per-page head metadata ───────────────────────────────────────────────────
+
+// Every indexable page gets the same directives: index it, and do not clip the
+// snippet or the preview image on our behalf.
+export const ROBOTS_INDEX =
+  'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+export const ROBOTS_NOINDEX = 'noindex, follow';
 
 const clamp = (text, max = 158) => {
   const s = String(text || '').replace(/\s+/g, ' ').trim();
@@ -168,7 +196,7 @@ export function headForPage(page) {
       title: `Page not found | ${SITE.name}`,
       description: SITE.description,
       canonical: url('/'),
-      robots: 'noindex, follow',
+      robots: ROBOTS_NOINDEX,
       ogType: 'website',
       image: url(SITE.ogImage),
       jsonLd: [],
@@ -178,7 +206,7 @@ export function headForPage(page) {
     title: route.title,
     description: clamp(route.description),
     canonical: url(route.path),
-    robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    robots: ROBOTS_INDEX,
     ogType: 'website',
     image: url(SITE.ogImage),
     jsonLd: jsonLdForPage(page),
@@ -192,7 +220,7 @@ export function headForPost(post) {
       title: `Post not found | ${SITE.name}`,
       description: SITE.description,
       canonical: url(BLOG_INDEX),
-      robots: 'noindex, follow',
+      robots: ROBOTS_NOINDEX,
       ogType: 'website',
       image: url(SITE.ogImage),
       jsonLd: [],
@@ -202,7 +230,7 @@ export function headForPost(post) {
     title: `${post.title} | LoogoNews`,
     description: clamp(post.excerpt || SITE.description),
     canonical: url(`${BLOG_BASE}/${post.slug}`),
-    robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    robots: ROBOTS_INDEX,
     ogType: 'article',
     image: url(SITE.ogImage),
     article: {
@@ -211,16 +239,9 @@ export function headForPost(post) {
       author: post.author || SITE.author,
       tags: splitTags(post.tags),
     },
-    jsonLd: [blogPostingLd(post), breadcrumbLd([
-      { name: 'Home', path: '/' },
-      { name: 'LoogoNews', path: BLOG_INDEX },
-      { name: post.title, path: `${BLOG_BASE}/${post.slug}` },
-    ])],
+    jsonLd: [blogPostingLd(post), breadcrumbLd(crumbsForPost(post))],
   };
 }
-
-export const splitTags = (tags) =>
-  String(tags || '').split(',').map((t) => t.trim()).filter(Boolean);
 
 export function isoDate(value) {
   if (!value) return null;
@@ -310,6 +331,74 @@ export const blogLd = (posts = []) => ({
   })),
 });
 
+// A post sits under its first matching topic, so the trail a reader sees and the
+// trail Google reads are the same three or four steps.
+export function crumbsForPost(post) {
+  const topic = primaryTopicForPost(post);
+  return [
+    { name: 'Home', path: '/' },
+    { name: 'LoogoNews', path: BLOG_INDEX },
+    ...(topic ? [{ name: topic.name, path: topicPath(topic.slug) }] : []),
+    { name: post.title, path: `${BLOG_BASE}/${post.slug}` },
+  ];
+}
+
+export const crumbsForTopic = (topic) => [
+  { name: 'Home', path: '/' },
+  { name: 'LoogoNews', path: BLOG_INDEX },
+  { name: topic.name, path: topicPath(topic.slug) },
+];
+
+/** A topic hub as a collection of the posts filed under it. */
+export const topicLd = (topic, posts = []) => ({
+  '@type': 'CollectionPage',
+  '@id': url(`${topicPath(topic.slug)}#collection`),
+  url: url(topicPath(topic.slug)),
+  name: topic.heading,
+  description: topic.description,
+  inLanguage: SITE.lang,
+  isPartOf: { '@id': url(`${BLOG_INDEX}#blog`) },
+  publisher: { '@id': url('/#organization') },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: posts.length,
+    itemListElement: posts.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: url(`${BLOG_BASE}/${p.slug}`),
+      name: p.title,
+    })),
+  },
+});
+
+/** Head metadata for a topic hub. `posts` is the whole feed; it is filtered here. */
+export function headForTopic(topic, posts = []) {
+  if (!topic) {
+    return {
+      title: `Topic not found | ${SITE.name}`,
+      description: SITE.description,
+      canonical: url(BLOG_INDEX),
+      robots: ROBOTS_NOINDEX,
+      ogType: 'website',
+      image: url(SITE.ogImage),
+      jsonLd: [],
+    };
+  }
+  const inTopic = postsInTopic(topic, posts);
+  return {
+    title: topic.title,
+    description: clamp(topic.description),
+    canonical: url(topicPath(topic.slug)),
+    // A hub nobody has written enough posts for yet is a thin page: keep it
+    // crawlable for the links it carries, out of the index until it fills up.
+    robots: isTopicIndexable(inTopic.length) ? ROBOTS_INDEX : ROBOTS_NOINDEX,
+    ogType: 'website',
+    image: url(SITE.ogImage),
+    jsonLd: [topicLd(topic, inTopic), breadcrumbLd(crumbsForTopic(topic))],
+  };
+}
+
 export const pricingLd = () => ({
   '@type': 'Product',
   '@id': url('/pricing#product'),
@@ -398,7 +487,7 @@ export function jsonLdForPage(page) {
       about: { '@id': url('/#organization') },
     });
   } else if (route) {
-    nodes.push(breadcrumbLd([crumbBase, { name: route.page === 'LoogoNews' ? 'LoogoNews' : route.page, path: route.path }]));
+    nodes.push(breadcrumbLd([crumbBase, { name: route.label, path: route.path }]));
   }
   if (page === 'Pricing') nodes.push(pricingLd());
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());

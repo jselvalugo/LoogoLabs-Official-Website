@@ -13,12 +13,39 @@
 # engines read as a duplicate of the homepage.
 #
 # Posts are the exception: one can be published from /admin without a rebuild,
-# so its slug has no file yet. Fall those through to the app, which fetches the
-# post and marks the page noindex if the slug really does not exist.
+# so its slug has no static file yet. Netlify serves an existing static file
+# straight from disk without even considering this rule (no `force`), so it only
+# fires for a slug that is not in the last build — which render-post.js server-
+# renders from the live database: real title, description, canonical, JSON-LD,
+# and article text, not a JS-only shell waiting on the next deploy.
 [[redirects]]
   from = "/news/*"
-  to = "/index.html"
+  to = "/.netlify/functions/render-post"
   status = 200
+
+# Same problem, for the crawl files instead of a single post: a post published
+# from /admin needs to show up in the sitemap, the feed, and llms.txt before the
+# next deploy, not after it. These force past the static copies the build writes
+# (which stay as the fallback for a host running this repo without functions) and
+# read the live posts table instead. `type` tells the one function which of the
+# three to build; each sets its own Content-Type and Cache-Control.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/crawl?type=sitemap"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/rss.xml"
+  to = "/.netlify/functions/crawl?type=rss"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/llms.txt"
+  to = "/.netlify/functions/crawl?type=llms"
+  status = 200
+  force = true
 
 [[headers]]
   for = "/fonts/*"
@@ -30,29 +57,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Crawl files change with every publish; do not let a CDN pin a stale sitemap.
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Type = "application/xml; charset=utf-8"
-
-[[headers]]
-  for = "/rss.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Type = "application/rss+xml; charset=utf-8"
-
+# robots.txt does not depend on the post list, so the static copy from the build
+# is both correct and cheaper — no function needed.
 [[headers]]
   for = "/robots.txt"
   [headers.values]
     Cache-Control = "public, max-age=3600"
-
-[[headers]]
-  for = "/llms.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
-    Content-Type = "text/plain; charset=utf-8"
 
 [[headers]]
   for = "/admin"

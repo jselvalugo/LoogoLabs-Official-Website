@@ -1,9 +1,11 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
-import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
+import { BLOG_BASE, BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
+import { relatedPosts, topicPath, topicsForPost } from '../lib/topics';
 
 export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
+  const [allPosts, setAllPosts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [notFound, setNotFound] = React.useState(false);
 
@@ -25,6 +27,15 @@ export default function BlogPost({ slug, onNavigate }) {
       })
       .finally(() => setLoading(false));
   }, [slug]);
+
+  // The related-posts block needs the whole feed, not just this post, so it can
+  // rank candidates by shared topic. Fetched once and reused across navigations.
+  React.useEffect(() => {
+    fetch('/.netlify/functions/get-posts')
+      .then(r => r.json())
+      .then(data => { if (Array.isArray(data)) setAllPosts(data); })
+      .catch(() => {});
+  }, []);
 
   // Title, description, canonical and BlogPosting schema all come from the post
   // body, so they can only be set once it has loaded. Until then the pre-rendered
@@ -56,6 +67,8 @@ export default function BlogPost({ slug, onNavigate }) {
 
   const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+  const topics = topicsForPost(post);
+  const related = relatedPosts(post, allPosts, 3);
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
@@ -123,8 +136,26 @@ export default function BlogPost({ slug, onNavigate }) {
               {renderMarkdown(post.content)}
             </div>
 
+            {/* Filed under — the topic hub(s) this post belongs to */}
+            {topics.length > 0 && (
+              <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 12 }}>
+                  Filed under
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  {topics.map(topic => (
+                    <a key={topic.slug} href={topicPath(topic.slug)}
+                      onClick={e => { e.preventDefault(); onNavigate('TopicHub', topic.slug); }}
+                      style={{ fontSize: 13, color: 'var(--ink-700)', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', padding: '6px 14px', textDecoration: 'none' }}>
+                      {topic.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* CTA box */}
-            <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
+            <div style={{ marginTop: 40, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 14 }}>
                 Loogo Labs · Get started
               </div>
@@ -134,17 +165,46 @@ export default function BlogPost({ slug, onNavigate }) {
               <p style={{ margin: '0 0 24px', fontSize: 15, lineHeight: 1.65, color: 'var(--ink-300)' }}>
                 We set it up, run it, and optimize it every month. You just run your business.
               </p>
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'var(--paper-100)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'var(--paper-200)'; }}
-              >
-                Book a free strategy call →
-              </a>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--paper-100)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--paper-200)'; }}
+                >
+                  Book a free strategy call →
+                </a>
+                <a
+                  href="/grow"
+                  onClick={e => { e.preventDefault(); onNavigate('GrowCFL'); }}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)', textDecoration: 'underline' }}
+                >
+                  Based in Central Florida? See our local page →
+                </a>
+              </div>
             </div>
+
+            {/* Related reading — same topic first, so a crawler and a reader both
+                have somewhere to go next instead of dead-ending on this post. */}
+            {related.length > 0 && (
+              <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 16 }}>
+                  Related reading
+                </div>
+                <div style={{ display: 'grid', gap: 16 }}>
+                  {related.map(r => (
+                    <a key={r.slug} href={`${BLOG_BASE}/${r.slug}`}
+                      onClick={e => { e.preventDefault(); onNavigate('BlogPost', r.slug); }}
+                      style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-900)', marginBottom: 4 }}>{r.title}</div>
+                      {r.excerpt && <div style={{ fontSize: 14, color: 'var(--ink-500)' }}>{r.excerpt}</div>}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Licence */}
             <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)', fontSize: 13, lineHeight: 1.7, color: 'var(--ink-500)' }}>
@@ -202,15 +262,33 @@ function renderMarkdown(text) {
   });
 }
 
+// Only the link targets a post is allowed to point at — internal paths, https
+// URLs, and mailto:. Post bodies are also editable from /admin, so this has to
+// hold even against a malicious or careless paste, not just what content/posts.mjs
+// happens to contain today. Mirrors safeHref() in lib/render.js.
+function safeHref(href) {
+  const h = String(href || '').trim();
+  if (/^\/(?!\/)/.test(h)) return h;
+  if (/^https?:\/\//i.test(h)) return h;
+  if (/^mailto:[^\s<>"']+$/i.test(h)) return h;
+  return null;
+}
+
 function inlineRender(text) {
   const parts = [];
-  const re = /(\*\*([^*]+)\*\*)|(\*([^*]+)\*)|(`([^`]+)`)/g;
+  const re = /(\[([^\]]+)\]\(([^)\s]+)\))|(\*\*([^*]+)\*\*)|(\*([^*]+)\*)|(`([^`]+)`)/g;
   let last = 0, match;
   while ((match = re.exec(text)) !== null) {
     if (match.index > last) parts.push(text.slice(last, match.index));
-    if (match[1]) parts.push(<strong key={match.index} style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{match[2]}</strong>);
-    else if (match[3]) parts.push(<em key={match.index}>{match[4]}</em>);
-    else if (match[5]) parts.push(<code key={match.index} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88em', background: 'var(--paper-200)', padding: '2px 6px', borderRadius: 3, color: 'var(--ink-800)' }}>{match[6]}</code>);
+    if (match[1]) {
+      const safe = safeHref(match[3]);
+      parts.push(safe
+        ? <a key={match.index} href={safe} style={{ color: 'var(--ink-900)', textDecoration: 'underline' }}
+            {...(safe.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{match[2]}</a>
+        : match[2]);
+    } else if (match[4]) parts.push(<strong key={match.index} style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{match[5]}</strong>);
+    else if (match[6]) parts.push(<em key={match.index}>{match[7]}</em>);
+    else if (match[8]) parts.push(<code key={match.index} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88em', background: 'var(--paper-200)', padding: '2px 6px', borderRadius: 3, color: 'var(--ink-800)' }}>{match[9]}</code>);
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));

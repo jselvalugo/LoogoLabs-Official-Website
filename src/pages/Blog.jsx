@@ -1,5 +1,6 @@
 import React from 'react';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
+import { TOPICS, topicPath } from '../lib/topics';
 
 export default function Blog({ onNavigate }) {
   const [posts, setPosts] = React.useState([]);
@@ -46,6 +47,26 @@ export default function Blog({ onNavigate }) {
 
       {/* ── CONTENT ── */}
       <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px clamp(64px,8vw,112px)' }}>
+
+        {/* Topic hubs — the second axis into the archive, next to the reverse-
+            chronological list below. */}
+        <div style={{ marginTop: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '0 0 20px' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
+              Browse by topic
+            </span>
+            <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
+          </div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            {TOPICS.map(topic => (
+              <a key={topic.slug} href={topicPath(topic.slug)}
+                onClick={e => { e.preventDefault(); onNavigate('TopicHub', topic.slug); }}
+                style={{ fontSize: 13, color: 'var(--ink-700)', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', padding: '8px 16px', textDecoration: 'none' }}>
+                {topic.name}
+              </a>
+            ))}
+          </div>
+        </div>
 
         {loading ? (
           <div style={{ padding: '80px 0', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import TopicHub from './pages/TopicHub';
 import NotFound from './pages/NotFound';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -33,7 +34,7 @@ function App() {
   const [postSlug, setPostSlug] = React.useState(init.slug);
 
   const navigate = React.useCallback((target, param, { push = true } = {}) => {
-    const slug = target === 'BlogPost' ? param : null;
+    const slug = (target === 'BlogPost' || target === 'TopicHub') ? param : null;
     setPage(target);
     setPostSlug(slug);
     if (push) {
@@ -58,7 +59,7 @@ function App() {
   // A post's title and description depend on data BlogPost fetches, so it sets
   // its own head once the post arrives. Everything else is known up front.
   React.useEffect(() => {
-    if (page === 'BlogPost' || page === 'Admin') return;
+    if (page === 'BlogPost' || page === 'TopicHub' || page === 'Admin') return;
     applyHead(headForPage(page));
   }, [page]);
 
@@ -92,6 +93,7 @@ function App() {
   else if (page === 'Pricing') body = <Pricing onNavigate={navigate} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
+  else if (page === 'TopicHub') body = <TopicHub slug={postSlug} onNavigate={navigate} />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
   else if (page === 'Terms') body = <Terms onNavigate={navigate} />;
   else body = <NotFound onNavigate={navigate} />;

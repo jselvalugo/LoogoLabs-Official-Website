@@ -53,7 +53,9 @@ The text buys you the first response. A person still has to close it. If dispatc
 
 Pull last week's call log. Count the calls that went unreturned within five minutes, and multiply by your average ticket. That isn't a hypothetical — that is revenue that rang your phone and then hung up on somebody else.
 
-Fix the response time before you touch anything else in your marketing. A better ad feeding a slow callback is just a more expensive way to lose the same leads.`,
+Fix the response time before you touch anything else in your marketing. A better ad feeding a slow callback is just a more expensive way to lose the same leads.
+
+I wrote about the same pattern from another angle in [Why Your Dental Practice Is Losing New Patients Before the Front Desk Even Calls Back](/news/dental-practice-lead-response-time), if you want to see how it plays out somewhere else.`,
   },
   {
     slug: `dental-practice-lead-response-time`,
@@ -96,7 +98,9 @@ Take your form submissions from the last two weeks. For each one, find the times
 
 If most of those gaps are measured in hours, you don't have a marketing problem. You have a protocol problem, and it is the cheapest one on this list to fix.
 
-Practices treat sterilization as a fixed standard that doesn't bend for a busy Tuesday. Response time is worth the same treatment.`,
+Practices treat sterilization as a fixed standard that doesn't bend for a busy Tuesday. Response time is worth the same treatment.
+
+If this sounds familiar from a different seat, I covered it in [The Missed Call That Cost an HVAC Company $4,200](/news/missed-call-text-back-hvac).`,
   },
   {
     slug: `salon-google-review-system`,
@@ -139,7 +143,9 @@ That isn't about hiding bad reviews. It is that a client who feels heard on Tues
 
 Time your next ten review requests against the appointment end time rather than checkout. If most are going out same-day but hours later, tighten that window before you touch the wording.
 
-And if the honest answer is that nobody is sending them at all because the desk is slammed — that is the version of this problem we set up for salons most often. It is worth a conversation.`,
+And if the honest answer is that nobody is sending them at all because the desk is slammed — that is the version of this problem we set up for salons most often. It is worth a conversation.
+
+The same fix shows up in a different business in [You Can't Out-Review Your History. You Can Only Answer It.](/news/restaurant-review-response-reputation) — worth a look if that one is closer to yours.`,
   },
   {
     slug: `real-estate-lead-response-time`,
@@ -186,7 +192,9 @@ When inventory is tight, everybody is motivated and speed matters less — she w
 
 Pull your last twenty and time the gap between submission and first real contact. Contact, not assignment.
 
-If that gap is measured in hours, buying more leads won't fix your pipeline. It will just increase the number of paid leads going cold in the same inbox.`,
+If that gap is measured in hours, buying more leads won't fix your pipeline. It will just increase the number of paid leads going cold in the same inbox.
+
+I broke down a close cousin of this problem in [The Missed Call That Cost an HVAC Company $4,200](/news/missed-call-text-back-hvac).`,
   },
   {
     slug: `reduce-no-shows-appointment-reminders`,
@@ -229,7 +237,9 @@ I don't think the answer is more automation there. Rebooking has to be as easy a
 
 ## Where to start
 
-Look at last month's schedule, count the no-shows, and check whether any reminder went out at all for those specific jobs. If the answer is no for most of them, you haven't got a customer problem to solve.`,
+Look at last month's schedule, count the no-shows, and check whether any reminder went out at all for those specific jobs. If the answer is no for most of them, you haven't got a customer problem to solve.
+
+For anyone dealing with the same thing in a different trade, I wrote [Every Call You Take Mid-Cut Costs You Twice](/news/barbershop-online-booking-interruptions).`,
   },
   {
     slug: `remodeling-crm-pipeline-follow-up`,
@@ -272,7 +282,9 @@ A nudge that says the Miller kitchen has had no activity in ten days is worth mo
 
 Open your list of open bids right now and sort by last contact.
 
-Whatever is sitting at the top is today's phone call. Not because it is urgent — because it is the one most likely to be gone already, and you would rather know.`,
+Whatever is sitting at the top is today's phone call. Not because it is urgent — because it is the one most likely to be gone already, and you would rather know.
+
+I have a longer version of this argument, aimed at a different business, in [A Lead That Belongs to Everyone Belongs to Nobody](/news/chiropractic-lead-assignment-ownership).`,
   },
   {
     slug: `restaurant-email-sms-reengagement`,
@@ -315,7 +327,9 @@ A list of past customers you aren't messaging is a zero-acquisition-cost channel
 
 Go find out how many contacts are actually in your system right now. That number is the audience you have been ignoring.
 
-Send one message to it this week before you touch the ad budget. If it turns out to be four thousand people and you would rather not be the one writing to them every month, that is the part we take over for restaurants — worth a conversation before you spend another month paying for reach you already own.`,
+Send one message to it this week before you touch the ad budget. If it turns out to be four thousand people and you would rather not be the one writing to them every month, that is the part we take over for restaurants — worth a conversation before you spend another month paying for reach you already own.
+
+The mechanics are nearly identical in [You Don't Have a Customer List. You Have Five of Them.](/news/pest-control-list-segmentation), if that is closer to what you run.`,
   },
   {
     slug: `property-management-workflow-automation`,
@@ -358,7 +372,9 @@ So measure your own instead. It takes a week and the number will be yours.
 
 Log every maintenance request and mark each one either judgment or relay. Assign, notify, confirm, update — that is relay. Approving a $1,400 repair is judgment.
 
-Count the relay column at the end of the week and multiply by the few minutes each one really took, including the interruption. That number is what a workflow should be handling without you, and for most managers at this size it is the better part of a day.`,
+Count the relay column at the end of the week and multiply by the few minutes each one really took, including the interruption. That number is what a workflow should be handling without you, and for most managers at this size it is the better part of a day.
+
+I answer a related question — same root cause, different business — in [The Client Signed Three Weeks Ago and You Still Can't Start](/news/bookkeeping-client-onboarding-first-week).`,
   },
   {
     slug: `med-spa-marketing-channel-roi`,
@@ -399,7 +415,9 @@ Attribution gets genuinely hard when a patient sees your ad in March, follows th
 
 I don't have a clean solution to that, and I'm suspicious of anyone who claims one. What I know is that a spa with imperfect source data makes better budget decisions than a spa with none, and the gap between those two is worth more than the gap between good attribution and perfect attribution.
 
-Start with imperfect. For every new patient this month, capture how they found you before they book. In thirty days you will have a real answer instead of a guess.`,
+Start with imperfect. For every new patient this month, capture how they found you before they book. In thirty days you will have a real answer instead of a guess.
+
+This shows up again, almost unchanged, in [The Average Is Hiding Your Worst Location](/news/cleaning-company-multi-location-reporting).`,
   },
   {
     slug: `landscaping-payments-invoicing`,
@@ -442,7 +460,9 @@ It gets you the money you already earned, sooner, and it stops you from financin
 
 Pull last month's completed jobs and average the days between job done and invoice sent.
 
-If that number is more than a day or two, that gap is where to fix cash flow first — before pricing, before lead flow, before anything else you were considering.`,
+If that number is more than a day or two, that gap is where to fix cash flow first — before pricing, before lead flow, before anything else you were considering.
+
+I wrote the neighboring piece to this one, [No-Shows Aren't a People Problem — They're a Systems Problem](/news/reduce-no-shows-appointment-reminders), for anyone asking the same question in a different trade.`,
   },
   {
     slug: `ai-voice-after-hours-plumbing`,
@@ -491,7 +511,9 @@ Twenty after-hours calls a month at a $650 emergency ticket, recovering a third 
 
 After hours, from your own phone. Listen to exactly what a homeowner standing in two inches of water hears.
 
-If it's a beep, you have your answer, and it's a configuration problem rather than a hiring one.`,
+If it's a beep, you have your answer, and it's a configuration problem rather than a hiring one.
+
+The same math holds in [Most Law Firm Intake Calls Are Not Cases. That's the Problem.](/news/ai-voice-intake-law-firm), just with different numbers.`,
   },
   {
     slug: `ai-voice-booking-auto-repair`,
@@ -542,7 +564,9 @@ You don't need a marketing budget for that. You need the phone answered between 
 
 Pull last month's call report and group the unanswered ones by hour of day.
 
-The spike will be obvious, and it'll tell you precisely which two hours of coverage are costing you the most — which is a much cheaper problem than the one you thought you had.`,
+The spike will be obvious, and it'll tell you precisely which two hours of coverage are costing you the most — which is a much cheaper problem than the one you thought you had.
+
+I have covered the adjacent case — [The 2 A.M. Burst Pipe Call Your Plumbing Company Never Hears](/news/ai-voice-after-hours-plumbing) — for anyone whose business looks a little different.`,
   },
   {
     slug: `ai-voice-intake-law-firm`,
@@ -588,7 +612,9 @@ A person calling three days after a serious accident isn't in a state to be effi
 
 My working rule is to over-transfer: when in doubt, a human. That costs the firm efficiency in exchange for not being the firm that did that to somebody. I think that's the right trade, but I'd hold it loosely, and I'd rather a firm decide it deliberately than inherit it from a default setting.
 
-Before you automate any of this, pull last month's intake calls and mark each one signed, not signed, or never a fit. If more than two thirds are in that third bucket, your intake isn't a staffing problem. It's a filtering problem, and filters can be built.`,
+Before you automate any of this, pull last month's intake calls and mark each one signed, not signed, or never a fit. If more than two thirds are in that third bucket, your intake isn't a staffing problem. It's a filtering problem, and filters can be built.
+
+See [The 2 A.M. Burst Pipe Call Your Plumbing Company Never Hears](/news/ai-voice-after-hours-plumbing) for how this plays out once the business on the other end changes.`,
   },
   {
     slug: `ai-voice-handoff-veterinary-clinic`,
@@ -641,7 +667,9 @@ Every one you find is a missing rule, and the list stabilizes faster than you'd 
 
 Sit down with your lead DVM and write the always-a-human list before you evaluate a single vendor, ours included. If that list doesn't exist on paper, the technology decision is premature.
 
-And if you'd rather have somebody build it around your list instead of the other way round, that's the conversation worth having — bring the list.`,
+And if you'd rather have somebody build it around your list instead of the other way round, that's the conversation worth having — bring the list.
+
+I go deeper on a related piece of this in [The 2 A.M. Burst Pipe Call Your Plumbing Company Never Hears](/news/ai-voice-after-hours-plumbing).`,
   },
   {
     slug: `ai-follow-up-messaging-gym`,
@@ -695,7 +723,9 @@ Once that runs, use AI to stop each of those four sounding like a template. In t
 
 Take your last twenty trial signups. How many got a first response inside five minutes, and how many got a fourth touch at all?
 
-Those two numbers tell you whether you have a writing problem or a system problem, and I'd bet on the second.`,
+Those two numbers tell you whether you have a writing problem or a system problem, and I'd bet on the second.
+
+Same problem, different trade: [The 2 A.M. Burst Pipe Call Your Plumbing Company Never Hears](/news/ai-voice-after-hours-plumbing).`,
   },
   {
     slug: `pest-control-list-segmentation`,
@@ -748,7 +778,9 @@ Start with three. Run them for a quarter. The fourth segment earns its place onl
 
 Open your system this afternoon and try to produce three lists: recurring customers, one-time customers, and anyone lapsed more than a year.
 
-If they come out in a couple of minutes, you're most of the way there and the campaigns are the easy part. If they don't, that is the actual work — and it's worth doing before you write another word of marketing.`,
+If they come out in a couple of minutes, you're most of the way there and the campaigns are the easy part. If they don't, that is the actual work — and it's worth doing before you write another word of marketing.
+
+I wrote about the same pattern from another angle in [The Email List Sitting in Your POS, Doing Nothing](/news/restaurant-email-sms-reengagement), if you want to see how it plays out somewhere else.`,
   },
   {
     slug: `restaurant-review-response-reputation`,
@@ -802,7 +834,9 @@ Do not automate the reply itself. The same three sentences pasted under six diff
 
 Sort your page by most recent and read the last ten the way a stranger choosing dinner would.
 
-Count how many have a reply, and how long each one took to get there. If half of them are sitting unanswered, that is your reputation work this week — not your average, and not another round of ads.`,
+Count how many have a reply, and how long each one took to get there. If half of them are sitting unanswered, that is your reputation work this week — not your average, and not another round of ads.
+
+If this sounds familiar from a different seat, I covered it in [The Google Review System Most Salon Owners Never Build](/news/salon-google-review-system).`,
   },
   {
     slug: `gym-membership-retention-management`,
@@ -849,7 +883,9 @@ The system's job is to tell that coach who to text, and when. Not to write the t
 
 Pull your check-in export for the last ninety days and cross it against your active membership list.
 
-Count the members paying you right now who have not been in for three weeks. That number is your next quarter of cancellations, visible today — and unlike the ones on the dashboard, every single one is still reachable.`,
+Count the members paying you right now who have not been in for three weeks. That number is your next quarter of cancellations, visible today — and unlike the ones on the dashboard, every single one is still reachable.
+
+The same fix shows up in a different business in [The Email List Sitting in Your POS, Doing Nothing](/news/restaurant-email-sms-reengagement) — worth a look if that one is closer to yours.`,
   },
   {
     slug: `roofing-unified-inbox-conversation-history`,
@@ -906,7 +942,9 @@ That is a policy decision, not a configuration one, and it only holds if the com
 
 Take your most complicated open job. If the person running it gave notice this afternoon, could somebody else pick it up tomorrow from what is in the system?
 
-If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.`,
+If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.
+
+I broke down a close cousin of this problem in [Your Remodeling Business Doesn't Have a CRM Problem. It Has a Follow-Up Problem.](/news/remodeling-crm-pipeline-follow-up).`,
   },
   {
     slug: `chiropractic-lead-assignment-ownership`,
@@ -956,7 +994,9 @@ I'd argue the opposite. That gap was always there. You just couldn't see it, and
 
 Take the inquiries from the last seven days and write down, for each one, the person responsible for it.
 
-If you find yourself writing "the front desk" or "whoever was on," you have found the leak. It isn't a speed problem, which means a faster auto-reply won't touch it.`,
+If you find yourself writing "the front desk" or "whoever was on," you have found the leak. It isn't a speed problem, which means a faster auto-reply won't touch it.
+
+For anyone dealing with the same thing in a different trade, I wrote [Your Remodeling Business Doesn't Have a CRM Problem. It Has a Follow-Up Problem.](/news/remodeling-crm-pipeline-follow-up).`,
   },
   {
     slug: `barbershop-online-booking-interruptions`,
@@ -1008,7 +1048,9 @@ If your chair is genuinely quiet midweek, this is not the first thing to fix —
 
 This Saturday, keep a tally on the mirror. Every time the phone rings while somebody is in your chair, make a mark.
 
-At close, multiply that number by your average ticket and decide which cost you would rather stop paying — the calls you missed, or the cuts you interrupted. For most shops the answer is both, and it is the same fix.`,
+At close, multiply that number by your average ticket and decide which cost you would rather stop paying — the calls you missed, or the cuts you interrupted. For most shops the answer is both, and it is the same fix.
+
+I have a longer version of this argument, aimed at a different business, in [No-Shows Aren't a People Problem — They're a Systems Problem](/news/reduce-no-shows-appointment-reminders).`,
   },
   {
     slug: `physical-therapy-home-program-discharge`,
@@ -1054,7 +1096,9 @@ Build the delivery on rails and leave the response to a person. A system that se
 
 Ring three people you discharged six weeks ago and ask one question: are you still doing the exercises?
 
-Their answers tell you what your current handout is worth, and whether that last visit was the end of the treatment or just the end of the billing.`,
+Their answers tell you what your current handout is worth, and whether that last visit was the end of the treatment or just the end of the billing.
+
+The mechanics are nearly identical in [The Email List Sitting in Your POS, Doing Nothing](/news/restaurant-email-sms-reengagement), if that is closer to what you run.`,
   },
   {
     slug: `self-storage-message-testing`,
@@ -1103,7 +1147,9 @@ An hour versus the following morning is a real question with an answer that appl
 
 Write down the message you send most often. Underneath it, write what you would change permanently depending on how a test came out.
 
-If you can't finish that second line, choose a different message. That is the entire filter, and it will spare you most of what passes for optimization.`,
+If you can't finish that second line, choose a different message. That is the entire filter, and it will spare you most of what passes for optimization.
+
+I answer a related question — same root cause, different business — in [The Email List Sitting in Your POS, Doing Nothing](/news/restaurant-email-sms-reengagement).`,
   },
   {
     slug: `pool-service-seasonal-content-calendar`,
@@ -1147,7 +1193,9 @@ Nobody is buying a pool opening in November. But your existing customers are dec
 
 Sit down before the season is fully over, while you still remember which questions customers actually asked this year.
 
-Map the eight weeks that matter, decide what goes out each week, and schedule it there and then. The version of you who is elbow-deep in a pump housing next May is not going to write a word of it.`,
+Map the eight weeks that matter, decide what goes out each week, and schedule it there and then. The version of you who is elbow-deep in a pump housing next May is not going to write a word of it.
+
+This shows up again, almost unchanged, in [The Email List Sitting in Your POS, Doing Nothing](/news/restaurant-email-sms-reengagement).`,
   },
   {
     slug: `moving-company-referral-partners`,
@@ -1204,7 +1252,9 @@ A realtor who can't accept a fee can almost always accept being made to look goo
 
 Not ten people to network with. Ten businesses whose customers are structurally about to need a mover.
 
-Then work out, for each one, how they would find out what happened to the first person they sent you. If you can't answer that for a name on your list, you don't have a partner there yet. You have a coffee meeting.`,
+Then work out, for each one, how they would find out what happened to the first person they sent you. If you can't answer that for a name on your list, you don't have a partner there yet. You have a coffee meeting.
+
+I wrote the neighboring piece to this one, [The Google Review System Most Salon Owners Never Build](/news/salon-google-review-system), for anyone asking the same question in a different trade.`,
   },
   {
     slug: `bookkeeping-client-onboarding-first-week`,
@@ -1254,7 +1304,9 @@ A good sequence makes the asking effortless. It doesn't make that decision for y
 
 Take your five most recent clients and measure the days between contract signed and first productive hour of work.
 
-If the average is longer than a week, the constraint isn't your capacity or your pricing. Nobody designed the handoff between the sale and the work, and it is costing you the best three days you will ever have with that client.`,
+If the average is longer than a week, the constraint isn't your capacity or your pricing. Nobody designed the handoff between the sale and the work, and it is costing you the best three days you will ever have with that client.
+
+The same math holds in [The Automation That Actually Matters for a Property Management Company](/news/property-management-workflow-automation), just with different numbers.`,
   },
   {
     slug: `cleaning-company-multi-location-reporting`,
@@ -1312,7 +1364,9 @@ The defense isn't more metrics. It is choosing numbers that are hard to fake —
 
 Open whatever reporting you have and split a single number by location for the last thirty days. Call answer rate is the easiest one to start with.
 
-Then ignore the company figure completely and look only at the lowest branch. That number is what a third of your customers experienced this month, and it's the only one on the page worth doing anything about.`,
+Then ignore the company figure completely and look only at the lowest branch. That number is what a third of your customers experienced this month, and it's the only one on the page worth doing anything about.
+
+I have covered the adjacent case — [Stop Guessing Which Ad Is Actually Bringing In Patients](/news/med-spa-marketing-channel-roi) — for anyone whose business looks a little different.`,
   },
   {
     slug: `tree-service-system-adoption`,
@@ -1361,7 +1415,9 @@ Make that one thing reachable in a single tap from a phone's home screen, then d
 
 Not a demo and not a meeting. Stand on a job site and watch a foreman try to close out a job with gloves on, in daylight, with the saw running twenty feet away.
 
-Two minutes of that tells you whether you have an adoption problem or a design problem. It is nearly always the second one.`,
+Two minutes of that tells you whether you have an adoption problem or a design problem. It is nearly always the second one.
+
+See [No-Shows Aren't a People Problem — They're a Systems Problem](/news/reduce-no-shows-appointment-reminders) for how this plays out once the business on the other end changes.`,
   },
   {
     slug: `garage-door-website-conversion`,
@@ -1415,7 +1471,9 @@ I have watched companies rebuild a site, double the calls it generates, and see 
 
 Not your laptop. Your phone, outdoors, in daylight, one-handed, the way she will.
 
-Time how long it takes to reach a tappable phone number, and see whether anything on that first screen tells you if they come out today. More than one tap or one scroll and you've found the leak — and it is a far cheaper fix than another marketing campaign.`,
+Time how long it takes to reach a tappable phone number, and see whether anything on that first screen tells you if they come out today. More than one tap or one scroll and you've found the leak — and it is a far cheaper fix than another marketing campaign.
+
+I go deeper on a related piece of this in [The Missed Call That Cost an HVAC Company $4,200](/news/missed-call-text-back-hvac).`,
   },
   {
     slug: `insurance-agency-contact-data-hygiene`,
@@ -1472,7 +1530,9 @@ Whatever you clean up, you need one rule about how a record gets created going f
 
 Before you buy or build anything, open your system and try to pull one list: every policy of one type, renewing in one specific month, with the client's mobile number attached.
 
-If that list comes out in a few seconds, your data is in better shape than most and you are ready to automate against it. If it takes you an afternoon, you have just found the actual project — and it is not the sequence you thought you were going to build.`,
+If that list comes out in a few seconds, your data is in better shape than most and you are ready to automate against it. If it takes you an afternoon, you have just found the actual project — and it is not the sequence you thought you were going to build.
+
+Same problem, different trade: [Your Remodeling Business Doesn't Have a CRM Problem. It Has a Follow-Up Problem.](/news/remodeling-crm-pipeline-follow-up).`,
   },
   {
     slug: `wedding-venue-long-cycle-nurture`,
@@ -1524,7 +1584,9 @@ If you cannot commit to somebody watching the replies, send fewer messages, not 
 
 I do not know the right cadence for venues that book much shorter — corporate events, or the last-minute reception business some venues run alongside weddings. The sixty-week shape does not transfer, and compressing the same four messages into eight weeks reads as pushy.
 
-My working guess is that short-cycle events need one message, not four, and it should be logistical rather than advisory. But I have not run that long enough anywhere to tell you it works. If you run both books out of one venue, that is the harder half of the problem, and I would rather say so than hand you a sequence I have not seen hold up.`,
+My working guess is that short-cycle events need one message, not four, and it should be logistical rather than advisory. But I have not run that long enough anywhere to tell you it works. If you run both books out of one venue, that is the harder half of the problem, and I would rather say so than hand you a sequence I have not seen hold up.
+
+I wrote about the same pattern from another angle in [The Missed Call That Cost an HVAC Company $4,200](/news/missed-call-text-back-hvac), if you want to see how it plays out somewhere else.`,
   },
   {
     slug: `appliance-repair-quiet-hours-send-timing`,
@@ -1569,7 +1631,9 @@ I have switched more sequences back on than I have built from scratch, and the r
 
 A system will do exactly what you configured at exactly the moment the condition is met. It has no sense of whether now is a reasonable time to speak to a person. That judgment does not emerge from a better tool; somebody has to encode it once, deliberately.
 
-Go into whatever you are running now and look at every message that is not an immediate response to an inbound. Check whether each one has a time window on it. The ones that do not are not broken yet — they are waiting for a tech to close a job late.`,
+Go into whatever you are running now and look at every message that is not an immediate response to an inbound. Check whether each one has a time window on it. The ones that do not are not broken yet — they are waiting for a tech to close a job late.
+
+If this sounds familiar from a different seat, I covered it in [The Automation That Actually Matters for a Property Management Company](/news/property-management-workflow-automation).`,
   },
   {
     slug: `solar-installer-pipeline-stale-deals`,
@@ -1625,7 +1689,9 @@ So if you turn on mandatory reason codes and change nothing else, reps will park
 
 Not a cleaner pipeline. A loss-reason report you believe, and one change made because of it.
 
-If the report says no contact is your largest bucket and you have not changed anything about follow-up, the cleanup was administrative and you should not have bothered. The pruning is only worth the argument it causes if the reasons end up pointing at something you go and fix.`,
+If the report says no contact is your largest bucket and you have not changed anything about follow-up, the cleanup was administrative and you should not have bothered. The pruning is only worth the argument it causes if the reasons end up pointing at something you go and fix.
+
+The same fix shows up in a different business in [You Already Paid for That Lead. Then You Let It Sit for Three Hours.](/news/real-estate-lead-response-time) — worth a look if that one is closer to yours.`,
   },
   {
     slug: `catering-company-booking-analytics-capacity`,
@@ -1682,6 +1748,8 @@ Automate the alert — tell the coordinator by Tuesday that Saturday is committe
 
 Pull last year's inquiries, tag each one with the requested event date rather than the date it arrived, and put your crew capacity next to it. It is an afternoon in a spreadsheet before it is ever a system.
 
-If the shoulder weeks come back looking as soft as they do for most operations, you have found next year's revenue without adding a single lead. If they come back full, then you genuinely do have a lead problem, and at least now you know which one you are solving.`,
+If the shoulder weeks come back looking as soft as they do for most operations, you have found next year's revenue without adding a single lead. If they come back full, then you genuinely do have a lead problem, and at least now you know which one you are solving.
+
+I broke down a close cousin of this problem in [You Already Paid for That Lead. Then You Let It Sit for Three Hours.](/news/real-estate-lead-response-time).`,
   },
 ];

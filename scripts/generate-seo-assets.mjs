@@ -7,7 +7,17 @@
 // shared the same <title>, the same description, no canonical, and no content
 // until JavaScript had run. This script takes that shell and writes one real
 // HTML file per route — correct head tags, JSON-LD, and the page's text already
-// in the markup — plus robots.txt, sitemap.xml, an RSS feed, and llms.txt.
+// in the markup — plus the topic hubs, robots.txt, sitemap.xml, an RSS feed, and
+// llms.txt.
+//
+// Where the post list comes from
+// ------------------------------
+// The live posts table is the source of truth, and content/posts.mjs is the
+// reviewed copy of it in git. This script reads both and merges them, so a post
+// published from /admin is pre-rendered by the next deploy even though it has
+// never been through a migration. When no database is reachable — a local build,
+// or a preview without the env var — it falls back to content/posts.mjs and says
+// so, rather than failing the build.
 //
 // The React app still boots and takes over on load: createRoot().render() clears
 // #root first, so the pre-rendered markup is a fallback for crawlers and slow
@@ -20,15 +30,20 @@ import { fileURLToPath } from 'node:url';
 import { posts as sourcePosts } from '../content/posts.mjs';
 import { readTime } from './generate-post-migration.mjs';
 import {
-  BLOG_BASE, BLOG_INDEX, ROUTES, SITE, blogLd, headForPage, headForPost,
-  jsonLdForPage, ldGraph, splitTags, url,
+  BLOG_BASE, ROUTES, SITE, blogLd, headForPage, headForPost, headForTopic,
+  isoDate, jsonLdForPage, url,
 } from '../src/lib/seo.js';
+import { TOPICS, postsInTopic, relatedPosts, topicPath, topicsForPost } from '../src/lib/topics.js';
+import {
+  TEMPLATE_PATH, esc, postArticleHtml, postListHtml, renderPage, shellHtml, topicNavHtml,
+} from '../src/lib/render.js';
+import { byNewest, llmsTxt, robotsTxt, rssXml, sitemapXml } from '../src/lib/crawlfiles.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const MIGRATIONS = join(ROOT, 'netlify/database/migrations');
 
-// ── Publication dates ────────────────────────────────────────────────────────
+// ── Publication dates for posts that only exist in git ───────────────────────
 // content/posts.mjs carries no dates: the database stamps published_at when a
 // post's migration runs. The migration folder that first mentions a slug is
 // therefore the closest thing to a publication date available at build time,
@@ -54,114 +69,79 @@ function publicationDates() {
   return dates;
 }
 
-const dates = publicationDates();
-const missingDates = sourcePosts.filter((p) => !dates.has(p.slug));
-
 const wordCount = (text) => String(text).trim().split(/\s+/).length;
 
-// Newest first, matching the order the live feed serves.
-const allPosts = sourcePosts
-  .map((post) => ({
-    ...post,
-    author: SITE.author,
-    read_time: readTime(post.content),
-    word_count: wordCount(post.content),
-    published_at: dates.get(post.slug) ?? null,
-  }))
-  .sort((a, b) => String(b.published_at ?? '').localeCompare(String(a.published_at ?? '')));
+const fromSource = (post, dates) => ({
+  ...post,
+  author: SITE.author,
+  read_time: readTime(post.content),
+  word_count: wordCount(post.content),
+  published_at: dates.get(post.slug) ?? null,
+  updated_at: null,
+});
 
-// ── Escaping ─────────────────────────────────────────────────────────────────
-
-const esc = (s) => String(s ?? '')
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-
-// A literal "</script>" inside JSON-LD would close the block early, and the
-// Unicode line separators are not valid inside a JS string literal.
-const escLd = (obj) => JSON.stringify(obj)
-  .replace(/</g, '\\u003c')
-  .replace(/\u2028/g, '\\u2028')
-  .replace(/\u2029/g, '\\u2029');
-
-// ── Markdown → HTML ──────────────────────────────────────────────────────────
-// Mirrors renderMarkdown() in src/pages/BlogPost.jsx: the same subset of
-// Markdown the posts are written in, so the pre-rendered article and the React
-// article are the same document.
-
-function inline(text) {
-  return esc(text)
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>');
+/** Published posts from the live table, or null when there is no database here. */
+async function loadPublishedFromDb() {
+  if (!process.env.NETLIFY_DATABASE_URL && !process.env.DATABASE_URL) return null;
+  try {
+    const { getDatabase } = await import('@netlify/database');
+    const { sql } = getDatabase();
+    const rows = await sql`
+      SELECT title, slug, excerpt, content, tags, author, read_time, published_at, updated_at
+      FROM posts WHERE status = 'published'
+    `;
+    return rows.map((row) => ({
+      ...row,
+      published_at: isoDate(row.published_at),
+      updated_at: isoDate(row.updated_at),
+      word_count: wordCount(row.content),
+    }));
+  } catch (error) {
+    console.warn(`  warning: could not read posts from the database (${error.message});` +
+      ' falling back to content/posts.mjs');
+    return null;
+  }
 }
 
-function markdownToHtml(text) {
-  return String(text || '').split(/\n\n+/).map((block) => {
-    const trimmed = block.trim();
-    if (!trimmed) return '';
-    if (trimmed.startsWith('## ')) return `<h2>${inline(trimmed.slice(3))}</h2>`;
-    if (trimmed.startsWith('### ')) return `<h3>${inline(trimmed.slice(4))}</h3>`;
-    if (trimmed.startsWith('> ')) return `<blockquote><p>${inline(trimmed.slice(2))}</p></blockquote>`;
-    const lines = trimmed.split('\n');
-    if (lines.every((l) => /^\s*[-*] /.test(l))) {
-      return `<ul>${lines.map((l) => `<li>${inline(l.trim().slice(2))}</li>`).join('')}</ul>`;
-    }
-    return `<p>${inline(trimmed)}</p>`;
-  }).filter(Boolean).join('\n');
+async function loadPosts() {
+  const dates = publicationDates();
+  const source = sourcePosts.map((post) => fromSource(post, dates));
+  const live = await loadPublishedFromDb();
+  if (!live) return { posts: byNewest(source), source: 'content/posts.mjs', dbOnly: 0 };
+
+  // The database wins for anything it knows about — it has the real publication
+  // date and any edit made from /admin. Anything only in git is kept, so a build
+  // that runs before a migration has been applied still pre-renders it.
+  const bySlug = new Map(source.map((p) => [p.slug, p]));
+  for (const row of live) bySlug.set(row.slug, { ...bySlug.get(row.slug), ...row });
+  const dbOnly = live.filter((row) => !source.some((p) => p.slug === row.slug)).length;
+  return { posts: byNewest([...bySlug.values()]), source: 'database + content/posts.mjs', dbOnly };
+}
+
+const { posts: allPosts, source: postSource, dbOnly } = await loadPosts();
+const missingDates = allPosts.filter((p) => !p.published_at);
+
+// A post that matches no topic is unreachable from any hub, which is the one
+// failure this whole structure exists to prevent. Fail the build rather than
+// publish an orphan — the fix is a tag on the post or a tag list in
+// content/topics.mjs.
+const orphans = allPosts.filter((p) => topicsForPost(p).length === 0);
+if (orphans.length) {
+  console.error(
+    `error: ${orphans.length} post(s) match no topic in content/topics.mjs:\n` +
+    orphans.map((p) => `  ${p.slug} [${p.tags}]`).join('\n') +
+    '\nAdd one of their tags to a topic, or retag the post.',
+  );
+  process.exit(1);
 }
 
 // ── HTML shell ───────────────────────────────────────────────────────────────
 
 const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 
-const NAV_LINKS = ROUTES
-  .filter((r) => r.page !== 'Home')
-  .map((r) => `<li><a href="${r.path}">${esc(r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page)}</a></li>`)
-  .join('');
-
-function headTags(head) {
-  const a = head.article;
-  const tags = [
-    `<title>${esc(head.title)}</title>`,
-    `<meta name="description" content="${esc(head.description)}" />`,
-    `<meta name="robots" content="${esc(head.robots)}" />`,
-    `<link rel="canonical" href="${esc(head.canonical)}" />`,
-    `<meta property="og:type" content="${esc(head.ogType)}" />`,
-    `<meta property="og:site_name" content="${esc(SITE.name)}" />`,
-    `<meta property="og:locale" content="${esc(SITE.locale)}" />`,
-    `<meta property="og:title" content="${esc(head.title)}" />`,
-    `<meta property="og:description" content="${esc(head.description)}" />`,
-    `<meta property="og:url" content="${esc(head.canonical)}" />`,
-    `<meta property="og:image" content="${esc(head.image)}" />`,
-    `<meta property="og:image:width" content="${SITE.ogImageWidth}" />`,
-    `<meta property="og:image:height" content="${SITE.ogImageHeight}" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`,
-    `<meta name="twitter:title" content="${esc(head.title)}" />`,
-    `<meta name="twitter:description" content="${esc(head.description)}" />`,
-    `<meta name="twitter:image" content="${esc(head.image)}" />`,
-  ];
-  if (a?.published) tags.push(`<meta property="article:published_time" content="${esc(a.published)}" />`);
-  if (a?.modified) tags.push(`<meta property="article:modified_time" content="${esc(a.modified)}" />`);
-  if (a?.author) tags.push(`<meta property="article:author" content="${esc(a.author)}" />`);
-  for (const tag of a?.tags || []) tags.push(`<meta property="article:tag" content="${esc(tag)}" />`);
-  tags.push(`<script type="application/ld+json" id="ld-json">${escLd(ldGraph(head.jsonLd || []))}</script>`);
-  return tags.join('\n    ');
-}
-
-// Everything the template hard-codes for the homepage is stripped, then replaced
-// with the tags for whichever route is being written.
-function renderPage({ head, body }) {
-  let html = template
-    .replace(/<title>[\s\S]*?<\/title>\s*/, '')
-    .replace(/[ \t]*<meta name="description"[^>]*>\s*/g, '')
-    .replace(/[ \t]*<meta property="og:[^>]*>\s*/g, '')
-    .replace(/[ \t]*<meta name="twitter:[^>]*>\s*/g, '')
-    .replace(/[ \t]*<link rel="canonical"[^>]*>\s*/g, '')
-    .replace(/[ \t]*<script type="application\/ld\+json"[\s\S]*?<\/script>\s*/g, '');
-
-  html = html.replace('</head>', `  ${headTags(head)}\n  </head>`);
-  return html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
-}
+// Kept verbatim for netlify/functions/render-post.js, which fetches it at
+// runtime to render posts published since this build.
+writeFileSync(join(DIST, TEMPLATE_PATH.replace(/^\//, '')), template);
 
 function write(routePath, html) {
   const dir = routePath === '/' ? DIST : join(DIST, routePath.replace(/^\//, ''));
@@ -169,17 +149,7 @@ function write(routePath, html) {
   writeFileSync(join(dir, 'index.html'), html);
 }
 
-// Fallback markup rendered before React mounts. Kept to the page's real heading,
-// its description, and the site's internal links — the same information the head
-// tags carry, never extra keywords the visitor would not see.
-const shell = (heading, lead, extra = '') => `
-      <main>
-        <a href="/">${esc(SITE.name)}</a>
-        <h1>${esc(heading)}</h1>
-        <p>${esc(lead)}</p>
-        ${extra}
-        <nav aria-label="Site"><ul>${NAV_LINKS}</ul></nav>
-      </main>`;
+let written = 0;
 
 // ── Static routes ────────────────────────────────────────────────────────────
 
@@ -192,8 +162,6 @@ const HEADINGS = {
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',
 };
-
-let written = 0;
 
 for (const route of ROUTES) {
   const head = headForPage(route.page);
@@ -208,17 +176,21 @@ for (const route of ROUTES) {
 
   if (route.page === 'LoogoNews') {
     // The post list is fetched from the database at runtime, so without this the
-    // index is an empty page and all 29 posts are unreachable by crawl.
+    // index is an empty page and every post is unreachable by crawl. The topic
+    // hubs go here too: this is the page that links them all.
     head.jsonLd = [...jsonLdForPage('LoogoNews'), blogLd(allPosts)];
-    extra = `<ul>${allPosts.map((p) => `<li><a href="${BLOG_BASE}/${p.slug}">${esc(p.title)}</a> — ${esc(p.excerpt)}</li>`).join('')}</ul>`;
+    extra = `<section><h2>Browse by topic</h2>${topicNavHtml(TOPICS)}</section>${postListHtml(allPosts)}`;
   }
 
-  write(route.path, renderPage({ head, body: shell(HEADINGS[route.page] ?? route.page, route.description, extra) }));
+  write(route.path, renderPage(template, {
+    head,
+    body: shellHtml(HEADINGS[route.page] ?? route.label, route.description, extra),
+  }));
   written += 1;
 }
 
 // The admin console must never be indexed.
-write('/admin', renderPage({
+write('/admin', renderPage(template, {
   head: {
     title: `Admin | ${SITE.name}`,
     description: 'Private administration console.',
@@ -231,25 +203,35 @@ write('/admin', renderPage({
   body: '',
 }));
 
+// ── Topic hubs ───────────────────────────────────────────────────────────────
+
+let hubs = 0;
+for (const topic of TOPICS) {
+  const inTopic = postsInTopic(topic, allPosts);
+  const head = headForTopic(topic, allPosts);
+  const siblings = TOPICS.filter((t) => t.slug !== topic.slug);
+  const body = `
+      <main>
+        <nav aria-label="Breadcrumb"><a href="/">${esc(SITE.name)}</a> / <a href="/loogonews">LoogoNews</a> / <span aria-current="page">${esc(topic.name)}</span></nav>
+        <h1>${esc(topic.heading)}</h1>
+        ${topic.intro.map((para) => `<p>${esc(para)}</p>`).join('\n        ')}
+        <section><h2>${inTopic.length} posts on ${esc(topic.name.toLowerCase())}</h2>${postListHtml(inTopic)}</section>
+        <section><h2>Other topics</h2>${topicNavHtml(siblings)}</section>
+        <p><a href="/grow">Marketing systems for Central Florida service businesses</a></p>
+        <p><a href="/loogonews">All LoogoNews posts</a></p>
+      </main>`;
+  write(topicPath(topic.slug), renderPage(template, { head, body }));
+  hubs += 1;
+  written += 1;
+}
+
 // ── Posts ────────────────────────────────────────────────────────────────────
 
 for (const post of allPosts) {
-  const head = headForPost(post);
-  const tags = splitTags(post.tags);
-  const body = `
-      <main>
-        <nav aria-label="Breadcrumb"><a href="/">${esc(SITE.name)}</a> / <a href="${BLOG_INDEX}">LoogoNews</a></nav>
-        <article>
-          <h1>${esc(post.title)}</h1>
-          <p><span>${esc(post.author)}</span>${post.published_at ? ` · <time datetime="${esc(post.published_at)}">${esc(post.published_at.slice(0, 10))}</time>` : ''} · ${post.read_time} min read</p>
-          ${tags.length ? `<p>${tags.map((t) => esc(t)).join(', ')}</p>` : ''}
-          <p>${esc(post.excerpt)}</p>
-          ${markdownToHtml(post.content)}
-        </article>
-        <p><a href="${BLOG_INDEX}">Back to LoogoNews</a></p>
-        <nav aria-label="Site"><ul>${NAV_LINKS}</ul></nav>
-      </main>`;
-  write(`${BLOG_BASE}/${post.slug}`, renderPage({ head, body }));
+  write(`${BLOG_BASE}/${post.slug}`, renderPage(template, {
+    head: headForPost(post),
+    body: postArticleHtml(post, { related: relatedPosts(post, allPosts) }),
+  }));
   written += 1;
 }
 
@@ -257,7 +239,7 @@ for (const post of allPosts) {
 // Served with a real 404 status (see netlify.toml), so an unknown URL is no
 // longer a 200-status copy of the homepage.
 
-writeFileSync(join(DIST, '404.html'), renderPage({
+writeFileSync(join(DIST, '404.html'), renderPage(template, {
   head: {
     title: `Page not found | ${SITE.name}`,
     description: 'That page isn’t here. The link may be out of date, or the page may have moved.',
@@ -267,119 +249,25 @@ writeFileSync(join(DIST, '404.html'), renderPage({
     image: url(SITE.ogImage),
     jsonLd: [],
   },
-  body: shell('That page isn’t here.', 'The link may be out of date, or the page may have moved.'),
+  body: shellHtml('That page isn’t here.', 'The link may be out of date, or the page may have moved.'),
 }));
 
-// ── robots.txt ───────────────────────────────────────────────────────────────
+// ── Crawl files ──────────────────────────────────────────────────────────────
+// Also served from netlify/functions/crawl.js so they stay current between
+// deploys; these are the same bytes, written for any host without the function.
 
-writeFileSync(join(DIST, 'robots.txt'), `# ${SITE.name}
-User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /.netlify/
-
-Sitemap: ${url('/sitemap.xml')}
-`);
-
-// ── sitemap.xml ──────────────────────────────────────────────────────────────
-
-const buildDate = new Date().toISOString();
-
-const urlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
-    <loc>${esc(loc)}</loc>
-    <lastmod>${esc(lastmod)}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
-
-const newestPost = allPosts[0]?.published_at ?? buildDate;
-
-const sitemapEntries = [
-  ...ROUTES.map((r) => urlEntry({
-    loc: url(r.path),
-    lastmod: r.page === 'LoogoNews' ? newestPost : buildDate,
-    changefreq: r.changefreq,
-    priority: r.priority,
-  })),
-  ...allPosts.map((p) => urlEntry({
-    loc: url(`${BLOG_BASE}/${p.slug}`),
-    lastmod: p.published_at ?? buildDate,
-    changefreq: 'monthly',
-    priority: '0.7',
-  })),
-];
-
-writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapEntries.join('\n')}
-</urlset>
-`);
-
-// ── rss.xml ──────────────────────────────────────────────────────────────────
-// The posts are CC BY 4.0, so a feed is worth having: it is how aggregators,
-// newsletter tools, and AI crawlers pick content up without scraping.
-
-const rfc822 = (iso) => new Date(iso ?? buildDate).toUTCString();
-
-const rssItems = allPosts.slice(0, 30).map((p) => `    <item>
-      <title>${esc(p.title)}</title>
-      <link>${esc(url(`${BLOG_BASE}/${p.slug}`))}</link>
-      <guid isPermaLink="true">${esc(url(`${BLOG_BASE}/${p.slug}`))}</guid>
-      <pubDate>${rfc822(p.published_at)}</pubDate>
-      <dc:creator>${esc(p.author)}</dc:creator>
-${splitTags(p.tags).map((t) => `      <category>${esc(t)}</category>`).join('\n')}
-      <description>${esc(p.excerpt)}</description>
-    </item>`).join('\n');
-
-writeFileSync(join(DIST, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
-    <title>LoogoNews — ${esc(SITE.name)}</title>
-    <link>${esc(url(BLOG_INDEX))}</link>
-    <atom:link href="${esc(url('/rss.xml'))}" rel="self" type="application/rss+xml" />
-    <description>Operational guides on lead follow-up, automation, and reputation for local service businesses.</description>
-    <language>en-us</language>
-    <copyright>CC BY 4.0 — ${esc(SITE.name)}</copyright>
-    <lastBuildDate>${rfc822(newestPost)}</lastBuildDate>
-${rssItems}
-  </channel>
-</rss>
-`);
-
-// ── llms.txt ─────────────────────────────────────────────────────────────────
-// Every post is already published under CC BY 4.0 and asks only for a credit.
-// Saying so in the format assistants look for makes the licence machine-readable
-// instead of something buried in a footer.
-
-writeFileSync(join(DIST, 'llms.txt'), `# ${SITE.name}
-
-> ${SITE.description}
-
-${SITE.name} builds and runs marketing systems for local service businesses —
-CRM, missed-call text-back, follow-up automation, reputation management, and
-local SEO — with setup and ongoing management handled for the owner.
-
-All LoogoNews articles are published under CC BY 4.0. You may quote, translate,
-and republish them; please credit ${SITE.name} and link back to the source URL.
-
-## Pages
-
-${ROUTES.map((r) => `- [${r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page}](${url(r.path)}): ${r.description}`).join('\n')}
-
-## Articles
-
-${allPosts.map((p) => `- [${p.title}](${url(`${BLOG_BASE}/${p.slug}`)}): ${p.excerpt}`).join('\n')}
-
-## Feeds
-
-- [RSS](${url('/rss.xml')})
-- [Sitemap](${url('/sitemap.xml')})
-`);
+writeFileSync(join(DIST, 'robots.txt'), robotsTxt());
+writeFileSync(join(DIST, 'sitemap.xml'), sitemapXml(allPosts));
+writeFileSync(join(DIST, 'rss.xml'), rssXml(allPosts));
+writeFileSync(join(DIST, 'llms.txt'), llmsTxt(allPosts));
 
 console.log(
-  `SEO assets: ${written} pre-rendered pages (${ROUTES.length} static, ${allPosts.length} posts), ` +
+  `SEO assets from ${postSource}: ${written} pre-rendered pages ` +
+  `(${ROUTES.length} static, ${hubs} topic hubs, ${allPosts.length} posts` +
+  `${dbOnly ? `, ${dbOnly} of them published from /admin` : ''}), ` +
   `sitemap.xml, rss.xml, robots.txt, llms.txt, 404.html`,
 );
 if (missingDates.length) {
-  console.warn(`  warning: no migration found for ${missingDates.length} slug(s); using build time as lastmod: ${missingDates.map((p) => p.slug).join(', ')}`);
+  console.warn(`  warning: no publication date for ${missingDates.length} slug(s); ` +
+    `lastmod omitted: ${missingDates.map((p) => p.slug).join(', ')}`);
 }
