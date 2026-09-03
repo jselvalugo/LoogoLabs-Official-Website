@@ -1149,4 +1149,272 @@ Sit down before the season is fully over, while you still remember which questio
 
 Map the eight weeks that matter, decide what goes out each week, and schedule it there and then. The version of you who is elbow-deep in a pump housing next May is not going to write a word of it.`,
   },
+  {
+    slug: `moving-company-referral-partners`,
+    title: `Your Best Referral Source Isn't a Happy Customer`,
+    excerpt: `A delighted customer refers you once every several years. A realtor who trusts you refers you twice a month.`,
+    tags: `Referral Systems, Moving Companies, Partnerships`,
+    content: `A delighted customer refers you roughly once every seven years, because that is how often the people around her happen to move.
+
+A realtor who trusts you refers you twice a month.
+
+That is the entire argument for where a moving company should put its referral effort, and most owners have it pointed the wrong way — a customer referral program with a gift card attached, and nothing at all aimed at the handful of businesses who meet their next customer before they do.
+
+## The customer referral math doesn't work in moving
+
+I'm not against asking happy customers. It costs nothing and it occasionally lands.
+
+But look at the frequency. Moving is a rare, stressful, expensive purchase. Your customer loved you in April and will have no natural opening to mention you until somebody in her circle moves, which might be next month or might be never. You cannot build a pipeline out of an event you have no way to schedule.
+
+Partners are structurally different. A realtor closes deals continuously. A property manager turns units over every month. A storage facility watches people load boxes all day. Their opportunity to refer resets constantly, and that is the only property that matters here.
+
+## Who is already standing next to your customer
+
+Build the list specific to your market:
+
+- Residential realtors, particularly the ones doing volume in the neighborhoods you cover
+- Property managers and apartment complexes handling turnover
+- Self-storage facilities, whose customers are mid-move by definition
+- Senior living communities and downsizing specialists
+- Home stagers and estate attorneys
+
+Every one of these people is in a conversation about moving before you are. That's the qualification. Nothing else on a networking list matters as much.
+
+## What makes a partner refer you a second time
+
+This is where most attempts quietly die. An owner takes a realtor for coffee, hands over a stack of cards, hears nothing, and concludes that partnerships don't work.
+
+A partner refers you again based on one thing: what they learned about the first person they sent. If they never heard how it went, the lesson was that referring you produces silence — and silence is not a reason to do something twice.
+
+So the mechanics matter more than the relationship does:
+
+- The partner is told when their referral books, not only if it closes
+- They hear briefly how the job went, without having to ask
+- The referral is tracked to them by name, so it never dissolves into somebody recommended us
+
+That loop is the program. The gift card is optional. The feedback isn't.
+
+### The awkward question about money
+
+Referral fees are routine in some of these relationships and prohibited or frowned upon in others, and it varies by state and by license. Ask directly instead of assuming either way.
+
+A realtor who can't accept a fee can almost always accept being made to look good in front of her own client, which tends to be worth more to her anyway.
+
+## Make a list of ten businesses
+
+Not ten people to network with. Ten businesses whose customers are structurally about to need a mover.
+
+Then work out, for each one, how they would find out what happened to the first person they sent you. If you can't answer that for a name on your list, you don't have a partner there yet. You have a coffee meeting.`,
+  },
+  {
+    slug: `bookkeeping-client-onboarding-first-week`,
+    title: `The Client Signed Three Weeks Ago and You Still Can't Start`,
+    excerpt: `Nothing sours a new bookkeeping engagement faster than the document chase that begins the moment the contract is signed.`,
+    tags: `Client Onboarding, Bookkeeping & Accounting, Workflow Automation`,
+    content: `Signed on the third. It's the twenty-fourth. You still don't have read-only bank access, last year's return, or the payroll login — and the client believes you have been working on her books for three weeks.
+
+That gap is where bookkeeping engagements go wrong, and almost none of it is about accounting.
+
+## The gap between sold and started
+
+Everybody puts their effort into winning the client. Very few firms have designed what happens in the seventy-two hours afterward, which is exactly when a new client is most willing to do what you ask.
+
+Enthusiasm has a half-life. On day one she is motivated, slightly anxious about her books, and will go hunting for a login because she just decided to fix this. By day twenty she is back to running her business and your email is one of forty.
+
+You will never get a better shot at her attention than the day after she signs. Most firms spend it sending a welcome email with a PDF attached.
+
+## Why the chase gets harder the longer it runs
+
+Every unanswered request makes the next one more awkward to send. The language softens, the follow-ups space out, you start apologizing for chasing.
+
+Meanwhile the engagement hasn't started, the first month's fee is landing for work you can't perform, and the client's private opinion of your firm is being formed entirely out of an inbox full of requests. By the time the documents arrive you have spent all your goodwill on logistics.
+
+## What an onboarding sequence has to do
+
+- Send one request at a time, in the order the work actually needs them, rather than a fourteen-item checklist on day one
+- Make each request a single action — one link, one upload, one specific login — not a paragraph describing five things
+- Follow up on a schedule automatically, so nobody has to feel rude about it
+- Show her what's still outstanding in one place, instead of making her reconstruct it from four emails
+
+### The order matters more than the tooling
+
+Ask first for the thing that unblocks the most work. For most engagements that is bank access, not the prior year return.
+
+A fourteen-item list on day one gets triaged into later, because it looks like an afternoon of work. One clear request gets done on a phone in a parking lot.
+
+## The part that's a boundary problem, not a workflow one
+
+I'll be straight that automation only carries this so far.
+
+If a client goes quiet for three weeks, no sequence rescues that. What rescues it is having said in writing, on day one, what happens if the documents aren't in by a specific date. Most firms never set that, because it feels ungracious in week one — and then absorb the cost of it in week five.
+
+A good sequence makes the asking effortless. It doesn't make that decision for you.
+
+## Time your last five onboardings
+
+Take your five most recent clients and measure the days between contract signed and first productive hour of work.
+
+If the average is longer than a week, the constraint isn't your capacity or your pricing. Nobody designed the handoff between the sale and the work, and it is costing you the best three days you will ever have with that client.`,
+  },
+  {
+    slug: `cleaning-company-multi-location-reporting`,
+    title: `The Average Is Hiding Your Worst Location`,
+    excerpt: `Roll three branches into one dashboard and the numbers look fine. On average, they almost always are.`,
+    tags: `Reporting & Dashboards, Cleaning Companies, Multi-Location`,
+    content: `If one of your branches stopped returning calls tomorrow, how long would it take you to find out?
+
+For most multi-location owners I ask, the honest answer is about a month — when revenue comes in soft and somebody finally goes looking for a reason.
+
+## An average is a device for hiding your worst performer
+
+Three locations. One answers 95% of its calls, one answers 80%, one answers 55%. The dashboard reports 77% and nobody panics, because 77% doesn't look like an emergency.
+
+There is no such thing as a 77% customer experience. Every caller reached exactly one branch, and a third of them reached the bad one. The average describes a company that doesn't exist.
+
+This gets worse as you add locations, which is precisely the opposite of what owners expect better reporting to do for them.
+
+## What has to be split by location
+
+Every number a local manager can personally influence:
+
+- Calls answered and missed, by hour of day
+- Speed to first response on new inquiries
+- Booking rate from inquiry to scheduled job
+- Reschedules and cancellations
+- Review count and rating over the last 90 days
+- Revenue per crew, not just the branch total
+
+### What can stay company-wide
+
+Marketing spend by channel, brand-level reputation, overall payroll — anything no single manager owns or can move on her own.
+
+The test is simple. If a location manager could change the number by doing her job differently, she needs to see her own version of it every week.
+
+## Comparison does something a target can't
+
+Here's the part that surprised me the first few times I set this up.
+
+Telling a manager she is at 55% against a target of 90% produces a defensive conversation about how her market is different, her staff is newer, her phones are busier.
+
+Showing her that the branch fifteen minutes away is at 95%, with the same script, the same pricing and the same weather, produces a completely different conversation — usually one where she is the one asking what they do differently.
+
+Rankings are uncomfortable and they work, as long as you are comparing things that are genuinely comparable.
+
+## The failure mode: numbers that stop being true
+
+Once branches know they're measured, some of them begin managing the measurement instead of the work.
+
+Jobs get marked complete before they are. Inquiries that were never going to book get deleted rather than marked lost. The dashboard improves while the business doesn't.
+
+The defense isn't more metrics. It is choosing numbers that are hard to fake — call recordings behind the answer rate, review counts that originate outside your system, revenue that has to reconcile against what was actually invoiced.
+
+## Look at your worst location, not your average
+
+Open whatever reporting you have and split a single number by location for the last thirty days. Call answer rate is the easiest one to start with.
+
+Then ignore the company figure completely and look only at the lowest branch. That number is what a third of your customers experienced this month, and it's the only one on the page worth doing anything about.`,
+  },
+  {
+    slug: `tree-service-system-adoption`,
+    title: `Nobody on Your Crew Is Using the System You Paid For`,
+    excerpt: `Software doesn't fail in the trades because it's bad. It fails because it was designed around the person who bought it.`,
+    tags: `Team Adoption, Tree Service, Field Operations`,
+    content: `The estimate is in the system. The job notes are on a legal pad on the dash of the chip truck. Photos of the split limb are in a foreman's camera roll. The change order the homeowner agreed to is a voice memo nobody else has heard.
+
+You are paying every month for software holding about a third of your operation, and the missing two thirds are the parts that decide whether a job goes right or turns into an argument.
+
+## Bought by one person, used by another
+
+This is the pattern in every trade running field crews, and tree service has it worse than most.
+
+The person who chose the system sat at a desk, looked at pipelines and reports, and judged it on what it could show him. The people who have to feed it are standing in a yard in gloves, next to a running chipper, holding a phone in a rugged case they can barely see in direct sun.
+
+None of that second job was part of the buying decision. So the tool gets rated useful by one person and impossible by five — and the five win, because they are the ones holding the information.
+
+## What hard to use means on a job site
+
+It has very little to do with training. It's the number of taps between finishing something and having it recorded.
+
+### Three things that decide whether a crew uses it
+
+- Can it be done one-handed, standing up, in under fifteen seconds
+- Does it work with no signal on the property and sync when the truck hits the road
+- Does entering it once mean nobody gets asked about it again over the radio
+
+If any of those is a no, your foreman keeps the legal pad. He isn't being difficult. He's being efficient with the tool that actually works at arm's length.
+
+## The workaround is the most useful feedback you'll get
+
+When a crew routes around the system, that isn't a discipline problem to be met with a policy. It is free, specific, accurate feedback about the system, and most owners throw it away.
+
+The legal pad tells you which fields are too slow. The voice memos tell you which record has no fast way in. The camera roll tells you photo upload is failing on a rural connection.
+
+I would rather have that than run a training session, because training mostly teaches people to tolerate friction — and the tolerance evaporates the week the season gets busy.
+
+## What I'd fix before buying anything else
+
+Pick the one thing your crews are supposed to record and reliably don't. Usually it's job completion or on-site photos.
+
+Make that one thing reachable in a single tap from a phone's home screen, then delete every field on it that isn't legally or operationally required. Not fewer screens — fewer fields. Crews are rarely refusing to record the job. They're refusing to fill in eleven boxes about it in the sun.
+
+## Watch somebody use it on a Tuesday
+
+Not a demo and not a meeting. Stand on a job site and watch a foreman try to close out a job with gloves on, in daylight, with the saw running twenty feet away.
+
+Two minutes of that tells you whether you have an adoption problem or a design problem. It is nearly always the second one.`,
+  },
+  {
+    slug: `garage-door-website-conversion`,
+    title: `Your Website's Only Job Is to Start a Conversation`,
+    excerpt: `Most contractor sites are a brochure with a form at the bottom, aimed at somebody whose car is trapped in the garage right now.`,
+    tags: `Website Conversion, Garage Door Repair, Lead Capture`,
+    content: `Her car is behind a door that won't open and she is now late for work.
+
+She types garage door repair near me into a phone held at an angle in a cold driveway, and taps the first three results. She is not evaluating your craftsmanship, your years in business, or the photo of your family truck. She wants two things: can you come today, and how do I reach you in one tap.
+
+Most contractor websites answer neither one on the first screen.
+
+## She isn't browsing
+
+The distance between what these sites are built for and what they get used for is enormous.
+
+They're structured like a brochure — an about section, a gallery, a paragraph on values, a service list, and a contact form somewhere near the bottom. That layout assumes a visitor comparing companies at leisure on a laptop.
+
+Your actual visitor is in a specific, mildly stressful situation, on a phone, with about a fifteen-second attention budget. Everything sitting above your phone number is a delay she didn't ask for.
+
+## What a brochure site asks of her
+
+It asks her to scroll past your history, work out which service category she belongs in, fill in four fields including an email address, and then wait an unspecified length of time to hear from a stranger.
+
+Her alternative is tapping the next search result and speaking to a person. That competition isn't close, and you lose it before she has read a word about your workmanship.
+
+### What the first screen has to carry
+
+- A phone number that dials on tap, large, at the top — not folded into a menu icon
+- A one-line answer to whether you come out today, with your actual hours
+- A text option, because plenty of people would rather send a photo of a snapped spring than describe it out loud
+- Your service area named by town or neighborhood, so she isn't left guessing
+
+Everything else — the gallery, the reviews, financing, the about page — belongs further down. It isn't useless. It just isn't what the first fifteen seconds are for.
+
+## A channel is only as good as the answer behind it
+
+One warning, because this is where the money actually gets wasted.
+
+A chat widget nobody staffs is worse than no chat widget. So is a form promising a fast response that produces one the following morning. You have taken somebody who was willing to reach out and taught her that reaching out to you accomplishes nothing.
+
+If you can't cover a channel, take it off the site. An honest line saying you answer the phone from seven to seven beats an unanswered chat bubble every time.
+
+## Where this stops being a website problem
+
+None of it matters if the phone rings out.
+
+I have watched companies rebuild a site, double the calls it generates, and see no change in booked jobs — because the new calls arrived while both techs were up ladders and nobody was there to pick up. The site's job is to start the conversation. Something still has to be waiting on the other end of it.
+
+## Open your own site on your phone
+
+Not your laptop. Your phone, outdoors, in daylight, one-handed, the way she will.
+
+Time how long it takes to reach a tappable phone number, and see whether anything on that first screen tells you if they come out today. More than one tap or one scroll and you've found the leak — and it is a far cheaper fix than another marketing campaign.`,
+  },
 ];

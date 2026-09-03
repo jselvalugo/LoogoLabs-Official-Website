@@ -38,3 +38,8 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-02 | physical-therapy-home-program-discharge | Physical therapy | Courses & content — post-discharge programs
 - 2026-09-02 | self-storage-message-testing | Self-storage | A/B testing & message optimization
 - 2026-09-02 | pool-service-seasonal-content-calendar | Pool service | Social scheduling & seasonal content calendar
+- 2026-09-03 | moving-company-referral-partners | Moving companies | Referral & partner programs
+- 2026-09-03 | bookkeeping-client-onboarding-first-week | Bookkeeping & accounting | Client onboarding & document collection
+- 2026-09-03 | cleaning-company-multi-location-reporting | Cleaning companies | Multi-location reporting & rollups
+- 2026-09-03 | tree-service-system-adoption | Tree service | Team adoption of the system
+- 2026-09-03 | garage-door-website-conversion | Garage door repair | Website conversion & lead capture
