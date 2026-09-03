@@ -1,5 +1,8 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
+// Shared with the FAQPage schema in lib/seo.js: Google requires the answer text
+// in structured data to match what the visitor actually reads on the page.
+import { GROW_FAQ as faqs } from '../lib/content';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -79,16 +82,6 @@ const packages = [
     includes: ['Everything in Growth', 'Facebook & Google Ads management (up to $5k ad spend)', 'Landing page & funnel builds', 'AI-powered chat widget on your website', 'Weekly reporting calls', 'Dedicated account manager'],
     cta: 'Start with Dominate',
   },
-];
-
-const faqs = [
-  ['Do I need any tech experience?', 'None. We build everything, set everything up, and manage it for you. You get a login to see your results, and we handle the rest. If you can read a report, you\'re more than qualified.'],
-  ['How long until I see results?', 'Most clients see their first automated leads and review requests go out within 5–7 business days of onboarding. Real results — more leads, higher review counts, better Google rankings — typically show within 60 days.'],
-  ['What kinds of businesses do you work with?', 'We specialize in Central Florida service businesses: home services (HVAC, plumbing, roofing, landscaping), healthcare and wellness (dentists, chiropractors, med spas), professional services, restaurants, and local retail.'],
-  ['Is there a contract?', 'We work month-to-month. No long-term lock-in. We keep your business because we earn it every month — not because you\'re trapped in a contract.'],
-  ['What makes this different from hiring a marketing agency?', 'Most agencies charge you for strategy, meetings, and deliverables you can\'t track. We build systems that run without manual effort and report on real metrics — leads, bookings, revenue — not impressions and reach.'],
-  ['Do you run ads too?', 'Yes, but only on our Dominate plan. We manage Facebook and Google Ads as part of a connected system — meaning every ad click is tracked through to a lead and, ultimately, a sale.'],
-  ['What if I already have a website or CRM?', 'We work alongside existing tools or replace them depending on what you have. During our free strategy call, we\'ll assess what you\'re already using and tell you honestly what to keep and what to replace.'],
 ];
 
 const testimonials = [

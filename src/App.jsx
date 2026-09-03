@@ -6,22 +6,25 @@ import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import NotFound from './pages/NotFound';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Pricing from './pages/Pricing';
 import { BOOKING_URL, openBooking } from './lib/booking';
+import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
 
 function getInitialState() {
-  const path = window.location.pathname;
-  if (path === '/admin') return { page: 'Admin', slug: null };
-  if (path.startsWith('/news/')) return { page: 'BlogPost', slug: path.slice(6) };
-  if (path === '/privacy') return { page: 'Privacy', slug: null };
-  if (path === '/terms') return { page: 'Terms', slug: null };
-  if (window.location.hash === '#grow') return { page: 'GrowCFL', slug: null };
-  return { page: 'Home', slug: null };
+  // The Central Florida page used to live behind #grow, which is not a URL a
+  // search engine can index. It has a real path now; honour the old fragment so
+  // links already in the wild still land somewhere.
+  if (window.location.hash === '#grow') {
+    window.history.replaceState({}, '', pathForPage('GrowCFL'));
+    return { page: 'GrowCFL', slug: null };
+  }
+  return routeForPath(window.location.pathname);
 }
 
 function App() {
@@ -29,30 +32,69 @@ function App() {
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
 
+  const navigate = React.useCallback((target, param, { push = true } = {}) => {
+    const slug = target === 'BlogPost' ? param : null;
+    setPage(target);
+    setPostSlug(slug);
+    if (push) {
+      const next = pathForPage(target, slug);
+      if (next !== window.location.pathname) window.history.pushState({}, '', next);
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  // Back and forward buttons previously did nothing: the URL changed but the
+  // view did not, so a visitor (and any crawler following history) got stuck.
+  React.useEffect(() => {
+    const onPop = () => {
+      const next = routeForPath(window.location.pathname);
+      setPage(next.page);
+      setPostSlug(next.slug);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // A post's title and description depend on data BlogPost fetches, so it sets
+  // its own head once the post arrives. Everything else is known up front.
+  React.useEffect(() => {
+    if (page === 'BlogPost' || page === 'Admin') return;
+    applyHead(headForPage(page));
+  }, [page]);
+
+  // Internal links are now real hrefs so crawlers can follow them. Intercept the
+  // clicks that stay on the site and route them without a reload; let modified
+  // clicks, new tabs, and external links behave normally.
+  const handleLinkClick = React.useCallback((e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const anchor = e.target.closest('a[href]');
+    if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+
+    const href = anchor.getAttribute('href');
+    if (href === '#' || href.startsWith('#')) { e.preventDefault(); return; }
+
+    const dest = new URL(anchor.href, window.location.origin);
+    if (dest.origin !== window.location.origin) return;
+
+    const next = routeForPath(dest.pathname);
+    if (next.page === 'NotFound') return;
+    e.preventDefault();
+    navigate(next.page, next.slug);
+  }, [navigate]);
+
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
 
-  function handleNavigate(target, param) {
-    if (target === 'BlogPost' && param) {
-      setPostSlug(param);
-      setPage('BlogPost');
-      window.history.pushState({}, '', `/news/${param}`);
-    } else {
-      setPage(target);
-      window.history.pushState({}, '', target === 'Home' ? '/' : `/${target.toLowerCase()}`);
-    }
-  }
-
   const nav = ['Home', 'Mission', 'Pricing', 'LoogoNews'];
   let body;
-  if (page === 'Home') body = <Home onNavigate={handleNavigate} />;
-  else if (page === 'Mission') body = <Mission onNavigate={handleNavigate} />;
-  else if (page === 'Pricing') body = <Pricing onNavigate={handleNavigate} />;
-  else if (page === 'LoogoNews') body = <Blog onNavigate={handleNavigate} />;
-  else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={handleNavigate} />;
-  else if (page === 'Privacy') body = <Privacy onNavigate={handleNavigate} />;
-  else if (page === 'Terms') body = <Terms onNavigate={handleNavigate} />;
-  else body = <Home onNavigate={handleNavigate} />;
+  if (page === 'Home') body = <Home onNavigate={navigate} />;
+  else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
+  else if (page === 'Pricing') body = <Pricing onNavigate={navigate} />;
+  else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
+  else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
+  else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
+  else if (page === 'Terms') body = <Terms onNavigate={navigate} />;
+  else body = <NotFound onNavigate={navigate} />;
 
   return (
     <div>
@@ -78,18 +120,18 @@ function App() {
         Book a free strategy call
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
-      <NavBar items={nav} active={page} onNavigate={handleNavigate}
+      <NavBar items={nav} active={page} onNavigate={navigate}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
       />
-      <div onClick={e => { if (e.target.closest('a') && !e.target.closest('nav')) e.preventDefault(); }}>{body}</div>
+      <div onClick={handleLinkClick}>{body}</div>
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
           { title: 'Company', links: ['Mission', 'Book a Call'] },
-          { title: 'Platform', links: ['Pricing', 'LoogoNews'] },
+          { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
         ]}
-        onNavigate={p => handleNavigate(p === 'Launch notes' ? 'LoogoNews' : p)}
-        onAdmin={() => setPage('Admin')} />
+        onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
+        onAdmin={() => navigate('Admin')} />
     </div>
   );
 }

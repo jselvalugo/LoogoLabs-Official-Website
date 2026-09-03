@@ -1,14 +1,14 @@
 import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
+import { pathForPage, routeMeta } from '../../lib/seo';
 
 const pageMap = {
   'Mission': 'Mission',
   'Pricing': 'Pricing',
   'LoogoNews': 'LoogoNews',
+  'Central Florida': 'GrowCFL',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
-  'PropIQ': 'Products',
-  'CartCaddy': 'Products',
 };
 
 const externalLinks = {
@@ -34,10 +34,12 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
                 if (external)
                   return <a key={l} href={external} target="_blank" rel="noopener noreferrer"
                     style={{ fontSize: 14, color: 'var(--ink-200)', textDecoration: 'none', borderBottom: 'none' }}>{l}</a>;
-                if (target && onNavigate)
-                  return <button key={l} onClick={() => { onNavigate(target); window.scrollTo(0, 0); }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left',
-                      fontSize: 14, color: 'var(--ink-200)', fontFamily: 'var(--font-body)' }}>{l}</button>;
+                // Real anchors, not buttons: the footer is the site-wide internal
+                // link graph, and a crawler cannot follow an onClick handler.
+                if (target && routeMeta(target))
+                  return <a key={l} href={pathForPage(target)}
+                    onClick={e => { e.preventDefault(); onNavigate && onNavigate(target); window.scrollTo(0, 0); }}
+                    style={{ fontSize: 14, color: 'var(--ink-200)', textDecoration: 'none' }}>{l}</a>;
                 return <span key={l} style={{ fontSize: 14, color: 'var(--ink-400)' }}>{l}</span>;
               })}
             </div>

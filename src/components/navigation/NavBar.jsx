@@ -1,4 +1,5 @@
 import React from 'react';
+import { pathForPage } from '../../lib/seo';
 
 function NavBar({ items = [], active, onNavigate, cta, style }) {
   const [open, setOpen] = React.useState(false);
@@ -19,19 +20,25 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', height: '100%', padding: '0 24px',
         display: 'flex', alignItems: 'center', gap: 32, position: 'relative' }}>
 
-        {/* Logo */}
-        <img
-          src="/logo.png"
-          alt="Loogo Labs"
-          onClick={() => handleNav('Home')}
-          style={{ height: 36, width: 'auto', flexShrink: 0, cursor: 'pointer' }}
-        />
+        {/* Logo — a real link so crawlers see a route back to the homepage */}
+        <a href={pathForPage('Home')} aria-label="Loogo Labs — home"
+          onClick={e => { e.preventDefault(); handleNav('Home'); }}
+          style={{ display: 'flex', flexShrink: 0 }}>
+          <img
+            src="/logo.png"
+            alt="Loogo Labs"
+            width="120"
+            height="36"
+            style={{ height: 36, width: 'auto', cursor: 'pointer' }}
+          />
+        </a>
 
         <nav className="ll-nav-links">
           {items.map(it => {
             const on = it === active;
             return (
-              <a key={it} href="#" onClick={e => { e.preventDefault(); handleNav(it); }}
+              <a key={it} href={pathForPage(it)} aria-current={on ? 'page' : undefined}
+                onClick={e => { e.preventDefault(); handleNav(it); }}
                 style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase',
                   textDecoration: 'none', paddingBottom: 2,
                   color: on ? 'var(--ink-900)' : 'var(--ink-500)',
@@ -56,7 +63,8 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
         <div className={`ll-nav-mobile${open ? ' open' : ''}`}
           style={{ background: 'var(--paper-200)', borderBottom: '1px solid rgba(38,53,23,0.15)' }}>
           {items.map(it => (
-            <a key={it} href="#" onClick={e => { e.preventDefault(); handleNav(it); }}
+            <a key={it} href={pathForPage(it)} aria-current={it === active ? 'page' : undefined}
+              onClick={e => { e.preventDefault(); handleNav(it); }}
               style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase',
                 textDecoration: 'none', color: it === active ? 'var(--ink-900)' : 'var(--ink-500)',
                 padding: '12px 0', borderBottom: '1px solid rgba(38,53,23,0.08)' }}>{it}</a>
