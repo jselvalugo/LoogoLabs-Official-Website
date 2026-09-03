@@ -14,7 +14,12 @@ const pageMap = {
 const externalLinks = {
   'Distillr': 'https://www.distillrsoftware.com',
   'Book a Call': BOOKING_URL,
+  'Facebook': 'https://www.facebook.com/loogolabs',
 };
+
+// Profile links corroborate the sameAs entries in the Organization schema, so
+// they are followable rather than nofollowed.
+const PROFILE_LINKS = new Set(['Facebook']);
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operational software for underserved industries', copyright = '© 2026 Loogo Labs', style, onNavigate, onAdmin }) {
   return (
@@ -32,7 +37,8 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
                 const external = externalLinks[l];
                 const target = pageMap[l];
                 if (external)
-                  return <a key={l} href={external} target="_blank" rel="noopener noreferrer"
+                  return <a key={l} href={external} target="_blank"
+                    rel={PROFILE_LINKS.has(l) ? 'noopener noreferrer me' : 'noopener noreferrer'}
                     style={{ fontSize: 14, color: 'var(--ink-200)', textDecoration: 'none', borderBottom: 'none' }}>{l}</a>;
                 // Real anchors, not buttons: the footer is the site-wide internal
                 // link graph, and a crawler cannot follow an onClick handler.

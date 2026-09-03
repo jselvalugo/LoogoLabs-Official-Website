@@ -68,8 +68,11 @@ export const GROW_FAQ = [
   ['What if I already have a website or CRM?', 'We work alongside existing tools or replace them depending on what you have. During our free strategy call, we’ll assess what you’re already using and tell you honestly what to keep and what to replace.'],
 ];
 
-// Service area for the Central Florida landing page, used for LocalBusiness schema.
+// Service area for the Central Florida landing page, used for the areaServed
+// node in the LocalBusiness schema. This list is the whole geographic signal —
+// see localBusinessLd() in lib/seo.js for why there is no street address.
 export const SERVICE_AREA = [
-  'Orlando', 'Kissimmee', 'Lake Mary', 'Winter Park', 'Sanford',
-  'Altamonte Springs', 'Oviedo', 'Clermont', 'Apopka', 'Central Florida',
+  'Celebration', 'Kissimmee', 'Orlando', 'St. Cloud', 'Winter Garden',
+  'Clermont', 'Winter Park', 'Lake Mary', 'Sanford', 'Altamonte Springs',
+  'Oviedo', 'Apopka', 'Central Florida',
 ];

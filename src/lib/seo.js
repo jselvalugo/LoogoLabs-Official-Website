@@ -24,7 +24,13 @@ export const SITE = {
   description:
     'One platform to launch, grow, and automate your business — CRM, follow-up automation, reputation management, and marketing, set up and run for you.',
   tagline: 'Marketing Systems, Automation, All-in-One CRM',
-  sameAs: [],
+  // Profiles that corroborate the Organization entity. Add Instagram, LinkedIn
+  // and the Google Business Profile URL here as they go live — each one should
+  // be a page that actually loads, since a sameAs pointing somewhere dead is a
+  // weak negative signal rather than a neutral one.
+  sameAs: [
+    'https://www.facebook.com/loogolabs',
+  ],
 };
 
 export const url = (path = '/') => new URL(path, SITE.origin).href;
@@ -335,6 +341,12 @@ export const faqLd = (entries = GROW_FAQ) => ({
   })),
 });
 
+// Modelled as a service-area business: the work is delivered to the client, not
+// from a storefront, and the operating address is residential. So there is
+// deliberately no `address` or `geo` node here — the area served is the whole
+// signal, and Google verifies the real address privately through the Google
+// Business Profile, where a service-area listing keeps it hidden. Do not add a
+// street address here without deciding to make it permanently public.
 export const localBusinessLd = () => ({
   '@type': 'ProfessionalService',
   '@id': url('/grow#localbusiness'),
@@ -344,6 +356,7 @@ export const localBusinessLd = () => ({
   description:
     'Marketing automation, local SEO, and reputation management for Central Florida service businesses.',
   parentOrganization: { '@id': url('/#organization') },
+  ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
   areaServed: SERVICE_AREA.map((name) => ({
     '@type': 'City',
     name,

@@ -126,7 +126,7 @@ function App() {
       <div onClick={handleLinkClick}>{body}</div>
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
-          { title: 'Company', links: ['Mission', 'Book a Call'] },
+          { title: 'Company', links: ['Mission', 'Book a Call', 'Facebook'] },
           { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
         ]}
