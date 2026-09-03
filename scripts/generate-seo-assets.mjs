@@ -199,6 +199,13 @@ for (const route of ROUTES) {
   const head = headForPage(route.page);
   let extra = '';
 
+  if (route.page === 'Home') {
+    // The founder contact is a real link on the rendered page; mirror it here so
+    // a crawler that does not run JavaScript sees the same thing, and so the
+    // email on the Organization entity is backed by visible markup.
+    extra = `<p>Email the founder: <a href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a> — ${esc(SITE.founder)}, Founder</p>`;
+  }
+
   if (route.page === 'LoogoNews') {
     // The post list is fetched from the database at runtime, so without this the
     // index is an empty page and all 29 posts are unreachable by crawl.
