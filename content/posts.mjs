@@ -1417,4 +1417,271 @@ Not your laptop. Your phone, outdoors, in daylight, one-handed, the way she will
 
 Time how long it takes to reach a tappable phone number, and see whether anything on that first screen tells you if they come out today. More than one tap or one scroll and you've found the leak — and it is a far cheaper fix than another marketing campaign.`,
   },
+  {
+    slug: `insurance-agency-contact-data-hygiene`,
+    title: `The Renewal Reminder That Went Out Six Weeks Late`,
+    excerpt: `Automation does not clean up a bad contact record — it runs it, faster, and in front of more people.`,
+    tags: `Data Quality, Insurance Agencies, Custom Fields`,
+    content: `Automation does not clean up a bad contact record. It runs it, faster, and in front of more people.
+
+I watched an agency send a renewal reminder to a commercial client six weeks after the policy had already lapsed. The automation worked perfectly. The date it was reading came off a row somebody had pasted in from a spreadsheet in 2023, and nobody had touched it since.
+
+## The problem before the automation problem
+
+Most agencies I sit down with want to talk about sequences. What should go out, when, on which channel. It is the fun part.
+
+Then I open a contact record and ask what the fields mean. Renewal date is filled in for maybe half the book. Policy type is a free-text box, so it contains "auto," "Auto," "personal auto," and "PA" — four values that the system reads as four unrelated things. Carrier is in the notes, in a sentence, where nothing can find it.
+
+You cannot build a renewal sequence on that. Not because the builder is not capable of it, but because there is nothing dependable to trigger on. Every rule you write will be right for the half of the book that happens to be filled in correctly and silent for the rest.
+
+## Free text is where automation goes to die
+
+The single most expensive habit in an agency database is typing information into a notes field.
+
+Notes are for context — the client's kid is starting to drive, they mentioned a boat. Anything you ever want to filter, sort, or fire an automation on has to live in a field with a fixed set of choices. A dropdown with six policy types is not bureaucracy. It is the difference between a list you can act on and a pile of sentences.
+
+The test I use: if I asked you to pull every commercial auto policy renewing in November, could you do it in one click? If the answer is "I'd have to go through and check," the field does not exist yet, no matter what is written in the record.
+
+## The three fields that carry almost all the weight
+
+For most books of business, the automation you actually want depends on a very short list:
+
+- **Renewal date**, as a real date field, on every single policy
+- **Policy type**, as a dropdown with a fixed set of values you agreed on once
+- **Carrier**, also a dropdown, because you will eventually need to message a whole block of clients when a carrier does something
+
+Everything else can stay messy for now. Those three, filled in consistently, unlock renewal reminders, cross-sell targeting, and carrier-change notices — which is most of what an agency wants automation to do in the first place.
+
+## Nobody wants to do this part
+
+The cleanup is genuinely tedious. It is a person, or a few people, going record by record for a couple of weeks.
+
+I am not going to pretend there is a clever way around it. There are import tools and there is some pattern-matching you can do on obvious cases — "PA" and "personal auto" can be mapped in bulk. But the records where the renewal date is simply absent cannot be inferred by anything. Somebody has to look it up.
+
+What I will say is that the cleanup is one-time and the alternative is permanent. An agency that skips it does not get less work; it gets the same work forever, done by hand, plus a set of automations that misfire often enough that the staff stop trusting them.
+
+## Where the discipline actually breaks
+
+It is not the cleanup. Agencies get through the cleanup.
+
+It breaks about four months later, when a producer is in a hurry and types a new client's policy type into the notes instead of picking the dropdown. Then another one does. The field stops being reliable, quietly, and nobody notices until a renewal batch goes out short.
+
+Whatever you clean up, you need one rule about how a record gets created going forward, and one person who checks it. Making the fields required at entry is the version of this that does not depend on anybody remembering.
+
+## Try the November question
+
+Before you buy or build anything, open your system and try to pull one list: every policy of one type, renewing in one specific month, with the client's mobile number attached.
+
+If that list comes out in a few seconds, your data is in better shape than most and you are ready to automate against it. If it takes you an afternoon, you have just found the actual project — and it is not the sequence you thought you were going to build.`,
+  },
+  {
+    slug: `wedding-venue-long-cycle-nurture`,
+    title: `Your Couples Book Fourteen Months Out. What Happens in Month Seven?`,
+    excerpt: `The first hour after a tour request is solved everywhere; the year of silence after the deposit is solved almost nowhere.`,
+    tags: `Long-Cycle Nurture, Wedding Venues, Follow-Up Sequences`,
+    content: `Fourteen months. That is roughly how far ahead of the date a couple tours a venue and puts down a deposit.
+
+Every venue I work with has the first hour of that relationship figured out. The tour request comes in, somebody replies fast, the tour gets booked. That part is solved.
+
+Month seven is not solved anywhere.
+
+## The gap nobody staffs for
+
+A couple signs in March for a May wedding the following year. Between the deposit and the final headcount there are about sixty weeks in which the venue has nothing it strictly needs from them.
+
+So it says nothing. Then in February it sends an email asking for the floor plan and the catering selections, and the reply comes back a week late and slightly cold, because the last time these people heard from the venue was eleven months ago and it was a contract.
+
+Nothing went wrong, exactly. But the couple spent a year not thinking about you, and the vendors they added in that year — planner, photographer, florist — became the people they actually talk to. By the time you need decisions, you are third in line for their attention.
+
+## Silence is not neutral
+
+This is the part venue owners tend to push back on, and I understand why. Nobody wants to be the vendor pestering a couple for a year.
+
+But the choice is not between silence and nagging. It is between silence and being mildly, usefully present. A couple planning a wedding is making about forty decisions they have never made before. Almost none of them are about you, and almost all of them are things you have watched two hundred couples get wrong.
+
+That is the material. You are not marketing to them — they already bought. You are the one vendor in their inbox who has done this before and is not selling them anything else.
+
+## What actually goes in a sixty-week sequence
+
+Not much per message, and not often. What matters is that each one is tied to where they are in their own planning, not to where you are in your calendar.
+
+- Around month two, when they are picking a photographer: the three spots on the property that photograph best, and the time of day for each
+- Around month five, when the guest list is causing family arguments: what the room actually holds at different table configurations
+- Around month nine, when they are choosing a florist: what other couples have done with the specific architecture they are walking into
+- Around month twelve, before you need anything: a note that the planning conversation is about to start, and what you will be asking for
+
+Four messages in a year. None of them ask for anything. All of them are things you know and they do not.
+
+## The seam: this cannot be entirely automatic
+
+A sequence can carry the timing and the general content. It cannot know that this couple's venue date got moved, or that the bride's mother is now the person making decisions, or that they had a bad experience with a vendor you recommended.
+
+So the sequence needs an off switch that is easy for staff to hit, and somebody has to actually be reading the replies. A helpful note that arrives the week after a couple postponed is worse than no note at all — it tells them the friendly voice was never a person.
+
+If you cannot commit to somebody watching the replies, send fewer messages, not more.
+
+## An open question I have not settled
+
+I do not know the right cadence for venues that book much shorter — corporate events, or the last-minute reception business some venues run alongside weddings. The sixty-week shape does not transfer, and compressing the same four messages into eight weeks reads as pushy.
+
+My working guess is that short-cycle events need one message, not four, and it should be logistical rather than advisory. But I have not run that long enough anywhere to tell you it works. If you run both books out of one venue, that is the harder half of the problem, and I would rather say so than hand you a sequence I have not seen hold up.`,
+  },
+  {
+    slug: `appliance-repair-quiet-hours-send-timing`,
+    title: `The Automation That Texts Your Customer at 3 A.M.`,
+    excerpt: `A trigger fires on an event, and events do not observe business hours — which is how a review request lands while the customer is asleep.`,
+    tags: `Send Timing, Appliance Repair, Workflow Automation`,
+    content: `Every automation you build will eventually try to text somebody at three in the morning. The only real question is whether you find out from a report or from the customer.
+
+Here is how it happens. A trigger fires on an event — a form submitted, a job marked complete, a payment cleared. Events do not observe business hours. A tech closes out the last job of the day at 9:40pm, the completion triggers the review request, and it lands while the customer is asleep.
+
+## Why this hits repair businesses harder
+
+Appliance work runs late. The dryer that stopped working is a today problem, so the schedule pushes, and a fair share of your jobs get closed out after dinner.
+
+Emergency-adjacent trades also collect a lot of after-hours inbound. Somebody's freezer is failing at 11pm and they fill in your web form, which fires your instant response, which is correct — that one *should* go out immediately. Then the day-three follow-up in the same sequence counts forward from 11pm and arrives at 11pm on Thursday.
+
+The instant response and the nurture message have opposite requirements, and they are usually sitting in the same automation with the same timing rules. That is the actual bug.
+
+## Three rules that cover most of it
+
+- **Quiet hours on anything that is not an immediate response.** Nothing non-urgent sends between about 9pm and 8am. Messages that come due inside that window queue and go out in the morning.
+- **Branch on how the contact arrived.** A person who just filled in your form at midnight is awake and waiting. A person you are following up with on day seven is not thinking about you. Same sequence, different timing rules.
+- **Decide about weekends deliberately.** Saturday morning is fine for most repair customers. Sunday is not, in a lot of markets. This one is local and you should pick based on your customers rather than a default.
+
+None of this is complicated to configure. It is just invisible until it goes wrong, because you are never awake to see your own automations misfire.
+
+## The exception, and why it needs a separate path
+
+If you run genuine emergency service, some things must go out at 2am. A dispatch confirmation, an ETA, a tech-is-on-the-way message.
+
+Those belong in their own automation with quiet hours off, and they should be short and purely factual. The mistake I see is running emergency messages through the same friendly template as everything else, so the 2am text opens with a line about how much you value their business. At 2am nobody values anything except the arrival time.
+
+## What a bad send costs
+
+More than the one customer, usually. A middle-of-the-night text is the kind of thing that gets screenshotted, and it converts a neutral customer into somebody with a small story to tell about you.
+
+It also does something quieter and worse inside the business. The owner sees the complaint, decides the automation is not trustworthy, and turns the whole sequence off. Now the follow-up that was working is gone too, because one message had no time-of-day rule on it.
+
+I have switched more sequences back on than I have built from scratch, and the reason they were off was almost never that the content was wrong.
+
+## Where automation stops and a rule starts
+
+A system will do exactly what you configured at exactly the moment the condition is met. It has no sense of whether now is a reasonable time to speak to a person. That judgment does not emerge from a better tool; somebody has to encode it once, deliberately.
+
+Go into whatever you are running now and look at every message that is not an immediate response to an inbound. Check whether each one has a time window on it. The ones that do not are not broken yet — they are waiting for a tech to close a job late.`,
+  },
+  {
+    slug: `solar-installer-pipeline-stale-deals`,
+    title: `How Many Deals in Your Pipeline Would You Bet Your Own Money On?`,
+    excerpt: `An unpruned pipeline is not optimistic, it is uninformative — and the loss reasons you are not collecting are the report worth having.`,
+    tags: `Pipeline Hygiene, Solar Installers, Sales Reporting`,
+    content: `How many of the deals in your pipeline right now would you put your own money on?
+
+Ask a solar sales manager that and you get a pause, then a number that is a lot smaller than the one on the dashboard. Everybody knows the pipeline is inflated. Almost nobody prunes it, because removing a deal feels like giving up on revenue.
+
+## An unpruned pipeline is not optimistic, it is uninformative
+
+The point of a pipeline is to tell you what is going to happen. Once it contains a hundred deals and you privately believe in twelve, it has stopped doing that. You are running the business off the twelve you carry in your head, and the dashboard is decoration.
+
+That has a real cost beyond the bad forecast. Every stale deal sits in somebody's follow-up queue. Reps spend Tuesday morning calling people who decided against solar in April and never said so out loud. The activity looks like selling. It is filing.
+
+## Solar pipelines rot in specific, identifiable ways
+
+This is not general sales hygiene. Solar deals stall for a small number of reasons, and each one has a different half-life:
+
+- **Roof condition.** The homeowner needs a re-roof first. That is a real deal with a real timeline, and it is not this quarter.
+- **Financing declined.** Sometimes recoverable with a different structure, usually not, and it goes quiet rather than getting a no.
+- **Permitting or utility interconnection.** Genuinely out of your hands and genuinely still alive.
+- **The spouse.** One person is sold and one is not, and the one who is not does not take your calls.
+
+These look identical in a pipeline that only tracks stage and age. They need completely different handling, and lumping them into "follow up" guarantees you treat the re-roof lead like the declined-financing lead.
+
+## Stalled and dead are different, and the difference is a date
+
+A stalled deal has a specific thing you are waiting on and a date when that thing resolves. Re-roof scheduled for September? That is stalled. Move it out, set the date, stop calling weekly.
+
+A dead deal has no such thing. Nobody is waiting on anything; the homeowner just stopped answering. If you cannot name what has to happen next and roughly when, it is not stalled.
+
+The rule I give teams: if a deal has no next step with a date on it, it does not stay in the pipeline. It gets closed with a reason, or it gets a date. Those are the two options.
+
+## Close-lost is not an admission, it is data collection
+
+This is the part that changes the business, and it only works if you make the reason mandatory and keep the list short.
+
+Six reason codes, maybe eight. Roof condition. Financing. Went with a competitor. Timing — not this year. No contact. Price.
+
+Do that for one quarter and you get something you cannot get any other way: the actual distribution of why you lose. Most solar operations I have worked with assume they are losing on price, because price is what reps hear. Then the codes come back and the biggest bucket is no contact, which is not a pricing problem at all — it is a follow-up problem, and it is fixable this month.
+
+You cannot get that number out of a pipeline where losing deals quietly disappear or sit forever at 40 percent.
+
+## The reason this is hard has nothing to do with software
+
+Nobody wants to close-lost a deal they spent six hours on. Reps especially, if any part of comp or standing is tied to pipeline volume.
+
+So if you turn on mandatory reason codes and change nothing else, reps will park deals in "timing" forever rather than mark them lost. You have to say out loud that the pipeline number is not the score, and then not react to it dropping by half the first month — because it will, and that first drop is the most honest the number has been all year.
+
+## What I would want to see after ninety days
+
+Not a cleaner pipeline. A loss-reason report you believe, and one change made because of it.
+
+If the report says no contact is your largest bucket and you have not changed anything about follow-up, the cleanup was administrative and you should not have bothered. The pruning is only worth the argument it causes if the reasons end up pointing at something you go and fix.`,
+  },
+  {
+    slug: `catering-company-booking-analytics-capacity`,
+    title: `You Do Not Have a Lead Problem in October`,
+    excerpt: `Inquiries plotted against capacity by event date tell you something monthly revenue never will: which weeks you lost slowly.`,
+    tags: `Booking Analytics, Catering, Capacity Planning`,
+    content: `You probably do not have a lead problem in October. You have a capacity problem that looks like a lead problem in February.
+
+Catering demand is not flat and nobody who runs a catering business needs me to tell them that. What surprises people is how much of the year's decision-making gets made on gut when the booking data has been sitting there the whole time.
+
+## Revenue hides the shape of the year
+
+Monthly revenue tells you what came in. It does not tell you what you turned away, when you turned it away, or what you could have taken if you had known three weeks earlier.
+
+Booking data does. Not revenue by month — inquiries by requested event date, plotted against what you actually had crew and kitchen for. Those two lines are the whole picture, and most operations have never put them next to each other.
+
+When you do, the useful thing is rarely the peak. Everyone knows December is full. The useful thing is the shoulder: the three weeks where inquiries were healthy and you had capacity and somehow booked at sixty percent, because nobody was watching closely enough to push.
+
+## Turning down work should be a decision, not an accident
+
+Every catering business declines events. The question is whether you decline them on purpose.
+
+Declined by accident looks like this: an inquiry comes in for a Saturday you are already heavy on, somebody replies two days later because the week is chaotic, and by then the client has booked elsewhere. You did not choose to pass on that job. You just lost it slowly.
+
+Declined on purpose looks like this: you know by Tuesday that the Saturday in question is at capacity, so the reply goes out the same day and says so, and offers the Friday or the following weekend. About a third of the time the client is flexible on date. You cannot capture any of that if the answer arrives too late to be an offer.
+
+The prerequisite for choosing is knowing your committed capacity for a given date without going to ask three people.
+
+## What to actually track
+
+Keep it to things you can pull without a project:
+
+- **Inquiries by requested event date**, not by the date the inquiry arrived
+- **Win rate by lead time** — inquiries with six weeks of notice versus two, which almost always convert differently
+- **Declined or lost, with the reason** separated into "we were full" and "we lost it"
+
+That last split is the one that pays. "We were full" on a given weekend is a pricing signal — you were underpriced for that date. "We lost it" on a weekend with open capacity is a follow-up or a proposal problem. Same missing revenue, two completely opposite responses, and a single lost-jobs number cannot tell them apart.
+
+## Spend follows capacity, not the calendar
+
+Here is where this stops being a reporting exercise.
+
+Most catering operations advertise on a fixed rhythm, or worse, advertise hardest when things feel slow — which is usually a few weeks after the period they should have been filling. Lead time makes that backwards. If your average corporate booking comes in five weeks ahead, then advertising in a slow week is buying inquiries for a date five weeks out that may already be committed.
+
+Once you can see inquiries against capacity by event date, spend has an obvious target: the dates that are open inside your booking window. That is a different question from "are we busy right now," and it is the one that actually moves the number.
+
+## The part I would not automate
+
+The reply itself, at least not fully. A same-day response saying you are at capacity but have the Friday open is doing real work only if it sounds like a person who looked at the calendar.
+
+Automate the alert — tell the coordinator by Tuesday that Saturday is committed. Automate the capacity view. Let a human write the sentence that offers the alternative date, because that sentence is where the third of clients who are flexible get saved or lost.
+
+## Worth an afternoon
+
+Pull last year's inquiries, tag each one with the requested event date rather than the date it arrived, and put your crew capacity next to it. It is an afternoon in a spreadsheet before it is ever a system.
+
+If the shoulder weeks come back looking as soft as they do for most operations, you have found next year's revenue without adding a single lead. If they come back full, then you genuinely do have a lead problem, and at least now you know which one you are solving.`,
+  },
 ];

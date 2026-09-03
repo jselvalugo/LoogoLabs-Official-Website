@@ -5,6 +5,7 @@ import Stat from '../components/surfaces/Stat';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
 import { openBooking } from '../lib/booking';
+import { SITE } from '../lib/seo';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -83,6 +84,63 @@ function ReferencesTicker() {
   );
 }
 
+// A direct line to the founder, as a low-commitment counterpoint to the booking
+// CTA that every other surface pushes. The mailto is a real link, so it also
+// backs the email on the Organization entity.
+function FounderNote() {
+  const [hover, setHover] = React.useState(false);
+  // width:100% — Home's <main> is a column flex container, and Wrap's auto side
+  // margins suppress cross-axis stretch, so a Wrap shrinks to its content unless
+  // it is wide enough to hit --container-max. Without this the rules below would
+  // sit narrower than every other section on the page.
+  return (
+    <Wrap style={{ width: '100%', padding: '8px 24px 24px' }}>
+      <div style={{
+        borderTop: '1px solid var(--border-hair)',
+        borderBottom: '1px solid var(--border-hair)',
+        padding: '36px 0',
+        display: 'flex', flexWrap: 'wrap', gap: 32,
+        alignItems: 'flex-end', justifyContent: 'space-between',
+      }}>
+        <div>
+          <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Talk to a person</span>
+          <p style={{ margin: '14px 0 0', maxWidth: '38ch', fontSize: 'var(--fs-body)',
+            lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
+            Not ready to book a call? Email me directly. It lands in my inbox, not a
+            ticket queue, and I answer it myself.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
+          <a
+            href={`mailto:${SITE.email}`}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 12,
+              fontSize: 'var(--fs-h3)', fontWeight: 700, letterSpacing: 'var(--ls-h3)',
+              color: hover ? 'var(--cyan-700)' : 'var(--ink-900)',
+              textDecoration: 'none',
+              borderBottom: '2px solid ' + (hover ? 'var(--cyan-500)' : 'var(--border-strong)'),
+              paddingBottom: 4,
+              transition: 'color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard)',
+            }}
+          >
+            {SITE.email}
+            <span aria-hidden="true" style={{
+              transform: hover ? 'translateX(3px)' : 'none',
+              transition: 'transform var(--dur-fast) var(--ease-standard)',
+            }}>→</span>
+          </a>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
+            textTransform: 'uppercase', color: 'var(--ink-400)' }}>
+            {SITE.founder} · Founder
+          </span>
+        </div>
+      </div>
+    </Wrap>
+  );
+}
+
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -143,6 +201,8 @@ function Home({ onNavigate }) {
           ))}
         </div>
       </Wrap>
+
+      <FounderNote />
 
       <ReferencesTicker />
     </main>

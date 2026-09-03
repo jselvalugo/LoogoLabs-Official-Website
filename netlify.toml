@@ -6,8 +6,17 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# Every route in src/lib/seo.js is written to disk as a real HTML file by
+# scripts/generate-seo-assets.mjs, so the site no longer needs a catch-all
+# rewrite. Netlify serves 404.html with a genuine 404 for anything else —
+# previously every typo'd URL returned the homepage with a 200, which search
+# engines read as a duplicate of the homepage.
+#
+# Posts are the exception: one can be published from /admin without a rebuild,
+# so its slug has no file yet. Fall those through to the app, which fetches the
+# post and marks the page noindex if the slug really does not exist.
 [[redirects]]
-  from = "/*"
+  from = "/news/*"
   to = "/index.html"
   status = 200
 
@@ -20,6 +29,35 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Crawl files change with every publish; do not let a CDN pin a stale sitemap.
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/xml; charset=utf-8"
+
+[[headers]]
+  for = "/rss.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/rss+xml; charset=utf-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
   for = "/*"

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo-assets.mjs",
     "preview": "vite preview",
     "db:seed-posts": "node scripts/seed-blog-posts.mjs",
-    "db:generate-post-migration": "node scripts/generate-post-migration.mjs"
+    "db:generate-post-migration": "node scripts/generate-post-migration.mjs",
+    "seo:generate": "node scripts/generate-seo-assets.mjs"
   },
   "dependencies": {
     "@netlify/database": "^2.0.0",

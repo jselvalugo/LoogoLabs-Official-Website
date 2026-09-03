@@ -43,3 +43,8 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-03 | cleaning-company-multi-location-reporting | Cleaning companies | Multi-location reporting & rollups
 - 2026-09-03 | tree-service-system-adoption | Tree service | Team adoption of the system
 - 2026-09-03 | garage-door-website-conversion | Garage door repair | Website conversion & lead capture
+- 2026-09-03 | insurance-agency-contact-data-hygiene | Insurance agencies | Custom fields & contact data hygiene
+- 2026-09-03 | wedding-venue-long-cycle-nurture | Wedding & event venues | Long sales-cycle nurture
+- 2026-09-03 | appliance-repair-quiet-hours-send-timing | Appliance repair | Send-time rules & quiet hours
+- 2026-09-03 | solar-installer-pipeline-stale-deals | Solar installers | Pipeline hygiene & close-lost reason codes
+- 2026-09-03 | catering-company-booking-analytics-capacity | Catering | Booking analytics & capacity planning

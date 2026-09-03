@@ -1,5 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
+import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 
 export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
@@ -25,6 +26,14 @@ export default function BlogPost({ slug, onNavigate }) {
       .finally(() => setLoading(false));
   }, [slug]);
 
+  // Title, description, canonical and BlogPosting schema all come from the post
+  // body, so they can only be set once it has loaded. Until then the pre-rendered
+  // tags from the static shell stand.
+  React.useEffect(() => {
+    if (loading) return;
+    applyHead(headForPost(notFound ? null : post));
+  }, [loading, notFound, post]);
+
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -39,7 +48,7 @@ export default function BlogPost({ slug, onNavigate }) {
         <div style={{ textAlign: 'center', padding: '0 24px' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 16 }}>404</div>
           <div style={{ fontSize: 'var(--fs-h2)', fontWeight: 700, marginBottom: 24, color: 'var(--ink-900)' }}>Post not found.</div>
-          <button onClick={() => onNavigate('LoogoNews')} style={backBtn}>← Back to Launch</button>
+          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to LoogoNews</a>
         </div>
       </div>
     );
@@ -55,12 +64,13 @@ export default function BlogPost({ slug, onNavigate }) {
       <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
 
-          {/* Back nav */}
-          <div style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
-            <button onClick={() => onNavigate('LoogoNews')} style={backBtnInverse}>
+          {/* Back nav — a real breadcrumb link, so the post is not an orphan */}
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
+            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
+              style={{ ...backBtnInverse, textDecoration: 'none' }}>
               ← LoogoNews
-            </button>
-          </div>
+            </a>
+          </nav>
 
           {/* Hero content */}
           <div style={{ maxWidth: 800, padding: 'clamp(36px,5vw,64px) 0 clamp(40px,5vw,72px)' }}>
@@ -89,7 +99,7 @@ export default function BlogPost({ slug, onNavigate }) {
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)', letterSpacing: '0.06em' }}>{post.author}</span>
               </div>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{date}</span>
+              <time dateTime={post.published_at || undefined} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{date}</time>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{post.read_time} min read</span>
             </div>
@@ -152,7 +162,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* Back link */}
             <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
-              <button onClick={() => onNavigate('LoogoNews')} style={backBtn}>← Back to LoogoNews</button>
+              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to LoogoNews</a>
             </div>
           </article>
         </div>

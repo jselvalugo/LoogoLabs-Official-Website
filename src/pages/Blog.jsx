@@ -1,4 +1,5 @@
 import React from 'react';
+import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
 
 export default function Blog({ onNavigate }) {
   const [posts, setPosts] = React.useState([]);
@@ -10,6 +11,14 @@ export default function Blog({ onNavigate }) {
       .then(data => { if (Array.isArray(data)) setPosts(data); })
       .finally(() => setLoading(false));
   }, []);
+
+  // Re-publish the index's structured data once the real post list is in, so the
+  // Blog node lists the posts a visitor actually sees.
+  React.useEffect(() => {
+    if (!posts.length) return;
+    const head = headForPage('LoogoNews');
+    applyHead({ ...head, jsonLd: [...head.jsonLd, blogLd(posts)] });
+  }, [posts]);
 
   const featured = posts[0] || null;
   const rest = posts.slice(1);
@@ -76,11 +85,12 @@ function FeaturedCard({ post, onNavigate }) {
     : '';
 
   return (
-    <div
-      onClick={() => onNavigate('BlogPost', post.slug)}
+    <a
+      href={`${BLOG_BASE}/${post.slug}`}
+      onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ marginTop: 48, cursor: 'pointer' }}
+      style={{ display: 'block', marginTop: 48, cursor: 'pointer', textDecoration: 'none', color: 'inherit' }}
     >
       {/* Label row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 0 }}>
@@ -106,7 +116,7 @@ function FeaturedCard({ post, onNavigate }) {
             ))}
           </div>
           <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginBottom: 4 }}>{date}</div>
+            <time dateTime={post.published_at || undefined} style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginBottom: 4 }}>{date}</time>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)' }}>{post.read_time} min read</div>
           </div>
         </div>
@@ -129,7 +139,7 @@ function FeaturedCard({ post, onNavigate }) {
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -141,11 +151,12 @@ function PostCard({ post, onNavigate }) {
     : '';
 
   return (
-    <div
-      onClick={() => onNavigate('BlogPost', post.slug)}
+    <a
+      href={`${BLOG_BASE}/${post.slug}`}
+      onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{ background: hover ? 'var(--paper-000)' : 'var(--paper-100)', padding: '32px 28px', cursor: 'pointer', transition: 'background 120ms ease', display: 'flex', flexDirection: 'column', gap: 14 }}
+      style={{ background: hover ? 'var(--paper-000)' : 'var(--paper-100)', padding: '32px 28px', cursor: 'pointer', transition: 'background 120ms ease', display: 'flex', flexDirection: 'column', gap: 14, textDecoration: 'none', color: 'inherit' }}
     >
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
         {tags.map(tag => (
@@ -164,13 +175,13 @@ function PostCard({ post, onNavigate }) {
       )}
       <div style={{ marginTop: 'auto', paddingTop: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>
-          <span>{date}</span>
+          <time dateTime={post.published_at || undefined}>{date}</time>
           <span style={{ color: 'var(--ink-300)' }}>·</span>
           <span>{post.read_time} min read</span>
         </div>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: hover ? 'var(--ink-700)' : 'var(--ink-300)', transition: 'color 120ms ease' }}>→</span>
       </div>
-    </div>
+    </a>
   );
 }
 

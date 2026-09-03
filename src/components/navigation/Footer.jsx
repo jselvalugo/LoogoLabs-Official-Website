@@ -1,20 +1,28 @@
 import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
+import { pathForPage, routeMeta } from '../../lib/seo';
 
 const pageMap = {
   'Mission': 'Mission',
   'Pricing': 'Pricing',
   'LoogoNews': 'LoogoNews',
+  'Central Florida': 'GrowCFL',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
-  'PropIQ': 'Products',
-  'CartCaddy': 'Products',
 };
 
 const externalLinks = {
   'Distillr': 'https://www.distillrsoftware.com',
   'Book a Call': BOOKING_URL,
+  'Facebook': 'https://www.facebook.com/loogolabs',
+  'Instagram': 'https://www.instagram.com/loogolabs.ai',
+  'LinkedIn': 'https://www.linkedin.com/company/loogolabs/',
 };
+
+// These mirror SITE.sameAs in lib/seo.js. Keep the two lists in step: a sameAs
+// entry corroborated by a visible rel="me" link is a stronger entity signal
+// than the schema claim on its own.
+const PROFILE_LINKS = new Set(['Facebook', 'Instagram', 'LinkedIn']);
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operational software for underserved industries', copyright = '© 2026 Loogo Labs', style, onNavigate, onAdmin }) {
   return (
@@ -32,12 +40,15 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
                 const external = externalLinks[l];
                 const target = pageMap[l];
                 if (external)
-                  return <a key={l} href={external} target="_blank" rel="noopener noreferrer"
+                  return <a key={l} href={external} target="_blank"
+                    rel={PROFILE_LINKS.has(l) ? 'noopener noreferrer me' : 'noopener noreferrer'}
                     style={{ fontSize: 14, color: 'var(--ink-200)', textDecoration: 'none', borderBottom: 'none' }}>{l}</a>;
-                if (target && onNavigate)
-                  return <button key={l} onClick={() => { onNavigate(target); window.scrollTo(0, 0); }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left',
-                      fontSize: 14, color: 'var(--ink-200)', fontFamily: 'var(--font-body)' }}>{l}</button>;
+                // Real anchors, not buttons: the footer is the site-wide internal
+                // link graph, and a crawler cannot follow an onClick handler.
+                if (target && routeMeta(target))
+                  return <a key={l} href={pathForPage(target)}
+                    onClick={e => { e.preventDefault(); onNavigate && onNavigate(target); window.scrollTo(0, 0); }}
+                    style={{ fontSize: 14, color: 'var(--ink-200)', textDecoration: 'none' }}>{l}</a>;
                 return <span key={l} style={{ fontSize: 14, color: 'var(--ink-400)' }}>{l}</span>;
               })}
             </div>
