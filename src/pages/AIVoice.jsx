@@ -1,7 +1,7 @@
 import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
-import { BOOKING_URL, openBooking } from '../lib/booking';
+import { openBooking } from '../lib/booking';
 
 const trackBook = () => { if (window.fbq) window.fbq('track', 'Schedule'); openBooking(); };
 
@@ -111,22 +111,6 @@ export default function AIVoice() {
           .aiv-industries-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-
-      {/* ── BOOKING BANNER ── */}
-      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
-        style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-          height: 36, background: 'var(--ink-900)', borderBottom: '1px solid var(--border-hair-inverse)',
-          textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: 11,
-          letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-300)',
-          transition: 'background 160ms ease', position: 'sticky', top: 0, zIndex: 30,
-        }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'var(--ink-800)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}>
-        <span className="ll-live-dot" aria-hidden="true" />
-        Live in about a week — book a free AI voice agent demo
-        <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
-      </a>
 
       {/* ── HERO ── */}
       <section style={{ position: 'relative', background: 'var(--ink-900)', padding: 'clamp(72px,10vw,120px) 0 clamp(56px,7vw,88px)', overflow: 'hidden' }}>

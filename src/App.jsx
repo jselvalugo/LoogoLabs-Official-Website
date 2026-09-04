@@ -86,12 +86,12 @@ function App() {
 
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
-  if (page === 'AIVoice') return <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
 
   const nav = ['Home', 'Mission', 'AIVoice', 'Pricing', 'LoogoNews'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
+  else if (page === 'AIVoice') body = <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
   else if (page === 'Pricing') body = <Pricing onNavigate={navigate} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
