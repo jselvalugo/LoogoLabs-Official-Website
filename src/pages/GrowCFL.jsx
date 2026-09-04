@@ -30,7 +30,8 @@ const BookBtn = ({ size = 'md', label = 'Book a free strategy call', dark }) => 
         textDecoration: 'none', borderRadius: 'var(--radius-2)', border: 'none', cursor: 'pointer',
         boxShadow: '3px 3px 0 var(--ink-700)', transition: 'transform 90ms ease, box-shadow 90ms ease' }}
       onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-1px,-1px)'; e.currentTarget.style.boxShadow = '4px 4px 0 var(--ink-700)'; }}
-      onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '3px 3px 0 var(--ink-700)'; }}>
+      onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '3px 3px 0 var(--ink-700)'; }}
+      onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
       {label} <span style={{ fontSize: 16 }}>→</span>
     </a>
   );
@@ -111,7 +112,8 @@ function GrowCFL() {
           letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-300)',
           transition: 'background 160ms ease', position: 'sticky', top: 0, zIndex: 30 }}
         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(216,211,198,0.08)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}>
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}
+        onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
         <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
         Book a free strategy call
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
@@ -340,7 +342,8 @@ function GrowCFL() {
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 36px',
                 background: 'var(--ink-900)', color: 'var(--paper-100)', fontWeight: 700, fontSize: 15,
                 fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', textTransform: 'uppercase',
-                textDecoration: 'none', borderRadius: 'var(--radius-2)', boxShadow: '3px 3px 0 var(--ink-700)' }}>
+                textDecoration: 'none', borderRadius: 'var(--radius-2)', boxShadow: '3px 3px 0 var(--ink-700)' }}
+              onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
               Check availability →
             </a>
           </div>
@@ -427,7 +430,8 @@ function GrowCFL() {
                 padding: '16px 24px', borderRadius: 'var(--radius-2)', fontFamily: 'var(--font-mono)',
                 fontSize: 13, letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 700,
                 textDecoration: 'none', background: 'var(--cyan-500)', color: '#000',
-                boxShadow: '3px 3px 0 var(--ink-700)' }}>
+                boxShadow: '3px 3px 0 var(--ink-700)' }}
+              onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
               Claim my September rate →
             </a>
 

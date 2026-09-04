@@ -94,6 +94,15 @@ export const ROUTES = [
     changefreq: 'monthly',
   },
   {
+    page: 'AIVoice',
+    path: '/ai-voice',
+    title: `AI Voice Agents for Local Service Businesses | ${SITE.name}`,
+    description:
+      'An AI voice agent that answers every call, books the job, and never puts a customer on hold — set up and managed for local service businesses.',
+    priority: '0.8',
+    changefreq: 'monthly',
+  },
+  {
     page: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,

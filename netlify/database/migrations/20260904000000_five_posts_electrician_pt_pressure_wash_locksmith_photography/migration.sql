@@ -1,0 +1,7 @@
+-- data migration (already applied)
+-- Published 5 LoogoNews posts via create-post function:
+--   electrician-quote-follow-up-sequence
+--   personal-training-trial-conversion-pipeline
+--   pressure-washing-review-request-automation
+--   locksmith-lead-source-tracking
+--   photography-studio-booking-automation

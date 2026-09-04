@@ -141,6 +141,7 @@ export default function BlogPost({ slug, onNavigate }) {
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'var(--paper-100)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'var(--paper-200)'; }}
+                onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
               >
                 Book a free strategy call →
               </a>

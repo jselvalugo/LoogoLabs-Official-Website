@@ -15,6 +15,7 @@ import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
+const AIVoice = React.lazy(() => import('./pages/AIVoice'));
 
 function getInitialState() {
   // The Central Florida page used to live behind #grow, which is not a URL a
@@ -41,6 +42,7 @@ function App() {
       if (next !== window.location.pathname) window.history.pushState({}, '', next);
       window.scrollTo(0, 0);
     }
+    if (window.fbq) window.fbq('track', 'PageView');
   }, []);
 
   // Back and forward buttons previously did nothing: the URL changed but the
@@ -84,8 +86,9 @@ function App() {
 
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
+  if (page === 'AIVoice') return <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
 
-  const nav = ['Home', 'Mission', 'Pricing', 'LoogoNews'];
+  const nav = ['Home', 'Mission', 'AIVoice', 'Pricing', 'LoogoNews'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -115,6 +118,7 @@ function App() {
         }}
         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(216,211,198,0.08)'; }}
         onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}
+        onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
       >
         <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
         Book a free strategy call
