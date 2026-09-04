@@ -20,11 +20,11 @@ const Eyebrow = ({ children, light }) => (
 /* ─────────────────────── waveform bars ─────────────────────── */
 const WAVE_BARS = [0.3, 0.7, 0.5, 1, 0.6, 0.85, 0.4, 0.9, 0.55, 0.75, 0.35, 0.95, 0.5, 0.8, 0.45, 1, 0.6, 0.7, 0.4, 0.9, 0.55, 0.65, 0.35, 0.85, 0.5, 0.75, 0.3, 0.95, 0.6, 0.8, 0.4, 0.7];
 
-const Waveform = ({ color = 'var(--cyan-500)', height = 56, animate = true }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 3, height }}>
-    {WAVE_BARS.map((h, i) => (
+const Waveform = ({ color = 'var(--cyan-500)', height = 56, animate = true, barCount = WAVE_BARS.length }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 3, height, overflow: 'hidden', minWidth: 0 }}>
+    {WAVE_BARS.slice(0, barCount).map((h, i) => (
       <div key={i} style={{
-        width: 3, height: `${h * 100}%`, background: color, borderRadius: 2, opacity: 0.85,
+        width: 3, flexShrink: 0, height: `${h * 100}%`, background: color, borderRadius: 2, opacity: 0.85,
         animation: animate ? `waveBar 1.2s ease-in-out ${(i * 0.04).toFixed(2)}s infinite alternate` : 'none',
       }} />
     ))}
@@ -67,6 +67,20 @@ const industries = [
   'Pest Control', 'Plumbing & Electric', 'Personal Injury Law', 'Auto Services',
 ];
 
+const comparison = [
+  ['Available after hours', '✓  Always', '✕  Voicemail or missed'],
+  ['Answers in under 1 second', '✓  Every call', '—  Depends on hold queue'],
+  ['Books directly into calendar', '✓  Real time', '—  Manual follow-up'],
+  ['Handles 10 calls simultaneously', '✓  No limit', '✕  One call per person'],
+  ['Cost per call', '✓  Near zero', '✕  $15–$40 per handled call'],
+];
+
+const differentiators = [
+  ['Built and run by us, not configured by you', "Most AI voice tools hand you a dashboard and wish you luck. We interview your team, write the script, train the agent, and monitor real calls for the first 30 days."],
+  ['Every call feeds the CRM you already run on', 'No separate app, no manual export. Bookings, tags, and call outcomes land directly in your existing pipeline — next to your follow-up, reviews, and reporting.'],
+  ["A person still has the leash", "When a call goes outside its training, the agent hands off to your team instead of guessing. You're never one strange call away from a bad review."],
+];
+
 const faqs = [
   ['Does it sound like a robot?', 'No. Modern voice AI is indistinguishable from human agents in most calls. We train it on your specific vocabulary, cadence, and tone so it sounds like someone who works for you — not a generic IVR system.'],
   ['What happens when a call gets too complex?', 'The agent knows its limits. If a caller asks something outside its training, it warmly offers to have a team member call them back, captures their info, and logs the ticket in your CRM.'],
@@ -90,6 +104,11 @@ export default function AIVoice() {
         @keyframes pulseRing {
           0%   { transform: scale(1);   opacity: 0.55; }
           100% { transform: scale(1.9); opacity: 0;    }
+        }
+        @media (max-width: 640px) {
+          .aiv-compare-table { display: none; }
+          .aiv-compare-cards { display: flex !important; }
+          .aiv-industries-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
@@ -139,19 +158,19 @@ export default function AIVoice() {
           </div>
 
           {/* waveform display */}
-          <div style={{ marginTop: 48, padding: '22px 26px',
+          <div style={{ marginTop: 48, padding: '18px 22px',
             background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)',
-            borderRadius: 'var(--radius-3)', display: 'flex', alignItems: 'center', gap: 20, maxWidth: 520 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            borderRadius: 'var(--radius-3)', display: 'flex', alignItems: 'center', gap: 16, maxWidth: 520 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
               <span className="ll-live-dot" aria-hidden="true" />
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-                textTransform: 'uppercase', color: 'var(--cyan-500)' }}>Live · Answering</span>
+                textTransform: 'uppercase', color: 'var(--cyan-500)', whiteSpace: 'nowrap' }}>Live</span>
             </div>
-            <div style={{ flex: 1 }}>
-              <Waveform height={36} animate />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <Waveform height={32} animate />
             </div>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)',
-              letterSpacing: '0.05em' }}>0:47</span>
+              letterSpacing: '0.05em', flexShrink: 0 }}>0:47</span>
           </div>
 
           {/* stats */}
@@ -356,6 +375,31 @@ export default function AIVoice() {
         </Wrap>
       </section>
 
+      {/* ── DIFFERENTIATOR ── */}
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(72px,9vw,112px) 0' }}>
+        <Wrap>
+          <Eyebrow>Why Loogo Labs</Eyebrow>
+          <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
+            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '22ch' }}>
+            Not a bot bolted onto your phone line.
+          </h2>
+          <p style={{ margin: '0 0 48px', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-500)', maxWidth: '58ch' }}>
+            Plenty of tools will sell you a self-serve voice bot and leave the rest to you. That's not what this is.
+          </p>
+          <div className="ll-grid-3" style={{ gap: 20 }}>
+            {differentiators.map(([title, desc]) => (
+              <div key={title} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)',
+                borderTop: '3px solid var(--cyan-500)',
+                borderRadius: 'var(--radius-2)', padding: '28px 24px', display: 'grid', gap: 12, alignContent: 'start' }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em',
+                  lineHeight: 1.3, color: 'var(--ink-900)' }}>{title}</h3>
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--ink-500)' }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </Wrap>
+      </section>
+
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(72px,9vw,112px) 0' }}>
         <Wrap>
@@ -383,7 +427,7 @@ export default function AIVoice() {
       {/* ── INDUSTRIES ── */}
       <section style={{ background: 'var(--paper-100)', padding: 'clamp(72px,9vw,112px) 0' }}>
         <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 64 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 64 }}>
             <div>
               <Eyebrow>Who it's built for</Eyebrow>
               <h2 style={{ margin: '0 0 20px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
@@ -397,7 +441,7 @@ export default function AIVoice() {
               <Button variant="secondary" onClick={trackBook}>See if it fits your business</Button>
             </div>
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1,
+              <div className="aiv-industries-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1,
                 background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
                 {industries.map((ind) => (
                   <div key={ind} style={{ background: 'var(--paper-100)', padding: '18px 20px',
@@ -421,7 +465,9 @@ export default function AIVoice() {
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '26ch' }}>
             How it stacks up against your current setup.
           </h2>
-          <div style={{ overflowX: 'auto' }}>
+
+          {/* desktop/tablet: full table */}
+          <div className="aiv-compare-table" style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14,
               background: 'var(--paper-000)', border: '1px solid var(--ink-900)',
               boxShadow: '4px 4px 0 var(--ink-900)' }}>
@@ -438,13 +484,7 @@ export default function AIVoice() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ['Available after hours', '✓  Always', '✕  Voicemail or missed'],
-                  ['Answers in under 1 second', '✓  Every call', '—  Depends on hold queue'],
-                  ['Books directly into calendar', '✓  Real time', '—  Manual follow-up'],
-                  ['Handles 10 calls simultaneously', '✓  No limit', '✕  One call per person'],
-                  ['Cost per call', '✓  Near zero', '✕  $15–$40 per handled call'],
-                ].map(([feat, ai, trad], i) => (
+                {comparison.map(([feat, ai, trad], i) => (
                   <tr key={feat} style={{ borderTop: '1px solid var(--border-hair)',
                     background: i % 2 === 1 ? 'var(--paper-100)' : 'var(--paper-000)' }}>
                     <td style={{ padding: '14px 20px', color: 'var(--ink-700)', fontWeight: 600,
@@ -457,6 +497,28 @@ export default function AIVoice() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* mobile: stacked cards — a 3-column table can't fit a phone width without truncating */}
+          <div className="aiv-compare-cards" style={{ display: 'none', flexDirection: 'column', gap: 12 }}>
+            {comparison.map(([feat, ai, trad]) => (
+              <div key={feat} style={{ background: 'var(--paper-000)', border: '1px solid var(--ink-900)',
+                borderRadius: 'var(--radius-2)', padding: '18px 20px', boxShadow: '3px 3px 0 var(--ink-900)' }}>
+                <div style={{ fontWeight: 700, fontSize: 14.5, color: 'var(--ink-900)', marginBottom: 12 }}>{feat}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '8px 0', borderTop: '1px solid var(--border-hair)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
+                    textTransform: 'uppercase', color: 'var(--ink-400)' }}>AI Voice Agent</span>
+                  <span style={{ fontSize: 13.5, fontWeight: 600, color: ai.startsWith('✓') ? 'var(--cyan-700)' : 'var(--ink-500)' }}>{ai}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '8px 0', borderTop: '1px solid var(--border-hair)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
+                    textTransform: 'uppercase', color: 'var(--ink-400)' }}>Traditional Setup</span>
+                  <span style={{ fontSize: 13.5, fontWeight: 600, color: trad.startsWith('✕') ? 'var(--status-danger)' : 'var(--ink-500)' }}>{trad}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </Wrap>
       </section>
