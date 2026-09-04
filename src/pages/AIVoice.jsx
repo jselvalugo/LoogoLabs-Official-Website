@@ -68,39 +68,32 @@ const transcript = [
 const problems = [
   ['62% of calls go unanswered', 'More than half the calls your business receives happen outside business hours. Every unanswered ring is a lead that just called your competitor.'],
   ['Voicemail gets deleted, not played', "The average person waits less than eight seconds before hanging up. They're not leaving a voicemail. They're googling someone else."],
-  ["Your team can't qualify and close at volume", 'When call volume spikes, quality drops. Rushed staff miss qualifying questions. Warm leads slip through.'],
   ['Speed to lead is everything', "Research shows the odds of contacting a lead drop by 80% after five minutes. If you're answering tomorrow, someone else answered today."],
-  ['After-hours is your busiest source of leads', "Homeowners search for help at 9 P.M. after kids are in bed. Businesses explore vendors on weekends. Those are your best leads — and you're missing them."],
 ];
 
 const capabilities = [
   ['24/7 Live Call Answering', 'Never miss another call. Your AI agent picks up in under a second, day or night, weekends and holidays included.'],
   ['Natural Lead Qualification', 'Asks the right questions in the right order — location, timeline, budget, urgency — and scores the lead before your team ever gets involved.'],
-  ['Appointment Booking', 'Syncs directly with your calendar and GHL pipeline. Prospects book a time slot during the call, not after filling out a form.'],
+  ['Appointment Booking', 'Syncs directly with your calendar and CRM pipeline. Prospects book a time slot during the call, and every lead is tagged automatically — no manual entry.'],
   ['Objection Handling', 'Trained on your most common objections. Price shopping? Competition? Not ready? The agent has a scripted, on-brand response for each.'],
-  ['CRM & GHL Integration', 'Every call is logged, every lead is tagged, every appointment is synced. Your pipeline updates in real time, without manual entry.'],
-  ['Your Voice. Your Brand.', 'We build the agent around your business — your tone, your offers, your FAQs, your service area. It sounds like your best employee on their best day.'],
 ];
 
 const steps = [
   ['01', 'Intake & scripting', 'We interview you (or your top salesperson) to capture your best call flow, objections, and closing language.', '~1 week'],
   ['02', 'Build & training', 'We build the voice agent, train it on your business, and run test calls until it meets our standard.', '~1 week'],
-  ['03', 'Integration', 'We connect your phone system, GHL pipeline, and calendar. Zero downtime — runs alongside your existing setup.', '~3 days'],
+  ['03', 'Integration', 'We connect your phone system, CRM pipeline, and calendar. Zero downtime — runs alongside your existing setup.', '~3 days'],
   ['04', 'Go live & tune', 'The agent goes live. We monitor real calls for the first 30 days and tune based on what we hear.', 'Ongoing'],
 ];
 
 const industries = [
-  'HVAC & Mechanical', 'Roofing & Exteriors', 'Dental & Med Spa', 'Personal Injury Law',
-  'Real Estate & Mortgage', 'Pest Control', 'Plumbing & Electric', 'Home Remodeling',
-  'Chiropractic & PT', 'Insurance Agencies', 'Solar Installation', 'Auto Services',
+  'HVAC & Mechanical', 'Roofing & Exteriors', 'Dental & Med Spa', 'Real Estate & Mortgage',
+  'Pest Control', 'Plumbing & Electric', 'Personal Injury Law', 'Auto Services',
 ];
 
 const faqs = [
   ['Does it sound like a robot?', 'No. Modern voice AI is indistinguishable from human agents in most calls. We train it on your specific vocabulary, cadence, and tone so it sounds like someone who works for you — not a generic IVR system.'],
   ['What happens when a call gets too complex?', 'The agent knows its limits. If a caller asks something outside its training, it warmly offers to have a team member call them back, captures their info, and logs the ticket in your CRM.'],
   ['Will it work with our existing phone number?', 'Yes. We route calls through your existing number. No need to change your marketing, your signage, or your contacts. Callers dial the same number they always have.'],
-  ['How does it handle accents or fast talkers?', 'The speech recognition we use ranks among the highest for accuracy across accents and speech patterns. We also run live call monitoring for the first 30 days to catch any edge cases.'],
-  ['What if we have seasonal call spikes?', 'This is exactly what AI voice agents are built for. There\'s no staffing delay, no overtime cost, and no hold times during your busiest season. It scales instantly.'],
   ['How long does setup take?', 'Most clients go live in 10–14 business days from our first call. We handle the entire build. You show up for a 90-minute intake session and an approval call before launch.'],
 ];
 
@@ -249,7 +242,7 @@ export default function AIVoice() {
               'Zero hold time',
               'Books directly into your calendar',
               'Works in English and Spanish',
-              'GHL native integration',
+              'Native CRM integration',
             ].map((txt, i) => (
               <span key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em',
                 textTransform: 'uppercase', color: 'var(--ink-900)', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -392,7 +385,7 @@ export default function AIVoice() {
                       borderRadius: 'var(--radius-pill)', padding: '5px 12px' }}>
                       <span style={{ color: '#2FD07E', fontSize: 11 }}>✓</span>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.1em',
-                        textTransform: 'uppercase', color: '#2FD07E' }}>Appointment booked · Synced to GHL</span>
+                        textTransform: 'uppercase', color: '#2FD07E' }}>Appointment booked · Synced to your CRM</span>
                     </span>
                   </div>
                 </div>
@@ -496,35 +489,6 @@ export default function AIVoice() {
         </Wrap>
       </section>
 
-      {/* ── MID CTA ── */}
-      <section style={{ background: '#2FD07E', padding: 'clamp(56px,7vw,88px) 0' }}>
-        <Wrap style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: 'rgba(26,38,16,0.55)', marginBottom: 16 }}>
-            Limited onboarding slots · Central Florida & remote
-          </div>
-          <h2 style={{ margin: '0 0 12px', fontSize: 'clamp(26px,4vw,48px)', fontWeight: 800,
-            letterSpacing: '-0.035em', lineHeight: 1.1, color: 'var(--ink-900)', maxWidth: '22ch', marginLeft: 'auto', marginRight: 'auto' }}>
-            We build and run your voice agent. You just run your business.
-          </h2>
-          <p style={{ margin: '0 0 36px', fontSize: 16, lineHeight: 1.65, color: 'rgba(26,38,16,0.65)',
-            maxWidth: '48ch', marginLeft: 'auto', marginRight: 'auto' }}>
-            We handle the entire setup — scripting, training, integration, and live monitoring.
-            You show up to a 90-minute intake call and an approval call. That's it.
-          </p>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackBook}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 9,
-              padding: '18px 40px', background: 'var(--ink-900)', color: 'var(--paper-000)',
-              fontFamily: 'var(--font-mono)', fontSize: 14, letterSpacing: '0.07em', textTransform: 'uppercase',
-              textDecoration: 'none', borderRadius: 'var(--radius-2)', fontWeight: 700,
-              boxShadow: '3px 3px 0 rgba(0,0,0,0.25)', transition: 'transform 90ms ease, box-shadow 90ms ease' }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-1px,-1px)'; e.currentTarget.style.boxShadow = '4px 4px 0 rgba(0,0,0,0.25)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '3px 3px 0 rgba(0,0,0,0.25)'; }}>
-            Book a free strategy call →
-          </a>
-        </Wrap>
-      </section>
-
       {/* ── COMPARISON TABLE ── */}
       <section style={{ background: 'var(--paper-200)', padding: 'clamp(72px,9vw,112px) 0' }}>
         <Wrap>
@@ -553,12 +517,9 @@ export default function AIVoice() {
                 {[
                   ['Available after hours', '✓  Always', '✕  Voicemail or missed'],
                   ['Answers in under 1 second', '✓  Every call', '—  Depends on hold queue'],
-                  ['Qualifies leads on the call', '✓  Every time', '—  Inconsistent'],
                   ['Books directly into calendar', '✓  Real time', '—  Manual follow-up'],
                   ['Handles 10 calls simultaneously', '✓  No limit', '✕  One call per person'],
                   ['Cost per call', '✓  Near zero', '✕  $15–$40 per handled call'],
-                  ['Zero sick days or turnover', '✓  Always consistent', '✕  High churn risk'],
-                  ['Updates instantly when trained', '✓  Same day', '✕  Weeks of retraining'],
                 ].map(([feat, ai, trad], i) => (
                   <tr key={i} style={{ borderTop: '1px solid var(--border-hair)',
                     background: i % 2 === 1 ? 'var(--paper-100)' : 'var(--paper-000)' }}>
