@@ -194,13 +194,15 @@ export default function AIReceptionist() {
             Answers every call, greets callers by your business name, books the appointment, and never calls out
             sick — for a fraction of what one payroll costs.
           </p>
-          <div style={{ display: 'flex', gap: 0, marginTop: 40, borderTop: '1px solid var(--border-hair)', justifyContent: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginTop: 40,
+            borderTop: '1px solid var(--border-hair)' }}>
             {[['24/7', 'Always answers'], ['< 1 s', 'Time to pick up'], ['~1 week', 'To go live'], ['$0', 'Sick days']].map(([val, label], i) => (
-              <div key={label} style={{ padding: '18px 16px 0', borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px,3vw,24px)', fontWeight: 700,
+              <div key={label} style={{ padding: '18px 6px 0', minWidth: 0,
+                borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px,4vw,24px)', fontWeight: 700,
                   letterSpacing: '-0.03em', color: 'var(--cyan-700)', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em',
-                  textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 6, whiteSpace: 'nowrap' }}>{label}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px,2vw,9.5px)', letterSpacing: '0.06em',
+                  textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 6 }}>{label}</div>
               </div>
             ))}
           </div>
@@ -342,19 +344,23 @@ export default function AIReceptionist() {
 
       {/* ── STICKY TOP BAR: logo mark only + progress ── */}
       <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--paper-000)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 24px' }}>
-          {step > 0 && !isResult ? (
-            <button onClick={() => go(step - 1)} style={{ background: 'none', border: 'none', cursor: 'pointer',
-              fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-              ← Back
-            </button>
-          ) : <span />}
-          <img src="/logo.png" alt="" style={{ height: 22, width: 'auto' }} />
-          {!isResult ? (
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--ink-400)' }}>
-              {Math.min(step + 1, TOTAL_STEPS)}/{TOTAL_STEPS}
-            </span>
-          ) : <span />}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', padding: '16px 24px' }}>
+          <div style={{ justifySelf: 'start' }}>
+            {step > 0 && !isResult && (
+              <button onClick={() => go(step - 1)} style={{ background: 'none', border: 'none', cursor: 'pointer',
+                fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
+                ← Back
+              </button>
+            )}
+          </div>
+          <img src="/logo.png" alt="" style={{ height: 22, width: 'auto', justifySelf: 'center' }} />
+          <div style={{ justifySelf: 'end' }}>
+            {!isResult && (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--ink-400)' }}>
+                {Math.min(step + 1, TOTAL_STEPS)}/{TOTAL_STEPS}
+              </span>
+            )}
+          </div>
         </div>
         <div style={{ height: 3, background: 'var(--border-hair)' }}>
           <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--cyan-700)', transition: 'width 240ms ease' }} />
