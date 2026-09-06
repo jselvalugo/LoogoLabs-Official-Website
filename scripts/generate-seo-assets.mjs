@@ -115,7 +115,7 @@ function markdownToHtml(text) {
 const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 
 const NAV_LINKS = ROUTES
-  .filter((r) => r.page !== 'Home')
+  .filter((r) => r.page !== 'Home' && !r.unlisted)
   .map((r) => `<li><a href="${r.path}">${esc(r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page)}</a></li>`)
   .join('');
 
@@ -295,7 +295,7 @@ const urlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
 const newestPost = allPosts[0]?.published_at ?? buildDate;
 
 const sitemapEntries = [
-  ...ROUTES.map((r) => urlEntry({
+  ...ROUTES.filter((r) => !r.unlisted).map((r) => urlEntry({
     loc: url(r.path),
     lastmod: r.page === 'LoogoNews' ? newestPost : buildDate,
     changefreq: r.changefreq,
@@ -364,7 +364,7 @@ and republish them; please credit ${SITE.name} and link back to the source URL.
 
 ## Pages
 
-${ROUTES.map((r) => `- [${r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page}](${url(r.path)}): ${r.description}`).join('\n')}
+${ROUTES.filter((r) => !r.unlisted).map((r) => `- [${r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page}](${url(r.path)}): ${r.description}`).join('\n')}
 
 ## Articles
 

@@ -104,6 +104,16 @@ export const ROUTES = [
     image: '/og-image-ai-voice.png',
   },
   {
+    page: 'AIReceptionist',
+    path: '/ai-receptionist',
+    title: `AI Receptionist for Local Service Businesses | ${SITE.name}`,
+    description:
+      'A full-time AI receptionist that answers every call, books the appointment, and never calls out sick — for a fraction of what one payroll costs.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     page: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,
@@ -188,10 +198,10 @@ export function headForPage(page) {
     title: route.title,
     description: clamp(route.description),
     canonical: url(route.path),
-    robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    robots: route.unlisted ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     ogType: 'website',
     image: url(route.image || SITE.ogImage),
-    jsonLd: jsonLdForPage(page),
+    jsonLd: route.unlisted ? [] : jsonLdForPage(page),
   };
 }
 
