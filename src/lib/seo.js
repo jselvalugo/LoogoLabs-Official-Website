@@ -112,6 +112,7 @@ export const ROUTES = [
     priority: '0.1',
     changefreq: 'monthly',
     unlisted: true,
+    image: '/og-image-ai-voice.png',
   },
   {
     page: 'Privacy',
