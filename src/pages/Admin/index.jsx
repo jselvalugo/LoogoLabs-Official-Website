@@ -3,9 +3,11 @@ import { isLoggedIn, logout } from '../../lib/identity';
 import Login from './Login';
 import BlogAdmin from './BlogAdmin';
 import Analytics from './Analytics';
+import Leads from './Leads';
 
 const NAV = [
   { id: 'posts', label: 'Posts' },
+  { id: 'leads', label: 'Leads' },
   { id: 'analytics', label: 'Analytics' },
 ];
 
@@ -59,6 +61,7 @@ export default function Admin() {
 
       <main className="ll-admin-main" style={{ flex: 1, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {subpage === 'posts' && <BlogAdmin />}
+        {subpage === 'leads' && <Leads />}
         {subpage === 'analytics' && <Analytics />}
       </main>
     </div>
