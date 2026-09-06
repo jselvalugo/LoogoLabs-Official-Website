@@ -101,6 +101,7 @@ export const ROUTES = [
       'An AI voice agent that answers every call, books the job, and never puts a customer on hold — set up and managed for local service businesses.',
     priority: '0.8',
     changefreq: 'monthly',
+    image: '/og-image-ai-voice.png',
   },
   {
     page: 'Privacy',
@@ -189,7 +190,7 @@ export function headForPage(page) {
     canonical: url(route.path),
     robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     ogType: 'website',
-    image: url(SITE.ogImage),
+    image: url(route.image || SITE.ogImage),
     jsonLd: jsonLdForPage(page),
   };
 }
