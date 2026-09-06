@@ -1,7 +1,10 @@
 import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
+import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
@@ -92,13 +95,17 @@ const QUIZ_STEPS = [
 ];
 
 const CONTENT_STEPS = ['hero', 'problem', 'capabilities', 'cost', 'proof', 'industries', 'faq'];
-const TOTAL_STEPS = CONTENT_STEPS.length + QUIZ_STEPS.length; // steps before the result screen
+const QUIZ_END = CONTENT_STEPS.length + QUIZ_STEPS.length; // index of the contact step, right after the last quiz question
+const TOTAL_STEPS = QUIZ_END + 1; // steps before the result screen (content + quiz + contact)
 
 /* ─────────────────────── main component ─────────────────────── */
 export default function AIReceptionist() {
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
   const [openFaq, setOpenFaq] = React.useState(null);
+  const [contact, setContact] = React.useState({ fullName: '', email: '' });
+  const [contactError, setContactError] = React.useState('');
+  const [submitting, setSubmitting] = React.useState(false);
 
   const go = (n) => {
     setStep(n);
@@ -113,13 +120,44 @@ export default function AIReceptionist() {
     if (quizIndex + 1 < QUIZ_STEPS.length) {
       go(CONTENT_STEPS.length + quizIndex + 1);
     } else {
-      if (next.decisionMaker === "Yes, that's me") fire('Lead');
-      go(TOTAL_STEPS);
+      go(QUIZ_END);
     }
   };
 
+  const submitContact = async () => {
+    const fullName = contact.fullName.trim();
+    const email = contact.email.trim();
+    if (!fullName || !EMAIL_RE.test(email)) {
+      setContactError('Enter your full name and a valid email to see your results.');
+      return;
+    }
+    setContactError('');
+    setSubmitting(true);
+    try {
+      await fetch('/.netlify/functions/create-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: fullName,
+          email,
+          business_type: answers.businessType,
+          missed_calls: answers.missedCalls,
+          pain_point: answers.painPoint,
+          decision_maker: answers.decisionMaker,
+        }),
+      });
+    } catch {
+      // Non-blocking: the visitor still sees their result even if the write fails.
+    }
+    fireCustom('FunnelContact', { email });
+    if (answers.decisionMaker === "Yes, that's me") fire('Lead');
+    setSubmitting(false);
+    go(TOTAL_STEPS);
+  };
+
   const progressPct = Math.min(step, TOTAL_STEPS) / TOTAL_STEPS * 100;
-  const isQuizStep = step >= CONTENT_STEPS.length && step < TOTAL_STEPS;
+  const isQuizStep = step >= CONTENT_STEPS.length && step < QUIZ_END;
+  const isContactStep = step === QUIZ_END;
   const isResult = step >= TOTAL_STEPS;
   const notDecisionMaker = answers.decisionMaker === "No, I'd need to check with someone";
 
@@ -148,6 +186,26 @@ export default function AIReceptionist() {
           from your business, and what it's costing you to keep missing calls instead.
         </p>
         <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook} fullWidth>Book My Free Fit Call</Button>
+      </Card>
+    );
+  } else if (isContactStep) {
+    body = (
+      <Card>
+        <Eyebrow>Fit check · Almost done</Eyebrow>
+        <StepHeading>Where should we send your results?</StepHeading>
+        <div style={{ display: 'grid', gap: 16 }}>
+          <Input label="Full name" value={contact.fullName}
+            onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))}
+            placeholder="Jane Smith" />
+          <Input label="Email" type="email" value={contact.email}
+            onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
+            placeholder="jane@yourbusiness.com" error={contactError} />
+        </div>
+        <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center' }}>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={submitContact} disabled={submitting} fullWidth>
+            {submitting ? 'Submitting…' : 'See My Results'}
+          </Button>
+        </div>
       </Card>
     );
   } else if (isQuizStep) {
