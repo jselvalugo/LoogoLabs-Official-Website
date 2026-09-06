@@ -7,7 +7,7 @@
 // build time to write static HTML, the sitemap, and the feed. One definition,
 // so the rendered page and the pre-rendered page can never disagree.
 
-import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, SERVICE_AREA } from './content.js';
+import { GROW_FAQ, SERVICE_AREA } from './content.js';
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -64,15 +64,6 @@ export const ROUTES = [
     description:
       'Most owners run their business across 10–15 disconnected tools. We built one platform that replaces them, and we handle setup, training, and support.',
     priority: '0.7',
-    changefreq: 'monthly',
-  },
-  {
-    page: 'Pricing',
-    path: '/pricing',
-    title: `Pricing — Plans From $97/Month | ${SITE.name}`,
-    description:
-      'Three plans, no hidden fees. CRM, email and SMS marketing, automation, and 24/7 support from $97 a month. Most clients cancel $400+ in tools on day one.',
-    priority: '0.9',
     changefreq: 'monthly',
   },
   {
@@ -319,44 +310,6 @@ export const blogLd = (posts = []) => ({
   })),
 });
 
-export const pricingLd = () => ({
-  '@type': 'Product',
-  '@id': url('/pricing#product'),
-  name: `${SITE.name} Platform`,
-  description:
-    'All-in-one CRM, marketing automation, and reputation management platform with done-for-you setup and 24/7 support.',
-  brand: { '@id': url('/#organization') },
-  image: url(SITE.ogImage),
-  offers: PLANS.flatMap((plan) => [
-    {
-      '@type': 'Offer',
-      name: `${plan.name} — monthly`,
-      description: plan.summary,
-      price: String(plan.price),
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: url('/pricing'),
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: String(plan.price),
-        priceCurrency: 'USD',
-        billingDuration: 1,
-        billingIncrement: 1,
-        unitCode: 'MON',
-      },
-    },
-    {
-      '@type': 'Offer',
-      name: `${plan.name} — annual`,
-      description: `${plan.summary} Billed annually at 20% off.`,
-      price: String(Math.round(plan.price * ANNUAL_DISCOUNT)),
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: url('/pricing'),
-    },
-  ]),
-});
-
 export const faqLd = (entries = GROW_FAQ) => ({
   '@type': 'FAQPage',
   '@id': url('/grow#faq'),
@@ -409,7 +362,6 @@ export function jsonLdForPage(page) {
   } else if (route) {
     nodes.push(breadcrumbLd([crumbBase, { name: route.page === 'LoogoNews' ? 'LoogoNews' : route.page, path: route.path }]));
   }
-  if (page === 'Pricing') nodes.push(pricingLd());
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
   return nodes;
 }

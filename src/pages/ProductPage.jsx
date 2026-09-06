@@ -53,7 +53,7 @@ function ProductPage({ product = 'CartCaddy', onNavigate }) {
               letterSpacing: 'var(--ls-display-2)', maxWidth: '20ch' }}>{c.headline}</h1>
             <p style={{ maxWidth: '50ch', margin: '20px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>{c.lede}</p>
             <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Pricing')}>See pricing</Button>
+              <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNavigate('Mission')}>Learn more</Button>
               <Button variant="secondary" onClick={() => onNavigate('Products')}>All products</Button>
             </div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)', marginTop: 20 }}>{product} · one application of the Loogo engine</div>

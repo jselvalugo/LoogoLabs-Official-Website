@@ -1,62 +1,7 @@
 // Structured business facts that both the UI and the build-time SEO generator
-// read. Keeping them here (a plain module, no JSX) means the pricing table and
-// the Product/Offer schema, or the FAQ accordion and the FAQPage schema, cannot
-// drift apart — search engines and visitors are always shown the same numbers.
-
-export const PLANS = [
-  {
-    name: 'Basics',
-    price: 97,
-    unit: 'per month',
-    summary: 'CRM, email and SMS marketing, reputation management, and scheduling in one login.',
-    lines: [
-      'CRM & contact management',
-      'Email & SMS marketing',
-      '2-way text & email conversations',
-      'Reputation management',
-      'GMB messaging & call tracking',
-      'Website & funnel builder',
-      'Scheduling & calendar',
-      '24/7 support',
-    ],
-  },
-  {
-    name: 'Pro',
-    price: 197,
-    unit: 'per month',
-    featured: true,
-    summary: 'Everything in Basics plus workflow automation, social scheduling, and AI content.',
-    lines: [
-      'Everything in Basics',
-      'Unlimited funnels & websites',
-      'Workflow automation builder',
-      'Social media scheduler',
-      '60+ AI content prompts',
-      'Surveys & forms',
-      'Affiliate manager',
-      'Advanced reporting & analytics',
-    ],
-  },
-  {
-    name: 'Platinum',
-    price: 497,
-    unit: 'per month',
-    summary: 'Everything in Pro plus courses, memberships, payments, and done-for-you automation.',
-    lines: [
-      'Everything in Pro',
-      'Unlimited courses & communities',
-      'Membership sites',
-      'Payment & invoicing tools',
-      'Branded mobile app (optional)',
-      'Priority onboarding session',
-      'Dedicated account manager',
-      'Done-for-you automation setup',
-    ],
-  },
-];
-
-// Annual billing is presented as 20% off the monthly rate.
-export const ANNUAL_DISCOUNT = 0.8;
+// read. Keeping them here (a plain module, no JSX) means the FAQ accordion and
+// the FAQPage schema cannot drift apart — search engines and visitors are
+// always shown the same answers.
 
 export const GROW_FAQ = [
   ['Do I need any tech experience?', 'None. We build everything, set everything up, and manage it for you. You get a login to see your results, and we handle the rest. If you can read a report, you’re more than qualified.'],

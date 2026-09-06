@@ -9,7 +9,6 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
-import Pricing from './pages/Pricing';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 
@@ -87,12 +86,11 @@ function App() {
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
 
-  const nav = ['Home', 'Mission', 'AIVoice', 'Pricing', 'LoogoNews'];
+  const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
   else if (page === 'AIVoice') body = <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
-  else if (page === 'Pricing') body = <Pricing onNavigate={navigate} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
@@ -131,7 +129,7 @@ function App() {
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
           { title: 'Company', links: ['Mission', 'Book a Call'] },
-          { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida'] },
+          { title: 'Platform', links: ['LoogoNews', 'Central Florida'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
           { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
