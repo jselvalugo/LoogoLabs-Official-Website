@@ -89,7 +89,7 @@ function App() {
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
   if (page === 'AIReceptionist') return <React.Suspense fallback={null}><AIReceptionist /></React.Suspense>;
 
-  const nav = ['Home', 'Mission', 'AIVoice', 'Pricing', 'LoogoNews'];
+  const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
