@@ -378,26 +378,32 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-admin-sidebar-brand {
     padding: 12px 14px !important;
     border-bottom: none !important;
-  }
-  .ll-admin-nav {
-    display: flex !important;
-    flex: 1;
-    flex-direction: row !important;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 !important;
-  }
-  .ll-admin-nav-item {
-    border-left: none !important;
-    border-bottom: 2px solid transparent;
-    padding: 12px 14px !important;
-    flex-shrink: 0;
+    order: 0;
   }
   .ll-admin-sidebar-footer {
     border-top: none !important;
     padding: 10px 14px !important;
     margin-left: auto;
     flex-shrink: 0;
+    order: 1;
+  }
+  /* Tabs get their own full-width row below brand/sign-out, as equal-width
+     buttons — no horizontal scrolling, so every tab is visible at a glance. */
+  .ll-admin-nav {
+    display: flex !important;
+    flex: 1 1 100% !important;
+    flex-direction: row !important;
+    order: 2;
+    overflow-x: visible;
+    padding: 0 !important;
+    border-top: 1px solid rgba(216,211,198,0.10);
+  }
+  .ll-admin-nav-item {
+    flex: 1 1 0;
+    text-align: center !important;
+    border-left: none !important;
+    border-bottom: 2px solid transparent;
+    padding: 12px 8px !important;
   }
   .ll-admin-main { overflow-y: auto !important; }
 

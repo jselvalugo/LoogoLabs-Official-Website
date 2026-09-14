@@ -36,17 +36,17 @@ export default function Leads() {
         ) : (
           <div className="ll-table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 900 }}>
-              <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 1 }}>
+              <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 2 }}>
                 <tr style={{ borderBottom: '1px solid var(--border-hair)' }}>
-                  {['Full name', 'Email', 'Business type', 'Missed calls/wk', 'Pain point', 'Decision maker', 'Submitted'].map((h) => (
-                    <th key={h} style={thStyle}>{h}</th>
+                  {['Full name', 'Email', 'Business type', 'Missed calls/wk', 'Pain point', 'Decision maker', 'Submitted'].map((h, i) => (
+                    <th key={h} style={i === 0 ? thStickyStyle : thStyle}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {leads.map((lead) => (
                   <tr key={lead.id} style={{ borderBottom: '1px solid var(--border-hair)' }}>
-                    <td style={{ ...tdStyle, fontWeight: 500 }}>{lead.full_name}</td>
+                    <td style={{ ...tdStickyStyle, fontWeight: 500 }}>{lead.full_name}</td>
                     <td style={tdStyle}>{lead.email}</td>
                     <td style={tdStyle}>{lead.business_type || '—'}</td>
                     <td style={tdStyle}>{lead.missed_calls || '—'}</td>
@@ -68,3 +68,6 @@ export default function Leads() {
 
 const thStyle = { padding: '10px 22px', textAlign: 'left', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)', fontWeight: 500 };
 const tdStyle = { padding: '13px 22px', fontSize: 13, color: 'var(--ink-900)', verticalAlign: 'middle' };
+// Name stays visible while swiping through the rest of the columns on a narrow screen.
+const thStickyStyle = { ...thStyle, position: 'sticky', left: 0, zIndex: 1, background: 'var(--paper-100)', borderRight: '1px solid var(--border-hair)' };
+const tdStickyStyle = { ...tdStyle, position: 'sticky', left: 0, zIndex: 1, background: 'var(--paper-100)', borderRight: '1px solid var(--border-hair)' };
