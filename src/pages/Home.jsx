@@ -164,7 +164,7 @@ function FounderSpotlight() {
           )}
         </div>
         <div style={{ marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
-          David Selva · Founder
+          David Selva
         </div>
 
         <span className="ll-eyebrow" style={{ color: 'var(--cyan-500)', display: 'block', marginTop: 28 }}>About the founder</span>

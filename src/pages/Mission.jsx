@@ -2,7 +2,6 @@ import React from 'react';
 import Badge from '../components/feedback/Badge';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Stat from '../components/surfaces/Stat';
-import Placeholder from '../components/website/Placeholder';
 import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
@@ -92,7 +91,8 @@ function Mission({ onNavigate }) {
       <Wrap style={{ padding: '64px 24px 88px' }}>
         <SectionHeading eyebrow="The company" title="We stay close to every client" />
         <div className="ll-2col" style={{ gap: 24, marginTop: 36 }}>
-          <Placeholder label="TEAM PHOTO — SUPPLY REAL ASSET" height={300} />
+          <img src="/team-photo.jpg" alt="The Loogo Labs team at work"
+            style={{ width: '100%', height: 300, objectFit: 'cover', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)', display: 'block' }} />
           <Card emphasis="strong" padding={28} style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <span className="ll-eyebrow">Working with us</span>
             <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)' }}>
