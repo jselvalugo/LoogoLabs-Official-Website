@@ -7,7 +7,7 @@
 // build time to write static HTML, the sitemap, and the feed. One definition,
 // so the rendered page and the pre-rendered page can never disagree.
 
-import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, SERVICE_AREA } from './content.js';
+import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, AI_RECEPTIONIST_FAQ, SERVICE_AREA } from './content.js';
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -108,11 +108,19 @@ export const ROUTES = [
     path: '/ai-receptionist',
     title: `AI Receptionist for Local Service Businesses | ${SITE.name}`,
     description:
-      'A full-time AI receptionist that answers every call, books the appointment, and never calls out sick — for a fraction of what one payroll costs.',
-    priority: '0.1',
+      'A full-time AI receptionist that answers every call, books the appointment, and never calls out sick — for a fraction of what one payroll costs. Take the free 60-second fit check.',
+    priority: '0.8',
     changefreq: 'monthly',
-    unlisted: true,
     image: '/og-image-ai-voice.png',
+  },
+  {
+    page: 'Quizzes',
+    path: '/quizzes',
+    title: `Free Fit-Check Quizzes | ${SITE.name}`,
+    description:
+      'Quick, free quizzes that tell you whether a Loogo Labs system is a fit for your business — no call required to find out.',
+    priority: '0.6',
+    changefreq: 'monthly',
   },
   {
     page: 'Privacy',
@@ -369,9 +377,9 @@ export const pricingLd = () => ({
   ]),
 });
 
-export const faqLd = (entries = GROW_FAQ) => ({
+export const faqLd = (entries = GROW_FAQ, path = '/grow') => ({
   '@type': 'FAQPage',
-  '@id': url('/grow#faq'),
+  '@id': url(`${path}#faq`),
   mainEntity: entries.map(([question, answer]) => ({
     '@type': 'Question',
     name: question,
@@ -423,6 +431,7 @@ export function jsonLdForPage(page) {
   }
   if (page === 'Pricing') nodes.push(pricingLd());
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
+  if (page === 'AIReceptionist') nodes.push(faqLd(AI_RECEPTIONIST_FAQ, '/ai-receptionist'));
   return nodes;
 }
 

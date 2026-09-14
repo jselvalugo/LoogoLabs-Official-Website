@@ -3,6 +3,7 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+import { AI_RECEPTIONIST_FAQ } from '../lib/content';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -62,12 +63,7 @@ const industries = [
   'Pest Control', 'Plumbing & Electric', 'Salon, Spa & Fitness', 'Legal & Professional Services',
 ];
 
-const faqs = [
-  ['Will it sound robotic on the phone?', "No. It's trained on your business's vocabulary, services, and tone so it sounds like a real front-desk hire — not a generic answering system."],
-  ["What happens if it can't help with something?", "It knows its limits. If a call falls outside its training, it warmly takes a message, captures the details, and gets your team a callback ticket — nothing gets lost."],
-  ['Does it work with my current phone number?', 'Yes. We route calls through the number you already have. No new number, no changes to your signage or ads.'],
-  ['How fast can this be live for my business?', "Most clients are live within a week. We handle the build — you show up for one intake session and one approval call."],
-];
+const faqs = AI_RECEPTIONIST_FAQ;
 
 const testimonialImages = [
   { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
@@ -80,6 +76,66 @@ function TestimonialImage({ src, alt }) {
   return (
     <img src={src} alt={alt} onError={() => setFailed(true)}
       style={{ width: '100%', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)', display: 'block' }} />
+  );
+}
+
+// Always mounted, regardless of which quiz step is showing. The interactive
+// widget above reveals this same information one click at a time, which is
+// great for a real visitor but invisible to a crawler that never clicks
+// through it — this section is the page's actual indexable, readable content.
+function SeoContent({ onStartQuiz }) {
+  return (
+    <section style={{ borderTop: '1px solid var(--border-hair)', padding: 'clamp(40px,6vw,72px) 24px', background: 'var(--paper-100)' }}>
+      <div style={{ maxWidth: 720, margin: '0 auto' }}>
+        <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(22px,3vw,30px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>
+          Is an AI Receptionist Right for Your Business?
+        </h2>
+        <p style={{ margin: '0 0 28px', fontSize: 15.5, lineHeight: 1.7, color: 'var(--ink-600)' }}>
+          A full-time human receptionist costs $45,000–$55,000 a year before benefits, and can only handle one
+          call at a time — every other caller during that call goes to voicemail. An AI receptionist answers
+          every call instantly, day or night, greets callers by your business name, books and reschedules
+          appointments straight to your calendar, and routes anything urgent to a real person. It typically
+          goes live within a week, for a fraction of one month's human-receptionist salary.
+        </p>
+
+        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>What it actually does</h3>
+        <ul style={{ margin: '0 0 28px', paddingLeft: 20, lineHeight: 1.8 }}>
+          {capabilities.map(([title, desc]) => (
+            <li key={title} style={{ fontSize: 14.5, color: 'var(--ink-700)', marginBottom: 8 }}>
+              <strong>{title}.</strong> {desc}
+            </li>
+          ))}
+        </ul>
+
+        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>AI receptionist vs. human receptionist</h3>
+        <ul style={{ margin: '0 0 28px', paddingLeft: 20, lineHeight: 1.8 }}>
+          {comparison.map(([feat, ai, human]) => (
+            <li key={feat} style={{ fontSize: 14.5, color: 'var(--ink-700)', marginBottom: 6 }}>
+              <strong>{feat}:</strong> {ai}, versus {human} for a human receptionist.
+            </li>
+          ))}
+        </ul>
+
+        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>Built for these industries</h3>
+        <p style={{ margin: '0 0 28px', fontSize: 14.5, lineHeight: 1.8, color: 'var(--ink-700)' }}>
+          {industries.join(' · ')}
+        </p>
+
+        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>Frequently asked questions</h3>
+        <div style={{ marginBottom: 32 }}>
+          {faqs.map(([q, a]) => (
+            <div key={q} style={{ marginBottom: 20 }}>
+              <h4 style={{ margin: '0 0 6px', fontSize: 15, fontWeight: 700, color: 'var(--ink-900)' }}>{q}</h4>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'var(--ink-600)' }}>{a}</p>
+            </div>
+          ))}
+        </div>
+
+        <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={onStartQuiz}>
+          Take The Free 60-Second Fit Check
+        </Button>
+      </div>
+    </section>
   );
 }
 
@@ -435,6 +491,8 @@ export default function AIReceptionist() {
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: 'clamp(32px,6vw,64px) 24px' }}>
         <div style={{ width: '100%' }}>{body}</div>
       </div>
+
+      <SeoContent onStartQuiz={() => go(0)} />
 
       {/* ── SLIM LEGAL FOOTER ── */}
       <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-hair)',

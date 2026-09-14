@@ -68,6 +68,13 @@ export const GROW_FAQ = [
   ['What if I already have a website or CRM?', 'We work alongside existing tools or replace them depending on what you have. During our free strategy call, we’ll assess what you’re already using and tell you honestly what to keep and what to replace.'],
 ];
 
+export const AI_RECEPTIONIST_FAQ = [
+  ['Will it sound robotic on the phone?', "No. It's trained on your business's vocabulary, services, and tone so it sounds like a real front-desk hire — not a generic answering system."],
+  ["What happens if it can't help with something?", "It knows its limits. If a call falls outside its training, it warmly takes a message, captures the details, and gets your team a callback ticket — nothing gets lost."],
+  ['Does it work with my current phone number?', 'Yes. We route calls through the number you already have. No new number, no changes to your signage or ads.'],
+  ['How fast can this be live for my business?', "Most clients are live within a week. We handle the build — you show up for one intake session and one approval call."],
+];
+
 // Service area for the Central Florida landing page, used for the areaServed
 // node in the LocalBusiness schema. This list is the whole geographic signal —
 // see localBusinessLd() in lib/seo.js for why there is no street address.

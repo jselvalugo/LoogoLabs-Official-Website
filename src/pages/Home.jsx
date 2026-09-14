@@ -5,7 +5,7 @@ import Stat from '../components/surfaces/Stat';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
 import { openBooking } from '../lib/booking';
-import { SITE } from '../lib/seo';
+import { SITE, pathForPage } from '../lib/seo';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -182,6 +182,30 @@ function FounderSpotlight() {
   );
 }
 
+// Not ready to book a call? Point them at the free quizzes instead — and give
+// the quiz hub a real internal link from the homepage while we're at it.
+function QuizTeaser({ onNavigate }) {
+  return (
+    <Wrap style={{ padding: '40px 24px' }}>
+      <a href={pathForPage('Quizzes')} onClick={(e) => { e.preventDefault(); onNavigate('Quizzes'); }}
+        style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+        <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'grid', gap: 8, maxWidth: '52ch' }}>
+            <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Not ready to book a call?</span>
+            <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>
+              Take a 60-second fit check instead.
+            </h2>
+            <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
+              Quick, free quizzes that tell you straight away whether one of our systems fits your business.
+            </p>
+          </div>
+          <Button variant="secondary" size="lg" iconRight={<span>→</span>}>See our free quizzes</Button>
+        </Card>
+      </a>
+    </Wrap>
+  );
+}
+
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -244,6 +268,8 @@ function Home({ onNavigate }) {
           ))}
         </div>
       </Wrap>
+
+      <QuizTeaser onNavigate={onNavigate} />
 
       <FounderNote />
 

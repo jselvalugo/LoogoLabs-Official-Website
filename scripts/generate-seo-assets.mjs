@@ -189,6 +189,8 @@ const HEADINGS = {
   Pricing: 'One platform. Three plans. No hidden fees.',
   LoogoNews: 'LoogoNews — Marketing News',
   GrowCFL: 'Stop losing customers to businesses that respond faster.',
+  AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
+  Quizzes: 'Free fit-check quizzes for your business',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',
 };
