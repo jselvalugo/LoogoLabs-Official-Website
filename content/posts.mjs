@@ -11,6 +11,62 @@
 
 export const posts = [
   {
+    slug: `gohighlevel-workflows-that-dont-break`,
+    title: `How I Build GoHighLevel Workflows That Don't Break by Month Two`,
+    excerpt: `Most GoHighLevel workflows fail from re-entry loops and duplicate triggers, not bad ideas — here's the exact architecture I check on every build.`,
+    tags: `GoHighLevel, Workflow Automation, CRM Automation`,
+    content: `A client's GoHighLevel workflow booked the same 9 a.m. slot to four different leads in one morning. The calendar wasn't broken. The workflow that watched for new bookings had fired four separate times off the same contact, and nobody had told it when to stop.
+
+This is the failure mode I see most in builds I didn't set up myself. Not a bad idea — a workflow that was never told its own boundaries.
+
+## Re-entry, not the trigger, is usually the bug
+
+Every GoHighLevel workflow has a re-entry setting: can this contact run through the workflow again after they've already run through it once? Left on the default, most builders never touch it.
+
+That's fine for a workflow that's supposed to loop — a monthly review-request sequence, say. It's a live bug for anything tied to a one-time event. A missed-call trigger firing on every ring, a form-submission trigger firing on every resubmit, an appointment trigger firing on every reschedule — each re-entry re-runs the whole sequence from the top, stacking SMS sends and calendar actions the contact already received.
+
+Before I touch anything else in a build, I check re-entry on every workflow first. If the trigger event can plausibly happen twice for the same contact and the workflow isn't designed to handle that, re-entry comes off.
+
+## A Goal stops the workflow from talking past the sale
+
+The second thing I check: does this workflow have a Goal set?
+
+A Goal is a condition that, once met, ends that contact's run immediately — skipping every step still queued below it. The standard case: a lead enters a 5-touch follow-up sequence (day 0, 1, 3, 7, 14), and on day 2 they book. Without a Goal, the workflow doesn't know that. It sends the day-3 and day-7 "still interested?" texts to someone who already has an appointment on the calendar.
+
+I set the Goal to the same event that would make the sequence pointless to keep running — appointment booked, tag added, pipeline stage changed to Won. It's a one-time setup that quietly prevents the single most common complaint I hear from new clients about their old automation: "it kept texting me after I already signed up."
+
+## If/Else branches, not five near-identical workflows
+
+The next thing I look for is workflow sprawl — five workflows that are each a copy of the same sequence with one condition changed. That's not organization, it's five places the same bug can now live.
+
+An If/Else step inside a single workflow reads a condition — a tag, a custom field value, a pipeline stage — and routes the contact down one branch or the other, inside the same build. A missed-call workflow with an If/Else on "existing customer?" tag sends a different message to a repeat client than a first-time caller, without duplicating the whole sequence to do it.
+
+The rule I use: if the only difference between two workflows is one condition, it should be one workflow with one branch, not two workflows with copy-pasted steps that will drift out of sync the first time either gets edited.
+
+## Wait steps are logic, not just delay
+
+A Wait step gets used as "pause for two days," which is correct but incomplete. The more useful version is Wait Until — hold the contact here until a specific condition becomes true, or until a maximum time limit passes, whichever comes first.
+
+That combination matters for anything tied to a business's actual hours. A lead comes in at 11 p.m.: instead of an immediate 11 p.m. text that gets ignored, a Wait Until step holds the contact until the next 8 a.m. window before the follow-up fires — but caps at 24 hours so a lead who came in on a Sunday still gets contacted by Monday morning, not stuck waiting for a condition that never triggers.
+
+## What I actually ship
+
+The shape of almost every workflow I build, stripped down:
+
+- **Trigger** — one specific event: form submitted, tag added, appointment booked, missed call
+- **If/Else** — route on the one condition that actually changes the message (new vs. returning, service type, lead source)
+- **Wait Until** — hold for business hours or a real-world condition, with a hard time cap
+- **Action** — the SMS, email, or task assignment itself
+- **Goal** — the event that makes the rest of the sequence pointless to keep running
+- **Webhook** — one outbound call, at the end, to whatever needs visibility (a Slack channel, a spreadsheet) — not one per step
+
+Five moving parts, every time. The workflows that get complicated aren't the ones with more steps — they're the ones missing one of these five.
+
+## Check this tonight
+
+Open your busiest workflow and look at two things: is re-entry on when it shouldn't be, and is there a Goal set on anything that ends in a booking or a sale. Those two settings, left at default, are behind almost every "the automation is acting weird" ticket I've ever gotten.`,
+  },
+  {
     slug: `missed-call-text-back-hvac`,
     title: `The Missed Call That Cost an HVAC Company $4,200`,
     excerpt: `Every unanswered call is a lead calling your competitor next — and the fix costs nothing to run.`,

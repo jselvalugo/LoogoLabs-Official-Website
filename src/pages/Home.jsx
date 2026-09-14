@@ -141,6 +141,72 @@ function FounderNote() {
   );
 }
 
+// The founder, front and center — a deliberate break from the product-only
+// sections around it. Framed like a HUD/status readout to match the site's
+// retro-computing visual language rather than a soft "team member" card.
+function FounderSpotlight() {
+  const [imgOk, setImgOk] = React.useState(true);
+  return (
+    <section className="ll-grid-bg--inverse" style={{ position: 'relative', background: 'var(--ink-900)', color: 'var(--paper-100)' }}>
+      <Wrap style={{ padding: '64px 24px', position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span className="ll-live-dot" aria-hidden="true" />
+          <Badge tone="inverse">Systems Person · Off The Clock</Badge>
+        </div>
+
+        <div className="ll-grid-2" style={{ gap: 48, marginTop: 28, alignItems: 'center' }}>
+          <div>
+            <span className="ll-eyebrow" style={{ color: 'var(--cyan-500)' }}>About the founder</span>
+            <h2 style={{ margin: '14px 0 0', fontWeight: 700, fontSize: 'var(--fs-h1)', lineHeight: 1.15,
+              letterSpacing: 'var(--ls-h1)', maxWidth: '22ch' }}>
+              By day I run legal contracts. By night, I run your marketing.
+            </h2>
+            <p style={{ margin: '20px 0 0', maxWidth: '54ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
+              I'm David Selva. My day job is Contract Lifecycle Management (CLM) inside the legal tech
+              industry — building the systems that keep enterprise contracts moving without a single
+              approval falling through the cracks.
+            </p>
+            <p style={{ margin: '14px 0 0', maxWidth: '54ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
+              Loogo Labs is that same obsession pointed somewhere else — a performance-marketing side
+              build for local businesses tired of losing leads to slow follow-up and duct-taped tools.
+              Every workflow running under the hood here, I designed and I run myself.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
+              {[['Day job', 'Legal Tech · CLM'], ['After hours', 'Performance Marketing · Automation']].map(([l, v]) => (
+                <div key={l} style={{ border: '1px solid var(--border-hair-inverse)', borderRadius: 'var(--radius-2)', padding: '10px 16px' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{l}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--paper-100)', marginTop: 4 }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ justifySelf: 'center' }}>
+            <div style={{ position: 'relative', width: 'min(280px, 100%)', border: '2px solid var(--paper-100)',
+              borderRadius: 'var(--radius-2)', boxShadow: '4px 4px 0 var(--cyan-500)', overflow: 'hidden', background: 'var(--ink-800)' }}>
+              {imgOk ? (
+                <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" onError={() => setImgOk(false)}
+                  style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} />
+              ) : (
+                <div style={{ width: '100%', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: 'var(--font-display)', fontSize: 64, fontWeight: 700, color: 'var(--cyan-500)' }}>DS</div>
+              )}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 14px',
+                background: 'rgba(26,38,16,0.85)', borderTop: '1px solid var(--border-hair-inverse)',
+                display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span className="ll-live-dot" aria-hidden="true" />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--paper-100)' }}>
+                  David Selva · Founder
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Wrap>
+    </section>
+  );
+}
+
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -186,6 +252,8 @@ function Home({ onNavigate }) {
       </Wrap>
 
       <VoiceBotSection />
+
+      <FounderSpotlight />
 
       <Wrap style={{ padding: '40px 24px' }}>
         <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>

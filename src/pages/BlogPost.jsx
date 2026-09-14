@@ -123,6 +123,27 @@ export default function BlogPost({ slug, onNavigate }) {
               {renderMarkdown(post.content)}
             </div>
 
+            {/* Author bio — the personal signature on every post, not just a byline */}
+            {post.author === 'David Selva' && (
+              <div style={{ marginTop: 48, padding: '24px 28px', background: 'var(--paper-200)',
+                border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)',
+                display: 'flex', gap: 18, alignItems: 'flex-start' }}>
+                <img src="/founder-david-selva.jpg" alt="David Selva" width={56} height={56}
+                  style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '2px solid var(--ink-900)' }} />
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 6 }}>
+                    Written by
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-900)' }}>David Selva</div>
+                  <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '54ch' }}>
+                    I run Loogo Labs and write every LoogoNews post myself, from what I've actually seen
+                    fixing this stuff for clients — not from a content calendar. Day job's in legal tech;
+                    this is what I build after hours.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* CTA box */}
             <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 14 }}>
