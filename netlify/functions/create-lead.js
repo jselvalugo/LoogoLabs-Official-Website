@@ -2,7 +2,7 @@ import { getDatabase } from '@netlify/database';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== 'POST') return new Response(null, { status: 405 });
 
   let body;
@@ -15,11 +15,15 @@ export default async (req) => {
   }
 
   const { source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point } = body;
+  const geo = context?.geo || {};
+  const city = geo.city || null;
+  const region = geo.subdivision?.name || null;
+  const country = geo.country?.name || null;
   const { sql } = getDatabase();
 
   const [lead] = await sql`
-    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point)
-    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null})
+    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point, city, region, country)
+    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country})
     RETURNING *
   `;
 

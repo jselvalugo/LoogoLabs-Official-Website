@@ -20,7 +20,18 @@ export default function BlogPost({ slug, onNavigate }) {
       .then(data => {
         if (data) {
           setPost(data);
-          fetch('/.netlify/functions/track-view', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug }) });
+          // One counted view per slug per browser session — reloading or
+          // re-reading the same post in this tab shouldn't inflate the count.
+          const viewedKey = `ll_viewed_${slug}`;
+          try {
+            if (!sessionStorage.getItem(viewedKey)) {
+              sessionStorage.setItem(viewedKey, '1');
+              fetch('/.netlify/functions/track-view', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug }) });
+            }
+          } catch {
+            // sessionStorage unavailable (private mode, etc.) — fall back to counting every load.
+            fetch('/.netlify/functions/track-view', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug }) });
+          }
         }
       })
       .finally(() => setLoading(false));

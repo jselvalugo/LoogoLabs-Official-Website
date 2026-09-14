@@ -14,8 +14,24 @@ export const leads = pgTable('leads', {
   // Reputation Autopilot's own quiz questions — null on AI Receptionist rows.
   job_volume: text('job_volume'),
   review_pain_point: text('review_pain_point'),
+  // IP-derived location (Netlify's built-in geolocation) — city/region accuracy, not precise.
+  city: text('city'),
+  region: text('region'),
+  country: text('country'),
   status: text('status').default('new'),
   notes: text('notes').default(''),
+});
+
+// One row per (deduplicated, one-per-session) blog post view, so views can be
+// broken down by location and by date — the posts.views counter alone can only
+// ever show a running total.
+export const post_views = pgTable('post_views', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  post_slug: text('post_slug').notNull(),
+  city: text('city'),
+  region: text('region'),
+  country: text('country'),
+  created_at: timestamp('created_at').defaultNow(),
 });
 
 export const posts = pgTable('posts', {

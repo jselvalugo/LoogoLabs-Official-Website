@@ -8,14 +8,44 @@ function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+const SOURCE_LABELS = {
+  ai_receptionist: 'AI Receptionist',
+  reputation_autopilot: 'Reputation Autopilot',
+};
+
+// "City, Region" when both are known, falling back gracefully — location is
+// IP-derived (Netlify's built-in geolocation), so it's occasionally missing.
+function locationLabel(row) {
+  const parts = [row.city, row.region || row.country].filter(Boolean);
+  return parts.length ? parts.join(', ') : null;
+}
+
+function topLocations(rows, limit = 8) {
+  const counts = {};
+  rows.forEach(r => {
+    const label = locationLabel(r);
+    if (label) counts[label] = (counts[label] || 0) + 1;
+  });
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, limit);
+}
+
 export default function Analytics() {
   const [posts, setPosts] = React.useState(null);
+  const [leads, setLeads] = React.useState(null);
+  const [postViews, setPostViews] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    apiFetch('/.netlify/functions/get-posts')
-      .then(r => r?.json())
-      .then(data => { if (Array.isArray(data)) setPosts(data); })
+    Promise.all([
+      apiFetch('/.netlify/functions/get-posts').then(r => r?.json()),
+      apiFetch('/.netlify/functions/get-leads').then(r => r?.json()),
+      apiFetch('/.netlify/functions/get-post-views').then(r => r?.json()),
+    ])
+      .then(([postsData, leadsData, viewsData]) => {
+        if (Array.isArray(postsData)) setPosts(postsData);
+        if (Array.isArray(leadsData)) setLeads(leadsData);
+        if (Array.isArray(viewsData)) setPostViews(viewsData);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -24,6 +54,8 @@ export default function Analytics() {
   }
 
   const all = posts || [];
+  const leadRows = leads || [];
+  const viewRows = postViews || [];
   const published = all.filter(p => p.status === 'published');
   const drafts = all.filter(p => p.status === 'draft');
   const archived = all.filter(p => p.status === 'archived');
@@ -82,6 +114,40 @@ export default function Analytics() {
   const avgLatency = latencies.length ? (latencies.reduce((s, v) => s + v, 0) / latencies.length).toFixed(1) : null;
 
   const recentlyUpdated = [...all].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)).slice(0, 6);
+
+  // ── Leads ──
+  const qualifiedLeads = leadRows.filter(l => l.decision_maker === "Yes, that's me");
+  const qualifiedRate = leadRows.length ? Math.round((qualifiedLeads.length / leadRows.length) * 100) : 0;
+  const leadsThisMonth = leadRows.filter(l => {
+    if (!l.created_at) return false;
+    const d = new Date(l.created_at);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }).length;
+
+  const leadsBySource = {};
+  leadRows.forEach(l => {
+    const key = SOURCE_LABELS[l.source] || l.source || 'Unknown';
+    leadsBySource[key] = (leadsBySource[key] || 0) + 1;
+  });
+  const sourceCounts = Object.entries(leadsBySource).sort((a, b) => b[1] - a[1]);
+  const maxSourceCount = sourceCounts[0]?.[1] || 1;
+
+  const leadsCadence = months.map(({ key, label }) => {
+    const [y, m] = key.split('-').map(Number);
+    const count = leadRows.filter(l => {
+      if (!l.created_at) return false;
+      const d = new Date(l.created_at);
+      return d.getFullYear() === y && d.getMonth() === m;
+    }).length;
+    return { label, count };
+  });
+  const maxLeadsCadence = Math.max(1, ...leadsCadence.map(c => c.count));
+
+  // ── Geography ──
+  const readerLocations = topLocations(viewRows);
+  const maxReaderLocation = readerLocations[0]?.[1] || 1;
+  const leadLocations = topLocations(leadRows);
+  const maxLeadLocation = leadLocations[0]?.[1] || 1;
 
   return (
     <div style={{ padding: '28px 32px 56px', overflowY: 'auto', flex: 1 }} className="ll-admin-content">
@@ -227,6 +293,64 @@ export default function Analytics() {
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{formatDate(p.updated_at)}</span>
                 </div>
               ))}
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      {/* ── QUIZ LEADS ── */}
+      <h2 style={{ margin: '48px 0 20px', fontSize: 'var(--fs-h2)', fontWeight: 700, letterSpacing: 'var(--ls-h2)' }}>Quiz Leads</h2>
+
+      <div className="ll-grid-4" style={{ gap: 12, marginBottom: 20 }}>
+        {[
+          { label: 'Total leads', value: leadRows.length },
+          { label: 'Qualified leads', value: qualifiedLeads.length, accent: true },
+          { label: 'Qualified rate', value: `${qualifiedRate}%` },
+          { label: 'Leads this month', value: leadsThisMonth },
+        ].map(({ label, value, accent }) => (
+          <StatCard key={label} label={label} value={value} accent={accent} />
+        ))}
+      </div>
+
+      <div className="ll-grid-2" style={{ gap: 20, marginBottom: 32 }}>
+        {/* Leads by quiz */}
+        <Panel title="Leads by quiz">
+          {sourceCounts.length === 0 ? <Empty text="No quiz submissions yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {sourceCounts.map(([source, n]) => <BarRow key={source} label={source} value={n} max={maxSourceCount} />)}
+            </div>
+          )}
+        </Panel>
+
+        {/* Leads over time */}
+        <Panel title="Leads over time (last 6 months)">
+          <div style={{ display: 'grid', gap: 12 }}>
+            {leadsCadence.map(({ label, count }) => <BarRow key={label} label={label} value={count} max={maxLeadsCadence} />)}
+          </div>
+        </Panel>
+      </div>
+
+      {/* ── GEOGRAPHY ── */}
+      <h2 style={{ margin: '16px 0 20px', fontSize: 'var(--fs-h2)', fontWeight: 700, letterSpacing: 'var(--ls-h2)' }}>Geography</h2>
+      <p style={{ margin: '-8px 0 20px', fontSize: 12, color: 'var(--ink-400)' }}>
+        Location is derived from IP address — city/region accuracy, not precise.
+      </p>
+
+      <div className="ll-grid-2" style={{ gap: 20 }}>
+        {/* Reader locations */}
+        <Panel title="Top reader locations">
+          {readerLocations.length === 0 ? <Empty text="No location data yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {readerLocations.map(([loc, n]) => <BarRow key={loc} label={loc} value={n} max={maxReaderLocation} />)}
+            </div>
+          )}
+        </Panel>
+
+        {/* Lead locations */}
+        <Panel title="Top lead locations">
+          {leadLocations.length === 0 ? <Empty text="No location data yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {leadLocations.map(([loc, n]) => <BarRow key={loc} label={loc} value={n} max={maxLeadLocation} />)}
             </div>
           )}
         </Panel>
