@@ -149,12 +149,7 @@ function FounderSpotlight() {
   return (
     <section className="ll-grid-bg--inverse" style={{ position: 'relative', background: 'var(--ink-900)', color: 'var(--paper-100)' }}>
       <Wrap style={{ padding: '64px 24px', position: 'relative', maxWidth: 640, textAlign: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-          <span className="ll-live-dot" aria-hidden="true" />
-          <Badge tone="inverse">Systems Person · Off The Clock</Badge>
-        </div>
-
-        <div style={{ position: 'relative', width: 72, height: 72, margin: '20px auto 0' }}>
+        <div style={{ position: 'relative', width: 72, height: 72, margin: '0 auto' }}>
           {imgOk ? (
             <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" onError={() => setImgOk(false)}
               style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', display: 'block', border: '2px solid var(--paper-100)' }} />
