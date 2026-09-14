@@ -7,7 +7,7 @@ import Leads from './Leads';
 
 const NAV = [
   { id: 'posts', label: 'Posts' },
-  { id: 'leads', label: 'Leads' },
+  { id: 'leads', label: 'AI Rec Leads' },
   { id: 'analytics', label: 'Analytics' },
 ];
 
