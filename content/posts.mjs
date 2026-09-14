@@ -11,6 +11,238 @@
 
 export const posts = [
   {
+    slug: `review-gating-illegal-ftc-rule`,
+    title: `Review Gating Is Now Illegal, and Most "Reputation Management" Tools Still Do It`,
+    excerpt: `The FTC's 2024 rule makes it illegal to only ask happy customers for a public review — and a lot of the "reputation management" funnels on the market are still built to do exactly that.`,
+    tags: `Review Management, Reputation, Compliance`,
+    content: `As of October 2024, it is a federal violation to only ask your happiest customers for a public review. Not a gray area. Not bad practice. Illegal, with real penalties attached — and I still see it built into review request flows every month.
+
+Here's the version almost everyone has seen, maybe without noticing what it was. A "feedback" form goes out after a job: "How was your experience?" A 4- or 5-star answer routes straight to a Google review link. A 1-, 2-, or 3-star answer routes to a private box that says "we're sorry, tell us more" and never reaches Google at all. That's review gating, and until recently it was just considered smart reputation management.
+
+## Why this felt normal for so long
+
+The logic made sense on its face: why would you actively route an unhappy customer toward the platform where anyone can see them? Almost every "reputation management" product I've come across was built around some version of this filter. It got sold as protecting your rating, and for a while, no one was checking whether it was legal.
+
+## What the rule actually bans
+
+The FTC's rule targets manipulated review flows directly — funneling only positive sentiment toward public platforms while diverting negative sentiment away is squarely in that category, alongside things like buying fake reviews and hiding your ownership of a competitor's harsh review. I'm not a lawyer and this isn't legal advice, but the exposure is specific enough that "we've always done it this way" stopped being a defense on the day the rule took effect.
+
+## The compliant version does the same job
+
+Here's what most owners miss: the fix isn't "ask for reviews less." It's "ask everyone the same way." Send the same review request to every customer, good job or bad, with no branching logic deciding who gets routed where. If your rating is strong, it holds up fine under that — because it was never inflated by hiding the other side. If it drops when you stop filtering, that's not a marketing problem. That's the actual rating, and it's telling you something a filtered one couldn't.
+
+## Check tonight
+
+Pull up your own review request flow and look for the branch point — the moment a rating or a "how was it" answer decides where someone gets sent next. If that branch exists, you're running a filter the FTC has a name for now. Send everyone the same link and let the real number stand.`,
+  },
+  {
+    slug: `lead-guarantee-lie-local-marketing`,
+    title: `The Lead Guarantee Is the Biggest Lie in Local Marketing`,
+    excerpt: `Nobody can guarantee you 30 leads a month without controlling your offer, your market, and your competitors — and any contract that promises it is selling you a number, not a result.`,
+    tags: `Marketing Claims, Lead Generation, Local Service Business`,
+    content: `How does a marketing company guarantee you 30 leads a month in a market they don't control, for an offer they didn't build, against competitors they can't see? I've asked variations of that question in a dozen sales calls I sat in on as the person brought in to clean up afterward, and I have never once gotten a straight answer.
+
+## The three things no agency actually controls
+
+A lead count depends on your offer, your local competition, and the season — three variables that shift constantly and that no outside company owns. An agency can control targeting, budget, and creative. It cannot control whether a hurricane just hit your service area, whether a competitor undercut your price last week, or whether your intake form scares off half the people who land on it. A number that depends on variables you don't control isn't a guarantee. It's a bet with someone else's confidence.
+
+## What the guarantee is actually protecting
+
+Read the contract closely and the "guarantee" usually protects the agency, not you. The common structure: if the lead count comes up short, you get a partial refund or an extra month of service — not the revenue those missing leads would have produced. The guarantee is priced to be cheap to honor, which is the only way an agency can afford to offer it in the first place.
+
+## The number that should worry you more than the guarantee
+
+Ask what counts as a "lead" in that contract. I've seen the definition stretch to include anyone who filled out a form, regardless of whether they ever answered a follow-up call, lived in the service area, or had any real intent to buy. Thirty "leads" a month means nothing if the agency's definition of a lead is a form submission with a fake phone number.
+
+## Ask this before you sign anything
+
+Ask for the exact definition of a qualified lead in writing, and ask what happens contractually if the count comes in low. If the answer is vague on either one, that's the actual guarantee you're signing up for — not the number on the sales deck.`,
+  },
+  {
+    slug: `boosting-facebook-posts-charity-for-meta`,
+    title: `Boosting Your Facebook Posts Is Charity Work for Meta, Not Marketing`,
+    excerpt: `The blue "Boost Post" button spends your budget on the same broad, untested audience every time — it's the easiest button on the platform to press and one of the worst ways to spend the money.`,
+    tags: `Paid Social, Ad Spend, Facebook Ads`,
+    content: `I've watched owners hand Meta $500 a month for years through the boost button and never once ask why the number of calls coming in never moved. The post gets more likes. The phone stays quiet. Nobody connects the two, because the dashboard makes it look like something is working.
+
+## What "boost" actually buys
+
+Boosting a post takes whatever you already published — a photo, a caption written for your existing followers — and pays to show it to more people who look roughly like your current audience. It optimizes for engagement: likes, comments, shares. None of those are a booked job. The button is one tap because it's designed to be one tap, not because it's the best use of the budget.
+
+## The campaign that costs the same and does more
+
+A real campaign starts with the outcome, not the post. Pick a specific offer, build a landing page or a form that captures the lead directly, and target people by intent — recent movers, homeowners in a specific radius, people who searched for the exact service — instead of "people who already like us." Same $500. Completely different mechanism, because it's built to produce a call instead of a like.
+
+## Why the easy button stays the easy button
+
+Meta makes money whichever way you spend the $500. It has no reason to make the harder, better-targeted version the default option, and it doesn't. The path of least resistance on the platform and the path of least resistance to a booked job are two different roads, and only one of them has a "Boost" button on it.
+
+## So the real question isn't whether to boost
+
+It's whether you know what result you're actually paying for the next time you're tempted to tap that button. If the answer is "more likes," that's a fair trade for the money. If the answer was supposed to be "more calls," it's worth building the campaign that's actually built to do that instead.`,
+  },
+  {
+    slug: `agency-incentive-follow-up-speed`,
+    title: `Why Most Marketing Agencies Never Mention Your Follow-Up Speed`,
+    excerpt: `An agency gets paid to spend your ad budget, not to fix how fast your front desk calls a lead back — so the cheapest fix in your entire funnel is the one almost nobody gets hired to bring up.`,
+    tags: `Lead Follow-Up, Marketing Agencies, Local Service Business`,
+    content: `I've sat in enough of these quarterly reviews to notice the pattern. The slide deck covers cost per click, cost per lead, click-through rate. It never covers how many minutes passed between a lead coming in and someone actually calling them back. That number usually matters more than every metric on the slide combined, and it costs nothing to fix.
+
+## The fix nobody gets hired to bill for
+
+An agency's contract is built around ad spend and campaign management — that's the service being sold, and that's what gets reported on. Follow-up speed lives inside your business, not inside the ad account, so it falls outside the scope of what anyone was hired to touch. Nobody's lying to you. It's just genuinely not their job, and reviewing a metric that isn't their job doesn't happen by default.
+
+## This isn't malice, it's structure
+
+The incentive points toward spending more, not toward fixing what's free. A slower month of leads reads, on the surface, like a targeting problem — so the proposed fix is almost always more budget or a new campaign, because that's the lever the agency actually has. Nobody in that room is rooting against you. The structure of the relationship just never routes attention toward the lever that isn't theirs to pull.
+
+## The number that moves first
+
+Pull your own call log and time the gap between a lead coming in and the first outbound call. I've seen this stretch past two hours during busy weeks, at businesses spending thousands a month on ads to generate those same leads. A missed-call text-back or an automated first response closes that gap to minutes, for less than a tenth of what most owners are already spending on the ads bringing those leads in.
+
+## Run this audit without hiring anyone
+
+Before your next conversation about increasing ad spend, pull last week's leads and time your own response gap. If it's over fifteen minutes on average, that's the cheaper fix, and it's one no campaign proposal is going to bring up for you.`,
+  },
+  {
+    slug: `twelve-month-contract-red-flag`,
+    title: `The 12-Month Contract Is a Red Flag, Not a Commitment Device`,
+    excerpt: `A marketing company that needs a year-long contract to keep you is telling you, upfront, that the work alone won't be enough to keep you.`,
+    tags: `Marketing Contracts, Vendor Management, Local Service Business`,
+    content: `A 12-month contract exists to solve one problem: keeping a client who would otherwise leave. That's worth sitting with before signing anything, because it means the company asking for that term already expects the results alone might not be enough to keep you around.
+
+## What the contract is actually protecting
+
+Contracts protect revenue predictability for the seller — a full year of guaranteed billing regardless of what results show up in month four. That's a completely reasonable thing for a company to want. It is not the same thing as a commitment to you, and treating it like one is where owners get burned. Read the term as what it actually is: a hedge against you leaving, not a promise about what you'll get.
+
+## The cancellation fee tells the real story
+
+Look past the length of the term and find the cancellation clause. I've seen early-termination fees that equal the entire remaining balance of the contract — meaning "cancel anytime" quietly becomes "pay for the whole year anyway, just faster." If leaving early costs almost the same as staying, the term length was never really the commitment. The fee was.
+
+## What month-to-month actually forces
+
+A vendor with no lock-in has to earn the relationship every single billing cycle, which changes behavior in a way no contract clause can. Support response times, campaign attention, and how fast problems get addressed all tend to improve when the alternative is losing the account next month instead of eleven months from now.
+
+## Read the cancellation clause before the pricing page
+
+Before you sign anything, find the exact word for how you exit — not how you enter. If leaving costs almost nothing, the length of the term barely matters. If it costs nearly what staying would, that's the number that should have been on the pricing page in the first place.`,
+  },
+  {
+    slug: `ai-powered-marketing-is-mostly-marketing`,
+    title: `"AI-Powered Marketing" Is Mostly Marketing`,
+    excerpt: `Slapping "AI-powered" on a templated service doesn't make it automated — it makes the sales page sound more expensive while the delivery stays exactly the same.`,
+    tags: `AI in Marketing, Marketing Claims, Automation`,
+    content: `What does "AI-powered" actually change on a Tuesday morning, when a lead calls in? For most of what gets sold under that label, the honest answer is nothing. The call still gets handled the same way it did last year. Only the pitch deck changed.
+
+## The test that cuts through the label
+
+Ask one specific question: what decision does the AI make, and what happens if it's wrong? A real automated system has a clear answer — it reads a message, decides which of three responses to send, and someone reviews the ones it flags as uncertain. A label with no answer to that question isn't describing a system. It's describing a word someone added to a proposal.
+
+## Where it actually changes the outcome
+
+The honest use cases are specific and a little unglamorous: drafting a first-pass reply to a routine inquiry, summarizing a long call into three lines a technician can read in five seconds, flagging which of two hundred reviews need a human response first. Each of those replaces a task a person was doing manually, and you can point to the exact minutes saved.
+
+## Where it's just a word on a slide
+
+The tell is a proposal that mentions "AI-powered" once, in the headline, and never explains what decision it's actually making anywhere in the twelve pages that follow. If a service was doing the same thing in 2019 under a different name, adding the label now doesn't make the delivery any different — it just makes it sound like it costs more to build.
+
+## Ask what decision it's making, not what it's called
+
+The next time a proposal leads with "AI-powered," skip past the word and ask what specific decision gets automated and what the fallback is when it's wrong. If there's a clear answer, you're looking at a real system. If there isn't, you're looking at a word.`,
+  },
+  {
+    slug: `guaranteed-page-1-seo-numbers-trick`,
+    title: `"Guaranteed Page 1" SEO Is a Numbers Trick, Not a Result`,
+    excerpt: `Ranking page 1 for a keyword nobody searches, or for your own business name, is not the same as ranking for the term that actually brings in revenue — and that gap is where the guarantee lives.`,
+    tags: `Local SEO, Marketing Claims, Google Rankings`,
+    content: `A dental practice I worked with had been "guaranteed page 1" by their previous SEO company for eleven keywords. Ten of them were variations of the practice's own name. Nobody has to search for your name to already know who you are — ranking for it isn't the win it's sold as.
+
+## How the guarantee gets kept without helping you
+
+Ranking page 1 for your own name, your city plus your exact business type when almost nobody else is competing for it, or a long-tail phrase with a handful of monthly searches is genuinely easy. It's also nearly worthless, because none of those terms represent someone actively shopping and comparing options. A guarantee built on easy keywords is a guarantee that was never at risk of being broken.
+
+## The keyword that actually matters
+
+The one that moves revenue is almost always shorter, more competitive, and exactly the term a stranger types when they need what you sell right now — "[service] near me," "[service] [city]," the phrase with real monthly search volume and real competitors already ranking for it. That's the one nobody guarantees, because it's the one that's actually hard to win.
+
+## Why that one takes longer, on purpose
+
+Ranking for a competitive local term takes real content, real reviews, real backlinks, and months of consistent work — nothing an SEO company can promise on a fixed timeline without risking the guarantee. So the eleven keywords in the contract quietly become the ones that were never going to be hard in the first place.
+
+## Check your own eleven keywords
+
+Pull up whatever keyword list your current or past SEO provider sent you. Count how many of them include your business name, or would get fewer than a handful of searches a month from a real stranger. If most of the list falls into that bucket, the ranking report was accurate — it just wasn't measuring anything that pays the bills.`,
+  },
+  {
+    slug: `buying-followers-fraud-ftc-rule`,
+    title: `Buying Followers Isn't a Shortcut Anymore. It's Fraud Under Federal Rules.`,
+    excerpt: `The same FTC rule that banned fake reviews in 2024 also covers fake followers and purchased engagement — the shortcut a lot of local businesses still get quietly sold isn't just useless, it's now against the law to sell.`,
+    tags: `Social Proof, Compliance, Social Media Marketing`,
+    content: `The same FTC rule that took effect in October 2024 to stop fake reviews also covers buying followers, likes, and other manufactured indicators of popularity. I'm not a lawyer and this isn't legal advice, but the days of treating a follower package as a harmless shortcut are over on paper, even if the sellers haven't updated their pitch yet.
+
+## What the rule actually covers
+
+The rule targets the sale and purchase of fake indicators of social media influence directly — not just fake reviews, but the broader category of manufactured social proof, including bought followers and engagement designed to look organic. If a package promises a specific follower count for a flat fee with no actual audience behind it, that transaction is exactly what the rule was written to stop.
+
+## Why the bought numbers never converted anyway
+
+Long before the legal risk existed, the marketing case against bought followers was already weak. A follower with no real interest in your business doesn't call, doesn't book, and doesn't refer anyone — the count goes up on the profile while every metric that actually predicts revenue stays flat. I've seen accounts with ten thousand followers and less engagement than accounts with three hundred real, local ones.
+
+## What actually builds the number that matters
+
+The number worth building is people in your service area who see your posts and remember your name when they need what you sell. That comes from consistent, specific, local content — actual jobs, actual results, actual faces — not from a follower count with no relationship to any of it. It's slower. It's also the only version that has ever produced a customer.
+
+## Look at where your last 100 followers came from
+
+If you've ever paid for a follower package, or your marketing vendor has ever suggested one, that's worth revisiting now — both because it never worked and because the legal ground under it just shifted.`,
+  },
+  {
+    slug: `copy-paste-review-responses-worse`,
+    title: `Copy-Paste Review Responses Are Worse Than Not Replying at All`,
+    excerpt: `"We're sorry to hear about your experience, please contact us" under every single review — good and bad — doesn't read as responsive. It reads like nobody is actually reading these.`,
+    tags: `Review Management, Customer Experience, Reputation`,
+    content: `I pulled up a client's Google profile last year and found the exact same forty-word response under eleven different reviews, word for word, punctuation and all. Five-star reviews got it. One-star reviews got it. A future customer scrolling through can see the pattern in about four seconds, and what it tells them is that nobody on the other end actually read what they wrote.
+
+## What a template actually signals
+
+A templated reply optimizes for the appearance of responsiveness without the substance of it. The intent is usually good — reply to everything, don't leave anyone hanging — but the execution tells a stranger reading it later that this business treats feedback as a box to check, not as information. That impression lands on every reader after the one who wrote the original review, not just the one it was meant for.
+
+## The response that costs about the same effort
+
+Naming one specific detail from the review — the technician's name, the exact service, the day of the week — turns a forty-second copy-paste into a fifteen-second read that actually sounds like a person wrote it. It costs almost the same time. It reads like an entirely different business.
+
+## Where templates are genuinely fine
+
+A consistent opening line is fine — "Thank you for taking the time to leave this" works for almost anything. The problem isn't structure. It's the response staying identical from the greeting through the very last word, with nothing in the middle that couldn't have been copied onto a review for a different business entirely.
+
+## Read your last five responses as a stranger would
+
+Pull up the last five reviews you replied to and read only your responses, back to back, ignoring what the customer wrote. If you can't tell which response belongs to which review without scrolling back up, a stranger reading your profile won't be able to either.`,
+  },
+  {
+    slug: `unsolicited-text-marketing-tcpa-risk`,
+    title: `Unsolicited Text Marketing Isn't a Growth Hack. It's a TCPA Lawsuit.`,
+    excerpt: `Texting a purchased list without consent isn't an aggressive growth tactic — it's a federal violation with statutory damages of up to $1,500 per text, and a single bad list can turn into hundreds of them.`,
+    tags: `SMS Marketing, Compliance, TCPA`,
+    content: `One violation of the Telephone Consumer Protection Act carries statutory damages of $500, or up to $1,500 if a court finds it was willful. A single promotional blast to a purchased list of four hundred numbers isn't one violation. Under that law, it's four hundred of them, and I've watched owners find this out only after a demand letter arrived.
+
+## Where the shortcut comes from
+
+Someone gets a spreadsheet of phone numbers — scraped, purchased, or pulled from an old customer list that never explicitly agreed to marketing texts — and sends a promotional blast because it's cheap, fast, and email open rates have been sliding for years. The tactic isn't new. What's changed is how organized the enforcement side has become at finding these blasts and turning them into claims.
+
+## What actual consent looks like
+
+Real consent is a specific, documented opt-in for marketing messages — a checked box on a form, a reply to a keyword, a signature on an intake sheet — that names texting specifically, not a number collected for scheduling that quietly gets reused for promotions later. If you can't point to the exact moment someone agreed to receive a marketing text, you don't have consent. You have a phone number.
+
+## Why the compliant version still works
+
+Text-based follow-up is genuinely effective when it's built on real consent — a missed-call text-back to someone who just called you, an appointment reminder to someone who just booked, a review request to someone who just finished a job. Every one of those has an obvious, defensible reason the customer expected a text. That's the entire difference between a tool that converts and a liability with a good open rate.
+
+## Check where your list actually came from
+
+Before your next SMS campaign goes out, trace exactly where every number on that list came from and whether marketing texts were part of what anyone agreed to. If you can't answer that clearly, the list is a liability wearing a marketing plan's clothes.`,
+  },
+  {
     slug: `gohighlevel-workflows-that-dont-break`,
     title: `How I Build GoHighLevel Workflows That Don't Break by Month Two`,
     excerpt: `Most GoHighLevel workflows fail from re-entry loops and duplicate triggers, not bad ideas — here's the exact architecture I check on every build.`,
