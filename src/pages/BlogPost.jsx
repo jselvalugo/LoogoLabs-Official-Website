@@ -168,20 +168,6 @@ export default function BlogPost({ slug, onNavigate }) {
               </a>
             </div>
 
-            {/* Licence */}
-            <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)', fontSize: 13, lineHeight: 1.7, color: 'var(--ink-500)' }}>
-              Republish this. It is licensed under{' '}
-              <a
-                href="https://creativecommons.org/licenses/by/4.0/"
-                target="_blank"
-                rel="noopener noreferrer license"
-                style={{ color: 'var(--ink-700)' }}
-              >
-                CC BY 4.0
-              </a>
-              {' '}— copy it, translate it, quote it, print it for your team. All we ask is a credit to Loogo Labs. No permission needed, no email required.
-            </div>
-
             {/* Back link */}
             <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
               <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to LoogoNews</a>
