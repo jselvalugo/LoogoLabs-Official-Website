@@ -82,10 +82,10 @@ const QUIZ_STEPS = [
 ];
 
 const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'comparison', 'proof'];
-const CONTACT_STEP = PRE_QUIZ_STEPS.length; // name + email, right before the quiz questions
-const QUIZ_START = CONTACT_STEP + 1; // index of the first quiz question
-const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // steps before the result screen
-const TOTAL_STEPS = QUIZ_END;
+const QUIZ_START = PRE_QUIZ_STEPS.length; // index of the first quiz question
+const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // index of the contact step
+const CONTACT_STEP = QUIZ_END; // name + email, right before the result — after they've already invested in the quiz
+const TOTAL_STEPS = CONTACT_STEP + 1;
 
 /* ─────────────────────── main component ─────────────────────── */
 export default function ReputationAutopilot() {
@@ -98,18 +98,6 @@ export default function ReputationAutopilot() {
     setStep(n);
     fireCustom('FunnelStep', { step: n });
     window.scrollTo(0, 0);
-  };
-
-  const confirmContact = () => {
-    const fullName = contact.fullName.trim();
-    const email = contact.email.trim();
-    if (!fullName || !EMAIL_RE.test(email)) {
-      setContactError('Enter your full name and a valid email to continue.');
-      return;
-    }
-    setContactError('');
-    fireCustom('FunnelContact', { email });
-    go(QUIZ_START);
   };
 
   const submitLead = (finalAnswers) => {
@@ -131,6 +119,19 @@ export default function ReputationAutopilot() {
     if (finalAnswers.decisionMaker === "Yes, that's me") fire('Lead');
   };
 
+  const confirmContact = () => {
+    const fullName = contact.fullName.trim();
+    const email = contact.email.trim();
+    if (!fullName || !EMAIL_RE.test(email)) {
+      setContactError('Enter your full name and a valid email to see your results.');
+      return;
+    }
+    setContactError('');
+    fireCustom('FunnelContact', { email });
+    submitLead(answers);
+    go(TOTAL_STEPS);
+  };
+
   const chooseQuiz = (quizIndex, key, option) => {
     const next = { ...answers, [key]: option };
     setAnswers(next);
@@ -138,12 +139,13 @@ export default function ReputationAutopilot() {
     if (quizIndex + 1 < QUIZ_STEPS.length) {
       go(QUIZ_START + quizIndex + 1);
     } else {
-      submitLead(next);
-      go(TOTAL_STEPS);
+      go(CONTACT_STEP);
     }
   };
 
-  const progressPct = Math.min(step, TOTAL_STEPS) / TOTAL_STEPS * 100;
+  const isIntroStep = step < QUIZ_START;
+  const quizProgressTotal = TOTAL_STEPS - QUIZ_START; // quiz questions + the contact step
+  const progressPct = isIntroStep ? 0 : Math.min(step - QUIZ_START + 1, quizProgressTotal) / quizProgressTotal * 100;
   const isQuizStep = step >= QUIZ_START && step < QUIZ_END;
   const isContactStep = step === CONTACT_STEP;
   const isResult = step >= TOTAL_STEPS;
@@ -179,7 +181,7 @@ export default function ReputationAutopilot() {
   } else if (isContactStep) {
     body = (
       <Card>
-        <Eyebrow>Fit check · Before we start</Eyebrow>
+        <Eyebrow>Fit check · Almost done</Eyebrow>
         <StepHeading>Where should we send your results?</StepHeading>
         <div style={{ display: 'grid', gap: 16 }}>
           <Input label="Full name" value={contact.fullName}
@@ -189,7 +191,7 @@ export default function ReputationAutopilot() {
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
             placeholder="jane@yourbusiness.com" error={contactError} />
         </div>
-        <ContinueRow onNext={confirmContact} label="Continue" />
+        <ContinueRow onNext={confirmContact} label="See My Results" />
       </Card>
     );
   } else if (isQuizStep) {
@@ -327,7 +329,7 @@ export default function ReputationAutopilot() {
           <div style={{ display: 'grid', gap: 16 }}>
             {testimonialImages.map((t) => <TestimonialImage key={t.src} {...t} />)}
           </div>
-          <ContinueRow onNext={() => go(CONTACT_STEP)} label="Start My 60-Second Fit Check" />
+          <ContinueRow onNext={() => go(QUIZ_START)} label="Start My 60-Second Fit Check" />
         </Card>
       );
     }
@@ -350,9 +352,9 @@ export default function ReputationAutopilot() {
           </div>
           <img src="/logo.png" alt="" style={{ height: 22, width: 'auto', justifySelf: 'center' }} />
           <div style={{ justifySelf: 'end' }}>
-            {!isResult && (
+            {!isResult && !isIntroStep && (
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--ink-400)' }}>
-                {Math.min(step + 1, TOTAL_STEPS)}/{TOTAL_STEPS}
+                {step - QUIZ_START + 1}/{quizProgressTotal}
               </span>
             )}
           </div>
