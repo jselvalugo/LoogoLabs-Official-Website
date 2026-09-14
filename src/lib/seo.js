@@ -7,7 +7,7 @@
 // build time to write static HTML, the sitemap, and the feed. One definition,
 // so the rendered page and the pre-rendered page can never disagree.
 
-import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, AI_RECEPTIONIST_FAQ, SERVICE_AREA } from './content.js';
+import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, SERVICE_AREA } from './content.js';
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -431,7 +431,6 @@ export function jsonLdForPage(page) {
   }
   if (page === 'Pricing') nodes.push(pricingLd());
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
-  if (page === 'AIReceptionist') nodes.push(faqLd(AI_RECEPTIONIST_FAQ, '/ai-receptionist'));
   return nodes;
 }
 

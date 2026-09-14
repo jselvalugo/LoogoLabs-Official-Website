@@ -3,7 +3,6 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
-import { AI_RECEPTIONIST_FAQ } from '../lib/content';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,13 +57,6 @@ const comparison = [
   ['Time to go live', '~1 week', '4–6 weeks of training'],
 ];
 
-const industries = [
-  'HVAC & Mechanical', 'Roofing & Exteriors', 'Dental & Med Spa', 'Real Estate & Mortgage',
-  'Pest Control', 'Plumbing & Electric', 'Salon, Spa & Fitness', 'Legal & Professional Services',
-];
-
-const faqs = AI_RECEPTIONIST_FAQ;
-
 const testimonialImages = [
   { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
   { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
@@ -79,66 +71,6 @@ function TestimonialImage({ src, alt }) {
   );
 }
 
-// Always mounted, regardless of which quiz step is showing. The interactive
-// widget above reveals this same information one click at a time, which is
-// great for a real visitor but invisible to a crawler that never clicks
-// through it — this section is the page's actual indexable, readable content.
-function SeoContent({ onStartQuiz }) {
-  return (
-    <section style={{ borderTop: '1px solid var(--border-hair)', padding: 'clamp(40px,6vw,72px) 24px', background: 'var(--paper-100)' }}>
-      <div style={{ maxWidth: 720, margin: '0 auto' }}>
-        <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(22px,3vw,30px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>
-          Is an AI Receptionist Right for Your Business?
-        </h2>
-        <p style={{ margin: '0 0 28px', fontSize: 15.5, lineHeight: 1.7, color: 'var(--ink-600)' }}>
-          A full-time human receptionist costs $45,000–$55,000 a year before benefits, and can only handle one
-          call at a time — every other caller during that call goes to voicemail. An AI receptionist answers
-          every call instantly, day or night, greets callers by your business name, books and reschedules
-          appointments straight to your calendar, and routes anything urgent to a real person. It typically
-          goes live within a week, for a fraction of one month's human-receptionist salary.
-        </p>
-
-        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>What it actually does</h3>
-        <ul style={{ margin: '0 0 28px', paddingLeft: 20, lineHeight: 1.8 }}>
-          {capabilities.map(([title, desc]) => (
-            <li key={title} style={{ fontSize: 14.5, color: 'var(--ink-700)', marginBottom: 8 }}>
-              <strong>{title}.</strong> {desc}
-            </li>
-          ))}
-        </ul>
-
-        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>AI receptionist vs. human receptionist</h3>
-        <ul style={{ margin: '0 0 28px', paddingLeft: 20, lineHeight: 1.8 }}>
-          {comparison.map(([feat, ai, human]) => (
-            <li key={feat} style={{ fontSize: 14.5, color: 'var(--ink-700)', marginBottom: 6 }}>
-              <strong>{feat}:</strong> {ai}, versus {human} for a human receptionist.
-            </li>
-          ))}
-        </ul>
-
-        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>Built for these industries</h3>
-        <p style={{ margin: '0 0 28px', fontSize: 14.5, lineHeight: 1.8, color: 'var(--ink-700)' }}>
-          {industries.join(' · ')}
-        </p>
-
-        <h3 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 700, color: 'var(--ink-900)' }}>Frequently asked questions</h3>
-        <div style={{ marginBottom: 32 }}>
-          {faqs.map(([q, a]) => (
-            <div key={q} style={{ marginBottom: 20 }}>
-              <h4 style={{ margin: '0 0 6px', fontSize: 15, fontWeight: 700, color: 'var(--ink-900)' }}>{q}</h4>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'var(--ink-600)' }}>{a}</p>
-            </div>
-          ))}
-        </div>
-
-        <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={onStartQuiz}>
-          Take The Free 60-Second Fit Check
-        </Button>
-      </div>
-    </section>
-  );
-}
-
 const QUIZ_STEPS = [
   { key: 'businessType', question: 'What type of business do you run?',
     options: ['Home Services (HVAC, plumbing, electrical, roofing)', 'Medical, Dental & Wellness', 'Legal & Professional Services', 'Salon, Spa & Fitness', 'Something else'] },
@@ -150,29 +82,53 @@ const QUIZ_STEPS = [
     options: ["Yes, that's me", "No, I'd need to check with someone"] },
 ];
 
-// Industries and FAQ move to after the quiz: the quiz itself is the fast path,
-// and these two are trust-building content most people only want once they've
-// already seen whether they qualify, not as a toll before they can start.
 const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'cost', 'proof'];
-const POST_QUIZ_STEPS = ['industries', 'faq'];
-const QUIZ_START = PRE_QUIZ_STEPS.length; // index of the first quiz question
-const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // index of the first post-quiz content step
-const CONTACT_STEP = QUIZ_END + POST_QUIZ_STEPS.length; // index of the contact step
-const TOTAL_STEPS = CONTACT_STEP + 1; // steps before the result screen
+const CONTACT_STEP = PRE_QUIZ_STEPS.length; // name + email, right before the quiz questions
+const QUIZ_START = CONTACT_STEP + 1; // index of the first quiz question
+const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // steps before the result screen
+const TOTAL_STEPS = QUIZ_END;
 
 /* ─────────────────────── main component ─────────────────────── */
 export default function AIReceptionist() {
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
-  const [openFaq, setOpenFaq] = React.useState(null);
   const [contact, setContact] = React.useState({ fullName: '', email: '' });
   const [contactError, setContactError] = React.useState('');
-  const [submitting, setSubmitting] = React.useState(false);
 
   const go = (n) => {
     setStep(n);
     fireCustom('FunnelStep', { step: n });
     window.scrollTo(0, 0);
+  };
+
+  const confirmContact = () => {
+    const fullName = contact.fullName.trim();
+    const email = contact.email.trim();
+    if (!fullName || !EMAIL_RE.test(email)) {
+      setContactError('Enter your full name and a valid email to continue.');
+      return;
+    }
+    setContactError('');
+    fireCustom('FunnelContact', { email });
+    go(QUIZ_START);
+  };
+
+  const submitLead = (finalAnswers) => {
+    fetch('/.netlify/functions/create-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: contact.fullName.trim(),
+        email: contact.email.trim(),
+        business_type: finalAnswers.businessType,
+        missed_calls: finalAnswers.missedCalls,
+        pain_point: finalAnswers.painPoint,
+        decision_maker: finalAnswers.decisionMaker,
+      }),
+    }).catch(() => {
+      // Non-blocking: the visitor still sees their result even if the write fails.
+    });
+    if (finalAnswers.decisionMaker === "Yes, that's me") fire('Lead');
   };
 
   const chooseQuiz = (quizIndex, key, option) => {
@@ -182,39 +138,9 @@ export default function AIReceptionist() {
     if (quizIndex + 1 < QUIZ_STEPS.length) {
       go(QUIZ_START + quizIndex + 1);
     } else {
-      go(QUIZ_END);
+      submitLead(next);
+      go(TOTAL_STEPS);
     }
-  };
-
-  const submitContact = async () => {
-    const fullName = contact.fullName.trim();
-    const email = contact.email.trim();
-    if (!fullName || !EMAIL_RE.test(email)) {
-      setContactError('Enter your full name and a valid email to see your results.');
-      return;
-    }
-    setContactError('');
-    setSubmitting(true);
-    try {
-      await fetch('/.netlify/functions/create-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          full_name: fullName,
-          email,
-          business_type: answers.businessType,
-          missed_calls: answers.missedCalls,
-          pain_point: answers.painPoint,
-          decision_maker: answers.decisionMaker,
-        }),
-      });
-    } catch {
-      // Non-blocking: the visitor still sees their result even if the write fails.
-    }
-    fireCustom('FunnelContact', { email });
-    if (answers.decisionMaker === "Yes, that's me") fire('Lead');
-    setSubmitting(false);
-    go(TOTAL_STEPS);
   };
 
   const progressPct = Math.min(step, TOTAL_STEPS) / TOTAL_STEPS * 100;
@@ -253,7 +179,7 @@ export default function AIReceptionist() {
   } else if (isContactStep) {
     body = (
       <Card>
-        <Eyebrow>Fit check · Almost done</Eyebrow>
+        <Eyebrow>Fit check · Before we start</Eyebrow>
         <StepHeading>Where should we send your results?</StepHeading>
         <div style={{ display: 'grid', gap: 16 }}>
           <Input label="Full name" value={contact.fullName}
@@ -263,11 +189,7 @@ export default function AIReceptionist() {
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
             placeholder="jane@yourbusiness.com" error={contactError} />
         </div>
-        <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center' }}>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={submitContact} disabled={submitting} fullWidth>
-            {submitting ? 'Submitting…' : 'See My Results'}
-          </Button>
-        </div>
+        <ContinueRow onNext={confirmContact} label="Continue" />
       </Card>
     );
   } else if (isQuizStep) {
@@ -297,7 +219,7 @@ export default function AIReceptionist() {
       </Card>
     );
   } else {
-    const id = step < QUIZ_START ? PRE_QUIZ_STEPS[step] : POST_QUIZ_STEPS[step - QUIZ_END];
+    const id = PRE_QUIZ_STEPS[step];
 
     if (id === 'hero') {
       body = (
@@ -405,54 +327,7 @@ export default function AIReceptionist() {
           <div style={{ display: 'grid', gap: 16 }}>
             {testimonialImages.map((t) => <TestimonialImage key={t.src} {...t} />)}
           </div>
-          <ContinueRow onNext={() => go(QUIZ_START)} label="Start My 60-Second Fit Check" />
-        </Card>
-      );
-    } else if (id === 'industries') {
-      body = (
-        <Card>
-          <Eyebrow>Who it's built for</Eyebrow>
-          <StepHeading>Any business where a missed call is a missed sale.</StepHeading>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1,
-            background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
-            {industries.map((ind) => (
-              <div key={ind} style={{ background: 'var(--paper-100)', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ color: 'var(--cyan-700)', fontSize: 11, flexShrink: 0 }}>→</span>
-                <span style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--ink-900)' }}>{ind}</span>
-              </div>
-            ))}
-          </div>
-          <ContinueRow onNext={() => go(QUIZ_END + 1)} label="Continue" />
-        </Card>
-      );
-    } else if (id === 'faq') {
-      body = (
-        <Card>
-          <Eyebrow>Before you go further</Eyebrow>
-          <StepHeading>Common questions.</StepHeading>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 1, background: 'var(--border-hair)',
-            border: '1px solid var(--border-hair)' }}>
-            {faqs.map(([q, a], i) => {
-              const open = openFaq === i;
-              return (
-                <div key={q} style={{ background: open ? 'var(--paper-000)' : 'var(--paper-100)', transition: 'background 140ms ease' }}>
-                  <button onClick={() => setOpenFaq(open ? null : i)}
-                    style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                      padding: '16px 18px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: 16 }}>
-                    <span style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ink-900)' }}>{q}</span>
-                    <span style={{ fontSize: 16, color: open ? 'var(--cyan-700)' : 'var(--ink-400)', flexShrink: 0,
-                      transition: 'transform 200ms ease', transform: open ? 'rotate(45deg)' : 'none' }}>+</span>
-                  </button>
-                  {open && (
-                    <div style={{ padding: '0 18px 18px' }}>
-                      <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: 'var(--ink-600)' }}>{a}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <ContinueRow onNext={() => go(CONTACT_STEP)} label="Continue to My Results" />
+          <ContinueRow onNext={() => go(CONTACT_STEP)} label="Start My 60-Second Fit Check" />
         </Card>
       );
     }
@@ -491,8 +366,6 @@ export default function AIReceptionist() {
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: 'clamp(32px,6vw,64px) 24px' }}>
         <div style={{ width: '100%' }}>{body}</div>
       </div>
-
-      <SeoContent onStartQuiz={() => go(0)} />
 
       {/* ── SLIM LEGAL FOOTER ── */}
       <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-hair)',
