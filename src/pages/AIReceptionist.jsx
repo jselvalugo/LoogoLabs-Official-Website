@@ -94,9 +94,15 @@ const QUIZ_STEPS = [
     options: ["Yes, that's me", "No, I'd need to check with someone"] },
 ];
 
-const CONTENT_STEPS = ['hero', 'problem', 'capabilities', 'cost', 'proof', 'industries', 'faq'];
-const QUIZ_END = CONTENT_STEPS.length + QUIZ_STEPS.length; // index of the contact step, right after the last quiz question
-const TOTAL_STEPS = QUIZ_END + 1; // steps before the result screen (content + quiz + contact)
+// Industries and FAQ move to after the quiz: the quiz itself is the fast path,
+// and these two are trust-building content most people only want once they've
+// already seen whether they qualify, not as a toll before they can start.
+const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'cost', 'proof'];
+const POST_QUIZ_STEPS = ['industries', 'faq'];
+const QUIZ_START = PRE_QUIZ_STEPS.length; // index of the first quiz question
+const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // index of the first post-quiz content step
+const CONTACT_STEP = QUIZ_END + POST_QUIZ_STEPS.length; // index of the contact step
+const TOTAL_STEPS = CONTACT_STEP + 1; // steps before the result screen
 
 /* ─────────────────────── main component ─────────────────────── */
 export default function AIReceptionist() {
@@ -118,7 +124,7 @@ export default function AIReceptionist() {
     setAnswers(next);
     fireCustom('QuizStep', { step: quizIndex + 1, question: key, answer: option });
     if (quizIndex + 1 < QUIZ_STEPS.length) {
-      go(CONTENT_STEPS.length + quizIndex + 1);
+      go(QUIZ_START + quizIndex + 1);
     } else {
       go(QUIZ_END);
     }
@@ -156,8 +162,8 @@ export default function AIReceptionist() {
   };
 
   const progressPct = Math.min(step, TOTAL_STEPS) / TOTAL_STEPS * 100;
-  const isQuizStep = step >= CONTENT_STEPS.length && step < QUIZ_END;
-  const isContactStep = step === QUIZ_END;
+  const isQuizStep = step >= QUIZ_START && step < QUIZ_END;
+  const isContactStep = step === CONTACT_STEP;
   const isResult = step >= TOTAL_STEPS;
   const notDecisionMaker = answers.decisionMaker === "No, I'd need to check with someone";
 
@@ -209,7 +215,7 @@ export default function AIReceptionist() {
       </Card>
     );
   } else if (isQuizStep) {
-    const qi = step - CONTENT_STEPS.length;
+    const qi = step - QUIZ_START;
     const q = QUIZ_STEPS[qi];
     body = (
       <Card>
@@ -235,7 +241,7 @@ export default function AIReceptionist() {
       </Card>
     );
   } else {
-    const id = CONTENT_STEPS[step];
+    const id = step < QUIZ_START ? PRE_QUIZ_STEPS[step] : POST_QUIZ_STEPS[step - QUIZ_END];
 
     if (id === 'hero') {
       body = (
@@ -343,7 +349,7 @@ export default function AIReceptionist() {
           <div style={{ display: 'grid', gap: 16 }}>
             {testimonialImages.map((t) => <TestimonialImage key={t.src} {...t} />)}
           </div>
-          <ContinueRow onNext={() => go(5)} label="Continue" />
+          <ContinueRow onNext={() => go(QUIZ_START)} label="Start My 60-Second Fit Check" />
         </Card>
       );
     } else if (id === 'industries') {
@@ -360,7 +366,7 @@ export default function AIReceptionist() {
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(6)} label="Continue" />
+          <ContinueRow onNext={() => go(QUIZ_END + 1)} label="Continue" />
         </Card>
       );
     } else if (id === 'faq') {
@@ -390,7 +396,7 @@ export default function AIReceptionist() {
               );
             })}
           </div>
-          <ContinueRow onNext={() => go(CONTENT_STEPS.length)} label="I'm Ready — Start My Fit Check" />
+          <ContinueRow onNext={() => go(CONTACT_STEP)} label="Continue to My Results" />
         </Card>
       );
     }
