@@ -114,6 +114,16 @@ export const ROUTES = [
     image: '/og-image-ai-voice.png',
   },
   {
+    page: 'ReputationAutopilot',
+    path: '/reputation-autopilot',
+    title: `Automated Review & Reputation Management | ${SITE.name}`,
+    description:
+      'Every completed job automatically becomes a review request — no spreadsheet, no sticky note, no forgetting. Take the free 60-second fit check.',
+    priority: '0.8',
+    changefreq: 'monthly',
+    image: '/og-image-ai-voice.png',
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,

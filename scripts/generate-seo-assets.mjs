@@ -190,6 +190,7 @@ const HEADINGS = {
   LoogoNews: 'LoogoNews — Marketing News',
   GrowCFL: 'Stop losing customers to businesses that respond faster.',
   AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
+  ReputationAutopilot: 'Every Completed Job Becomes A 5-Star Review Request.',
   Quizzes: 'Free fit-check quizzes for your business',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',

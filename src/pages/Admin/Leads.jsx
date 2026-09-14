@@ -6,6 +6,11 @@ function formatDate(iso) {
   return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
 
+const SOURCE_LABELS = {
+  ai_receptionist: 'AI Receptionist',
+  reputation_autopilot: 'Reputation Autopilot',
+};
+
 export default function Leads() {
   const [leads, setLeads] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -21,7 +26,7 @@ export default function Leads() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
       <div className="ll-admin-content-header" style={{ padding: '20px 32px 16px', borderBottom: '1px solid var(--border-hair)', flexShrink: 0, background: 'var(--paper-100)' }}>
         <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>
-          AI Receptionist Funnel Leads
+          Quiz Funnel Leads
         </h1>
         <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
           {leads.length} submission{leads.length === 1 ? '' : 's'}
@@ -38,7 +43,7 @@ export default function Leads() {
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 900 }}>
               <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 2 }}>
                 <tr style={{ borderBottom: '1px solid var(--border-hair)' }}>
-                  {['Full name', 'Email', 'Business type', 'Missed calls/wk', 'Pain point', 'Decision maker', 'Submitted'].map((h, i) => (
+                  {['Full name', 'Email', 'Quiz', 'Business type', 'Volume/wk', 'Pain point', 'Decision maker', 'Submitted'].map((h, i) => (
                     <th key={h} style={i === 0 ? thStickyStyle : thStyle}>{h}</th>
                   ))}
                 </tr>
@@ -48,9 +53,10 @@ export default function Leads() {
                   <tr key={lead.id} style={{ borderBottom: '1px solid var(--border-hair)' }}>
                     <td style={{ ...tdStickyStyle, fontWeight: 500 }}>{lead.full_name}</td>
                     <td style={tdStyle}>{lead.email}</td>
+                    <td style={tdStyle}>{SOURCE_LABELS[lead.source] || lead.source || '—'}</td>
                     <td style={tdStyle}>{lead.business_type || '—'}</td>
-                    <td style={tdStyle}>{lead.missed_calls || '—'}</td>
-                    <td style={tdStyle}>{lead.pain_point || '—'}</td>
+                    <td style={tdStyle}>{lead.missed_calls || lead.job_volume || '—'}</td>
+                    <td style={tdStyle}>{lead.pain_point || lead.review_pain_point || '—'}</td>
                     <td style={tdStyle}>{lead.decision_maker || '—'}</td>
                     <td style={{ ...tdStyle, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>
                       {formatDate(lead.created_at)}

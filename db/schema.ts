@@ -5,10 +5,15 @@ export const leads = pgTable('leads', {
   created_at: timestamp('created_at').defaultNow(),
   full_name: text('full_name').notNull(),
   email: text('email').notNull(),
+  // Which quiz this lead came from — 'ai_receptionist' or 'reputation_autopilot'.
+  source: text('source').default('ai_receptionist'),
   business_type: text('business_type'),
   missed_calls: text('missed_calls'),
   pain_point: text('pain_point'),
   decision_maker: text('decision_maker'),
+  // Reputation Autopilot's own quiz questions — null on AI Receptionist rows.
+  job_volume: text('job_volume'),
+  review_pain_point: text('review_pain_point'),
   status: text('status').default('new'),
   notes: text('notes').default(''),
 });

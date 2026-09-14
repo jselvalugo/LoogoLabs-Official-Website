@@ -18,6 +18,7 @@ const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
 const AIVoice = React.lazy(() => import('./pages/AIVoice'));
 const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
+const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
 
 function getInitialState() {
   // The Central Florida page used to live behind #grow, which is not a URL a
@@ -89,6 +90,7 @@ function App() {
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
   if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
   if (page === 'AIReceptionist') return <React.Suspense fallback={null}><AIReceptionist /></React.Suspense>;
+  if (page === 'ReputationAutopilot') return <React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense>;
 
   const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];
   let body;

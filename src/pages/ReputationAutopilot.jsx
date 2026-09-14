@@ -37,24 +37,23 @@ const ContinueRow = ({ onNext, label }) => (
 
 /* ─────────────────────── data ─────────────────────── */
 const problems = [
-  ['A full-time receptionist runs $45K–$55K a year', 'Add payroll tax, benefits, sick days, and turnover, and that number is real before they answer a single call.'],
-  ['They can only take one call at a time', "While they're on one call, everyone else hits voicemail — and voicemail is where leads go to die."],
-  ['Gone at 5, out sick, or two weeks behind on training', 'Nights, weekends, lunch breaks, vacation. The phone does not take any of those off. Your coverage shouldn\'t either.'],
+  ['Techs forget to ask, every time', "The job's done and the truck's already at the next stop — asking for a review is the first thing that gets skipped when things get busy."],
+  ['Requests sent days later get ignored', "By the time someone remembers to send the text, the customer has already moved on. Response rates fall off fast after the first 24 hours."],
+  ['No system means no consistency', "Some customers get asked, most don't. There's no way to know your real review velocity if half of it depends on someone remembering."],
 ];
 
 const capabilities = [
-  ['Answers Every Call, Instantly', 'Picks up in under a second, day or night, weekends and holidays included.'],
-  ['Greets Callers By Your Business Name', 'Sounds like a member of your team. Trained on your tone, services, and most common questions.'],
-  ['Books & Reschedules Appointments', 'Syncs live with your calendar — callers pick a real open slot during the call.'],
-  ['Routes Urgent Calls To A Real Person', 'Knows the difference between a routine question and an emergency.'],
+  ['Fires The Moment A Job Closes', 'Triggered off the same status update your team already makes — no extra step for anyone.'],
+  ['Texts And Emails, Automatically', 'Sends through whichever channel gets the best response, with no one manually sending anything.'],
+  ['One-Click Reply Templates', 'Replying to a new review takes one tap instead of writing a response from scratch every time.'],
+  ['Live Rating & Volume Dashboard', 'See your review count, star rating, and trend over time in one place — not spread across five tabs.'],
 ];
 
 const comparison = [
-  ['Annual cost', 'A fraction of one month\'s salary', '$45,000–$55,000+'],
-  ['Availability', '24 / 7 / 365', '~40 hrs / week'],
-  ['Simultaneous calls', 'Unlimited', '1 at a time'],
-  ['Sick days & turnover', 'Never', 'Every year'],
-  ['Time to go live', '~1 week', '4–6 weeks of training'],
+  ['Time to send a request', 'Instant, automatic', 'Whenever someone remembers'],
+  ['Consistency', 'Every job, every time', 'Depends on who\'s on shift'],
+  ['Response rate', 'Higher — sent within minutes', 'Drops fast after 24 hours'],
+  ['Reply time on new reviews', 'One click', 'Written from scratch'],
 ];
 
 const testimonialImages = [
@@ -74,22 +73,22 @@ function TestimonialImage({ src, alt }) {
 const QUIZ_STEPS = [
   { key: 'businessType', question: 'What type of business do you run?',
     options: ['Home Services (HVAC, plumbing, electrical, roofing)', 'Medical, Dental & Wellness', 'Legal & Professional Services', 'Salon, Spa & Fitness', 'Something else'] },
-  { key: 'missedCalls', question: 'How many calls does your business miss or send to voicemail every week?',
-    options: ['0–5', '6–15', '16–30', '30+'] },
-  { key: 'painPoint', question: "What's costing you the most right now?",
-    options: ['Missed calls after hours & weekends', 'Staff too busy to answer every call', 'Slow follow-up losing leads to competitors', 'Paying too much for a human receptionist'] },
+  { key: 'jobVolume', question: 'How many jobs or appointments does your business complete in an average week?',
+    options: ['0–10', '11–25', '26–50', '50+'] },
+  { key: 'reviewPainPoint', question: "What's costing you the most right now?",
+    options: ['Not enough new reviews coming in', 'Bad reviews hurting our ranking', 'No time to ask customers manually', "Don't know how we compare to competitors"] },
   { key: 'decisionMaker', question: 'Are you the owner, or the person who decides on tools like this?',
     options: ["Yes, that's me", "No, I'd need to check with someone"] },
 ];
 
-const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'cost', 'proof'];
+const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'comparison', 'proof'];
 const CONTACT_STEP = PRE_QUIZ_STEPS.length; // name + email, right before the quiz questions
 const QUIZ_START = CONTACT_STEP + 1; // index of the first quiz question
 const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // steps before the result screen
 const TOTAL_STEPS = QUIZ_END;
 
 /* ─────────────────────── main component ─────────────────────── */
-export default function AIReceptionist() {
+export default function ReputationAutopilot() {
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
   const [contact, setContact] = React.useState({ fullName: '', email: '' });
@@ -120,10 +119,10 @@ export default function AIReceptionist() {
       body: JSON.stringify({
         full_name: contact.fullName.trim(),
         email: contact.email.trim(),
-        source: 'ai_receptionist',
+        source: 'reputation_autopilot',
         business_type: finalAnswers.businessType,
-        missed_calls: finalAnswers.missedCalls,
-        pain_point: finalAnswers.painPoint,
+        job_volume: finalAnswers.jobVolume,
+        review_pain_point: finalAnswers.reviewPainPoint,
         decision_maker: finalAnswers.decisionMaker,
       }),
     }).catch(() => {
@@ -168,11 +167,11 @@ export default function AIReceptionist() {
       <Card style={{ textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="ok">You qualify</Badge></div>
         <h2 style={{ margin: '18px 0 14px', fontSize: 28, fontWeight: 700, color: 'var(--ink-900)', lineHeight: 1.2 }}>
-          This is exactly what we built the AI Receptionist for.
+          This is exactly what Reputation Autopilot was built for.
         </h2>
         <p style={{ margin: '0 0 32px', fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-500)' }}>
-          Book a free 20-minute fit call. We'll show you exactly what your AI receptionist would say on a real call
-          from your business, and what it's costing you to keep missing calls instead.
+          Book a free 20-minute fit call. We'll show you exactly what a review request would look like for your
+          business, and how many reviews you're likely missing right now.
         </p>
         <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook} fullWidth>Book My Free Fit Call</Button>
       </Card>
@@ -227,19 +226,19 @@ export default function AIReceptionist() {
         <Card style={{ textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="accent">AI Receptionist</Badge>
+            <Badge tone="accent">Reputation Autopilot</Badge>
           </div>
           <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'clamp(30px,5.4vw,50px)', lineHeight: 1.1,
             letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
-            A Full-Time Receptionist. <span style={{ color: 'var(--cyan-700)' }}>Without The Full-Time Cost.</span>
+            Every Completed Job Becomes <span style={{ color: 'var(--cyan-700)' }}>A 5-Star Review Request.</span>
           </h1>
           <p style={{ margin: '20px 0 0', fontSize: 16, lineHeight: 1.6, color: 'var(--ink-500)' }}>
-            Answers every call, greets callers by your business name, books the appointment, and never calls out
-            sick — for a fraction of what one payroll costs.
+            The moment a job is marked done, your customer gets a text asking for a Google review — no
+            spreadsheet, no sticky note, no forgetting.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginTop: 40,
             borderTop: '1px solid var(--border-hair)' }}>
-            {[['24/7', 'Always answers'], ['< 1 s', 'Time to pick up'], ['~1 week', 'To go live'], ['$0', 'Sick days']].map(([val, label], i) => (
+            {[['+40%', 'More reviews collected'], ['< 5 min', 'After job completion'], ['24/7', 'Runs itself'], ['1 click', 'To reply']].map(([val, label], i) => (
               <div key={label} style={{ padding: '18px 6px 0', minWidth: 0,
                 borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px,4vw,24px)', fontWeight: 700,
@@ -257,8 +256,8 @@ export default function AIReceptionist() {
     } else if (id === 'problem') {
       body = (
         <Card>
-          <Eyebrow>The real cost of a front desk</Eyebrow>
-          <StepHeading>A human receptionist costs more than you think.</StepHeading>
+          <Eyebrow>The real cost of asking by hand</Eyebrow>
+          <StepHeading>Manually asking for reviews doesn't scale — so most owners just stop.</StepHeading>
           <div style={{ display: 'grid', gap: 12 }}>
             {problems.map(([title, desc]) => (
               <div key={title} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
@@ -278,7 +277,7 @@ export default function AIReceptionist() {
       body = (
         <Card>
           <Eyebrow>What it actually does</Eyebrow>
-          <StepHeading>Everything your front desk does. None of the payroll.</StepHeading>
+          <StepHeading>A review request that fires itself the second the job is done.</StepHeading>
           <div style={{ display: 'grid', gap: 10 }}>
             {capabilities.map(([title, desc], i) => (
               <div key={title} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
@@ -291,28 +290,28 @@ export default function AIReceptionist() {
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(3)} label="See The Cost Comparison" />
+          <ContinueRow onNext={() => go(3)} label="See The Comparison" />
         </Card>
       );
-    } else if (id === 'cost') {
+    } else if (id === 'comparison') {
       body = (
         <Card>
-          <Eyebrow>AI Receptionist vs. human receptionist</Eyebrow>
+          <Eyebrow>Automated vs. asking by hand</Eyebrow>
           <StepHeading>Side by side, it's not close.</StepHeading>
           <div style={{ display: 'grid', gap: 8 }}>
-            {comparison.map(([feat, ai, human]) => (
+            {comparison.map(([feat, automated, manual]) => (
               <div key={feat} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
                 borderRadius: 'var(--radius-2)', padding: '14px 18px' }}>
                 <div style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink-900)', marginBottom: 10 }}>{feat}</div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0',
                   borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>AI Receptionist</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--cyan-700)' }}>{ai}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Automated</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--cyan-700)' }}>{automated}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0',
                   borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Human Receptionist</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-500)' }}>{human}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Asking By Hand</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-500)' }}>{manual}</span>
                 </div>
               </div>
             ))}

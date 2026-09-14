@@ -14,12 +14,12 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'full_name and a valid email are required' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
   }
 
-  const { business_type, missed_calls, pain_point, decision_maker } = body;
+  const { source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point } = body;
   const { sql } = getDatabase();
 
   const [lead] = await sql`
-    INSERT INTO leads (full_name, email, business_type, missed_calls, pain_point, decision_maker)
-    VALUES (${full_name}, ${email}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null})
+    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point)
+    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null})
     RETURNING *
   `;
 

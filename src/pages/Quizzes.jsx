@@ -17,6 +17,12 @@ const QUIZZES = [
     time: '60 seconds',
     description: 'Answer a few questions about your call volume and find out whether an AI receptionist would pay for itself in your business — no call required to find out.',
   },
+  {
+    page: 'ReputationAutopilot',
+    title: 'Reputation Autopilot Fit Check',
+    time: '60 seconds',
+    description: 'Answer a few questions about your review process and find out how many 5-star reviews you\'re likely missing every month — no call required to find out.',
+  },
 ];
 
 function Quizzes({ onNavigate }) {
