@@ -207,28 +207,52 @@ function QuizTeaser({ onNavigate }) {
 }
 
 function Home({ onNavigate }) {
+  const [founderPhotoOk, setFounderPhotoOk] = React.useState(true);
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <section style={{ position: 'relative', backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)', padding: '80px 0 0' }}>
-        <div className="ll-hero-grid-bg" aria-hidden="true" />
+      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '64px 0 0' }}>
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
-          <Badge tone="inverse">Loogo Labs · All-In-One Platform</Badge>
-          <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
-            letterSpacing: 'var(--ls-display-1)', maxWidth: '20ch' }}>
-            Launch, Grow & Automate Your Business — <span style={{ color: 'var(--cyan-500)' }}>All in One Place</span>.
-          </h1>
-          <p style={{ maxWidth: '52ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-300)' }}>
-            Stop paying for 10–15 different tools that barely talk to each other. Our all-in-one
-            platform gives you CRM, email & SMS marketing, social media, courses, and automation — in one dashboard.
-          </p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
-            <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
+          <div className="ll-grid-2" style={{ gap: 48, alignItems: 'center' }}>
+            <div>
+              <Badge tone="accent">A Digital Marketing Partner You Can Trust</Badge>
+              <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
+                letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
+                Launch, Grow & Automate Your Business — <span style={{ color: 'var(--cyan-700)' }}>All in One Place</span>.
+              </h1>
+              <p style={{ maxWidth: '50ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
+                We specialize in small business marketing, backed by 8+ years of hands-on experience in
+                performance marketing and automation. Stop paying for 10–15 tools that barely talk to
+                each other — get one platform, set up and run for you.
+              </p>
+              <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+                <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
+                <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
+              </div>
+            </div>
+
+            {/* Trust panel — a real face instead of a stock hero image */}
+            <div style={{ justifySelf: 'center', width: '100%', maxWidth: 360 }}>
+              <div style={{ position: 'relative', border: '2px solid var(--ink-900)', borderRadius: 'var(--radius-2)',
+                boxShadow: 'var(--shadow-hard)', overflow: 'hidden', background: 'var(--paper-100)' }}>
+                {founderPhotoOk ? (
+                  <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" onError={() => setFounderPhotoOk(false)}
+                    style={{ width: '100%', aspectRatio: '4 / 5', objectFit: 'cover', display: 'block' }} />
+                ) : (
+                  <div style={{ width: '100%', aspectRatio: '4 / 5', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: 'var(--font-display)', fontSize: 64, fontWeight: 700, color: 'var(--cyan-700)', background: 'var(--paper-200)' }}>DS</div>
+                )}
+                <div style={{ padding: '14px 18px', borderTop: '1px solid var(--border-hair)' }}>
+                  <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--ink-900)' }}>David Selva</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--ink-500)', marginTop: 2 }}>8+ years in performance marketing &amp; automation</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 64, borderTop: '1px solid var(--border-hair-inverse)' }}>
+
+          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56, borderTop: '1px solid var(--border-hair)' }}>
             {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
               <div key={l} style={{ flex: 1, padding: '20px 0 32px', paddingLeft: i ? 24 : 0,
-                borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
+                borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
                 <Stat label={l} value={v} unit={u} />
               </div>
             ))}
