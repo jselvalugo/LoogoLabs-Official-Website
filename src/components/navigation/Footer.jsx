@@ -40,6 +40,10 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
               {col.links.map(l => {
                 const external = externalLinks[l];
                 const target = pageMap[l];
+                if (l === 'Cookie Preferences')
+                  return <button key={l} onClick={() => window.openCookiePreferences && window.openCookiePreferences()}
+                    style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer',
+                      fontSize: 14, color: 'var(--ink-200)', fontFamily: 'inherit' }}>{l}</button>;
                 if (external)
                   return <a key={l} href={external} target="_blank"
                     rel={PROFILE_LINKS.has(l) ? 'noopener noreferrer me' : 'noopener noreferrer'}

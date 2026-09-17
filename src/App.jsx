@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from './components/navigation/NavBar';
 import Button from './components/core/Button';
 import Footer from './components/navigation/Footer';
+import CookieConsent from './components/feedback/CookieConsent';
 import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Blog from './pages/Blog';
@@ -88,9 +89,9 @@ function App() {
   }, [navigate]);
 
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
-  if (page === 'GrowCFL') return <React.Suspense fallback={null}><GrowCFL /></React.Suspense>;
-  if (page === 'AIReceptionist') return <React.Suspense fallback={null}><AIReceptionist /></React.Suspense>;
-  if (page === 'ReputationAutopilot') return <React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense>;
+  if (page === 'GrowCFL') return <><CookieConsent /><React.Suspense fallback={null}><GrowCFL /></React.Suspense></>;
+  if (page === 'AIReceptionist') return <><CookieConsent /><React.Suspense fallback={null}><AIReceptionist /></React.Suspense></>;
+  if (page === 'ReputationAutopilot') return <><CookieConsent /><React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense></>;
 
   const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];
   let body;
@@ -138,11 +139,12 @@ function App() {
         columns={[
           { title: 'Company', links: ['Mission', 'Book a Call'] },
           { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida', 'Quizzes'] },
-          { title: 'Legal', links: ['Privacy Policy', 'Terms of Service'] },
+          { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
+      <CookieConsent />
     </div>
   );
 }
