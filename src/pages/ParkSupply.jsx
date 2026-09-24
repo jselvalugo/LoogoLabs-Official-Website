@@ -1,12 +1,11 @@
 import React from 'react';
-import { CATEGORIES, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS } from '../lib/parkSupply';
+import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS } from '../lib/parkSupply';
 import { SITE } from '../lib/seo';
 
 // Unlisted: reachable only by direct link. It is kept out of the nav, footer,
 // sitemap and llms.txt (see `unlisted` in lib/seo.js) and served noindex.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const STORAGE_KEY = 'll-park-supply-draft';
 
 const usd = (n) => Number(n || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 const num = (v) => { const n = parseFloat(v); return Number.isFinite(n) && n >= 0 ? n : 0; };
@@ -165,17 +164,19 @@ export default function ParkSupply() {
     }
     setSubmitState({ status: 'sending', error: '' });
     try {
-      const res = await fetch('/.netlify/functions/create-lead', {
+      const res = await fetch('/.netlify/functions/create-proposal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          full_name: contact.trim(),
+          number: draft.number,
+          ...draft.client,
+          contact: contact.trim(),
           email: email.trim(),
-          source: 'park_supply',
-          business_type: draft.client.organization || null,
-          pain_point: draft.client.project || null,
-          job_volume: usd(totals.total),
-          notes: proposalSummary(draft, totals),
+          scope: draft.scope,
+          lines: draft.lines.map((l) => ({ sku: l.sku, qty: num(l.qty), price: num(l.price) })),
+          discount_pct: num(draft.discountPct),
+          shipping: num(draft.shipping),
+          tax_pct: num(draft.taxPct),
         }),
       });
       if (!res.ok) throw new Error();
@@ -504,29 +505,6 @@ function ProposalDocument({ draft, totals }) {
 const docTd = { borderBottom: '1px solid #D8D3C6', padding: '7px 4px', verticalAlign: 'top' };
 const docSumTd = { padding: '3px 12px 3px 0' };
 const docSumVal = { padding: '3px 0', textAlign: 'right' };
-
-/** Plain-text copy of the proposal, stored on the lead so it is readable in the admin. */
-function proposalSummary(draft, totals) {
-  const c = draft.client;
-  const lines = draft.lines.map((l) => {
-    const p = PRODUCTS_BY_SKU.get(l.sku);
-    return `${num(l.qty)} × ${p.sku} ${p.name} @ ${usd(l.price)} = ${usd(num(l.qty) * num(l.price))}`;
-  });
-  return [
-    `Proposal ${draft.number}`,
-    [c.organization, c.project, c.location].filter(Boolean).join(' — '),
-    c.phone ? `Phone: ${c.phone}` : '',
-    '',
-    ...lines,
-    '',
-    `Subtotal ${usd(totals.subtotal)}` +
-      (totals.discount ? ` · Discount −${usd(totals.discount)}` : '') +
-      (totals.shipping ? ` · Freight ${usd(totals.shipping)}` : '') +
-      (totals.tax ? ` · Tax ${usd(totals.tax)}` : '') +
-      ` · Total ${usd(totals.total)}`,
-    draft.scope ? `\nScope: ${draft.scope}` : '',
-  ].filter((s, i, a) => s !== '' || a[i - 1] !== '').join('\n').trim();
-}
 
 const PAGE_CSS = `
 .ps-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; scrollbar-width: thin; }

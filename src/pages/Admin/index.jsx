@@ -1,19 +1,43 @@
 import React from 'react';
-import { isLoggedIn, logout } from '../../lib/identity';
+import { apiFetch, isLoggedIn, logout } from '../../lib/identity';
 import Login from './Login';
 import BlogAdmin from './BlogAdmin';
 import Analytics from './Analytics';
 import Leads from './Leads';
+import Proposals from './Proposals';
 
 const NAV = [
   { id: 'posts', label: 'Posts' },
   { id: 'leads', label: 'Quiz Leads' },
+  { id: 'proposals', label: 'Proposals' },
   { id: 'analytics', label: 'Analytics' },
 ];
 
 export default function Admin() {
   const [authed, setAuthed] = React.useState(isLoggedIn());
   const [subpage, setSubpage] = React.useState('posts');
+  const [proposals, setProposals] = React.useState([]);
+  const [proposalsLoading, setProposalsLoading] = React.useState(true);
+
+  // Proposals are loaded here rather than in their tab so the sidebar can show
+  // how many new ones are waiting, and polled so new submissions show up
+  // without a reload.
+  const loadProposals = React.useCallback(() => {
+    apiFetch('/.netlify/functions/get-proposals')
+      .then((r) => r?.json())
+      .then((data) => { if (Array.isArray(data)) setProposals(data); })
+      .catch(() => {})
+      .finally(() => setProposalsLoading(false));
+  }, []);
+
+  React.useEffect(() => {
+    if (!authed) return undefined;
+    loadProposals();
+    const id = setInterval(loadProposals, 60000);
+    return () => clearInterval(id);
+  }, [authed, loadProposals]);
+
+  const newProposals = proposals.filter((p) => p.status === 'new').length;
 
   if (!authed) return <Login onLogin={() => setAuthed(true)} />;
 
@@ -46,6 +70,10 @@ export default function Admin() {
                   cursor: 'pointer', color: active ? 'var(--paper-100)' : 'var(--ink-300)',
                   fontSize: 14, fontFamily: 'var(--font-body)', fontWeight: active ? 500 : 400, whiteSpace: 'nowrap' }}>
                 {label}
+                {id === 'proposals' && newProposals > 0 && (
+                  <span style={{ marginLeft: 8, padding: '1px 7px', borderRadius: 999, background: 'var(--cyan-500)', color: 'var(--ink-900)',
+                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600 }}>{newProposals}</span>
+                )}
               </button>
             );
           })}
@@ -62,6 +90,11 @@ export default function Admin() {
       <main className="ll-admin-main" style={{ flex: 1, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {subpage === 'posts' && <BlogAdmin />}
         {subpage === 'leads' && <Leads />}
+        {subpage === 'proposals' && (
+          <Proposals proposals={proposals} loading={proposalsLoading} onRefresh={loadProposals}
+            onChange={(row) => setProposals((prev) => prev.map((p) => (p.id === row.id ? row : p)))}
+            onRemove={(id) => setProposals((prev) => prev.filter((p) => p.id !== id))} />
+        )}
         {subpage === 'analytics' && <Analytics />}
       </main>
     </div>

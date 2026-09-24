@@ -175,3 +175,7 @@ export const PRODUCTS = [
 export const PRODUCTS_BY_SKU = new Map(PRODUCTS.map((p) => [p.sku, p]));
 
 export const PROPOSAL_VALID_DAYS = 30;
+
+// localStorage key for the builder's draft. The admin's "Open in builder" writes
+// a submission here so it can be edited and printed as a proposal.
+export const DRAFT_STORAGE_KEY = 'll-park-supply-draft';
