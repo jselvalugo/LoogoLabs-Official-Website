@@ -74,7 +74,7 @@ export default function Privacy({ onNavigate }) {
           <P>We ask for your consent before using anything beyond what the site needs to run, through the cookie banner shown on your first visit. These are the categories we use:</P>
           <UL items={[
             'Necessary cookies: Required for the website to function — page routing, security, and remembering your cookie choice. Always on, and cannot be disabled.',
-            'Analytics cookies: Aggregate, city-level traffic data so we know which pages are read and how traffic arrives. No personal profile is built from it. Only active if you allow it.',
+            'Analytics cookies: Aggregate, city-level traffic data so we know which pages are read, how long visits last, and how traffic arrives. Visit length is tied to a random per-tab ID that is discarded when the tab closes. No personal profile is built from it. Only active if you allow it.',
             'Marketing cookies: Power the Meta Pixel, which we use to measure ad performance and show relevant Loogo Labs content on other sites. Only active if you allow it.',
           ]} />
           <P>You can change your choice at any time from the &ldquo;Cookie Preferences&rdquo; link in the site footer, or through your browser settings. Disabling cookies may affect some functionality of the site.</P>

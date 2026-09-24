@@ -12,7 +12,7 @@ const CATEGORIES = [
   {
     key: 'analytics',
     title: 'Analytics',
-    desc: 'Aggregate, city-level traffic data so we know which pages get read. No personal profile is built from it.',
+    desc: 'Aggregate, city-level traffic data — which pages get read and how long visits last. No personal profile is built from it.',
   },
   {
     key: 'marketing',

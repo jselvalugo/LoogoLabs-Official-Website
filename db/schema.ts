@@ -77,3 +77,20 @@ export const proposals = pgTable('proposals', {
   region: text('region'),
   country: text('country'),
 });
+
+// Engaged-time sessions for Analytics — see the create_site_sessions migration.
+export const site_sessions = pgTable('site_sessions', {
+  id: uuid('id').primaryKey(),
+  started_at: timestamp('started_at').defaultNow(),
+  last_seen_at: timestamp('last_seen_at').defaultNow(),
+  active_seconds: integer('active_seconds').default(0),
+  page_count: integer('page_count').default(1),
+  landing_path: text('landing_path'),
+  // { "/path": engagedSeconds }
+  paths: jsonb('paths').notNull().default({}),
+  referrer: text('referrer'),
+  device: text('device'),
+  city: text('city'),
+  region: text('region'),
+  country: text('country'),
+});
