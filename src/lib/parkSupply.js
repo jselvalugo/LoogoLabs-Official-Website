@@ -1,6 +1,9 @@
 // Catalog for the unlisted Park Supply page (/park-supply). Prices are list
 // prices in USD per unit; each line's price can still be overridden inside a
 // proposal, so edit these to set the default, not to quote a one-off deal.
+//
+// `image` is optional; products without one fall back to a category icon.
+// Photos are cropped from the supplier's 2023 street-furniture product atlas.
 
 export const CATEGORIES = [
   { id: 'stations', label: 'Complete Stations' },
@@ -17,12 +20,14 @@ export const PRODUCTS = [
   {
     sku: 'PWS-100', category: 'stations', price: 389, unit: 'each',
     name: 'Standard Pet Waste Station',
+    image: '/park-supply/pws-100.jpg',
     desc: 'The all-in-one park staple: roll-bag dispenser, 10-gal lidded receptacle, and cleanup sign on a 7′ post.',
     specs: ['Powder-coated aluminum, rust-proof', 'Holds 800 roll bags', 'Includes 200 starter bags', 'In-ground post with anchor'],
   },
   {
     sku: 'PWS-200', category: 'stations', price: 549, unit: 'each',
     name: 'Heavy-Duty Station, 15-Gal',
+    image: '/park-supply/pws-200.jpg',
     desc: 'Built for high-traffic trailheads and dog parks. Larger capacity means fewer service visits.',
     specs: ['14-gauge steel, powder-coated', '15-gal receptacle with self-closing lid', 'Holds 1,600 roll bags', 'Vandal-resistant hardware'],
   },
@@ -35,6 +40,7 @@ export const PRODUCTS = [
   {
     sku: 'PWS-050', category: 'stations', price: 219, unit: 'each',
     name: 'Compact Dispenser Station',
+    image: '/park-supply/pws-050.jpg',
     desc: 'Dispenser and sign on a post, no receptacle — for locations already served by an existing trash can.',
     specs: ['Powder-coated aluminum', 'Holds 400 header bags', 'Includes 200 starter bags', '5′ post with anchor'],
   },
@@ -43,18 +49,21 @@ export const PRODUCTS = [
   {
     sku: 'DSP-R1', category: 'dispensers', price: 69, unit: 'each',
     name: 'Roll Bag Dispenser',
+    image: '/park-supply/dsp-r1.jpg',
     desc: 'Tear-off roll dispenser that cuts waste — patrons take one bag at a time.',
     specs: ['Aluminum housing', 'Holds 2 rolls (400 bags)', 'Post or wall mount'],
   },
   {
     sku: 'DSP-H1', category: 'dispensers', price: 59, unit: 'each',
     name: 'Header Bag Dispenser',
+    image: '/park-supply/dsp-h1.jpg',
     desc: 'Pull-one-bag header style, the most common municipal format.',
     specs: ['Aluminum housing', 'Holds 400 header bags', 'Post or wall mount'],
   },
   {
     sku: 'DSP-R2', category: 'dispensers', price: 99, unit: 'each',
     name: 'Dual-Roll Dispenser',
+    image: '/park-supply/dsp-r2.jpg',
     desc: 'Double capacity for busy dog parks and trail entrances.',
     specs: ['Aluminum housing', 'Holds 4 rolls (800 bags)', 'Lockable refill door'],
   },
@@ -63,12 +72,14 @@ export const PRODUCTS = [
   {
     sku: 'RCP-10', category: 'receptacles', price: 149, unit: 'each',
     name: '10-Gal Receptacle with Lid',
+    image: '/park-supply/rcp-10.jpg',
     desc: 'Lidded can that keeps odor down and wildlife out.',
     specs: ['Powder-coated aluminum', 'Hinged lid', 'Post-mount bracket included'],
   },
   {
     sku: 'RCP-20', category: 'receptacles', price: 289, unit: 'each',
     name: '20-Gal Steel Receptacle',
+    image: '/park-supply/rcp-20.jpg',
     desc: 'Free-standing, high-capacity can for dog park entrances.',
     specs: ['Steel, powder-coated', 'Self-closing lid', 'Surface-mount anchor kit'],
   },
@@ -147,6 +158,7 @@ export const PRODUCTS = [
   {
     sku: 'AMN-BENCH', category: 'amenities', price: 699, unit: 'each',
     name: '6′ Recycled-Plastic Park Bench',
+    image: '/park-supply/amn-bench.jpg',
     desc: 'Maintenance-free seating for dog park owners.',
     specs: ['Recycled HDPE slats', 'Steel frame', 'Surface-mount'],
   },
