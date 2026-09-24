@@ -197,6 +197,11 @@ export default function ParkSupply() {
         <header style={{ position: 'sticky', top: 0, zIndex: 30, background: 'var(--ink-900)', borderBottom: '1px solid rgba(216,211,198,0.2)' }}>
           <Wrap style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+              {/* The mark is solid dark green, so it sits on a light chip against the dark bar. */}
+              <a href="/" aria-label="Loogo Labs — home"
+                style={{ display: 'flex', flexShrink: 0, background: 'var(--paper-000)', padding: 4, borderRadius: 'var(--radius-1)' }}>
+                <img src="/logo.png" alt="Loogo Labs" width="28" height="28" style={{ height: 28, width: 28, display: 'block' }} />
+              </a>
               <span style={{ color: 'var(--paper-000)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
               <span className="ps-hide-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>/ Park Supply</span>
             </div>
