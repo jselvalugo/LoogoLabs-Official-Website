@@ -192,6 +192,7 @@ const HEADINGS = {
   AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
   ReputationAutopilot: 'Every Completed Job Becomes A 5-Star Review Request.',
   Quizzes: 'Free fit-check quizzes for your business',
+  ParkSupply: 'Pet waste stations & dog park amenities',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',
 };
