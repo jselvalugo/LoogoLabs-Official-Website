@@ -243,12 +243,19 @@ export default function ParkSupply() {
                 const inProposal = draft.lines.find((l) => l.sku === p.sku);
                 return (
                   <article key={p.sku} className="ps-card">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
-                      <div style={{ width: 64, height: 64, borderRadius: 'var(--radius-2)', background: 'var(--paper-100)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
-                        <CategoryIcon category={p.category} />
+                    {p.image ? (
+                      <div className="ps-photo">
+                        <img src={p.image} alt={p.name} loading="lazy" decoding="async" />
+                        <span className="ps-photo-sku">{p.sku}</span>
                       </div>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'var(--ink-400)' }}>{p.sku}</span>
-                    </div>
+                    ) : (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                        <div style={{ width: 64, height: 64, borderRadius: 'var(--radius-2)', background: 'var(--paper-100)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                          <CategoryIcon category={p.category} />
+                        </div>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'var(--ink-400)' }}>{p.sku}</span>
+                      </div>
+                    )}
                     <h3 style={{ margin: '14px 0 6px', fontSize: 17, lineHeight: 1.3, letterSpacing: '-0.01em', color: 'var(--ink-900)' }}>{p.name}</h3>
                     <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: 'var(--ink-600)' }}>{p.desc}</p>
                     <ul style={{ margin: '12px 0 0', padding: 0, listStyle: 'none', display: 'grid', gap: 4 }}>
@@ -598,6 +605,11 @@ const PAGE_CSS = `
 .ps-chip.is-active { background: var(--ink-900); border-color: var(--ink-900); color: var(--paper-000); }
 .ps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 .ps-card { display: flex; flex-direction: column; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
+.ps-photo { position: relative; margin: -18px -18px 0; height: 220px; padding: 14px; background: #fff;
+  border-bottom: 1px solid var(--border-hair); border-radius: var(--radius-2) var(--radius-2) 0 0; overflow: hidden; }
+.ps-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ps-photo-sku { position: absolute; top: 10px; right: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(255,255,255,0.9);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-400); }
 .ps-builder { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; }
 .ps-panel { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
 .ps-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
