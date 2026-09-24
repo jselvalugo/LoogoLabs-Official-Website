@@ -1,9 +1,14 @@
 import React from 'react';
-import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS } from '../lib/parkSupply';
+import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS, SITE_PLANS } from '../lib/parkSupply';
+import { isLoggedIn } from '../lib/identity';
 import { SITE } from '../lib/seo';
 
 // Unlisted: reachable only by direct link. It is kept out of the nav, footer,
 // sitemap and llms.txt (see `unlisted` in lib/seo.js) and served noindex.
+//
+// Buyers see a quote cart: quantities at list price, sent as a quote request
+// (there is no payment step). Staff signed in to /admin also get unit-price,
+// discount, freight, and tax controls to turn a request into a proposal.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,6 +55,14 @@ function totalsFor(draft) {
   const tax = (subtotal - discount) * num(draft.taxPct) / 100;
   return { subtotal, discount, shipping, tax, total: subtotal - discount + shipping + tax };
 }
+
+// The buying process, shown on the page and echoed after a request is sent.
+const PROCESS = [
+  ['Build your list and send the form', 'Use the planner or the catalog, then tell us who you are and where it’s going. No payment, no commitment.'],
+  ['We contact you', 'A real person reaches out by phone or email to talk through your site and confirm what you need.'],
+  ['We work out logistics together', 'Delivery, freight, installation, and timing, planned around your site and your schedule.'],
+  ['Formal quote, then we move forward', 'You get a final quote to approve. Once you do, we order, deliver, and install.'],
+];
 
 /* ─────────────────────── primitives ─────────────────────── */
 
@@ -120,6 +133,23 @@ export default function ParkSupply() {
   const [category, setCategory] = React.useState('all');
   const [submitState, setSubmitState] = React.useState({ status: 'idle', error: '' });
   const builderRef = React.useRef(null);
+  const [staff] = React.useState(() => { try { return isLoggedIn(); } catch { return false; } });
+  const [toast, setToast] = React.useState(null); // { id, text }
+  const [builderInView, setBuilderInView] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!toast) return undefined;
+    const t = setTimeout(() => setToast(null), 2600);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  React.useEffect(() => {
+    const el = builderRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver(([e]) => setBuilderInView(e.isIntersecting), { rootMargin: '0px 0px -30% 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   React.useEffect(() => {
     try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); } catch { /* storage blocked — draft just won't persist */ }
@@ -129,21 +159,36 @@ export default function ParkSupply() {
   const itemCount = draft.lines.reduce((s, l) => s + num(l.qty), 0);
   const visible = category === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === category);
 
-  const addProduct = (sku) => {
+  // Merge [sku, qty] pairs into the draft, adding to any quantity already there.
+  const addLines = (pairs) => {
     setSubmitState({ status: 'idle', error: '' });
     setDraft((d) => {
-      const existing = d.lines.find((l) => l.sku === sku);
-      if (existing) return { ...d, lines: d.lines.map((l) => (l.sku === sku ? { ...l, qty: num(l.qty) + 1 } : l)) };
-      return { ...d, lines: [...d.lines, { sku, qty: 1, price: PRODUCTS_BY_SKU.get(sku).price }] };
+      let lines = d.lines;
+      for (const [sku, qty] of pairs) {
+        lines = lines.some((l) => l.sku === sku)
+          ? lines.map((l) => (l.sku === sku ? { ...l, qty: num(l.qty) + qty } : l))
+          : [...lines, { sku, qty, price: PRODUCTS_BY_SKU.get(sku).price }];
+      }
+      return { ...d, lines };
     });
   };
+  const addProduct = (sku) => {
+    addLines([[sku, 1]]);
+    setToast({ id: Date.now(), text: `${PRODUCTS_BY_SKU.get(sku).name} added` });
+  };
+  const addPlan = (pairs, label) => {
+    addLines(pairs);
+    const n = pairs.reduce((s, [, q]) => s + q, 0);
+    setToast({ id: Date.now(), text: `${label} starter kit added: ${n} item${n === 1 ? '' : 's'}` });
+  };
+  const setQty = (sku, qty) => (qty <= 0 ? removeLine(sku) : updateLine(sku, { qty }));
   const updateLine = (sku, patch) => setDraft((d) => ({ ...d, lines: d.lines.map((l) => (l.sku === sku ? { ...l, ...patch } : l)) }));
   const removeLine = (sku) => setDraft((d) => ({ ...d, lines: d.lines.filter((l) => l.sku !== sku) }));
   const setClient = (key) => (value) => setDraft((d) => ({ ...d, client: { ...d.client, [key]: value } }));
   const setField = (key) => (value) => setDraft((d) => ({ ...d, [key]: value }));
 
   const startOver = () => {
-    if (draft.lines.length && !window.confirm('Clear this proposal and start a new one?')) return;
+    if (draft.lines.length && submitState.status !== 'sent' && !window.confirm('Clear this quote and start a new one?')) return;
     setDraft(emptyDraft());
     setSubmitState({ status: 'idle', error: '' });
   };
@@ -207,7 +252,8 @@ export default function ParkSupply() {
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
               style={{ ...btn('secondary'), padding: '7px 12px', background: 'var(--cyan-500)', borderColor: 'var(--cyan-500)', whiteSpace: 'nowrap' }}>
-              Proposal · {itemCount}<span className="ps-hide-sm">&nbsp;item{itemCount === 1 ? '' : 's'}</span>
+              {staff ? 'Proposal' : 'Quote'} · <span key={itemCount} className={itemCount ? 'ps-bump' : undefined}>{itemCount}</span>
+              <span className="ps-hide-sm">&nbsp;item{itemCount === 1 ? '' : 's'}</span>
             </button>
           </Wrap>
         </header>
@@ -221,10 +267,30 @@ export default function ParkSupply() {
             </h1>
             <p style={{ maxWidth: '60ch', margin: '20px 0 0', fontSize: 17, lineHeight: 1.6, color: 'var(--ink-200)' }}>
               Commercial-grade pet waste stations, refills, signage, and dog park amenities for parks departments,
-              HOAs, property managers, and developers. Build a line-item proposal below, then print it or send it for a formal quote.
+              HOAs, property managers, and developers. Pick what your site needs, or let the planner build a starter list,
+              then send it to us for a formal quote. No payment and no commitment.
             </p>
           </Wrap>
         </section>
+
+        {/* ── HOW IT WORKS ── */}
+        <section style={{ padding: 'clamp(32px,5vw,56px) 0 0' }}>
+          <Wrap>
+            <Eyebrow>How it works</Eyebrow>
+            <h2 style={{ margin: '0 0 18px', fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>From list to installed, with a person at every step</h2>
+            <ol className="ps-steps">
+              {PROCESS.map(([t, sub], i) => (
+                <li key={t}>
+                  <span className="ps-step-n">{i + 1}</span>
+                  <div><strong>{t}</strong><p>{sub}</p></div>
+                </li>
+              ))}
+            </ol>
+          </Wrap>
+        </section>
+
+        {/* ── PLANNER ── */}
+        <SitePlanner onAdd={addPlan} />
 
         {/* ── CATALOG ── */}
         <section style={{ padding: 'clamp(32px,5vw,56px) 0' }}>
@@ -247,7 +313,7 @@ export default function ParkSupply() {
               {visible.map((p) => {
                 const inProposal = draft.lines.find((l) => l.sku === p.sku);
                 return (
-                  <article key={p.sku} className="ps-card">
+                  <article key={p.sku} className={`ps-card${inProposal ? ' is-in' : ''}`}>
                     {p.image ? (
                       <div className="ps-photo">
                         <img src={p.image} alt={p.name} loading="lazy" decoding="async" />
@@ -276,9 +342,13 @@ export default function ParkSupply() {
                         <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(p.price)}</div>
                         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{p.unit}</div>
                       </div>
-                      <button type="button" onClick={() => addProduct(p.sku)} style={btn(inProposal ? 'secondary' : 'primary')}>
-                        {inProposal ? `Added · ${inProposal.qty}` : 'Add'} <span aria-hidden>+</span>
-                      </button>
+                      {inProposal ? (
+                        <Stepper label={p.name} value={num(inProposal.qty)} onChange={(q) => setQty(p.sku, q)} />
+                      ) : (
+                        <button type="button" onClick={() => addProduct(p.sku)} style={btn('primary')}>
+                          Add to quote <span aria-hidden>+</span>
+                        </button>
+                      )}
                     </div>
                   </article>
                 );
@@ -292,10 +362,10 @@ export default function ParkSupply() {
           <Wrap>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
               <div>
-                <Eyebrow>Proposal {draft.number}</Eyebrow>
-                <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>Build a proposal</h2>
+                <Eyebrow>{staff ? 'Proposal' : 'Quote request'} {draft.number}</Eyebrow>
+                <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>{staff ? 'Build a proposal' : 'Your quote'}</h2>
               </div>
-              <button type="button" onClick={startOver} style={btn('ghost')}>New proposal</button>
+              <button type="button" onClick={startOver} style={btn('ghost')}>{staff ? 'New proposal' : 'Start over'}</button>
             </div>
 
             <div className="ps-builder">
@@ -303,26 +373,32 @@ export default function ParkSupply() {
               <div>
                 {draft.lines.length === 0 ? (
                   <div style={{ padding: '36px 20px', border: '1px dashed var(--border-hair)', borderRadius: 'var(--radius-2)', textAlign: 'center', color: 'var(--ink-400)', fontSize: 14 }}>
-                    No products yet. Add items from the catalog above.
+                    Your quote is empty. Try the planner above, or add items from the catalog.
                   </div>
                 ) : (
                   <div style={{ display: 'grid', gap: 10 }}>
                     {draft.lines.map((l) => {
                       const p = PRODUCTS_BY_SKU.get(l.sku);
                       return (
-                        <div key={l.sku} className="ps-line">
+                        <div key={l.sku} className={`ps-line${staff ? '' : ' ps-line--buyer'}`}>
                           <div style={{ minWidth: 0 }}>
                             <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink-900)' }}>{p.name}</div>
-                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginTop: 2 }}>{p.sku} · {p.unit}</div>
+                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginTop: 2 }}>{p.sku} · {usd(l.price)} {p.unit}</div>
                           </div>
-                          <label className="ps-line-field">
-                            <span>Qty</span>
-                            <input type="number" min="0" step="1" value={l.qty} onChange={(e) => updateLine(l.sku, { qty: e.target.value })} style={fieldStyle} />
-                          </label>
-                          <label className="ps-line-field">
-                            <span>Unit $</span>
-                            <input type="number" min="0" step="0.01" value={l.price} onChange={(e) => updateLine(l.sku, { price: e.target.value })} style={fieldStyle} />
-                          </label>
+                          {staff ? (
+                            <>
+                              <label className="ps-line-field">
+                                <span>Qty</span>
+                                <input type="number" min="0" step="1" value={l.qty} onChange={(e) => updateLine(l.sku, { qty: e.target.value })} style={fieldStyle} />
+                              </label>
+                              <label className="ps-line-field">
+                                <span>Unit $</span>
+                                <input type="number" min="0" step="0.01" value={l.price} onChange={(e) => updateLine(l.sku, { price: e.target.value })} style={fieldStyle} />
+                              </label>
+                            </>
+                          ) : (
+                            <Stepper label={p.name} value={num(l.qty)} onChange={(q) => setQty(l.sku, q)} />
+                          )}
                           <div style={{ textAlign: 'right', fontWeight: 700, fontSize: 15, color: 'var(--ink-900)', whiteSpace: 'nowrap' }}>{usd(num(l.qty) * num(l.price))}</div>
                           <button type="button" aria-label={`Remove ${p.name}`} onClick={() => removeLine(l.sku)}
                             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-400)', fontSize: 20, lineHeight: 1, padding: 4 }}>×</button>
@@ -333,7 +409,7 @@ export default function ParkSupply() {
                 )}
 
                 <div style={{ marginTop: 24, display: 'grid', gap: 14 }}>
-                  <Field label="Scope / notes (appears on the proposal)" textarea value={draft.scope} onChange={setField('scope')}
+                  <Field label={staff ? 'Scope / notes (appears on the proposal)' : 'Anything we should know? (optional)'} textarea value={draft.scope} onChange={setField('scope')}
                     placeholder="e.g. Install 6 stations along the Lake Loop Trail and 2 at the dog park entrance. Includes first year of servicing." />
                 </div>
               </div>
@@ -341,7 +417,7 @@ export default function ParkSupply() {
               {/* Client + totals */}
               <aside style={{ display: 'grid', gap: 20, alignContent: 'start' }}>
                 <div className="ps-panel">
-                  <Eyebrow>Prepared for</Eyebrow>
+                  <Eyebrow>{staff ? 'Prepared for' : 'About you and the site'}</Eyebrow>
                   <div style={{ display: 'grid', gap: 12 }}>
                     <Field label="Organization" value={draft.client.organization} onChange={setClient('organization')} placeholder="City of Winter Park — Parks & Rec" />
                     <Field label="Project / park" value={draft.client.project} onChange={setClient('project')} placeholder="Lake Loop Trail improvements" />
@@ -355,47 +431,74 @@ export default function ParkSupply() {
                 </div>
 
                 <div className="ps-panel">
-                  <Eyebrow>Pricing</Eyebrow>
-                  <div className="ps-three">
-                    <Field label="Discount %" type="number" value={draft.discountPct} onChange={setField('discountPct')} placeholder="0" />
-                    <Field label="Freight $" type="number" value={draft.shipping} onChange={setField('shipping')} placeholder="0" />
-                    <Field label="Tax %" type="number" value={draft.taxPct} onChange={setField('taxPct')} placeholder="0" />
-                  </div>
-                  <dl style={{ margin: '18px 0 0', display: 'grid', gap: 6, fontSize: 14 }}>
+                  <Eyebrow>{staff ? 'Pricing' : 'Estimate'}</Eyebrow>
+                  {staff && (
+                    <div className="ps-three" style={{ marginBottom: 18 }}>
+                      <Field label="Discount %" type="number" value={draft.discountPct} onChange={setField('discountPct')} placeholder="0" />
+                      <Field label="Freight $" type="number" value={draft.shipping} onChange={setField('shipping')} placeholder="0" />
+                      <Field label="Tax %" type="number" value={draft.taxPct} onChange={setField('taxPct')} placeholder="0" />
+                    </div>
+                  )}
+                  <dl style={{ margin: 0, display: 'grid', gap: 6, fontSize: 14 }}>
                     <TotalRow label="Subtotal" value={usd(totals.subtotal)} />
                     {totals.discount > 0 && <TotalRow label={`Discount (${num(draft.discountPct)}%)`} value={`−${usd(totals.discount)}`} />}
                     {totals.shipping > 0 && <TotalRow label="Freight" value={usd(totals.shipping)} />}
                     {totals.tax > 0 && <TotalRow label={`Tax (${num(draft.taxPct)}%)`} value={usd(totals.tax)} />}
                     <div style={{ borderTop: '1px solid var(--border-hair)', marginTop: 6, paddingTop: 10 }}>
-                      <TotalRow label="Total" value={usd(totals.total)} strong />
+                      <TotalRow label={staff ? 'Total' : 'Estimated total'} value={usd(totals.total)} strong />
                     </div>
                   </dl>
                 </div>
 
                 <div style={{ display: 'grid', gap: 10 }}>
-                  <button type="button" onClick={printProposal} disabled={!draft.lines.length}
-                    style={{ ...btn('primary'), padding: '13px 16px', opacity: draft.lines.length ? 1 : 0.4, cursor: draft.lines.length ? 'pointer' : 'not-allowed' }}>
-                    Print / save as PDF
-                  </button>
-                  <button type="button" onClick={submitQuote} disabled={submitState.status === 'sending'} style={{ ...btn('secondary'), padding: '13px 16px' }}>
-                    {submitState.status === 'sending' ? 'Sending…' : 'Submit quote request'}
-                  </button>
-                  {submitState.status === 'sent' && (
-                    <p role="status" style={{ margin: 0, fontSize: 13, color: 'var(--ink-600)' }}>
-                      Received. A formal quote for {draft.number} will follow by email.
-                    </p>
+                  {submitState.status === 'sent' ? (
+                    <QuoteSent number={draft.number} email={draft.client.email} onNew={startOver} />
+                  ) : (
+                    <>
+                      <button type="button" onClick={submitQuote} disabled={submitState.status === 'sending'} style={{ ...btn('primary'), padding: '14px 16px', fontSize: 13 }}>
+                        {submitState.status === 'sending' ? 'Sending…' : 'Request my quote'} <span aria-hidden>→</span>
+                      </button>
+                      <button type="button" onClick={printProposal} disabled={!draft.lines.length}
+                        style={{ ...btn('secondary'), padding: '12px 16px', opacity: draft.lines.length ? 1 : 0.4, cursor: draft.lines.length ? 'pointer' : 'not-allowed' }}>
+                        Print / save as PDF
+                      </button>
+                    </>
                   )}
                   {submitState.status === 'error' && (
                     <p role="alert" style={{ margin: 0, fontSize: 13, color: 'var(--status-danger)' }}>{submitState.error}</p>
                   )}
                   <p style={{ margin: 0, fontSize: 12, color: 'var(--ink-400)', lineHeight: 1.5 }}>
-                    Drafts save in this browser automatically. Prices valid {PROPOSAL_VALID_DAYS} days; freight and install confirmed at order.
+                    No payment is taken here. After you send this, we contact you to work out logistics before anything is ordered.
+                    Your list saves in this browser. List prices valid {PROPOSAL_VALID_DAYS} days.
                   </p>
                 </div>
               </aside>
             </div>
           </Wrap>
         </section>
+
+        {itemCount > 0 && !builderInView && submitState.status !== 'sent' && (
+          <div className="ps-dock">
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>
+                {itemCount} item{itemCount === 1 ? '' : 's'} · est.
+              </div>
+              <div style={{ fontWeight: 700, fontSize: 17 }}>{usd(totals.total)}</div>
+            </div>
+            <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              style={{ ...btn('secondary'), background: 'var(--paper-000)', borderColor: 'var(--paper-000)' }}>
+              Review quote <span aria-hidden>→</span>
+            </button>
+          </div>
+        )}
+
+        <div aria-live="polite" className="ps-toast-wrap">
+          {toast && (
+            <div key={toast.id} className="ps-toast">
+              <PawIcon /> {toast.text}
+            </div>
+          )}
+        </div>
 
         <footer style={{ background: 'var(--ink-900)', color: 'var(--ink-200)', padding: '24px 0', fontSize: 13 }}>
           <Wrap style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
@@ -414,6 +517,112 @@ function TotalRow({ label, value, strong }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontWeight: strong ? 700 : 400, fontSize: strong ? 18 : 14, color: strong ? 'var(--ink-900)' : 'var(--ink-600)' }}>
       <dt>{label}</dt><dd style={{ margin: 0 }}>{value}</dd>
+    </div>
+  );
+}
+
+/* ─────────────────────── buyer widgets ─────────────────────── */
+
+function PawIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ flexShrink: 0 }}>
+      <ellipse cx="12" cy="16" rx="5" ry="4.2" /><circle cx="5.5" cy="10" r="2.2" /><circle cx="9.5" cy="6" r="2.2" />
+      <circle cx="14.5" cy="6" r="2.2" /><circle cx="18.5" cy="10" r="2.2" />
+    </svg>
+  );
+}
+
+function Stepper({ value, onChange, label, min = 0, max = 999 }) {
+  const b = { width: 34, height: 34, border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 18, lineHeight: 1, color: 'var(--ink-900)' };
+  return (
+    <div className="ps-stepper" role="group" aria-label={`Quantity of ${label}`}>
+      <button type="button" style={b} aria-label="Decrease" onClick={() => onChange(Math.max(min, value - 1))}>−</button>
+      <input type="number" min={min} max={max} value={value} aria-label="Quantity"
+        onChange={(e) => onChange(Math.min(max, Math.max(min, Math.floor(Number(e.target.value) || 0))))} />
+      <button type="button" style={b} aria-label="Increase" onClick={() => onChange(Math.min(max, value + 1))}>+</button>
+    </div>
+  );
+}
+
+function SitePlanner({ onAdd }) {
+  const [planId, setPlanId] = React.useState(SITE_PLANS[0].id);
+  const [count, setCount] = React.useState(2);
+  const plan = SITE_PLANS.find((x) => x.id === planId);
+  const pairs = plan.lines(count);
+  const est = pairs.reduce((s, [sku, q]) => s + PRODUCTS_BY_SKU.get(sku).price * q, 0);
+
+  return (
+    <section style={{ padding: 'clamp(32px,5vw,56px) 0 0' }}>
+      <Wrap>
+        <div className="ps-planner">
+          <div>
+            <Eyebrow>Quick start</Eyebrow>
+            <h2 style={{ margin: '0 0 6px', fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>What are you outfitting?</h2>
+            <p style={{ margin: '0 0 18px', color: 'var(--ink-600)', fontSize: 15, lineHeight: 1.5 }}>
+              Pick a site and we’ll sketch a starter list. You can change every line before you send it.
+            </p>
+            <div className="ps-plan-tiles" role="radiogroup" aria-label="Site type">
+              {SITE_PLANS.map((x) => (
+                <button key={x.id} type="button" role="radio" aria-checked={x.id === planId} onClick={() => setPlanId(x.id)}
+                  className={`ps-plan-tile${x.id === planId ? ' is-active' : ''}`}>
+                  <strong>{x.label}</strong>
+                  <span>{x.blurb}</span>
+                </button>
+              ))}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginTop: 18 }}>
+              <span style={{ fontSize: 14, color: 'var(--ink-700)', fontWeight: 600 }}>{plan.countLabel}</span>
+              <Stepper label={plan.countLabel} value={count} min={1} max={50} onChange={setCount} />
+            </div>
+          </div>
+
+          <div className="ps-plan-preview">
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 10 }}>
+              Starter kit · {plan.label}
+            </div>
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
+              {pairs.map(([sku, q]) => {
+                const p = PRODUCTS_BY_SKU.get(sku);
+                return (
+                  <li key={sku} style={{ display: 'grid', gridTemplateColumns: '44px 1fr auto', alignItems: 'center', gap: 10 }}>
+                    <img src={p.image} alt="" width="44" height="44" style={{ width: 44, height: 44, objectFit: 'contain', background: '#fff', borderRadius: 'var(--radius-1)', border: '1px solid var(--border-hair)' }} />
+                    <span style={{ fontSize: 14, color: 'var(--ink-900)', lineHeight: 1.3 }}>{p.name}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-600)' }}>× {q}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderTop: '1px solid var(--border-hair)', marginTop: 14, paddingTop: 12 }}>
+              <span style={{ fontSize: 13, color: 'var(--ink-500)' }}>Estimate at list price</span>
+              <span style={{ fontWeight: 700, fontSize: 20, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(est)}</span>
+            </div>
+            <button type="button" onClick={() => onAdd(pairs, plan.label)} style={{ ...btn('primary'), width: '100%', marginTop: 14, padding: '13px 16px' }}>
+              Add kit to my quote <span aria-hidden>+</span>
+            </button>
+          </div>
+        </div>
+      </Wrap>
+    </section>
+  );
+}
+
+function QuoteSent({ number, email, onNew }) {
+  return (
+    <div className="ps-sent" role="status">
+      <div className="ps-confetti" aria-hidden>
+        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ '--i': i }}><PawIcon size={14} /></span>)}
+      </div>
+      <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--ink-900)', color: 'var(--paper-000)', display: 'grid', placeItems: 'center', fontSize: 22 }}>✓</div>
+      <h3 style={{ margin: '14px 0 4px', fontSize: 20, color: 'var(--ink-900)' }}>Quote request sent</h3>
+      <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-600)', lineHeight: 1.5 }}>
+        Reference <strong style={{ fontFamily: 'var(--font-mono)' }}>{number}</strong>. Here’s what happens next:
+      </p>
+      <ol style={{ margin: '14px 0 0', paddingLeft: 18, display: 'grid', gap: 6, fontSize: 14, color: 'var(--ink-700)' }}>
+        <li>We contact you at {email || 'the email you gave us'} to talk through your site.</li>
+        <li>We work out delivery, freight, install, and timing together.</li>
+        <li>You approve a formal quote, and we move forward.</li>
+      </ol>
+      <button type="button" onClick={onNew} style={{ ...btn('ghost'), marginTop: 16, width: '100%' }}>Start another quote</button>
     </div>
   );
 }
@@ -618,6 +827,50 @@ const PAGE_CSS = `
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-400); }
 .ps-photo-note { position: absolute; left: 10px; bottom: 10px; padding: 3px 7px; border-radius: 999px; background: var(--paper-100);
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
+.ps-card { transition: border-color .15s, box-shadow .15s, transform .15s; }
+.ps-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hard-sm); border-color: var(--ink-900); }
+.ps-card.is-in { border-color: var(--ink-400); box-shadow: inset 0 0 0 1px var(--ink-400); }
+.ps-stepper { display: inline-flex; align-items: center; border: 2px solid var(--ink-900); border-radius: var(--radius-2); background: var(--paper-000); }
+.ps-stepper input { width: 42px; border: none; background: transparent; text-align: center; font: 600 14px var(--font-mono); color: var(--ink-900); -moz-appearance: textfield; }
+.ps-stepper input::-webkit-inner-spin-button, .ps-stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.ps-stepper button:hover { background: var(--paper-100); }
+.ps-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; counter-reset: none; }
+.ps-steps li { display: flex; gap: 12px; align-items: flex-start; padding: 16px; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-2); }
+.ps-steps strong { font-size: 15px; color: var(--ink-900); line-height: 1.3; }
+.ps-steps p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-600); }
+.ps-step-n { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--ink-900); color: var(--paper-000); font: 700 13px var(--font-mono); }
+@media (max-width: 1000px) { .ps-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ps-planner { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: start;
+  background: var(--paper-000); border: 2px solid var(--ink-900); border-radius: var(--radius-2); padding: clamp(18px, 3vw, 28px); box-shadow: var(--shadow-hard); }
+.ps-plan-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ps-plan-tile { display: grid; gap: 3px; text-align: left; padding: 14px; border-radius: var(--radius-2); cursor: pointer;
+  border: 1px solid var(--border-hair); background: var(--paper-100); color: var(--ink-900); font-family: var(--font-body); transition: all .15s; }
+.ps-plan-tile strong { font-size: 15px; }
+.ps-plan-tile span { font-size: 12.5px; color: var(--ink-500); }
+.ps-plan-tile:hover { border-color: var(--ink-900); }
+.ps-plan-tile.is-active { background: var(--ink-900); border-color: var(--ink-900); color: var(--paper-000); }
+.ps-plan-tile.is-active span { color: var(--ink-200); }
+.ps-plan-preview { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 16px; }
+.ps-line.ps-line--buyer { grid-template-columns: minmax(0, 1fr) auto 96px 28px; }
+.ps-bump { display: inline-block; animation: ps-bump .45s ease; }
+@keyframes ps-bump { 0% { transform: scale(1); } 40% { transform: scale(1.6); } 100% { transform: scale(1); } }
+.ps-toast-wrap { position: fixed; left: 0; right: 0; bottom: 20px; display: flex; justify-content: center; pointer-events: none; z-index: 60; }
+.ps-toast { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--ink-900); color: var(--paper-000);
+  font-size: 14px; box-shadow: 0 8px 24px rgba(26,38,16,.25); animation: ps-toast-in .3s ease; max-width: calc(100vw - 32px); }
+@keyframes ps-toast-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.ps-dock { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; display: none; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 12px 10px 16px; border-radius: var(--radius-2); background: var(--ink-900); color: var(--paper-000); box-shadow: 0 10px 30px rgba(26,38,16,.3); }
+.ps-sent { position: relative; overflow: hidden; background: var(--paper-100); border: 2px solid var(--ink-900); border-radius: var(--radius-2); padding: 20px; }
+.ps-confetti span { position: absolute; top: -20px; left: calc(var(--i) * 8.3%); color: var(--ink-300); opacity: 0;
+  animation: ps-fall 1.8s ease-in calc(var(--i) * 0.07s) 1 both; }
+.ps-confetti span:nth-child(3n) { color: var(--ink-500); }
+@keyframes ps-fall { 0% { opacity: 0; transform: translateY(0) rotate(0); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(260px) rotate(200deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .ps-card, .ps-card:hover { transition: none; transform: none; }
+  .ps-bump, .ps-toast, .ps-confetti span { animation: none; }
+  .ps-confetti { display: none; }
+}
 .ps-builder { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; }
 .ps-panel { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
 .ps-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -630,7 +883,9 @@ const PAGE_CSS = `
 .ps-doc-label { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5E7C3A; margin-bottom: 5px; }
 .ps-doc-mono { font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
 @media (max-width: 860px) {
-  .ps-builder { grid-template-columns: 1fr; }
+  .ps-builder, .ps-planner { grid-template-columns: 1fr; }
+  .ps-dock { display: flex; }
+  .ps-toast-wrap { bottom: 84px; }
 }
 @media (max-width: 560px) {
   .ps-hide-sm { display: none; }
@@ -639,6 +894,8 @@ const PAGE_CSS = `
   .ps-line > :nth-child(4) { grid-column: 1 / 3; text-align: left !important; }
   .ps-line > :last-child { grid-column: 3; grid-row: 1; }
   .ps-two, .ps-three { grid-template-columns: 1fr; }
+  .ps-line.ps-line--buyer { grid-template-columns: 1fr 1fr 28px; }
+  .ps-steps { grid-template-columns: 1fr; }
 }
 @media print {
   @page {
