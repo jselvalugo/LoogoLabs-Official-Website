@@ -252,6 +252,7 @@ export default function ParkSupply() {
                       <div className="ps-photo">
                         <img src={p.image} alt={p.name} loading="lazy" decoding="async" />
                         <span className="ps-photo-sku">{p.sku}</span>
+                        {p.illustration && <span className="ps-photo-note">Illustration</span>}
                       </div>
                     ) : (
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
@@ -615,6 +616,8 @@ const PAGE_CSS = `
 .ps-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .ps-photo-sku { position: absolute; top: 10px; right: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(255,255,255,0.9);
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-400); }
+.ps-photo-note { position: absolute; left: 10px; bottom: 10px; padding: 3px 7px; border-radius: 999px; background: var(--paper-100);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
 .ps-builder { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; }
 .ps-panel { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
 .ps-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

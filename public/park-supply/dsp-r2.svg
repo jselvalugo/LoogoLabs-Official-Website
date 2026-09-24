@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><ellipse cx="200" cy="262" rx="90" ry="9" fill="#000" opacity=".07"/>
+<rect x="128" y="48" width="144" height="200" rx="10" fill="#9AA3AA"/><rect x="128" y="48" width="144" height="20" rx="10" fill="#66707A"/>
+<rect x="128" y="60" width="144" height="8" fill="#66707A"/>
+<circle cx="200" cy="84" r="5" fill="#66707A"/><circle cx="200" cy="84" r="2" fill="#27302A"/>
+<g transform="translate(200 130) scale(2.2)"><g fill="#2F6B3A"><ellipse cx="0" cy="0" rx="9" ry="5"/><circle cx="9" cy="-6" r="3.6"/><rect x="-8" y="2" width="2.4" height="7"/><rect x="5" y="2" width="2.4" height="7"/><path d="M-9 -2 l-4 -4" stroke="#2F6B3A" stroke-width="2" fill="none"/></g></g>
+<rect x="146" y="214" width="48" height="10" rx="5" fill="#27302A"/><rect x="206" y="214" width="48" height="10" rx="5" fill="#27302A"/>
+<path d="M156 224 q6 14 -2 22 h26 q-6 -10 0 -22z" fill="#2F6B3A" opacity=".85"/><path d="M216 224 q6 14 -2 22 h26 q-6 -10 0 -22z" fill="#2F6B3A" opacity=".85"/>
+</svg>
