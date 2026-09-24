@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><ellipse cx="205" cy="265" rx="120" ry="9" fill="#000" opacity=".07"/>
+<path d="M110 110 l80 -30 l100 20 l-80 30z" fill="#E2C99E"/><path d="M110 110 v130 l100 20 v-130z" fill="#C9A874"/><path d="M210 130 v130 l80 -30 v-130z" fill="#B08E5C"/>
+<text transform="translate(161 165) skewY(11)" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#27302A" text-anchor="middle">HEADER BAGS</text>
+<text transform="translate(161 179) skewY(11)" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#66707A" text-anchor="middle">2,000 ct · 8″ × 12″</text>
+<g transform="translate(252 150)"><rect x="-26" y="-6" width="46" height="70" rx="3" fill="#2F6B3A"/><rect x="-23" y="-3" width="46" height="70" rx="3" fill="#4A8F57"/><rect x="-20" y="0" width="46" height="70" rx="3" fill="#2F6B3A"/><rect x="-17" y="3" width="46" height="70" rx="3" fill="#4A8F57"/><rect x="-17" y="3" width="46" height="10" fill="#fff" opacity=".85"/><circle cx="-2" cy="8" r="2" fill="#27302A"/><circle cx="14" cy="8" r="2" fill="#27302A"/></g>
+</svg>
