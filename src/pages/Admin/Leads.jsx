@@ -9,6 +9,7 @@ function formatDate(iso) {
 const SOURCE_LABELS = {
   ai_receptionist: 'AI Receptionist',
   reputation_autopilot: 'Reputation Autopilot',
+  park_supply: 'Park Supply quote',
 };
 
 export default function Leads() {
@@ -53,7 +54,7 @@ export default function Leads() {
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 900 }}>
               <thead style={{ position: 'sticky', top: 0, background: 'var(--paper-100)', zIndex: 2 }}>
                 <tr style={{ borderBottom: '1px solid var(--border-hair)' }}>
-                  {['Full name', 'Email', 'Quiz', 'Business type', 'Volume/wk', 'Pain point', 'Decision maker', 'Submitted', ''].map((h, i) => (
+                  {['Full name', 'Email', 'Quiz', 'Business type', 'Volume/wk', 'Pain point', 'Decision maker', 'Details', 'Submitted', ''].map((h, i) => (
                     <th key={h || 'actions'} style={i === 0 ? thStickyStyle : thStyle}>{h}</th>
                   ))}
                 </tr>
@@ -68,6 +69,14 @@ export default function Leads() {
                     <td style={tdStyle}>{lead.missed_calls || lead.job_volume || '—'}</td>
                     <td style={tdStyle}>{lead.pain_point || lead.review_pain_point || '—'}</td>
                     <td style={tdStyle}>{lead.decision_maker || '—'}</td>
+                    <td style={tdStyle}>
+                      {lead.notes ? (
+                        <details>
+                          <summary style={{ cursor: 'pointer', fontSize: 12, color: 'var(--ink-600)' }}>View</summary>
+                          <pre style={{ margin: '8px 0 0', fontFamily: 'var(--font-mono)', fontSize: 11, whiteSpace: 'pre-wrap', maxWidth: 420 }}>{lead.notes}</pre>
+                        </details>
+                      ) : '—'}
+                    </td>
                     <td style={{ ...tdStyle, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>
                       {formatDate(lead.created_at)}
                     </td>

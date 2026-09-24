@@ -133,6 +133,18 @@ export const ROUTES = [
     changefreq: 'monthly',
   },
   {
+    // Unlisted: shared by direct link only — kept out of nav, sitemap, llms.txt
+    // and served noindex.
+    page: 'ParkSupply',
+    path: '/park-supply',
+    title: `Park Supply — Pet Waste Stations & Dog Park Amenities | ${SITE.name}`,
+    description:
+      'Commercial pet waste stations, bags, signage, and dog park amenities for parks, HOAs, and developers. Build a line-item proposal and request a quote.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     page: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,
