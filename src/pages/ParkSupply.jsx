@@ -1,12 +1,11 @@
 import React from 'react';
-import { CATEGORIES, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS } from '../lib/parkSupply';
+import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS } from '../lib/parkSupply';
 import { SITE } from '../lib/seo';
 
 // Unlisted: reachable only by direct link. It is kept out of the nav, footer,
 // sitemap and llms.txt (see `unlisted` in lib/seo.js) and served noindex.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const STORAGE_KEY = 'll-park-supply-draft';
 
 const usd = (n) => Number(n || 0).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 const num = (v) => { const n = parseFloat(v); return Number.isFinite(n) && n >= 0 ? n : 0; };
@@ -149,10 +148,12 @@ export default function ParkSupply() {
     setSubmitState({ status: 'idle', error: '' });
   };
 
-  const printProposal = () => {
+  const printProposal = async () => {
+    // Print only once the brand fonts are in, or the PDF falls back to Arial.
+    try { await document.fonts?.ready; } catch { /* print anyway */ }
     const prev = document.title;
     // The browser uses the document title as the default PDF filename.
-    document.title = `${draft.number}${draft.client.organization ? ` — ${draft.client.organization}` : ''}`;
+    document.title = `${SITE.name} Proposal ${draft.number}${draft.client.organization ? ` — ${draft.client.organization}` : ''}`;
     window.print();
     document.title = prev;
   };
@@ -165,17 +166,19 @@ export default function ParkSupply() {
     }
     setSubmitState({ status: 'sending', error: '' });
     try {
-      const res = await fetch('/.netlify/functions/create-lead', {
+      const res = await fetch('/.netlify/functions/create-proposal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          full_name: contact.trim(),
+          number: draft.number,
+          ...draft.client,
+          contact: contact.trim(),
           email: email.trim(),
-          source: 'park_supply',
-          business_type: draft.client.organization || null,
-          pain_point: draft.client.project || null,
-          job_volume: usd(totals.total),
-          notes: proposalSummary(draft, totals),
+          scope: draft.scope,
+          lines: draft.lines.map((l) => ({ sku: l.sku, qty: num(l.qty), price: num(l.price) })),
+          discount_pct: num(draft.discountPct),
+          shipping: num(draft.shipping),
+          tax_pct: num(draft.taxPct),
         }),
       });
       if (!res.ok) throw new Error();
@@ -404,129 +407,189 @@ function TotalRow({ label, value, strong }) {
 
 /* ─────────────────────── printable proposal ─────────────────────── */
 
+// Brand palette as literal hex: print output should not depend on CSS variables
+// resolving, and these match the site tokens in styles/globals.css.
+const B = {
+  ink900: '#1A2610', ink700: '#263517', ink500: '#415A27', ink400: '#5E7C3A', ink200: '#B0C492',
+  paper: '#FFFFFF', paper000: '#F5F2EB', paper100: '#EAE6DC', paper200: '#D8D3C6',
+};
+
 function ProposalDocument({ draft, totals }) {
   const today = new Date();
   const validUntil = new Date(today.getTime() + PROPOSAL_VALID_DAYS * 86400000);
   const fmt = (d) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   const c = draft.client;
+  // Running footer on every printed page, via CSS page-margin boxes.
+  const footerCss = `@media print { @page { @bottom-left { content: ${JSON.stringify(`${SITE.name}  ·  Proposal ${draft.number}`)}; } } }`;
 
   return (
     <div className="ps-doc" aria-hidden>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #1A2610', paddingBottom: 14 }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src="/logo.png" alt="" style={{ height: 36 }} />
-            <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em' }}>{SITE.name}</span>
+      <style>{footerCss}</style>
+
+      {/* ── Masthead ── */}
+      <header style={{ background: B.ink900, color: B.paper000, borderRadius: 8, padding: '22px 26px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{ background: B.paper000, borderRadius: 6, padding: 6, display: 'flex' }}>
+            <img src="/logo.png" alt="" style={{ height: 46, width: 46, display: 'block' }} />
           </div>
-          <div style={{ fontSize: 11, marginTop: 6 }}>{SITE.founder} · {SITE.email} · loogolabs.com</div>
+          <div>
+            <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>{SITE.name}</div>
+            <div className="ps-doc-mono" style={{ color: B.ink200, marginTop: 7 }}>Park Supply · Pet waste stations & dog park amenities</div>
+          </div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em' }}>Proposal</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11 }}>{draft.number}</div>
-          <div style={{ fontSize: 11 }}>Issued {fmt(today)}</div>
-          <div style={{ fontSize: 11 }}>Valid until {fmt(validUntil)}</div>
+          <div className="ps-doc-mono" style={{ color: B.ink200 }}>Proposal</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 15, fontWeight: 600, marginTop: 4, letterSpacing: '0.02em' }}>{draft.number}</div>
+          <div style={{ fontSize: 10.5, marginTop: 6, color: B.paper200 }}>Issued {fmt(today)}</div>
+          <div style={{ fontSize: 10.5, color: B.paper200 }}>Valid until {fmt(validUntil)}</div>
         </div>
-      </div>
+      </header>
 
-      <div style={{ display: 'flex', gap: 40, margin: '18px 0' }}>
-        <div style={{ flex: 1 }}>
-          <div className="ps-doc-label">Prepared for</div>
+      {/* ── Parties ── */}
+      <section style={{ display: 'grid', gridTemplateColumns: (c.project || c.location) ? '1fr 1fr 1fr' : '1fr 1fr', gap: 10, marginTop: 14 }}>
+        <DocCard label="Prepared for">
           {c.organization && <div style={{ fontWeight: 700 }}>{c.organization}</div>}
           {c.contact && <div>Attn: {c.contact}</div>}
           {c.email && <div>{c.email}</div>}
           {c.phone && <div>{c.phone}</div>}
-        </div>
-        {(c.project || c.location) && <div style={{ flex: 1 }}>
-          <div className="ps-doc-label">Project</div>
-          {c.project && <div style={{ fontWeight: 700 }}>{c.project}</div>}
-          {c.location && <div>{c.location}</div>}
-        </div>}
-      </div>
+          {!c.organization && !c.contact && <div style={{ color: B.ink400 }}>—</div>}
+        </DocCard>
+        {(c.project || c.location) && (
+          <DocCard label="Project">
+            {c.project && <div style={{ fontWeight: 700 }}>{c.project}</div>}
+            {c.location && <div>{c.location}</div>}
+          </DocCard>
+        )}
+        <DocCard label="Prepared by">
+          <div style={{ fontWeight: 700 }}>{SITE.name}</div>
+          <div>{SITE.founder}, Founder</div>
+          <div>{SITE.email}</div>
+          <div>loogolabs.com</div>
+        </DocCard>
+      </section>
 
       {draft.scope && (
-        <div style={{ margin: '0 0 18px' }}>
-          <div className="ps-doc-label">Scope</div>
-          <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{draft.scope}</p>
-        </div>
+        <section style={{ marginTop: 14, borderLeft: `3px solid ${B.ink900}`, padding: '2px 0 2px 14px' }}>
+          <div className="ps-doc-label">Scope of work</div>
+          <p style={{ margin: 0, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{draft.scope}</p>
+        </section>
       )}
 
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+      {/* ── Line items ── */}
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11.5, marginTop: 18 }}>
         <thead>
           <tr>
-            {['SKU', 'Description', 'Qty', 'Unit price', 'Amount'].map((h, i) => (
-              <th key={h} style={{ textAlign: i >= 2 ? 'right' : 'left', borderBottom: '1px solid #1A2610', padding: '6px 4px', whiteSpace: 'nowrap', fontFamily: 'var(--font-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{h}</th>
+            {['#', 'Item', 'Qty', 'Unit price', 'Amount'].map((h, i) => (
+              <th key={h} className="ps-doc-mono" style={{
+                textAlign: i >= 2 ? 'right' : 'left', background: B.ink900, color: B.paper000, padding: '8px 10px', whiteSpace: 'nowrap',
+              }}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {draft.lines.map((l) => {
+          {draft.lines.map((l, i) => {
             const p = PRODUCTS_BY_SKU.get(l.sku);
+            const bg = i % 2 ? B.paper000 : B.paper;
             return (
               <tr key={l.sku} style={{ breakInside: 'avoid' }}>
-                <td style={{ ...docTd, whiteSpace: 'nowrap' }}>{p.sku}</td>
-                <td style={docTd}><strong>{p.name}</strong><div style={{ color: '#415A27' }}>{p.specs.join(' · ')}</div></td>
-                <td style={{ ...docTd, textAlign: 'right', whiteSpace: 'nowrap' }}>{num(l.qty)} <span style={{ color: '#5E7C3A' }}>{p.unit}</span></td>
-                <td style={{ ...docTd, textAlign: 'right' }}>{usd(l.price)}</td>
-                <td style={{ ...docTd, textAlign: 'right' }}>{usd(num(l.qty) * num(l.price))}</td>
+                <td style={{ ...docTd, background: bg, color: B.ink400, fontFamily: 'var(--font-mono)', width: 22 }}>{String(i + 1).padStart(2, '0')}</td>
+                <td style={{ ...docTd, background: bg }}>
+                  <div>
+                    <span style={{ fontWeight: 700 }}>{p.name}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: B.ink400, marginLeft: 8, letterSpacing: '0.04em' }}>{p.sku}</span>
+                  </div>
+                  <div style={{ color: B.ink500, fontSize: 10.5, marginTop: 2, lineHeight: 1.4 }}>{p.specs.join(' · ')}</div>
+                </td>
+                <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap' }}>{num(l.qty)} <span style={{ color: B.ink400 }}>{p.unit}</span></td>
+                <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap' }}>{usd(l.price)}</td>
+                <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap', fontWeight: 700 }}>{usd(num(l.qty) * num(l.price))}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
 
-      <table style={{ marginLeft: 'auto', marginTop: 12, fontSize: 12, minWidth: 260 }}>
-        <tbody>
-          <tr><td style={docSumTd}>Subtotal</td><td style={docSumVal}>{usd(totals.subtotal)}</td></tr>
-          {totals.discount > 0 && <tr><td style={docSumTd}>Discount ({num(draft.discountPct)}%)</td><td style={docSumVal}>−{usd(totals.discount)}</td></tr>}
-          {totals.shipping > 0 && <tr><td style={docSumTd}>Freight</td><td style={docSumVal}>{usd(totals.shipping)}</td></tr>}
-          {totals.tax > 0 && <tr><td style={docSumTd}>Tax ({num(draft.taxPct)}%)</td><td style={docSumVal}>{usd(totals.tax)}</td></tr>}
-          <tr><td style={{ ...docSumTd, fontWeight: 800, fontSize: 15, borderTop: '2px solid #1A2610' }}>Total</td>
-            <td style={{ ...docSumVal, fontWeight: 800, fontSize: 15, borderTop: '2px solid #1A2610' }}>{usd(totals.total)}</td></tr>
-        </tbody>
-      </table>
-
-      <div style={{ marginTop: 28, fontSize: 11, lineHeight: 1.5, color: '#263517', breakInside: 'avoid' }}>
-        <div className="ps-doc-label">Terms</div>
-        <p style={{ margin: 0 }}>
-          Pricing valid for {PROPOSAL_VALID_DAYS} days from issue. Freight and installation are estimates until confirmed at order.
-          Standard lead time 2–4 weeks from purchase order; amenities and custom signage may take longer. Purchase orders and
-          tax-exemption certificates accepted. Net 30 for approved public agencies.
-        </p>
-        <div style={{ display: 'flex', gap: 40, marginTop: 36 }}>
-          <div style={{ flex: 1, borderTop: '1px solid #1A2610', paddingTop: 4 }}>Accepted by (name, title)</div>
-          <div style={{ width: 160, borderTop: '1px solid #1A2610', paddingTop: 4 }}>Date</div>
+      {/* ── Terms & next steps beside the totals ── */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1fr 290px', gap: 22, marginTop: 14, alignItems: 'start', breakInside: 'avoid' }}>
+        <div style={{ display: 'grid', gap: 12, fontSize: 10.5, lineHeight: 1.5, color: B.ink700 }}>
+          <div>
+            <div className="ps-doc-label">Terms</div>
+            <p style={{ margin: 0 }}>
+              Pricing valid for {PROPOSAL_VALID_DAYS} days from issue. Freight and installation are estimates until confirmed at order.
+              Standard lead time 2–4 weeks from purchase order; amenities and custom signage may take longer. Purchase orders and
+              tax-exemption certificates accepted. Net 30 for approved public agencies.
+            </p>
+          </div>
+          <div>
+            <div className="ps-doc-label">Next steps</div>
+            <ol style={{ margin: 0, paddingLeft: 16 }}>
+              <li>Sign and return this proposal.</li>
+              <li>Send a purchase order and, if applicable, your tax-exemption certificate.</li>
+              <li>We confirm freight, schedule delivery, and coordinate installation.</li>
+            </ol>
+          </div>
         </div>
-      </div>
+        <div style={{ background: B.paper000, borderRadius: 8, overflow: 'hidden', border: `1px solid ${B.paper200}` }}>
+          <div style={{ padding: '10px 14px', display: 'grid', gap: 5 }}>
+            <DocSum label="Subtotal" value={usd(totals.subtotal)} />
+            {totals.discount > 0 && <DocSum label={`Discount (${num(draft.discountPct)}%)`} value={`−${usd(totals.discount)}`} />}
+            {totals.shipping > 0 && <DocSum label="Freight" value={usd(totals.shipping)} />}
+            {totals.tax > 0 && <DocSum label={`Tax (${num(draft.taxPct)}%)`} value={usd(totals.tax)} />}
+          </div>
+          <div style={{ background: B.ink900, color: B.paper000, padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+            <span className="ps-doc-mono" style={{ color: B.ink200 }}>Total (USD)</span>
+            <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em' }}>{usd(totals.total)}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Signatures ── */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, marginTop: 22, fontSize: 10.5, color: B.ink700, breakInside: 'avoid' }}>
+        {[
+          { who: `For ${SITE.name}`, name: `${SITE.founder}, Founder` },
+          { who: `Accepted for ${c.organization || 'client'}`, name: 'Name, title' },
+        ].map((s) => (
+          <div key={s.who}>
+            <div className="ps-doc-label">{s.who}</div>
+            <div style={{ height: 28 }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 90px', gap: 12 }}>
+              <div style={{ borderTop: `1px solid ${B.ink900}`, paddingTop: 4 }}>{s.name}</div>
+              <div style={{ borderTop: `1px solid ${B.ink900}`, paddingTop: 4 }}>Date</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* ── Sign-off ── */}
+      <footer style={{ marginTop: 20, paddingTop: 12, borderTop: `2px solid ${B.ink900}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, breakInside: 'avoid' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <img src="/logo.png" alt="" style={{ height: 26, width: 26 }} />
+          <span style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Thank you for considering {SITE.name}.</span>
+        </div>
+        <span className="ps-doc-mono" style={{ color: B.ink400 }}>{SITE.email} · loogolabs.com</span>
+      </footer>
     </div>
   );
 }
 
-const docTd = { borderBottom: '1px solid #D8D3C6', padding: '7px 4px', verticalAlign: 'top' };
-const docSumTd = { padding: '3px 12px 3px 0' };
-const docSumVal = { padding: '3px 0', textAlign: 'right' };
-
-/** Plain-text copy of the proposal, stored on the lead so it is readable in the admin. */
-function proposalSummary(draft, totals) {
-  const c = draft.client;
-  const lines = draft.lines.map((l) => {
-    const p = PRODUCTS_BY_SKU.get(l.sku);
-    return `${num(l.qty)} × ${p.sku} ${p.name} @ ${usd(l.price)} = ${usd(num(l.qty) * num(l.price))}`;
-  });
-  return [
-    `Proposal ${draft.number}`,
-    [c.organization, c.project, c.location].filter(Boolean).join(' — '),
-    c.phone ? `Phone: ${c.phone}` : '',
-    '',
-    ...lines,
-    '',
-    `Subtotal ${usd(totals.subtotal)}` +
-      (totals.discount ? ` · Discount −${usd(totals.discount)}` : '') +
-      (totals.shipping ? ` · Freight ${usd(totals.shipping)}` : '') +
-      (totals.tax ? ` · Tax ${usd(totals.tax)}` : '') +
-      ` · Total ${usd(totals.total)}`,
-    draft.scope ? `\nScope: ${draft.scope}` : '',
-  ].filter((s, i, a) => s !== '' || a[i - 1] !== '').join('\n').trim();
+function DocCard({ label, children }) {
+  return (
+    <div style={{ background: B.paper000, border: `1px solid ${B.paper200}`, borderRadius: 8, padding: '11px 13px', lineHeight: 1.5 }}>
+      <div className="ps-doc-label">{label}</div>
+      {children}
+    </div>
+  );
 }
+
+function DocSum({ label, value }) {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 11.5 }}>
+      <span style={{ color: B.ink500 }}>{label}</span><span>{value}</span>
+    </div>
+  );
+}
+
+const docTd = { borderBottom: `1px solid ${B.paper200}`, padding: '7px 10px', verticalAlign: 'top' };
 
 const PAGE_CSS = `
 .ps-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; scrollbar-width: thin; }
@@ -544,7 +607,8 @@ const PAGE_CSS = `
 .ps-line-field { display: grid; gap: 3px; }
 .ps-line-field span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
 .ps-doc { display: none; }
-.ps-doc-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #5E7C3A; margin-bottom: 4px; }
+.ps-doc-label { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5E7C3A; margin-bottom: 5px; }
+.ps-doc-mono { font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
 @media (max-width: 860px) {
   .ps-builder { grid-template-columns: 1fr; }
 }
@@ -557,11 +621,17 @@ const PAGE_CSS = `
   .ps-two, .ps-three { grid-template-columns: 1fr; }
 }
 @media print {
-  @page { margin: 16mm; }
+  @page {
+    margin: 12mm 12mm 16mm;
+    @bottom-left { font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: 0.1em; color: #5E7C3A; }
+    @bottom-right { content: "loogolabs.com  ·  Page " counter(page) " of " counter(pages); font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: 0.1em; color: #5E7C3A; }
+  }
   body { background: #fff !important; }
   body * { visibility: hidden; }
   .ps-screen { display: none; }
   .ps-doc, .ps-doc * { visibility: visible; }
   .ps-doc { display: block; position: absolute; left: 0; top: 0; width: 100%; color: #1A2610; font-family: var(--font-body); font-size: 12px; }
+  /* Keep brand fills even when "Background graphics" is off in the print dialog. */
+  .ps-doc, .ps-doc * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 `;

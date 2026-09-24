@@ -1,4 +1,4 @@
-import { pgTable, uuid, timestamp, text, integer } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, timestamp, text, integer, jsonb, numeric } from 'drizzle-orm/pg-core';
 
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -48,4 +48,32 @@ export const posts = pgTable('posts', {
   author: text('author').default('Loogo Labs'),
   read_time: integer('read_time').default(5),
   published_at: timestamp('published_at'),
+});
+
+// Park Supply proposal submissions — see the create_proposals migration.
+export const proposals = pgTable('proposals', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+  number: text('number').notNull(),
+  organization: text('organization'),
+  contact: text('contact').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone'),
+  project: text('project'),
+  location: text('location'),
+  scope: text('scope').default(''),
+  // [{ sku, name, unit, qty, price, list_price }]
+  lines: jsonb('lines').notNull().default([]),
+  discount_pct: numeric('discount_pct').default('0'),
+  shipping: numeric('shipping').default('0'),
+  tax_pct: numeric('tax_pct').default('0'),
+  subtotal: numeric('subtotal').default('0'),
+  total: numeric('total').default('0'),
+  // new → reviewing → sent → won | lost
+  status: text('status').default('new'),
+  admin_notes: text('admin_notes').default(''),
+  city: text('city'),
+  region: text('region'),
+  country: text('country'),
 });
