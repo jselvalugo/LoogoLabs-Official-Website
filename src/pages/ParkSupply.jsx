@@ -202,7 +202,7 @@ export default function ParkSupply() {
                 style={{ display: 'flex', flexShrink: 0, background: 'var(--paper-000)', padding: 4, borderRadius: 'var(--radius-1)' }}>
                 <img src="/logo.png" alt="Loogo Labs" width="28" height="28" style={{ height: 28, width: 28, display: 'block' }} />
               </a>
-              <span style={{ color: 'var(--paper-000)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
+              <img src="/wordmark-light.png" alt="Loogo Labs" width="100" height="22" style={{ height: 22, width: 'auto', display: 'block', flexShrink: 0 }} />
               <span className="ps-hide-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>/ Park Supply</span>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
