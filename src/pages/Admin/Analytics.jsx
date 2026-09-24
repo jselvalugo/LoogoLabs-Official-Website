@@ -20,6 +20,26 @@ function locationLabel(row) {
   return parts.length ? parts.join(', ') : null;
 }
 
+// "1m 05s" / "42s" / "1h 03m" — engaged time reads better than raw seconds.
+function formatDuration(sec) {
+  const s = Math.round(Number(sec) || 0);
+  if (s < 60) return `${s}s`;
+  if (s < 3600) return `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, '0')}s`;
+  return `${Math.floor(s / 3600)}h ${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}m`;
+}
+
+const median = (nums) => {
+  if (!nums.length) return 0;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
+const DURATION_BUCKETS = [
+  ['Under 10s', 0, 10], ['10–30s', 10, 30], ['30s–1m', 30, 60],
+  ['1–3m', 60, 180], ['3–10m', 180, 600], ['10m+', 600, Infinity],
+];
+
 function topLocations(rows, limit = 8) {
   const counts = {};
   rows.forEach(r => {
@@ -33,6 +53,7 @@ export default function Analytics() {
   const [posts, setPosts] = React.useState(null);
   const [leads, setLeads] = React.useState(null);
   const [postViews, setPostViews] = React.useState(null);
+  const [sessions, setSessions] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -40,8 +61,10 @@ export default function Analytics() {
       apiFetch('/.netlify/functions/get-posts').then(r => r?.json()),
       apiFetch('/.netlify/functions/get-leads').then(r => r?.json()),
       apiFetch('/.netlify/functions/get-post-views').then(r => r?.json()),
+      apiFetch('/.netlify/functions/get-sessions').then(r => r?.json()).catch(() => null),
     ])
-      .then(([postsData, leadsData, viewsData]) => {
+      .then(([postsData, leadsData, viewsData, sessionsData]) => {
+        if (Array.isArray(sessionsData)) setSessions(sessionsData);
         if (Array.isArray(postsData)) setPosts(postsData);
         if (Array.isArray(leadsData)) setLeads(leadsData);
         if (Array.isArray(viewsData)) setPostViews(viewsData);
@@ -143,6 +166,49 @@ export default function Analytics() {
   });
   const maxLeadsCadence = Math.max(1, ...leadsCadence.map(c => c.count));
 
+  // ── Visitors & engagement (last 30 days) ──
+  const DAY = 24 * 60 * 60 * 1000;
+  const sessionRows = (sessions || []).map(x => ({ ...x, secs: Number(x.active_seconds) || 0, t: new Date(x.started_at).getTime() }));
+  const last30 = sessionRows.filter(x => now - x.t < 30 * DAY);
+  const prev30 = sessionRows.filter(x => now - x.t >= 30 * DAY && now - x.t < 60 * DAY);
+  const avgOf = rows => (rows.length ? rows.reduce((sum, x) => sum + x.secs, 0) / rows.length : 0);
+  const avgSession = avgOf(last30);
+  const prevAvgSession = avgOf(prev30);
+  const avgChange = prev30.length && prevAvgSession ? Math.round(((avgSession - prevAvgSession) / prevAvgSession) * 100) : null;
+  const medianSession = median(last30.map(x => x.secs));
+  const pagesPerSession = last30.length ? (last30.reduce((sum, x) => sum + (Number(x.page_count) || 1), 0) / last30.length).toFixed(1) : '0';
+
+  const durationBuckets = DURATION_BUCKETS.map(([label, lo, hi]) => ({ label, count: last30.filter(x => x.secs >= lo && x.secs < hi).length }));
+  const maxBucket = Math.max(1, ...durationBuckets.map(b => b.count));
+
+  const dailyEngagement = Array.from({ length: 14 }, (_, i) => {
+    const day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (13 - i));
+    const next = day.getTime() + DAY;
+    const rows = sessionRows.filter(x => x.t >= day.getTime() && x.t < next);
+    return { label: day.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), avg: avgOf(rows), count: rows.length };
+  });
+  const maxDaily = Math.max(1, ...dailyEngagement.map(d => d.avg));
+
+  const pageTime = {};
+  last30.forEach(x => Object.entries(x.paths || {}).forEach(([path, sec]) => {
+    const e = pageTime[path] || (pageTime[path] = { total: 0, sessions: 0 });
+    e.total += Number(sec) || 0;
+    e.sessions += 1;
+  }));
+  const timeOnPage = Object.entries(pageTime)
+    .map(([path, e]) => ({ path, avg: e.total / e.sessions, sessions: e.sessions }))
+    .sort((a, b) => b.sessions - a.sessions).slice(0, 8);
+  const maxTimeOnPage = Math.max(1, ...timeOnPage.map(p => p.avg));
+
+  const countBy = (rows, key) => {
+    const counts = {};
+    rows.forEach(x => { const k = key(x); counts[k] = (counts[k] || 0) + 1; });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  };
+  const landingPages = countBy(last30, x => x.landing_path || '/');
+  const sources = countBy(last30, x => x.referrer || 'Direct / none');
+  const devices = countBy(last30, x => (x.device ? x.device[0].toUpperCase() + x.device.slice(1) : 'Unknown'));
+
   // ── Geography ──
   const readerLocations = topLocations(viewRows);
   const maxReaderLocation = readerLocations[0]?.[1] || 1;
@@ -152,6 +218,80 @@ export default function Analytics() {
   return (
     <div style={{ padding: '28px 32px 56px', overflowY: 'auto', flex: 1 }} className="ll-admin-content">
       <h1 style={{ margin: '0 0 24px', fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Analytics</h1>
+
+      {/* ── VISITORS & ENGAGEMENT ── */}
+      <h2 style={{ margin: '0 0 8px', fontSize: 'var(--fs-h2)', fontWeight: 700, letterSpacing: 'var(--ls-h2)' }}>Visitors &amp; engagement</h2>
+      <p style={{ margin: '0 0 20px', fontSize: 12, color: 'var(--ink-400)', maxWidth: '70ch' }}>
+        Last 30 days. Session length is engaged time: the tab is visible and the visitor was active in the last minute.
+        Only visitors who accepted Analytics cookies are counted, so treat totals as a sample.
+      </p>
+
+      <div className="ll-grid-4" style={{ gap: 12, marginBottom: 20 }}>
+        <StatCard label="Sessions" value={last30.length} />
+        <StatCard label="Avg session" value={formatDuration(avgSession)} accent
+          sub={avgChange === null ? null : `${avgChange >= 0 ? '▲' : '▼'} ${Math.abs(avgChange)}% vs prior 30 days`} />
+        <StatCard label="Median session" value={formatDuration(medianSession)} />
+        <StatCard label="Pages / session" value={pagesPerSession} />
+      </div>
+
+      <div className="ll-grid-2" style={{ gap: 20, marginBottom: 20 }}>
+        <Panel title="Session length">
+          {last30.length === 0 ? <Empty text="No sessions recorded yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {durationBuckets.map(b => <BarRow key={b.label} label={b.label} value={b.count} max={maxBucket} />)}
+            </div>
+          )}
+        </Panel>
+        <Panel title="Avg session by day (last 14 days)">
+          {sessionRows.length === 0 ? <Empty text="No sessions recorded yet." /> : (
+            <div style={{ display: 'grid', gap: 10 }}>
+              {dailyEngagement.map(d => (
+                <BarRow key={d.label} label={d.label} value={d.avg} max={maxDaily}
+                  display={d.count ? `${formatDuration(d.avg)} · ${d.count} session${d.count === 1 ? '' : 's'}` : '—'} />
+              ))}
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      <div className="ll-grid-2" style={{ gap: 20, marginBottom: 20 }}>
+        <Panel title="Avg time on page (most visited)">
+          {timeOnPage.length === 0 ? <Empty text="No page data yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {timeOnPage.map(p => (
+                <BarRow key={p.path} label={p.path} value={p.avg} max={maxTimeOnPage}
+                  display={`${formatDuration(p.avg)} · ${p.sessions} session${p.sessions === 1 ? '' : 's'}`} />
+              ))}
+            </div>
+          )}
+        </Panel>
+        <Panel title="Top landing pages">
+          {landingPages.length === 0 ? <Empty text="No sessions recorded yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {landingPages.map(([path, n]) => <BarRow key={path} label={path} value={n} max={landingPages[0][1]} />)}
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      <div className="ll-grid-2" style={{ gap: 20, marginBottom: 48 }}>
+        <Panel title="Traffic sources">
+          {sources.length === 0 ? <Empty text="No sessions recorded yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {sources.map(([src, n]) => <BarRow key={src} label={src} value={n} max={sources[0][1]} />)}
+            </div>
+          )}
+        </Panel>
+        <Panel title="Devices">
+          {devices.length === 0 ? <Empty text="No sessions recorded yet." /> : (
+            <div style={{ display: 'grid', gap: 12 }}>
+              {devices.map(([d, n]) => <BarRow key={d} label={d} value={n} max={devices[0][1]} />)}
+            </div>
+          )}
+        </Panel>
+      </div>
+
+      <h2 style={{ margin: '0 0 20px', fontSize: 'var(--fs-h2)', fontWeight: 700, letterSpacing: 'var(--ls-h2)' }}>Content</h2>
 
       {/* ── TOP-LEVEL STATS ── */}
       <div className="ll-grid-4" style={{ gap: 12, marginBottom: 32 }}>
@@ -359,11 +499,12 @@ export default function Analytics() {
   );
 }
 
-function StatCard({ label, value, accent }) {
+function StatCard({ label, value, accent, sub }) {
   return (
     <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '16px 18px' }}>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</div>
       <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 6, color: accent ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{value}</div>
+      {sub && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginTop: 4 }}>{sub}</div>}
     </div>
   );
 }
@@ -377,12 +518,12 @@ function Panel({ title, children }) {
   );
 }
 
-function BarRow({ label, value, max }) {
+function BarRow({ label, value, max, display }) {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, gap: 12 }}>
         <span style={{ fontSize: 13, color: 'var(--ink-700)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{label}</span>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)', flexShrink: 0 }}>{value}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)', flexShrink: 0 }}>{display ?? value}</span>
       </div>
       <div style={{ height: 4, background: 'var(--paper-200)', borderRadius: 2 }}>
         <div style={{ height: '100%', width: `${(value / max) * 100}%`, background: 'var(--ink-700)', borderRadius: 2 }} />
