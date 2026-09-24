@@ -209,3 +209,29 @@ export const PROPOSAL_VALID_DAYS = 30;
 // localStorage key for the builder's draft. The admin's "Open in builder" writes
 // a submission here so it can be edited and printed as a proposal.
 export const DRAFT_STORAGE_KEY = 'll-park-supply-draft';
+
+// Quick-start planner on /park-supply. Each site type turns "how many spots
+// need a station" into a starter quote; buyers can adjust every line after.
+const half = (n) => Math.max(1, Math.ceil(n / 2));
+export const SITE_PLANS = [
+  {
+    id: 'dogpark', label: 'Dog park', blurb: 'Off-leash areas and fenced runs',
+    countLabel: 'Entrances and gates',
+    lines: (n) => [['PWS-200', n], ['SGN-RULES', 1], ['AMN-FOUNT', 1], ['AMN-BENCH', 2], ['BAG-R2000', half(n)], ['SVC-INSTALL', n]],
+  },
+  {
+    id: 'trail', label: 'Trail or greenway', blurb: 'Trailheads, loops, and waterfronts',
+    countLabel: 'Trailheads and access points',
+    lines: (n) => [['PWS-100', n], ['BAG-R2000', half(n)], ['LNR-10', 1], ['SVC-INSTALL', n]],
+  },
+  {
+    id: 'hoa', label: 'HOA or apartments', blurb: 'Communities and property managers',
+    countLabel: 'Walking routes and common areas',
+    lines: (n) => [['PWS-100', n], ['SGN-CUSTOM', n], ['BAG-R2000', half(n)], ['SVC-ANNUAL', n]],
+  },
+  {
+    id: 'citypark', label: 'City park', blurb: 'Neighborhood and regional parks',
+    countLabel: 'Entrances, paths, and play areas',
+    lines: (n) => [['PWS-100', n], ['RCP-20', n], ['BAG-R2000', half(n)], ['SVC-INSTALL', n]],
+  },
+];
