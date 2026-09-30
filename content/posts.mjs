@@ -1972,4 +1972,200 @@ Pull last year's inquiries, tag each one with the requested event date rather th
 
 If the shoulder weeks come back looking as soft as they do for most operations, you have found next year's revenue without adding a single lead. If they come back full, then you genuinely do have a lead problem, and at least now you know which one you are solving.`,
   },
+  {
+    slug: `dog-grooming-cancellation-waitlist`,
+    title: `The Cancelled Tuesday Slot Is Not Lost Until Noon`,
+    excerpt: `A same-day cancellation only becomes an empty table if nobody on the waitlist hears about it before the window closes.`,
+    tags: `Online Booking, Waitlists, Pet Grooming`,
+    content: `Nine o'clock on a Tuesday, a groomer gets a text that the doodle booked for eleven has a stomach bug. That ninety-minute slot is now worth zero dollars, and it will stay worth zero unless somebody fills it in the next hour or so.
+
+Most shops handle that moment the same way. The front desk scrolls through a notebook or a sticky-note list of people who asked to be squeezed in, calls two of them, gets voicemail twice, and goes back to checking in the dogs who actually showed up. By ten-thirty the slot is gone for good.
+
+## A waitlist that lives in someone's head is not a waitlist
+
+Almost every grooming shop I talk to has one. It is usually a list of names without dates, without the size of the dog, and without any note of when each person could actually come in on short notice.
+
+That last piece is what matters. A same-day opening is only useful to the handful of clients who can drop a dog off within two hours. A list that cannot sort for those people forces the desk to call everyone, which means in practice they call nobody.
+
+## Short notice changes who the right client is
+
+Here is the part owners underrate. The client who books three weeks out and the client who grabs a same-day slot are often different people. Retirees, people who work from home, the regular whose dog is overdue and a little matted. Once you start filling cancellations deliberately, you learn who those people are, and the list gets better every month.
+
+It also changes what you ask when someone joins the waitlist. Not just a name and a phone number, but the breed or coat size, which days they can do, and how much notice they need. Four fields. That is enough to match a ninety-minute doodle slot to a ninety-minute dog.
+
+## What the system should do, and what it shouldn't
+
+The part worth automating is the broadcast. When a slot opens, a text goes out to the waitlist clients who fit it: same size of job, available that day, short notice is fine. First reply that says yes gets it. Everyone else gets a quick follow-up that it has been taken, so nobody drives over for a slot that no longer exists.
+
+The part I would keep human is the judgment call. If the opening is at eleven and the first yes is a dog with a behavior note on file, a groomer needs to look at that before it is confirmed. The system can hold the slot for fifteen minutes while someone checks. It should not make that call alone.
+
+## Count the empty slots before you fix anything
+
+For two weeks, write down every same-day cancellation and whether it got refilled. No software required, just a tally by the register.
+
+If you are refilling most of them already, your waitlist works and you can leave it alone. If the tally shows six or eight empty slots a week, multiply that by your average ticket. That number is what a fifteen-minute setup is competing against, and in my experience it is rarely a small one.`,
+  },
+  {
+    slug: `optometry-annual-recall-sequence`,
+    title: `Your Recall List Is Your Best Marketing Channel, and It Runs on a Postcard`,
+    excerpt: `An optometry practice already knows who is due for an exam next month; the question is whether anyone reaches them before a retail chain does.`,
+    tags: `Patient Recall, Optometry, Automated Follow-Up`,
+    content: `What does it cost to get a patient who already chose you once to come back for the exam they need anyway?
+
+For a lot of independent eye care practices, the honest answer is a postcard, a stamp, and hope. The recall list is sitting in the practice software, sorted by due date, and it gets worked in batches whenever the front desk has an afternoon free. That is the most valuable list in the building, and it is being handled like a chore.
+
+## The competitor is not the practice down the street
+
+When a patient is due for their annual exam and nobody reaches them, they do not usually switch to another independent optometrist. They walk into a big-box optical department while buying groceries, because the sign said walk-ins welcome and they remembered their contacts are running low.
+
+That is the real race. Not your marketing against theirs, but your reminder against their convenience. A postcard that arrives three weeks after the due date loses that race without anyone at the practice noticing.
+
+## Recall is a sequence, not a message
+
+The single reminder is where most practices stop. One text or one card, then silence. The patients who respond to the first touch were probably coming back anyway. The ones you actually recover are the ones who need a second and third nudge.
+
+A sequence I would start with looks roughly like this:
+
+- **A few weeks before the due date:** a short text that they are coming up on their exam, with a direct booking link
+- **At the due date:** an email with a bit more context, including a note if their contact lens prescription is about to expire
+- **A few weeks past due:** a text from a named person at the practice, asking if they want help finding a time
+- **Later still:** a phone call from the front desk, reserved for the patients the messages did not move
+
+The phone call is last on purpose. It is the most expensive step, so it should only go to the smallest group.
+
+## The contact lens angle matters more than people think
+
+For contact lens wearers, the exam is tied to something they physically run out of. A reminder that says "your prescription expires on the fourteenth" lands differently than "it is time for your annual exam." One is a health suggestion. The other is a deadline they can feel.
+
+If your software can separate glasses-only patients from lens wearers, split the sequence. Same cadence, different reason to act.
+
+## Where this stops working
+
+Recall only works if the data behind it is clean. If half the mobile numbers on file are landlines from a decade ago, or the due dates were never updated after a patient moved their appointment, the sequence will send cheerful reminders to the wrong people at the wrong time.
+
+So the first week is not about writing messages. It is about checking a sample of fifty records and seeing how many have a working mobile number and a correct due date. If it is fewer than you expected, fix that first, or the automation just makes the mess faster.
+
+## A question worth asking your front desk
+
+How many patients were due last quarter, and how many of them actually booked? If nobody at the practice can answer that without an afternoon of digging, that gap is the project. If you want a second pair of eyes on it, that is the kind of thing we are happy to walk through on a call.`,
+  },
+  {
+    slug: `hvac-maintenance-agreement-recurring-billing`,
+    title: `Maintenance Agreements Are a Scheduling Tool Before They Are a Revenue Line`,
+    excerpt: `The real payoff from HVAC service plans is not the monthly fee; it is the ability to fill April and October with work you already know is coming.`,
+    tags: `Recurring Billing, HVAC, Service Agreements`,
+    content: `Most HVAC owners I talk to pitch their maintenance plans as extra revenue. Fifteen or twenty dollars a month, two tune-ups a year, priority service. They look at the plan count, multiply by the fee, and feel good about it.
+
+I think that framing undersells the plan, and it leads to running it badly.
+
+## The slow months are the actual problem
+
+An HVAC shop's year has two emergencies built into it. The first hot week of summer and the first cold snap of winter, when every tech is booked solid and the phone does not stop. In between, there are stretches where good techs are driving around doing very little.
+
+A maintenance agreement is the one product that lets you put known, scheduled work into those gaps. Two visits a year per member, and you decide when they happen. That is not a revenue feature. It is a way to flatten the calendar so you are not paying full crews to wait for the weather.
+
+## Why the billing setup matters so much
+
+Here is where a lot of plans quietly fall apart. The agreement is sold on a paper form or a one-time card charge, and the renewal depends on somebody remembering to call the customer next year. Some of them get called. Many do not. The member count drifts down and nobody can say exactly why.
+
+Putting the plan on automatic recurring billing fixes most of that, but it creates its own chore: cards expire. A customer whose card lapses in month nine does not cancel, they just stop paying, and unless something catches it, they keep getting treated as a member until a tech shows up for a tune-up they are not covered for.
+
+The system should flag a failed payment the same day, send the customer a short text with a link to update their card, and put a note on the contact record so the dispatcher sees it before booking a visit. That sequence is boring. It is also where most of the lost members are.
+
+## Book the visits when the plan is sold
+
+The other habit I push for: schedule both tune-ups at the moment someone signs up. Not "we will reach out in the spring." An actual date in a shoulder month, confirmed with a reminder a few days before.
+
+When visits are booked at signup, you can look at March and see exactly how many tune-ups are already on the board. That is a number you can staff to. When they are not booked, you are back to calling a list and hoping people answer.
+
+## The honest limit
+
+This does not work if the tune-up itself is thin. If the visit is a fifteen-minute filter swap and a sticker, members notice by year two and stop renewing no matter how smooth the billing is. The system can keep people from falling through the cracks. It cannot make them feel the plan was worth it.
+
+## Look at last April
+
+Pull your schedule for April and October from last year and count how many tech hours were idle. Then count how many active plan members you have. If those two numbers could cover each other, the plan is not an add-on. It is the fix for your shoulder season, and it deserves to be run like one.`,
+  },
+  {
+    slug: `music-school-self-reported-lead-source`,
+    title: `"How Did You Hear About Us?" Is the Least Reliable Field on Your Form`,
+    excerpt: `Parents answer the source question with whatever they remember last, which is why a music school can pay for ads that the intake form swears never worked.`,
+    tags: `Lead Source Tracking, Music Schools, Marketing Attribution`,
+    content: `Ask a parent how they heard about your music school and most of them will say "a friend" or "Google." Both answers are usually true. Neither one tells you what actually got them to fill out the form.
+
+That gap has a price. A school can look at its intake forms, see almost nobody writing "an ad," and cut the ad budget. If enrollment softens the next term, the forms will not explain it, because they never saw the ad in the first place.
+
+## People report the last thing they remember
+
+A family's path to a trial lesson is rarely one step. A neighbor mentions the school at a birthday party. A few weeks later, the parent sees an ad on their phone. A month after that, they search the school's name and click the first result.
+
+When the form asks where they heard about you, they pick one. Usually the friend, because that feels like the real reason, or Google, because that is what they did five minutes ago. The ad in the middle gets no credit, even though it may be the thing that turned a vague mention into an actual search.
+
+## Tracked source and reported source answer different questions
+
+The system can record where a lead came from without asking: the ad they clicked, the page they landed on, the link in the email. That is tracked source. It is precise about the last click and blind to everything before it.
+
+The form field is reported source. It is vague, but it often catches the word-of-mouth piece that no tracking ever sees.
+
+The mistake is treating either one as the truth. I keep both on the contact record and look at them side by side. When tracking says "paid ad" and the parent says "a friend," that is not a contradiction. It is two parts of the same story, and it usually means the ad did its job by reminding someone of a recommendation.
+
+## Make the question more useful
+
+If you keep the field, and I think you should, change what it offers. A dropdown with "Google," "Facebook," "Friend," and "Other" invites the lazy answer. Two small changes help:
+
+- **Ask it as "What made you reach out now?"** That pulls out the trigger, like a new school year or a kid asking for guitar lessons, which is useful for timing your marketing even when it says nothing about channels.
+- **Add "A current student's family" as its own option,** separate from "A friend." Referrals from enrolled families are worth tracking on their own, because they tell you which teachers and programs parents talk about.
+
+## Where I would not trust any of this
+
+Small numbers. A school running twenty trial lessons a month cannot draw a conclusion from one month of source data, tracked or reported. Swings of three or four families are noise.
+
+Give it a full term before you move money around, and look for patterns that hold across both kinds of source, not just one.
+
+## Before you cut the ad budget
+
+Pull the last term's enrollments and put both columns next to each other, the tracked source and the reported one. Count how many families show an ad click anywhere in their history, even if they wrote "a friend" on the form. If that count surprises you, the ad was working. The form just did not know how to say so.`,
+  },
+  {
+    slug: `painting-contractor-estimate-follow-up`,
+    title: `Four Days After the Estimate Is When Painting Jobs Are Decided`,
+    excerpt: `Most homeowners collect three painting quotes and pick within a week, so the contractor who follows up on day four is often the only one still in the conversation.`,
+    tags: `Estimate Follow-Up, Painting Contractors, Automated Sequences`,
+    content: `Ask a residential painting contractor which of last month's estimates are still live, and watch what happens. There is usually a pause, then a scroll through the phone or a flip through a folder in the truck, and then some version of "honestly, I don't know." Every one of those houses got walked, measured, and priced. Most of them never got a second conversation.
+
+That stack is where a lot of painting businesses keep their lost revenue.
+
+## The homeowner is comparing, not deciding
+
+A homeowner who wants their exterior painted almost always gets more than one quote. They schedule the walkthroughs, collect the numbers, and then set them on the kitchen counter. For a few days, nothing happens. They are talking it over, looking at colors, maybe waiting for a paycheck.
+
+Then, at some point in that first week or so, they pick. If you have not been in touch since you emailed the PDF, you are relying on your number and your handwriting to carry the whole decision.
+
+## Price is rarely the only question left
+
+The owners I work with tend to assume a silent homeowner is a lost bid on price. Sometimes it is. More often, the homeowner has a question they did not bother to ask: can you start before their daughter's graduation party, does the price include the trim on the garage, will the crew move the patio furniture.
+
+A follow-up that invites those questions does more than a follow-up that asks "any decision yet?" The first one sounds like help. The second one sounds like a salesperson checking a box.
+
+## A sequence that fits a painting job
+
+This is what I would set up for an estimate that has gone out and gotten no response:
+
+- **Same day:** a short text confirming the estimate was sent, with the owner's name and a line saying questions are welcome
+- **Day three or four:** a message that answers a common question before they ask it, such as how weather delays are handled or what prep work is included
+- **Day seven:** a direct, low-pressure text asking whether they are still planning the project this season
+- **Day fourteen:** a final note that the estimate stays good for thirty days, then the sequence stops
+
+The moment the homeowner replies, the automation pauses and a person takes over. Nothing kills trust faster than a scheduled "still interested?" arriving an hour after they called to book.
+
+## What the system cannot fix
+
+If the estimate itself is confusing, a line-item total with no explanation of prep, coats, or product, follow-up will not save it. The homeowner is comparing documents. Yours has to be the one they understand.
+
+And if the crew cannot actually start for eight weeks, say so in the estimate. A follow-up sequence that wins the job and then misses the start date just moves the lost customer further down the road.
+
+## Sort the stack
+
+Take every estimate you sent in the last sixty days and sort it into three piles: won, lost with a known reason, and never heard back. If the third pile is the tallest, you do not need more leads this month. You need a way to stay in the conversation for one more week. If you want to talk through what that looks like for your crew, book a call and bring the stack.`,
+  },
 ];
