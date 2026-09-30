@@ -48,3 +48,8 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-03 | appliance-repair-quiet-hours-send-timing | Appliance repair | Send-time rules & quiet hours
 - 2026-09-03 | solar-installer-pipeline-stale-deals | Solar installers | Pipeline hygiene & close-lost reason codes
 - 2026-09-03 | catering-company-booking-analytics-capacity | Catering | Booking analytics & capacity planning
+- 2026-09-30 | dog-grooming-cancellation-waitlist | Pet grooming | Waitlists & same-day cancellation fill
+- 2026-09-30 | optometry-annual-recall-sequence | Optometry | Patient recall sequences
+- 2026-09-30 | hvac-maintenance-agreement-recurring-billing | HVAC | Recurring billing — maintenance agreements
+- 2026-09-30 | music-school-self-reported-lead-source | Music schools | Lead source tracking — tracked vs. self-reported
+- 2026-09-30 | painting-contractor-estimate-follow-up | Painting contractors | Estimate follow-up sequences
