@@ -99,7 +99,7 @@ function PressRelease() {
               style={{ display: 'flex', flexDirection: 'column', gap: 16, ...(p.featured ? { borderColor: 'var(--cyan-700)' } : null) }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
                 <h3 style={{ margin: 0, fontSize: 18, color: 'var(--ink-900)' }}>{p.name}</h3>
-                {p.featured && <Badge tone="accent">Most popular</Badge>}
+                {p.featured && <Badge tone="accent">Recommended</Badge>}
               </div>
               <div>
                 <span style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>{p.price}</span>
