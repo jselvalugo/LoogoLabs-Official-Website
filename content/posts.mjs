@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `photographer-deposit-holds-the-date`,
+    title: `A Quote Doesn't Hold Your Date. A Deposit Does.`,
+    excerpt: `Most photographers keep a Saturday open in their head for a client who hasn't committed to anything, and the fix is a short window and a deposit that closes it.`,
+    tags: `Booking, Payments, Photographers`,
+    content: `You told an engaged couple that October 12 was open. They said they loved your work and would get back to you. Three weeks later a second couple asks for the same Saturday, and now you are deciding whether to hold a date for someone who has not paid, promised or replied.
+
+That is the real cost of a loose quote. Your calendar is the only thing a photographer has to sell, and you are lending it out for free.
+
+## Where the date actually goes
+
+When I look at how a typical solo photographer handles an inquiry, the date is held in three places, and none of them is binding. It is in your head, in the email thread, and sometimes as a tentative block on the calendar that nobody ever goes back and clears.
+
+The client holds it nowhere. For them, nothing has happened yet. They are comparing you to two other people and a cousin with a good camera, and a price sheet in their inbox does not feel like a decision waiting on them.
+
+So the date drifts. You decline a second inquiry out of politeness. The first couple books someone else without telling you. You find out when you chase them, or you never find out at all.
+
+## Give the hold a lifespan
+
+I am not suggesting you demand money the moment someone writes in. Plenty of good clients need a few days, and a hard sell on the first message loses them.
+
+What I do suggest is that every hold has an end date, stated out loud. In your first reply, say something like: *I can pencil in October 12 for you through Thursday. After that it goes back on the calendar unless the retainer is in.*
+
+That one sentence changes what the silence means. Before, no answer was neutral. Now no answer is an answer, and you are allowed to act on it.
+
+## Make the deposit the easiest next step
+
+A hold with an expiry only works if paying is easy. If the next step is "download the contract, print it, sign it, then ask me how to send the retainer," you have built a wall and put your own date behind it.
+
+Put the invoice and the agreement behind a single link, in the same message that offers the hold. Sign, pay, done, from a phone, at eleven at night when the couple finally sits down together to talk about it. That late evening is when most of these decisions get made, and you are asleep.
+
+Keep the retainer a flat amount that is clearly separate from the final balance. Say what it covers and what happens if their plans change. Owners who stay vague here tend to have the awkward conversation later, with the client already annoyed.
+
+## Let the system keep the clock
+
+This is the part I set up for clients, because it is the part people forget. The tentative block goes on the calendar when the quote goes out. A reminder text goes out the day before the hold ends, short and plain, with the same link. If nothing has been paid when the window closes, the block is released and the contact moves to a "date released" stage.
+
+Then one more message goes out, saying the date is back open but you would be glad to look at another one. Some people reply to that. Some come back months later with a different date and a deposit. Neither happens if your tentative blocks pile up unchecked until the calendar looks full and is not.
+
+A note on the limits: this does not rescue a quote that was priced out of range or a portfolio that did not fit. It only stops good-fit couples from dissolving into silence because nothing asked them to decide.
+
+## Check this week
+
+Open your calendar and count the tentative or penciled-in dates for the next six months. For each one, find the last message you sent and ask whether the client was ever told when the hold ends.
+
+If the answer is no on any of them, send that sentence today, with the link and a real deadline. Then you will know by Friday which of those dates are yours and which have been free all along.`,
+  },
+  {
     slug: `dental-year-end-benefits-treatment-plans`,
     title: `December Is Full by November: Book Unfinished Treatment Now`,
     excerpt: `The patient who said "let me think about it" in March has a benefit year that ends December 31, and your December schedule will be gone before they remember.`,

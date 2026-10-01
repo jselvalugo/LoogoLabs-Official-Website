@@ -54,3 +54,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-30 | music-school-self-reported-lead-source | Music schools | Lead source tracking — tracked vs. self-reported
 - 2026-09-30 | painting-contractor-estimate-follow-up | Painting contractors | Estimate follow-up sequences
 - 2026-10-01 | dental-year-end-benefits-treatment-plans | Dental practices | Year-end benefit deadlines & unscheduled treatment plans
+- 2026-10-01 | photographer-deposit-holds-the-date | Photographers | Booking & payments — tentative date holds & deposits
