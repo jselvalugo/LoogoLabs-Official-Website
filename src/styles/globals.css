@@ -702,3 +702,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   /* Small, tucked into the open space right of the CTAs, echoing desktop. */
   .ll-hero-art { position: absolute; bottom: -6px; right: 0; width: 26vw; max-width: 120px; pointer-events: none; }
 }
+/* Hero badge is one long mono line; tighten it so it fits small phones. */
+@media (max-width: 400px) {
+  .ll-hero-badge { letter-spacing: 0.04em !important; padding: 3px 6px !important; }
+}
