@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from './components/navigation/NavBar';
+import SeasonalGarland from './components/navigation/SeasonalGarland';
 import Button from './components/core/Button';
 import Footer from './components/navigation/Footer';
 import CookieConsent from './components/feedback/CookieConsent';
@@ -158,6 +159,7 @@ function App({ initialPath }) {
       <NavBar items={nav} active={page} onNavigate={navigate}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
       />
+      <SeasonalGarland />
       <div onClick={handleLinkClick}>{body}</div>
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[

@@ -319,9 +319,46 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 /* ── NavBar mobile ── */
 .ll-nav-links    { display: flex; gap: 24px; margin-right: auto; }
 .ll-nav-burger   { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--ink-300); }
-.ll-nav-mobile   { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100;
-  flex-direction: column; padding: 16px 24px 20px; gap: 4px; }
-.ll-nav-mobile.open { display: flex; }
+.ll-nav-mobile   { display: flex; position: absolute; top: 100%; left: 0; right: 0; z-index: 100;
+  flex-direction: column; padding: 20px 24px 28px; background: var(--ink-900);
+  border-bottom: 1px solid var(--border-hair-inverse); box-shadow: 0 24px 40px rgba(26,38,16,0.35);
+  max-height: calc(100vh - 56px); overflow-y: auto;
+  visibility: hidden; opacity: 0; transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms; }
+.ll-nav-mobile.open { visibility: visible; opacity: 1; transform: none;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s; }
+.ll-nav-mobile-kicker { margin: 0 0 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-300); }
+.ll-nav-mobile-link { display: flex; align-items: baseline; gap: 14px; padding: 16px 0;
+  border-bottom: 1px solid var(--border-hair-inverse); text-decoration: none; color: var(--paper-100);
+  opacity: 0; transform: translateY(6px); transition: opacity 220ms ease, transform 220ms ease, color 120ms ease; }
+.ll-nav-mobile.open .ll-nav-mobile-link { opacity: 1; transform: none; }
+.ll-nav-mobile-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-300); }
+.ll-nav-mobile-label { font-family: var(--font-display); font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.ll-nav-mobile-arrow { margin-left: auto; font-family: var(--font-mono); color: var(--ink-300); transition: transform 120ms ease; }
+.ll-nav-mobile-link:hover .ll-nav-mobile-arrow, .ll-nav-mobile-link:focus-visible .ll-nav-mobile-arrow { transform: translateX(4px); color: var(--paper-100); }
+.ll-nav-mobile-link.on .ll-nav-mobile-label { color: var(--paper-200); text-decoration: underline;
+  text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.ll-nav-mobile-link.on .ll-nav-mobile-num { color: var(--paper-100); }
+.ll-nav-mobile-cta { padding-top: 24px; }
+.ll-nav-mobile-cta > * { width: 100%; justify-content: center; }
+.ll-nav-mobile-foot { margin: 16px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-300); text-align: center; }
+.ll-nav-scrim { position: fixed; inset: 0; z-index: 19; background: rgba(26,38,16,0.45);
+  opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+.ll-nav-scrim.open { opacity: 1; pointer-events: auto; }
+@media (min-width: 961px) { .ll-nav-mobile, .ll-nav-scrim { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .ll-nav-mobile, .ll-nav-mobile-link, .ll-nav-scrim { transition: none; transform: none; }
+}
+
+/* ── October garland under the nav bar ── */
+.ll-garland { position: relative; height: 0; z-index: 5; pointer-events: none; }
+.ll-garland-strand { position: absolute; top: 0; transform-origin: top center;
+  animation: ll-garland-sway 4.5s ease-in-out infinite alternate; }
+.ll-garland-strand svg { display: block; margin-left: -12px; }
+@keyframes ll-garland-sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@media (max-width: 640px) { .ll-garland-strand:nth-child(even) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ll-garland-strand { animation: none; } }
 
 /* ── Featured LoogoNews post ── */
 .ll-feature-label { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
