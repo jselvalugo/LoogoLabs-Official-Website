@@ -1,113 +1,132 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
-import SectionHeading from '../components/surfaces/SectionHeading';
-import Stat from '../components/surfaces/Stat';
-import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 
-const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
-);
+// The Mission page is the house style for editorial pages: dark hero →
+// numbered principles → stat band → timeline → closing CTA panel.
+// All of its building blocks are the reusable `ll-staple-*` classes in globals.css.
+
+const TOOLS = ['CRM', 'Email marketing', 'Scheduling', 'Course platform', 'Social scheduler', 'Review requests', 'Forms & funnels', 'Invoicing'];
+
+const PRINCIPLES = [
+  ['Software should make you money, not cost more of it',
+    'We got tired of watching good businesses overpay for disconnected tools that barely talk to each other. We brought it all under one roof and made sure the math works from day one.'],
+  ['The outcome is the product',
+    'The goal is never the software. More leads followed up, more deals closed, more content published without burning hours, and more time to work on the business instead of inside it.'],
+  ['Done for you, not handed to you',
+    'Every account is configured, automated and taught by us. Nothing is left for you to figure out alone.'],
+  ['We stay until it runs itself',
+    'We are not done until your operations run on their own, and 24/7 support is included the whole way there.'],
+];
+
+const STATS = [['10+', 'Tools replaced'], ['$400+', 'Saved every month'], ['24/7', 'Support included']];
+
+const STEPS = [
+  ['Discovery', 'We learn your business: what tools you pay for, what costs you the most, and what the platform has to do first.'],
+  ['Setup', 'We configure your account, build your pipelines, import your contacts and connect your existing systems.'],
+  ['Automations', 'We build the workflows that matter most first: lead follow-up, appointment reminders, review requests.'],
+  ['Training', 'We walk your team through the platform until everyone is confident, with recordings, guides and a direct line to us.'],
+  ['Ongoing support', '24/7 support, always. As your business grows, the platform grows with it.'],
+];
 
 function Mission({ onNavigate }) {
   return (
     <main>
-      <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
-        <Badge tone="accent">Mission</Badge>
-        <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
-          letterSpacing: 'var(--ls-display-2)', maxWidth: '24ch' }}>
-          We believe running a business should not require 15 different tools.
-        </h1>
-        <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-          Most business owners are logging into 10–15 different platforms every single day just to
-          run basic operations. We built a better way — and we handle every step of getting you
-          set up, trained, and growing on it.
-        </p>
-      </Wrap>
-
-      <Wrap style={{ padding: '64px 24px' }}>
-        <div className="ll-2col" style={{ gap: 48 }}>
+      {/* ── Hero ── */}
+      <section className="ll-staple-hero">
+        <div className="ll-hero-grid-bg" aria-hidden="true" />
+        <div className="ll-staple-wrap ll-staple-hero-inner">
           <div>
-            <SectionHeading eyebrow="What we believe" title="Software should make you more money, not cost more of it" rule={false} level={2} />
-            <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 20 }}>
-              We got tired of watching good businesses overpay for disconnected tools that barely
-              talk to each other. A CRM here. An email platform there. A course tool on top of
-              that. A scheduling app. A social media scheduler. It adds up fast — and none of
-              them work together.
+            <span className="ll-staple-kicker"><span className="ll-live-dot" />Our mission</span>
+            <h1 className="ll-staple-title">
+              Running a business shouldn’t take <em>15 different tools.</em>
+            </h1>
+            <p className="ll-staple-lede">
+              Most owners log into 10–15 platforms every day just to run basic operations. We built a
+              better way, and we handle every step of getting you set up, trained and growing on it.
             </p>
-            <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
-              We brought it all under one roof and made sure the math works from day one. Most
-              clients replace more than $400 a month in subscriptions the moment they switch.
-            </p>
+            <div className="ll-staple-actions">
+              <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
+            </div>
           </div>
-          <div>
-            <SectionHeading eyebrow="What we build toward" title="Your business, fully automated and fully owned" rule={false} level={2} />
-            <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 20 }}>
-              The goal is never the software — it is the outcome. More leads followed up. More
-              deals closed. More content published without burning hours. More time back in your
-              week to work on the business instead of inside it.
-            </p>
-            <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
-              We are not done until your operations run themselves. And we stay close — with 24/7
-              support included — until that is exactly what is happening.
-            </p>
+          <div className="ll-staple-collapse" aria-label="Many tools replaced by one platform">
+            <ul>
+              {TOOLS.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+            <div className="ll-staple-collapse-arrow" aria-hidden="true">↓</div>
+            <div className="ll-staple-collapse-one">One platform. Set up for you.</div>
           </div>
         </div>
-      </Wrap>
-
-      <section className="ll-grid-bg--inverse" style={{ backgroundColor: 'var(--ink-900)', color: 'var(--paper-100)' }}>
-        <Wrap style={{ padding: '64px 24px' }}>
-          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0 }}>
-            {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
-              <div key={l} style={{ flex: 1, paddingLeft: i ? 24 : 0, borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
-                <Stat label={l} value={v} unit={u} />
-              </div>
-            ))}
-          </div>
-        </Wrap>
       </section>
 
-      <Wrap style={{ padding: '64px 24px', borderBottom: '1px solid var(--border-hair)' }}>
-        <SectionHeading eyebrow="How onboarding works" title="Five steps. Done for you every time."
-          description="Every client goes through the same proven process. You never have to figure it out alone — we are with you from day one." />
-        <div className="ll-grid-5" style={{ gap: 16, marginTop: 36 }}>
-          {[
-            ['01', 'Discovery', 'We learn your business — what tools you are currently paying for, what is costing you the most, and exactly what you need the platform to do first.'],
-            ['02', 'Setup', 'We configure your account, build your pipelines, import your contacts, and connect your existing systems. Nothing is left for you to figure out alone.'],
-            ['03', 'Automations', 'We build the workflows that matter most first — lead follow-up, appointment reminders, review requests, and anything else that should be running on autopilot.'],
-            ['04', 'Training', 'We walk you and your team through the platform until everyone is confident. You get recordings, guides, and a direct line back to us anytime.'],
-            ['05', 'Ongoing Support', '24/7 support is included — always. As your business grows, the platform grows with it, and we are here every step of the way to make sure it does.'],
-          ].map(([n, t, d]) => (
-            <Card key={n} padding={22} tone="inverse" style={{ display: 'grid', gap: 10, alignContent: 'start' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--cyan-500)' }}>{n}</div>
-              <h3 style={{ margin: 0, fontSize: 'var(--fs-h3)', letterSpacing: 'var(--ls-h3)', color: 'var(--paper-100)' }}>{t}</h3>
-              <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-300)' }}>{d}</p>
-            </Card>
+      {/* ── Principles ── */}
+      <section className="ll-staple-wrap ll-staple-section">
+        <div className="ll-staple-split">
+          <div className="ll-staple-sticky">
+            <span className="ll-eyebrow">What we believe</span>
+            <h2 className="ll-staple-h2">Four principles behind everything we build.</h2>
+          </div>
+          <ol className="ll-staple-principles">
+            {PRINCIPLES.map(([t, d], i) => (
+              <li key={t}>
+                <span className="ll-staple-num">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ── Stat band ── */}
+      <section className="ll-staple-band">
+        <div className="ll-staple-wrap ll-staple-stats">
+          {STATS.map(([v, l]) => (
+            <div key={l}>
+              <div className="ll-staple-stat-value">{v}</div>
+              <div className="ll-eyebrow">{l}</div>
+            </div>
           ))}
         </div>
-      </Wrap>
+      </section>
 
-      <Wrap style={{ padding: '64px 24px 88px' }}>
-        <SectionHeading eyebrow="The company" title="We stay close to every client" />
-        <div className="ll-2col" style={{ gap: 24, marginTop: 36 }}>
-          <img src="/team-photo.jpg" alt="The Loogo Labs team at work"
-            style={{ width: '100%', height: 300, objectFit: 'cover', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)', display: 'block' }} />
-          <Card emphasis="strong" padding={28} style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
-            <span className="ll-eyebrow">Working with us</span>
-            <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)' }}>
-              We keep our client list intentional. Not everyone is a fit — but if you are a local
-              business, service provider, or online brand tired of the tool chaos, this
-              conversation is worth 15 minutes. We will tell you exactly what the platform can do
-              for your specific situation, no pitch deck required.
+      {/* ── Timeline ── */}
+      <section className="ll-staple-wrap ll-staple-section">
+        <span className="ll-eyebrow">How onboarding works</span>
+        <h2 className="ll-staple-h2">Five steps. Done for you, every time.</h2>
+        <p className="ll-staple-sub">Every client goes through the same proven process. You never have to figure it out alone.</p>
+        <ol className="ll-staple-timeline">
+          {STEPS.map(([t, d], i) => (
+            <li key={t}>
+              <span className="ll-staple-node">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ── Closing CTA ── */}
+      <section className="ll-staple-wrap" style={{ paddingBottom: 96 }}>
+        <div className="ll-staple-cta">
+          <img src="/team-photo.jpg" alt="The Loogo Labs team at work" />
+          <div className="ll-staple-cta-body">
+            <span className="ll-eyebrow" style={{ color: 'var(--ink-200)' }}>Working with us</span>
+            <h2 className="ll-staple-h2" style={{ color: 'var(--paper-000)' }}>We stay close to every client.</h2>
+            <p>
+              We keep our client list intentional. If you are a local business, service provider or
+              online brand tired of the tool chaos, this conversation is worth 15 minutes. We will tell
+              you exactly what the platform can do for you, no pitch deck required.
             </p>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <div className="ll-staple-actions">
               <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
-              <Button variant="secondary" onClick={() => onNavigate('Home')}>Back to home</Button>
+              <button type="button" className="ll-staple-textlink" onClick={() => onNavigate('Home')}>Back to home</button>
             </div>
-          </Card>
+          </div>
         </div>
-      </Wrap>
+      </section>
     </main>
   );
 }
