@@ -30,33 +30,33 @@ const QUIZZES = [
 function Quizzes({ onNavigate }) {
   return (
     <main>
-      <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
+      <Wrap style={{ padding: '48px 24px 32px', borderBottom: '1px solid var(--border-hair)' }}>
         <Badge tone="accent">Free tools</Badge>
-        <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
-          letterSpacing: 'var(--ls-display-2)', maxWidth: '22ch' }}>
+        <h1 style={{ margin: '14px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-3)', lineHeight: 'var(--lh-display-3)',
+          letterSpacing: 'var(--ls-display-3)', maxWidth: '22ch' }}>
           Quick fit checks. No call required.
         </h1>
-        <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
+        <p style={{ maxWidth: 'var(--container-narrow)', margin: '14px 0 0', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-400)' }}>
           A handful of questions, straight answers. Take any quiz below to see whether one of our
           systems fits your business — you'll get your result on the spot.
         </p>
       </Wrap>
 
-      <Wrap style={{ padding: '56px 24px 88px' }}>
-        <div style={{ display: 'grid', gap: 20 }}>
+      <Wrap style={{ padding: '32px 24px 64px' }}>
+        <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}>
           {QUIZZES.map((q) => (
             <a key={q.page} href={pathForPage(q.page)}
               onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}
-              style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-              <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'grid', gap: 8, maxWidth: '52ch' }}>
+              style={{ textDecoration: 'none', color: 'inherit', display: 'flex' }}>
+              <Card emphasis="strong" padding={20} style={{ display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'space-between', width: '100%' }}>
+                <div style={{ display: 'grid', gap: 6 }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
                     {q.time} · Free
                   </span>
-                  <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>{q.title}</h2>
-                  <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>{q.description}</p>
+                  <h2 style={{ margin: 0, fontSize: 'var(--fs-h3)', lineHeight: 'var(--lh-h3)', color: 'var(--ink-900)' }}>{q.title}</h2>
+                  <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-500)' }}>{q.description}</p>
                 </div>
-                <Button variant="primary" size="lg" iconRight={<span>→</span>}>Take the quiz</Button>
+                <Button variant="primary" size="sm" style={{ alignSelf: 'flex-start' }} iconRight={<span>→</span>}>Take the quiz</Button>
               </Card>
             </a>
           ))}
