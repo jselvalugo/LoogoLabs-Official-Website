@@ -4,6 +4,7 @@ import { pathForPage, routeMeta } from '../../lib/seo';
 
 const pageMap = {
   'Mission': 'Mission',
+  'Company': 'Company',
   'Pricing': 'Pricing',
   'LoogoNews': 'LoogoNews',
   'Central Florida': 'GrowCFL',
