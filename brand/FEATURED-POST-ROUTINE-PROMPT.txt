@@ -1,24 +1,3 @@
-# Routine: write and feature a new LoogoNews post
-
-The instructions a scheduled routine follows to publish one new LoogoNews post
-and make it the **featured** post. Copy everything under "Prompt" into the
-routine. The featured post appears in three places, all driven by one database
-flag (`posts.featured`), so there is no page code to touch:
-
-- **Homepage**: the "★ Featured on LoogoNews" line under the hero
-- **/news**: the large dark spotlight panel at the top of the index
-- **The post page**: the featured header, drop cap and reading-progress bar
-
-Only one post can be featured at a time. Featuring a new post retires the
-previous one into the regular LoogoNews feed: it stays published, at the same
-URL, with its original publish date, views and text, and appears in the "All
-posts" grid and the latest-posts lists in date order. Nothing is deleted or
-re-dated.
-
----
-
-## Prompt
-
 You are publishing **one** new LoogoNews post on loogolabs.com and making it the
 featured post. Work in the `jselvalugo/LoogoLabs-Official-Website` repository.
 Follow the steps in order. If any step fails or a check doesn't hold, stop, do
