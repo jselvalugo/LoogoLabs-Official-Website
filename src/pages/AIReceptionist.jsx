@@ -3,6 +3,7 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+import { getSessionId } from '../lib/sessionTracker';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -109,6 +110,7 @@ export default function AIReceptionist() {
         full_name: contact.fullName.trim(),
         email: contact.email.trim(),
         source: 'ai_receptionist',
+        session_id: getSessionId(),
         business_type: finalAnswers.businessType,
         missed_calls: finalAnswers.missedCalls,
         pain_point: finalAnswers.painPoint,

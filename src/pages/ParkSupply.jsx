@@ -2,6 +2,7 @@ import React from 'react';
 import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU, PROPOSAL_VALID_DAYS, SITE_PLANS } from '../lib/parkSupply';
 import { isLoggedIn } from '../lib/identity';
 import { SITE } from '../lib/seo';
+import { getSessionId } from '../lib/sessionTracker';
 
 // Unlisted: reachable only by direct link. It is kept out of the nav, footer,
 // sitemap and llms.txt (see `unlisted` in lib/seo.js) and served noindex.
@@ -220,6 +221,7 @@ export default function ParkSupply() {
           contact: contact.trim(),
           email: email.trim(),
           scope: draft.scope,
+          session_id: getSessionId(),
           lines: draft.lines.map((l) => ({ sku: l.sku, qty: num(l.qty), price: num(l.price) })),
           discount_pct: num(draft.discountPct),
           shipping: num(draft.shipping),

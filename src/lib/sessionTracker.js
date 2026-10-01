@@ -18,6 +18,7 @@ const IDLE_MS = 60 * 1000;
 const SEND_EVERY_MS = 15 * 1000;
 
 let started = false;
+let currentId = null;
 
 const uuid = () => (crypto.randomUUID
   ? crypto.randomUUID()
@@ -64,6 +65,7 @@ function start() {
   started = true;
 
   const state = loadState();
+  currentId = state.id;
   let lastPath = null;
   let lastActivity = Date.now();
   let lastTick = Date.now();
@@ -127,4 +129,10 @@ export function startSessionTracking() {
   start();
   // Visitors who accept Analytics mid-visit start being tracked from then on.
   window.addEventListener('ll:consent-change', () => { if (getConsent()?.analytics) start(); });
+}
+
+// The current tab's session id, for linking a lead or proposal to the visit it
+// came from. Null without Analytics consent, so nothing links when declined.
+export function getSessionId() {
+  return currentId && hasConsent('analytics') ? currentId : null;
 }

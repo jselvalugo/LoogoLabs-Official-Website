@@ -1,6 +1,7 @@
 import { getDatabase } from '@netlify/database';
 import { PRODUCTS_BY_SKU } from '../../src/lib/parkSupply.js';
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const json = (data, status) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 
@@ -41,11 +42,11 @@ export default async (req, context) => {
   const { sql } = getDatabase();
   const [row] = await sql`
     INSERT INTO proposals (number, organization, contact, email, phone, project, location, scope, lines,
-      discount_pct, shipping, tax_pct, subtotal, total, city, region, country)
+      discount_pct, shipping, tax_pct, subtotal, total, city, region, country, session_id)
     VALUES (${str(body.number, 40) || 'LL-PS'}, ${str(body.organization) || null}, ${contact}, ${email},
       ${str(body.phone, 40) || null}, ${str(body.project) || null}, ${str(body.location) || null}, ${str(body.scope, 4000)},
       ${JSON.stringify(lines)}::jsonb, ${discount_pct}, ${shipping}, ${tax_pct}, ${subtotal}, ${total},
-      ${geo.city || null}, ${geo.subdivision?.name || null}, ${geo.country?.name || null})
+      ${geo.city || null}, ${geo.subdivision?.name || null}, ${geo.country?.name || null}, ${UUID_RE.test(body.session_id || '') ? body.session_id : null})
     RETURNING id, number
   `;
 
