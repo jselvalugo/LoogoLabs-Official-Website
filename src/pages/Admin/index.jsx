@@ -5,12 +5,14 @@ import BlogAdmin from './BlogAdmin';
 import Analytics from './Analytics';
 import Leads from './Leads';
 import Proposals from './Proposals';
+import Links from './Links';
 
 const NAV = [
   { id: 'posts', label: 'Posts' },
   { id: 'leads', label: 'Quiz Leads' },
   { id: 'proposals', label: 'Proposals' },
   { id: 'analytics', label: 'Analytics' },
+  { id: 'links', label: 'Backlinks' },
 ];
 
 export default function Admin() {
@@ -96,6 +98,7 @@ export default function Admin() {
             onRemove={(id) => setProposals((prev) => prev.filter((p) => p.id !== id))} />
         )}
         {subpage === 'analytics' && <Analytics />}
+        {subpage === 'links' && <Links />}
       </main>
     </div>
   );

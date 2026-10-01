@@ -1,10 +1,18 @@
 import React from 'react';
 import { apiFetch } from '../../lib/identity';
+import { pathForPage } from '../../lib/seo';
 
 function formatDate(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
+
+// Page each quiz lives on, so the Quiz column links straight to it.
+const SOURCE_PAGES = {
+  ai_receptionist: 'AIReceptionist',
+  reputation_autopilot: 'ReputationAutopilot',
+  park_supply: 'ParkSupply',
+};
 
 const SOURCE_LABELS = {
   ai_receptionist: 'AI Receptionist',
@@ -64,7 +72,12 @@ export default function Leads() {
                   <tr key={lead.id} style={{ borderBottom: '1px solid var(--border-hair)' }}>
                     <td style={{ ...tdStickyStyle, fontWeight: 500 }}>{lead.full_name}</td>
                     <td style={tdStyle}>{lead.email}</td>
-                    <td style={tdStyle}>{SOURCE_LABELS[lead.source] || lead.source || '—'}</td>
+                    <td style={tdStyle}>
+                      {SOURCE_PAGES[lead.source] ? (
+                        <a href={pathForPage(SOURCE_PAGES[lead.source])} target="_blank" rel="noopener noreferrer"
+                          style={{ color: 'var(--cyan-700)' }}>{SOURCE_LABELS[lead.source]}</a>
+                      ) : (SOURCE_LABELS[lead.source] || lead.source || '—')}
+                    </td>
                     <td style={tdStyle}>{lead.business_type || '—'}</td>
                     <td style={tdStyle}>{lead.missed_calls || lead.job_volume || '—'}</td>
                     <td style={tdStyle}>{lead.pain_point || lead.review_pain_point || '—'}</td>
