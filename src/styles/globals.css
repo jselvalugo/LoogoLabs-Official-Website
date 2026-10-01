@@ -699,8 +699,8 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-hero-art { display: block; width: 100%; max-width: 620px; height: auto; justify-self: end; }
 @media (max-width: 900px) {
   .ll-hero-grid { grid-template-columns: 1fr; gap: 0; position: relative; }
-  /* Small, tucked into the open space right of the CTAs, echoing desktop. */
-  .ll-hero-art { position: absolute; bottom: -6px; right: 0; width: 26vw; max-width: 120px; pointer-events: none; }
+  /* Small, tucked into the open space right of the headline, echoing desktop. */
+  .ll-hero-art { position: absolute; top: 84px; right: -14px; width: 22vw; max-width: 120px; pointer-events: none; }
 }
 /* Hero badge is one long mono line; tighten it so it fits small phones. */
 @media (max-width: 400px) {
