@@ -20,6 +20,8 @@ export const leads = pgTable('leads', {
   country: text('country'),
   status: text('status').default('new'),
   notes: text('notes').default(''),
+  // site_sessions.id of the visit this lead came from (Analytics consent only).
+  session_id: uuid('session_id'),
 });
 
 // One row per (deduplicated, one-per-session) blog post view, so views can be
@@ -78,6 +80,8 @@ export const proposals = pgTable('proposals', {
   city: text('city'),
   region: text('region'),
   country: text('country'),
+  // site_sessions.id of the visit this proposal came from (Analytics consent only).
+  session_id: uuid('session_id'),
 });
 
 // Engaged-time sessions for Analytics — see the create_site_sessions migration.

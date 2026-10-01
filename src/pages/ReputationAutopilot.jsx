@@ -3,6 +3,7 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+import { getSessionId } from '../lib/sessionTracker';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -108,6 +109,7 @@ export default function ReputationAutopilot() {
         full_name: contact.fullName.trim(),
         email: contact.email.trim(),
         source: 'reputation_autopilot',
+        session_id: getSessionId(),
         business_type: finalAnswers.businessType,
         job_volume: finalAnswers.jobVolume,
         review_pain_point: finalAnswers.reviewPainPoint,

@@ -1,5 +1,6 @@
 import { getDatabase } from '@netlify/database';
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default async (req, context) => {
@@ -18,6 +19,7 @@ export default async (req, context) => {
   // Park Supply quote requests carry their line items here; cap it so the
   // public endpoint cannot be used to stuff arbitrarily large rows.
   const notes = typeof body.notes === 'string' ? body.notes.slice(0, 8000) : '';
+  const session_id = UUID_RE.test(body.session_id || '') ? body.session_id : null;
   const geo = context?.geo || {};
   const city = geo.city || null;
   const region = geo.subdivision?.name || null;
@@ -25,8 +27,8 @@ export default async (req, context) => {
   const { sql } = getDatabase();
 
   const [lead] = await sql`
-    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point, city, region, country, notes)
-    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country}, ${notes})
+    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point, city, region, country, notes, session_id)
+    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country}, ${notes}, ${session_id})
     RETURNING *
   `;
 
