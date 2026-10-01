@@ -5,7 +5,7 @@ import Stat from '../components/surfaces/Stat';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
 import { openBooking } from '../lib/booking';
-import { SITE, pathForPage } from '../lib/seo';
+import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -210,6 +210,37 @@ function QuizTeaser({ onNavigate }) {
   );
 }
 
+// One quiet line under the hero pointing at the featured LoogoNews post. Renders
+// nothing until the post list loads, or if no post is featured, so the hero
+// never shifts for visitors when there is nothing to show.
+function FeaturedPostLine({ onNavigate }) {
+  const [post, setPost] = React.useState(null);
+  const [hover, setHover] = React.useState(false);
+  React.useEffect(() => {
+    fetch('/.netlify/functions/get-posts')
+      .then(r => r.json())
+      .then(data => { if (Array.isArray(data)) setPost(data.find(p => p.featured) || null); })
+      .catch(() => {});
+  }, []);
+  if (!post) return null;
+  return (
+    <Wrap style={{ width: '100%' }}>
+      <a
+        href={`${BLOG_BASE}/${post.slug}`}
+        onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className="ll-featured-line"
+        style={{ background: hover ? 'var(--paper-200)' : 'transparent' }}
+      >
+        <span className="ll-featured-line-tag">★ Featured on LoogoNews</span>
+        <span className="ll-featured-line-title" style={{ color: hover ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{post.title}</span>
+        <span aria-hidden="true" style={{ marginLeft: 'auto', flex: 'none', fontFamily: 'var(--font-mono)', transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
+      </a>
+    </Wrap>
+  );
+}
+
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -242,6 +273,8 @@ function Home({ onNavigate }) {
           </div>
         </Wrap>
       </section>
+
+      <FeaturedPostLine onNavigate={onNavigate} />
 
       <Wrap style={{ padding: '40px 24px 0' }}>
         <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"

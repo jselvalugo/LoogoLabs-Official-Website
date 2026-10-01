@@ -75,6 +75,10 @@ export default function BlogPost({ slug, onNavigate }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
 
+      {post.featured ? (
+        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} />
+      ) : (
+        <>
       {/* ── HERO HEADER ── */}
       <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
@@ -122,20 +126,23 @@ export default function BlogPost({ slug, onNavigate }) {
         </div>
       </div>
 
+        </>
+      )}
+
       {/* ── BODY ── */}
       <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
         <div className="ll-post-layout">
 
           {/* Article content */}
           <article style={{ paddingTop: 'clamp(40px,5vw,64px)', paddingBottom: 'clamp(56px,7vw,96px)' }}>
-            {post.excerpt && (
+            {post.excerpt && !post.featured && (
               <p style={{ margin: '0 0 40px', fontSize: 20, lineHeight: 1.65, color: 'var(--ink-500)', fontWeight: 400, borderLeft: '3px solid var(--ink-700)', paddingLeft: 20 }}>
                 {post.excerpt}
               </p>
             )}
 
             <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>
-              {renderMarkdown(post.content)}
+              {renderMarkdown(post.content, { dropCap: !!post.featured })}
             </div>
 
             {/* Author bio — the personal signature on every post, not just a byline */}
@@ -194,9 +201,94 @@ export default function BlogPost({ slug, onNavigate }) {
   );
 }
 
-function renderMarkdown(text) {
+// Header for the featured post. Where the standard header is a compact dark
+// band, this one is a full editorial opener: featured kicker, display-size
+// title, the excerpt promoted to a standfirst, and a ruled byline strip. A
+// reading-progress bar rides the top of the viewport while you read.
+function FeaturedHero({ post, tags, date, onNavigate }) {
+  const [progress, setProgress] = React.useState(0);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
+  }, []);
+
+  const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' };
+  const cell = { padding: '18px 0', display: 'grid', gap: 6, alignContent: 'start' };
+
+  return (
+    <>
+      <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
+      <header className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-100)', borderBottom: '6px solid var(--cyan-500)' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
+              style={{ ...backBtnInverse, textDecoration: 'none' }}>
+              ← LoogoNews
+            </a>
+            <span style={{ ...mono, fontSize: 10, color: 'var(--ink-900)', background: 'var(--cyan-500)', padding: '5px 12px', fontWeight: 700 }}>
+              ★ Featured post
+            </span>
+          </nav>
+
+          <div style={{ padding: 'clamp(44px,7vw,96px) 0 clamp(32px,4vw,48px)' }}>
+            {tags.length > 0 && (
+              <div style={{ ...mono, fontSize: 10, color: 'var(--cyan-500)', marginBottom: 24 }}>
+                {tags.join('  /  ')}
+              </div>
+            )}
+            <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,6.4vw,84px)', lineHeight: 0.98, letterSpacing: '-0.04em', maxWidth: '18ch' }}>
+              {post.title}
+            </h1>
+            {post.excerpt && (
+              <p style={{ margin: 'clamp(24px,3vw,36px) 0 0', maxWidth: '46ch', fontSize: 'clamp(18px,1.9vw,23px)', lineHeight: 1.55, color: 'var(--ink-200)' }}>
+                {post.excerpt}
+              </p>
+            )}
+          </div>
+
+          <div className="ll-feature-byline" style={{ borderTop: '1px solid rgba(216,211,198,0.18)' }}>
+            <div style={{ ...cell, gridAutoFlow: 'column', justifyContent: 'start', alignItems: 'center', gap: 12 }}>
+              {post.author === 'David Selva' ? (
+                <img src="/founder-david-selva.jpg" alt="" width={36} height={36}
+                  style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--paper-100)' }} />
+              ) : (
+                <span style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--ink-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+                  {post.author ? post.author[0].toUpperCase() : 'L'}
+                </span>
+              )}
+              <span style={{ display: 'grid', gap: 4 }}>
+                <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Written by</span>
+                <span style={{ fontSize: 15, fontWeight: 700 }}>{post.author}</span>
+              </span>
+            </div>
+            <div style={cell}>
+              <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Published</span>
+              <time dateTime={post.published_at || undefined} style={{ ...mono, color: 'var(--paper-100)' }}>{date}</time>
+            </div>
+            <div style={cell}>
+              <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Read time</span>
+              <span style={{ ...mono, color: 'var(--paper-100)' }}>{post.read_time} min</span>
+            </div>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
+
+function renderMarkdown(text, { dropCap = false } = {}) {
   if (!text) return null;
   const blocks = text.split(/\n\n+/);
+  // The drop cap goes on the first plain paragraph only — never a heading or list.
+  const firstPara = dropCap
+    ? blocks.findIndex(b => { const t = b.trim(); return t && !/^(#{2,3} |> |[-*] )/.test(t); })
+    : -1;
   return blocks.map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
@@ -221,7 +313,7 @@ function renderMarkdown(text) {
         </blockquote>
       );
     }
-    return <p key={i} style={{ margin: '0 0 28px', fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>{inlineRender(trimmed)}</p>;
+    return <p key={i} className={i === firstPara ? 'll-dropcap' : undefined} style={{ margin: '0 0 28px', fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>{inlineRender(trimmed)}</p>;
   });
 }
 
