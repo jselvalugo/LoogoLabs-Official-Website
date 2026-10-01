@@ -14,9 +14,11 @@ import Pricing from './pages/Pricing';
 import Quizzes from './pages/Quizzes';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
+import { citySlugFromPage } from './lib/cfl';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
+const GrowCity = React.lazy(() => import('./pages/GrowCity'));
 const AIVoice = React.lazy(() => import('./pages/AIVoice'));
 const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
@@ -93,7 +95,14 @@ function App({ initialPath }) {
   }, [navigate]);
 
   if (page === 'Admin') return <React.Suspense fallback={null}><Admin /></React.Suspense>;
-  if (page === 'GrowCFL') return <><CookieConsent /><React.Suspense fallback={null}><GrowCFL /></React.Suspense></>;
+  const citySlug = citySlugFromPage(page);
+  if (page === 'GrowCFL' || citySlug) {
+    return (
+      <><CookieConsent /><div onClick={handleLinkClick}><React.Suspense fallback={null}>
+        {citySlug ? <GrowCity key={citySlug} slug={citySlug} /> : <GrowCFL />}
+      </React.Suspense></div></>
+    );
+  }
   if (page === 'AIReceptionist') return <><CookieConsent /><React.Suspense fallback={null}><AIReceptionist /></React.Suspense></>;
   if (page === 'ReputationAutopilot') return <><CookieConsent /><React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
