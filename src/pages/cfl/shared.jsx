@@ -177,8 +177,8 @@ const STEPS = [
 ];
 
 export const Process = () => (
-  <section style={{ background: 'var(--paper-000)', padding: 'clamp(56px,7vw,88px) 0', borderTop: '1px solid var(--border-hair)' }}>
-    <Wrap>
+  <section style={{ background: 'var(--paper-000)', padding: 'clamp(44px,5vw,64px) 0 clamp(28px,3vw,40px)', borderTop: '1px solid var(--border-hair)' }}>
+    <Wrap><div className="cfl-narrow">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
         <div>
           <Eyebrow>How it works</Eyebrow>
@@ -202,7 +202,7 @@ export const Process = () => (
           </li>
         ))}
       </ol>
-    </Wrap>
+    </div></Wrap>
   </section>
 );
 
