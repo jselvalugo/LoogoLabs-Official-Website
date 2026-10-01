@@ -1,34 +1,14 @@
-# Routine: write and feature a new LoogoNews post
-
-The instructions a scheduled routine follows to publish one new LoogoNews post
-and make it the **featured** post. Copy everything under "Prompt" into the
-routine. The featured post appears in three places, all driven by one database
-flag (`posts.featured`), so there is no page code to touch:
-
-- **Homepage**: the "★ Featured on LoogoNews" line under the hero
-- **/news**: the large dark spotlight panel at the top of the index
-- **The post page**: the featured header, drop cap and reading-progress bar
-
-Only one post can be featured at a time. Featuring a new post retires the
-previous one into the regular LoogoNews feed: it stays published, at the same
-URL, with its original publish date, views and text, and appears in the "All
-posts" grid and the latest-posts lists in date order. Nothing is deleted or
-re-dated.
-
----
-
-## Prompt
-
-You are publishing **one** new LoogoNews post on loogolabs.com and making it the
-featured post. Work in the `jselvalugo/LoogoLabs-Official-Website` repository.
-Follow the steps in order. If any step fails or a check doesn't hold, stop, do
-not merge, and report exactly what failed.
+You are publishing **one** new regular LoogoNews post on loogolabs.com. It is
+**not** the featured post: do not change which post is featured. Work in the
+`jselvalugo/LoogoLabs-Official-Website` repository. Follow the steps in order.
+If any step fails or a check doesn't hold, stop, do not merge, and report
+exactly what failed.
 
 ### 1. Start clean
 
-- `git fetch origin main`, then create `claude/featured-post-YYYY-MM-DD` (today's
-  date) from `origin/main`. If that branch or an open PR for today already
-  exists, stop: one post per day.
+- `git fetch origin main`, then create `claude/news-post-YYYY-MM-DD` (today's
+  date) from `origin/main`. If that branch or an open PR for it already exists,
+  stop: one post per run.
 - `npm ci` if `node_modules` is missing.
 
 ### 2. Read the house rules, in full, before writing anything
@@ -46,11 +26,10 @@ Do not reuse their wording.
 
 - Choose a topic + vertical pairing that is **not** in `brand/BLOG-TOPIC-LOG.md`
   and doesn't make the same argument as an existing post in a different vertical.
-- It's the featured post, so pick the strongest idea available: one specific,
-  practical problem a local service business owner has **this month** (season,
-  holidays, year-end, weather), with a fix they can act on themselves.
-- Before writing, state in one line each: the reader, the problem, the fix, and
-  why it's timely. If you can't fill all four crisply, pick another topic.
+- One specific, practical problem a local service business owner has, with a fix
+  they can act on themselves.
+- Before writing, state in one line each: the reader, the problem, the fix. If
+  you can't fill all three crisply, pick another topic.
 
 ### 4. Write the post — original work only
 
@@ -68,7 +47,7 @@ Add one object at the **top** of the `posts` array in `content/posts.mjs`:
 {
   slug: `short-keyword-slug`,        // lowercase, hyphens, unique in the file
   title: `Title Under ~70 Characters`,
-  excerpt: `One sentence, the sharpest line of the post.`,
+  excerpt: `One sentence that makes someone want to read it.`,
   tags: `Topic, Subtopic, Vertical`, // 2–3, comma-separated
   content: `Markdown body…`,
 },
@@ -76,19 +55,18 @@ Add one object at the **top** of the `posts` array in `content/posts.mjs`:
 
 Requirements:
 
-- **Excerpt**: shown as the pull quote on /news and as the standfirst on the
-  post page. One sentence, under ~200 characters, no surrounding quote marks,
-  and not a copy of a sentence from the body.
-- **Title**: shown up to 84px tall; under ~70 characters, concrete, no clickbait.
-- **First paragraph**: plain prose (it gets the drop cap). Open on the problem,
-  not a preamble or a question to the reader.
+- **Excerpt**: shown on the post card in /news and in the RSS feed. One
+  sentence, under ~200 characters, no surrounding quote marks, not copied from
+  the body.
+- **Title**: under ~70 characters, concrete, no clickbait.
+- **Opening**: start on the problem, not a preamble or a question to the reader.
 - **Body**: 450–900 words, `##` section headings, short paragraphs.
   Only `##`, `###`, `-` lists, `>` quotes, `**bold**`, `*italic*`, `` `code` ``.
   No links, images, tables or HTML.
 - Escape every backtick in text as `` \` `` (the strings are template literals);
   avoid `${` in text.
 - End with **one** concrete thing the reader can check or change this week.
-- Do not set `featured` in `content/posts.mjs`; that is step 6.
+- Do **not** add a `featured` field.
 
 ### 5. Generate the post migration
 
@@ -98,36 +76,20 @@ Open the new `netlify/database/migrations/<stamp>_new_post_<short_slug>/migratio
 and confirm the new post is in it. The generator upserts every post; that's
 expected — existing posts keep their `status` and `published_at`.
 
-### 6. Note the outgoing featured post, then feature the new one
+Do **not** run `npm run db:feature-post`. The current featured post stays featured.
 
-Before running anything, record the **current** featured post's slug and title:
+### 6. Confirm nothing else changed
 
-- the slug in the newest `*_feature_*` folder under `netlify/database/migrations/`; or,
-- if there is no such folder yet, the newest published post before today
-  (that's what `20261001120000_posts_add_featured` featured); or the post
-  marked ★ in /admin.
+- `git diff origin/main -- content/posts.mjs` shows **only** your new object added.
+- No new `*_feature_*` migration folder exists in your diff.
+- Nothing in the diff edits, deletes or re-dates any existing post.
 
-Then run `npm run db:feature-post -- <new-slug>` and confirm:
-
-- its stamp sorts **after** the post migration from step 5;
-- its SQL only contains the two `UPDATE "posts" SET "featured" = …` statements —
-  nothing touches `status`, `published_at`, `views`, `slug` or text.
-
-### 7. Confirm the outgoing post stays in the feed
-
-- `git diff origin/main -- content/posts.mjs` shows **only** your new object
-  added. The outgoing post (and every other post) is unchanged.
-- Nothing in the diff deletes or re-dates any post.
-
-After deploy it will show in the /news "All posts" grid and latest-posts lists
-by its original date, with the standard post layout, at the same URL.
-
-### 8. Log the topic
+### 7. Log the topic
 
 Append a row to `brand/BLOG-TOPIC-LOG.md`:
 `- YYYY-MM-DD | <slug> | <vertical> | <topic>`
 
-### 9. Check it — build, then two full review passes
+### 8. Check it — build, then two full review passes
 
 Run the build first, then do **two separate review passes**. Do not merge
 until both passes are complete and clean. If either pass changes the post,
@@ -180,26 +142,24 @@ Write a short note for the PR: "Review pass 2: <what you changed, or 'no
 changes needed'>". If you are not confident the post is fully original after
 pass 2, stop, do not merge, and report why.
 
-### 10. Ship it
+### 9. Ship it
 
-- Commit: `Add featured LoogoNews post: <title>`
+- Commit: `Add LoogoNews post: <title>`
 - Push the branch and open a PR against `main` with the same title. Body:
   - **Title**, **Excerpt**, **Slug**, **Tags**, **Word count**
-  - **Why this topic now**: one line
-  - **Originality pass 1** and **Review pass 2** notes from step 9
-  - **Moved to archive**: `<previous title>` (`<previous slug>`) — un-featured
-    only; still published, original date, still in latest posts.
-- Merge only once the checks pass **and** both review passes are recorded clean. Netlify deploys `main` and applies both
-  migrations; the post goes live already featured.
-- After deploy, if you can, load `/news`, the new post's URL and the previous
-  featured post's URL and confirm all three behave as described above.
+  - **Originality pass 1** and **Review pass 2** notes from step 8
+- Merge only once the checks pass **and** both review passes are recorded clean.
+  Netlify deploys `main` and applies the migration; the post appears in the
+  /news "All posts" grid and latest-posts lists by date.
+- After deploy, if you can, load `/news` and the new post's URL and confirm it
+  shows, and that the featured post is unchanged.
 
 ### Rules
 
 - One post per run. If no unused pairing fits, stop and say so — never reuse one.
-- Never edit, delete or re-date an existing post, including the one being
-  un-featured. Un-featuring only clears its flag.
-- Never hand-write or edit migration SQL; always use the two npm scripts.
+- Never change the featured post in this routine.
+- Never edit, delete or re-date an existing post.
+- Never hand-write or edit migration SQL; always use the npm script.
 - Never publish anything copied, paraphrased or adapted from another source.
   Two review passes are required before every merge.
 - Never touch page code, styles or other brand files in this routine.
