@@ -50,6 +50,14 @@ export default function Leads() {
         <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
           {leads.length} submission{leads.length === 1 ? '' : 's'}
         </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+          {Object.entries(SOURCE_PAGES).map(([source, page]) => (
+            <a key={source} href={pathForPage(page)} target="_blank" rel="noopener noreferrer"
+              style={{ padding: '5px 10px', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', fontSize: 12, color: 'var(--ink-600)', textDecoration: 'none' }}>
+              {SOURCE_LABELS[source]} ↗
+            </a>
+          ))}
+        </div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto' }}>
