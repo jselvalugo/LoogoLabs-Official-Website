@@ -627,3 +627,34 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 @media (prefers-reduced-motion: reduce) {
   .cfl-city-card, .cfl-rail__link { transition: none; }
 }
+
+/* How-it-works timeline: one hairline, four markers, no boxes. */
+.cfl-steps {
+  list-style: none; margin: 40px 0 0; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+}
+.cfl-steps::before {
+  content: ''; position: absolute; left: 14px; right: 0; top: 14px; height: 1px; background: var(--border-hair);
+}
+.cfl-step { position: relative; }
+.cfl-step__mark { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.cfl-step__dot {
+  position: relative; z-index: 1; width: 29px; height: 29px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center; background: var(--ink-900); color: var(--paper-000);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  box-shadow: 0 0 0 5px var(--paper-000);
+}
+.cfl-step__when {
+  position: relative; z-index: 1; padding: 0 8px; background: var(--paper-000);
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-400);
+}
+.cfl-step__title { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; color: var(--ink-900); }
+.cfl-step__desc { margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-500); max-width: 30ch; }
+
+@media (max-width: 767px) {
+  .cfl-steps { grid-template-columns: 1fr; gap: 22px; }
+  .cfl-steps::before { left: 14px; right: auto; top: 14px; bottom: 14px; width: 1px; height: auto; }
+  .cfl-step { padding-left: 0; }
+  .cfl-step__mark { margin-bottom: 6px; }
+  .cfl-step__title, .cfl-step__desc { margin-left: 41px; }
+}
