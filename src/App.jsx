@@ -22,7 +22,10 @@ const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
 
-function getInitialState() {
+function getInitialState(initialPath) {
+  // The build pre-renders each page on the server, where there is no window;
+  // it passes the path in instead.
+  if (initialPath) return routeForPath(initialPath);
   // The Central Florida page used to live behind #grow, which is not a URL a
   // search engine can index. It has a real path now; honour the old fragment so
   // links already in the wild still land somewhere.
@@ -33,8 +36,8 @@ function getInitialState() {
   return routeForPath(window.location.pathname);
 }
 
-function App() {
-  const init = getInitialState();
+function App({ initialPath }) {
+  const init = getInitialState(initialPath);
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
 

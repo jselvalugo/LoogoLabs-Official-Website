@@ -9,14 +9,15 @@
 // HTML file per route — correct head tags, JSON-LD, and the page's text already
 // in the markup — plus robots.txt, sitemap.xml, an RSS feed, and llms.txt.
 //
-// The React app still boots and takes over on load: createRoot().render() clears
-// #root first, so the pre-rendered markup is a fallback for crawlers and slow
-// connections, never something the user sees twice.
+// Marketing pages are rendered with React at build time (src/entry-server.jsx)
+// and marked data-ssr, so the client hydrates them in place. Other pages carry a
+// plain fallback that createRoot().render() replaces on load.
 
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { render } from '../dist-ssr/entry-server.js';
 import { posts as sourcePosts } from '../content/posts.mjs';
 import { readTime } from './generate-post-migration.mjs';
 import {
@@ -150,7 +151,7 @@ function headTags(head) {
 
 // Everything the template hard-codes for the homepage is stripped, then replaced
 // with the tags for whichever route is being written.
-function renderPage({ head, body }) {
+function renderPage({ head, body, ssr = false }) {
   let html = template
     .replace(/<title>[\s\S]*?<\/title>\s*/, '')
     .replace(/[ \t]*<meta name="description"[^>]*>\s*/g, '')
@@ -160,7 +161,7 @@ function renderPage({ head, body }) {
     .replace(/[ \t]*<script type="application\/ld\+json"[\s\S]*?<\/script>\s*/g, '');
 
   html = html.replace('</head>', `  ${headTags(head)}\n  </head>`);
-  return html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  return html.replace('<div id="root"></div>', `<div id="root"${ssr ? ' data-ssr' : ''}>${body}</div>`);
 }
 
 function write(routePath, html) {
@@ -217,7 +218,16 @@ for (const route of ROUTES) {
     extra = `<ul>${allPosts.map((p) => `<li><a href="${BLOG_BASE}/${p.slug}">${esc(p.title)}</a> — ${esc(p.excerpt)}</li>`).join('')}</ul>`;
   }
 
-  write(route.path, renderPage({ head, body: shell(HEADINGS[route.page] ?? route.page, route.description, extra) }));
+  // Marketing pages are rendered by React itself, so the HTML carries their full
+  // copy and the client hydrates it. The blog index lists posts it fetches at
+  // runtime, so it keeps the hand-built fallback above. Park Supply is a noindexed
+  // quoting tool whose first render depends on localStorage and today's date, so
+  // it cannot hydrate from build-time markup and gains nothing from it.
+  if (route.page !== 'LoogoNews' && route.page !== 'ParkSupply') {
+    write(route.path, renderPage({ head, body: await render(route.path), ssr: true }));
+  } else {
+    write(route.path, renderPage({ head, body: shell(HEADINGS[route.page] ?? route.page, route.description, extra) }));
+  }
   written += 1;
 }
 
