@@ -23,7 +23,7 @@ export const CITIES = [
     ],
     industries: ['Home services & pool care', 'Med spas & wellness', 'Real estate & property management', 'Restaurants on Market Street', 'Dentists & family practices'],
     searches: ['pool service celebration fl', 'dentist celebration fl', 'handyman near celebration', 'med spa celebration'],
-    areas: ['Georgetown', 'Island Village', 'Celebration Downtown', 'North Village'],
+    areas: ['West Village', 'North Village', 'Artisan Park', 'Spring Lake', 'Island Village', 'Georgetown', 'Evander Square', 'Celebration Village', 'Celebration Town Center', 'Celebration Downtown'],
     nearby: ['kissimmee', 'orlando', 'st-cloud'],
   },
   {

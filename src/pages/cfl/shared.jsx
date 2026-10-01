@@ -169,26 +169,39 @@ export const Services = ({ cityName }) => (
   </section>
 );
 
+const STEPS = [
+  ['Strategy call', 'We review your Google profile, local rankings, and how fast leads hear back today.', '30 min'],
+  ['Build', 'Profile, city pages, follow-up, reviews, and booking — set up for your service area.', 'Week 1'],
+  ['Launch & test', 'Test leads run end-to-end so every message, alert, and booking is confirmed.', 'Week 2'],
+  ['Manage & grow', 'A monthly report and call. We tune pages, campaigns, and sequences on results.', 'Ongoing'],
+];
+
 export const Process = () => (
-  <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)', padding: 'clamp(64px,8vw,104px) 0' }}>
+  <section style={{ background: 'var(--paper-000)', padding: 'clamp(56px,7vw,88px) 0', borderTop: '1px solid var(--border-hair)' }}>
     <Wrap>
-      <Eyebrow light>How it works</Eyebrow>
-      <H2 light>Live in about two weeks. Managed every month after.</H2>
-      <div className="ll-grid-4" style={{ gap: 14, marginTop: 48 }}>
-        {[
-          ['01', 'Strategy call', 'We look at your Google profile, your local rankings, and how fast leads get a reply today.', '30 minutes'],
-          ['02', 'Build', 'Profile, city pages, follow-up, review automation, and booking — set up for your service area.', 'Week 1'],
-          ['03', 'Launch & test', 'We run test leads end-to-end and confirm every message, alert, and booking works.', 'Week 2'],
-          ['04', 'Manage & grow', 'Monthly report and strategy call. We adjust pages, campaigns, and sequences based on results.', 'Ongoing'],
-        ].map(([num, title, desc, when]) => (
-          <div key={num} className="cfl-glass" style={{ padding: '24px 22px', display: 'grid', gap: 10, alignContent: 'start' }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 26, fontWeight: 600, color: 'var(--ink-300)' }}>{num}</div>
-            <div style={{ fontWeight: 700, fontSize: 17 }}>{title}</div>
-            <div style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(245,242,235,0.7)' }}>{desc}</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--paper-200)', marginTop: 4 }}>{when}</div>
-          </div>
-        ))}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
+        <div>
+          <Eyebrow>How it works</Eyebrow>
+          <h2 style={{ margin: 0, fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
+            Live in about two weeks.
+          </h2>
+        </div>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '36ch' }}>
+          Then managed every month — no hand-off, no DIY.
+        </p>
       </div>
+      <ol className="cfl-steps">
+        {STEPS.map(([title, desc, when], i) => (
+          <li key={title} className="cfl-step">
+            <div className="cfl-step__mark">
+              <span className="cfl-step__dot">{i + 1}</span>
+              <span className="cfl-step__when">{when}</span>
+            </div>
+            <div className="cfl-step__title">{title}</div>
+            <p className="cfl-step__desc">{desc}</p>
+          </li>
+        ))}
+      </ol>
     </Wrap>
   </section>
 );
