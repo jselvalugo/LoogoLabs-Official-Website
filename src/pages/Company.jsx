@@ -22,28 +22,29 @@ function Company({ onNavigate }) {
   const [imgOk, setImgOk] = React.useState(true);
   return (
     <main>
-      {/* ── Hero ── */}
+      {/* ── Hero: a compact founder quote ── */}
       <section className="ll-staple-hero">
         <div className="ll-hero-grid-bg" aria-hidden="true" />
-        <div className="ll-staple-wrap ll-staple-hero-inner">
-          <div>
-            <span className="ll-staple-kicker"><span className="ll-live-dot" />The company</span>
-            <h1 className="ll-staple-title">
-              From Coamo to Celebration, <em>built on systems.</em>
-            </h1>
-            <p className="ll-staple-lede">
-              I'm {SITE.founder}, founder of {SITE.name}. Born in Coamo, Puerto Rico, now building a
-              business in Celebration, Florida.
-            </p>
-            <div className="ll-staple-actions">
-              <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a call with me</Button>
+        <div className="ll-staple-wrap" style={{ position: 'relative', padding: '56px 24px 48px', maxWidth: 760 }}>
+          <h1 style={{ margin: 0, font: 'inherit' }}><span className="ll-staple-kicker"><span className="ll-live-dot" />Meet the founder</span></h1>
+          <blockquote style={{ margin: '24px 0 0', fontSize: 'var(--fs-h2)', lineHeight: 1.35, fontWeight: 600, color: 'var(--paper-000)' }}>
+            “Service delivery has been my career for the past 5 years. Now I deliver it for the
+            businesses in my own backyard — because every local owner deserves a team that shows
+            up, follows through and treats their business like family.”
+          </blockquote>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 24 }}>
+            {imgOk ? (
+              <img src="/founder-david-selva.jpg" alt={`${SITE.founder}, founder of ${SITE.name}`} onError={() => setImgOk(false)}
+                width={48} height={48}
+                style={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--paper-100)' }} />
+            ) : null}
+            <div>
+              <div style={{ fontWeight: 700, color: 'var(--paper-000)' }}>{SITE.founder}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
+                Founder · Coamo, PR → Celebration, FL
+              </div>
             </div>
           </div>
-          {imgOk && (
-            <img src="/founder-david-selva.jpg" alt={`${SITE.founder}, founder of ${SITE.name}`} onError={() => setImgOk(false)}
-              width={280} height={280}
-              style={{ width: 280, height: 280, maxWidth: '100%', borderRadius: '50%', objectFit: 'cover', justifySelf: 'center' }} />
-          )}
         </div>
       </section>
 
