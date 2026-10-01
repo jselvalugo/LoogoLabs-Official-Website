@@ -8,7 +8,7 @@ const cityFaq = (c) => [
   [`Do you work with businesses in ${c.name}?`, `Yes. ${c.name} is part of our core ${c.county} service area. We build your Google Business Profile, service pages, and follow-up around the ${c.name} neighborhoods you actually serve.`],
   [`How long does local SEO take in ${c.name}?`, 'Profile and review improvements usually show within the first 30–60 days. Ranking for competitive searches takes longer and depends on how established your competitors are — we show you where you stand on the first call.'],
   ['Do I need to be physically located in the city?', `No. Google ranks service-area businesses by where they serve, not only where they sit. If you serve ${c.name}, we can build visibility there.`],
-  ['Is there a contract?', 'No. We work month-to-month and keep your business by earning it.'],
+  ['Is there a contract?', 'We recommend a 3-month minimum — local SEO and review growth take time to compound, and three months is when results become clear. For smaller businesses that want to test things first, we also offer month-to-month.'],
 ];
 
 function GrowCity({ slug }) {
