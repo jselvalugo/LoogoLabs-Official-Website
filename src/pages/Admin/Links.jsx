@@ -21,10 +21,10 @@ export default function Links() {
   }, []);
 
   const pages = ROUTES.filter((r) => !LINKED_FROM_HOME.has(r.page))
-    .map((r) => ({ key: r.page, label: r.page + (r.unlisted ? ' (unlisted)' : ''), href: url(r.path) }));
+    .map((r) => ({ key: r.page, label: r.page + (r.unlisted ? ' (unlisted)' : ''), href: r.path, full: url(r.path) }));
   // The featured post is linked from the homepage hero line; every other post isn't.
   const postLinks = posts.filter((p) => p.status === 'published' && !p.featured)
-    .map((p) => ({ key: p.slug, label: p.title, href: url(`${BLOG_BASE}/${p.slug}`) }));
+    .map((p) => ({ key: p.slug, label: p.title, href: `${BLOG_BASE}/${p.slug}`, full: url(`${BLOG_BASE}/${p.slug}`) }));
 
   function copy(href) {
     navigator.clipboard?.writeText(href).then(() => {
@@ -45,11 +45,11 @@ export default function Links() {
           <div style={{ flex: '1 1 260px', minWidth: 0 }}>
             <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--ink-900)' }}>{row.label}</div>
             <a href={row.href} target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cyan-700)', wordBreak: 'break-all' }}>{row.href}</a>
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cyan-700)', wordBreak: 'break-all' }}>{row.full}</a>
           </div>
-          <button onClick={() => copy(row.href)}
+          <button onClick={() => copy(row.full)}
             style={{ padding: '5px 10px', background: 'none', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', fontSize: 12, cursor: 'pointer', fontFamily: 'var(--font-body)', color: 'var(--ink-600)' }}>
-            {copied === row.href ? 'Copied' : 'Copy'}
+            {copied === row.full ? 'Copied' : 'Copy'}
           </button>
         </div>
       ))}

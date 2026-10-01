@@ -52,10 +52,8 @@ export default function Admin() {
     <div className="ll-admin-shell" style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--paper-100)', fontFamily: 'var(--font-body)' }}>
       <aside className="ll-admin-sidebar" style={{ width: 220, background: 'var(--ink-900)', color: 'var(--paper-100)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         <div className="ll-admin-sidebar-brand" style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
-          <div style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em' }}>
-            Loogo Labs<span style={{ color: 'var(--cyan-500)' }}>.</span>
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 3 }}>
+          <img src="/admin-logo.png" alt="Loogo Labs" width="40" height="40" style={{ display: 'block', width: 40, height: 40 }} />
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 10 }}>
             Admin
           </div>
         </div>
