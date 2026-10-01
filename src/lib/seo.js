@@ -67,6 +67,15 @@ export const ROUTES = [
     changefreq: 'monthly',
   },
   {
+    page: 'Company',
+    path: '/company',
+    title: `Company — Meet Founder ${SITE.founder} | ${SITE.name}`,
+    description:
+      `${SITE.name} is founded by ${SITE.founder}, a professional from Coamo, Puerto Rico with a background in CLM, government contracting, consulting, project management and marketing — now building in Celebration, Florida.`,
+    priority: '0.6',
+    changefreq: 'monthly',
+  },
+  {
     page: 'Pricing',
     path: '/pricing',
     title: `Pricing — Plans From $97/Month | ${SITE.name}`,
