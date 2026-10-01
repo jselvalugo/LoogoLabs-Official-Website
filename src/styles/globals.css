@@ -698,6 +698,6 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 .ll-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
 .ll-hero-art { display: block; width: 100%; max-width: 620px; height: auto; justify-self: end; }
 @media (max-width: 900px) {
-  .ll-hero-grid { grid-template-columns: 1fr; gap: 8px; }
-  .ll-hero-art { max-width: 340px; width: 80%; justify-self: center; }
+  .ll-hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .ll-hero-art { order: -1; max-width: 220px; width: 60%; justify-self: center; margin-bottom: 8px; }
 }
