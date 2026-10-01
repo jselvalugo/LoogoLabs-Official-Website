@@ -60,7 +60,7 @@ function PostsTab() {
     } else {
       const res = await apiFetch('/.netlify/functions/update-post', { method: 'PATCH', body: JSON.stringify({ id: selectedId, ...data }) });
       const updated = await res?.json();
-      if (updated?.id) setPosts(prev => prev.map(p => p.id === selectedId ? updated : p));
+      if (updated?.id) setPosts(prev => prev.map(p => p.id === selectedId ? updated : (updated.featured ? { ...p, featured: false } : p)));
     }
   }
 
@@ -144,7 +144,7 @@ function PostRow({ post, selected, onClick }) {
     <tr onClick={onClick} style={{ borderBottom: '1px solid var(--border-hair)', cursor: 'pointer', background: selected || hover ? 'var(--paper-200)' : 'transparent' }}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <td style={tdStyle}>
-        <div style={{ fontWeight: 500 }}>{post.title}</div>
+        <div style={{ fontWeight: 500 }}>{post.featured && <span title="Featured" style={{ color: 'var(--cyan-700)', marginRight: 6 }}>★</span>}{post.title}</div>
         <div style={{ fontSize: 11, color: 'var(--ink-400)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{post.slug}</div>
       </td>
       <td style={tdStyle}><StatusPill status={post.status} /></td>
@@ -162,6 +162,7 @@ function PostEditor({ post, onSave, onDelete, onClose }) {
   const [tags, setTags] = React.useState(post?.tags || '');
   const [status, setStatus] = React.useState(post?.status || 'draft');
   const [readTime, setReadTime] = React.useState(post?.read_time || 5);
+  const [featured, setFeatured] = React.useState(!!post?.featured);
   const [saving, setSaving] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(false);
@@ -174,7 +175,7 @@ function PostEditor({ post, onSave, onDelete, onClose }) {
 
   async function handleSave() {
     setSaving(true);
-    await onSave({ title, slug, excerpt, content, tags, status, read_time: Number(readTime) });
+    await onSave({ title, slug, excerpt, content, tags, status, read_time: Number(readTime), featured });
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -220,6 +221,17 @@ function PostEditor({ post, onSave, onDelete, onClose }) {
             <input type="number" value={readTime} onChange={e => setReadTime(e.target.value)} min={1} style={inputStyle} />
           </EditorField>
         </div>
+
+        {post && (
+          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: 'var(--ink-600)', cursor: status === 'published' ? 'pointer' : 'default', opacity: status === 'published' ? 1 : 0.5 }}>
+            <input type="checkbox" checked={featured && status === 'published'} disabled={status !== 'published'}
+              onChange={e => setFeatured(e.target.checked)} style={{ marginTop: 2 }} />
+            <span>
+              <strong style={{ color: 'var(--ink-900)' }}>Featured post</strong> — gets the featured layout on LoogoNews and its own page, plus a link on the homepage.
+              Featuring this post un-features the current one. Published posts only.
+            </span>
+          </label>
+        )}
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 8 }}>
           <button onClick={handleSave} disabled={saving || !title || !slug}

@@ -1,4 +1,4 @@
-import { pgTable, uuid, timestamp, text, integer, jsonb, numeric } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, timestamp, text, integer, jsonb, numeric, boolean } from 'drizzle-orm/pg-core';
 
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -48,6 +48,8 @@ export const posts = pgTable('posts', {
   author: text('author').default('Loogo Labs'),
   read_time: integer('read_time').default(5),
   published_at: timestamp('published_at'),
+  // At most one row is true (partial unique index posts_one_featured).
+  featured: boolean('featured').notNull().default(false),
 });
 
 // Park Supply proposal submissions — see the create_proposals migration.

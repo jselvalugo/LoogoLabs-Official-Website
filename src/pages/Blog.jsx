@@ -20,8 +20,11 @@ export default function Blog({ onNavigate }) {
     applyHead({ ...head, jsonLd: [...head.jsonLd, blogLd(posts)] });
   }, [posts]);
 
-  const featured = posts[0] || null;
-  const rest = posts.slice(1);
+  // An editor-picked featured post gets the spotlight layout. With none picked,
+  // the newest post leads in the plain "Latest post" card, as before.
+  const spotlight = posts.find(p => p.featured) || null;
+  const featured = spotlight || posts[0] || null;
+  const rest = posts.filter(p => p !== featured);
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
@@ -55,7 +58,9 @@ export default function Blog({ onNavigate }) {
           <EmptyState />
         ) : (
           <>
-            {featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
+            {spotlight
+              ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} />
+              : featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
 
             {rest.length > 0 && (
               <div style={{ marginTop: 2 }}>
@@ -74,6 +79,74 @@ export default function Blog({ onNavigate }) {
         )}
       </div>
     </div>
+  );
+}
+
+// The editor-picked featured post. Deliberately louder than everything else on
+// the page: a dark full-width panel that breaks the paper grid, a display-size
+// title, the excerpt set as a pull quote, and a numbered "featured" rule.
+function FeaturedSpotlight({ post, onNavigate }) {
+  const [hover, setHover] = React.useState(false);
+  const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const date = post.published_at
+    ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '';
+  const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' };
+
+  return (
+    <a
+      href={`${BLOG_BASE}/${post.slug}`}
+      onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      aria-label={`Featured post: ${post.title}`}
+      style={{ display: 'block', marginTop: 48, textDecoration: 'none', color: 'inherit' }}
+    >
+      <div className="ll-feature-label">
+        <span className="ll-feature-star" aria-hidden="true">★</span>
+        <span style={{ ...mono, fontSize: 10, color: 'var(--ink-900)', fontWeight: 700 }}>Featured</span>
+        <div style={{ flex: 1, height: 1, background: 'var(--ink-900)' }} />
+        <span style={{ ...mono, fontSize: 10, color: 'var(--ink-400)' }}>Editor's pick</span>
+      </div>
+
+      <div className="ll-grid-bg--inverse ll-feature-panel" style={{
+        background: 'var(--ink-900)', color: 'var(--paper-100)',
+        boxShadow: hover ? '8px 8px 0 var(--cyan-500)' : '4px 4px 0 var(--cyan-500)',
+        transform: hover ? 'translate(-2px,-2px)' : 'none',
+        transition: 'box-shadow 160ms ease, transform 160ms ease',
+      }}>
+        <div className="ll-feature-main">
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {tags.map(tag => (
+              <span key={tag} style={{ ...mono, fontSize: 10, color: 'var(--ink-200)', border: '1px solid rgba(216,211,198,0.25)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h2 style={{ margin: '28px 0 0', fontWeight: 800, fontSize: 'clamp(30px,4.6vw,60px)', lineHeight: 1.04, letterSpacing: '-0.035em', maxWidth: '20ch' }}>
+            {post.title}
+          </h2>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginTop: 36, ...mono, fontWeight: 700, color: 'var(--cyan-500)' }}>
+            Read the featured post
+            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34, background: 'var(--cyan-500)', color: 'var(--ink-900)', borderRadius: '50%', fontSize: 15, transition: 'transform 160ms ease', transform: hover ? 'translateX(4px)' : 'none' }}>→</span>
+          </div>
+        </div>
+
+        <aside className="ll-feature-side">
+          {post.excerpt && (
+            <p style={{ margin: 0, fontSize: 'clamp(17px,1.6vw,20px)', lineHeight: 1.6, color: 'var(--ink-200)', fontStyle: 'italic' }}>
+              <span aria-hidden="true" style={{ display: 'block', fontSize: 56, lineHeight: 0.6, color: 'var(--cyan-500)', fontStyle: 'normal', fontWeight: 800, marginBottom: 14 }}>“</span>
+              {post.excerpt}
+            </p>
+          )}
+          <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px 16px', ...mono, fontSize: 10 }}>
+            <dt style={{ color: 'var(--ink-400)' }}>By</dt><dd style={{ margin: 0, color: 'var(--paper-100)' }}>{post.author}</dd>
+            {date && <><dt style={{ color: 'var(--ink-400)' }}>Published</dt><dd style={{ margin: 0, color: 'var(--paper-100)' }}><time dateTime={post.published_at}>{date}</time></dd></>}
+            <dt style={{ color: 'var(--ink-400)' }}>Length</dt><dd style={{ margin: 0, color: 'var(--paper-100)' }}>{post.read_time} min read</dd>
+          </dl>
+        </aside>
+      </div>
+    </a>
   );
 }
 

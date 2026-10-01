@@ -15,7 +15,7 @@ const MIGRATIONS_DIR = 'netlify/database/migrations';
 // Migrations apply in filename order, and existing folders are stamped by hand,
 // so a wall-clock timestamp can sort *before* migrations that already ran. Take
 // the later of "now" and one second past the newest existing stamp.
-function nextStamp() {
+export function nextStamp() {
   const now = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
   const newest = readdirSync(MIGRATIONS_DIR)
     .map((entry) => entry.slice(0, 14))
