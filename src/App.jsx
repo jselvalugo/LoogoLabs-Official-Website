@@ -11,7 +11,6 @@ import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
-import Pricing from './pages/Pricing';
 import Quizzes from './pages/Quizzes';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
@@ -114,7 +113,6 @@ function App({ initialPath }) {
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
   else if (page === 'AIVoice') body = <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
   else if (page === 'Company') body = <Company onNavigate={navigate} />;
-  else if (page === 'Pricing') body = <Pricing onNavigate={navigate} />;
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
@@ -154,7 +152,7 @@ function App({ initialPath }) {
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
           { title: 'Company', links: ['Mission', 'Company', 'Book a Call'] },
-          { title: 'Platform', links: ['Pricing', 'LoogoNews', 'Central Florida', 'Quizzes'] },
+          { title: 'Platform', links: ['LoogoNews', 'Central Florida', 'Quizzes'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}

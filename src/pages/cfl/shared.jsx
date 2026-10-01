@@ -232,7 +232,7 @@ export const FinalCta = ({ cityName }) => (
       </p>
       <div style={{ marginTop: 40 }}><BookBtn size="lg" label="Book my free strategy call" /></div>
       <div style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
-        Month-to-month · <a href="/pricing" style={{ color: 'inherit' }}>See pricing</a>
+        3-month recommended · Month-to-month available
       </div>
     </Wrap>
   </section>

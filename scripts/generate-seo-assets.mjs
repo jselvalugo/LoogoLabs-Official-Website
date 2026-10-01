@@ -188,7 +188,6 @@ const HEADINGS = {
   Home: 'Launch, Grow & Automate Your Business — All in One Place',
   Mission: 'We believe running a business should not require 15 different tools.',
   Company: 'From Coamo to Celebration, built on systems.',
-  Pricing: 'One platform. Three plans. No hidden fees.',
   LoogoNews: 'LoogoNews — Marketing News',
   GrowCFL: 'Stop losing customers to businesses that respond faster.',
   AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
