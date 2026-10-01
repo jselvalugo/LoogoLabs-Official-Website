@@ -47,13 +47,6 @@ const WEB_PACKAGES = [
   },
 ];
 
-const MEDIA_PACKAGES = [
-  ['Local', '$249', 'One city, metro area, or state', 'USA & Canada'],
-  ['Regional', '$299', 'A multi-state region', 'USA & Canada'],
-  ['Nationwide', '$399', 'Journalists across one country', null],
-  ['Global', '$549', 'Journalists worldwide', null],
-];
-
 const NETWORK = [
   'Hundreds of downstream news & business sites',
   'ABC, CBS, FOX & NBC affiliate TV and radio station sites',
@@ -64,7 +57,7 @@ const NETWORK = [
 const STEPS = [
   ['Book a quick call', 'Tell us what you are announcing and pick your package.'],
   ['We write or polish', 'Your release is edited for news standards and approved by you before it goes out.'],
-  ['We distribute', 'Published across the network, and pitched to journalists if you chose media outreach.'],
+  ['We distribute', 'Published across the news network and indexed by Google News.'],
   ['You get a report', 'A full list of live placements you can share with customers and on social.'],
 ];
 
@@ -82,8 +75,7 @@ function PressRelease() {
           Get your business in the news.
         </h1>
         <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-          Press release writing and distribution to hundreds of news sites, broadcast affiliate pages, and
-          industry journalists. Fixed prices, done for you, with a report of every placement.
+          Press release writing and distribution to hundreds of news sites and broadcast affiliate pages. Fixed prices, done for you, with a report of every placement.
         </p>
         <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('hero')}>Book a release</Button>
@@ -112,21 +104,6 @@ function PressRelease() {
                 ))}
               </ul>
               <Button variant={p.featured ? 'primary' : 'secondary'} size="lg" fullWidth onClick={() => order(p.name)}>Get started</Button>
-            </Card>
-          ))}
-        </div>
-      </Wrap>
-
-      <Wrap style={{ padding: '0 24px 64px' }}>
-        <SectionTitle eyebrow="Web + media outreach" title="Put your story in front of journalists"
-          lead="Everything in Web Distribution, plus targeted outreach to journalists and editors across five industry categories you choose. Priced per release." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
-          {MEDIA_PACKAGES.map(([name, price, reach, note]) => (
-            <Card key={name} padding={24} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <h3 style={{ margin: 0, fontSize: 16, color: 'var(--ink-900)' }}>{name}</h3>
-              <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>{price}</span>
-              <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-500)', flex: 1 }}>{reach}{note && <><br /><span style={{ fontSize: 12, color: 'var(--ink-400)' }}>{note} only</span></>}</p>
-              <Button variant="secondary" fullWidth onClick={() => order(`Media ${name}`)}>Choose {name}</Button>
             </Card>
           ))}
         </div>
