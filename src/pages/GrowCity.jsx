@@ -107,19 +107,15 @@ function GrowCity({ slug }) {
         <Process />
 
         {/* ── NEARBY ── */}
-        <section style={{ background: 'var(--paper-000)', padding: 'clamp(56px,7vw,88px) 0' }}>
-          <Wrap>
-            <Eyebrow>Also serving near {c.name}</Eyebrow>
-            <div className="cfl-cards" style={{ marginTop: 8 }}>
+        <section style={{ background: 'var(--paper-000)', padding: '0 0 clamp(44px,5vw,64px)' }}>
+          <Wrap><div className="cfl-narrow">
+            <div className="cfl-nearby">
+              <span className="cfl-nearby__label">Also serving near {c.name}</span>
               {nearby.map((n) => (
-                <a key={n.slug} href={cityPath(n.slug)} className="cfl-city-card">
-                  <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em' }}>{n.name}</span>
-                  <span style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{n.market[0][0]}.</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-600)' }}>{n.name} page →</span>
-                </a>
+                <a key={n.slug} href={cityPath(n.slug)} className="cfl-nearby__link">{n.name} <span aria-hidden="true">→</span></a>
               ))}
             </div>
-          </Wrap>
+          </div></Wrap>
         </section>
 
         <Faq items={cityFaq(c)} />

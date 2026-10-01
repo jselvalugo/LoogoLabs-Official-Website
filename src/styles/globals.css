@@ -630,8 +630,8 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 
 /* How-it-works timeline: one hairline, four markers, no boxes. */
 .cfl-steps {
-  list-style: none; margin: 40px 0 0; padding: 0; position: relative;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  list-style: none; margin: 32px 0 0; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
 }
 .cfl-steps::before {
   content: ''; position: absolute; left: 14px; right: 0; top: 14px; height: 1px; background: var(--border-hair);
@@ -658,3 +658,20 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .cfl-step__mark { margin-bottom: 6px; }
   .cfl-step__title, .cfl-step__desc { margin-left: 41px; }
 }
+
+/* Process + nearby: a narrower centred column so the section reads compact. */
+.cfl-narrow { max-width: 880px; margin: 0 auto; }
+.cfl-nearby {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
+  padding-top: 24px; border-top: 1px solid var(--border-hair);
+}
+.cfl-nearby__label {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-400); margin-right: 6px;
+}
+.cfl-nearby__link {
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border-hair); border-bottom: 1px solid var(--border-hair) !important;
+  font-size: 13.5px; font-weight: 600; color: var(--ink-900); text-decoration: none; background: var(--paper-100);
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.cfl-nearby__link:hover { background: var(--ink-900); color: var(--paper-000); }
