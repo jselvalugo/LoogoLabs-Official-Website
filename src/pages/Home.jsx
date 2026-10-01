@@ -248,15 +248,15 @@ function Home({ onNavigate }) {
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <div className="ll-hero-grid">
           <div style={{ maxWidth: '46ch' }}>
-            <Badge tone="accent" className="ll-hero-badge">A Digital Marketing Partner You Can Trust</Badge>
+            <Badge tone="accent" className="ll-hero-badge">Central Florida's Hometown Marketing Team</Badge>
             <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
               letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
               Launch, Grow & Automate Your Business — <span style={{ color: 'var(--cyan-700)' }}>All in One Place</span>.
             </h1>
             <p style={{ maxWidth: '50ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
-              We specialize in small business marketing, backed by 8+ years of hands-on experience in
-              performance marketing and automation. Stop paying for 10–15 tools that barely talk to
-              each other — get one platform, set up and run for you.
+              We're the local marketing team behind Central Florida small businesses, with 8+ years
+              in performance marketing. Press releases, social media, video, automation and
+              day-to-day operations — planned, built and run for you, all in one place.
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
               <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
