@@ -9,8 +9,10 @@ flag (`posts.featured`), so there is no page code to touch:
 - **/news**: the large dark spotlight panel at the top of the index
 - **The post page**: the featured header, drop cap and reading-progress bar
 
-Only one post can be featured at a time; featuring a new one un-features the
-old one, which drops back into the normal grid.
+Only one post can be featured at a time. Featuring a new post retires the
+previous one back into the regular LoogoNews archive: it stays published, at the
+same URL, with its original publish date, views and text, and appears in the
+"All posts" grid in date order. Nothing is deleted or re-dated.
 
 ---
 
@@ -84,25 +86,44 @@ the new one. Check that its stamp sorts **after** the post migration (it will
 if you run the commands in this order); the post must exist before it can be
 featured.
 
-### 7. Log the topic
+### 7. Retire the previous featured post into the archive
+The previous featured post must stay on the site as a normal post. Before
+committing, confirm:
+- Note its slug first: in `/admin` it is the post marked ★, or it is the slug
+  in the most recent `*_feature_*` folder under `netlify/database/migrations/`.
+- It is still in `content/posts.mjs`, unchanged. Do not remove, rename or edit it.
+- The feature migration from step 6 only changes the `featured` column. It must
+  not touch that post's `status`, `published_at`, `views`, `slug` or text.
+- The post migration from step 5 leaves existing posts' `status` and
+  `published_at` alone (it says so in its header), so the old post keeps its
+  original date and its place in the feed.
+- In the pull request body, list the previous featured post by title and slug
+  under "Moved to archive", so there is a record of the hand-off.
+
+After deploy, the old post shows in the /news "All posts" grid by its original
+date, its page uses the standard post layout, and its URL keeps working.
+
+### 8. Log the topic
 Append a row to `brand/BLOG-TOPIC-LOG.md`:
 `- YYYY-MM-DD | <slug> | <vertical> | <topic>`
 
-### 8. Check it
+### 9. Check it
 - `npm run build` must pass (it also regenerates the sitemap, RSS feed and the
   pre-rendered post page).
 - Re-read the post once, aloud in your head, against `brand/CONTENT-POLICY.md`.
   Rewrite anything that sounds generic or machine-made.
 
-### 9. Ship it
+### 10. Ship it
 - Commit: `Add featured LoogoNews post: <title>`.
 - Push the branch and open a pull request against `main` titled the same, with
-  the title, excerpt, slug and word count in the body.
+  the title, excerpt, slug and word count in the body, plus the
+  "Moved to archive" line from step 7.
 - Merge the pull request once the checks pass. Netlify deploys `main` and
   applies both migrations; the post goes live already featured.
 
 ### Rules
 - One post per run. If you can't find a pairing that isn't already logged,
   stop and say so instead of reusing one.
-- Never edit an existing post's text, date or status as part of this routine.
+- Never edit, delete or re-date an existing post as part of this routine,
+  including the one being un-featured. Un-featuring only clears its flag.
 - Never hand-write migration SQL; always use the two npm scripts above.
