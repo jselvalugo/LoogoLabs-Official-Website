@@ -17,7 +17,7 @@ const externalLinks = {
   'Distillr': 'https://www.distillrsoftware.com',
   'Book a Call': BOOKING_URL,
   'Facebook': 'https://www.facebook.com/loogolabs',
-  'Instagram': 'https://www.instagram.com/loogolabs.ai',
+  'Instagram': 'https://www.instagram.com/loogolabs.fl',
   'LinkedIn': 'https://www.linkedin.com/company/loogolabs/',
 };
 

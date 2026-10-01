@@ -246,6 +246,7 @@ function Home({ onNavigate }) {
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '64px 0 0' }}>
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
+          <div className="ll-hero-grid">
           <div style={{ maxWidth: '46ch' }}>
             <Badge tone="accent">A Digital Marketing Partner You Can Trust</Badge>
             <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
@@ -261,6 +262,9 @@ function Home({ onNavigate }) {
               <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
               <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
             </div>
+          </div>
+          <img className="ll-hero-art" src="/hero-blocks.webp" width="1200" height="921"
+            alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
           </div>
 
           <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56, borderTop: '1px solid var(--border-hair)' }}>

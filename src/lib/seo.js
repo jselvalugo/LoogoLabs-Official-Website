@@ -38,7 +38,7 @@ export const SITE = {
   // for something whose whole job is to be the profile's stable identity.
   sameAs: [
     'https://www.facebook.com/loogolabs',
-    'https://www.instagram.com/loogolabs.ai',
+    'https://www.instagram.com/loogolabs.fl',
     'https://www.linkedin.com/company/loogolabs/',
   ],
 };
