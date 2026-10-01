@@ -675,3 +675,21 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   transition: background 140ms ease, border-color 140ms ease;
 }
 .cfl-nearby__link:hover { background: var(--ink-900); color: var(--paper-000); }
+
+/* Services: compact 3×2 grid of short cards. */
+.cfl-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+.cfl-service {
+  padding: 18px 18px 16px; border-radius: 14px; background: var(--paper-000); border: 1px solid var(--border-hair);
+  display: grid; gap: 8px; align-content: start;
+}
+.cfl-service__head { display: flex; align-items: baseline; gap: 10px; }
+.cfl-service__num { font-family: var(--font-mono); font-size: 11px; color: var(--ink-400); }
+.cfl-service__title { margin: 0; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-900); }
+.cfl-service__desc { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-500); }
+.cfl-service__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.cfl-service__tags span {
+  padding: 3px 8px; border-radius: 999px; background: var(--paper-100);
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-600);
+}
+@media (max-width: 900px) { .cfl-services { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cfl-services { grid-template-columns: 1fr; } }
