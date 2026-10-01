@@ -158,9 +158,9 @@ export default function BlogPost({ slug, onNavigate }) {
                   </div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-900)' }}>David Selva</div>
                   <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '54ch' }}>
-                    I run Loogo Labs and write every LoogoNews post myself, from what I've actually seen
-                    fixing this stuff for clients — not from a content calendar. Day job's in legal tech;
-                    this is what I build after hours.
+                    Founder of Loogo Labs. I build and run the follow-up, booking and review systems that
+                    keep local service businesses from losing leads, and LoogoNews is where I write down
+                    what holds up once those systems are live, and what doesn't.
                   </p>
                 </div>
               </div>
