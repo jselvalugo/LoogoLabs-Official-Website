@@ -185,9 +185,11 @@ const shell = (heading, lead, extra = '') => `
 // ── Static routes ────────────────────────────────────────────────────────────
 
 import { NICHE_QUIZZES } from '../src/lib/nicheQuizzes.js';
+import { SERVICE_PACKAGES } from '../src/lib/servicePackages.js';
 
 const HEADINGS = {
   ...Object.fromEntries(NICHE_QUIZZES.map((q) => [q.page, q.headline])),
+  ...Object.fromEntries(SERVICE_PACKAGES.map((p) => [p.page, `${p.headline} ${p.accent}`])),
   Home: 'Launch, Grow & Automate Your Business — All in One Place',
   Mission: 'We believe running a business should not require 15 different tools.',
   Company: 'Meet the founder',

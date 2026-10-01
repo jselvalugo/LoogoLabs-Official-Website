@@ -9,6 +9,7 @@
 
 import { NICHE_QUIZZES } from './nicheQuizzes.js';
 import { GROW_FAQ, SERVICE_AREA } from './content.js';
+import { SERVICE_PACKAGES } from './servicePackages.js';
 import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from './cfl.js';
 
 export const SITE = {
@@ -171,6 +172,14 @@ export const ROUTES = [
     priority: '0.7',
     changefreq: 'monthly',
   },
+  ...SERVICE_PACKAGES.map((p) => ({
+    page: p.page,
+    path: p.path,
+    title: `${p.metaTitle} | ${SITE.name}`,
+    description: p.metaDescription,
+    priority: '0.7',
+    changefreq: 'monthly',
+  })),
   {
     // Unlisted: shared by direct link only — kept out of nav, sitemap, llms.txt
     // and served noindex.
