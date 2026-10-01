@@ -42,7 +42,7 @@ const DURATION_BUCKETS = [
 
 // Pages where a visit turns into a lead or a quote. Reading one of these after
 // a post counts as the post sending the reader somewhere useful.
-const MONEY_PATHS = ['/pricing', '/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/quizzes', '/park-supply', '/grow'];
+const MONEY_PATHS = ['/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/quizzes', '/park-supply', '/grow'];
 const POST_PREFIX = '/news/';
 const OPEN_PROPOSAL = ['new', 'reviewing', 'sent'];
 
@@ -622,7 +622,7 @@ export default function Analytics() {
       {/* ── BLOG → NEXT STEP ── */}
       <h2 style={sectionH2}>Blog → next step</h2>
       <p style={sectionNote}>
-        Last 90 days. Onward = the same visit also opened pricing, a product page, a quiz or Park Supply.
+        Last 90 days. Onward = the same visit also opened a product page, a quiz or Park Supply.
         Read-through compares engaged time on the post with its estimated read time.
       </p>
       <div className="ll-grid-4" style={{ gap: 12, marginBottom: 20 }}>

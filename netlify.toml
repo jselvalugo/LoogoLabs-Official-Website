@@ -15,6 +15,13 @@
 # Posts are the exception: one can be published from /admin without a rebuild,
 # so its slug has no file yet. Fall those through to the app, which fetches the
 # post and marks the page noindex if the slug really does not exist.
+# Pricing is withdrawn while plans are reworked; send old links home rather
+# than to a 404.
+[[redirects]]
+  from = "/pricing"
+  to = "/"
+  status = 302
+
 [[redirects]]
   from = "/news/*"
   to = "/index.html"

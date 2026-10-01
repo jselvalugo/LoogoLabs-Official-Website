@@ -4,7 +4,7 @@ import { ROUTES, BLOG_BASE, url } from '../../lib/seo';
 // Pages the homepage already links to — through the nav bar (App.jsx `nav`),
 // the footer columns, and the homepage body itself. Keep in step with those.
 const LINKED_FROM_HOME = new Set([
-  'Home', 'Mission', 'AIVoice', 'LoogoNews', 'Pricing', 'GrowCFL', 'Quizzes', 'Privacy', 'Terms',
+  'Home', 'Mission', 'AIVoice', 'LoogoNews', 'GrowCFL', 'Quizzes', 'Privacy', 'Terms',
 ]);
 
 export default function Links() {
