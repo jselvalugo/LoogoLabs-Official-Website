@@ -30,16 +30,17 @@ export default function Blog({ onNavigate }) {
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
 
       {/* ── MASTHEAD ── */}
-      <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,72px)' }}>
+      <div className="ll-grid-bg--inverse ln-masthead" style={{ background: 'var(--ink-900)' }}>
+        <img className="ln-masthead__art" src="/loogonews-masthead.png" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
+        <div className="ln-masthead__inner" style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,72px)' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 24 }}>
             Loogo Labs · LoogoNews
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
+          <div className="ln-masthead__copy">
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(48px,7vw,96px)', lineHeight: 0.9, letterSpacing: '-0.04em', color: 'var(--paper-100)' }}>
               Marketing<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
             </h1>
-            <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)', paddingBottom: 6 }}>
+            <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)' }}>
               Operational guides, automation strategies, and platform updates — written for business owners running on our system.
             </p>
           </div>
