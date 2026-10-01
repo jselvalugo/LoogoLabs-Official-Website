@@ -1,6 +1,7 @@
 import React from 'react';
 import { apiFetch } from '../../lib/identity';
 import { pathForPage } from '../../lib/seo';
+import { NICHE_SOURCE_PAGES, NICHE_SOURCE_LABELS } from '../../lib/nicheQuizzes';
 
 function formatDate(iso) {
   if (!iso) return '—';
@@ -12,12 +13,14 @@ const SOURCE_PAGES = {
   ai_receptionist: 'AIReceptionist',
   reputation_autopilot: 'ReputationAutopilot',
   park_supply: 'ParkSupply',
+  ...NICHE_SOURCE_PAGES,
 };
 
 const SOURCE_LABELS = {
   ai_receptionist: 'AI Receptionist',
   reputation_autopilot: 'Reputation Autopilot',
   park_supply: 'Park Supply quote',
+  ...NICHE_SOURCE_LABELS,
 };
 
 export default function Leads() {
@@ -25,6 +28,8 @@ export default function Leads() {
   const [loading, setLoading] = React.useState(true);
   const [confirmDeleteId, setConfirmDeleteId] = React.useState(null);
   const [deletingId, setDeletingId] = React.useState(null);
+  const [quiz, setQuiz] = React.useState('all');
+  const shown = quiz === 'all' ? leads : leads.filter((l) => l.source === quiz);
 
   React.useEffect(() => {
     apiFetch('/.netlify/functions/get-leads')
@@ -48,9 +53,16 @@ export default function Leads() {
           Quiz Funnel Leads
         </h1>
         <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-          {leads.length} submission{leads.length === 1 ? '' : 's'}
+          {shown.length} submission{shown.length === 1 ? '' : 's'}{quiz === 'all' ? '' : ` · ${SOURCE_LABELS[quiz] || quiz}`}
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+          <select value={quiz} onChange={(e) => setQuiz(e.target.value)} aria-label="Filter by quiz"
+            style={{ padding: '5px 10px', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', fontSize: 12, fontFamily: 'var(--font-body)', background: 'var(--paper-000)', color: 'var(--ink-900)' }}>
+            <option value="all">All quizzes ({leads.length})</option>
+            {Object.keys(SOURCE_LABELS).map((s) => (
+              <option key={s} value={s}>{SOURCE_LABELS[s]} ({leads.filter((l) => l.source === s).length})</option>
+            ))}
+          </select>
           {Object.entries(SOURCE_PAGES).map(([source, page]) => (
             <a key={source} href={pathForPage(page)} target="_blank" rel="noopener noreferrer"
               style={{ padding: '5px 10px', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', fontSize: 12, color: 'var(--ink-600)', textDecoration: 'none' }}>
@@ -63,7 +75,7 @@ export default function Leads() {
       <div style={{ flex: 1, overflowY: 'auto' }}>
         {loading ? (
           <div style={{ padding: '32px 28px', color: 'var(--ink-400)', fontSize: 13 }}>Loading…</div>
-        ) : leads.length === 0 ? (
+        ) : shown.length === 0 ? (
           <div style={{ padding: '32px 28px', color: 'var(--ink-400)', fontSize: 13 }}>No funnel submissions yet.</div>
         ) : (
           <div className="ll-table-scroll">
@@ -76,7 +88,7 @@ export default function Leads() {
                 </tr>
               </thead>
               <tbody>
-                {leads.map((lead) => (
+                {shown.map((lead) => (
                   <tr key={lead.id} style={{ borderBottom: '1px solid var(--border-hair)' }}>
                     <td style={{ ...tdStickyStyle, fontWeight: 500 }}>{lead.full_name}</td>
                     <td style={tdStyle}>{lead.email}</td>

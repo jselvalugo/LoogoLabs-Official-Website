@@ -1,5 +1,6 @@
 import React from 'react';
 import { apiFetch } from '../../lib/identity';
+import { NICHE_QUIZZES, NICHE_SOURCE_LABELS } from '../../lib/nicheQuizzes';
 
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -11,6 +12,7 @@ function formatDate(iso) {
 const SOURCE_LABELS = {
   ai_receptionist: 'AI Receptionist',
   reputation_autopilot: 'Reputation Autopilot',
+  ...NICHE_SOURCE_LABELS,
 };
 
 // "City, Region" when both are known, falling back gracefully — location is
@@ -42,7 +44,7 @@ const DURATION_BUCKETS = [
 
 // Pages where a visit turns into a lead or a quote. Reading one of these after
 // a post counts as the post sending the reader somewhere useful.
-const MONEY_PATHS = ['/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/quizzes', '/park-supply', '/grow'];
+const MONEY_PATHS = ['/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/quizzes', '/park-supply', '/grow', ...NICHE_QUIZZES.map(q => q.path)];
 const POST_PREFIX = '/news/';
 const OPEN_PROPOSAL = ['new', 'reviewing', 'sent'];
 
@@ -704,7 +706,7 @@ export default function Analytics() {
 
       {/* ── LEAD QUALITY ── */}
       <h2 style={sectionH2}>Lead quality</h2>
-      <p style={sectionNote}>All quiz leads, from both quizzes. Qualified = answered that they make the decision.</p>
+      <p style={sectionNote}>All quiz leads, from every quiz. Qualified = answered that they make the decision.</p>
       <div className="ll-grid-2" style={{ gap: 20, marginBottom: 20 }}>
         <QualityPanel title="By business type" rows={leadsByBusiness} />
         <QualityPanel title="By main pain point" rows={leadsByPain} />
