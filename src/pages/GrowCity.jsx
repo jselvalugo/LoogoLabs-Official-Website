@@ -24,11 +24,11 @@ function GrowCity({ slug }) {
 
         {/* ── HERO ── */}
         <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)',
-          padding: 'clamp(48px,7vw,96px) 0', position: 'relative', overflow: 'hidden' }}>
+          padding: 'clamp(32px,4vw,56px) 0', position: 'relative', overflow: 'hidden' }}>
           <div aria-hidden="true" style={{ position: 'absolute', bottom: -260, left: -160, width: 620, height: 620, borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(134,164,92,0.2) 0%, transparent 65%)', pointerEvents: 'none' }} />
           <Wrap>
-            <nav aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 22 }}>
+            <nav aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 16 }}>
               <a href={CFL_BASE} style={{ color: 'var(--ink-300)', textDecoration: 'none' }}>Central Florida</a>
               <span style={{ color: 'rgba(245,242,235,0.4)', margin: '0 8px' }}>/</span>
               <span style={{ color: 'rgba(245,242,235,0.75)' }}>{c.name}, FL</span>
@@ -36,11 +36,11 @@ function GrowCity({ slug }) {
             <div className="cfl-hero-grid">
               <div>
                 <Eyebrow light>{c.name} local SEO &amp; marketing automation</Eyebrow>
-                <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(34px, 4.8vw, 60px)', lineHeight: 1.04, letterSpacing: '-0.035em' }}>
+                <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(30px, 3.6vw, 46px)', lineHeight: 1.06, letterSpacing: '-0.035em' }}>
                   {c.headline}
                 </h1>
-                <p style={{ maxWidth: '54ch', margin: '24px 0 0', fontSize: 17, lineHeight: 1.7, color: 'rgba(245,242,235,0.75)' }}>{c.intro}</p>
-                <div style={{ marginTop: 34 }}><BookBtn size="lg" label={`Free ${c.name} local audit`} /></div>
+                <p style={{ maxWidth: '54ch', margin: '16px 0 0', fontSize: 16, lineHeight: 1.6, color: 'rgba(245,242,235,0.75)' }}>{c.intro}</p>
+                <div style={{ marginTop: 24 }}><BookBtn label={`Free ${c.name} local audit`} /></div>
               </div>
               <CflMap active={c.slug} />
             </div>
