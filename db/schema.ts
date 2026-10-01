@@ -5,7 +5,8 @@ export const leads = pgTable('leads', {
   created_at: timestamp('created_at').defaultNow(),
   full_name: text('full_name').notNull(),
   email: text('email').notNull(),
-  // Which quiz this lead came from — 'ai_receptionist' or 'reputation_autopilot'.
+  // Which quiz this lead came from — 'ai_receptionist', 'reputation_autopilot', or a
+  // niche quiz source from src/lib/nicheQuizzes.js (e.g. 'quiz_dental').
   source: text('source').default('ai_receptionist'),
   business_type: text('business_type'),
   missed_calls: text('missed_calls'),

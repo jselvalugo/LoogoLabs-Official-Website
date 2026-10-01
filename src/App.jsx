@@ -14,6 +14,7 @@ import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
 import Packages from './pages/Packages';
 import PressRelease from './pages/PressRelease';
+import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { citySlugFromPage } from './lib/cfl';
@@ -24,6 +25,7 @@ const GrowCity = React.lazy(() => import('./pages/GrowCity'));
 const AIVoice = React.lazy(() => import('./pages/AIVoice'));
 const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
+const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
 
 function getInitialState(initialPath) {
@@ -107,6 +109,7 @@ function App({ initialPath }) {
   }
   if (page === 'AIReceptionist') return <><CookieConsent /><React.Suspense fallback={null}><AIReceptionist /></React.Suspense></>;
   if (page === 'ReputationAutopilot') return <><CookieConsent /><React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense></>;
+  if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
   const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];

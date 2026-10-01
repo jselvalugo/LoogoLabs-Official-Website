@@ -7,6 +7,7 @@
 // build time to write static HTML, the sitemap, and the feed. One definition,
 // so the rendered page and the pre-rendered page can never disagree.
 
+import { NICHE_QUIZZES } from './nicheQuizzes.js';
 import { GROW_FAQ, SERVICE_AREA } from './content.js';
 import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from './cfl.js';
 
@@ -143,6 +144,15 @@ export const ROUTES = [
     priority: '0.6',
     changefreq: 'monthly',
   },
+  ...NICHE_QUIZZES.map((q) => ({
+    page: q.page,
+    path: q.path,
+    label: q.label,
+    title: `${q.label} — Free 60-Second Quiz | ${SITE.name}`,
+    description: q.description,
+    priority: '0.6',
+    changefreq: 'monthly',
+  })),
   {
     page: 'Packages',
     path: '/packages',

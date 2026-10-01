@@ -3,6 +3,7 @@ import Badge from '../components/feedback/Badge';
 import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
+import { NICHE_QUIZZES } from '../lib/nicheQuizzes';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -23,6 +24,7 @@ const QUIZZES = [
     time: '60 seconds',
     description: 'Answer a few questions about your review process and find out how many 5-star reviews you\'re likely missing every month — no call required to find out.',
   },
+  ...NICHE_QUIZZES.map((q) => ({ page: q.page, title: q.label, time: '60 seconds', description: q.description })),
 ];
 
 function Quizzes({ onNavigate }) {
