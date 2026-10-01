@@ -197,7 +197,7 @@ const HEADINGS = {
   ReputationAutopilot: 'Every Completed Job Becomes A 5-Star Review Request.',
   Quizzes: 'Free fit-check quizzes for your business',
   Packages: 'Fixed scope. Fixed price. Done for you.',
-  PressRelease: 'Get your business in the news.',
+  PressRelease: 'Get your business in the news. Starting at $149.',
   ParkSupply: 'Pet waste stations & dog park amenities',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',

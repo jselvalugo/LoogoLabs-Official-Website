@@ -15,7 +15,7 @@ const PACKAGES = [
     page: 'PressRelease',
     title: 'Press Release Distribution',
     from: 'From $149',
-    description: 'Get your announcement onto 350+ news sites and in front of journalists in your industry — written, edited, and distributed for you, with a full placement report.',
+    description: 'Get your announcement onto 350+ news sites and Google News — written, edited, and distributed for you, with a full placement report.',
   },
 ];
 

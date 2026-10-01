@@ -13,161 +13,319 @@ const order = (pkg) => {
   openBooking();
 };
 
-const SectionTitle = ({ eyebrow, title, lead }) => (
-  <div style={{ marginBottom: 28 }}>
-    <span className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>{eyebrow}</span>
-    <h2 style={{ margin: '10px 0 0', fontSize: 'var(--fs-h1, 32px)', lineHeight: 1.2, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{title}</h2>
-    {lead && <p style={{ margin: '12px 0 0', maxWidth: '60ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>{lead}</p>}
-  </div>
+const Eyebrow = ({ children, inverse }) => (
+  <div className="ll-eyebrow" style={{ color: inverse ? 'var(--cyan-500)' : 'var(--cyan-700)', textAlign: 'center' }}>{children}</div>
 );
 
-// Prices are ours; outlet lists describe the network, not guaranteed placements.
-const WEB_PACKAGES = [
+const Heading = ({ children, inverse }) => (
+  <h2 style={{ margin: '10px auto 32px', maxWidth: '24ch', textAlign: 'center', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 700,
+    lineHeight: 1.15, letterSpacing: '-0.03em', color: inverse ? 'var(--paper-000)' : 'var(--ink-900)' }}>{children}</h2>
+);
+
+// The value story: what a published release actually does for a business.
+// Platforms are named as plain text, never logos, and nothing here promises a placement.
+const VALUE = [
   {
-    name: 'Web Distribution',
-    price: '$149',
-    unit: 'per release',
-    blurb: 'You send the release, we format it, optimise it, and publish it across the news network.',
-    features: ['350+ downstream news sites', 'Google News indexing', 'Editorial review & formatting', 'Full placement report with live links'],
+    names: ['Google', 'Google News', 'Bing'],
+    title: 'Show up when customers search your name',
+    body: 'Published news pages stay on record, so anyone who looks you up finds a credible story, not just your own site.',
   },
   {
-    name: 'Written + Distributed',
-    price: '$299',
-    unit: 'per release',
-    featured: true,
-    blurb: 'We interview you, write the release, and distribute it. The easiest way to get your news out.',
-    features: ['Everything in Web Distribution', 'Professionally written release (up to 500 words)', 'One round of revisions', 'Headline & SEO keyword optimisation'],
+    names: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'],
+    title: 'Be on the pages AI assistants read',
+    body: 'Answer engines lean on published news as source material. A release gives them something about you to cite.',
   },
   {
-    name: 'Monthly PR Plan',
-    price: '$449',
-    unit: 'per month',
-    blurb: 'Stay in the news every week. Ideal for businesses with regular launches, events, or updates.',
-    features: ['Up to 4 releases per month', 'Written + distributed', 'Monthly placement summary', 'Cancel anytime'],
+    names: ['ABC', 'CBS', 'FOX', 'NBC affiliates'],
+    title: 'Earn an "as seen on" you can share',
+    body: 'Your placement report links to live news pages you can put on your site, socials, and sales decks.',
   },
 ];
 
-const MEDIA_PACKAGES = [
-  ['Local', '$249', 'One city, metro area, or state', 'USA & Canada'],
-  ['Regional', '$299', 'A multi-state region', 'USA & Canada'],
-  ['Nationwide', '$399', 'Journalists across one country', null],
-  ['Global', '$549', 'Journalists worldwide', null],
+const BENEFITS = [
+  ['Instant credibility', 'A real news page about your business builds trust before a customer ever calls.'],
+  ['Stronger search presence', 'News pages rank for your brand name and push your best story to the top of the results.'],
+  ['Cited by AI answers', 'Published news gives ChatGPT, Gemini, and other assistants something accurate to say about you.'],
+  ['Backlinks to your site', 'Links from news pages point people and search engines straight to your website.'],
+  ['Content for every channel', 'Share the live links on your site, Google profile, socials, emails, and sales decks.'],
+  ['Lasting record', 'Your story stays published, working for you long after launch day.'],
 ];
 
-const NETWORK = [
-  'Hundreds of downstream news & business sites',
-  'ABC, CBS, FOX & NBC affiliate TV and radio station sites',
-  'Google News',
-  'Premium add-on outlets such as AP News, USA Today, Barchart & StreetInsider',
-];
+const INCLUDED = ['Distribution to 350+ news & media sites', 'Google News indexing', 'Editorial review & formatting', 'Placement report with every live link'];
+
+const USES = ['Grand openings', 'New locations', 'Product & service launches', 'Awards & milestones', 'New hires & partnerships', 'Events & community work'];
 
 const STEPS = [
-  ['Book a quick call', 'Tell us what you are announcing and pick your package.'],
-  ['We write or polish', 'Your release is edited for news standards and approved by you before it goes out.'],
-  ['We distribute', 'Published across the network, and pitched to journalists if you chose media outreach.'],
-  ['You get a report', 'A full list of live placements you can share with customers and on social.'],
+  ['You tell us what\'s new', 'A quick call, a draft, or rough notes — no finished copy required.'],
+  ['We shape the story', 'We agree the angle with you, or find one in what you send us.'],
+  ['We polish the release', 'Edited to the format and standard news sites expect.'],
+  ['You sign it off', 'Nothing goes to the network until you approve it.'],
 ];
 
-function Check() {
-  return <span style={{ color: 'var(--cyan-700)', fontWeight: 700, flexShrink: 0 }}>✓</span>;
-}
+// Fictional example business — used only to illustrate what a release and report look like.
+const EXAMPLE = {
+  company: 'Lakeside Comfort HVAC',
+  headline: 'Lakeside Comfort HVAC Opens Second Central Florida Location',
+  dateline: 'CELEBRATION, Fla.',
+  site: 'lakesidecomfort.com',
+};
+
+// Outlet types in the distribution network. Shown as text wordmarks, not logos.
+const PLACEMENTS = [
+  { outlet: 'Google News', style: { fontWeight: 600 }, path: 'news.google.com', note: 'Indexed' },
+  { outlet: 'FOX affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business news' },
+  { outlet: 'NBC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station press releases' },
+  { outlet: 'CBS affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station news partners' },
+  { outlet: 'ABC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business wire' },
+  { outlet: 'AP News', style: { fontWeight: 800 }, path: 'apnews.com/press-release', note: 'Add-on' },
+  { outlet: 'Barchart', style: { fontWeight: 700 }, path: 'barchart.com/story/news', note: 'Add-on' },
+];
+
+const FAQ = [
+  ['How fast does it go live?', 'Once you approve your release, we schedule it for distribution and send your placement report when it is live. Timing varies by release.'],
+  ['Which sites will I appear on?', 'Your release is distributed across a network of 350+ news and media sites, including broadcast affiliate pages. Specific outlets are not guaranteed and depend on each outlet\'s editorial policies.'],
+  ['Is this the same as getting featured by a journalist?', 'No. This is paid distribution of your announcement, not an earned story. It builds search presence and credibility; any journalist pickup is a bonus.'],
+  ['What can\'t I publish?', 'Releases must be genuine news and meet content guidelines — no adult, gambling, or misleading claims. We will flag anything before it goes out.'],
+];
+
+const Check = () => <span style={{ color: 'var(--cyan-700)', fontWeight: 700, flexShrink: 0 }}>✓</span>;
 
 function PressRelease() {
   return (
     <main>
-      <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
-        <Badge tone="accent">Packaged service</Badge>
-        <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
-          letterSpacing: 'var(--ls-display-2)', maxWidth: '22ch' }}>
-          Get your business in the news.
+      {/* ── HERO ── */}
+      <Wrap style={{ padding: '64px 24px 48px', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">Press release distribution</Badge></div>
+        <h1 style={{ margin: '18px auto 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
+          letterSpacing: 'var(--ls-display-2)', maxWidth: '20ch' }}>
+          Get your business in the news. <span style={{ color: 'var(--cyan-700)' }}>Starting at $149.</span>
         </h1>
-        <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-          Press release writing and distribution to hundreds of news sites, broadcast affiliate pages, and
-          industry journalists. Fixed prices, done for you, with a report of every placement.
+        <p style={{ maxWidth: '56ch', margin: '18px auto 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
+          We write, publish, and report on your press release across 350+ news sites — so customers, search engines,
+          and AI assistants find a credible story when they look you up.
         </p>
-        <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}>
           <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('hero')}>Book a release</Button>
         </div>
+        <div style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
+          Fixed price · Done for you · Full placement report
+        </div>
       </Wrap>
 
-      <Wrap style={{ padding: '64px 24px' }}>
-        <SectionTitle eyebrow="Web distribution" title="Pick a package"
-          lead="Every release goes out across our news distribution network and is indexed by Google News." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
-          {WEB_PACKAGES.map((p) => (
-            <Card key={p.name} emphasis={p.featured ? 'strong' : undefined} padding={28}
-              style={{ display: 'flex', flexDirection: 'column', gap: 16, ...(p.featured ? { borderColor: 'var(--cyan-700)' } : null) }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                <h3 style={{ margin: 0, fontSize: 18, color: 'var(--ink-900)' }}>{p.name}</h3>
-                {p.featured && <Badge tone="accent">Recommended</Badge>}
+      {/* ── WHY IT WORKS ── */}
+      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: '56px 0' }}>
+        <Wrap>
+          <Eyebrow inverse>Why it works</Eyebrow>
+          <Heading inverse>Why businesses publish a release before their big month</Heading>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+            {VALUE.map((v) => (
+              <div key={v.title} style={{ background: 'var(--paper-000)', borderRadius: 'var(--radius-3)', padding: 24 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 16, borderBottom: '1px solid var(--border-hair)' }}>
+                  {v.names.map((n) => (
+                    <span key={n} style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-600)', background: 'var(--paper-200)',
+                      borderRadius: 999, padding: '4px 10px' }}>{n}</span>
+                  ))}
+                </div>
+                <h3 style={{ margin: '16px 0 8px', fontSize: 18, lineHeight: 1.25, color: 'var(--ink-900)' }}>{v.title}</h3>
+                <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{v.body}</p>
               </div>
-              <div>
-                <span style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>{p.price}</span>
-                <span style={{ marginLeft: 6, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{p.unit}</span>
+            ))}
+          </div>
+        </Wrap>
+      </section>
+
+      {/* ── WE DRAFT, YOU SIGN OFF ── */}
+      <Wrap style={{ padding: '56px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, alignItems: 'end' }}>
+          <div>
+            <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>No PR team needed — that's our job</div>
+            <h2 style={{ margin: '10px 0 0', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+              We shape your release. You sign it off.
+            </h2>
+          </div>
+          <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+            Tell us what's new in your business and we turn it into a release that reads like news.
+            It comes back to you for approval before any site sees it.
+          </p>
+        </div>
+        <ol style={{ listStyle: 'none', margin: '36px 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 24 }}>
+          {STEPS.map(([t, d], i) => (
+            <li key={t}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--ink-900)', color: 'var(--paper-000)', flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700 }}>0{i + 1}</span>
+                <span style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
               </div>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)' }}>{p.blurb}</p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8, flex: 1 }}>
-                {p.features.map((f) => (
-                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--ink-700)' }}><Check />{f}</li>
-                ))}
+              <h3 style={{ margin: '16px 0 6px', fontSize: 17, color: 'var(--ink-900)' }}>{t}</h3>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            </li>
+          ))}
+        </ol>
+        <div style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between',
+          background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderLeft: '4px solid var(--cyan-700)', borderRadius: 'var(--radius-2)', padding: '18px 22px' }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Start whenever suits you.</div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 4, fontSize: 14.5, color: 'var(--ink-600)' }}><Check />Nothing is published until you say yes.</div>
+          </div>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('draft')}>Get my release started</Button>
+        </div>
+      </Wrap>
+
+      {/* ── 01 YOUR RELEASE ── */}
+      <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', padding: '56px 0' }}>
+        <Wrap>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>01</div>
+              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your release</div>
+              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+                A ready-to-publish release, written like news
+              </h2>
+              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+                Your links sit inside the story, where readers and search engines follow them. Your company
+                boilerplate and contact details close it out, just like a real newsroom release.
+              </p>
+              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
+                {['Headline and angle built for search', 'Links to your site worked into the copy', 'Your sign-off before anything is sent'].map((f) =>
+                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
               </ul>
-              <Button variant={p.featured ? 'primary' : 'secondary'} size="lg" fullWidth onClick={() => order(p.name)}>Get started</Button>
-            </Card>
-          ))}
-        </div>
-      </Wrap>
-
-      <Wrap style={{ padding: '0 24px 64px' }}>
-        <SectionTitle eyebrow="Web + media outreach" title="Put your story in front of journalists"
-          lead="Everything in Web Distribution, plus targeted outreach to journalists and editors across five industry categories you choose. Priced per release." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
-          {MEDIA_PACKAGES.map(([name, price, reach, note]) => (
-            <Card key={name} padding={24} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <h3 style={{ margin: 0, fontSize: 16, color: 'var(--ink-900)' }}>{name}</h3>
-              <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>{price}</span>
-              <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-500)', flex: 1 }}>{reach}{note && <><br /><span style={{ fontSize: 12, color: 'var(--ink-400)' }}>{note} only</span></>}</p>
-              <Button variant="secondary" fullWidth onClick={() => order(`Media ${name}`)}>Choose {name}</Button>
-            </Card>
-          ))}
-        </div>
-      </Wrap>
-
-      <Wrap style={{ padding: '64px 24px', borderTop: '1px solid var(--border-hair)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 48 }}>
-          <div>
-            <SectionTitle eyebrow="The network" title="Where your release can appear" />
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 12 }}>
-              {NETWORK.map((n) => <li key={n} style={{ display: 'flex', gap: 10, fontSize: 15, color: 'var(--ink-700)' }}><Check />{n}</li>)}
-            </ul>
-            <p style={{ margin: '16px 0 0', fontSize: 12, lineHeight: 1.6, color: 'var(--ink-400)' }}>
-              Placement on any specific outlet is not guaranteed and depends on the outlet's editorial policies.
-              Premium outlets are available as add-ons. Releases must meet news content guidelines.
-            </p>
+            </div>
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', borderBottom: '1px solid var(--border-hair)', background: 'var(--paper-100)' }}>
+                {[0, 1, 2].map((i) => <span key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border-hair)' }} />)}
+                <span style={{ marginLeft: 8, flex: 1, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', background: 'var(--paper-000)',
+                  border: '1px solid var(--border-hair)', borderRadius: 999, padding: '4px 12px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                  news-site.com/press-release/lakeside-comfort-second-location
+                </span>
+              </div>
+              <div style={{ padding: '22px 24px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-700)',
+                  background: 'var(--paper-200)', borderRadius: 999, padding: '4px 10px' }}>Press release</span>
+                <h3 style={{ margin: '14px 0 8px', fontSize: 21, lineHeight: 1.25, color: 'var(--ink-900)' }}>{EXAMPLE.headline}</h3>
+                <div style={{ fontSize: 12.5, color: 'var(--ink-400)' }}>By {EXAMPLE.company} · Celebration, Florida</div>
+                <p style={{ margin: '14px 0 0', paddingTop: 14, borderTop: '1px solid var(--border-hair)', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
+                  <strong style={{ color: 'var(--ink-900)' }}>{EXAMPLE.dateline}</strong> — {EXAMPLE.company} has opened a second location,
+                  bringing same-day repair and installation to more homeowners across Osceola County.
+                </p>
+                <p style={{ margin: '10px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
+                  Details and booking are available at <span style={{ color: 'var(--cyan-700)', textDecoration: 'underline' }}>{EXAMPLE.site}/new-location</span>.
+                </p>
+                <p style={{ margin: '14px 0 0', fontSize: 12, color: 'var(--ink-400)' }}>Example release for illustration.</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <SectionTitle eyebrow="How it works" title="Four steps, no busywork" />
-            <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 16 }}>
-              {STEPS.map(([t, d], i) => (
-                <li key={t} style={{ display: 'flex', gap: 16 }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cyan-700)', paddingTop: 3 }}>0{i + 1}</span>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--ink-900)' }}>{t}</div>
-                    <div style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)' }}>{d}</div>
-                  </div>
-                </li>
+        </Wrap>
+      </section>
+
+      {/* ── 02 YOUR PLACEMENTS ── */}
+      <section style={{ padding: '56px 0' }}>
+        <Wrap>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>02</div>
+              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your placements</div>
+              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+                Live across 350+ news sites
+              </h2>
+              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+                One announcement, published across the network — every placement a dated news page carrying
+                your name and your links, and a crawlable page search engines and AI assistants can read.
+              </p>
+              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
+                {['Broadcast affiliate and business news sites', 'Indexed by Google News', 'A report with every live link'].map((f) =>
+                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
+              </ul>
+            </div>
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
+              <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border-hair)' }}>
+                <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Placement report</div>
+                <div style={{ fontSize: 13, color: 'var(--ink-400)' }}>{EXAMPLE.company} · Second location</div>
+              </div>
+              {PLACEMENTS.map((pl) => (
+                <div key={pl.outlet} style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: 12, alignItems: 'center', padding: '11px 22px', borderBottom: '1px solid var(--border-hair)' }}>
+                  <span style={{ fontSize: 13.5, color: 'var(--ink-900)', ...pl.style }}>{pl.outlet}</span>
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: 'var(--ink-800)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{EXAMPLE.headline}</span>
+                    <span style={{ display: 'block', fontSize: 12, color: 'var(--cyan-700)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{pl.path}</span>
+                  </span>
+                  {pl.note ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{pl.note}</span> : <span />}
+                </div>
               ))}
-            </ol>
+              <div style={{ padding: '12px 22px', fontSize: 12, color: 'var(--ink-400)', background: 'var(--paper-100)' }}>
+                + hundreds more sites across the network · Example report for illustration. Outlets vary by release; add-ons cost extra.
+              </div>
+            </div>
           </div>
+        </Wrap>
+      </section>
+
+      {/* ── BENEFITS ── */}
+      <Wrap style={{ padding: '56px 24px' }}>
+        <Eyebrow>What you get</Eyebrow>
+        <Heading>One release. Benefits that keep paying off.</Heading>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
+          {BENEFITS.map(([t, d]) => (
+            <div key={t} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '18px 20px' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Check />
+                <h3 style={{ margin: 0, fontSize: 16, color: 'var(--ink-900)' }}>{t}</h3></div>
+              <p style={{ margin: '6px 0 0 22px', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* ── PRICE ── */}
+        <Card emphasis="strong" padding={28} style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between', borderColor: 'var(--cyan-700)' }}>
+          <div>
+            <div className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Starting at</div>
+            <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)', lineHeight: 1.1 }}>$149</div>
+            <div style={{ fontSize: 13, color: 'var(--ink-500)' }}>per release · fixed price</div>
+          </div>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 7 }}>
+            {INCLUDED.map((f) => <li key={f} style={{ display: 'flex', gap: 10, fontSize: 14.5, color: 'var(--ink-700)' }}><Check />{f}</li>)}
+          </ul>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('price')}>Book a release</Button>
+        </Card>
+      </Wrap>
+
+      {/* ── USES ── */}
+      <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', borderBottom: '1px solid var(--border-hair)', padding: '48px 0' }}>
+        <Wrap>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40 }}>
+            <div>
+              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>Great for</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 14 }}>
+                {USES.map((u) => (
+                  <span key={u} style={{ fontSize: 14, color: 'var(--ink-700)', background: 'var(--paper-000)',
+                    border: '1px solid var(--border-hair)', borderRadius: 999, padding: '6px 14px' }}>{u}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Wrap>
+      </section>
+
+      {/* ── FAQ ── */}
+      <Wrap style={{ padding: '56px 24px 40px', maxWidth: 760 }}>
+        <Eyebrow>FAQ</Eyebrow>
+        <Heading>Good questions</Heading>
+        <div style={{ display: 'grid', gap: 10 }}>
+          {FAQ.map(([q, a]) => (
+            <details key={q} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '14px 18px' }}>
+              <summary style={{ cursor: 'pointer', fontWeight: 700, fontSize: 15, color: 'var(--ink-900)' }}>{q}</summary>
+              <p style={{ margin: '10px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)' }}>{a}</p>
+            </details>
+          ))}
         </div>
       </Wrap>
 
-      <Wrap style={{ padding: '0 24px 88px' }}>
-        <Card emphasis="strong" padding={32} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* ── CTA ── */}
+      <Wrap style={{ padding: '24px 24px 80px' }}>
+        <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ maxWidth: '52ch' }}>
-            <h2 style={{ margin: 0, fontSize: 24, color: 'var(--ink-900)' }}>Have news to share?</h2>
-            <p style={{ margin: '8px 0 0', fontSize: 15, color: 'var(--ink-500)' }}>Book a 15-minute call and we will recommend the right package for your announcement.</p>
+            <h2 style={{ margin: 0, fontSize: 22, color: 'var(--ink-900)' }}>Have news to share?</h2>
+            <p style={{ margin: '6px 0 0', fontSize: 15, color: 'var(--ink-500)' }}>Book a 15-minute call and we'll get your release moving.</p>
           </div>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('footer')}>Book a call</Button>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('footer')}>Book a release</Button>
         </Card>
       </Wrap>
     </main>

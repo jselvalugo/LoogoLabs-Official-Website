@@ -167,7 +167,7 @@ export const ROUTES = [
     path: '/packages/press-release',
     title: `Press Release Writing & Distribution | ${SITE.name}`,
     description:
-      'Press release writing and distribution to 350+ news sites, broadcast affiliate pages, Google News, and industry journalists. Fixed prices from $149.',
+      'Press release writing and distribution to 350+ news sites, broadcast affiliate pages, and Google News. Fixed prices from $149.',
     priority: '0.7',
     changefreq: 'monthly',
   },
