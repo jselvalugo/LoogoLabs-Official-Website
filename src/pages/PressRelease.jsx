@@ -42,30 +42,16 @@ const VALUE = [
   },
 ];
 
-const PACKAGES = [
-  {
-    name: 'Web Distribution',
-    price: '$149',
-    unit: 'per release',
-    blurb: 'You write it, we polish and publish it.',
-    features: ['350+ news & media sites', 'Google News indexing', 'Editorial review & formatting', 'Placement report with live links'],
-  },
-  {
-    name: 'Written + Distributed',
-    price: '$299',
-    unit: 'per release',
-    featured: true,
-    blurb: 'We write it from a short interview, then publish it.',
-    features: ['Everything in Web Distribution', 'Professionally written (up to 500 words)', 'One round of revisions', 'Headline & keyword optimisation'],
-  },
-  {
-    name: 'Monthly PR Plan',
-    price: '$449',
-    unit: 'per month',
-    blurb: 'Stay in the news every week.',
-    features: ['Up to 4 releases a month', 'Written + distributed', 'Monthly placement summary', 'Cancel anytime'],
-  },
+const BENEFITS = [
+  ['Instant credibility', 'A real news page about your business builds trust before a customer ever calls.'],
+  ['Stronger search presence', 'News pages rank for your brand name and push your best story to the top of the results.'],
+  ['Cited by AI answers', 'Published news gives ChatGPT, Gemini, and other assistants something accurate to say about you.'],
+  ['Backlinks to your site', 'Links from news pages point people and search engines straight to your website.'],
+  ['Content for every channel', 'Share the live links on your site, Google profile, socials, emails, and sales decks.'],
+  ['Lasting record', 'Your story stays published, working for you long after launch day.'],
 ];
+
+const INCLUDED = ['Distribution to 350+ news & media sites', 'Google News indexing', 'Editorial review & formatting', 'Placement report with every live link'];
 
 const USES = ['Grand openings', 'New locations', 'Product & service launches', 'Awards & milestones', 'New hires & partnerships', 'Events & community work'];
 
@@ -77,7 +63,7 @@ const STEPS = [
 ];
 
 const FAQ = [
-  ['How fast does it go live?', 'Most releases publish within 1–2 business days of your approval.'],
+  ['How fast does it go live?', 'Once you approve your release, we schedule it for distribution and send your placement report when it is live. Timing varies by release.'],
   ['Which sites will I appear on?', 'Your release is distributed across a network of 350+ news and media sites, including broadcast affiliate pages. Specific outlets are not guaranteed and depend on each outlet\'s editorial policies.'],
   ['Is this the same as getting featured by a journalist?', 'No. This is paid distribution of your announcement, not an earned story. It builds search presence and credibility; any journalist pickup is a bonus.'],
   ['What can\'t I publish?', 'Releases must be genuine news and meet content guidelines — no adult, gambling, or misleading claims. We will flag anything before it goes out.'],
@@ -103,7 +89,7 @@ function PressRelease() {
           <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('hero')}>Book a release</Button>
         </div>
         <div style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-          Fixed price · Live in 1–2 days · Full placement report
+          Fixed price · Done for you · Full placement report
         </div>
       </Wrap>
 
@@ -129,30 +115,32 @@ function PressRelease() {
         </Wrap>
       </section>
 
-      {/* ── PACKAGES ── */}
+      {/* ── BENEFITS ── */}
       <Wrap style={{ padding: '56px 24px' }}>
-        <Eyebrow>Pricing</Eyebrow>
-        <Heading>Simple, fixed-price packages</Heading>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16 }}>
-          {PACKAGES.map((p) => (
-            <Card key={p.name} emphasis={p.featured ? 'strong' : undefined} padding={24}
-              style={{ display: 'flex', flexDirection: 'column', gap: 14, ...(p.featured ? { borderColor: 'var(--cyan-700)' } : null) }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                <h3 style={{ margin: 0, fontSize: 17, color: 'var(--ink-900)' }}>{p.name}</h3>
-                {p.featured && <Badge tone="accent">Recommended</Badge>}
-              </div>
-              <div>
-                <span style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>{p.price}</span>
-                <span style={{ marginLeft: 6, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{p.unit}</span>
-              </div>
-              <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-500)' }}>{p.blurb}</p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 7, flex: 1 }}>
-                {p.features.map((f) => <li key={f} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--ink-700)' }}><Check />{f}</li>)}
-              </ul>
-              <Button variant={p.featured ? 'primary' : 'secondary'} size="lg" fullWidth onClick={() => order(p.name)}>Get started</Button>
-            </Card>
+        <Eyebrow>What you get</Eyebrow>
+        <Heading>One release. Benefits that keep paying off.</Heading>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
+          {BENEFITS.map(([t, d]) => (
+            <div key={t} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '18px 20px' }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Check />
+                <h3 style={{ margin: 0, fontSize: 16, color: 'var(--ink-900)' }}>{t}</h3></div>
+              <p style={{ margin: '6px 0 0 22px', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            </div>
           ))}
         </div>
+
+        {/* ── PRICE ── */}
+        <Card emphasis="strong" padding={28} style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between', borderColor: 'var(--cyan-700)' }}>
+          <div>
+            <div className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Starting at</div>
+            <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)', lineHeight: 1.1 }}>$149</div>
+            <div style={{ fontSize: 13, color: 'var(--ink-500)' }}>per release · fixed price</div>
+          </div>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 7 }}>
+            {INCLUDED.map((f) => <li key={f} style={{ display: 'flex', gap: 10, fontSize: 14.5, color: 'var(--ink-700)' }}><Check />{f}</li>)}
+          </ul>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('price')}>Book a release</Button>
+        </Card>
       </Wrap>
 
       {/* ── USES + HOW IT WORKS ── */}
@@ -205,7 +193,7 @@ function PressRelease() {
         <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ maxWidth: '52ch' }}>
             <h2 style={{ margin: 0, fontSize: 22, color: 'var(--ink-900)' }}>Have news to share?</h2>
-            <p style={{ margin: '6px 0 0', fontSize: 15, color: 'var(--ink-500)' }}>Book a 15-minute call and we'll get your release live this week.</p>
+            <p style={{ margin: '6px 0 0', fontSize: 15, color: 'var(--ink-500)' }}>Book a 15-minute call and we'll get your release moving.</p>
           </div>
           <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('footer')}>Book a release</Button>
         </Card>
