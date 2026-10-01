@@ -168,9 +168,6 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* CTA box */}
             <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 14 }}>
-                Loogo Labs · Get started
-              </div>
               <h3 style={{ margin: '0 0 14px', fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, lineHeight: 1.2, color: 'var(--paper-100)', letterSpacing: '-0.02em' }}>
                 Want this running in your business?
               </h3>

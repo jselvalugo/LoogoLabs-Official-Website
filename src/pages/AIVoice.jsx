@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 
@@ -116,13 +115,8 @@ export default function AIVoice() {
       <section style={{ position: 'relative', background: 'var(--ink-900)', padding: 'clamp(72px,10vw,120px) 0 clamp(56px,7vw,88px)', overflow: 'hidden' }}>
         <div className="ll-hero-grid-bg" aria-hidden="true" />
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="inverse">Loogo Labs · AI Voice Agents</Badge>
-          </div>
-
           <h1 style={{
-            margin: '20px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
+            margin: 0, fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
             letterSpacing: 'var(--ls-display-1)', color: 'var(--paper-100)', maxWidth: '17ch',
           }}>
             Your Business Answers Every Call. <span style={{ color: 'var(--cyan-500)' }}>Even the 2 A.M. Ones.</span>
