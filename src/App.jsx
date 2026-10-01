@@ -14,6 +14,8 @@ import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
 import Packages from './pages/Packages';
 import PressRelease from './pages/PressRelease';
+import ServicePackage from './pages/ServicePackage';
+import { SERVICE_PACKAGE_BY_PAGE } from './lib/servicePackages';
 import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
@@ -121,6 +123,7 @@ function App({ initialPath }) {
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
   else if (page === 'Packages') body = <Packages onNavigate={navigate} />;
   else if (page === 'PressRelease') body = <PressRelease />;
+  else if (SERVICE_PACKAGE_BY_PAGE[page]) body = <ServicePackage key={page} page={page} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;

@@ -3,6 +3,7 @@ import Badge from '../components/feedback/Badge';
 import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
+import { SERVICE_PACKAGES } from '../lib/servicePackages';
 
 const Wrap = ({ children, style }) => (
   <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
@@ -17,6 +18,7 @@ const PACKAGES = [
     from: 'From $149',
     description: 'Get your announcement onto 350+ news sites and Google News — written, edited, and distributed for you, with a full placement report.',
   },
+  ...SERVICE_PACKAGES.map((p) => ({ page: p.page, title: p.cardTitle, from: p.from, description: p.cardDescription })),
 ];
 
 function Packages({ onNavigate }) {
@@ -47,7 +49,7 @@ function Packages({ onNavigate }) {
                   <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>{p.title}</h2>
                   <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>{p.description}</p>
                 </div>
-                <Button variant="primary" size="lg" iconRight={<span>→</span>}>View packages</Button>
+                <Button variant="primary" size="lg" iconRight={<span>→</span>}>View package</Button>
               </Card>
             </a>
           ))}

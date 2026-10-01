@@ -706,3 +706,25 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 @media (max-width: 400px) {
   .ll-hero-badge { letter-spacing: 0.04em !important; padding: 3px 6px !important; }
 }
+
+/* LoogoNews masthead: office artwork bleeds in from the right on desktop and
+   sits as a banner under the copy on mobile. The PNG fades to transparent on
+   its left and bottom edges so it blends into --ink-900. */
+.ln-masthead { position: relative; overflow: hidden; }
+.ln-masthead__inner { position: relative; z-index: 1; }
+.ln-masthead__copy { display: grid; gap: 28px; max-width: 46%; }
+.ln-masthead__art {
+  position: absolute; top: 0; right: 0; height: 100%; width: auto; max-width: 58%;
+  object-fit: cover; object-position: right top; pointer-events: none;
+}
+@media (max-width: 860px) {
+  .ln-masthead { display: flex; flex-direction: column-reverse; }
+  .ln-masthead__copy { max-width: none; }
+  .ln-masthead__inner { padding-bottom: 8px !important; }
+  .ln-masthead__art {
+    position: static; display: block; height: 260px; width: 100%; max-width: none;
+    object-position: 75% 30%; margin-top: -24px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%);
+            mask-image: linear-gradient(to bottom, transparent, #000 22%);
+  }
+}
