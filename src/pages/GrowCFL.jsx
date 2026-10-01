@@ -16,22 +16,22 @@ function GrowCFL() {
 
         {/* ── HERO ── */}
         <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)',
-          padding: 'clamp(56px,8vw,104px) 0', position: 'relative', overflow: 'hidden' }}>
+          padding: 'clamp(36px,4.5vw,60px) 0', position: 'relative', overflow: 'hidden' }}>
           <div aria-hidden="true" style={{ position: 'absolute', top: -200, right: -120, width: 640, height: 640, borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(134,164,92,0.22) 0%, transparent 65%)', pointerEvents: 'none' }} />
           <Wrap>
             <div className="cfl-hero-grid">
               <div>
                 <Eyebrow light>Orlando · Kissimmee · Celebration · and beyond</Eyebrow>
-                <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(38px, 5.4vw, 68px)', lineHeight: 1.02, letterSpacing: '-0.04em' }}>
+                <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(32px, 4vw, 50px)', lineHeight: 1.04, letterSpacing: '-0.04em' }}>
                   Central Florida's local SEO &amp; <span style={{ color: 'var(--ink-300)' }}>marketing automation</span> team.
                 </h1>
-                <p style={{ maxWidth: '52ch', margin: '26px 0 0', fontSize: 18, lineHeight: 1.65, color: 'rgba(245,242,235,0.75)' }}>
+                <p style={{ maxWidth: '52ch', margin: '18px 0 0', fontSize: 16, lineHeight: 1.6, color: 'rgba(245,242,235,0.75)' }}>
                   We put Central Florida businesses at the top of Google Maps in the cities they serve — then make sure every
                   call, form, and message gets an instant reply, a follow-up, and a review request. Built locally, for this market only.
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 36, flexWrap: 'wrap' }}>
-                  <BookBtn size="lg" label="Get my free local audit" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 26, flexWrap: 'wrap' }}>
+                  <BookBtn label="Get my free local audit" />
                   <a href="#cities"
                     onClick={(e) => { e.preventDefault(); document.getElementById('cities')?.scrollIntoView({ behavior: 'smooth' }); }}
                     style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase',
@@ -39,7 +39,7 @@ function GrowCFL() {
                     Find your city ↓
                   </a>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 36 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 24 }}>
                   {COUNTIES.map((c) => (
                     <span key={c} style={{ padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(245,242,235,0.2)',
                       fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'rgba(245,242,235,0.8)' }}>{c}</span>

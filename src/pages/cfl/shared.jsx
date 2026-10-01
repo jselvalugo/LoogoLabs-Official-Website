@@ -85,8 +85,8 @@ const COORDS = {
   'altamonte-springs': [28.661, -81.366], oviedo: [28.67, -81.208], apopka: [28.676, -81.512],
 };
 const BOUNDS = { latMin: 28.18, latMax: 28.86, lonMin: -81.84, lonMax: -81.02 };
-// Labels that would collide with a neighbour's sit on the pin's left instead.
-const LEFT_LABEL = new Set(['altamonte-springs']);
+// Labels that would collide with a neighbour's sit under the pin instead.
+const BELOW_LABEL = new Set(['altamonte-springs']);
 const W = 520;
 const H = 500;
 const project = ([lat, lon]) => [
@@ -96,7 +96,7 @@ const project = ([lat, lon]) => [
 
 /** Stylised pin map of the service area; each pin links to its city page. */
 export const CflMap = ({ active }) => (
-  <div className="cfl-glass" style={{ padding: 18 }}>
+  <div className="cfl-glass" style={{ padding: 12, maxWidth: 400, width: '100%', justifySelf: 'end' }}>
     <svg className="cfl-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of the Central Florida cities we serve"
       style={{ width: '100%', height: 'auto', display: 'block' }}>
       <defs>
@@ -122,7 +122,7 @@ export const CflMap = ({ active }) => (
             {on && <circle cx={x} cy={y} r="40" fill="url(#cfl-glow)" />}
             <circle className="cfl-map-pin" cx={x} cy={y} r={on ? 8 : 6}
               fill={on ? 'var(--ink-300)' : 'var(--paper-000)'} stroke="var(--ink-900)" strokeWidth="2" />
-            <text x={LEFT_LABEL.has(c.slug) ? x - 12 : x + 12} y={y + 4} textAnchor={LEFT_LABEL.has(c.slug) ? 'end' : 'start'} fill={on ? 'var(--ink-300)' : 'rgba(245,242,235,0.85)'}
+            <text x={BELOW_LABEL.has(c.slug) ? x : x + 12} y={BELOW_LABEL.has(c.slug) ? y + 22 : y + 4} textAnchor={BELOW_LABEL.has(c.slug) ? 'middle' : 'start'} fill={on ? 'var(--ink-300)' : 'rgba(245,242,235,0.85)'}
               fontFamily="var(--font-body)" fontSize={on ? 15 : 13} fontWeight={on ? 700 : 500}>{c.name}</text>
           </a>
         );
