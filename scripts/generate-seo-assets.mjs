@@ -117,7 +117,7 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 
 const NAV_LINKS = ROUTES
   .filter((r) => r.page !== 'Home' && !r.unlisted)
-  .map((r) => `<li><a href="${r.path}">${esc(r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page)}</a></li>`)
+  .map((r) => `<li><a href="${r.path}">${esc(r.label || r.page)}</a></li>`)
   .join('');
 
 function headTags(head) {
@@ -379,7 +379,7 @@ and republish them; please credit ${SITE.name} and link back to the source URL.
 
 ## Pages
 
-${ROUTES.filter((r) => !r.unlisted).map((r) => `- [${r.page === 'LoogoNews' ? 'LoogoNews' : r.page === 'GrowCFL' ? 'Central Florida' : r.page}](${url(r.path)}): ${r.description}`).join('\n')}
+${ROUTES.filter((r) => !r.unlisted).map((r) => `- [${r.label || r.page}](${url(r.path)}): ${r.description}`).join('\n')}
 
 ## Articles
 

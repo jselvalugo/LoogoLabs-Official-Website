@@ -8,6 +8,7 @@
 // so the rendered page and the pre-rendered page can never disagree.
 
 import { PLANS, ANNUAL_DISCOUNT, GROW_FAQ, SERVICE_AREA } from './content.js';
+import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from './cfl.js';
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -96,12 +97,22 @@ export const ROUTES = [
   {
     page: 'GrowCFL',
     path: '/grow',
-    title: `Central Florida Marketing Systems | ${SITE.name}`,
+    label: 'Central Florida',
+    title: `Central Florida Local SEO & Marketing Automation | ${SITE.name}`,
     description:
-      'Automated lead follow-up, local SEO, and reputation management for Central Florida service businesses. Stop losing customers to whoever answers first.',
+      'Local SEO, automated lead follow-up, and review generation for businesses in Orlando, Kissimmee, Celebration, and across Central Florida.',
     priority: '0.9',
     changefreq: 'monthly',
   },
+  ...CITIES.map((c) => ({
+    page: cityPageKey(c.slug),
+    path: cityPath(c.slug),
+    label: `${c.name}, FL`,
+    title: `${c.name}, FL Local SEO & Marketing Automation | ${SITE.name}`,
+    description: `Local SEO, Google Business Profile, review automation, and instant lead follow-up for ${c.name} businesses. ${c.intro.split('. ')[0]}.`,
+    priority: '0.8',
+    changefreq: 'monthly',
+  })),
   {
     page: 'AIVoice',
     path: '/ai-voice',
@@ -442,6 +453,23 @@ export const localBusinessLd = () => ({
   priceRange: '$$',
 });
 
+// A city page describes the same business serving one city, so it points at the
+// hub's LocalBusiness node instead of minting a second business entity.
+export const cityServiceLd = (city) => ({
+  '@type': 'Service',
+  '@id': url(`${cityPath(city.slug)}#service`),
+  name: `Local SEO & marketing automation in ${city.name}, FL`,
+  serviceType: 'Local SEO and marketing automation',
+  url: url(cityPath(city.slug)),
+  description: city.intro,
+  provider: { '@id': url('/grow#localbusiness') },
+  areaServed: {
+    '@type': 'City',
+    name: city.name,
+    containedInPlace: { '@type': 'AdministrativeArea', name: `${city.county}, Florida` },
+  },
+});
+
 /** The JSON-LD graph nodes a given static page should carry. */
 export function jsonLdForPage(page) {
   const crumbBase = { name: 'Home', path: '/' };
@@ -458,7 +486,11 @@ export function jsonLdForPage(page) {
       about: { '@id': url('/#organization') },
     });
   } else if (route) {
-    nodes.push(breadcrumbLd([crumbBase, { name: route.page === 'LoogoNews' ? 'LoogoNews' : route.page, path: route.path }]));
+    const citySlug = citySlugFromPage(page);
+    nodes.push(breadcrumbLd(citySlug
+      ? [crumbBase, { name: 'Central Florida', path: '/grow' }, { name: CITY_BY_SLUG.get(citySlug).name, path: route.path }]
+      : [crumbBase, { name: route.label || route.page, path: route.path }]));
+    if (citySlug) nodes.push(cityServiceLd(CITY_BY_SLUG.get(citySlug)));
   }
   if (page === 'Pricing') nodes.push(pricingLd());
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
