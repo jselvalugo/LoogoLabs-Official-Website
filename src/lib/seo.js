@@ -144,6 +144,24 @@ export const ROUTES = [
     changefreq: 'monthly',
   },
   {
+    page: 'Packages',
+    path: '/packages',
+    title: `Packaged Services — Fixed Price, Done For You | ${SITE.name}`,
+    description:
+      'Off-the-shelf services with fixed scope and fixed prices — no custom quote, no retainer. Pick a package and we handle the rest.',
+    priority: '0.7',
+    changefreq: 'monthly',
+  },
+  {
+    page: 'PressRelease',
+    path: '/packages/press-release',
+    title: `Press Release Writing & Distribution | ${SITE.name}`,
+    description:
+      'Press release writing and distribution to 350+ news sites, broadcast affiliate pages, Google News, and industry journalists. Fixed prices from $149.',
+    priority: '0.7',
+    changefreq: 'monthly',
+  },
+  {
     // Unlisted: shared by direct link only — kept out of nav, sitemap, llms.txt
     // and served noindex.
     page: 'ParkSupply',

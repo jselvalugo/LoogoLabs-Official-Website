@@ -8,6 +8,7 @@ const pageMap = {
   'LoogoNews': 'LoogoNews',
   'Central Florida': 'GrowCFL',
   'Quizzes': 'Quizzes',
+  'Packaged Services': 'Packages',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
 };
