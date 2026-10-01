@@ -11,6 +11,45 @@
 
 export const posts = [
   {
+    slug: `dental-year-end-benefits-treatment-plans`,
+    title: `December Is Full by November: Book Unfinished Treatment Now`,
+    excerpt: `The patient who said "let me think about it" in March has a benefit year that ends December 31, and your December schedule will be gone before they remember.`,
+    tags: `Treatment Plan Follow-Up, Dental Practices, Year-End Planning`,
+    content: `Open your schedule for the second week of December and count the empty chairs. Now open the list of patients who accepted a treatment plan this year and never booked the visit. Those two numbers are about to collide, and the second list almost always loses.
+
+Most of those patients are not avoiding you. They said yes to the crown or the second half of a treatment plan in spring, went home, and the appointment slid behind a vacation, a school year, a busy quarter at work. Nobody on your side called, because nobody owns a list of people who have not done anything.
+
+## Why this month and not December
+
+Many patients have insurance benefits that reset on January 1, and whatever is left unused simply goes away. I am not going to guess at how many of your patients are in that position, because I do not know your mix of plans. You can find out, and I will show you how below.
+
+What I do know is how the calendar behaves. In the last two weeks of the year, everyone with a deadline calls at once. Your front desk offers them the 7:15 a.m. slot on a Wednesday and the patient says no. A patient asked in October gets Tuesday at 10. A patient asked in December gets whatever is left, and often nothing.
+
+## Build the list first
+
+Before any message goes out, you need a clean list. Pull every patient who has a diagnosed, accepted treatment with no future appointment booked. Sort it by how long ago the plan was presented. Then remove anyone who told you a specific reason to wait, such as a planned pregnancy, a move, or a financing question you are already working through.
+
+That removal step matters. A reminder that ignores what the patient told you reads like a mass mailing, and it should not.
+
+## What the message says, and what it never says
+
+Keep the text short and plain: the practice name, a line that the end of the year is a common deadline for benefits, and a direct way to book. Offer two or three real openings from the next three weeks rather than a link to a blank calendar.
+
+Do not put a procedure name, a diagnosis, or an amount in a text message. Say "the visit we discussed" and let the conversation happen on the phone or in the office. I am not a lawyer, and you should check how your own state and your own policies treat patient messages, but leaving the clinical details out is a good habit regardless.
+
+If the patient replies, the automated messages stop and a person takes over. A scheduled nudge arriving after someone has already called back is worse than silence.
+
+## Where it breaks
+
+This does not work on a patient who has no benefits left to lose, or who is paying out of pocket and cannot afford the work this year. For them, a deadline message is pressure without a reason. That is why I would split the list by whether they have insurance at all, and send the self-pay group a different note with no year-end angle.
+
+It also fails if the front desk is not ready to say yes. Texting forty people and then having two open slots a week is a mistake you only make once.
+
+## One list to pull by Friday
+
+By the end of this week, run the report of accepted treatment with no appointment booked, and count it. Then count the open chair-hours you have between now and Thanksgiving. If the first number is larger than the second, you already know October is the month to start.`,
+  },
+  {
     slug: `review-gating-illegal-ftc-rule`,
     title: `Review Gating Is Now Illegal, and Most "Reputation Management" Tools Still Do It`,
     excerpt: `The FTC's 2024 rule makes it illegal to only ask happy customers for a public review — and a lot of the "reputation management" funnels on the market are still built to do exactly that.`,
