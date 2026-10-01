@@ -56,10 +56,29 @@ const INCLUDED = ['Distribution to 350+ news & media sites', 'Google News indexi
 const USES = ['Grand openings', 'New locations', 'Product & service launches', 'Awards & milestones', 'New hires & partnerships', 'Events & community work'];
 
 const STEPS = [
-  ['Book a call', 'Tell us your news.'],
-  ['We write or polish', 'You approve before it goes out.'],
-  ['We publish', 'Across the network and Google News.'],
-  ['You get a report', 'Every live link, ready to share.'],
+  ['You tell us what\'s new', 'A quick call, a draft, or rough notes — no finished copy required.'],
+  ['We shape the story', 'We agree the angle with you, or find one in what you send us.'],
+  ['We polish the release', 'Edited to the format and standard news sites expect.'],
+  ['You sign it off', 'Nothing goes to the network until you approve it.'],
+];
+
+// Fictional example business — used only to illustrate what a release and report look like.
+const EXAMPLE = {
+  company: 'Lakeside Comfort HVAC',
+  headline: 'Lakeside Comfort HVAC Opens Second Central Florida Location',
+  dateline: 'CELEBRATION, Fla.',
+  site: 'lakesidecomfort.com',
+};
+
+// Outlet types in the distribution network. Shown as text wordmarks, not logos.
+const PLACEMENTS = [
+  { outlet: 'Google News', style: { fontWeight: 600 }, path: 'news.google.com', note: 'Indexed' },
+  { outlet: 'FOX affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business news' },
+  { outlet: 'NBC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station press releases' },
+  { outlet: 'CBS affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station news partners' },
+  { outlet: 'ABC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business wire' },
+  { outlet: 'AP News', style: { fontWeight: 800 }, path: 'apnews.com/press-release', note: 'Add-on' },
+  { outlet: 'Barchart', style: { fontWeight: 700 }, path: 'barchart.com/story/news', note: 'Add-on' },
 ];
 
 const FAQ = [
@@ -115,6 +134,131 @@ function PressRelease() {
         </Wrap>
       </section>
 
+      {/* ── WE DRAFT, YOU SIGN OFF ── */}
+      <Wrap style={{ padding: '56px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, alignItems: 'end' }}>
+          <div>
+            <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>No PR team needed — that's our job</div>
+            <h2 style={{ margin: '10px 0 0', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+              We shape your release. You sign it off.
+            </h2>
+          </div>
+          <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+            Tell us what's new in your business and we turn it into a release that reads like news.
+            It comes back to you for approval before any site sees it.
+          </p>
+        </div>
+        <ol style={{ listStyle: 'none', margin: '36px 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 24 }}>
+          {STEPS.map(([t, d], i) => (
+            <li key={t}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--ink-900)', color: 'var(--paper-000)', flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700 }}>0{i + 1}</span>
+                <span style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
+              </div>
+              <h3 style={{ margin: '16px 0 6px', fontSize: 17, color: 'var(--ink-900)' }}>{t}</h3>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            </li>
+          ))}
+        </ol>
+        <div style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between',
+          background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderLeft: '4px solid var(--cyan-700)', borderRadius: 'var(--radius-2)', padding: '18px 22px' }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Start whenever suits you.</div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 4, fontSize: 14.5, color: 'var(--ink-600)' }}><Check />Nothing is published until you say yes.</div>
+          </div>
+          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('draft')}>Get my release started</Button>
+        </div>
+      </Wrap>
+
+      {/* ── 01 YOUR RELEASE ── */}
+      <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', padding: '56px 0' }}>
+        <Wrap>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>01</div>
+              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your release</div>
+              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+                A ready-to-publish release, written like news
+              </h2>
+              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+                Your links sit inside the story, where readers and search engines follow them. Your company
+                boilerplate and contact details close it out, just like a real newsroom release.
+              </p>
+              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
+                {['Headline and angle built for search', 'Links to your site worked into the copy', 'Your sign-off before anything is sent'].map((f) =>
+                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
+              </ul>
+            </div>
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', borderBottom: '1px solid var(--border-hair)', background: 'var(--paper-100)' }}>
+                {[0, 1, 2].map((i) => <span key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border-hair)' }} />)}
+                <span style={{ marginLeft: 8, flex: 1, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', background: 'var(--paper-000)',
+                  border: '1px solid var(--border-hair)', borderRadius: 999, padding: '4px 12px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                  news-site.com/press-release/lakeside-comfort-second-location
+                </span>
+              </div>
+              <div style={{ padding: '22px 24px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-700)',
+                  background: 'var(--paper-200)', borderRadius: 999, padding: '4px 10px' }}>Press release</span>
+                <h3 style={{ margin: '14px 0 8px', fontSize: 21, lineHeight: 1.25, color: 'var(--ink-900)' }}>{EXAMPLE.headline}</h3>
+                <div style={{ fontSize: 12.5, color: 'var(--ink-400)' }}>By {EXAMPLE.company} · Celebration, Florida</div>
+                <p style={{ margin: '14px 0 0', paddingTop: 14, borderTop: '1px solid var(--border-hair)', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
+                  <strong style={{ color: 'var(--ink-900)' }}>{EXAMPLE.dateline}</strong> — {EXAMPLE.company} has opened a second location,
+                  bringing same-day repair and installation to more homeowners across Osceola County.
+                </p>
+                <p style={{ margin: '10px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
+                  Details and booking are available at <span style={{ color: 'var(--cyan-700)', textDecoration: 'underline' }}>{EXAMPLE.site}/new-location</span>.
+                </p>
+                <p style={{ margin: '14px 0 0', fontSize: 12, color: 'var(--ink-400)' }}>Example release for illustration.</p>
+              </div>
+            </div>
+          </div>
+        </Wrap>
+      </section>
+
+      {/* ── 02 YOUR PLACEMENTS ── */}
+      <section style={{ padding: '56px 0' }}>
+        <Wrap>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>02</div>
+              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your placements</div>
+              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
+                Live across 350+ news sites
+              </h2>
+              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+                One announcement, published across the network — every placement a dated news page carrying
+                your name and your links, and a crawlable page search engines and AI assistants can read.
+              </p>
+              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
+                {['Broadcast affiliate and business news sites', 'Indexed by Google News', 'A report with every live link'].map((f) =>
+                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
+              </ul>
+            </div>
+            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
+              <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border-hair)' }}>
+                <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Placement report</div>
+                <div style={{ fontSize: 13, color: 'var(--ink-400)' }}>{EXAMPLE.company} · Second location</div>
+              </div>
+              {PLACEMENTS.map((pl) => (
+                <div key={pl.outlet} style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: 12, alignItems: 'center', padding: '11px 22px', borderBottom: '1px solid var(--border-hair)' }}>
+                  <span style={{ fontSize: 13.5, color: 'var(--ink-900)', ...pl.style }}>{pl.outlet}</span>
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: 'var(--ink-800)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{EXAMPLE.headline}</span>
+                    <span style={{ display: 'block', fontSize: 12, color: 'var(--cyan-700)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{pl.path}</span>
+                  </span>
+                  {pl.note ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{pl.note}</span> : <span />}
+                </div>
+              ))}
+              <div style={{ padding: '12px 22px', fontSize: 12, color: 'var(--ink-400)', background: 'var(--paper-100)' }}>
+                + hundreds more sites across the network · Example report for illustration. Outlets vary by release; add-ons cost extra.
+              </div>
+            </div>
+          </div>
+        </Wrap>
+      </section>
+
       {/* ── BENEFITS ── */}
       <Wrap style={{ padding: '56px 24px' }}>
         <Eyebrow>What you get</Eyebrow>
@@ -143,7 +287,7 @@ function PressRelease() {
         </Card>
       </Wrap>
 
-      {/* ── USES + HOW IT WORKS ── */}
+      {/* ── USES ── */}
       <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', borderBottom: '1px solid var(--border-hair)', padding: '48px 0' }}>
         <Wrap>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40 }}>
@@ -155,20 +299,6 @@ function PressRelease() {
                     border: '1px solid var(--border-hair)', borderRadius: 999, padding: '6px 14px' }}>{u}</span>
                 ))}
               </div>
-            </div>
-            <div>
-              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>How it works</div>
-              <ol style={{ listStyle: 'none', margin: '14px 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
-                {STEPS.map(([t, d], i) => (
-                  <li key={t} style={{ display: 'flex', gap: 10 }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cyan-700)', paddingTop: 2 }}>0{i + 1}</span>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14.5, color: 'var(--ink-900)' }}>{t}</div>
-                      <div style={{ fontSize: 13.5, color: 'var(--ink-500)' }}>{d}</div>
-                    </div>
-                  </li>
-                ))}
-              </ol>
             </div>
           </div>
         </Wrap>
