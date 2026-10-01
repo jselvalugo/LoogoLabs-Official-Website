@@ -132,40 +132,34 @@ export const CflMap = ({ active }) => (
 );
 
 export const SERVICES = [
-  { num: '01', title: 'Local SEO & map-pack ranking', desc: 'A fully built-out Google Business Profile, city and neighborhood service pages, consistent citations, and the local keywords your customers actually type.', items: ['Google Business Profile optimization & posting', 'City + neighborhood landing pages', 'Citation cleanup across major directories', 'Monthly local rankings report'] },
-  { num: '02', title: 'Instant lead follow-up', desc: 'Every lead from your site, ads, Facebook, or phone gets a personal reply in seconds — by text and email — then a follow-up sequence that runs until they book.', items: ['Missed-call text-back', 'Speed-to-lead SMS & email', 'Multi-step nurture sequences', 'English & Spanish templates'] },
-  { num: '03', title: 'Review generation', desc: 'Reviews are the strongest local ranking signal you control. After every job, customers get a simple request — and you get alerts and reply templates.', items: ['Automatic review requests', 'New-review alerts', 'One-click reply templates', 'Review growth dashboard'] },
-  { num: '04', title: 'Automated email & SMS marketing', desc: 'Your past customers are your cheapest new revenue. Seasonal campaigns — hurricane prep, summer AC, snowbird season — go out without you writing a word.', items: ['Done-for-you campaigns', 'Seasonal Florida promos', 'Segmented customer lists', 'Open & click tracking'] },
-  { num: '05', title: 'Booking & CRM pipeline', desc: 'One place to see every lead and conversation, with online booking synced to your calendar and reminders that cut no-shows.', items: ['Visual lead pipeline', 'Online booking calendar', 'Automated reminders', 'Mobile app'] },
-  { num: '06', title: 'Reporting that ties to revenue', desc: 'See which searches, ads, and campaigns turned into booked jobs — so you only pay for what works.', items: ['Lead-source tracking', 'Calls, forms & bookings in one view', 'Monthly strategy call', 'Your data, always'] },
+  { title: 'Local SEO & Maps', desc: 'Rank in the map pack for the cities and neighborhoods you serve.', items: ['Google Business Profile', 'City pages', 'Citations'] },
+  { title: 'Instant lead follow-up', desc: 'Every call, form, and message gets a reply in seconds.', items: ['Missed-call text-back', 'SMS & email', 'English & Spanish'] },
+  { title: 'Review generation', desc: 'An automatic review request after every job.', items: ['Auto requests', 'Alerts', 'Reply templates'] },
+  { title: 'Email & SMS campaigns', desc: 'Seasonal Florida campaigns that bring past customers back.', items: ['Done for you', 'Segmented lists'] },
+  { title: 'Booking & CRM', desc: 'Every lead in one pipeline, with online booking and reminders.', items: ['Pipeline', 'Calendar', 'Mobile app'] },
+  { title: 'Revenue reporting', desc: 'See which searches and campaigns turned into booked jobs.', items: ['Lead sources', 'Monthly call'] },
 ];
 
 export const Services = ({ cityName }) => (
-  <section style={{ background: 'var(--paper-100)', padding: 'clamp(64px,8vw,104px) 0' }}>
-    <Wrap>
+  <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5vw,64px) 0' }}>
+    <Wrap><div className="cfl-narrow">
       <Eyebrow>What we do{cityName ? ` in ${cityName}` : ''}</Eyebrow>
-      <H2>Local SEO gets you found. Automation makes sure you get the job.</H2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: 16, marginTop: 48 }}>
-        {SERVICES.map(({ num, title, desc, items }) => (
-          <div key={num} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 16,
-            padding: '28px 26px', display: 'grid', gap: 14, alignContent: 'start' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--ink-400)' }}>{num}</span>
-              <span style={{ width: 8, height: 8, borderRadius: 99, background: 'var(--ink-300)' }} />
+      <h2 style={{ margin: 0, fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
+        Get found. Get the job.
+      </h2>
+      <div className="cfl-services">
+        {SERVICES.map(({ title, desc, items }, i) => (
+          <div key={title} className="cfl-service">
+            <div className="cfl-service__head">
+              <span className="cfl-service__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="cfl-service__title">{title}</h3>
             </div>
-            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.2 }}>{title}</h3>
-            <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--ink-500)' }}>{desc}</p>
-            <ul style={{ listStyle: 'none', margin: 0, padding: '14px 0 0', borderTop: '1px solid var(--border-hair)', display: 'grid', gap: 8 }}>
-              {items.map((it) => (
-                <li key={it} style={{ display: 'flex', gap: 10, fontSize: 13, lineHeight: 1.5, color: 'var(--ink-600)' }}>
-                  <span aria-hidden="true" style={{ color: 'var(--ink-400)' }}>✓</span>{it}
-                </li>
-              ))}
-            </ul>
+            <p className="cfl-service__desc">{desc}</p>
+            <div className="cfl-service__tags">{items.map((it) => <span key={it}>{it}</span>)}</div>
           </div>
         ))}
       </div>
-    </Wrap>
+    </div></Wrap>
   </section>
 );
 
