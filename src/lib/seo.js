@@ -11,6 +11,7 @@ import { NICHE_QUIZZES } from './nicheQuizzes.js';
 import { GROW_FAQ, SERVICE_AREA } from './content.js';
 import { SERVICE_PACKAGES } from './servicePackages.js';
 import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from './cfl.js';
+import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityPageKey, voiceCitySlugFromPage } from './voiceCities.js';
 
 export const SITE = {
   origin: 'https://loogolabs.com',
@@ -116,6 +117,16 @@ export const ROUTES = [
     changefreq: 'monthly',
     image: '/og-image-ai-voice.png',
   },
+  ...VOICE_CITIES.map((c) => ({
+    page: voiceCityPageKey(c.slug),
+    path: voiceCityPath(c.slug),
+    label: `AI Voice Agent — ${c.name}, FL`,
+    title: `AI Voice Agent for ${c.name}, FL Businesses | ${SITE.name}`,
+    description: `A 24/7 AI voice agent that answers, qualifies, and books calls for ${c.name} businesses in English and Spanish. ${c.intro.split('. ')[0]}.`,
+    priority: '0.7',
+    changefreq: 'monthly',
+    image: '/og-image-ai-voice.png',
+  })),
   {
     page: 'AIReceptionist',
     path: '/ai-receptionist',
@@ -460,6 +471,23 @@ export const cityServiceLd = (city) => ({
   },
 });
 
+// Same business, one more service: points at the hub's LocalBusiness node.
+export const voiceCityServiceLd = (city) => ({
+  '@type': 'Service',
+  '@id': url(`${voiceCityPath(city.slug)}#service`),
+  name: `AI voice agent in ${city.name}, FL`,
+  serviceType: 'AI voice agent and call answering',
+  url: url(voiceCityPath(city.slug)),
+  description: city.intro,
+  provider: { '@id': url('/grow#localbusiness') },
+  availableLanguage: ['English', 'Spanish'],
+  areaServed: {
+    '@type': 'City',
+    name: city.name,
+    containedInPlace: { '@type': 'AdministrativeArea', name: `${city.county}, Florida` },
+  },
+});
+
 /** The JSON-LD graph nodes a given static page should carry. */
 export function jsonLdForPage(page) {
   const crumbBase = { name: 'Home', path: '/' };
@@ -477,10 +505,14 @@ export function jsonLdForPage(page) {
     });
   } else if (route) {
     const citySlug = citySlugFromPage(page);
+    const voiceSlug = voiceCitySlugFromPage(page);
     nodes.push(breadcrumbLd(citySlug
       ? [crumbBase, { name: 'Central Florida', path: '/grow' }, { name: CITY_BY_SLUG.get(citySlug).name, path: route.path }]
-      : [crumbBase, { name: route.label || route.page, path: route.path }]));
+      : voiceSlug
+        ? [crumbBase, { name: 'AI Voice Agents', path: VOICE_BASE }, { name: VOICE_CITY_BY_SLUG.get(voiceSlug).name, path: route.path }]
+        : [crumbBase, { name: route.label || route.page, path: route.path }]));
     if (citySlug) nodes.push(cityServiceLd(CITY_BY_SLUG.get(citySlug)));
+    if (voiceSlug) nodes.push(voiceCityServiceLd(VOICE_CITY_BY_SLUG.get(voiceSlug)));
   }
   if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
   return nodes;
