@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `cleaning-company-seasonal-residents-return`,
+    title: `Your Winter Clients Booked Someone Else Before They Landed`,
+    excerpt: `Central Florida's part-year residents plan their return from up north in September, so a cleaning company that waits for them to call in November is already second in line.`,
+    tags: `Client Reactivation, Seasonal Residents, Cleaning Companies`,
+    content: `Every fall I hear the same complaint from cleaning company owners around Central Florida: the winter regulars are back, the condo on the lake has its lights on again, and the client who used to book a biweekly clean from November to April has not called. A week later you learn a neighbor recommended someone else, and that someone texted first.
+
+The return of seasonal residents is the closest thing this region has to a second busy season. Most owners treat it like weather. It arrives, and you take what it brings.
+
+## They decide before they drive down
+
+Here is the timing problem. A part-year resident does not start thinking about the house when they pull into the driveway. They start in September, from a kitchen in Ohio or Ontario, making a list: get the AC checked, get the place aired out, have someone clean before we arrive.
+
+That list gets worked from wherever they are, mostly by text and mostly in the evening. Whoever is in front of them at that moment gets the job. If your last contact with them was a thank-you in April, you are not in front of them.
+
+So the work is not winning them back in November. It is being the first message they see in early October.
+
+## The list you already have
+
+Every cleaning company I set up has this list buried somewhere and has never pulled it. It is the clients whose bookings stop around April or May and pick up again in the fall, year after year.
+
+Pull every client with no booking since May. Then sort them by hand, because the system cannot know the difference between a seasonal client and one who quietly left. Your crew leads usually know. Ask them which homes sit empty all summer.
+
+Tag the seasonal ones. That one tag is the entire foundation of this. Without it, every message you send goes to the wrong people, including the ones who fired you in June.
+
+## What the first message says
+
+Keep it personal and specific to the house, not a promotion. Something like:
+
+*Hi Carol, it's Maria from the cleaning crew. Are you two heading back this fall? If you tell me your arrival date, I'll get a deep clean on the calendar for the day before so the house is ready when you walk in.*
+
+Three things are doing the work there. It names the person sending it, so it reads like the owner and not a blast. It asks one question they can answer with a date. And it offers the thing they actually want, which is to walk into a clean house after a long drive, not a discount.
+
+Send it as a text, not an email. Send it in the first week of October, early evening. If they do not answer in five days, send one short follow-up. After that, leave it alone until they reach out.
+
+## Hold the arrival week
+
+The part owners get wrong is capacity. When half your winter list replies in the same two weeks, you discover you cannot do eight move-in deep cleans on the Friday before Thanksgiving.
+
+Block a few slots in late October and November now for returning clients only, before the regular calendar fills them. When someone replies with a date, book the arrival clean first, and then, in the same reply, offer to set the recurring schedule for the season. That second step is where the real money is. One deep clean is a nice job. Five months of biweekly visits is the account.
+
+If you do 30 recurring winter homes and lose five of them to a faster competitor, that is five houses times roughly ten visits each that you never get back until next year, if at all.
+
+## Where this breaks
+
+This does not help with clients who left because of the work. If someone did not come back last year and never said why, a friendly text will not fix it, and you should call them instead.
+
+It also depends on your notes. If you do not know which client has the gate code or the cat, the reply will expose it fast. Get those details into the contact record before the first message goes out.
+
+## Do this before Friday
+
+Pull the list of every client with no visit since May and mark the seasonal ones with your crew leads. If that list has more than a handful of names, you have a second season sitting in your own records, and the first text should go out next week.`,
+  },
+  {
     slug: `photographer-deposit-holds-the-date`,
     title: `A Quote Doesn't Hold Your Date. A Deposit Does.`,
     excerpt: `Most photographers keep a Saturday open in their head for a client who hasn't committed to anything, and the fix is a short window and a deposit that closes it.`,
