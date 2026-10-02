@@ -58,3 +58,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-02 | cleaning-company-seasonal-residents-return | Cleaning companies | Seasonal client reactivation — returning part-year residents (Central Florida)
 - 2026-10-03 | handyman-celebration-own-one-town | Handyman services | Hyper-local growth — route density & neighbor referrals in one community (Celebration, FL)
 - 2026-10-02 | holiday-lighting-book-install-and-takedown | Holiday lighting installers | Seasonal booking — selling install and takedown as one paired booking
+- 2026-10-02 | carpet-cleaning-prep-text-before-the-van-arrives | Carpet cleaning | Pre-visit prep instructions & job-readiness confirmation

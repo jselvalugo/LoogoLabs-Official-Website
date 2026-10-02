@@ -11,6 +11,64 @@
 
 export const posts = [
   {
+    slug: `carpet-cleaning-prep-text-before-the-van-arrives`,
+    title: `The Van Arrived, But the Living Room Wasn't Ready`,
+    excerpt: `A carpet cleaning job can fall apart without a single no-show, because the customer was home and the room still wasn't clear when your tech walked in.`,
+    tags: `Booking, Job Prep, Carpet Cleaning`,
+    content: `Your tech knocks on time, the customer opens the door, and then comes the sentence that costs you the afternoon: "Oh, I thought you'd move the furniture."
+
+Nobody no-showed. The reminder went out. The customer is standing right there, friendly and a little embarrassed. And your tech now has three bad options: spend forty minutes moving a sectional and a piano bench for free, clean around everything and hand over a patchy result, or leave and eat the trip.
+
+## A reminder confirms the time, not the room
+
+Most owners who fight no-shows have already set up a reminder, and it works for what it does. It tells the customer that Thursday at 1:00 is coming.
+
+It says nothing about the floor. A carpet job depends on a handful of things the customer controls: how much is on the carpet, whether the dog is shut in the back, whether there is a place to park near the door, whether anyone is going to be home to let the tech in. The reminder never touches any of that, so every job quietly rides on the customer guessing correctly what you expect.
+
+Most customers do not guess correctly. They have never had their carpets cleaned by a professional, or they last did it years ago with a different company that moved everything for them.
+
+## Put the prep in writing, twice
+
+I set this up as two short messages, and the wording matters more than the timing.
+
+The first goes out the moment the job is booked. It lists what you need from them, in plain language, as a short list:
+
+- Small items off the floor: toys, shoes, cords, things on the bottom shelves
+- Heavy furniture left where it is, or a note of what you will and won't move
+- Pets in a room we won't be working in
+- A way to reach them at the door, and where to park
+
+The second goes out the day before, and it is a question, not a lecture: "Tomorrow at 1:00. Is the room ready the way the list says, or do you need us to adjust the job?" One reply gets you an honest answer while there is still time to do something about it.
+
+If you only write one of them, write the second. A question gets a reply. A list gets skimmed.
+
+## Decide your furniture policy before you write the text
+
+The messages only work if your policy is settled. A tech who has to improvise at the door will make a different call every time, and customers will notice.
+
+Pick your answer to three things and write them down. What will your crew move, and what will they never touch? Is there a fee for a room that needs extra clearing, and what is it? And what happens when nobody is home and there is no lockbox or key plan?
+
+The fee is the one owners resist. I understand why. But a visible, stated fee for extra moving is far easier to defend than a surprise one at the door, and most customers will simply clear the floor once they know the alternative has a price on it.
+
+## Use the reply to make a decision
+
+When the day-before reply comes back with "oh no, it's all still full," you have options that did not exist at the door. You can offer to add a clearing step and quote it. You can move the appointment a day. You can warn your tech and give them an extra slot of time.
+
+Make each of those a one-tap response on your side. If the answer is "not ready," that job should be flagged for a person to call, because the whole point is a human decision made early.
+
+Here is a small piece of arithmetic worth doing for yourself. Count the jobs last month where your techs ran long or left a customer unhappy because of the room, not the carpet. Multiply by the hour your crew lost on each one. That total is what the prep messages are competing with, and it is usually larger than the cost of a no-show, because no-shows at least free up the schedule.
+
+## Where this falls short
+
+A text will not fix every job. Some customers will read nothing and ignore every message you send. Commercial accounts with an office manager are a different problem altogether, since the person who answers is not the person who moves the desks.
+
+And a long message backfires. If your prep list runs to ten items, nobody follows any of them. Keep it to the four things that actually cause trouble at your door.
+
+## Try this week
+
+Pull the last five jobs where something went wrong on arrival and write down the single thing each customer failed to do. Turn the two or three that repeat into your prep list, and send it by hand to next week's bookings before you automate any of it.`,
+  },
+  {
     slug: `holiday-lighting-book-install-and-takedown`,
     title: `Sell the January Takedown in October`,
     excerpt: `A holiday lighting job is two visits, and the crew that books only the first one spends January working for free.`,
