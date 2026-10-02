@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
+import { VOICE_CITIES, voiceCityPath } from '../lib/voiceCities';
 
 const trackBook = () => { if (window.fbq) window.fbq('track', 'Schedule'); openBooking(); };
 
@@ -540,6 +541,21 @@ export default function AIVoice() {
                 </div>
               );
             })}
+          </div>
+        </Wrap>
+      </section>
+
+      {/* ── CENTRAL FLORIDA CITIES ── */}
+      <section style={{ background: 'var(--paper-000)', padding: 'clamp(56px,7vw,88px) 0', borderTop: '1px solid var(--border-hair)' }}>
+        <Wrap>
+          <Eyebrow>Central Florida</Eyebrow>
+          <h2 style={{ margin: 0, fontSize: 'clamp(26px,3.4vw,40px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '24ch' }}>
+            AI voice agents for businesses in your city.
+          </h2>
+          <div className="cfl-nearby" style={{ marginTop: 28 }}>
+            {VOICE_CITIES.map((c) => (
+              <a key={c.slug} href={voiceCityPath(c.slug)} className="cfl-nearby__link">{c.name} <span aria-hidden="true">→</span></a>
+            ))}
           </div>
         </Wrap>
       </section>

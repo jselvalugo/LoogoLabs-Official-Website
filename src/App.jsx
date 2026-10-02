@@ -21,11 +21,13 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { BOOKING_URL, openBooking } from './lib/booking';
 import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { citySlugFromPage } from './lib/cfl';
+import { voiceCitySlugFromPage } from './lib/voiceCities';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
 const GrowCity = React.lazy(() => import('./pages/GrowCity'));
 const AIVoice = React.lazy(() => import('./pages/AIVoice'));
+const AIVoiceCity = React.lazy(() => import('./pages/AIVoiceCity'));
 const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
@@ -107,6 +109,14 @@ function App({ initialPath }) {
     return (
       <><CookieConsent /><div onClick={handleLinkClick}><React.Suspense fallback={null}>
         {citySlug ? <GrowCity key={citySlug} slug={citySlug} /> : <GrowCFL />}
+      </React.Suspense></div></>
+    );
+  }
+  const voiceSlug = voiceCitySlugFromPage(page);
+  if (voiceSlug) {
+    return (
+      <><CookieConsent /><div onClick={handleLinkClick}><React.Suspense fallback={null}>
+        <AIVoiceCity key={voiceSlug} slug={voiceSlug} />
       </React.Suspense></div></>
     );
   }
