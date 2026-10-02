@@ -11,6 +11,60 @@
 
 export const posts = [
   {
+    slug: `holiday-lighting-book-install-and-takedown`,
+    title: `Sell the January Takedown in October`,
+    excerpt: `A holiday lighting job is two visits, and the crew that books only the first one spends January working for free.`,
+    tags: `Seasonal Booking, Scheduling, Holiday Lighting`,
+    content: `The calls for Christmas lights bunch up in the last week of November, and your crew can only hang so many houses a day. Everyone who calls on November 25 wants to be lit by the weekend after Thanksgiving. You say yes to as many as the calendar allows, you turn the rest away, and you start December already behind.
+
+That part is familiar. The part nobody plans for comes six weeks later.
+
+## The job has two visits, and you only sold one
+
+A lighting install is a hang in November and a takedown in January. Most owners book the hang, collect payment, and treat the takedown as a favor they will get to when things calm down. Then the first week of January arrives with forty homeowners texting "when are you coming for the lights?" on the same days.
+
+Those visits pay less per hour than the install did. You are pulling clips off gutters and winding strands into totes. Nobody is excited, including you, and the ones who wait longest are the most irritated.
+
+The fix is not to work harder in January. It is to stop treating the takedown as an afterthought and book it on the same day you book the install.
+
+## Book the pair, not the visit
+
+When a customer says yes in October, give them two dates, not one:
+
+- An install window: "We hang the week of November 16."
+- A takedown window: "We pull everything the week of January 4."
+
+They approve both at once. The takedown now sits on your calendar like any other job, with a name and an address, and you can see in October how many crews you will need in January.
+
+I would put the takedown in the quote itself, as a line item, so it is never a surprise and never a separate negotiation. A customer who has already agreed to a date is far less likely to message you on January 2 asking where you are.
+
+## Close the order book on a date
+
+Late-November demand will always exceed what you can hang. You cannot fix that, but you can decide who gets the slots instead of letting the calendar decide by who called first.
+
+Pick a cutoff, say November 1, and tell people about it. "Orders placed by November 1 get an install date before Thanksgiving. After that, we take what is left." That is not pressure. It is the truth about your capacity, said early enough that a customer can act on it.
+
+Then write to everyone who had lights from you last year, before you write to anyone else. They already know the work. They are the easiest yes you will get this year, and they are the people most likely to forget until December and then be disappointed.
+
+## What to send, and when
+
+You do not need a campaign. You need one short text to last year's customers in the next few days, and one reminder a week before your cutoff to anyone who replied but has not picked dates.
+
+The first message should say the cutoff, offer the two windows, and ask for a reply with a yes. Keep it a few lines. If it takes a paragraph to explain, nobody will read it on a phone in a driveway.
+
+The reminder should name the dates that are still open, because "slots are filling up" is something every business says and nobody believes. If the week of November 16 has two openings left, say that.
+
+## Where this breaks
+
+This does not work if your January is genuinely unpredictable, for example if you are a landscaper who sees storm cleanup swallow your winter. A takedown window you cannot honor is worse than none. Make the window wide enough that you can keep the promise: "sometime in the first two weeks of January" is fine. A specific day you miss is not.
+
+It also adds one conversation to every sale. That conversation is worth having in October, when you have time, rather than in January, when you do not.
+
+## Do this week
+
+Open your calendar for the first two weeks of January and look at it. If it is empty, that is your takedown work sitting there unbooked. Pick your November cutoff, write the two-window text to last year's customers, and send it before the weekend.`,
+  },
+  {
     slug: `handyman-celebration-own-one-town`,
     title: `Win Celebration First, Then Worry About the Rest of Osceola`,
     excerpt: `A handyman with twenty clients on the same few streets has a better business than one with sixty clients scattered across three counties, and Celebration is built to make that possible.`,
