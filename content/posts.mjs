@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `handyman-celebration-own-one-town`,
+    title: `Win Celebration First, Then Worry About the Rest of Osceola`,
+    excerpt: `A handyman with twenty clients on the same few streets has a better business than one with sixty clients scattered across three counties, and Celebration is built to make that possible.`,
+    tags: `Local Growth, Referrals, Handyman Services`,
+    content: `The handyman who covers "all of Central Florida" spends a surprising part of each day on the turnpike. A faucet in Clermont, a ceiling fan in St. Cloud, a door that sticks in Winter Garden. Each job pays fine. The day as a whole does not, because the hours between jobs are unpaid and the truck is burning gas the whole time.
+
+When owners ask me where the growth is around here, my answer usually surprises them. It is not a wider radius. It is a smaller one, and a town like Celebration is close to an ideal place to start.
+
+## Why this town works for a small crew
+
+Celebration was planned. The houses sit close together, the streets are walkable, and people actually see their neighbors at the mailbox, on the sidewalk and around the town center. Plenty of the homes are the same age and were built to similar standards, which means the same things wear out on the same schedule: the same exterior trim, the same kind of fence, the same fixtures.
+
+For a service business, that is three advantages stacked together. Short drives between jobs. Repeat problems you get very fast at fixing. And word of mouth that travels in days instead of months, because the people talking about you live next door to each other.
+
+Most crews never take advantage of any of it, because they treat a Celebration job exactly like a job anywhere else.
+
+## Do the drive-time arithmetic
+
+Here is the math I walk owners through. Say you average 40 minutes of driving between scattered jobs and fit four jobs in a day. That is two hours on the road. Cluster those same four jobs within a few streets, and the gaps shrink to five or ten minutes. You have just found room for a fifth or sixth job without working a longer day.
+
+One extra job a day, five days a week, is roughly 250 extra jobs a year. Nothing about your marketing changed. You just stopped paying yourself to sit in traffic.
+
+## Turn one job into the street
+
+The growth move is simple, and almost nobody does it consistently. Every time you finish a job in Celebration, the neighbors are the warmest leads you will ever get. They have the same house, likely the same problem, and they just watched your truck out front.
+
+What I set up for clients is a short routine that runs after each completed job in the area:
+
+- A thank-you text to the customer that asks if any neighbor has mentioned a similar issue, with an easy way to pass your number along
+- A tag on the contact for the neighborhood, so you can see over time which streets you already own
+- A follow-up a few months later about the next maintenance item that house will need, because you now know the house
+
+Check your homeowners association rules before you leave signs or door hangers anywhere. In a community that cares this much about how things look, the wrong flyer can do you more harm than good. A referral from a neighbor always beats a flyer anyway.
+
+## Be the name people say on the community pages
+
+In tight-knit places, someone asks "who do you use for…" in a neighborhood group almost every week. The business that gets named is rarely the biggest one. It is the one three people have used recently and had a good experience with.
+
+You cannot fake that, and you should not try. What you can do is make it easy: ask every happy Celebration customer for a review right after the job, while they are still pleased, and reply to every review personally. When your name comes up, the person checking you out should find a wall of recent reviews from people who live a few streets away.
+
+## Where this does not work
+
+Density only pays if you can actually take the extra work. If your calendar is already full and you are turning people away, the right move is raising prices, not finding more neighbors.
+
+It also takes patience. The first few months in one town feel slow, because you are building a reputation instead of chasing every lead in the county. Owners who quit at month two never see the part where the phone starts ringing from people they have never advertised to.
+
+## Look at your last 30 jobs
+
+Before the weekend, pull the addresses of your last 30 jobs and drop them on a map. If they look like confetti across the region, pick one community where you already have three or four happy customers, and make every job there for the next 60 days count twice.`,
+  },
+  {
     slug: `cleaning-company-seasonal-residents-return`,
     title: `Your Winter Clients Booked Someone Else Before They Landed`,
     excerpt: `Central Florida's part-year residents plan their return from up north in September, so a cleaning company that waits for them to call in November is already second in line.`,
