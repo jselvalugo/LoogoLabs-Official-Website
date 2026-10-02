@@ -24,7 +24,6 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
     <header style={{
       position: 'sticky', top: 0, zIndex: 20, height: 56,
       background: 'var(--ink-900)',
-      backdropFilter: 'blur(12px)',
       borderBottom: '1px solid var(--border-hair-inverse)',
       ...style
     }}>
@@ -75,22 +74,18 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
         </div>
 
         <div id="ll-nav-mobile" className={`ll-nav-mobile${open ? ' open' : ''}`}>
-          <p className="ll-nav-mobile-kicker">Menu</p>
           {items.map((it, i) => {
             const on = it === active;
             return (
               <a key={it} href={pathForPage(it)} aria-current={on ? 'page' : undefined}
                 className={`ll-nav-mobile-link${on ? ' on' : ''}`}
-                style={{ transitionDelay: open ? `${60 + i * 40}ms` : '0ms' }}
+                style={{ transitionDelay: open ? `${40 + i * 35}ms` : '0ms' }}
                 onClick={e => { e.preventDefault(); handleNav(it); }}>
-                <span className="ll-nav-mobile-num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="ll-nav-mobile-label">{it}</span>
-                <span className="ll-nav-mobile-arrow" aria-hidden="true">→</span>
+                {it}
               </a>
             );
           })}
           <div className="ll-nav-mobile-cta">{cta}</div>
-          <p className="ll-nav-mobile-foot">Central Florida · Marketing, automation &amp; operations</p>
         </div>
       </div>
     </header>
