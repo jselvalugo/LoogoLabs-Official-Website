@@ -298,12 +298,13 @@ function Home({ onNavigate }) {
       <FounderSpotlight />
 
       <Wrap style={{ padding: '40px 24px' }}>
-        <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Why clients switch</span>
-        <div className="ll-grid-2" style={{ gap: 24, marginTop: 24 }}>
-          {[['Replace 10–15+ tools', 'One login. One dashboard. One monthly bill. Stop paying for Mailchimp, ClickFunnels, Teachable, Calendly, and 10 other tools separately.'],
-            ['Save $400–$500 a month', 'Most clients cut more than $400 in monthly subscriptions on day one. The platform pays for itself before your first campaign goes out.'],
-            ['24/7 real support included', 'Live support from people who actually know the platform — not a chatbot, not a ticket queue. A real person who picks up and gets it done.'],
-            ['Done-for-you setup', 'We handle the full onboarding. You walk in on day one with your account configured, your automations live, and your first campaign ready to send.']].map(([k, v]) => (
+        <SectionHeading eyebrow="Why work with us" title="Consultants who can actually build it"
+          description="Most agencies hand you a strategy deck. Most dev shops wait for a spec. We sit in the middle — performance marketers who write the backend code, wire the tracking, and ship the AI that makes your spend work harder." />
+        <div className="ll-grid-2" style={{ gap: 24, marginTop: 36 }}>
+          {[['Performance marketing, engineered', 'We run paid media like an engineering problem: clean server-side tracking, real attribution, tight testing loops. Every dollar gets measured against revenue — not clicks, not impressions.'],
+            ['AI consulting that ships', 'No slide-deck AI strategy. We find where AI actually moves your numbers — lead qualification, voice agents, content ops, reporting — then build and deploy it into your workflow.'],
+            ['Software & backend expertise', 'APIs, data pipelines, CRM integrations, custom automations. When your marketing hits a technical wall, we don\'t file a ticket with someone else — we write the code ourselves.'],
+            ['A partner, not a vendor', 'You work directly with the people doing the work. We learn your business, sit in on your numbers, and stay accountable to outcomes — strategy, execution, and the tech underneath it all.']].map(([k, v]) => (
             <Card key={k} padding={24} emphasis="strong">
               <div style={{ fontSize: 'var(--fs-body)', fontWeight: 600 }}>{k}</div>
               <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-400)', marginTop: 6 }}>{v}</div>
