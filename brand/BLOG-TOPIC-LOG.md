@@ -55,3 +55,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-09-30 | painting-contractor-estimate-follow-up | Painting contractors | Estimate follow-up sequences
 - 2026-10-01 | dental-year-end-benefits-treatment-plans | Dental practices | Year-end benefit deadlines & unscheduled treatment plans
 - 2026-10-01 | photographer-deposit-holds-the-date | Photographers | Booking & payments — tentative date holds & deposits
+- 2026-10-02 | cleaning-company-seasonal-residents-return | Cleaning companies | Seasonal client reactivation — returning part-year residents (Central Florida)
