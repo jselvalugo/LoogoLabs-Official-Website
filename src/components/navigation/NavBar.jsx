@@ -75,8 +75,7 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
         </div>
 
         <div id="ll-nav-mobile" className={`ll-nav-mobile${open ? ' open' : ''}`}>
-          <p className="ll-nav-mobile-kicker">Menu</p>
-          {items.map((it, i) => {
+                    {items.map((it, i) => {
             const on = it === active;
             return (
               <a key={it} href={pathForPage(it)} aria-current={on ? 'page' : undefined}
@@ -90,7 +89,6 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
             );
           })}
           <div className="ll-nav-mobile-cta">{cta}</div>
-          <p className="ll-nav-mobile-foot">Central Florida · Marketing, automation &amp; operations</p>
         </div>
       </div>
     </header>
