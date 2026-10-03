@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `gutter-cleaning-rain-day-reschedule-list`,
+    title: `A Rainy Tuesday Shouldn't Cost You the Whole Week`,
+    excerpt: `Gutter work stops when the ladder gets slick, and the real damage comes after, when twelve customers are rescheduled by phone tag over three days.`,
+    tags: `Scheduling, Weather Delays, Gutter Cleaning`,
+    content: `A gutter crew can lose a full day to a rainy morning, and that is the cheap part. The expensive part is the next three days, when you and your office person try to rebook twelve homeowners one phone call at a time while new October jobs pile up behind them.
+
+Fall is when gutter cleaning pays the rent. The leaves come down, everyone remembers the overflow from last winter, and the calls arrive in a clump. A crew that is booked solid for two weeks has no slack, so one lost day does not disappear. It pushes every job after it, and each pushed job is a customer you have to reach.
+
+## The rain-out is predictable, the rebooking is not planned
+
+You know it will rain on some of your days this month. You just do not know which ones until the night before. So you can prepare everything except the date.
+
+What most shops prepare is nothing. Someone looks at the forecast at 6 a.m., calls the first few customers, leaves voicemails for the rest, and then fields callbacks for two days. Customers who are not reached assume you forgot them. Customers who are reached pick a new day on the spot, usually the closest one, which collides with the jobs already sitting there.
+
+I am not going to give you a number for how many jobs you lose this way, because it depends on how tight your calendar is. Count your own: how many rescheduled jobs last month turned into a cancellation or a "never mind, I'll find someone else"?
+
+## Build the reschedule list before it rains
+
+The fix is a short list that exists before you need it, plus one message that is ready to go.
+
+Keep a **rain-out order**: every booked job ranked by who gets moved first. Give it real rules, not gut feel:
+
+- Customers with clogged gutters already overflowing go to the front of the line
+- Jobs booked longest ago come next
+- Flexible customers, the ones who said any day works, are the first to be moved when slots are tight
+- Anyone who has already been rescheduled once never gets moved a second time if you can help it
+
+Then write the message once. It should say three things: the job is moved because of weather, here is the new date, and reply if that day doesn't work. A new date in the first message is the whole trick. "We'll call you to reschedule" creates a task. "You're now Thursday at 10, reply to change it" closes it.
+
+## Hold a few open slots on purpose
+
+Rebooking into new dates only works if there is space. In a heavy week, I would hold back one or two slots a day, not as spare time but as a deliberate rain buffer, and release them to new callers only after 3 p.m. the day before.
+
+Yes, that feels like leaving money on the table when the phone is ringing. Run the arithmetic on your own week. If a rain day moves eight jobs and you have no buffer, those eight stack on top of the next eight. A buffer you give up on a dry day costs you a slot. A buffer you lack on a wet day costs you the schedule.
+
+## What to automate, and what not to
+
+The message can go out the moment you mark a day as rained out, by text, to everyone on that day's route, each with their own new date. The system can also hand you the replies sorted, so the person who wrote "that doesn't work" is on your screen, not buried under the ones who said fine.
+
+What I would not automate is choosing the new dates. That is a judgment about routes, crew capacity and customers who are already unhappy. Make that call yourself, in ten minutes, with the ranked list in front of you.
+
+## Do this before the next rain
+
+This week, open your calendar and mark the three days with the most booked jobs. For each one, write the ranked list of who moves first and the single message you would send. Having it saved on a Sunday means a Tuesday storm costs you ten minutes instead of two days.`,
+  },
+  {
     slug: `carpet-cleaning-prep-text-before-the-van-arrives`,
     title: `The Van Arrived, But the Living Room Wasn't Ready`,
     excerpt: `A carpet cleaning job can fall apart without a single no-show, because the customer was home and the room still wasn't clear when your tech walked in.`,
