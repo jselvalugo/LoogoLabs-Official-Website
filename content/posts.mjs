@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `chimney-sweep-first-cold-snap-waves`,
+    title: `The First Cold Snap Books Your Whole Fall in One Weekend`,
+    excerpt: `A chimney sweep can handle a busy October and still lose the season on the one Saturday after the temperature drops, because everyone remembers their fireplace at the same moment.`,
+    tags: `Seasonal Demand, Customer Reminders, Chimney Sweeps`,
+    content: `Nobody thinks about their chimney in September. Then the first cold morning arrives, a customer lights the first fire of the year, smells something wrong, and calls you before breakfast. So does everyone else on your route who had the same thought that weekend.
+
+Your phone does not get busy that Saturday. It gets buried. You are on a roof, your helper is in a basement with a brush, and eleven calls go to voicemail. Most of those people do not leave a message. They call the next sweep on the search results, and that company gets a customer you spent years earning.
+
+## The demand is not a surprise, it is a date you can't see yet
+
+Your calendar looks fine in early October, and that is the trap. The work is out there, but it has not announced itself. It arrives all at once, triggered by weather rather than by anything you did.
+
+I would not try to predict the cold snap. Nobody predicts it well enough to staff around it. What you control is how much of that work has already been booked before the weather decides for everyone.
+
+## Sort last year's customers by how long they have waited
+
+Pull every customer you serviced in the last two or three years. Put the oldest service date at the top. The person you swept two winters ago and never heard from again is the one most likely to light a fire this month with no idea whether the flue is clear.
+
+Split the list into three groups by how long it has been:
+
+- Longest gap. They go first, and they get the earliest dates.
+- Middle gap. They go a week later.
+- Most recent. They go last, and some of them may not need you this year at all.
+
+Do not send one message to all three groups. The reason is simple: if you text four hundred people on the same afternoon, you create your own cold snap. Forty replies in an hour is the same pile-up you were trying to avoid, just with a friendlier origin.
+
+## Offer two dates, not a booking link and a prayer
+
+A message that says "call us to schedule" asks the customer to do the hard part. A message that says "I can come Tuesday the 20th or Thursday the 22nd, reply with 1 or 2" is something a person answers while standing in the kitchen.
+
+Keep the message short and say plainly why you are writing now: you are working through the list from the oldest service date forward, before the cold weather makes everyone call at once. That is true, and it also gives the customer a reason to answer today instead of next month.
+
+Hold back some days on purpose. If you fill every slot in the first two waves, the customer who calls during the cold snap hears "see you in three weeks," and that is the same lost sale in a different form. Leave a few open days in the weeks that follow for the people who only remember when it gets cold.
+
+## Cover the weekend you can't avoid
+
+Even a well-booked fall has one morning when the calls spike. For that morning, the missed call should trigger an automatic text within a minute: "Sorry I missed you, I'm on a roof. Reply with your street and what you noticed, and I'll call you back by noon." You are not trying to be clever. You are trying to stay in the conversation until you can pick up the phone.
+
+## Where this breaks
+
+If your customer list lives in a shoebox of invoices, the first job is to get it into one place with a last service date next to each name. That is a bad week, and it is still a better week than the cold snap.
+
+It also falls apart if you promise dates and then slip. Text two dates only if you can hold both. A crew that cancels its own fall schedule loses more goodwill than a crew that was a week out to begin with.
+
+## Pull one date this week
+
+Open your customer records and find the oldest service date still on your list. If it is more than two years back, those are your first wave. Write the two-date message for them today, even if you send it Monday.`,
+  },
+  {
     slug: `gutter-cleaning-rain-day-reschedule-list`,
     title: `A Rainy Tuesday Shouldn't Cost You the Whole Week`,
     excerpt: `Gutter work stops when the ladder gets slick, and the real damage comes after, when twelve customers are rescheduled by phone tag over three days.`,

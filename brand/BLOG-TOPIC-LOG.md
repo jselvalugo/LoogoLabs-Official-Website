@@ -60,3 +60,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-02 | holiday-lighting-book-install-and-takedown | Holiday lighting installers | Seasonal booking — selling install and takedown as one paired booking
 - 2026-10-02 | carpet-cleaning-prep-text-before-the-van-arrives | Carpet cleaning | Pre-visit prep instructions & job-readiness confirmation
 - 2026-10-03 | gutter-cleaning-rain-day-reschedule-list | Gutter cleaning | Weather delays — rain-out reschedule order & buffer slots
+- 2026-10-03 | chimney-sweep-first-cold-snap-waves | Chimney sweeps | Seasonal demand — staggered outreach by last-service date before the first cold snap
