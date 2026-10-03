@@ -56,7 +56,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: `AI Voice Agent`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',
