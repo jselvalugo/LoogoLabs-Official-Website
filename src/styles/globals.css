@@ -776,6 +776,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 }
 .ll-footer__wordmark:hover { color: var(--paper-100); background: none; }
 .ll-footer__note { margin: 10px 0 0; max-width: 32ch; font-size: 14px; line-height: 1.6; color: var(--ink-300); }
+.ll-footer__address { margin: 14px 0 0; font-style: normal; font-size: 13px; line-height: 1.6; color: var(--ink-300); }
 .ll-footer__col { display: grid; gap: 10px; align-content: start; }
 .ll-footer__link {
   justify-self: start; display: inline-flex; align-items: baseline; gap: 4px;

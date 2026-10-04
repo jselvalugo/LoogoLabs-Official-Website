@@ -15,6 +15,5 @@ export const GROW_FAQ = [
 ];
 
 // Service area for the Central Florida landing page, used for the areaServed
-// node in the LocalBusiness schema. This list is the whole geographic signal —
-// see localBusinessLd() in lib/seo.js for why there is no street address.
+// node in the LocalBusiness schema. See localBusinessLd() in lib/seo.js.
 export const SERVICE_AREA = [...CITIES.map((c) => c.name), 'Central Florida'];

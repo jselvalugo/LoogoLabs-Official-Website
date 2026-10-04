@@ -1,5 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
+import { SITE } from '../lib/seo';
 
 export default function Privacy({ onNavigate }) {
   return (
@@ -24,7 +25,7 @@ export default function Privacy({ onNavigate }) {
       <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(48px,6vw,80px) 32px clamp(64px,8vw,96px)' }}>
 
         <Section title="1. Who We Are">
-          <P>Loogo Labs LLC ("Loogo Labs," "we," "us," or "our") operates the website loogolabs.com and provides marketing automation and business platform services to small and mid-size businesses. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website or interact with our services.</P>
+          <P>David Selva, a sole proprietor doing business as Loogo Labs ("Loogo Labs," "we," "us," or "our") operates the website loogolabs.com and provides marketing automation and business platform services to small and mid-size businesses. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website or interact with our services.</P>
           <P>If you have questions about this policy, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
         </Section>
 
@@ -108,6 +109,11 @@ export default function Privacy({ onNavigate }) {
 
         <Section title="10. Changes to This Policy">
           <P>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. If the changes are material, we will make reasonable efforts to notify you. Continued use of our website after changes are posted constitutes your acceptance of the updated policy.</P>
+        </Section>
+
+        <Section title="11. Contact">
+          <P>For questions about this policy, email <a href={`mailto:${SITE.email}`} style={linkStyle}>{SITE.email}</a> or write to us:</P>
+          <P><strong>David Selva, d/b/a Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
         <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>
