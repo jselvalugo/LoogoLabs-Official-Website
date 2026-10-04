@@ -177,8 +177,17 @@ function Packages({ onNavigate }) {
             <div className="pk-grid">
               {PRIMARY_PACKAGES.map((p) => <PackageCard key={p.name} pkg={p} />)}
             </div>
-            <p style={{ margin: '20px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-              Prefer to run it yourself? Self-serve platform access is available from $147/mo — ask us on a call.
+            <Card emphasis="strong" padding={28} style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'grid', gap: 8, maxWidth: '56ch' }}>
+                <span style={mono}>Self-serve · $147/mo · no setup fee · month-to-month</span>
+                <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>Prefer to run it yourself?</h2>
+                <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
+                  Get the same platform as Growth — CRM, automation, AI and templates — and set it up your way, with community support.
+                </p>
+              </div>
+              <Button variant="secondary" size="lg" onClick={openBooking} iconRight={<span>→</span>}>Book a call</Button>
+            </Card>
+            <p style={{ margin: '16px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
               Ad spend and usage (SMS, calls, AI) are billed at cost.
             </p>
           </div>
