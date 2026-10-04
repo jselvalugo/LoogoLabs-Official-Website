@@ -179,7 +179,7 @@ function Packages({ onNavigate }) {
             </div>
             <Card emphasis="strong" padding={28} style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'grid', gap: 8, maxWidth: '56ch' }}>
-                <span style={mono}>Self-serve · $147/mo · no setup fee · month-to-month</span>
+                <span style={mono}>Self-serve · $39.99/mo · no setup fee · month-to-month</span>
                 <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>Prefer to run it yourself?</h2>
                 <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
                   Get the same platform as Growth — CRM, automation, AI and templates — and set it up your way, with community support.
