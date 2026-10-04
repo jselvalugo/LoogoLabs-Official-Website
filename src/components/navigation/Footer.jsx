@@ -34,7 +34,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
         <div className="ll-footer__top">
           <div className="ll-footer__brand">
             <a href="/" className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
-              {wordmark}<span style={{ color: 'var(--cyan-500)' }}>.</span>
+              {wordmark}
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}
           </div>
@@ -65,7 +65,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
         <div className="ll-footer__bottom">
           <div className="ll-footer__meta">
             <span>{copyright}</span>
-            <span>{strap}</span>
+            <span className="ll-footer__strap">{strap}</span>
           </div>
           <span className="ll-footer__license">
             LoogoNews posts are free to republish under{' '}

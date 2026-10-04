@@ -770,7 +770,10 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   display: grid; grid-template-columns: minmax(220px, 1.6fr) repeat(auto-fit, minmax(140px, 1fr));
   gap: 32px; padding-bottom: 36px; border-bottom: 1px solid var(--border-hair-inverse);
 }
-.ll-footer__wordmark { font-weight: 700; font-size: 24px; letter-spacing: -0.03em; color: var(--paper-100); border-bottom: none; }
+.ll-footer__wordmark {
+  font-family: "EB Garamond", Garamond, "Times New Roman", serif; font-weight: 500;
+  font-size: 34px; line-height: 1; letter-spacing: 0.01em; color: #fff; border-bottom: none;
+}
 .ll-footer__wordmark:hover { color: var(--paper-100); background: none; }
 .ll-footer__note { margin: 10px 0 0; max-width: 32ch; font-size: 14px; line-height: 1.6; color: var(--ink-300); }
 .ll-footer__col { display: grid; gap: 10px; align-content: start; }
@@ -798,9 +801,17 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-600);
 }
 .ll-footer__admin:hover { color: var(--ink-400); }
+/* Mobile: one compact stack. Column headings and the blurb drop away and
+   each column's links run inline, so the footer is a few short rows. */
 @media (max-width: 640px) {
-  .ll-footer { padding: 48px 16px 28px; }
-  .ll-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
-  .ll-footer__brand { grid-column: 1 / -1; }
-  .ll-footer__bottom { flex-direction: column; }
+  .ll-footer { padding: 36px 16px 24px; text-align: center; }
+  .ll-footer__top { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-bottom: 24px; }
+  .ll-footer__wordmark { font-size: 30px; }
+  .ll-footer__brand { margin-bottom: 6px; }
+  .ll-footer__note, .ll-footer__col > .ll-eyebrow, .ll-footer__strap, .ll-footer__ext { display: none; }
+  .ll-footer__col { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+  .ll-footer__col + .ll-footer__col:last-child .ll-footer__link { color: var(--ink-300); }
+  .ll-footer__link { justify-self: auto; font-size: 13px; }
+  .ll-footer__bottom { flex-direction: column; align-items: center; gap: 6px; padding-top: 16px; font-size: 10px; }
+  .ll-footer__license { max-width: 34ch; }
 }
