@@ -873,3 +873,20 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .ln-side { background: rgba(244,241,234,0.96); }
 }
+
+/* ── LoogoNews "All posts" filter bar ── */
+.ln-filters { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 20px; }
+.ln-filters input, .ln-filters select {
+  width: 100%; min-width: 0; height: 42px; padding: 0 12px; font: inherit; font-size: 14px; color: var(--ink-900);
+  background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: 10px;
+}
+.ln-filters select { cursor: pointer; }
+.ln-filters input:focus-visible, .ln-filters select:focus-visible { outline: 2px solid var(--ink-700); outline-offset: 1px; }
+.ln-filters__clear {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-700); background: none; border: 0; cursor: pointer; text-decoration: underline;
+}
+@media (max-width: 767px) {
+  .ln-filters { grid-template-columns: 1fr 1fr; }
+  .ln-filters__search { grid-column: 1 / -1; }
+}
