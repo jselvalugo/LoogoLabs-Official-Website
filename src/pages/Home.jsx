@@ -250,7 +250,7 @@ function Home({ onNavigate }) {
           <div style={{ maxWidth: '46ch' }}>
             <h1 style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
               letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
-              Launch, Grow & Automate Your Business — <span style={{ color: 'var(--cyan-700)' }}>All in One Place</span>.
+              More Customers. Less Busywork. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.
             </h1>
             <p style={{ maxWidth: '50ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
               We're the local marketing team behind Central Florida small businesses, with 8+ years
