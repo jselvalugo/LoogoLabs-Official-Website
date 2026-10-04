@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `pressure-washing-photo-quote-before-site-visit`,
+    title: `Stop Driving Out to Quote a Driveway You Can See in a Photo`,
+    excerpt: `Free on-site estimates eat a pressure washer's week, and most of them are for jobs a few phone photos and a square-footage guess would have priced.`,
+    tags: `Estimating, Lead Intake, Pressure Washing`,
+    content: `Say you do six free estimates a week. Each one is thirty minutes of driving each way and fifteen minutes standing in a driveway with a tape measure. That is seventy-five minutes a stop, and six stops is seven and a half hours. A full day of your best work, spent looking at concrete and giving a number you could have given from your truck.
+
+Some of those visits are worth it. Plenty are not, and you only find out which after you have already burned the gas.
+
+## Where the hours actually go
+
+The trip is not the only cost. Homeowners want you to come by while they are home, which means evenings and weekends, so estimates pile onto the time you would otherwise spend running the machine. Paid jobs slide later and the schedule slips.
+
+Then there is the person who asked for a price, got a price, and said they would think about it. You spent seventy-five minutes to learn what a three-line text could have told you: they were shopping.
+
+## Ask for the photos before you ask for the visit
+
+The moment someone fills out your form or leaves a voicemail, send them one text. It should ask for the address, a photo of each surface they want cleaned, a rough idea of how big it is, and whether there is rust, oil or paint on it.
+
+Keep it short, and tell them why you are asking:
+
+> "Thanks for reaching out. To give you a real number without a site visit, can you send two or three photos of the driveway and the house, plus the address? If it looks straightforward I can quote you today."
+
+People will send photos. It takes them a minute, the phone is already in their hand, and it feels like less work than waiting at home for a truck to show up.
+
+## Quote a range, then confirm on the day
+
+A photo will not tell you everything. It will not show a stained patch under a planter or a spot that needs a long hose run. So quote a range, and say what moves the price inside it.
+
+Something like: "From the photos, I'd expect this to land between two hundred and two hundred fifty dollars. If the oil stain turns out deeper than it looks, it will be at the top of that range. I'll confirm before I start."
+
+Now the customer has a number, you have a booked job instead of a maybe, and the only people you drive to see are the ones who already said yes to a price.
+
+## Let the system do the asking
+
+You will not send that text by hand at nine at night. Set it to go out automatically on every new inquiry, with a second nudge a day later for people who do not reply. Tag each lead by what happened: photos received, quoted, booked, or went quiet.
+
+That tag list is also an honest picture of your pipeline. After a few weeks you will see how many people send photos, how many accept a range, and how many disappear the moment a price shows up. I would rather you learn that than guess.
+
+## Where this goes wrong
+
+Big jobs still need a visit: a long fence, a multi-story house, a commercial lot, anything with roof work. Do not quote those from a thumbnail. Tell the customer plainly that this one needs a look, and either charge for the visit or fold its cost into the job.
+
+It also fails when your range is so wide it means nothing. If the high number is double the low one, you are guessing, and the customer can tell. Narrow it by asking one more question, not by shrugging.
+
+And some people will not send photos. That is fine. They go on the old path, with a visit, and you learn right away they are the slower sale.
+
+## Count the yeses on your calendar
+
+Look at the six estimates on your calendar, or the last six you did. For each one, write down whether a photo and a square-footage number would have been enough to quote it. Count the yeses. If it is more than half, write the one text above and send it to your next five inquiries before you agree to any visit.`,
+  },
+  {
     slug: `lawn-care-fall-transition-after-last-mow`,
     title: `Your Mowing Customers Stop Needing You in November`,
     excerpt: `A weekly mowing customer doesn't cancel in the fall, they just stop hearing from you, and by spring they've hired whoever knocked on the door in March.`,

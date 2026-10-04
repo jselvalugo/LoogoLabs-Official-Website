@@ -62,3 +62,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-03 | gutter-cleaning-rain-day-reschedule-list | Gutter cleaning | Weather delays — rain-out reschedule order & buffer slots
 - 2026-10-03 | chimney-sweep-first-cold-snap-waves | Chimney sweeps | Seasonal demand — staggered outreach by last-service date before the first cold snap
 - 2026-10-04 | lawn-care-fall-transition-after-last-mow | Lawn care | Seasonal transition — naming the gap after the last mow, leaf cleanup offer & spring hold
+- 2026-10-04 | pressure-washing-photo-quote-before-site-visit | Pressure washing | Lead intake — photo-based quoting before a site visit
