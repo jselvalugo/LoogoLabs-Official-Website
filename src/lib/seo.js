@@ -16,7 +16,7 @@ import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityP
 export const SITE = {
   origin: 'https://loogolabs.com',
   name: 'Loogo Labs',
-  legalName: 'Loogo Labs',
+  legalName: 'David Selva', // sole proprietor d/b/a Loogo Labs
   locale: 'en_US',
   lang: 'en',
   author: 'David Selva',

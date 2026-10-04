@@ -25,7 +25,7 @@ export default function Terms({ onNavigate }) {
       <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(48px,6vw,80px) 32px clamp(64px,8vw,96px)' }}>
 
         <Section title="1. Acceptance of Terms">
-          <P>By accessing or using the website loogolabs.com or any services provided by Loogo Labs LLC ("Loogo Labs," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use our website or services.</P>
+          <P>By accessing or using the website loogolabs.com or any services provided by David Selva, a sole proprietor doing business as Loogo Labs ("Loogo Labs," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use our website or services.</P>
           <P>These terms apply to all visitors, leads, clients, and anyone who interacts with our website or engages with our services.</P>
         </Section>
 
@@ -48,7 +48,7 @@ export default function Terms({ onNavigate }) {
 
         <Section title="4. Intellectual Property">
           <P>All original content published on loogolabs.com — including blog posts, copy, design, and branding — is created by Loogo Labs. While we do not restrict sharing or referencing our content, we ask that you credit us when quoting or linking to it.</P>
-          <P>The Loogo Labs name, logo, and brand marks are owned by Loogo Labs LLC. You may not use them without prior written consent.</P>
+          <P>The Loogo Labs name, logo, and brand marks are owned by David Selva, doing business as Loogo Labs. You may not use them without prior written consent.</P>
           <P>We do not reproduce or distribute content owned by third parties without authorization. If you believe any content on our site infringes your intellectual property rights, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a> and we will investigate promptly.</P>
         </Section>
 
@@ -86,7 +86,7 @@ export default function Terms({ onNavigate }) {
 
         <Section title="12. Contact">
           <P>For questions about these terms, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
-          <P><strong>Loogo Labs LLC</strong><br />{SITE.address.recipient}<br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
+          <P><strong>David Selva, d/b/a Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
         <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>
