@@ -173,8 +173,8 @@ function FounderSpotlight() {
           approval falling through the cracks.
         </p>
         <p style={{ margin: '14px auto 0', maxWidth: '54ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
-          Loogo Labs is that same obsession pointed somewhere else — a performance-marketing side
-          build for local businesses tired of losing leads to slow follow-up and duct-taped tools.
+          Loogo Labs is that same obsession pointed somewhere else — a performance-marketing company
+          for local businesses tired of losing leads to slow follow-up and duct-taped tools.
           Every workflow running under the hood here, I designed and I run myself.
         </p>
         <div style={{ marginTop: 24, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
