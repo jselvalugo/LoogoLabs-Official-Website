@@ -46,10 +46,10 @@ export default function Blog({ onNavigate }) {
               Market<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
             </h1>
             <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)' }}>
-              Straight talk for local service businesses — faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents — plus the marketing myths worth ignoring.
+              Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.
             </p>
             <p style={{ margin: 0, maxWidth: '38ch', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', lineHeight: 1.7, color: 'var(--ink-400)' }}>
-              We're sports lovers at Loogo — a sports section is coming soon.
+              We're sports lovers at Loogo. A sports section is coming soon.
             </p>
           </div>
         </div>
