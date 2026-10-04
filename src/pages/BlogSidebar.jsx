@@ -9,19 +9,32 @@ const daysLive = p => Math.max(1, (Date.now() - new Date(p.published_at || p.cre
 
 // "Best ranked": views earned per day live (so a strong new post isn't buried by
 // an older one's raw total), with a boost for editor-featured posts.
+// The posts carry 100+ very specific tags, so readers browse by a handful of
+// broad groups instead. A post can sit in more than one group.
+export const TOPIC_GROUPS = [
+  { key: 'cfl', label: 'Central Florida', re: CFL_RE },
+  { key: 'leads', label: 'Leads', re: /retention|membership|lead|follow-up|speed to|missed call|nurture|reactivation|sequence|after-hours|referral/i },
+  { key: 'reviews', label: 'Reviews', re: /review|reputation|social proof/i },
+  { key: 'booking', label: 'Booking', re: /book|schedul|no-show|waitlist|payment|invoic|billing|cash flow|capacity|reminder|recall|seasonal|weather|job prep/i },
+  { key: 'ai', label: 'AI', re: /\bai\b|automat|reporting|dashboard|team adoption|field op|workflow|crm|gohighlevel|pipeline|inbox|custom field|data quality/i },
+  { key: 'marketing', label: 'Marketing', re: /marketing|\bads?\b|ad spend|seo|google rank|social|email|sms|tcpa|compliance|attribution|roi|agenc|website|content/i },
+];
+export const inGroup = (p, key) => {
+  const g = TOPIC_GROUPS.find(x => x.key === key);
+  return !g || g.re.test(key === 'cfl' ? `${p.tags || ''} ${p.title}` : p.tags || '');
+};
+
 export const rankScore = p => (p.views || 0) / Math.sqrt(daysLive(p)) + (p.featured ? 25 : 0);
 
 export function buildSidebar(posts) {
   const top = (list, fn, n = 5) => [...list].sort((a, b) => fn(b) - fn(a)).slice(0, n);
   const cfl = posts.filter(p => CFL_RE.test(`${p.tags || ''} ${p.title}`));
-  const counts = {};
-  posts.forEach(p => tagsOf(p).forEach(t => { counts[t] = (counts[t] || 0) + 1; }));
   return {
     mostViewed: top(posts, p => p.views || 0),
     bestRanked: top(posts, rankScore),
     cfl: top(cfl, rankScore),
     quickReads: top(posts.filter(p => (p.read_time || 99) <= 5), p => p.views || 0, 4),
-    topics: Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 12),
+    topics: TOPIC_GROUPS.map(g => [g, posts.filter(p => inGroup(p, g.key)).length]).filter(([, n]) => n > 0),
   };
 }
 
@@ -72,7 +85,7 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
       {s.topics.length > 0 && (
         <Section label="Browse by topic">
           <div className="ln-side__tags">
-            {s.topics.map(([t, n]) => (
+            {s.topics.map(([{ key: t, label }, n]) => (
               <button
                 key={t}
                 type="button"
@@ -80,7 +93,7 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
                 aria-pressed={topic === t}
                 onClick={() => { onTopic(topic === t ? null : t); onPick?.(); }}
               >
-                {t} <span>{n}</span>
+                {label} <span>{n}</span>
               </button>
             ))}
           </div>

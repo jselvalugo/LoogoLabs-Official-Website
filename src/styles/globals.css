@@ -889,9 +889,9 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 }
 .ln-find__search input::placeholder { color: var(--ink-400); }
 .ln-find__row { display: flex; align-items: center; gap: 16px; }
-.ln-find__chips { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ln-find__chips { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .ln-find__chip {
-  font: inherit; font-size: 13px; font-weight: 600; padding: 7px 14px; cursor: pointer;
+  font: inherit; font-size: 12px; font-weight: 600; padding: 4px 11px; cursor: pointer; white-space: nowrap;
   color: var(--ink-700); background: transparent;
   border: 1px solid var(--border-hair); border-radius: var(--radius-pill);
   transition: background 120ms ease, border-color 120ms ease;
@@ -915,5 +915,9 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ln-find__chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
   .ln-find__chip { flex: none; }
   .ln-find__search { height: 52px; }
+  .ln-find__head { gap: 12px !important; }
+  .ln-find__head > div { display: none; }
+  .ln-find__head > span, .ln-filters__clear { white-space: nowrap; }
+  .ln-find__head .ln-find__sort { margin-left: auto; }
   .ln-find__search input { font-size: 15px; }
 }
