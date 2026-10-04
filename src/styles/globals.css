@@ -888,5 +888,5 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 }
 @media (max-width: 767px) {
   .ln-filters { grid-template-columns: 1fr 1fr; }
-  .ln-filters__search { grid-column: 1 / -1; }
+  .ln-filters__search, .ln-filters select:last-child { grid-column: 1 / -1; }
 }
