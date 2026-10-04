@@ -2,14 +2,14 @@ import React from 'react';
 import { BLOG_BASE } from '../lib/seo';
 
 // Tags/titles that mark a post as written for Central Florida small businesses.
-const CFL_RE = /central florida|\bcfl\b|orlando|kissimmee|sanford|lakeland|winter park|small business|local business/i;
+export const CFL_RE = /central florida|\bcfl\b|orlando|kissimmee|sanford|lakeland|winter park|small business|local business/i;
 
-const tagsOf = p => (p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : []);
+export const tagsOf = p => (p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : []);
 const daysLive = p => Math.max(1, (Date.now() - new Date(p.published_at || p.created_at || Date.now())) / 864e5);
 
 // "Best ranked": views earned per day live (so a strong new post isn't buried by
 // an older one's raw total), with a boost for editor-featured posts.
-const rankScore = p => (p.views || 0) / Math.sqrt(daysLive(p)) + (p.featured ? 25 : 0);
+export const rankScore = p => (p.views || 0) / Math.sqrt(daysLive(p)) + (p.featured ? 25 : 0);
 
 export function buildSidebar(posts) {
   const top = (list, fn, n = 5) => [...list].sort((a, b) => fn(b) - fn(a)).slice(0, n);

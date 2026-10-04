@@ -1,11 +1,17 @@
 import React from 'react';
-import BlogSidebar from './BlogSidebar';
+import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
+
+// Pseudo-topic for the Central Florida small business collection.
+const CFL = '__cfl';
 
 export default function Blog({ onNavigate }) {
   const [posts, setPosts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [topic, setTopic] = React.useState(null);
+  const [query, setQuery] = React.useState('');
+  const [sort, setSort] = React.useState('newest');
+  const [length, setLength] = React.useState('any');
 
   React.useEffect(() => {
     fetch('/.netlify/functions/get-posts')
@@ -27,9 +33,23 @@ export default function Blog({ onNavigate }) {
   const spotlight = posts.find(p => p.featured) || null;
   const featured = spotlight || posts[0] || null;
   const rest = posts.filter(p => p !== featured);
-  const shown = topic
-    ? rest.filter(p => (p.tags || '').split(',').some(t => t.trim() === topic))
-    : rest;
+  const allTopics = React.useMemo(
+    () => [...new Set(posts.flatMap(tagsOf))].sort((a, b) => a.localeCompare(b)),
+    [posts],
+  );
+  // Once any filter is on, search the whole archive (featured post included).
+  const filtering = Boolean(topic || query.trim() || length !== 'any' || sort !== 'newest');
+  const shown = React.useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const list = (filtering ? posts : rest).filter(p =>
+      (!topic || (topic === CFL ? CFL_RE.test(`${p.tags || ''} ${p.title}`) : tagsOf(p).includes(topic)))
+      && (!q || `${p.title} ${p.excerpt || ''} ${p.tags || ''}`.toLowerCase().includes(q))
+      && (length === 'any' || (length === 'quick' ? (p.read_time || 99) <= 5 : (p.read_time || 0) > 5)));
+    if (sort === 'views') return [...list].sort((a, b) => (b.views || 0) - (a.views || 0));
+    if (sort === 'ranked') return [...list].sort((a, b) => rankScore(b) - rankScore(a));
+    return list;
+  }, [posts, rest, filtering, topic, query, length, sort]);
+  const clearFilters = () => { setTopic(null); setQuery(''); setSort('newest'); setLength('any'); };
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
@@ -72,19 +92,43 @@ export default function Blog({ onNavigate }) {
               ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} />
               : featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
 
-            {(rest.length > 0 || topic) && (
+            {(rest.length > 0 || filtering) && (
               <div style={{ marginTop: 2 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '36px 0 24px', borderTop: '1px solid var(--border-hair)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '36px 0 16px', borderTop: '1px solid var(--border-hair)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-                    {topic ? `Topic: ${topic}` : 'All posts'}
+                    {filtering ? `${shown.length} of ${posts.length} posts` : 'All posts'}
                   </span>
                   <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
-                  {topic && (
-                    <button type="button" onClick={() => setTopic(null)} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-700)', background: 'none', border: 0, cursor: 'pointer' }}>
-                      Clear ✕
-                    </button>
+                  {filtering && (
+                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>Clear ✕</button>
                   )}
                 </div>
+                <div className="ln-filters" role="search">
+                  <input
+                    type="search" className="ln-filters__search" placeholder="Search posts…"
+                    aria-label="Search posts" value={query} onChange={e => setQuery(e.target.value)}
+                  />
+                  <select aria-label="Topic" value={topic || ''} onChange={e => setTopic(e.target.value || null)}>
+                    <option value="">All topics</option>
+                    <option value={CFL}>Central Florida small business</option>
+                    {allTopics.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                  <select aria-label="Sort" value={sort} onChange={e => setSort(e.target.value)}>
+                    <option value="newest">Newest</option>
+                    <option value="views">Most viewed</option>
+                    <option value="ranked">Best ranked</option>
+                  </select>
+                  <select aria-label="Length" value={length} onChange={e => setLength(e.target.value)}>
+                    <option value="any">Any length</option>
+                    <option value="quick">Quick reads (5 min or less)</option>
+                    <option value="long">Deep dives (6+ min)</option>
+                  </select>
+                </div>
+                {shown.length === 0 && (
+                  <p style={{ padding: '40px 0', margin: 0, textAlign: 'center', color: 'var(--ink-400)', fontSize: 15 }}>
+                    No posts match those filters. <button type="button" className="ln-filters__clear" onClick={clearFilters}>Clear filters</button>
+                  </p>
+                )}
                 <div className="ll-grid-2" style={{ gap: 1, background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
                   {shown.map(post => <PostCard key={post.id} post={post} onNavigate={onNavigate} />)}
                 </div>
