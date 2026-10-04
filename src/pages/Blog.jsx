@@ -43,10 +43,13 @@ export default function Blog({ onNavigate }) {
           </div>
           <div className="ln-masthead__copy">
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(48px,7vw,96px)', lineHeight: 0.9, letterSpacing: '-0.04em', color: 'var(--paper-100)' }}>
-              Marketing<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
+              Market<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
             </h1>
             <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)' }}>
-              Operational guides, automation strategies, and platform updates — written for business owners running on our system.
+              Straight talk for local service businesses — faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents — plus the marketing myths worth ignoring.
+            </p>
+            <p style={{ margin: 0, maxWidth: '38ch', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', lineHeight: 1.7, color: 'var(--ink-400)' }}>
+              We're sports lovers at Loogo — a sports section is coming soon.
             </p>
           </div>
         </div>
