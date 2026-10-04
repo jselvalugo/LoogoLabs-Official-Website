@@ -190,7 +190,7 @@ import { SERVICE_PACKAGES } from '../src/lib/servicePackages.js';
 const HEADINGS = {
   ...Object.fromEntries(NICHE_QUIZZES.map((q) => [q.page, q.headline])),
   ...Object.fromEntries(SERVICE_PACKAGES.map((p) => [p.page, `${p.headline} ${p.accent}`])),
-  Home: 'Launch, Grow & Automate Your Business — All in One Place',
+  Home: 'More Customers. Less Busywork. We Run It for You.',
   Mission: 'We believe running a business should not require 15 different tools.',
   Company: 'Meet the founder',
   LoogoNews: 'LoogoNews — Marketing News',
