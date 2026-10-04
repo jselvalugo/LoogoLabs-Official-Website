@@ -814,6 +814,8 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-footer__link { justify-self: auto; font-size: 13px; }
   .ll-footer__bottom { flex-direction: column; align-items: center; gap: 6px; padding-top: 16px; font-size: 10px; }
   .ll-footer__license { max-width: 34ch; }
+}
+
 /* ── LoogoNews sidebar (floating glass panel) ── */
 .ln-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; align-items: start; }
 .ln-layout__main { min-width: 0; }
