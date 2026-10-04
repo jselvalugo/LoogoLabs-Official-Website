@@ -201,7 +201,7 @@ export default function AIVoice() {
       </div>
 
       {/* ── PROBLEM ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow>The problem</Eyebrow>
           <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700,
@@ -228,7 +228,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── LIVE DEMO ── */}
-      <section style={{ background: 'var(--ink-900)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--ink-900)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
 
@@ -335,7 +335,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── CAPABILITIES ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--paper-200)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow>What it does</Eyebrow>
           <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
@@ -361,7 +361,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── DIFFERENTIATOR ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow>Why Loogo Labs</Eyebrow>
           <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
@@ -386,7 +386,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow light>The process</Eyebrow>
           <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
@@ -410,7 +410,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── INDUSTRIES ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40 }}>
             <div>
@@ -443,7 +443,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── COMPARISON TABLE ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--paper-200)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow>AI vs. traditional</Eyebrow>
           <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
@@ -509,7 +509,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── FAQ ── */}
-      <section style={{ background: 'var(--surface-sunken)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
+      <section style={{ background: 'var(--surface-sunken)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
         <Wrap>
           <Eyebrow>Common questions</Eyebrow>
           <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
@@ -546,7 +546,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── CENTRAL FLORIDA CITIES ── */}
-      <section style={{ background: 'var(--paper-000)', padding: 'clamp(36px,4.5vw,52px) 0', borderTop: '1px solid var(--border-hair)' }}>
+      <section style={{ background: 'var(--paper-000)', padding: 'clamp(28px,3vw,36px) 0', borderTop: '1px solid var(--border-hair)' }}>
         <Wrap>
           <Eyebrow>Central Florida</Eyebrow>
           <h2 style={{ margin: 0, fontSize: 'clamp(26px,3.4vw,40px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '24ch' }}>
@@ -561,7 +561,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: 'clamp(48px,6vw,68px) 0', color: 'var(--paper-100)', textAlign: 'center' }}>
+      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: 'clamp(40px,4.5vw,52px) 0', color: 'var(--paper-100)', textAlign: 'center' }}>
         <Wrap>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 14px',
             background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)', borderRadius: 'var(--radius-2)', marginBottom: 28 }}>
