@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `lawn-care-fall-transition-after-last-mow`,
+    title: `Your Mowing Customers Stop Needing You in November`,
+    excerpt: `A weekly mowing customer doesn't cancel in the fall, they just stop hearing from you, and by spring they've hired whoever knocked on the door in March.`,
+    tags: `Seasonal Planning, Customer Retention, Lawn Care`,
+    content: `The grass stops growing sometime in November, your crew skips a week, and nobody tells the customer anything. Then it happens again. By the third quiet week, the homeowner has decided you are done for the year, and a few of them quietly decide you are done for good.
+
+I have watched this play out with small mowing companies, and the owner almost never notices it as a loss. The route just gets thinner in the spring. Eight or ten customers are gone, and nobody ever cancelled.
+
+## Silence reads as the end of the contract
+
+A weekly customer has a simple mental model: you show up, the lawn gets cut, they pay. When the visits stop, that model has nothing left in it. They are not angry. They just have no reason to think of you until the grass is long again, and by then a competitor with a clean truck and a door-hanger has been to the house.
+
+The fix is not a bigger spring promotion. It is saying something *before* the last mow, so the break has a name and an end date.
+
+## Give the gap a name
+
+Most lawns still need something between the last mow and the first one. Leaves come down on a schedule you can predict from your own calendar: you already know which weeks your oldest neighborhoods are buried. Beds need cutting back, and some yards want a last edge and a final pass to mulch the leaves.
+
+So before the last mow, tell each customer what the next few months look like for their yard. Two or three visits, with dates, is plenty. It does not need to be a catalog.
+
+A message that works is plain:
+
+> "Last regular mow for your lawn is likely the week of November 9. I'd like to book two leaf cleanups, one around November 16 and one around December 7, and hold your first spring mow for the week of March 15. Reply YES and I'll lock all three."
+
+That is one message, and it gives the customer a decision instead of a silence.
+
+## Price it by yard, not by hour
+
+Leaf work is where owners lose money, because it is slow and the first yard of the day always runs long. Decide your pricing from the lot size you already have on file, with a flat number per visit and a cap on how many bags or how much volume it covers. If a yard is buried, say so in the message and quote the second visit up front.
+
+Do this before you send anything. A cleanup offer with a vague price turns into a phone call, and a phone call turns into a Tuesday you spent explaining yourself instead of cutting grass.
+
+## Hold the spring start now
+
+The part I would not skip is the spring hold. A customer who agrees to a March start has made a decision in October, which is when they are paying attention to you, instead of in April, when they are comparing three quotes.
+
+Put it in your system as a tagged booking, not a note on a napkin. Tag each customer by what they said yes to: cleanups and spring, spring only, or no reply. Then your follow-up writes itself. The no-reply group gets one more message the week after the last mow. The spring-only group gets a reminder in February.
+
+## Where this breaks
+
+Some customers truly are done for the year, and a few move. If you send three messages to someone who told you no, you have spent goodwill for nothing. One follow-up is enough.
+
+It also fails if you promise leaf dates your crew cannot keep. If your trucks are full in the second week of November, offer one window, not two, and say which.
+
+## Try this before your last mow
+
+Open your customer list and sort it by the neighborhoods that drop leaves earliest. Write the one message above, with real dates for your calendar, and send it to the first twenty customers on that list. Count how many replies you get in a week. That number tells you how much of next spring you are about to keep.`,
+  },
+  {
     slug: `chimney-sweep-first-cold-snap-waves`,
     title: `The First Cold Snap Books Your Whole Fall in One Weekend`,
     excerpt: `A chimney sweep can handle a busy October and still lose the season on the one Saturday after the temperature drops, because everyone remembers their fireplace at the same moment.`,
