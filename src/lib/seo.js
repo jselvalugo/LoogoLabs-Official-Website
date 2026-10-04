@@ -178,9 +178,9 @@ export const ROUTES = [
   {
     page: 'Packages',
     path: '/packages',
-    title: `Packaged Services — Fixed Price, Done For You | ${SITE.name}`,
+    title: `Growth Packages & Quick Starts — Done For You | ${SITE.name}`,
     description:
-      'Off-the-shelf services with fixed scope and fixed prices — no custom quote, no retainer. Pick a package and we handle the rest.',
+      'Done-for-you growth packages — Launch, Growth and Scale — plus fixed-price quick starts for reviews, Google Business Profile, city pages and press releases.',
     priority: '0.7',
     changefreq: 'monthly',
   },
