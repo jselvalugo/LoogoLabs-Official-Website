@@ -1,9 +1,11 @@
 import React from 'react';
+import BlogSidebar from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
 
 export default function Blog({ onNavigate }) {
   const [posts, setPosts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [topic, setTopic] = React.useState(null);
 
   React.useEffect(() => {
     fetch('/.netlify/functions/get-posts')
@@ -25,6 +27,9 @@ export default function Blog({ onNavigate }) {
   const spotlight = posts.find(p => p.featured) || null;
   const featured = spotlight || posts[0] || null;
   const rest = posts.filter(p => p !== featured);
+  const shown = topic
+    ? rest.filter(p => (p.tags || '').split(',').some(t => t.trim() === topic))
+    : rest;
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
@@ -58,25 +63,33 @@ export default function Blog({ onNavigate }) {
         ) : posts.length === 0 ? (
           <EmptyState />
         ) : (
-          <>
+          <div className="ln-layout">
+           <div className="ln-layout__main">
             {spotlight
               ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} />
               : featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
 
-            {rest.length > 0 && (
+            {(rest.length > 0 || topic) && (
               <div style={{ marginTop: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '36px 0 24px', borderTop: '1px solid var(--border-hair)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-                    All posts
+                    {topic ? `Topic: ${topic}` : 'All posts'}
                   </span>
                   <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
+                  {topic && (
+                    <button type="button" onClick={() => setTopic(null)} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-700)', background: 'none', border: 0, cursor: 'pointer' }}>
+                      Clear ✕
+                    </button>
+                  )}
                 </div>
                 <div className="ll-grid-2" style={{ gap: 1, background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
-                  {rest.map(post => <PostCard key={post.id} post={post} onNavigate={onNavigate} />)}
+                  {shown.map(post => <PostCard key={post.id} post={post} onNavigate={onNavigate} />)}
                 </div>
               </div>
             )}
-          </>
+           </div>
+            <BlogSidebar posts={posts} topic={topic} onTopic={setTopic} onNavigate={onNavigate} />
+          </div>
         )}
       </div>
     </div>
