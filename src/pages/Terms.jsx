@@ -1,5 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
+import { SITE } from '../lib/seo';
 
 export default function Terms({ onNavigate }) {
   return (
@@ -85,7 +86,7 @@ export default function Terms({ onNavigate }) {
 
         <Section title="12. Contact">
           <P>For questions about these terms, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
-          <P><strong>Loogo Labs LLC</strong></P>
+          <P><strong>Loogo Labs LLC</strong><br />{SITE.address.recipient}<br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
         <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>

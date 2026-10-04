@@ -1,6 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
-import { pathForPage, routeMeta } from '../../lib/seo';
+import { SITE, pathForPage, routeMeta } from '../../lib/seo';
 
 const pageMap = {
   'Mission': 'Mission',
@@ -37,6 +37,12 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
               {wordmark}
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}
+            <address className="ll-footer__address">
+              {SITE.address.recipient}<br />
+              {SITE.address.streetAddress}<br />
+              {SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />
+              {SITE.address.countryName}
+            </address>
           </div>
           {columns.map(col => (
             <nav key={col.title} className="ll-footer__col" aria-label={col.title}>

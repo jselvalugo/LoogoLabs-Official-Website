@@ -22,6 +22,16 @@ export const SITE = {
   author: 'David Selva',
   founder: 'David Selva',
   email: 'david@loogolabs.com',
+  // Public business mailing address, shown in the footer and the schema.
+  address: {
+    recipient: 'David Selva',
+    streetAddress: '2875 S Orange Ave STE 500 #6412',
+    addressLocality: 'Orlando',
+    addressRegion: 'FL',
+    postalCode: '32806-5471',
+    addressCountry: 'US',
+    countryName: 'United States',
+  },
   logo: '/logo.png',
   ogImage: '/og-image.jpg',
   ogImageWidth: 1200,
@@ -340,6 +350,11 @@ export function isoDate(value) {
 
 // ── JSON-LD ──────────────────────────────────────────────────────────────────
 
+const postalAddressLd = () => {
+  const { streetAddress, addressLocality, addressRegion, postalCode, addressCountry } = SITE.address;
+  return { '@type': 'PostalAddress', streetAddress, addressLocality, addressRegion, postalCode, addressCountry };
+};
+
 export const organizationLd = () => ({
   '@type': 'Organization',
   '@id': url('/#organization'),
@@ -350,6 +365,7 @@ export const organizationLd = () => ({
   image: url(SITE.ogImage),
   description: SITE.description,
   email: SITE.email,
+  address: postalAddressLd(),
   founder: { '@type': 'Person', name: SITE.founder },
   contactPoint: {
     '@type': 'ContactPoint',
@@ -431,17 +447,16 @@ export const faqLd = (entries = GROW_FAQ, path = '/grow') => ({
 });
 
 // Modelled as a service-area business: the work is delivered to the client, not
-// from a storefront, and the operating address is residential. So there is
-// deliberately no `address` or `geo` node here — the area served is the whole
-// signal, and Google verifies the real address privately through the Google
-// Business Profile, where a service-area listing keeps it hidden. Do not add a
-// street address here without deciding to make it permanently public.
+// from a storefront. The address is the public business mailing address (no
+// `geo` node — there is no storefront to locate); areaServed carries the
+// geographic signal.
 export const localBusinessLd = () => ({
   '@type': 'ProfessionalService',
   '@id': url('/grow#localbusiness'),
   name: `${SITE.name} — Central Florida`,
   url: url('/grow'),
   image: url(SITE.ogImage),
+  address: postalAddressLd(),
   description:
     'Marketing automation, local SEO, and reputation management for Central Florida service businesses.',
   parentOrganization: { '@id': url('/#organization') },
