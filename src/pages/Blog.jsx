@@ -104,25 +104,37 @@ export default function Blog({ onNavigate }) {
                   )}
                 </div>
                 <div className="ln-filters" role="search">
-                  <input
-                    type="search" className="ln-filters__search" placeholder="Search posts…"
-                    aria-label="Search posts" value={query} onChange={e => setQuery(e.target.value)}
-                  />
-                  <select aria-label="Topic" value={topic || ''} onChange={e => setTopic(e.target.value || null)}>
-                    <option value="">All topics</option>
-                    <option value={CFL}>Central Florida small business</option>
-                    {allTopics.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                  <select aria-label="Sort" value={sort} onChange={e => setSort(e.target.value)}>
-                    <option value="newest">Newest</option>
-                    <option value="views">Most viewed</option>
-                    <option value="ranked">Best ranked</option>
-                  </select>
-                  <select aria-label="Length" value={length} onChange={e => setLength(e.target.value)}>
-                    <option value="any">Any length</option>
-                    <option value="quick">Quick reads (5 min or less)</option>
-                    <option value="long">Deep dives (6+ min)</option>
-                  </select>
+                  <label className="ln-filters__field ln-filters__field--search">
+                    <span className="ln-filters__label">Search</span>
+                    <span className="ln-filters__control">
+                      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="7" cy="7" r="5" /><path d="M11 11l3.5 3.5" strokeLinecap="round" /></svg>
+                      <input type="search" placeholder="Reviews, no-shows, HVAC…" value={query} onChange={e => setQuery(e.target.value)} />
+                    </span>
+                  </label>
+                  <label className={`ln-filters__field${topic ? ' is-set' : ''}`}>
+                    <span className="ln-filters__label">Topic</span>
+                    <select value={topic || ''} onChange={e => setTopic(e.target.value || null)}>
+                      <option value="">All topics</option>
+                      <option value={CFL}>Central Florida small business</option>
+                      {allTopics.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </label>
+                  <label className={`ln-filters__field${sort !== 'newest' ? ' is-set' : ''}`}>
+                    <span className="ln-filters__label">Sort by</span>
+                    <select value={sort} onChange={e => setSort(e.target.value)}>
+                      <option value="newest">Newest</option>
+                      <option value="views">Most viewed</option>
+                      <option value="ranked">Best ranked</option>
+                    </select>
+                  </label>
+                  <label className={`ln-filters__field${length !== 'any' ? ' is-set' : ''}`}>
+                    <span className="ln-filters__label">Length</span>
+                    <select value={length} onChange={e => setLength(e.target.value)}>
+                      <option value="any">Any length</option>
+                      <option value="quick">Quick reads (≤ 5 min)</option>
+                      <option value="long">Deep dives (6+ min)</option>
+                    </select>
+                  </label>
                 </div>
                 {shown.length === 0 && (
                   <p style={{ padding: '40px 0', margin: 0, textAlign: 'center', color: 'var(--ink-400)', fontSize: 15 }}>
