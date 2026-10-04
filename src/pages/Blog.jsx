@@ -11,7 +11,6 @@ export default function Blog({ onNavigate }) {
   const [topic, setTopic] = React.useState(null);
   const [query, setQuery] = React.useState('');
   const [sort, setSort] = React.useState('newest');
-  const [length, setLength] = React.useState('any');
 
   React.useEffect(() => {
     fetch('/.netlify/functions/get-posts')
@@ -33,23 +32,25 @@ export default function Blog({ onNavigate }) {
   const spotlight = posts.find(p => p.featured) || null;
   const featured = spotlight || posts[0] || null;
   const rest = posts.filter(p => p !== featured);
-  const allTopics = React.useMemo(
-    () => [...new Set(posts.flatMap(tagsOf))].sort((a, b) => a.localeCompare(b)),
-    [posts],
-  );
-  // Once any filter is on, search the whole archive (featured post included).
-  const filtering = Boolean(topic || query.trim() || length !== 'any' || sort !== 'newest');
+  // Quick-pick chips: the Central Florida collection plus the most-used tags.
+  // A topic picked from the sidebar that isn't among them gets its own chip.
+  const chips = React.useMemo(() => {
+    const counts = {};
+    posts.forEach(p => tagsOf(p).forEach(t => { counts[t] = (counts[t] || 0) + 1; }));
+    return Object.entries(counts).sort((x, y) => y[1] - x[1]).map(([t]) => t).filter(t => t.toLowerCase() !== 'central florida').slice(0, 6);
+  }, [posts]);
+  const chipList = topic && topic !== CFL && !chips.includes(topic) ? [...chips, topic] : chips;
+  const filtering = Boolean(topic || query.trim() || sort !== 'newest');
   const shown = React.useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = (filtering ? posts : rest).filter(p =>
       (!topic || (topic === CFL ? CFL_RE.test(`${p.tags || ''} ${p.title}`) : tagsOf(p).includes(topic)))
-      && (!q || `${p.title} ${p.excerpt || ''} ${p.tags || ''}`.toLowerCase().includes(q))
-      && (length === 'any' || (length === 'quick' ? (p.read_time || 99) <= 5 : (p.read_time || 0) > 5)));
+      && (!q || `${p.title} ${p.excerpt || ''} ${p.tags || ''}`.toLowerCase().includes(q)));
     if (sort === 'views') return [...list].sort((a, b) => (b.views || 0) - (a.views || 0));
     if (sort === 'ranked') return [...list].sort((a, b) => rankScore(b) - rankScore(a));
     return list;
-  }, [posts, rest, filtering, topic, query, length, sort]);
-  const clearFilters = () => { setTopic(null); setQuery(''); setSort('newest'); setLength('any'); };
+  }, [posts, rest, filtering, topic, query, sort]);
+  const clearFilters = () => { setTopic(null); setQuery(''); setSort('newest'); };
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
@@ -96,45 +97,35 @@ export default function Blog({ onNavigate }) {
               <div style={{ marginTop: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '36px 0 16px', borderTop: '1px solid var(--border-hair)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-                    {filtering ? `${shown.length} of ${posts.length} posts` : 'All posts'}
+                    {filtering ? `Showing ${shown.length} of ${posts.length} posts` : 'Find a post'}
                   </span>
                   <div style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
                   {filtering && (
                     <button type="button" className="ln-filters__clear" onClick={clearFilters}>Clear ✕</button>
                   )}
                 </div>
-                <div className="ln-filters" role="search">
-                  <label className="ln-filters__field ln-filters__field--search">
-                    <span className="ln-filters__label">Search</span>
-                    <span className="ln-filters__control">
-                      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="7" cy="7" r="5" /><path d="M11 11l3.5 3.5" strokeLinecap="round" /></svg>
-                      <input type="search" placeholder="Reviews, no-shows, HVAC…" value={query} onChange={e => setQuery(e.target.value)} />
-                    </span>
+                <div className="ln-find" role="search">
+                  <label className="ln-find__search">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="7" cy="7" r="5" /><path d="M11 11l3.5 3.5" strokeLinecap="round" /></svg>
+                    <input type="search" aria-label="Search posts" placeholder="Search posts, e.g. reviews or HVAC" value={query} onChange={e => setQuery(e.target.value)} />
                   </label>
-                  <label className={`ln-filters__field${topic ? ' is-set' : ''}`}>
-                    <span className="ln-filters__label">Topic</span>
-                    <select value={topic || ''} onChange={e => setTopic(e.target.value || null)}>
-                      <option value="">All topics</option>
-                      <option value={CFL}>Central Florida small business</option>
-                      {allTopics.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </label>
-                  <label className={`ln-filters__field${sort !== 'newest' ? ' is-set' : ''}`}>
-                    <span className="ln-filters__label">Sort by</span>
-                    <select value={sort} onChange={e => setSort(e.target.value)}>
-                      <option value="newest">Newest</option>
-                      <option value="views">Most viewed</option>
-                      <option value="ranked">Best ranked</option>
-                    </select>
-                  </label>
-                  <label className={`ln-filters__field${length !== 'any' ? ' is-set' : ''}`}>
-                    <span className="ln-filters__label">Length</span>
-                    <select value={length} onChange={e => setLength(e.target.value)}>
-                      <option value="any">Any length</option>
-                      <option value="quick">Quick reads (≤ 5 min)</option>
-                      <option value="long">Deep dives (6+ min)</option>
-                    </select>
-                  </label>
+                  <div className="ln-find__row">
+                    <div className="ln-find__chips" aria-label="Filter by topic">
+                      {[[null, 'All'], [CFL, 'Central Florida'], ...chipList.map(t => [t, t])].map(([value, text]) => (
+                        <button key={text} type="button" className="ln-find__chip" aria-pressed={topic === value} onClick={() => setTopic(value)}>
+                          {text}
+                        </button>
+                      ))}
+                    </div>
+                    <label className="ln-find__sort">
+                      Sort
+                      <select value={sort} onChange={e => setSort(e.target.value)}>
+                        <option value="newest">Newest</option>
+                        <option value="views">Most viewed</option>
+                        <option value="ranked">Best ranked</option>
+                      </select>
+                    </label>
+                  </div>
                 </div>
                 {shown.length === 0 && (
                   <p style={{ padding: '40px 0', margin: 0, textAlign: 'center', color: 'var(--ink-400)', fontSize: 15 }}>
