@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import '@fontsource/eb-garamond/latin-500.css';
 import './styles/globals.css';
 import App from './App';
 import { startSessionTracking } from './lib/sessionTracker';
