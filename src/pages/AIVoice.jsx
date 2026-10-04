@@ -114,7 +114,7 @@ export default function AIVoice() {
       `}</style>
 
       {/* ── HERO ── */}
-      <section style={{ position: 'relative', background: 'var(--ink-900)', padding: 'clamp(72px,10vw,120px) 0 clamp(56px,7vw,88px)', overflow: 'hidden' }}>
+      <section style={{ position: 'relative', background: 'var(--ink-900)', padding: 'clamp(48px,6vw,72px) 0 clamp(36px,4.5vw,56px)', overflow: 'hidden' }}>
         <div className="ll-hero-grid-bg" aria-hidden="true" />
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -143,7 +143,7 @@ export default function AIVoice() {
           </div>
 
           {/* waveform display */}
-          <div style={{ marginTop: 48, padding: '18px 22px',
+          <div style={{ marginTop: 28, padding: '18px 22px',
             background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)',
             borderRadius: 'var(--radius-3)', display: 'flex', alignItems: 'center', gap: 16, maxWidth: 520 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
@@ -159,7 +159,7 @@ export default function AIVoice() {
           </div>
 
           {/* stats */}
-          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56,
+          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 32,
             borderTop: '1px solid var(--border-hair-inverse)' }}>
             {[
               ['100%', 'Answer rate'],
@@ -201,7 +201,7 @@ export default function AIVoice() {
       </div>
 
       {/* ── PROBLEM ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow>The problem</Eyebrow>
           <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700,
@@ -213,7 +213,7 @@ export default function AIVoice() {
             They find someone who answers — and they book with them instead.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 1,
-            marginTop: 48, background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
+            marginTop: 28, background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
             {problems.map(([title, desc]) => (
               <div key={title} style={{ background: 'var(--paper-100)', padding: '32px 28px', display: 'grid', gap: 12 }}>
                 <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,74,61,0.1)',
@@ -228,9 +228,9 @@ export default function AIVoice() {
       </section>
 
       {/* ── LIVE DEMO ── */}
-      <section style={{ background: 'var(--ink-900)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--ink-900)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
 
             {/* left: copy */}
             <div>
@@ -243,7 +243,7 @@ export default function AIVoice() {
                 The AI doesn't read from a script. It holds a real conversation, adapts to what the caller says,
                 and guides them toward the outcome your business needs — a booked appointment.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 40 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
                 {['Speaks naturally — no robotic pauses or clipped sentences',
                   'Handles interruptions and tangents gracefully',
                   'Stays on-brand for every single call',
@@ -335,10 +335,10 @@ export default function AIVoice() {
       </section>
 
       {/* ── CAPABILITIES ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--paper-200)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow>What it does</Eyebrow>
-          <h2 style={{ margin: '0 0 56px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
+          <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '26ch' }}>
             Everything your front desk does — plus everything they can't.
           </h2>
@@ -361,14 +361,14 @@ export default function AIVoice() {
       </section>
 
       {/* ── DIFFERENTIATOR ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow>Why Loogo Labs</Eyebrow>
           <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '22ch' }}>
             Not a bot bolted onto your phone line.
           </h2>
-          <p style={{ margin: '0 0 48px', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-500)', maxWidth: '58ch' }}>
+          <p style={{ margin: '0 0 28px', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-500)', maxWidth: '58ch' }}>
             Plenty of tools will sell you a self-serve voice bot and leave the rest to you. That's not what this is.
           </p>
           <div className="ll-grid-3" style={{ gap: 20 }}>
@@ -386,10 +386,10 @@ export default function AIVoice() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow light>The process</Eyebrow>
-          <h2 style={{ margin: '0 0 56px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
+          <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--paper-100)', maxWidth: '24ch' }}>
             From first call to live agent in about a week.
           </h2>
@@ -410,9 +410,9 @@ export default function AIVoice() {
       </section>
 
       {/* ── INDUSTRIES ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 64 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40 }}>
             <div>
               <Eyebrow>Who it's built for</Eyebrow>
               <h2 style={{ margin: '0 0 20px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
@@ -443,10 +443,10 @@ export default function AIVoice() {
       </section>
 
       {/* ── COMPARISON TABLE ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--paper-200)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow>AI vs. traditional</Eyebrow>
-          <h2 style={{ margin: '0 0 48px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
+          <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '26ch' }}>
             How it stacks up against your current setup.
           </h2>
@@ -509,10 +509,10 @@ export default function AIVoice() {
       </section>
 
       {/* ── FAQ ── */}
-      <section style={{ background: 'var(--surface-sunken)', padding: 'clamp(72px,9vw,112px) 0' }}>
+      <section style={{ background: 'var(--surface-sunken)', padding: 'clamp(44px,5.5vw,64px) 0' }}>
         <Wrap>
           <Eyebrow>Common questions</Eyebrow>
-          <h2 style={{ margin: '0 0 48px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
+          <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
             letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '24ch' }}>
             Everything you've been wondering.
           </h2>
@@ -546,7 +546,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── CENTRAL FLORIDA CITIES ── */}
-      <section style={{ background: 'var(--paper-000)', padding: 'clamp(56px,7vw,88px) 0', borderTop: '1px solid var(--border-hair)' }}>
+      <section style={{ background: 'var(--paper-000)', padding: 'clamp(36px,4.5vw,52px) 0', borderTop: '1px solid var(--border-hair)' }}>
         <Wrap>
           <Eyebrow>Central Florida</Eyebrow>
           <h2 style={{ margin: 0, fontSize: 'clamp(26px,3.4vw,40px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '24ch' }}>
@@ -561,7 +561,7 @@ export default function AIVoice() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: 'clamp(80px,10vw,112px) 0', color: 'var(--paper-100)', textAlign: 'center' }}>
+      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: 'clamp(48px,6vw,68px) 0', color: 'var(--paper-100)', textAlign: 'center' }}>
         <Wrap>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 14px',
             background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)', borderRadius: 'var(--radius-2)', marginBottom: 28 }}>
@@ -581,12 +581,12 @@ export default function AIVoice() {
             voice agent would look like for your specific business, and give you a clear picture of ROI
             before you commit to anything.
           </p>
-          <div style={{ marginTop: 40 }}>
+          <div style={{ marginTop: 24 }}>
             <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook}>Book my free strategy call</Button>
           </div>
 
           {/* trust row */}
-          <div style={{ marginTop: 48, paddingTop: 40,
+          <div style={{ marginTop: 28, paddingTop: 40,
             borderTop: '1px solid var(--border-hair-inverse)',
             display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px 40px' }}>
             {[
