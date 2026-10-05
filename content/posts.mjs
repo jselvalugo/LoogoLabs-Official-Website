@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `locksmith-lockout-price-range-text-before-dispatch`,
+    title: `Locksmiths: Text the Price Range Before You Leave the Shop`,
+    excerpt: `A locked-out customer calls three shops and hires whoever sounds sure, so the shop that sends a price range and an arrival window in the first minutes wins the job and skips the argument at the door.`,
+    tags: `Lead Response, Pricing, Locksmiths`,
+    content: `A woman is standing outside her car at 9 PM with her keys on the driver's seat. She calls the first shop and gets voicemail. She calls the second and hears "it depends, we'll see when we get there." The third picks up, gives her a range and a time, and gets the job. The first two never learn they were in the race.
+
+If you run a locksmith shop, you have lost jobs this way, and the cruel part is that it had nothing to do with your skill.
+
+## Why vague loses
+
+A lockout is a bad moment, and the customer is already nervous about being overcharged by a stranger. When you say "it depends," you are telling a worried person that the number will be decided after they can't say no. Even if you are completely fair, that answer sounds like the setup for a bad surprise.
+
+I'd rather see you give a range you can defend than a mystery you can't. People will tolerate a number. They will not tolerate not knowing.
+
+The second problem comes later, at the car door. The customer heard one number on the phone, or thought they did, and the invoice says another. Now your tech is arguing about a conversation they weren't part of, and the customer is angry in a way that follows you into a review.
+
+## The two things to put in writing
+
+You don't need a long message. You need two facts, sent as a text while the customer is still deciding.
+
+**A price range, with what moves it.** Something like: "Car lockout is usually $X to $Y. After-hours and farther addresses sit toward the top." Pick the figures from your own jobs. If you can't state a range, look at the last twenty tickets and see where most of them landed.
+
+**An arrival window, not a promise.** "Tech can be there between 9:40 and 10:10" is more believable than "20 minutes." If you say twenty and it takes forty-five, you have turned a fair job into a complaint.
+
+Add one line asking for the make and year of the car, or the type of lock on the door. That helps your tech arrive with the right tools, and it makes the customer feel something is already in motion.
+
+## Make it automatic, because you're under a car
+
+The reason this doesn't happen today is that nobody is free to send it. The owner is on a job, and the phone rings out.
+
+On the platform, a missed call can trigger a text back within moments, and that text can carry your range and window. A call that you do answer can end with the same message sent right after, so the customer has the numbers in writing. Same words, same range, every time. It also means the person answering the phone on a bad night cannot accidentally quote something different.
+
+Keep the language plain. No jargon about "service call fees" without saying what the fee is.
+
+## Where it breaks
+
+Ranges are only honest when your jobs are fairly predictable. A standard car or house lockout fits. A broken-off key in an unusual lock, or a high-security cylinder, does not, and pretending otherwise will hurt you.
+
+So write a second version of the text for the strange jobs: "This one needs a look first. I'll confirm the price by phone before the tech leaves." That is still better than silence, because the customer knows when they'll hear from you.
+
+I should also say I don't know your market. Whether customers will accept a range, or whether competitors are quoting flat numbers that make yours look high, is something only your own call history will tell you.
+
+## What to check this week
+
+Pull your last ten lockout jobs and write down two things for each: what the customer was told before dispatch, and what they paid. Count how many had a gap between the two. If more than one or two did, write your range-and-window text this week, and use it on the very next call.
+`,
+  },
+  {
     slug: `window-cleaning-daylight-saving-last-start-time`,
     title: `The Clocks Go Back Nov. 1. Your 4 PM Slots Don't Survive It`,
     excerpt: `Exterior work needs daylight, and the booking calendar doesn't know that, so the last slot of the day quietly turns into a job your tech can't finish.`,
