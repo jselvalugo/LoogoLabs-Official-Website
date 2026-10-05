@@ -11,6 +11,64 @@
 
 export const posts = [
   {
+    slug: `window-cleaning-daylight-saving-last-start-time`,
+    title: `The Clocks Go Back Nov. 1. Your 4 PM Slots Don't Survive It`,
+    excerpt: `Exterior work needs daylight, and the booking calendar doesn't know that, so the last slot of the day quietly turns into a job your tech can't finish.`,
+    tags: `Scheduling, Seasonal, Window Cleaning`,
+    content: `A customer books a 4 PM exterior clean in the second week of November. Your tech gets there at 4:10, sets up the ladder, and by 5:00 the light is going. The second-story windows get done in the dusk, streaks you can't see until the next morning, and the customer sees them over coffee. That is a redo, and a review you didn't want.
+
+Nothing about the job changed. The sun moved, and your booking calendar has no idea.
+
+## Why the calendar lets it happen
+
+Most online booking calendars are built around business hours. You set nine to five, you set how long each service takes, and the system offers every opening that fits. A two-hour exterior job fits fine in a 3 PM slot, so it gets offered.
+
+The calendar is right about your hours and wrong about your light. In July a 4 PM start is a comfortable afternoon. After the clocks go back on Sunday, November 1, the same slot is a race against sunset, and it gets worse every week into December.
+
+You will not notice this in the settings, because nothing broke. The slots just keep appearing.
+
+## What actually goes wrong
+
+It is rarely a dramatic failure. It is three small ones:
+
+- The tech rushes the last windows and the quality drops on exactly the house that was booked latest.
+- A job runs into dark, so you either leave it unfinished or pay overtime to finish under a headlamp.
+- You text the customer to move the job, and now you are rescheduling people by hand, which is the real cost.
+
+Interior work doesn't have this problem. Anything outside does: windows, gutters, siding, pressure washing, roof inspections, holiday lights. If you are in any of those, this is your month to fix it.
+
+## Do the sunset math once
+
+You don't need a formula. You need one number per service.
+
+Look up your sunset time for the middle of December, which is roughly when it is earliest. Subtract the longest the service takes, then subtract a half hour for setup, travel and slop. That is the latest you should start that service.
+
+Here is an invented example. Say sunset is 5:20 PM. A two-hour exterior clean plus thirty minutes of buffer means the last start is 2:50 PM, so call it 2:30 to keep it clean. A quick screen-and-track tidy that takes forty-five minutes could start later.
+
+Different services get different cutoffs. A single latest-start time for the whole business is the lazy version, and it will either cut too many slots or too few.
+
+## Set it on the calendar, not in your head
+
+Put the cutoff where the customer can't get around it. In the platform's booking calendar, you can set availability per service, so the exterior service stops offering openings after its cutoff while an interior or quote-visit service keeps its later hours.
+
+Then do the other half. Pull up the next six weeks of jobs already on the books and look at every exterior job starting after your new cutoff. Those were booked under the old rules. Move them now, with a short text that gives the customer a choice between two earlier times, rather than finding out on the day.
+
+Something like:
+
+> "Quick heads up: with the clocks changing, I'm moving afternoon exterior jobs earlier so the crew has full daylight. Would Thursday at 10:00 or Friday at 1:00 work better for you?"
+
+That message reads as care, because it is. People don't mind an earlier slot. They mind a surprise.
+
+## One honest limit
+
+Moving everything to the morning has its own cost: mornings fill first, and a customer who can only do afternoons may go elsewhere. I don't think you can fully avoid that. If you lose a few afternoon-only customers to a rule that protects your finished work, I would take that trade, but it is your call and depends on how much of your book is afternoon-only.
+
+## Check your latest start time this week
+
+Open your booking calendar and find the latest time you currently offer for an exterior service. Compare it to sunset on December 15 minus the job length. If the calendar offers anything later, change it today, then look at what is already booked past that line and move it before November 1.
+`,
+  },
+  {
     slug: `pressure-washing-photo-quote-before-site-visit`,
     title: `Stop Driving Out to Quote a Driveway You Can See in a Photo`,
     excerpt: `Free on-site estimates eat a pressure washer's week, and most of them are for jobs a few phone photos and a square-footage guess would have priced.`,
