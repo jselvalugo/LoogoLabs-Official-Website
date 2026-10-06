@@ -125,7 +125,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Home', 'Mission', 'AIVoice', 'LoogoNews'];
+  const nav = ['Home', 'Mission', 'AIVoice'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -167,6 +167,7 @@ function App({ initialPath }) {
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
+        feature={{ page: 'LoogoNews', label: 'LoogoNews', badge: 'Fresh' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
       />
       <SeasonalGarland />
