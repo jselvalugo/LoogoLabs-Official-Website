@@ -523,6 +523,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-form-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
 
   .ll-nav-links  { display: none !important; }
+  .ll-nav-feature-desktop { display: none !important; }
   .ll-nav-burger { display: flex !important; align-items: center; justify-content: center; margin-left: auto; }
 
   /* Inline-style grid override for GrowCFL's stat row */

@@ -58,17 +58,17 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
                   borderBottom: '2px solid ' + (on ? 'var(--cyan-500)' : 'transparent') }}>{it}</a>
             );
           })}
+        </nav>
+
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 16 }}>
           {feature && (
             <a href={pathForPage(feature.page)} aria-current={active === feature.page ? 'page' : undefined}
-              className="ll-nav-feature" onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
+              className="ll-nav-feature ll-nav-feature-desktop" onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
               <span className="ll-nav-feature-dot" aria-hidden="true" />
               {feature.label}
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>
           )}
-        </nav>
-
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{ display: 'contents' }} className="ll-cta-desktop">
             {cta}
           </div>
