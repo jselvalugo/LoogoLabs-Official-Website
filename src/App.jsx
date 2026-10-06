@@ -163,7 +163,7 @@ function App({ initialPath }) {
         onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
       >
         <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
-        Book a free strategy call
+        Replace 10–15 tools &amp; save $400+ a month — see how
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
