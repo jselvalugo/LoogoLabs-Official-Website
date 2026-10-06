@@ -316,34 +316,35 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 /* ── Tables that must never break page width ── */
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-/* ── NavBar featured button (LoogoNews) ── */
+/* ── NavBar featured button (LoogoNews) ──
+   On-brand standout: sage-green block, cream hard-edge border + offset shadow,
+   mono uppercase label. Distinct from the cream primary CTA. */
 .ll-nav-feature {
   position: relative; display: inline-flex; align-items: center; gap: 8px; align-self: center;
-  padding: 6px 8px 6px 12px; border-radius: 999px; overflow: hidden; isolation: isolate;
-  font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: 0.01em;
-  text-decoration: none; color: #1a1406;
-  background: linear-gradient(110deg, #F5C451 0%, #FFE08A 45%, #F59E3B 100%);
-  box-shadow: 0 0 0 1px rgba(255,224,138,0.6), 0 4px 18px rgba(245,180,60,0.35);
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  padding: 5px 6px 5px 10px; border-radius: var(--radius-2); overflow: hidden; isolation: isolate;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink-900);
+  background: var(--ink-300);
+  border: 2px solid var(--paper-100);
+  box-shadow: 3px 3px 0 var(--paper-100);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 .ll-nav-feature::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.65) 50%, transparent 70%);
-  transform: translateX(-120%); animation: ll-feature-shine 3.2s ease-in-out infinite;
+  background: linear-gradient(100deg, transparent 35%, rgba(245,242,235,0.45) 50%, transparent 65%);
+  transform: translateX(-120%); animation: ll-feature-shine 4s ease-in-out infinite;
 }
-.ll-nav-feature:hover, .ll-nav-feature:focus-visible {
-  transform: translateY(-1px) scale(1.04);
-  box-shadow: 0 0 0 1px rgba(255,224,138,0.9), 0 6px 26px rgba(245,180,60,0.55);
-}
-.ll-nav-feature[aria-current="page"] { box-shadow: 0 0 0 2px var(--paper-100), 0 6px 26px rgba(245,180,60,0.55); }
-.ll-nav-feature-dot { width: 7px; height: 7px; border-radius: 50%; background: #C2410C; box-shadow: 0 0 0 0 rgba(194,65,12,0.6); animation: ll-feature-ping 1.8s ease-out infinite; }
+.ll-nav-feature:hover, .ll-nav-feature:focus-visible { background: var(--ink-200); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--paper-100); }
+.ll-nav-feature:active { transform: translate(2px, 2px); box-shadow: none; }
+.ll-nav-feature[aria-current="page"] { background: var(--ink-200); }
+.ll-nav-feature-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-900); animation: ll-feature-ping 1.8s ease-out infinite; }
 .ll-nav-feature-badge {
-  font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 3px 7px; border-radius: 999px; background: #1a1406; color: #FFE08A;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+  padding: 3px 6px; border-radius: var(--radius-1); background: var(--ink-900); color: var(--paper-100);
 }
-.ll-nav-feature-mobile { justify-content: center; margin: 8px 4px 0; padding: 12px 16px; font-size: 16px; }
-@keyframes ll-feature-shine { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
-@keyframes ll-feature-ping { 0% { box-shadow: 0 0 0 0 rgba(194,65,12,0.6); } 100% { box-shadow: 0 0 0 8px rgba(194,65,12,0); } }
+.ll-nav-feature-mobile { justify-content: center; margin: 8px 4px 0; padding: 12px 16px; font-size: 14px; }
+@keyframes ll-feature-shine { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes ll-feature-ping { 0% { box-shadow: 0 0 0 0 rgba(26,38,16,0.55); } 100% { box-shadow: 0 0 0 7px rgba(26,38,16,0); } }
 @media (prefers-reduced-motion: reduce) { .ll-nav-feature::after, .ll-nav-feature-dot { animation: none; } }
 
 /* ── NavBar mobile ── */
