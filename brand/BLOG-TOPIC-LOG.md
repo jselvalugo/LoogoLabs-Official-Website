@@ -65,3 +65,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-04 | pressure-washing-photo-quote-before-site-visit | Pressure washing | Lead intake — photo-based quoting before a site visit
 - 2026-10-05 | window-cleaning-daylight-saving-last-start-time | Window cleaning | Scheduling — per-service latest start time before the clocks go back (daylight-dependent exterior work)
 - 2026-10-05 | locksmith-lockout-price-range-text-before-dispatch | Locksmiths | Lead response — price range & arrival window text before dispatch
+- 2026-10-06 | appliance-repair-thanksgiving-fixed-by-cutoff-date | Appliance repair | Seasonal booking — a fixed-by-Thanksgiving cutoff date driven by parts lead time
