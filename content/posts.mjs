@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `appliance-repair-thanksgiving-fixed-by-cutoff-date`,
+    title: `Your Thanksgiving Promise Expires Over a Week Early`,
+    excerpt: `An oven that dies the week of the holiday is a job you can only save if the part was ordered days ago, so the date you stop promising a fix matters more than how fast you can drive.`,
+    tags: `Seasonal Booking, Parts & Scheduling, Appliance Repair`,
+    content: `Thanksgiving is November 26 this year. If a replacement part takes four days to reach you, and your tech needs a day to install it, then a customer who calls on the Monday of that week is not getting a working oven by Thursday, no matter how hard anyone drives. Most appliance repair shops keep saying yes to that call anyway.
+
+That yes is the problem. It feels like service, and it turns into a worse outcome for everyone. The customer plans a dinner around your promise, the part is late or wrong, and you become the shop that ruined a holiday.
+
+## The date nobody writes down
+
+Every owner knows the rule of thumb in their head: oven elements and igniters are usually on the truck or a short order away, control boards and door latches often are not. What almost nobody does is turn that into a date.
+
+Do the arithmetic once. Take your slowest common part, add the delivery days, add a day for the visit, and count backward from the holiday. That is your **fixed-by-Thanksgiving cutoff**. In the example above, a call that comes in more than about nine days before the holiday can be promised. After that, you can only promise a try.
+
+I would rather you pick a date that makes you slightly nervous than one that is exactly right. A cutoff you hit with room to spare is a promise you can keep.
+
+## Say it before they ask
+
+A customer whose range is dead on the 12th is the best lead you will get all month. They are motivated, they have a deadline, and they will pay for the visit. The mistake is waiting for them to bring up Thanksgiving.
+
+When the call or form comes in, the first reply should already contain the date:
+
+> We can have you cooking again before Thanksgiving if we get out there by the 17th. Send us a photo of the label inside the door so we can order the part today.
+
+That one message does three jobs. It tells them you understand the deadline, it creates urgency without pressure, and it asks for the single thing that lets you start the clock: the model and serial number.
+
+## Order the part before the visit
+
+The other half of the cutoff is when you find out what is broken. If you diagnose on Tuesday and order on Tuesday, your four days start Tuesday. If you could have known on Friday, you lost a weekend.
+
+A photo of the model label, a short description of what it does and does not do, and an error code if the display shows one will let a good tech make a confident guess about the part before arriving. You will be wrong sometimes. Being wrong on a hunch costs you a returned part. Being slow every time costs you the week.
+
+## What to do after the cutoff
+
+Past the date, be honest, and give them something to do. Offer the earliest real appointment, and say plainly that the holiday is not guaranteed. Then send a short note with two ideas for cooking around a dead oven, because a customer who feels looked after on a bad week is the one who calls you in March for the dryer.
+
+## Where this breaks
+
+If you only ever work on one brand, your parts times are predictable and the cutoff is easy. If you service six, one slow supplier can wreck it, so track your slowest brand separately and use that date for it.
+
+The date also does nothing if nobody reads it. A cutoff that lives in your head is not a policy. It has to be in the first reply, on the booking page and on the voicemail greeting, or your phone will keep promising what your parts shelf can't deliver.
+
+## What to do this week
+
+Open your last five repair jobs that needed a part and write down how many days each took from the first call to the finished visit. Take the longest, add a day of cushion, and count back from November 26. Put that date at the top of your reply to new calls, and set a reminder on your own calendar to switch it to "earliest available" the morning after it passes.`,
+  },
+  {
     slug: `locksmith-lockout-price-range-text-before-dispatch`,
     title: `Locksmiths: Text the Price Range Before You Leave the Shop`,
     excerpt: `A locked-out customer calls three shops and hires whoever sounds sure, so the shop that sends a price range and an arrival window in the first minutes wins the job and skips the argument at the door.`,
