@@ -1,7 +1,7 @@
 import React from 'react';
 import { pathForPage } from '../../lib/seo';
 
-function NavBar({ items = [], active, onNavigate, cta, style }) {
+function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
   const [open, setOpen] = React.useState(false);
 
   // Close on Escape and stop the page scrolling behind the open menu.
@@ -58,6 +58,14 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
                   borderBottom: '2px solid ' + (on ? 'var(--cyan-500)' : 'transparent') }}>{it}</a>
             );
           })}
+          {feature && (
+            <a href={pathForPage(feature.page)} aria-current={active === feature.page ? 'page' : undefined}
+              className="ll-nav-feature" onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
+              <span className="ll-nav-feature-dot" aria-hidden="true" />
+              {feature.label}
+              {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
+            </a>
+          )}
         </nav>
 
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -88,6 +96,14 @@ function NavBar({ items = [], active, onNavigate, cta, style }) {
               </a>
             );
           })}
+          {feature && (
+            <a href={pathForPage(feature.page)} className="ll-nav-feature ll-nav-feature-mobile"
+              onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
+              <span className="ll-nav-feature-dot" aria-hidden="true" />
+              {feature.label}
+              {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
+            </a>
+          )}
           <div className="ll-nav-mobile-cta">{cta}</div>
         </div>
       </div>
