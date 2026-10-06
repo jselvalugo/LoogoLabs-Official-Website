@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `tutoring-center-block-renewal-note-at-session-six`,
+    title: `Your Tutoring Block Ends and Nobody Says Anything`,
+    excerpt: `Prepaid tutoring families rarely cancel, they just never book the next block, and a short note two sessions before the end gives them an easy way to say yes.`,
+    tags: `Client Retention, Renewals, Tutoring Centers`,
+    content: `The most expensive moment in a tutoring business is the last session of a prepaid block, because that is when nobody says anything. The parent paid for eight weeks, the eighth week happens, the student waves goodbye, and the next block simply never gets booked. Nobody cancelled. Nobody was unhappy. The calendar just went quiet.
+
+This is easy to miss, because your books show a completed block, not a lost student.
+
+## The block ends, and so does the decision
+
+A parent who prepays for eight sessions has made one decision, and it expires on week eight. Renewing is a second decision, and it lands in the busiest part of their evening, usually in a parking lot with a backpack and a younger sibling. If you wait for them to bring it up, you are asking a tired person to start a conversation about money and schedules.
+
+Most won't. Not because they said no, but because nobody asked them a question that was easy to answer.
+
+## Send the note at session six, not eight
+
+By session eight the decision is already forming. Two sessions earlier you still have room to shape it. Here is the message I would send after the sixth session, written the way you would say it:
+
+> Quick note on Maya. Over the last six weeks she has gone from skipping the word problems to starting them without being asked. The next thing we are working on is showing her steps. Her Tuesday 4:30 spot is hers for the next block if you want it. Reply YES by the 20th and I will hold it, otherwise I will offer it to the waitlist.
+
+Three things are doing the work in that text.
+
+- **One specific thing that changed.** Not "doing great." A parent can tell the difference between a template and a tutor who was paying attention.
+- **One thing that comes next.** This gives the next block a purpose, so renewing feels like continuing rather than buying more of the same.
+- **A held slot with a date.** The slot is real, the deadline is real, and the reply is one word.
+
+## Hold the same time slot
+
+The reason families drop out is rarely the tutoring. It is the schedule. A student who has Tuesdays at 4:30 has built a routine around it, and the routine is worth more than any discount. When the block ends and the slot is released, the family has to rebuild the week from scratch, and rebuilding is where they give up.
+
+So make holding the slot the default and make letting it go the choice that needs a reply. That flips the effort. A parent who is happy with things only has to type one word.
+
+## Let the system send it, but write the first one yourself
+
+This is easy to automate. You can have a reminder fire when a student's block hits session six, include the student's name, and route a YES reply into a task for you to book the next block. Someone still has to type the line about what changed. I would not let a template fill that in.
+
+My suggestion is to write the first three by hand, notice which sentences you keep repeating, and only then set up the trigger. You will end up with a message that sounds like you, which matters more than how clever the setup is.
+
+## When a note isn't enough
+
+This does not rescue a student who has stopped progressing. If six weeks went by and you honestly have nothing specific to point at, the problem is not the renewal message, and a nicer text will only delay the conversation. In that case call the parent and say what you plan to change.
+
+It also does not help when the family's reason is something outside your control, like a move or a schedule that no longer fits. A short note still gives them an easy way to tell you, and a clear answer is better than silence, because you can offer the slot to someone else sooner.
+
+Finally, watch the waitlist promise. If you say you will offer the spot to someone, be ready to do it. An empty threat teaches parents to ignore the deadline.
+
+## Check your last ten blocks
+
+Pull the last ten prepaid blocks that ended and mark each one: renewed within a week, renewed late, or never renewed. For each one that never renewed, look back and see whether anyone contacted the parent before the final session. If the answer is mostly no, write the session-six note for the three students whose blocks end soonest, and send them by hand this week.`,
+  },
+  {
     slug: `appliance-repair-thanksgiving-fixed-by-cutoff-date`,
     title: `Your Thanksgiving Promise Expires Over a Week Early`,
     excerpt: `An oven that dies the week of the holiday is a job you can only save if the part was ordered days ago, so the date you stop promising a fix matters more than how fast you can drive.`,
