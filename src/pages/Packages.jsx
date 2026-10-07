@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Badge from '../components/feedback/Badge';
 import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
@@ -106,8 +106,11 @@ const STANDALONE_SERVICES = [
 const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' };
 
 function PackageCard({ pkg }) {
+  // On phones the feature list starts collapsed so all three packages fit on a
+  // couple of screens; desktop always shows it (see .pk-features in the styles).
+  const [open, setOpen] = useState(false);
   return (
-    <Card emphasis="strong" padding={28} style={{
+    <Card emphasis="strong" padding={28} className={`pk-card${open ? ' is-open' : ''}`} style={{
       display: 'flex', flexDirection: 'column', gap: 20, height: '100%', boxSizing: 'border-box', position: 'relative',
       ...(pkg.featured ? { boxShadow: '0 0 0 2px var(--ink-900)' } : null),
     }}>
@@ -118,13 +121,17 @@ function PackageCard({ pkg }) {
       <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>{pkg.tagline}</p>
       <div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-          <span style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{pkg.monthly}</span>
+          <span className="pk-price" style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{pkg.monthly}</span>
           <span style={{ color: 'var(--ink-400)' }}>/mo</span>
         </div>
         <div style={{ ...mono, marginTop: 6 }}>{pkg.setup} · {pkg.term}</div>
       </div>
-      <div style={{ fontSize: 14, color: 'var(--ink-500)' }}><strong style={{ color: 'var(--ink-700)' }}>Best for:</strong> {pkg.ideal}</div>
-      <div style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 18, flex: 1 }}>
+      <div className="pk-ideal" style={{ fontSize: 14, color: 'var(--ink-500)' }}><strong style={{ color: 'var(--ink-700)' }}>Best for:</strong> {pkg.ideal}</div>
+      <button type="button" className="pk-toggle" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        {open ? 'Hide details' : `See what's included (${pkg.features.length})`}
+        <span aria-hidden="true">{open ? '−' : '+'}</span>
+      </button>
+      <div className="pk-features" style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 18, flex: 1 }}>
         {pkg.includesPrev && <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)', marginBottom: 10 }}>{pkg.includesPrev}</div>}
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 10 }}>
           {pkg.features.map((f) => (
@@ -151,15 +158,15 @@ function QuickStartSidebar({ onNavigate }) {
           Not ready for a package? Start with a single done-for-you service.
         </p>
       </div>
-      <div style={{ display: 'grid', gap: 12 }}>
+      <div className="pk-quick-grid">
         {QUICK_STARTS.map((q) => (
           <a key={q.page} href={pathForPage(q.page)}
             onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}
             style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-            <Card padding={16} style={{ display: 'grid', gap: 4 }}>
+            <Card padding={16} className="pk-quick" style={{ display: 'grid', gap: 4, height: '100%', boxSizing: 'border-box' }}>
               <span style={{ ...mono, fontSize: 10 }}>{q.from}</span>
               <span style={{ fontWeight: 600, fontSize: 15, color: 'var(--ink-900)' }}>{q.title} →</span>
-              <span style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--ink-500)' }}>{q.description}</span>
+              <span className="pk-quick-desc" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--ink-500)' }}>{q.description}</span>
             </Card>
           </a>
         ))}
@@ -179,7 +186,38 @@ function Packages({ onNavigate }) {
           .pk-layout { grid-template-columns: 1fr; }
           .pk-sidebar { position: static; }
         }
-        @media (max-width: 860px) { .pk-grid { grid-template-columns: 1fr; } }
+        .pk-quick-grid { display: grid; gap: 12px; }
+        .pk-toggle { display: none; }
+        @media (max-width: 1180px) { .pk-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 860px) {
+          .pk-grid { grid-template-columns: 1fr; gap: 16px; }
+          /* Packages: compact cards, feature list behind a toggle. */
+          .pk-card { padding: 20px !important; gap: 12px !important; }
+          .pk-card h2 { font-size: 24px !important; }
+          .pk-price { font-size: 32px !important; }
+          .pk-ideal { font-size: 13px !important; }
+          .pk-card:not(.is-open) .pk-features { display: none; }
+          .pk-features { padding-top: 14px !important; }
+          .pk-toggle {
+            display: flex; align-items: center; justify-content: space-between; width: 100%;
+            padding: 10px 0; background: none; border: 0; border-top: 1px solid var(--border-hair);
+            font: 600 14px/1.2 var(--font-sans, inherit); color: var(--ink-900); cursor: pointer; text-align: left;
+          }
+          .pk-toggle span { font-family: var(--font-mono); font-size: 18px; }
+          .pk-card.is-open .pk-toggle { border-bottom: 0; }
+          /* Standalone services: two per row. */
+          .pk-grid--services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+          .pk-service { padding: 14px !important; gap: 8px !important; }
+          .pk-service:last-child:nth-child(odd) { grid-column: 1 / -1; }
+          .pk-service-title { font-size: 16px !important; line-height: 1.25; }
+          .pk-service-price { font-size: 22px !important; }
+          .pk-service-desc { font-size: 13px !important; line-height: 1.4 !important; }
+          .pk-service button { font-size: 13px; padding-left: 10px; padding-right: 10px; }
+        }
+        @media (max-width: 560px) {
+          .pk-quick { padding: 12px !important; }
+          .pk-quick-desc { display: none; }
+        }
       `}</style>
 
       <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
@@ -217,15 +255,15 @@ function Packages({ onNavigate }) {
                 Hire us for a single service on its own, or add it to any package. Final pricing depends on scope.
               </p>
             </div>
-            <div className="pk-grid" style={{ marginTop: 20 }}>
+            <div className="pk-grid pk-grid--services" style={{ marginTop: 20 }}>
               {STANDALONE_SERVICES.map((s) => (
-                <Card key={s.title} emphasis="strong" padding={24} style={{ display: 'flex', flexDirection: 'column', gap: 12, height: '100%', boxSizing: 'border-box' }}>
-                  <h3 style={{ margin: 0, fontSize: 20, color: 'var(--ink-900)' }}>{s.title}</h3>
+                <Card key={s.title} emphasis="strong" padding={24} className="pk-service" style={{ display: 'flex', flexDirection: 'column', gap: 12, height: '100%', boxSizing: 'border-box' }}>
+                  <h3 className="pk-service-title" style={{ margin: 0, fontSize: 20, color: 'var(--ink-900)' }}>{s.title}</h3>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{s.price}</span>
+                    <span className="pk-service-price" style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{s.price}</span>
                     <span style={{ color: 'var(--ink-400)' }}>{s.unit}</span>
                   </div>
-                  <p style={{ margin: 0, flex: 1, fontSize: 15, lineHeight: 1.5, color: 'var(--ink-500)' }}>{s.description}</p>
+                  <p className="pk-service-desc" style={{ margin: 0, flex: 1, fontSize: 15, lineHeight: 1.5, color: 'var(--ink-500)' }}>{s.description}</p>
                   <Button variant="secondary" size="md" fullWidth onClick={openBooking} iconRight={<span>→</span>}>Get a quote</Button>
                 </Card>
               ))}
