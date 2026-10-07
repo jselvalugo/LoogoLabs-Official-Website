@@ -84,7 +84,7 @@ export default function BlogPost({ slug, onNavigate }) {
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
 
           {/* Back nav — a real breadcrumb link, so the post is not an orphan */}
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
               ← LoogoNews
@@ -222,7 +222,7 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       <header className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-100)', borderBottom: '6px solid var(--cyan-500)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
               ← LoogoNews
