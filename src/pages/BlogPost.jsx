@@ -93,17 +93,6 @@ export default function BlogPost({ slug, onNavigate }) {
 
           {/* Hero content */}
           <div style={{ maxWidth: 800, padding: 'clamp(36px,5vw,64px) 0 clamp(40px,5vw,72px)' }}>
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 28 }}>
-                {tags.map(tag => (
-                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-300)', background: 'rgba(216,211,198,0.08)', border: '1px solid rgba(216,211,198,0.15)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
             {/* Title */}
             <h1 style={{ margin: '0 0 32px', fontWeight: 800, fontSize: 'clamp(28px,4.5vw,58px)', lineHeight: 1.08, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
               {post.title}
@@ -144,6 +133,16 @@ export default function BlogPost({ slug, onNavigate }) {
             <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>
               {renderMarkdown(post.content, { dropCap: !!post.featured })}
             </div>
+
+            {tags.length > 0 && (
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
+                {tags.map(tag => (
+                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-500)', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Author bio — the personal signature on every post, not just a byline */}
             {post.author === 'David Selva' && (
@@ -234,11 +233,6 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
           </nav>
 
           <div style={{ padding: 'clamp(44px,7vw,96px) 0 clamp(32px,4vw,48px)' }}>
-            {tags.length > 0 && (
-              <div style={{ ...mono, fontSize: 10, color: 'var(--cyan-500)', marginBottom: 24 }}>
-                {tags.join('  /  ')}
-              </div>
-            )}
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,6.4vw,84px)', lineHeight: 0.98, letterSpacing: '-0.04em', maxWidth: '18ch' }}>
               {post.title}
             </h1>
