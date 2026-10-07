@@ -57,7 +57,7 @@ export default function Blog({ onNavigate }) {
 
       {/* ── MASTHEAD ── */}
       <div className="ll-grid-bg--inverse ln-masthead" style={{ background: 'var(--ink-900)' }}>
-        <img className="ln-masthead__art" src="/loogonews-masthead.png" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
+        <img className="ln-masthead__art" src="/loogonews-masthead.webp" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
         <div className="ln-masthead__inner" style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,72px)' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 24 }}>
             Loogo Labs · LoogoNews

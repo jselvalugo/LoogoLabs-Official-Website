@@ -72,7 +72,7 @@ function Company({ onNavigate }) {
       {/* ── Closing CTA ── */}
       <section className="ll-staple-wrap" style={{ paddingBottom: 96 }}>
         <div className="ll-staple-cta">
-          <img src="/team-photo.jpg" alt="Loogo Labs at work in Celebration, Florida" />
+          <img src="/team-photo.jpg" alt="Loogo Labs at work in Celebration, Florida" loading="lazy" decoding="async" />
           <div className="ll-staple-cta-body">
             <span className="ll-eyebrow" style={{ color: 'var(--ink-200)' }}>Work with me</span>
             <h2 className="ll-staple-h2" style={{ color: 'var(--paper-000)' }}>You talk to the founder, not a call center.</h2>
