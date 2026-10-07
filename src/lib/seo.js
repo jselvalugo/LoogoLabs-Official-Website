@@ -67,6 +67,7 @@ export const KNOWS_ABOUT = [
   'Lead follow-up and missed-call text-back',
   'AI voice agents and AI receptionists',
   'Facebook and Google Ads management',
+  'Website design for local businesses',
 ];
 
 export const url = (path = '/') => new URL(path, SITE.origin).href;
