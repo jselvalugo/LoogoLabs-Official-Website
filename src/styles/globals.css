@@ -950,3 +950,16 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ln-find__search { height: 52px; }
   .ln-find__search input { font-size: 15px; }
 }
+
+/* Location badge above the home hero headline. */
+.ll-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 0 0 20px; padding: 7px 14px 7px 12px;
+  border: 1px solid var(--border-hair); border-radius: 999px;
+  background: var(--paper-100); color: var(--cyan-700);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.3;
+}
+.ll-hero-badge svg { flex: none; }
+.ll-hero-badge-sep { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.45; }
+@media (max-width: 420px) { .ll-hero-badge { font-size: 11px; letter-spacing: 0.06em; } }

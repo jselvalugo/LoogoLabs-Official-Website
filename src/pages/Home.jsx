@@ -248,6 +248,15 @@ function Home({ onNavigate }) {
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <div className="ll-hero-grid">
           <div style={{ maxWidth: '46ch' }}>
+            <p className="ll-hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="12" cy="10" r="2.5" fill="currentColor" />
+              </svg>
+              <span>Orlando, FL</span>
+              <span className="ll-hero-badge-sep" aria-hidden="true" />
+              <span>Marketing &amp; Automation Agency</span>
+            </p>
             <h1 style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
               letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
               More Customers. Less Busywork. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.

@@ -80,7 +80,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `AI Voice Agent`,
+    title: `${SITE.name} | Orlando Marketing & Automation Agency`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',
