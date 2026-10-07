@@ -244,21 +244,21 @@ function FeaturedPostLine({ onNavigate }) {
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '64px 0 0' }}>
+      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '40px 0 0' }}>
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <div className="ll-hero-grid">
           <div style={{ maxWidth: '46ch' }}>
             <h1 style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
               letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
-              More Customers. Less Busywork. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.
+              Email Marketing That Brings Customers Back. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.
             </h1>
             <p style={{ maxWidth: '50ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
-              We're the local marketing team behind Central Florida small businesses, with 8+ years
-              in performance marketing. Press releases, social media, video, automation and
-              day-to-day operations — planned, built and run for you, all in one place.
+              Email marketing is the cheapest way to turn the customers you already have into repeat
+              sales. We write the campaigns, build the automated follow-ups and send them for you —
+              for Central Florida small businesses, backed by 8+ years in performance marketing.
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Book a free strategy call</Button>
+              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Get my email marketing plan</Button>
               <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
             </div>
           </div>

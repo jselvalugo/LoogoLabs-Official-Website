@@ -80,6 +80,29 @@ const QUICK_STARTS = [
   ...SERVICE_PACKAGES.map((p) => ({ page: p.page, title: p.cardTitle, from: p.from, description: p.cardDescription })),
 ];
 
+// Standalone services: ongoing management or one-off builds sold on their own,
+// outside the packages above.
+const STANDALONE_SERVICES = [
+  {
+    title: 'Local SEO',
+    price: '$500+',
+    unit: '/mo',
+    description: 'Ongoing Google Business Profile management, citations, on-page fixes, local content, and monthly ranking reports.',
+  },
+  {
+    title: 'Google Ads Management',
+    price: '$500+',
+    unit: '/mo',
+    description: 'Campaign setup, keyword and negative lists, ad copy, conversion tracking, and ongoing bid and budget optimization.',
+  },
+  {
+    title: 'Web Design',
+    price: '$1,500+',
+    unit: ' one-time',
+    description: 'A fast, mobile-first website built to turn visitors into calls and bookings, with on-page SEO set up from day one.',
+  },
+];
+
 const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' };
 
 function PackageCard({ pkg }) {
@@ -187,6 +210,26 @@ function Packages({ onNavigate }) {
               </div>
               <Button variant="secondary" size="lg" onClick={openBooking} iconRight={<span>→</span>}>Book a call</Button>
             </Card>
+            <div style={{ marginTop: 48, display: 'grid', gap: 6 }}>
+              <span style={mono}>Standalone services</span>
+              <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>Need one thing done well?</h2>
+              <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
+                Hire us for a single service on its own, or add it to any package. Final pricing depends on scope.
+              </p>
+            </div>
+            <div className="pk-grid" style={{ marginTop: 20 }}>
+              {STANDALONE_SERVICES.map((s) => (
+                <Card key={s.title} emphasis="strong" padding={24} style={{ display: 'flex', flexDirection: 'column', gap: 12, height: '100%', boxSizing: 'border-box' }}>
+                  <h3 style={{ margin: 0, fontSize: 20, color: 'var(--ink-900)' }}>{s.title}</h3>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                    <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{s.price}</span>
+                    <span style={{ color: 'var(--ink-400)' }}>{s.unit}</span>
+                  </div>
+                  <p style={{ margin: 0, flex: 1, fontSize: 15, lineHeight: 1.5, color: 'var(--ink-500)' }}>{s.description}</p>
+                  <Button variant="secondary" size="md" fullWidth onClick={openBooking} iconRight={<span>→</span>}>Get a quote</Button>
+                </Card>
+              ))}
+            </div>
             <p style={{ margin: '16px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
               Ad spend and usage (SMS, calls, AI) are billed at cost.
             </p>

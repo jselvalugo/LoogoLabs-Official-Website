@@ -9,9 +9,6 @@ export default function Terms({ onNavigate }) {
       {/* Header */}
       <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,64px)' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 20 }}>
-            Loogo Labs · Legal
-          </div>
           <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,5vw,64px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
             Terms of Service
           </h1>

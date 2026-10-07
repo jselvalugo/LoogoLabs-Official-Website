@@ -156,14 +156,16 @@ function App({ initialPath }) {
           letterSpacing: '0.12em', textTransform: 'uppercase',
           color: 'var(--ink-300)',
           transition: 'background 160ms ease',
-          overflow: 'hidden',
+          overflow: 'hidden', whiteSpace: 'nowrap', padding: '0 16px',
         }}
         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(216,211,198,0.08)'; }}
         onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}
         onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
       >
         <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
-        Never miss another lead — your AI receptionist answers 24/7
+        <span className="ll-topbar-text">
+          Email Marketing, done for you<span className="ll-topbar-long"> — campaigns that bring customers back</span>
+        </span>
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}

@@ -84,7 +84,7 @@ export default function BlogPost({ slug, onNavigate }) {
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
 
           {/* Back nav — a real breadcrumb link, so the post is not an orphan */}
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
               ← LoogoNews
@@ -93,17 +93,6 @@ export default function BlogPost({ slug, onNavigate }) {
 
           {/* Hero content */}
           <div style={{ maxWidth: 800, padding: 'clamp(36px,5vw,64px) 0 clamp(40px,5vw,72px)' }}>
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 28 }}>
-                {tags.map(tag => (
-                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-300)', background: 'rgba(216,211,198,0.08)', border: '1px solid rgba(216,211,198,0.15)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
             {/* Title */}
             <h1 style={{ margin: '0 0 32px', fontWeight: 800, fontSize: 'clamp(28px,4.5vw,58px)', lineHeight: 1.08, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
               {post.title}
@@ -145,6 +134,16 @@ export default function BlogPost({ slug, onNavigate }) {
               {renderMarkdown(post.content, { dropCap: !!post.featured })}
             </div>
 
+            {tags.length > 0 && (
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
+                {tags.map(tag => (
+                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-500)', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {/* Author bio — the personal signature on every post, not just a byline */}
             {post.author === 'David Selva' && (
               <div style={{ marginTop: 48, padding: '24px 28px', background: 'var(--paper-200)',
@@ -168,9 +167,6 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* CTA box */}
             <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 14 }}>
-                Loogo Labs · Get started
-              </div>
               <h3 style={{ margin: '0 0 14px', fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, lineHeight: 1.2, color: 'var(--paper-100)', letterSpacing: '-0.02em' }}>
                 Want this running in your business?
               </h3>
@@ -226,7 +222,7 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       <header className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-100)', borderBottom: '6px solid var(--cyan-500)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 'clamp(28px,4vw,40px)', paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
               ← LoogoNews
@@ -237,11 +233,6 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
           </nav>
 
           <div style={{ padding: 'clamp(44px,7vw,96px) 0 clamp(32px,4vw,48px)' }}>
-            {tags.length > 0 && (
-              <div style={{ ...mono, fontSize: 10, color: 'var(--cyan-500)', marginBottom: 24 }}>
-                {tags.join('  /  ')}
-              </div>
-            )}
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,6.4vw,84px)', lineHeight: 0.98, letterSpacing: '-0.04em', maxWidth: '18ch' }}>
               {post.title}
             </h1>
