@@ -125,7 +125,7 @@ export const ROUTES = [
       'An AI voice agent that answers every call, books the job, and never puts a customer on hold — set up and managed for local service businesses.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.png',
+    image: '/og-image-ai-voice.jpg',
   },
   ...VOICE_CITIES.map((c) => ({
     page: voiceCityPageKey(c.slug),
@@ -135,7 +135,7 @@ export const ROUTES = [
     description: `A 24/7 AI voice agent that answers, qualifies, and books calls for ${c.name} businesses in English and Spanish. ${c.intro.split('. ')[0]}.`,
     priority: '0.7',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.png',
+    image: '/og-image-ai-voice.jpg',
   })),
   {
     page: 'AIReceptionist',
@@ -145,7 +145,7 @@ export const ROUTES = [
       'A full-time AI receptionist that answers every call, books the appointment, and never calls out sick — for a fraction of what one payroll costs. Take the free 60-second fit check.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.png',
+    image: '/og-image-ai-voice.jpg',
   },
   {
     page: 'ReputationAutopilot',
@@ -155,7 +155,7 @@ export const ROUTES = [
       'Every completed job automatically becomes a review request — no spreadsheet, no sticky note, no forgetting. Take the free 60-second fit check.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.png',
+    image: '/og-image-ai-voice.jpg',
   },
   {
     page: 'Quizzes',
@@ -274,7 +274,17 @@ export const routeMeta = (page) => BY_PAGE.get(page) ?? null;
 
 // ── Per-page head metadata ───────────────────────────────────────────────────
 
-const clamp = (text, max = 158) => {
+// Google truncates titles past ~60 characters. Drop the brand suffix (and, for
+// very long titles, trim at a word boundary) rather than lose the keywords.
+export const fitTitle = (title, max = 60) => {
+  const t = String(title || '').replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const bare = t.replace(/\s+\|\s+[^|]+$/, '');
+  if (bare.length <= max) return bare;
+  return `${bare.slice(0, max - 1).replace(/\s+\S*$/, '').replace(/[\s,;:.—-]+$/, '')}…`;
+};
+
+const clamp = (text, max = 155) => {
   const s = String(text || '').replace(/\s+/g, ' ').trim();
   if (s.length <= max) return s;
   return `${s.slice(0, max - 1).replace(/[\s,;:.—-]+$/, '')}…`;
@@ -295,7 +305,7 @@ export function headForPage(page) {
     };
   }
   return {
-    title: route.title,
+    title: fitTitle(route.title),
     description: clamp(route.description),
     canonical: url(route.path),
     robots: route.unlisted ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
@@ -319,7 +329,7 @@ export function headForPost(post) {
     };
   }
   return {
-    title: `${post.title} | LoogoNews`,
+    title: fitTitle(`${post.title} | LoogoNews`),
     description: clamp(post.excerpt || SITE.description),
     canonical: url(`${BLOG_BASE}/${post.slug}`),
     robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
