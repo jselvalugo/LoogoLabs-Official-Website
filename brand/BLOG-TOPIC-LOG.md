@@ -68,3 +68,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-06 | appliance-repair-thanksgiving-fixed-by-cutoff-date | Appliance repair | Seasonal booking — a fixed-by-Thanksgiving cutoff date driven by parts lead time
 - 2026-10-06 | tutoring-center-block-renewal-note-at-session-six | Tutoring centers | Renewals — session-six progress note & held time slot before a prepaid block ends
 - 2026-10-07 | massage-therapy-gift-certificate-recipient-booking-nudge | Massage therapy | Holiday gift certificates — capturing the recipient at purchase & booking nudges
+- 2026-10-07 | mobile-detailing-booking-form-slot-length | Mobile auto detailing | Booking — intake questions that set slot length & price tier

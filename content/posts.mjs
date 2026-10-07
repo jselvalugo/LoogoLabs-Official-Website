@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `mobile-detailing-booking-form-slot-length`,
+    title: `Your Detail Slot Is Three Hours. The Minivan Needs Five.`,
+    excerpt: `A mobile detailer who books every full detail into the same slot loses the afternoon to the one dirty vehicle, and three questions at booking fix it.`,
+    tags: `Booking, Scheduling, Mobile Auto Detailing`,
+    content: `Three hours is a fair slot for a full detail on a clean sedan. It is a bad slot for a family minivan with a dog, a booster seat and a month of crushed cereal. The sedan finishes on time. The minivan runs two hours over and takes the next customer's appointment down with it.
+
+I see this in mobile detailers all the time. The calendar says "Full Detail, 3 hours," because that is what the service is called on the booking page. The vehicle that actually shows up decides the real number, and nobody asked about it.
+
+## The slot is a guess you wrote once
+
+When you set up a service on your calendar, you picked a duration. Probably the one that felt right on an average Tuesday. Every booking after that inherits your guess, whether the car is a coupe or a work truck.
+
+The trouble is that the average job hides a wide spread. If your clean-car jobs take three hours and your worst ones take five, a calendar built on three means roughly one bad day in every few weeks where you are finishing in the dark and texting an apology to someone waiting at 5 PM.
+
+## Ask three things before you confirm the slot
+
+The booking form already collects a name and an address. Add three questions, and make each one a multiple choice so nobody types an essay:
+
+- **What are we working on?** Sedan, SUV or truck, three-row or minivan. Size changes the time more than anything else.
+- **Any pets, kids or heavy stains?** Pet hair alone can add an hour. A yes here is the strongest signal on the form.
+- **When was it last detailed?** Within a year, a few years ago, or never.
+
+Notice what is missing: no question about the paint, no question about what products you use. Those are your decisions. These three tell you how long the car will take, and nothing else.
+
+## Let the answers pick the slot
+
+This is the part that matters. If the answers only land in a note, you will read them at 7 AM and be annoyed. They should set the slot length when the customer books.
+
+A small SUV with no pets and a recent detail gets the three-hour slot. A three-row vehicle with pet hair gets five, priced to match. In the system I set up for clients, the form answers decide which service the booking becomes, so the calendar blocks the right time and the confirmation text shows the right price. The customer sees the number before they pay the deposit, not at the curb.
+
+You do not need ten tiers. Two or three is enough: standard, heavy, and "send me a photo first" for anything that falls outside both.
+
+## Say why, in one line
+
+Some customers will see a higher price and wonder what happened. Put one sentence under the question: "Pet hair and heavy stains take longer, so we set aside more time and price it to fit." Most people read that and nod. They have seen their own back seat.
+
+## What the form can't tell you
+
+People under-report. A customer who answers "no pets" may have a dog who rides in the cargo area, and a car "detailed last year" may have been done at a gas station car wash. Expect to be wrong about one job in ten.
+
+So keep a margin. I would leave thirty minutes between jobs on heavy days rather than packing the calendar edge to edge, and I would give yourself permission to raise the price at the door when the car is clearly worse than described, as long as the confirmation text said you might.
+
+## Look at last Friday's calendar
+
+Pull up your last week of full details and write the actual finish time next to each one. Mark the jobs that ran more than thirty minutes over, then look at what those vehicles had in common. If it is the same two things every time, those are the two questions you add to your booking form this week.`,
+  },
+  {
     slug: `massage-therapy-gift-certificate-recipient-booking-nudge`,
     title: `The Gift Certificate You Sold Is Sitting in a Drawer`,
     excerpt: `A massage gift certificate gets paid for in December and used, if ever, in a rush in March, and the fix is to put the recipient on your list the day it's sold.`,
