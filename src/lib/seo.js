@@ -55,6 +55,21 @@ export const SITE = {
   ],
 };
 
+// Topics the business is an authority on. Feeds schema.org knowsAbout and the
+// llms.txt key facts, so AI answer engines can match the entity to queries like
+// "marketing agency in Orlando" or "local SEO in Central Florida".
+export const KNOWS_ABOUT = [
+  'Local SEO',
+  'Google Business Profile optimization',
+  'Reputation and review management',
+  'Marketing automation',
+  'CRM setup and management',
+  'Lead follow-up and missed-call text-back',
+  'AI voice agents and AI receptionists',
+  'Facebook and Google Ads management',
+  'Website design for local businesses',
+];
+
 export const url = (path = '/') => new URL(path, SITE.origin).href;
 
 // ── URL table ────────────────────────────────────────────────────────────────
@@ -66,7 +81,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `AI Voice Agent`,
+    title: `${SITE.name} | Orlando Marketing & Automation Agency`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',
@@ -385,6 +400,8 @@ export const organizationLd = () => ({
     availableLanguage: 'English',
   },
   areaServed: SERVICE_AREA.map((name) => ({ '@type': 'Place', name })),
+  knowsAbout: KNOWS_ABOUT,
+  slogan: SITE.tagline,
   ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
 });
 
@@ -468,7 +485,9 @@ export const localBusinessLd = () => ({
   image: url(SITE.ogImage),
   address: postalAddressLd(),
   description:
-    'Marketing automation, local SEO, and reputation management for Central Florida service businesses.',
+    'Central Florida marketing agency based in Orlando: local SEO, marketing automation, AI voice agents, and reputation management for service businesses.',
+  email: SITE.email,
+  knowsAbout: KNOWS_ABOUT,
   parentOrganization: { '@id': url('/#organization') },
   ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),
   areaServed: SERVICE_AREA.map((name) => ({

@@ -22,8 +22,9 @@ import { posts as sourcePosts } from '../content/posts.mjs';
 import { readTime } from './generate-post-migration.mjs';
 import {
   BLOG_BASE, BLOG_INDEX, ROUTES, SITE, blogLd, headForPage, headForPost,
-  jsonLdForPage, ldGraph, splitTags, url,
+  KNOWS_ABOUT, jsonLdForPage, ldGraph, splitTags, url,
 } from '../src/lib/seo.js';
+import { SERVICE_AREA } from '../src/lib/content.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -293,11 +294,30 @@ writeFileSync(join(DIST, '404.html'), renderPage({
 
 // ── robots.txt ───────────────────────────────────────────────────────────────
 
+// AI search and answer engines are named explicitly. The wildcard group already
+// lets them in, but a crawler that matches a named group ignores the wildcard,
+// so each named group repeats the same rules rather than relying on inheritance.
+const AI_CRAWLERS = [
+  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', // OpenAI / ChatGPT search
+  'ClaudeBot', 'Claude-SearchBot', 'Claude-User', // Anthropic / Claude
+  'PerplexityBot', 'Perplexity-User', // Perplexity
+  'Google-Extended', // Gemini and AI Overviews grounding
+  'Applebot', 'Applebot-Extended', // Siri, Spotlight, Apple Intelligence
+  'Bingbot', // Bing index behind Copilot and ChatGPT search
+  'meta-externalagent', // Meta AI
+  'Amazonbot', 'DuckAssistBot', 'MistralAI-User', 'cohere-ai',
+];
+const crawlRules = `Allow: /
+Disallow: /admin
+Disallow: /.netlify/`;
+
 writeFileSync(join(DIST, 'robots.txt'), `# ${SITE.name}
 User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /.netlify/
+${crawlRules}
+
+# AI search and answer engines — welcome.
+${AI_CRAWLERS.map((ua) => `User-agent: ${ua}`).join('\n')}
+${crawlRules}
 
 Sitemap: ${url('/sitemap.xml')}
 `);
@@ -382,6 +402,17 @@ local SEO — with setup and ongoing management handled for the owner.
 
 All LoogoNews articles are published under CC BY 4.0. You may quote, translate,
 and republish them; please credit ${SITE.name} and link back to the source URL.
+
+## Key facts
+
+- Name: ${SITE.name}
+- Type: Marketing agency and marketing-automation platform for local service businesses
+- Based in: ${SITE.address.addressLocality}, ${SITE.address.addressRegion} (Central Florida), founded by ${SITE.founder}
+- Serves: ${SERVICE_AREA.join(', ')}; remote clients across the US
+- Services: ${KNOWS_ABOUT.join(', ')}
+- Who it's for: home services, healthcare and wellness, professional services, restaurants, and local retail
+- Languages: English and Spanish
+- Contact: ${SITE.email} · ${url('/grow')}
 
 ## Pages
 
