@@ -20,7 +20,7 @@ export default function NotFound({ onNavigate }) {
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href="/" onClick={(e) => { e.preventDefault(); onNavigate('Home'); }} style={btn}>Go to the homepage</a>
           <a href="/loogonews" onClick={(e) => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...btn, background: 'transparent', color: 'var(--ink-700)', border: '1px solid var(--border-hair)' }}>
-            Read LoogoNews
+            Read Industry LoogoBlog
           </a>
         </div>
       </div>

@@ -1,4 +1,4 @@
-# Loogo Labs — LoogoNews Voice & Editorial Guide
+# Loogo Labs — Industry LoogoBlog Voice & Editorial Guide
 
 > This guide governs *how* a post is written. `CONTENT-POLICY.md` governs what we
 > publish and who owns it; `GHL-CONTEXT.md` covers what we may say about the
@@ -6,7 +6,7 @@
 
 ---
 
-## The Blog: LoogoNews
+## The Blog: Industry LoogoBlog
 
 **Purpose:** Position Loogo Labs as the practitioner's guide to running a local
 service business better. Not a tech blog. Not a think piece factory. A reference
@@ -174,7 +174,7 @@ When automation creates more overhead than it saves. The hidden cost of handoffs
 
 ## Formatting Conventions
 
-- **Publication name:** LoogoNews
+- **Publication name:** Industry LoogoBlog
 - **Author byline:** David Selva (always — see The Byline above)
 - **Tags:** 2–4 per post, title case, specific (e.g., "Reporting Automation", "Property Management", "Data Quality")
 - **Read time:** Honest. If it takes 7 minutes, say 7.

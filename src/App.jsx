@@ -169,7 +169,7 @@ function App({ initialPath }) {
         <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: 'LoogoNews', badge: 'Fresh' }}
+        feature={{ page: 'LoogoNews', label: 'Industry LoogoBlog', badge: 'Fresh' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
       />
       <SeasonalGarland />
@@ -177,7 +177,7 @@ function App({ initialPath }) {
       <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
         columns={[
           { title: 'Company', links: ['Mission', 'Company', 'Book a Call'] },
-          { title: 'Platform', links: ['LoogoNews', 'Central Florida', 'Quizzes', 'Packaged Services'] },
+          { title: 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}

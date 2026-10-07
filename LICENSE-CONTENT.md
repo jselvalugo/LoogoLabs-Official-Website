@@ -2,7 +2,7 @@
 
 ## What this covers
 
-The editorial content of loogolabs.com — every LoogoNews post, including the
+The editorial content of loogolabs.com — every Industry LoogoBlog post, including the
 text in `content/posts.mjs` and the copy stored in the `posts` table — is
 licensed under the **Creative Commons Attribution 4.0 International licence
 (CC BY 4.0)**.

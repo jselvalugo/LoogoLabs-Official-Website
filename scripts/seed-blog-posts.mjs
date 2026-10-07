@@ -1,4 +1,4 @@
-// Seeds any LoogoNews post missing from the database as a draft, for review
+// Seeds any Industry LoogoBlog post missing from the database as a draft, for review
 // before publishing. Run with: npm run db:seed-posts
 // Requires NETLIFY_DATABASE_URL in the environment (e.g. `netlify dev` or `netlify env:pull`).
 //

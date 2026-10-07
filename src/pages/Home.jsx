@@ -210,7 +210,7 @@ function QuizTeaser({ onNavigate }) {
   );
 }
 
-// One quiet line under the hero pointing at the featured LoogoNews post. Renders
+// One quiet line under the hero pointing at the featured Industry LoogoBlog post. Renders
 // nothing until the post list loads, or if no post is featured, so the hero
 // never shifts for visitors when there is nothing to show.
 function FeaturedPostLine({ onNavigate }) {
@@ -233,7 +233,7 @@ function FeaturedPostLine({ onNavigate }) {
         className="ll-featured-line"
         style={{ background: hover ? 'var(--paper-200)' : 'transparent' }}
       >
-        <span className="ll-featured-line-tag">★ Featured on LoogoNews</span>
+        <span className="ll-featured-line-tag">★ Featured on Industry LoogoBlog</span>
         <span className="ll-featured-line-title" style={{ color: hover ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{post.title}</span>
         <span aria-hidden="true" style={{ marginLeft: 'auto', flex: 'none', fontFamily: 'var(--font-mono)', transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
       </a>

@@ -1,8 +1,8 @@
-# LoogoNews — Content Policy
+# Industry LoogoBlog — Content Policy
 
 ## Originality
 
-**Every word on LoogoNews is written by us. Nothing is copied from anyone.**
+**Every word on Industry LoogoBlog is written by us. Nothing is copied from anyone.**
 
 Not one sentence of any post is lifted, verbatim or near-verbatim, from another website, article, newsletter, book, social post, competitor's blog, or press release. We write every post word for word, from a blank page, out of our own experience running these systems for clients.
 

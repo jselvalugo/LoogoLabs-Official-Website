@@ -63,7 +63,7 @@ export default function BlogPost({ slug, onNavigate }) {
         <div style={{ textAlign: 'center', padding: '0 24px' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 16 }}>404</div>
           <div style={{ fontSize: 'var(--fs-h2)', fontWeight: 700, marginBottom: 24, color: 'var(--ink-900)' }}>Post not found.</div>
-          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to LoogoNews</a>
+          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to Industry LoogoBlog</a>
         </div>
       </div>
     );
@@ -87,7 +87,7 @@ export default function BlogPost({ slug, onNavigate }) {
           <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
-              ← LoogoNews
+              ← Industry LoogoBlog
             </a>
           </nav>
 
@@ -158,7 +158,7 @@ export default function BlogPost({ slug, onNavigate }) {
                   <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-900)' }}>David Selva</div>
                   <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '54ch' }}>
                     Founder of Loogo Labs. I build and run the follow-up, booking and review systems that
-                    keep local service businesses from losing leads, and LoogoNews is where I write down
+                    keep local service businesses from losing leads, and Industry LoogoBlog is where I write down
                     what holds up once those systems are live, and what doesn't.
                   </p>
                 </div>
@@ -188,7 +188,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* Back link */}
             <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
-              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to LoogoNews</a>
+              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to Industry LoogoBlog</a>
             </div>
           </article>
         </div>
@@ -225,7 +225,7 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
           <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
               style={{ ...backBtnInverse, textDecoration: 'none' }}>
-              ← LoogoNews
+              ← Industry LoogoBlog
             </a>
             <span style={{ ...mono, fontSize: 10, color: 'var(--ink-900)', background: 'var(--cyan-500)', padding: '5px 12px', fontWeight: 700 }}>
               ★ Featured post

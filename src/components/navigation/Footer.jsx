@@ -5,7 +5,7 @@ import { SITE, pathForPage, routeMeta } from '../../lib/seo';
 const pageMap = {
   'Mission': 'Mission',
   'Company': 'Company',
-  'LoogoNews': 'LoogoNews',
+  'Industry LoogoBlog': 'LoogoNews',
   'Central Florida': 'GrowCFL',
   'Quizzes': 'Quizzes',
   'Packaged Services': 'Packages',
@@ -74,7 +74,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
             <span className="ll-footer__strap">{strap}</span>
           </div>
           <span className="ll-footer__license">
-            LoogoNews posts are free to republish under{' '}
+            Industry LoogoBlog posts are free to republish under{' '}
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
               rel="noopener noreferrer license">CC BY 4.0</a>
             {' '}— credit Loogo Labs and take it.

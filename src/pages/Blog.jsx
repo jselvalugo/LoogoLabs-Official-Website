@@ -61,7 +61,7 @@ export default function Blog({ onNavigate }) {
         <div className="ln-masthead__inner" style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,72px)' }}>
           <div className="ln-masthead__copy">
             <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(48px,7vw,96px)', lineHeight: 0.9, letterSpacing: '-0.04em', color: 'var(--paper-100)' }}>
-              Market<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>News.</span>
+              Industry<br /><span style={{ color: 'var(--cyan-500)', fontStyle: 'italic' }}>LoogoBlog.</span>
             </h1>
             <p style={{ margin: 0, maxWidth: '38ch', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)' }}>
               Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.
