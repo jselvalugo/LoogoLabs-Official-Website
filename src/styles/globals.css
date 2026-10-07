@@ -968,3 +968,8 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ln-find__search { height: 52px; }
   .ln-find__search input { font-size: 15px; }
 }
+
+/* Site-wide top bar: drop the tagline on phones so it stays on one line. */
+.ll-topbar-text { color: var(--paper-000); }
+.ll-topbar-long { color: var(--ink-300); }
+@media (max-width: 640px) { .ll-topbar-long { display: none; } }
