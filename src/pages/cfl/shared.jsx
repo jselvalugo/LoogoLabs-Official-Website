@@ -40,14 +40,11 @@ export const BookBtn = ({ size = 'md', label = 'Book a free strategy call', vari
 };
 
 export const TopBanner = () => (
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, height: 36,
-    background: 'var(--ink-900)', borderBottom: '1px solid rgba(216,211,198,0.18)',
-    fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-    <a href="/" style={{ color: 'var(--paper-000)', textDecoration: 'none' }}>Loogo Labs</a>
-    <span aria-hidden="true" style={{ color: 'var(--ink-400)' }}>/</span>
-    <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}
-      style={{ color: 'var(--ink-300)', textDecoration: 'none' }}>
-      Book a free strategy call <span aria-hidden="true">→</span>
+  <div className="cfl-topbar">
+    <a href="/" className="cfl-topbar__brand">Loogo Labs</a>
+    <span aria-hidden="true" className="cfl-topbar__sep">/</span>
+    <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-topbar__cta">
+      Book a free <span className="cfl-topbar__long">strategy </span>call <span aria-hidden="true">→</span>
     </a>
   </div>
 );
