@@ -244,13 +244,10 @@ function FeaturedPostLine({ onNavigate }) {
 function Home({ onNavigate }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '64px 0 0' }}>
+      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '40px 0 0' }}>
         <Wrap style={{ position: 'relative', zIndex: 1 }}>
           <div className="ll-hero-grid">
           <div style={{ maxWidth: '46ch' }}>
-            <span className="ll-eyebrow" style={{ color: 'var(--cyan-700)', display: 'block', marginBottom: 18 }}>
-              Email Marketing · Central Florida
-            </span>
             <h1 style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
               letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
               Email Marketing That Brings Customers Back. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.
