@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `massage-therapy-gift-certificate-recipient-booking-nudge`,
+    title: `The Gift Certificate You Sold Is Sitting in a Drawer`,
+    excerpt: `A massage gift certificate gets paid for in December and used, if ever, in a rush in March, and the fix is to put the recipient on your list the day it's sold.`,
+    tags: `Gift Certificates, Seasonal Booking, Massage Therapy`,
+    content: `Say you sell 30 gift certificates between Black Friday and Christmas Eve. The money lands in December, which feels great, and then most of those certificates go into a card, then a drawer, then a coat pocket. A few get used in January. Some get found in June. A handful never come back at all.
+
+You were paid, so on paper nothing went wrong. But a gift certificate is supposed to be the cheapest new client you'll ever get, and most of them never make it to your table.
+
+## You sold it to the wrong person
+
+The buyer is your customer. The person who will actually lie on your table is a stranger, and you know nothing about them. No name, no number, no email. Your only contact is a person who has already moved on to wrapping paper.
+
+So the whole job of the certificate happens without you. The recipient has to remember, find the card, work out how to book, and decide on a date, all in the weeks when their calendar is worst.
+
+I would not blame them for forgetting. I would blame a system that depends on it.
+
+## Ask one extra question at checkout
+
+When someone buys a certificate, add one thing to the purchase: the recipient's first name and mobile number, with a line that says "I'll send them a quick note so they know how to book." Most buyers will give it, because it makes their gift easier.
+
+If a buyer won't, don't push. Take the certificate anyway and use the buyer-only version of the plan below.
+
+What you want is the recipient as a contact in your system, tagged as a gift holder, with the purchase date and the amount attached.
+
+## Three messages, spaced out
+
+Once you have a number, three short texts cover the whole life of the gift. Write them in your own voice. Here is the shape:
+
+- **Day of the gift:** "Hi Dana, this is David at the studio. Marcus got you a 60-minute massage for the holidays. When you're ready, you can pick a time here: [booking link]. No rush, but weekday mornings fill up first."
+- **About three weeks after the holidays:** "Hi Dana, just a reminder that your massage is waiting. I have openings Tuesday and Thursday this week if you'd like one."
+- **Six weeks before it expires, if you set an expiry:** "Hi Dana, your gift runs out on [date]. I'd hate for it to go unused, so here's the link."
+
+Put your own name and studio in those, and change the wording until it sounds like you. The timing is the part that matters.
+
+## Why the second text matters most
+
+The first message gets read and filed under "later." The second one is the one that gets booked, because by then the holidays are over and the recipient has time to think about themselves.
+
+If you have a quiet January, this is your calendar filler, and it costs you nothing but ten minutes of setup. A gift holder is also far easier to turn into a regular than a cold lead. They've already been told by someone they trust that you are worth going to.
+
+## Where this breaks
+
+This only works if the recipient number is real, and if you're careful about how often you text. Three messages over the life of a gift is plenty. Do not add a fourth.
+
+It also breaks if your booking link can't take a gift certificate code. Test that before you promote anything. A recipient who tries to book, hits a payment screen, and gives up is worse than one who never tried.
+
+Check your local rules on expiry dates for gift certificates too. I'm not going to guess at them for your area, and they vary.
+
+## Do this before Black Friday
+
+Open your last holiday season's gift certificates and count how many were redeemed, and how many are still unused. That is your baseline. Then change your purchase form this week so it asks for the recipient's first name and mobile number, and write the day-of-gift text so it is ready before the first sale.`,
+  },
+  {
     slug: `tutoring-center-block-renewal-note-at-session-six`,
     title: `Your Tutoring Block Ends and Nobody Says Anything`,
     excerpt: `Prepaid tutoring families rarely cancel, they just never book the next block, and a short note two sessions before the end gives them an easy way to say yes.`,
