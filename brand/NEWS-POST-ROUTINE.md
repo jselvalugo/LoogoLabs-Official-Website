@@ -1,7 +1,7 @@
-# Routine: write and publish a regular LoogoNews post
+# Routine: write and publish a regular Industry LoogoBlog post
 
 The instructions a scheduled routine follows to publish one new, non-featured
-LoogoNews post. Copy everything under "Prompt" into the routine (also available
+Industry LoogoBlog post. Copy everything under "Prompt" into the routine (also available
 as plain text in `brand/NEWS-POST-ROUTINE-PROMPT.txt`). The post appears in the
 /news "All posts" grid and latest-posts lists by date; the featured post is left
 alone. To publish a featured post instead, use `brand/FEATURED-POST-ROUTINE.md`.
@@ -10,7 +10,7 @@ alone. To publish a featured post instead, use `brand/FEATURED-POST-ROUTINE.md`.
 
 ## Prompt
 
-You are publishing **one** new regular LoogoNews post on loogolabs.com. It is
+You are publishing **one** new regular Industry LoogoBlog post on loogolabs.com. It is
 **not** the featured post: do not change which post is featured. Work in the
 `jselvalugo/LoogoLabs-Official-Website` repository. Follow the steps in order.
 If any step fails or a check doesn't hold, stop, do not merge, and report
@@ -156,7 +156,7 @@ pass 2, stop, do not merge, and report why.
 
 ### 9. Ship it
 
-- Commit: `Add LoogoNews post: <title>`
+- Commit: `Add Industry LoogoBlog post: <title>`
 - Push the branch and open a PR against `main` with the same title. Body:
   - **Title**, **Excerpt**, **Slug**, **Tags**, **Word count**
   - **Originality pass 1** and **Review pass 2** notes from step 8

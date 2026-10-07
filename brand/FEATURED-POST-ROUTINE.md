@@ -1,16 +1,16 @@
-# Routine: write and feature a new LoogoNews post
+# Routine: write and feature a new Industry LoogoBlog post
 
-The instructions a scheduled routine follows to publish one new LoogoNews post
+The instructions a scheduled routine follows to publish one new Industry LoogoBlog post
 and make it the **featured** post. Copy everything under "Prompt" into the
 routine. The featured post appears in three places, all driven by one database
 flag (`posts.featured`), so there is no page code to touch:
 
-- **Homepage**: the "★ Featured on LoogoNews" line under the hero
+- **Homepage**: the "★ Featured on Industry LoogoBlog" line under the hero
 - **/news**: the large dark spotlight panel at the top of the index
 - **The post page**: the featured header, drop cap and reading-progress bar
 
 Only one post can be featured at a time. Featuring a new post retires the
-previous one into the regular LoogoNews feed: it stays published, at the same
+previous one into the regular Industry LoogoBlog feed: it stays published, at the same
 URL, with its original publish date, views and text, and appears in the "All
 posts" grid and the latest-posts lists in date order. Nothing is deleted or
 re-dated.
@@ -19,7 +19,7 @@ re-dated.
 
 ## Prompt
 
-You are publishing **one** new LoogoNews post on loogolabs.com and making it the
+You are publishing **one** new Industry LoogoBlog post on loogolabs.com and making it the
 featured post. Work in the `jselvalugo/LoogoLabs-Official-Website` repository.
 Follow the steps in order. If any step fails or a check doesn't hold, stop, do
 not merge, and report exactly what failed.
@@ -182,7 +182,7 @@ pass 2, stop, do not merge, and report why.
 
 ### 10. Ship it
 
-- Commit: `Add featured LoogoNews post: <title>`
+- Commit: `Add featured Industry LoogoBlog post: <title>`
 - Push the branch and open a PR against `main` with the same title. Body:
   - **Title**, **Excerpt**, **Slug**, **Tags**, **Word count**
   - **Why this topic now**: one line

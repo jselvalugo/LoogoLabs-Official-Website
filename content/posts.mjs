@@ -1,4 +1,4 @@
-// Single source of truth for every LoogoNews post.
+// Single source of truth for every Industry LoogoBlog post.
 //
 // Both the seeder (scripts/seed-blog-posts.mjs) and the migration generator
 // (scripts/generate-post-migration.mjs) read from this file, so a post's text

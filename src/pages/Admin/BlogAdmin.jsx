@@ -19,7 +19,7 @@ export default function BlogAdmin() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
       <div className="ll-admin-content-header" style={{ padding: '20px 32px 16px', borderBottom: '1px solid var(--border-hair)', flexShrink: 0, background: 'var(--paper-100)' }}>
-        <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>LoogoNews Posts</h1>
+        <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Industry LoogoBlog Posts</h1>
       </div>
 
       <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
@@ -227,7 +227,7 @@ function PostEditor({ post, onSave, onDelete, onClose }) {
             <input type="checkbox" checked={featured && status === 'published'} disabled={status !== 'published'}
               onChange={e => setFeatured(e.target.checked)} style={{ marginTop: 2 }} />
             <span>
-              <strong style={{ color: 'var(--ink-900)' }}>Featured post</strong> — gets the featured layout on LoogoNews and its own page, plus a link on the homepage.
+              <strong style={{ color: 'var(--ink-900)' }}>Featured post</strong> — gets the featured layout on Industry LoogoBlog and its own page, plus a link on the homepage.
               Featuring this post un-features the current one. Published posts only.
             </span>
           </label>

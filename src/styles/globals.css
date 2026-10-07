@@ -316,7 +316,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 /* ── Tables that must never break page width ── */
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-/* ── NavBar featured button (LoogoNews) ──
+/* ── NavBar featured button (Industry LoogoBlog) ──
    On-brand standout: sage-green block, cream hard-edge border + offset shadow,
    mono uppercase label. Distinct from the cream primary CTA. */
 .ll-nav-feature {
@@ -388,7 +388,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
 @media (max-width: 640px) { .ll-garland-strand:nth-child(even) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .ll-garland-strand { animation: none; } }
 
-/* ── Featured LoogoNews post ── */
+/* ── Featured Industry LoogoBlog post ── */
 .ll-feature-label { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .ll-feature-star  { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px;
   background: var(--ink-900); color: var(--cyan-500); font-size: 12px; }
@@ -791,7 +791,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-hero-badge { letter-spacing: 0.04em !important; padding: 3px 6px !important; }
 }
 
-/* LoogoNews masthead: office artwork bleeds in from the right on desktop and
+/* Industry LoogoBlog masthead: office artwork bleeds in from the right on desktop and
    sits as a banner under the copy on mobile. The PNG fades to transparent on
    its left and bottom edges so it blends into --ink-900. */
 .ln-masthead { position: relative; overflow: hidden; }
@@ -867,7 +867,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ll-footer__license { max-width: 34ch; }
 }
 
-/* ── LoogoNews sidebar (floating glass panel) ── */
+/* ── Industry LoogoBlog sidebar (floating glass panel) ── */
 .ln-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; align-items: start; }
 .ln-layout__main { min-width: 0; }
 .ln-side {
@@ -925,7 +925,7 @@ a:hover { color: var(--ink-900); background: var(--cyan-100); }
   .ln-side { background: rgba(244,241,234,0.96); }
 }
 
-/* ── LoogoNews "Find a post" search + topic chips ── */
+/* ── Industry LoogoBlog "Find a post" search + topic chips ── */
 .ln-find { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 24px; }
 .ln-find__search {
   display: flex; align-items: center; gap: 12px; padding: 0 18px; height: 56px; cursor: text;

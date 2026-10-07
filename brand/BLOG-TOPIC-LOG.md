@@ -1,4 +1,4 @@
-# LoogoNews — Published Topic Log
+# Industry LoogoBlog — Published Topic Log
 
 Tracks every topic + vertical pairing already published, so we never run
 the same argument twice in a new vertical.

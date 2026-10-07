@@ -114,7 +114,7 @@ export default function BlogSidebar(props) {
 
   return (
     <>
-      <aside className="ln-side ln-side--docked" aria-label="LoogoNews highlights">
+      <aside className="ln-side ln-side--docked" aria-label="Industry LoogoBlog highlights">
         <SidebarBody {...props} />
       </aside>
 
@@ -122,7 +122,7 @@ export default function BlogSidebar(props) {
         {open ? '✕ Close' : '✦ Top posts'}
       </button>
       {open && <div className="ln-side__scrim" onClick={() => setOpen(false)} />}
-      <aside id="ln-side-drawer" className={`ln-side ln-side--drawer${open ? ' is-open' : ''}`} aria-label="LoogoNews highlights" hidden={!open}>
+      <aside id="ln-side-drawer" className={`ln-side ln-side--drawer${open ? ' is-open' : ''}`} aria-label="Industry LoogoBlog highlights" hidden={!open}>
         <SidebarBody {...props} onPick={() => setOpen(false)} />
       </aside>
     </>

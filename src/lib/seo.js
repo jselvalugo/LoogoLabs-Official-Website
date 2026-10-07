@@ -107,7 +107,7 @@ export const ROUTES = [
   {
     page: 'LoogoNews',
     path: '/loogonews',
-    title: `LoogoNews — Automation Guides for Local Business | ${SITE.name}`,
+    title: `Industry LoogoBlog — Automation Guides for Local Business | ${SITE.name}`,
     description:
       'Guides on lead follow-up, missed-call text-back, reviews, and automation — written for owners of HVAC, dental, salon, gym, and other service businesses.',
     priority: '0.9',
@@ -344,7 +344,7 @@ export function headForPost(post) {
     };
   }
   return {
-    title: fitTitle(`${post.title} | LoogoNews`),
+    title: fitTitle(`${post.title} | Industry LoogoBlog`),
     description: clamp(post.excerpt || SITE.description),
     canonical: url(`${BLOG_BASE}/${post.slug}`),
     robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
@@ -358,7 +358,7 @@ export function headForPost(post) {
     },
     jsonLd: [blogPostingLd(post), breadcrumbLd([
       { name: 'Home', path: '/' },
-      { name: 'LoogoNews', path: BLOG_INDEX },
+      { name: 'Industry LoogoBlog', path: BLOG_INDEX },
       { name: post.title, path: `${BLOG_BASE}/${post.slug}` },
     ])],
   };
@@ -450,7 +450,7 @@ export const blogPostingLd = (post) => {
 export const blogLd = (posts = []) => ({
   '@type': 'Blog',
   '@id': url(`${BLOG_INDEX}#blog`),
-  name: 'LoogoNews',
+  name: 'Industry LoogoBlog',
   url: url(BLOG_INDEX),
   description: BY_PAGE.get('LoogoNews').description,
   inLanguage: SITE.lang,

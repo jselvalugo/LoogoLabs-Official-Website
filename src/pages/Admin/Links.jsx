@@ -66,7 +66,7 @@ export default function Links() {
       </div>
       <div style={{ flex: 1, overflowY: 'auto' }}>
         {section('Pages', pages)}
-        {section('LoogoNews posts', postLinks)}
+        {section('Industry LoogoBlog posts', postLinks)}
       </div>
     </div>
   );

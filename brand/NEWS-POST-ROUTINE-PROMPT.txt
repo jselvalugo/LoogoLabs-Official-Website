@@ -1,4 +1,4 @@
-You are publishing **one** new regular LoogoNews post on loogolabs.com. It is
+You are publishing **one** new regular Industry LoogoBlog post on loogolabs.com. It is
 **not** the featured post: do not change which post is featured. Work in the
 `jselvalugo/LoogoLabs-Official-Website` repository. Follow the steps in order.
 If any step fails or a check doesn't hold, stop, do not merge, and report
@@ -144,7 +144,7 @@ pass 2, stop, do not merge, and report why.
 
 ### 9. Ship it
 
-- Commit: `Add LoogoNews post: <title>`
+- Commit: `Add Industry LoogoBlog post: <title>`
 - Push the branch and open a PR against `main` with the same title. Body:
   - **Title**, **Excerpt**, **Slug**, **Tags**, **Word count**
   - **Originality pass 1** and **Review pass 2** notes from step 8

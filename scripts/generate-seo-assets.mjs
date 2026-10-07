@@ -194,7 +194,7 @@ const HEADINGS = {
   Home: 'More Customers. Less Busywork. We Run It for You.',
   Mission: 'We believe running a business should not require 15 different tools.',
   Company: 'Meet the founder',
-  LoogoNews: 'LoogoNews — Marketing News',
+  LoogoNews: 'Industry LoogoBlog',
   GrowCFL: 'Stop losing customers to businesses that respond faster.',
   AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
   ReputationAutopilot: 'Every Completed Job Becomes A 5-Star Review Request.',
@@ -260,7 +260,7 @@ for (const post of allPosts) {
   const tags = splitTags(post.tags);
   const body = `
       <main>
-        <nav aria-label="Breadcrumb"><a href="/">${esc(SITE.name)}</a> / <a href="${BLOG_INDEX}">LoogoNews</a></nav>
+        <nav aria-label="Breadcrumb"><a href="/">${esc(SITE.name)}</a> / <a href="${BLOG_INDEX}">Industry LoogoBlog</a></nav>
         <article>
           <h1>${esc(post.title)}</h1>
           <p><span>${esc(post.author)}</span>${post.published_at ? ` · <time datetime="${esc(post.published_at)}">${esc(post.published_at.slice(0, 10))}</time>` : ''} · ${post.read_time} min read</p>
@@ -268,7 +268,7 @@ for (const post of allPosts) {
           <p>${esc(post.excerpt)}</p>
           ${markdownToHtml(post.content)}
         </article>
-        <p><a href="${BLOG_INDEX}">Back to LoogoNews</a></p>
+        <p><a href="${BLOG_INDEX}">Back to Industry LoogoBlog</a></p>
         <nav aria-label="Site"><ul>${NAV_LINKS}</ul></nav>
       </main>`;
   write(`${BLOG_BASE}/${post.slug}`, renderPage({ head, body }));
@@ -375,7 +375,7 @@ ${splitTags(p.tags).map((t) => `      <category>${esc(t)}</category>`).join('\n'
 writeFileSync(join(DIST, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>LoogoNews — ${esc(SITE.name)}</title>
+    <title>Industry LoogoBlog — ${esc(SITE.name)}</title>
     <link>${esc(url(BLOG_INDEX))}</link>
     <atom:link href="${esc(url('/rss.xml'))}" rel="self" type="application/rss+xml" />
     <description>Operational guides on lead follow-up, automation, and reputation for local service businesses.</description>
@@ -400,7 +400,7 @@ ${SITE.name} builds and runs marketing systems for local service businesses —
 CRM, missed-call text-back, follow-up automation, reputation management, and
 local SEO — with setup and ongoing management handled for the owner.
 
-All LoogoNews articles are published under CC BY 4.0. You may quote, translate,
+All Industry LoogoBlog articles are published under CC BY 4.0. You may quote, translate,
 and republish them; please credit ${SITE.name} and link back to the source URL.
 
 ## Key facts
