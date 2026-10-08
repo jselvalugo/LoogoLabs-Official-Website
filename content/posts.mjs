@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `dog-boarding-vaccine-records-before-thanksgiving`,
+    title: `Your Boarding Kennel Finds the Expired Vaccine at the Door`,
+    excerpt: `The dog with a lapsed vaccine arrives on the Wednesday before Thanksgiving, when you have no kennel to spare and the owner has a plane to catch.`,
+    tags: `Seasonal Booking, Pet Boarding, Customer Communication`,
+    content: `The owner is standing at your front desk with a suitcase in the car, and the dog's rabies certificate expired three weeks ago. You can't board the dog. The owner can't take the dog on the plane. Everyone in the lobby is now having the worst version of a Wednesday.
+
+This is a boarding problem, and it gets worse every year in the same week. Thanksgiving is the one stretch where your kennels are full, your front desk is slammed and a lapsed record has nowhere to go. The fix has nothing to do with being stricter at the door. It is a date on your calendar well before the door.
+
+## Why the door is the wrong place to check
+
+Most boarding shops verify vaccines at check-in. It feels natural: the dog is there, the paperwork is there, you look at both. On a quiet Tuesday in March, a problem at check-in costs you twenty minutes and a phone call.
+
+On the Wednesday before the holiday it costs you more. The owner can't fix it in time, because the vet is closing early or already closed. You can bend your rules and take the dog anyway, which is how a kennel ends up with a health scare. Or you turn them away, and now you have an empty run on the single week it was worth the most, with no one to fill it.
+
+The record was out of date days or weeks ago. You just didn't look until the last possible minute.
+
+## Set a records date, ten days out
+
+Pick a number of days before arrival and treat it as a real deadline. I like ten for holiday stays, because it leaves a full week for the owner to get a vet appointment, even with a busy clinic.
+
+At that date, the system checks each booked dog against the expiry dates you've entered. Two things can happen:
+
+- **Records are current through the whole stay.** Nothing happens. The owner hears nothing.
+- **Anything expires before pickup.** The owner gets a text with a simple upload link and a plain sentence: "Bella's rabies vaccine expires Dec. 2, before her stay ends. Please send us the updated certificate by Nov. 16 to keep your Thanksgiving reservation."
+
+Note the phrase "through the whole stay." A vaccine that is valid on drop-off day and expires on Friday is the same problem, just delayed. Check against the pickup date.
+
+## Give them one reminder, then a clear consequence
+
+Some owners won't answer the first text. Send a second one three days later. Then, on the deadline, say what happens next in the same calm tone, not as a scolding: the reservation is released to the waitlist if the record isn't in.
+
+This sounds harsh until you think about the other side. You have other customers sitting on a waitlist for that exact week, and they'd happily take the run. A release on the deadline fills a kennel. A surprise at the door leaves it empty.
+
+## What this won't catch
+
+An upload link only helps if the certificate is readable. Blurry photos of a folded paper are common, and you'll still need someone to look at each one. I would keep a human in that step and let the system handle only the asking and the deadline.
+
+It also can't fix owners who skip your texts entirely. Expect a few. Call those the day before the deadline, once, and then follow through on the release. The rule only works if it's real.
+
+## Open the list for Thanksgiving week
+
+Pull every reservation you have for the week of Nov. 26 and sort by pickup date. Next to each dog, write the earliest vaccine expiry on file. Any that fall before pickup, send the owner the text today, not ten days out. You'll learn how many surprises were waiting for you, and you'll still have time to fix every one of them.`,
+  },
+  {
     slug: `mobile-detailing-booking-form-slot-length`,
     title: `Your Detail Slot Is Three Hours. The Minivan Needs Five.`,
     excerpt: `A mobile detailer who books every full detail into the same slot loses the afternoon to the one dirty vehicle, and three questions at booking fix it.`,
