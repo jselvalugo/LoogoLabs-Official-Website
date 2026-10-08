@@ -11,6 +11,49 @@
 
 export const posts = [
   {
+    slug: `driving-school-stalled-students-between-lessons`,
+    title: `Your Driving Students Quit Between Lesson Three and Four`,
+    excerpt: `A student who drifts away mid-course leaves an instructor's hour empty and a license unfinished, and a simple days-since-last-lesson check catches them while they still want to come back.`,
+    tags: `Scheduling, Student Retention, Driving Schools`,
+    content: `Somewhere on your instructor's schedule there is an empty Tuesday at 4 PM, and somewhere on your student list there is a sixteen-year-old who needs exactly that hour and hasn't booked a lesson in five weeks. Neither side knows about the other. Nobody cancelled. The student just stopped.
+
+That is the quiet leak in a driving school. Your sign-ups look fine and your first lessons look fine. The money disappears in the middle, when a student has done a few hours behind the wheel and the next one never gets scheduled.
+
+## Why they stall
+
+Almost nobody quits a driving course on purpose. They stall for ordinary reasons. Exams arrive. A parent's work shifts. The first lessons were stressful and nobody wants to book the next one. The student means to call and then it is Thursday, then it is the weekend, then it has been a month.
+
+Here is the part that costs you. Every week of silence makes the next lesson harder to book, because the student now feels a little embarrassed about the gap. The longer they wait, the more likely they are to try someone else, or to let the whole thing drift until a deadline forces a panic.
+
+## What you can see, and what you can't
+
+You can't see why a student went quiet. You can see one thing very clearly: the number of days since their last lesson, and whether another one is on the calendar.
+
+That is enough. A student with a lesson booked is fine. A student with no lesson booked and a last lesson more than a week ago is the one to look at. You don't need to guess at the reason before you reach out, because the message does that work for you.
+
+## Three touches, in this order
+
+I set this up as a short sequence that starts the day a lesson ends and stops the moment another one is booked.
+
+- **Day 0, the same evening.** A text to whoever pays and schedules, usually the parent: thanks, here is what we covered, and a link to book the next one. This is where most students rebook, because the lesson is fresh.
+- **Day 7, if nothing is booked.** A text that names two actual open times next week, with the instructor's first name. Two real times work better than "let us know when you're free," because replying with a single word is easy.
+- **Day 14, if still nothing.** No text. This one goes on a short list for a person to phone. A parent who ignored two messages will often pick up for a human voice, and the call is also how you learn the real reason.
+
+The sequence checks the calendar before every message. If a lesson appears, the remaining steps cancel themselves. Nothing is more annoying than a reminder to book something you already booked.
+
+## Where this goes wrong
+
+Some pauses are legitimate. A student studying for finals does not want a text on day seven. So give the person making the day-14 call a way to mark a student as paused until a date, and make sure the system holds all messages until then. Without that, you will text a worried parent at the worst time and teach them to ignore you.
+
+The other mistake is the opposite one. If every stalled student lands on one list that nobody owns, the list just gets longer. Pick one person who looks at it on one day of the week, and let the rest run on its own.
+
+I also won't promise you a number here. How many students come back depends on how many were stalling for reasons you could actually fix. Some will have moved or switched schools, and no message will change that. The point is to find out which kind you have now, while the student can still be reached, instead of discovering a month from now that your instructors have open hours and you can't explain why.
+
+## Count the gaps this week
+
+Pull your list of students who have taken at least one lesson but have no lesson on the calendar. Next to each name, write the date of their last lesson. Any student past seven days gets the day-seven text from your own phone this week, with two real open times in it. Keep a tally of who answers, and you will know within days whether your gap is a scheduling problem or a nudge problem.`,
+  },
+  {
     slug: `dog-boarding-vaccine-records-before-thanksgiving`,
     title: `Your Boarding Kennel Finds the Expired Vaccine at the Door`,
     excerpt: `The dog with a lapsed vaccine arrives on the Wednesday before Thanksgiving, when you have no kennel to spare and the owner has a plane to catch.`,
