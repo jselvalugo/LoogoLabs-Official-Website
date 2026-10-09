@@ -14,7 +14,7 @@ export const EVENT_THEME = {
   cream: '#F0EBE0',
   muted: '#B5A99A',
   border: 'rgba(201,149,42,.28)',
-  logo: '/blog/lugos-craft-distillery-logo.png',
+  logo: '/blog/lugos-craft-logo-on-dark.png',
   serif: "'Playfair Display', 'Fraunces', Georgia, serif",
 };
 

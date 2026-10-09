@@ -230,7 +230,7 @@
 .lb-page--event .lb-prose h2, .lb-page--event .lb-prose h3, .lb-page--event .lb-prose strong { color: #C9952A; }
 .lb-page--event .lb-prose a { color: #E3B554; }
 .lb-page--event .lb-prose li::marker { color: #C9952A; }
-.lb-page--event .lb-figure img { border: 1px solid rgba(201,149,42,.28); }
+.lb-page--event .lb-figure img { max-width: 200px; border-radius: 0; }
 .lb-page--event .lb-tag { color: #C9952A; background: rgba(201,149,42,.08); border-color: rgba(201,149,42,.28); }
 .lb-page--event .ll-glass { background: #1C1A16; border-color: rgba(201,149,42,.22); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .lb-page--event .lb-bio__name { color: #F0EBE0; }
@@ -239,4 +239,4 @@
 .lb-page--event .lb-cta__btn:hover { background: #E3B554; }
 .lb-page--event .lb-cta__btn .lb-go__icon { background: #0F0D0A; color: #C9952A; }
 .lb-page--event .lb-back--pill { color: #C9952A; background: #1C1A16; border-color: rgba(201,149,42,.28); }
-.lb-event-logo { display: block; width: 120px; height: auto; margin-bottom: 24px; filter: brightness(0) invert(1); opacity: .85; }
+.lb-event-logo { display: block; width: 96px; height: auto; margin-bottom: 24px; }

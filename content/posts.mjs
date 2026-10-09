@@ -3161,7 +3161,7 @@ Take every estimate you sent in the last sixty days and sort it into three piles
     title: `Cards & Cocktails: A Pokémon TCG Night at Lugo's Craft Distillery`,
     excerpt: `Saturday, November 14th, 2026 — buy, sell, and trade Pokémon cards in Lakeland with a craft cocktail in hand. Free to attend, family friendly with mocktails for kids, VIP early access, and $80 vendor tables.`,
     tags: `Events, Lakeland FL, Pokémon TCG`,
-    content: `![Lugo's Craft Distillery logo](/blog/cards-and-cocktails-event.jpg)
+    content: `![Lugo's Craft Distillery logo](/blog/lugos-craft-logo-on-dark.png)
 
 Most card shows happen under fluorescent lights in a convention hall. This one happens in a distillery.
 

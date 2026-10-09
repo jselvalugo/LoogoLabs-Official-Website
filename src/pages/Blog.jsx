@@ -219,7 +219,7 @@ function EventFeaturedCard({ post, onNavigate }) {
         boxShadow: hover ? '0 18px 48px rgba(201,149,42,.18)' : 'none', transition: 'box-shadow 160ms ease',
       }}>
         <div style={{ padding: 'clamp(28px,4vw,52px)', borderRight: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220 }}>
-          <img src={t.logo} alt="Lugo's Craft Distillery" style={{ width: '100%', maxWidth: 240, height: 'auto', filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+          <img src={t.logo} alt="Lugo's Craft Distillery" style={{ width: '100%', maxWidth: 180, height: 'auto' }} />
         </div>
         <div style={{ padding: 'clamp(28px,4vw,52px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}>
           <div>
