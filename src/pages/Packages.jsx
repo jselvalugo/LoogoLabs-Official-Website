@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import Badge from '../components/feedback/Badge';
-import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
 import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGES } from '../lib/servicePackages';
+import { ArrowRight, Check, Plus, Minus } from '@phosphor-icons/react';
+import '../styles/pages/packages.css';
 
-const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
-);
 
 // Primary packages: done-for-you growth systems. Each tier includes everything
 // in the tier before it.
@@ -34,7 +31,7 @@ const PRIMARY_PACKAGES = [
     name: 'Growth',
     featured: true,
     tagline: 'Full marketing automation with AI follow-up.',
-    ideal: 'Established businesses, $500K–$3M',
+    ideal: 'Established businesses, $500K-$3M',
     monthly: '$597',
     setup: '$1,497 setup',
     term: '6-month term · live in 30 days',
@@ -75,7 +72,7 @@ const QUICK_STARTS = [
     page: 'PressRelease',
     title: 'Press Release Distribution',
     from: 'From $149',
-    description: 'Your announcement on 350+ news sites and Google News — written, distributed, and reported.',
+    description: 'Your announcement on 350+ news sites and Google News: written, distributed, and reported.',
   },
   ...SERVICE_PACKAGES.map((p) => ({ page: p.page, title: p.cardTitle, from: p.from, description: p.cardDescription })),
 ];
@@ -103,71 +100,62 @@ const STANDALONE_SERVICES = [
   },
 ];
 
-const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' };
+const Arrow = <ArrowRight size={16} weight="bold" />;
 
 function PackageCard({ pkg }) {
   // On phones the feature list starts collapsed so all three packages fit on a
-  // couple of screens; desktop always shows it (see .pk-features in the styles).
+  // couple of screens; desktop always shows it (see .pk-features in packages.css).
   const [open, setOpen] = useState(false);
+  const dark = !!pkg.featured;
   return (
-    <Card emphasis="strong" padding={28} className={`pk-card${open ? ' is-open' : ''}`} style={{
-      display: 'flex', flexDirection: 'column', gap: 20, height: '100%', boxSizing: 'border-box', position: 'relative',
-      ...(pkg.featured ? { boxShadow: '0 0 0 2px var(--ink-900)' } : null),
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-        <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>{pkg.name}</h2>
-        {pkg.featured && <Badge tone="accent">Most popular</Badge>}
+    <div className={`pk-card ${dark ? 'pk-card--dark ll-forest pk-dark' : 'pk-card--paper'}${open ? ' is-open' : ''}`}>
+      <div className="pk-card__top">
+        <h2>{pkg.name}</h2>
+        {pkg.featured && <span className="pk-pop">Most popular</span>}
       </div>
-      <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>{pkg.tagline}</p>
+      <p>{pkg.tagline}</p>
       <div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-          <span className="pk-price" style={{ fontSize: 40, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{pkg.monthly}</span>
-          <span style={{ color: 'var(--ink-400)' }}>/mo</span>
+        <div className="pk-price-row">
+          <span className="pk-price">{pkg.monthly}</span>
+          <span className="pk-per">/mo</span>
         </div>
-        <div style={{ ...mono, marginTop: 6 }}>{pkg.setup} · {pkg.term}</div>
+        <span className="pk-tag">{pkg.setup} · {pkg.term}</span>
       </div>
-      <div className="pk-ideal" style={{ fontSize: 14, color: 'var(--ink-500)' }}><strong style={{ color: 'var(--ink-700)' }}>Best for:</strong> {pkg.ideal}</div>
+      <div className="pk-ideal"><strong>Best for:</strong> {pkg.ideal}</div>
       <button type="button" className="pk-toggle" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
         {open ? 'Hide details' : `See what's included (${pkg.features.length})`}
-        <span aria-hidden="true">{open ? '−' : '+'}</span>
+        <span className="pk-toggle__icon" aria-hidden="true">{open ? <Minus size={14} weight="bold" /> : <Plus size={14} weight="bold" />}</span>
       </button>
-      <div className="pk-features" style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 18, flex: 1 }}>
-        {pkg.includesPrev && <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)', marginBottom: 10 }}>{pkg.includesPrev}</div>}
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 10 }}>
+      <div className="pk-features">
+        {pkg.includesPrev && <div className="pk-features__prev">{pkg.includesPrev}</div>}
+        <ul className="pk-list">
           {pkg.features.map((f) => (
-            <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, lineHeight: 1.4, color: 'var(--ink-700)' }}>
-              <span aria-hidden="true" style={{ color: 'var(--status-ok)', fontWeight: 700 }}>✓</span>{f}
-            </li>
+            <li key={f}><Check className="pk-check" size={16} weight="bold" aria-hidden="true" />{f}</li>
           ))}
         </ul>
       </div>
-      <Button variant={pkg.featured ? 'primary' : 'secondary'} size="lg" fullWidth onClick={openBooking} iconRight={<span>→</span>}>
+      <Button variant={dark ? 'primary' : 'inverse'} size="lg" fullWidth onClick={openBooking} iconRight={Arrow}>
         Book a call
       </Button>
-    </Card>
+    </div>
   );
 }
 
 function QuickStartSidebar({ onNavigate }) {
   return (
-    <aside className="pk-sidebar" aria-labelledby="quick-starts-heading">
-      <div style={{ display: 'grid', gap: 6, marginBottom: 16 }}>
-        <span style={mono}>Quick starts</span>
-        <h2 id="quick-starts-heading" style={{ margin: 0, fontSize: 20, color: 'var(--ink-900)' }}>One-off, fixed-price wins</h2>
-        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: 'var(--ink-500)' }}>
-          Not ready for a package? Start with a single done-for-you service.
-        </p>
+    <aside className="pk-sidebar ll-glass" aria-labelledby="quick-starts-heading">
+      <div className="pk-sidebar__head">
+        <span className="pk-tag">Quick starts</span>
+        <h2 id="quick-starts-heading">One-off, fixed-price wins</h2>
+        <p>Not ready for a package? Start with a single done-for-you service.</p>
       </div>
       <div className="pk-quick-grid">
         {QUICK_STARTS.map((q) => (
-          <a key={q.page} href={pathForPage(q.page)}
-            onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}
-            style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-            <Card padding={16} className="pk-quick" style={{ display: 'grid', gap: 4, height: '100%', boxSizing: 'border-box' }}>
-              <span style={{ ...mono, fontSize: 10 }}>{q.from}</span>
-              <span style={{ fontWeight: 600, fontSize: 15, color: 'var(--ink-900)' }}>{q.title} →</span>
-              <span className="pk-quick-desc" style={{ fontSize: 13, lineHeight: 1.45, color: 'var(--ink-500)' }}>{q.description}</span>
-            </Card>
+          <a key={q.page} href={pathForPage(q.page)} className="pk-quick"
+            onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}>
+            <span className="pk-tag" style={{ fontSize: 10 }}>{q.from}</span>
+            <span className="pk-quick__title">{q.title} <ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
+            <span className="pk-quick-desc">{q.description}</span>
           </a>
         ))}
       </div>
@@ -178,103 +166,53 @@ function QuickStartSidebar({ onNavigate }) {
 function Packages({ onNavigate }) {
   return (
     <main>
-      <style>{`
-        .pk-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; }
-        .pk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
-        .pk-sidebar { position: sticky; top: 96px; }
-        @media (max-width: 1180px) {
-          .pk-layout { grid-template-columns: 1fr; }
-          .pk-sidebar { position: static; }
-        }
-        .pk-quick-grid { display: grid; gap: 12px; }
-        .pk-toggle { display: none; }
-        @media (max-width: 1180px) { .pk-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 860px) {
-          .pk-grid { grid-template-columns: 1fr; gap: 16px; }
-          /* Packages: compact cards, feature list behind a toggle. */
-          .pk-card { padding: 20px !important; gap: 12px !important; }
-          .pk-card h2 { font-size: 24px !important; }
-          .pk-price { font-size: 32px !important; }
-          .pk-ideal { font-size: 13px !important; }
-          .pk-card:not(.is-open) .pk-features { display: none; }
-          .pk-features { padding-top: 14px !important; }
-          .pk-toggle {
-            display: flex; align-items: center; justify-content: space-between; width: 100%;
-            padding: 10px 0; background: none; border: 0; border-top: 1px solid var(--border-hair);
-            font: 600 14px/1.2 var(--font-sans, inherit); color: var(--ink-900); cursor: pointer; text-align: left;
-          }
-          .pk-toggle span { font-family: var(--font-mono); font-size: 18px; }
-          .pk-card.is-open .pk-toggle { border-bottom: 0; }
-          /* Standalone services: two per row. */
-          .pk-grid--services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-          .pk-service { padding: 14px !important; gap: 8px !important; }
-          .pk-service:last-child:nth-child(odd) { grid-column: 1 / -1; }
-          .pk-service-title { font-size: 16px !important; line-height: 1.25; }
-          .pk-service-price { font-size: 22px !important; }
-          .pk-service-desc { font-size: 13px !important; line-height: 1.4 !important; }
-          .pk-service button { font-size: 13px; padding-left: 10px; padding-right: 10px; }
-        }
-        @media (max-width: 560px) {
-          .pk-quick { padding: 12px !important; }
-          .pk-quick-desc { display: none; }
-        }
-      `}</style>
-
-      <Wrap style={{ padding: '72px 24px 56px', borderBottom: '1px solid var(--border-hair)' }}>
-        <Badge tone="accent">Packages</Badge>
-        <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
-          letterSpacing: 'var(--ls-display-2)', maxWidth: '22ch' }}>
-          A complete growth system, built and run for you.
-        </h1>
-        <p style={{ maxWidth: 'var(--container-narrow)', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>
-          CRM, automation, reviews, and AI follow-up on one platform — set up by our team and managed every month.
+      <section className="pk-wrap pk-hero">
+        <span className="ll-eyebrow">Packages</span>
+        <h1 className="pk-title">A complete growth system, <em>built and run for you.</em></h1>
+        <p className="pk-lede">
+          CRM, automation, reviews, and AI follow-up on one platform, set up by our team and managed every month.
           Pick the package that fits where your business is today, or grab a quick start to begin.
         </p>
-      </Wrap>
+      </section>
 
-      <Wrap style={{ padding: '56px 24px 88px' }}>
+      <div className="pk-wrap pk-section" style={{ paddingBottom: 96 }}>
         <div className="pk-layout">
           <div>
             <div className="pk-grid">
               {PRIMARY_PACKAGES.map((p) => <PackageCard key={p.name} pkg={p} />)}
             </div>
-            <Card emphasis="strong" padding={28} style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'grid', gap: 8, maxWidth: '56ch' }}>
-                <span style={mono}>Self-serve · $39.99/mo · no setup fee · month-to-month</span>
-                <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>Prefer to run it yourself?</h2>
-                <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
-                  Get the same platform as Growth — CRM, automation, AI and templates — and set it up your way, with community support.
+            <div className="pk-diy ll-sage ll-bezel">
+              <div>
+                <span className="pk-tag">Self-serve · $39.99/mo · no setup fee · month-to-month</span>
+                <h2>Prefer to run it yourself?</h2>
+                <p>
+                  Get the same platform as Growth (CRM, automation, AI and templates) and set it up your way, with community support.
                 </p>
               </div>
-              <Button variant="secondary" size="lg" onClick={openBooking} iconRight={<span>→</span>}>Book a call</Button>
-            </Card>
-            <div style={{ marginTop: 48, display: 'grid', gap: 6 }}>
-              <span style={mono}>Standalone services</span>
-              <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>Need one thing done well?</h2>
-              <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
-                Hire us for a single service on its own, or add it to any package. Final pricing depends on scope.
-              </p>
+              <Button variant="inverse" size="lg" onClick={openBooking} iconRight={Arrow}>Book a call</Button>
             </div>
-            <div className="pk-grid pk-grid--services" style={{ marginTop: 20 }}>
+            <div className="pk-head pk-services-head">
+              <h2 className="pk-h2">Need one thing <em>done well?</em></h2>
+              <p>Hire us for a single service on its own, or add it to any package. Final pricing depends on scope.</p>
+            </div>
+            <div className="pk-grid pk-grid--services">
               {STANDALONE_SERVICES.map((s) => (
-                <Card key={s.title} emphasis="strong" padding={24} className="pk-service" style={{ display: 'flex', flexDirection: 'column', gap: 12, height: '100%', boxSizing: 'border-box' }}>
-                  <h3 className="pk-service-title" style={{ margin: 0, fontSize: 20, color: 'var(--ink-900)' }}>{s.title}</h3>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span className="pk-service-price" style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink-900)' }}>{s.price}</span>
-                    <span style={{ color: 'var(--ink-400)' }}>{s.unit}</span>
+                <div key={s.title} className="pk-service ll-glass">
+                  <h3 className="pk-service-title">{s.title}</h3>
+                  <div className="pk-price-row" style={{ gap: 4 }}>
+                    <span className="pk-service-price">{s.price}</span>
+                    <span className="pk-per">{s.unit}</span>
                   </div>
-                  <p className="pk-service-desc" style={{ margin: 0, flex: 1, fontSize: 15, lineHeight: 1.5, color: 'var(--ink-500)' }}>{s.description}</p>
-                  <Button variant="secondary" size="md" fullWidth onClick={openBooking} iconRight={<span>→</span>}>Get a quote</Button>
-                </Card>
+                  <p className="pk-service-desc">{s.description}</p>
+                  <Button variant="secondary" size="md" fullWidth onClick={openBooking} iconRight={Arrow}>Get a quote</Button>
+                </div>
               ))}
             </div>
-            <p style={{ margin: '16px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-              Ad spend and usage (SMS, calls, AI) are billed at cost.
-            </p>
+            <p className="pk-note">Ad spend and usage (SMS, calls, AI) are billed at cost.</p>
           </div>
           <QuickStartSidebar onNavigate={onNavigate} />
         </div>
-      </Wrap>
+      </div>
     </main>
   );
 }

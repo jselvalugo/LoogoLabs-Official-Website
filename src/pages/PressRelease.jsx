@@ -1,26 +1,14 @@
 import React from 'react';
 import Badge from '../components/feedback/Badge';
-import Card from '../components/surfaces/Card';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
-
-const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
-);
+import { ArrowRight, Check, Plus } from '@phosphor-icons/react';
+import '../styles/pages/packages.css';
 
 const order = (pkg) => {
   if (window.fbq) window.fbq('track', 'InitiateCheckout', { content_name: pkg });
   openBooking();
 };
-
-const Eyebrow = ({ children, inverse }) => (
-  <div className="ll-eyebrow" style={{ color: inverse ? 'var(--cyan-500)' : 'var(--cyan-700)', textAlign: 'center' }}>{children}</div>
-);
-
-const Heading = ({ children, inverse }) => (
-  <h2 style={{ margin: '10px auto 32px', maxWidth: '24ch', textAlign: 'center', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 700,
-    lineHeight: 1.15, letterSpacing: '-0.03em', color: inverse ? 'var(--paper-000)' : 'var(--ink-900)' }}>{children}</h2>
-);
 
 // The value story: what a published release actually does for a business.
 // Platforms are named as plain text, never logos, and nothing here promises a placement.
@@ -56,7 +44,7 @@ const INCLUDED = ['Distribution to 350+ news & media sites', 'Google News indexi
 const USES = ['Grand openings', 'New locations', 'Product & service launches', 'Awards & milestones', 'New hires & partnerships', 'Events & community work'];
 
 const STEPS = [
-  ['You tell us what\'s new', 'A quick call, a draft, or rough notes — no finished copy required.'],
+  ['You tell us what\'s new', 'A quick call, a draft, or rough notes, no finished copy required.'],
   ['We shape the story', 'We agree the angle with you, or find one in what you send us.'],
   ['We polish the release', 'Edited to the format and standard news sites expect.'],
   ['You sign it off', 'Nothing goes to the network until you approve it.'],
@@ -85,249 +73,218 @@ const FAQ = [
   ['How fast does it go live?', 'Once you approve your release, we schedule it for distribution and send your placement report when it is live. Timing varies by release.'],
   ['Which sites will I appear on?', 'Your release is distributed across a network of 350+ news and media sites, including broadcast affiliate pages. Specific outlets are not guaranteed and depend on each outlet\'s editorial policies.'],
   ['Is this the same as getting featured by a journalist?', 'No. This is paid distribution of your announcement, not an earned story. It builds search presence and credibility; any journalist pickup is a bonus.'],
-  ['What can\'t I publish?', 'Releases must be genuine news and meet content guidelines — no adult, gambling, or misleading claims. We will flag anything before it goes out.'],
+  ['What can\'t I publish?', 'Releases must be genuine news and meet content guidelines: no adult, gambling, or misleading claims. We will flag anything before it goes out.'],
 ];
 
-const Check = () => <span style={{ color: 'var(--cyan-700)', fontWeight: 700, flexShrink: 0 }}>✓</span>;
+const Arrow = <ArrowRight size={16} weight="bold" />;
+const Tick = () => <Check className="pk-check" size={16} weight="bold" aria-hidden="true" />;
 
 function PressRelease() {
   return (
     <main>
       {/* ── HERO ── */}
-      <Wrap style={{ padding: '64px 24px 48px', textAlign: 'center' }}>
+      <section className="pk-wrap pk-hero pk-hero--center">
         <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">Press release distribution</Badge></div>
-        <h1 style={{ margin: '18px auto 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
-          letterSpacing: 'var(--ls-display-2)', maxWidth: '20ch' }}>
-          Get your business in the news. <span style={{ color: 'var(--cyan-700)' }}>Starting at $149.</span>
-        </h1>
-        <p style={{ maxWidth: '56ch', margin: '18px auto 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
-          We write, publish, and report on your press release across 350+ news sites — so customers, search engines,
+        <h1 className="pk-title">Get your business in the news. <em>Starting at $149.</em></h1>
+        <p className="pk-lede">
+          We write, publish, and report on your press release across 350+ news sites, so customers, search engines,
           and AI assistants find a credible story when they look you up.
         </p>
-        <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('hero')}>Book a release</Button>
+        <div className="pk-hero__actions">
+          <Button variant="inverse" size="lg" iconRight={Arrow} onClick={() => order('hero')}>Book a release</Button>
         </div>
-        <div style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-          Fixed price · Done for you · Full placement report
-        </div>
-      </Wrap>
+        <div className="pk-tag pk-hero__meta">Fixed price · Done for you · Full placement report</div>
+      </section>
 
       {/* ── WHY IT WORKS ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: '56px 0' }}>
-        <Wrap>
-          <Eyebrow inverse>Why it works</Eyebrow>
-          <Heading inverse>Why businesses publish a release before their big month</Heading>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+      <section className="pk-wrap pk-section">
+        <div className="sp-panel ll-forest ll-bezel--dark">
+          <div className="pk-head pk-head--center">
+            <h2 className="pk-h2" style={{ color: 'var(--paper-000)' }}>Why businesses publish a release <em style={{ color: 'var(--ink-200)' }}>before their big month</em></h2>
+          </div>
+          <div className="pr-value">
             {VALUE.map((v) => (
-              <div key={v.title} style={{ background: 'var(--paper-000)', borderRadius: 'var(--radius-3)', padding: 24 }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, paddingBottom: 16, borderBottom: '1px solid var(--border-hair)' }}>
-                  {v.names.map((n) => (
-                    <span key={n} style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-600)', background: 'var(--paper-200)',
-                      borderRadius: 999, padding: '4px 10px' }}>{n}</span>
-                  ))}
+              <div key={v.title} className="pr-value__card ll-glass--dark">
+                <div className="pr-chips">
+                  {v.names.map((n) => <span key={n}>{n}</span>)}
                 </div>
-                <h3 style={{ margin: '16px 0 8px', fontSize: 18, lineHeight: 1.25, color: 'var(--ink-900)' }}>{v.title}</h3>
-                <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{v.body}</p>
+                <h3>{v.title}</h3>
+                <p>{v.body}</p>
               </div>
             ))}
           </div>
-        </Wrap>
+        </div>
       </section>
 
       {/* ── WE DRAFT, YOU SIGN OFF ── */}
-      <Wrap style={{ padding: '56px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, alignItems: 'end' }}>
+      <section className="pk-wrap pk-section">
+        <div className="pr-split pr-split--head">
           <div>
-            <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>No PR team needed — that's our job</div>
-            <h2 style={{ margin: '10px 0 0', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
-              We shape your release. You sign it off.
-            </h2>
+            <span className="ll-eyebrow">No PR team needed: that's our job</span>
+            <h2 className="pk-h2" style={{ marginTop: 12 }}>We shape your release. <em>You sign it off.</em></h2>
           </div>
-          <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
+          <p className="pr-body" style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: 'var(--ink-500)' }}>
             Tell us what's new in your business and we turn it into a release that reads like news.
             It comes back to you for approval before any site sees it.
           </p>
         </div>
-        <ol style={{ listStyle: 'none', margin: '36px 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 24 }}>
+        <ol className="sp-steps" style={{ marginTop: 36 }}>
           {STEPS.map(([t, d], i) => (
-            <li key={t}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--ink-900)', color: 'var(--paper-000)', flexShrink: 0,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700 }}>0{i + 1}</span>
-                <span style={{ flex: 1, height: 1, background: 'var(--border-hair)' }} />
-              </div>
-              <h3 style={{ margin: '16px 0 6px', fontSize: 17, color: 'var(--ink-900)' }}>{t}</h3>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            <li key={t} className="sp-step ll-glass">
+              <span className="sp-step__n">{i + 1}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
             </li>
           ))}
         </ol>
-        <div style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between',
-          background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderLeft: '4px solid var(--cyan-700)', borderRadius: 'var(--radius-2)', padding: '18px 22px' }}>
+        <div className="pr-start ll-sage ll-bezel">
           <div>
-            <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Start whenever suits you.</div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 4, fontSize: 14.5, color: 'var(--ink-600)' }}><Check />Nothing is published until you say yes.</div>
+            <strong>Start whenever suits you.</strong>
+            <span className="pr-start__sub"><Tick />Nothing is published until you say yes.</span>
           </div>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('draft')}>Get my release started</Button>
+          <Button variant="inverse" size="lg" iconRight={Arrow} onClick={() => order('draft')}>Get my release started</Button>
         </div>
-      </Wrap>
-
-      {/* ── 01 YOUR RELEASE ── */}
-      <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', padding: '56px 0' }}>
-        <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>01</div>
-              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your release</div>
-              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
-                A ready-to-publish release, written like news
-              </h2>
-              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
-                Your links sit inside the story, where readers and search engines follow them. Your company
-                boilerplate and contact details close it out, just like a real newsroom release.
-              </p>
-              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
-                {['Headline and angle built for search', 'Links to your site worked into the copy', 'Your sign-off before anything is sent'].map((f) =>
-                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
-              </ul>
-            </div>
-            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', borderBottom: '1px solid var(--border-hair)', background: 'var(--paper-100)' }}>
-                {[0, 1, 2].map((i) => <span key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border-hair)' }} />)}
-                <span style={{ marginLeft: 8, flex: 1, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', background: 'var(--paper-000)',
-                  border: '1px solid var(--border-hair)', borderRadius: 999, padding: '4px 12px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                  news-site.com/press-release/lakeside-comfort-second-location
-                </span>
-              </div>
-              <div style={{ padding: '22px 24px' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-700)',
-                  background: 'var(--paper-200)', borderRadius: 999, padding: '4px 10px' }}>Press release</span>
-                <h3 style={{ margin: '14px 0 8px', fontSize: 21, lineHeight: 1.25, color: 'var(--ink-900)' }}>{EXAMPLE.headline}</h3>
-                <div style={{ fontSize: 12.5, color: 'var(--ink-400)' }}>By {EXAMPLE.company} · Celebration, Florida</div>
-                <p style={{ margin: '14px 0 0', paddingTop: 14, borderTop: '1px solid var(--border-hair)', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
-                  <strong style={{ color: 'var(--ink-900)' }}>{EXAMPLE.dateline}</strong> — {EXAMPLE.company} has opened a second location,
-                  bringing same-day repair and installation to more homeowners across Osceola County.
-                </p>
-                <p style={{ margin: '10px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-600)' }}>
-                  Details and booking are available at <span style={{ color: 'var(--cyan-700)', textDecoration: 'underline' }}>{EXAMPLE.site}/new-location</span>.
-                </p>
-                <p style={{ margin: '14px 0 0', fontSize: 12, color: 'var(--ink-400)' }}>Example release for illustration.</p>
-              </div>
-            </div>
-          </div>
-        </Wrap>
       </section>
 
-      {/* ── 02 YOUR PLACEMENTS ── */}
-      <section style={{ padding: '56px 0' }}>
-        <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.04em', color: 'var(--cyan-700)', lineHeight: 1 }}>02</div>
-              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)', marginTop: 12 }}>Your placements</div>
-              <h2 style={{ margin: '8px 0 0', fontSize: 'clamp(24px,3.5vw,34px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
-                Live across 350+ news sites
-              </h2>
-              <p style={{ margin: '14px 0 0', fontSize: 15.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>
-                One announcement, published across the network — every placement a dated news page carrying
-                your name and your links, and a crawlable page search engines and AI assistants can read.
-              </p>
-              <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'grid', gap: 8 }}>
-                {['Broadcast affiliate and business news sites', 'Indexed by Google News', 'A report with every live link'].map((f) =>
-                  <li key={f} style={{ display: 'flex', gap: 10, fontSize: 15, fontWeight: 600, color: 'var(--ink-800)' }}><Check />{f}</li>)}
-              </ul>
+      {/* ── YOUR RELEASE ── */}
+      <section className="pk-wrap pk-section">
+        <div className="pr-split">
+          <div>
+            <span className="ll-eyebrow">Your release</span>
+            <h2 className="pk-h2" style={{ marginTop: 12 }}>A ready-to-publish release, <em>written like news</em></h2>
+            <p className="pr-body">
+              Your links sit inside the story, where readers and search engines follow them. Your company
+              boilerplate and contact details close it out, just like a real newsroom release.
+            </p>
+            <ul className="pk-list">
+              {['Headline and angle built for search', 'Links to your site worked into the copy', 'Your sign-off before anything is sent'].map((f) =>
+                <li key={f}><Tick />{f}</li>)}
+            </ul>
+          </div>
+          <div className="pr-mock">
+            <div className="pr-mock__bar">
+              {[0, 1, 2].map((i) => <i key={i} />)}
+              <span className="pr-mock__url">news-site.com/press-release/lakeside-comfort-second-location</span>
             </div>
-            <div style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-3)', overflow: 'hidden', boxShadow: '0 12px 32px rgba(26,31,20,0.08)' }}>
-              <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border-hair)' }}>
-                <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--ink-900)' }}>Placement report</div>
-                <div style={{ fontSize: 13, color: 'var(--ink-400)' }}>{EXAMPLE.company} · Second location</div>
-              </div>
-              {PLACEMENTS.map((pl) => (
-                <div key={pl.outlet} style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: 12, alignItems: 'center', padding: '11px 22px', borderBottom: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontSize: 13.5, color: 'var(--ink-900)', ...pl.style }}>{pl.outlet}</span>
-                  <span style={{ minWidth: 0 }}>
-                    <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: 'var(--ink-800)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{EXAMPLE.headline}</span>
-                    <span style={{ display: 'block', fontSize: 12, color: 'var(--cyan-700)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{pl.path}</span>
-                  </span>
-                  {pl.note ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{pl.note}</span> : <span />}
-                </div>
-              ))}
-              <div style={{ padding: '12px 22px', fontSize: 12, color: 'var(--ink-400)', background: 'var(--paper-100)' }}>
-                + hundreds more sites across the network · Example report for illustration. Outlets vary by release; add-ons cost extra.
-              </div>
+            <div className="pr-mock__body">
+              <span className="pr-mock__chip">Press release</span>
+              <h3>{EXAMPLE.headline}</h3>
+              <div className="pr-mock__by">By {EXAMPLE.company} · Celebration, Florida</div>
+              <p>
+                <strong style={{ color: 'var(--ink-900)' }}>{EXAMPLE.dateline}</strong>: {EXAMPLE.company} has opened a second location,
+                bringing same-day repair and installation to more homeowners across Osceola County.
+              </p>
+              <p>
+                Details and booking are available at <span className="pr-mock__link">{EXAMPLE.site}/new-location</span>.
+              </p>
+              <p className="pr-mock__fine">Example release for illustration.</p>
             </div>
           </div>
-        </Wrap>
+        </div>
+      </section>
+
+      {/* ── YOUR PLACEMENTS ── */}
+      <section className="pk-wrap pk-section">
+        <div className="pr-split">
+          <div>
+            <span className="ll-eyebrow">Your placements</span>
+            <h2 className="pk-h2" style={{ marginTop: 12 }}>Live across <em>350+ news sites</em></h2>
+            <p className="pr-body">
+              One announcement, published across the network: every placement a dated news page carrying
+              your name and your links, and a crawlable page search engines and AI assistants can read.
+            </p>
+            <ul className="pk-list">
+              {['Broadcast affiliate and business news sites', 'Indexed by Google News', 'A report with every live link'].map((f) =>
+                <li key={f}><Tick />{f}</li>)}
+            </ul>
+          </div>
+          <div className="pr-mock">
+            <div className="pr-report__head">
+              <strong>Placement report</strong>
+              <span>{EXAMPLE.company} · Second location</span>
+            </div>
+            <div className="pr-report__rows">
+              {PLACEMENTS.map((pl) => (
+                <div key={pl.outlet} className="pr-row">
+                  <span className="pr-row__outlet" style={pl.style}>{pl.outlet}</span>
+                  <span style={{ minWidth: 0 }}>
+                    <span className="pr-row__h">{EXAMPLE.headline}</span>
+                    <span className="pr-row__p">{pl.path}</span>
+                  </span>
+                  {pl.note ? <span className="pr-row__note">{pl.note}</span> : <span />}
+                </div>
+              ))}
+            </div>
+            <div className="pr-report__foot">
+              + hundreds more sites across the network · Example report for illustration. Outlets vary by release; add-ons cost extra.
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── BENEFITS ── */}
-      <Wrap style={{ padding: '56px 24px' }}>
-        <Eyebrow>What you get</Eyebrow>
-        <Heading>One release. Benefits that keep paying off.</Heading>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
+      <section className="pk-wrap pk-section">
+        <div className="pk-head pk-head--center">
+          <h2 className="pk-h2">One release. <em>Benefits that keep paying off.</em></h2>
+        </div>
+        <div className="pr-benefits">
           {BENEFITS.map(([t, d]) => (
-            <div key={t} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '18px 20px' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Check />
-                <h3 style={{ margin: 0, fontSize: 16, color: 'var(--ink-900)' }}>{t}</h3></div>
-              <p style={{ margin: '6px 0 0 22px', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-500)' }}>{d}</p>
+            <div key={t} className="pr-benefit ll-glass">
+              <h3><Tick />{t}</h3>
+              <p>{d}</p>
             </div>
           ))}
         </div>
 
         {/* ── PRICE ── */}
-        <Card emphasis="strong" padding={28} style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between', borderColor: 'var(--cyan-700)' }}>
+        <div className="pr-price ll-forest ll-bezel--dark pk-dark">
           <div>
-            <div className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Starting at</div>
-            <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink-900)', lineHeight: 1.1 }}>$149</div>
-            <div style={{ fontSize: 13, color: 'var(--ink-500)' }}>per release · fixed price</div>
+            <span className="pk-tag">Starting at</span>
+            <div className="pk-price" style={{ marginTop: 8 }}>$149</div>
+            <div className="pr-price__sub">per release · fixed price</div>
           </div>
-          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 7 }}>
-            {INCLUDED.map((f) => <li key={f} style={{ display: 'flex', gap: 10, fontSize: 14.5, color: 'var(--ink-700)' }}><Check />{f}</li>)}
+          <ul className="pk-list">
+            {INCLUDED.map((f) => <li key={f}><Tick />{f}</li>)}
           </ul>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('price')}>Book a release</Button>
-        </Card>
-      </Wrap>
+          <Button variant="primary" size="lg" iconRight={Arrow} onClick={() => order('price')}>Book a release</Button>
+        </div>
+      </section>
 
       {/* ── USES ── */}
-      <section style={{ background: 'var(--paper-100)', borderTop: '1px solid var(--border-hair)', borderBottom: '1px solid var(--border-hair)', padding: '48px 0' }}>
-        <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40 }}>
-            <div>
-              <div className="ll-eyebrow" style={{ color: 'var(--cyan-700)' }}>Great for</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 14 }}>
-                {USES.map((u) => (
-                  <span key={u} style={{ fontSize: 14, color: 'var(--ink-700)', background: 'var(--paper-000)',
-                    border: '1px solid var(--border-hair)', borderRadius: 999, padding: '6px 14px' }}>{u}</span>
-                ))}
-              </div>
-            </div>
+      <section className="pk-wrap pk-section">
+        <div className="sp-panel ll-sage sp-panel--sage" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <h2 className="pk-h2" style={{ fontSize: 'clamp(24px, 2.6vw, 34px)' }}>Great for</h2>
+          <div className="pr-uses">
+            {USES.map((u) => <span key={u}>{u}</span>)}
           </div>
-        </Wrap>
+        </div>
       </section>
 
       {/* ── FAQ ── */}
-      <Wrap style={{ padding: '56px 24px 40px', maxWidth: 760 }}>
-        <Eyebrow>FAQ</Eyebrow>
-        <Heading>Good questions</Heading>
-        <div style={{ display: 'grid', gap: 10 }}>
+      <section className="pk-wrap pk-wrap--narrow pk-section">
+        <div className="pk-head pk-head--center">
+          <h2 className="pk-h2">Good questions</h2>
+        </div>
+        <div className="sp-faq">
           {FAQ.map(([q, a]) => (
-            <details key={q} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '14px 18px' }}>
-              <summary style={{ cursor: 'pointer', fontWeight: 700, fontSize: 15, color: 'var(--ink-900)' }}>{q}</summary>
-              <p style={{ margin: '10px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)' }}>{a}</p>
+            <details key={q} className="ll-glass">
+              <summary>{q}<Plus size={18} weight="bold" aria-hidden="true" /></summary>
+              <p>{a}</p>
             </details>
           ))}
         </div>
-      </Wrap>
+      </section>
 
       {/* ── CTA ── */}
-      <Wrap style={{ padding: '24px 24px 80px' }}>
-        <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ maxWidth: '52ch' }}>
-            <h2 style={{ margin: 0, fontSize: 22, color: 'var(--ink-900)' }}>Have news to share?</h2>
-            <p style={{ margin: '6px 0 0', fontSize: 15, color: 'var(--ink-500)' }}>Book a 15-minute call and we'll get your release moving.</p>
+      <section className="pk-wrap" style={{ paddingTop: 24, paddingBottom: 96 }}>
+        <div className="sp-cta ll-forest ll-bezel--dark">
+          <div>
+            <h2>Have news to share?</h2>
+            <p>Book a 15-minute call and we'll get your release moving.</p>
           </div>
-          <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => order('footer')}>Book a release</Button>
-        </Card>
-      </Wrap>
+          <Button variant="primary" size="lg" iconRight={Arrow} onClick={() => order('footer')}>Book a release</Button>
+        </div>
+      </section>
     </main>
   );
 }
