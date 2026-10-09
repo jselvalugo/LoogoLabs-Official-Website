@@ -21,21 +21,17 @@ const CATEGORIES = [
   },
 ];
 
-const darkBtnBase = {
-  padding: '11px 20px', borderRadius: 'var(--radius-2)', fontWeight: 700, fontSize: 12.5,
-  fontFamily: 'var(--font-mono)', letterSpacing: '0.05em', textTransform: 'uppercase',
+const btnBase = {
+  padding: '11px 18px', borderRadius: 'var(--radius-pill)', fontWeight: 600, fontSize: 14,
+  fontFamily: 'var(--font-body)', letterSpacing: '-0.005em',
   cursor: 'pointer', whiteSpace: 'nowrap', border: 'none',
 };
-const darkPrimaryBtn = { ...darkBtnBase, background: 'var(--cyan-500)', color: 'var(--ink-900)', border: '2px solid var(--ink-900)', boxShadow: '3px 3px 0 var(--ink-700)' };
-const darkGhostBtn = { ...darkBtnBase, background: 'transparent', color: 'var(--paper-100)', border: '1px solid var(--border-hair-inverse)', fontWeight: 600 };
+const darkPrimaryBtn = { ...btnBase, background: 'var(--paper-000)', color: 'var(--ink-900)', boxShadow: '0 6px 16px -8px rgba(0,0,0,0.5)' };
+const darkGhostBtn = { ...btnBase, background: 'rgba(245,242,235,0.08)', color: 'var(--paper-100)', border: '1px solid rgba(245,242,235,0.16)' };
 
-const lightBtnBase = {
-  padding: '12px 18px', borderRadius: 'var(--radius-2)', fontWeight: 700, fontSize: 12.5,
-  fontFamily: 'var(--font-mono)', letterSpacing: '0.05em', textTransform: 'uppercase',
-  cursor: 'pointer', flex: '1 1 auto', textAlign: 'center', border: 'none',
-};
-const lightPrimaryBtn = { ...lightBtnBase, background: 'var(--cyan-500)', color: 'var(--ink-900)', border: '2px solid var(--ink-900)', boxShadow: 'var(--shadow-hard-sm)' };
-const lightGhostBtn = { ...lightBtnBase, background: 'var(--paper-000)', color: 'var(--ink-900)', border: '1px solid var(--border-hair)', fontWeight: 600 };
+const lightBtnBase = { ...btnBase, flex: '1 1 auto', textAlign: 'center' };
+const lightPrimaryBtn = { ...lightBtnBase, background: 'var(--ink-900)', color: 'var(--paper-000)', boxShadow: '0 10px 22px -12px rgba(26,38,16,0.6)' };
+const lightGhostBtn = { ...lightBtnBase, background: 'rgba(255,255,255,0.6)', color: 'var(--ink-900)', border: '1px solid rgba(26,38,16,0.12)' };
 
 function loadMetaPixelIfGranted(consent) {
   if (consent.marketing && typeof window !== 'undefined' && typeof window.__loadMetaPixel === 'function') {
@@ -83,18 +79,17 @@ function CookieConsent() {
   return (
     <>
       {stage === 'banner' && (
-        <div role="region" aria-label="Cookie notice" style={{
-          position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 90,
-          background: 'var(--ink-900)', color: 'var(--paper-100)',
-          borderTop: '2px solid var(--cyan-500)', boxShadow: '0 -10px 28px rgba(0,0,0,0.28)',
+        <div role="region" aria-label="Cookie notice" className="ll-glass--dark" style={{
+          position: 'fixed', left: 16, right: 16, bottom: 16, zIndex: 90, margin: '0 auto',
+          maxWidth: 'calc(var(--container-max) + 48px)', borderRadius: 'var(--radius-3)',
         }}>
           <div style={{
-            maxWidth: 'var(--container-max)', margin: '0 auto', padding: '22px 24px',
+            padding: '20px 24px',
             display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap',
           }}>
             <div style={{ flex: '1 1 320px', minWidth: 240 }}>
               <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>We value your privacy</div>
-              <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-300)', maxWidth: '68ch' }}>
+              <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-200)', maxWidth: '68ch' }}>
                 We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze
                 our traffic. By clicking &ldquo;Accept All&rdquo;, you consent to our use of cookies.
               </p>
@@ -110,12 +105,12 @@ function CookieConsent() {
 
       {stage === 'customize' && (
         <>
-          <div onClick={closeCustomize} style={{ position: 'fixed', inset: 0, zIndex: 95, background: 'rgba(10,14,9,0.55)' }} />
+          <div onClick={closeCustomize} style={{ position: 'fixed', inset: 0, zIndex: 95, background: 'rgba(26,38,16,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }} />
           <div role="dialog" aria-modal="true" aria-label="Cookie preferences" style={{
             position: 'fixed', zIndex: 96, left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
             width: 'min(520px, calc(100vw - 32px))', maxHeight: 'calc(100vh - 48px)', overflowY: 'auto',
-            background: 'var(--paper-000)', color: 'var(--ink-900)', border: '2px solid var(--ink-900)',
-            borderRadius: 'var(--radius-3)', boxShadow: 'var(--shadow-hard)', padding: '28px 26px',
+            background: 'var(--paper-000)', color: 'var(--ink-900)', border: '1px solid rgba(255,255,255,0.9)',
+            borderRadius: 'var(--radius-4)', boxShadow: 'var(--bezel)', padding: '30px 28px',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
               <div>
@@ -132,7 +127,7 @@ function CookieConsent() {
             </p>
             <div style={{ display: 'grid', gap: 12, marginTop: 22 }}>
               {CATEGORIES.map(cat => (
-                <div key={cat.key} style={{ border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)', padding: '14px 16px' }}>
+                <div key={cat.key} style={{ background: 'rgba(26,38,16,0.035)', borderRadius: 'var(--radius-2)', padding: '14px 16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                     <span style={{ fontWeight: 700, fontSize: 14 }}>{cat.title}</span>
                     {cat.locked
