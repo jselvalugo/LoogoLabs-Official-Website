@@ -226,7 +226,7 @@ function Home({ onNavigate }) {
           </div>
 
           <div className="hm-stats ll-glass">
-            {[['10+', 'Tools replaced'], ['$400+', 'Saved every month'], ['24/7', 'Support']].map(([v, l]) => (
+            {[['10+', 'Tools replaced'], ['$400+', 'Saved monthly'], ['24/7', 'Support']].map(([v, l]) => (
               <div key={l}><span className="hm-stats__v">{v}</span><span className="hm-stats__l">{l}</span></div>
             ))}
           </div>

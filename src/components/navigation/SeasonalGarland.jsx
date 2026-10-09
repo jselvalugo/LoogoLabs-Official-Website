@@ -58,7 +58,8 @@ function SeasonalGarland() {
         const len = Math.round(rawLen / 2) + 4;
         return (
         <span key={i} className="ll-garland-strand"
-          style={{ left: `${left}%`, animationDelay: `${delay}s` }}>
+          // Spread strands across the middle of the nav pill, clear of its rounded ends.
+          style={{ left: `${8 + left * 0.86}%`, animationDelay: `${delay}s` }}>
           <svg width="24" height={len + 34} viewBox={`-12 0 24 ${len + 34}`}>
             <line x1="0" y1="0" x2="0" y2={len} stroke="#5E7C3A" strokeWidth="1" strokeDasharray="2 2" />
             <g transform={`translate(0 ${len})`}><Ornament kind={kind} color={color} /></g>

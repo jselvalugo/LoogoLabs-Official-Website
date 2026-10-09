@@ -335,7 +335,10 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ── October garland under the nav bar ── */
-.ll-garland { position: relative; height: 64px; z-index: 5; pointer-events: none; }
+/* Same width as the floating nav pill, so every strand hangs from the bar. */
+.ll-garland { position: relative; height: 64px; z-index: 5; pointer-events: none;
+  width: calc(100% - 32px); max-width: calc(var(--container-max) + 48px); margin: 0 auto; }
+@media (max-width: 960px) { .ll-garland { width: calc(100% - 24px); } }
 .ll-garland-strand { position: absolute; top: 0; transform-origin: top center;
   animation: ll-garland-sway 4.5s ease-in-out infinite alternate; }
 .ll-garland-strand svg { display: block; margin-left: -12px; }
@@ -1210,4 +1213,15 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   /* Fine-print labels that dipped below 11px. */
   .hm-pill__tag, .pk-pop, .pr-row__note, .pr-mock__chip, .lb-empty__kicker, .ps-photo-note,
   .av-call small, .av-phone small, .av-call__live, .cfl-transcript small, .cfl-transcript__head { font-size: 11px !important; }
+}
+
+/* Featured post pill: stack on phones so the title gets the full width. */
+@media (max-width: 767px) {
+  .hm-featured {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'tag tag' 'title go';
+    align-items: center; gap: 12px 12px; padding: 14px 14px 14px 18px; border-radius: var(--radius-3);
+  }
+  .hm-featured__tag { grid-area: tag; justify-self: start; font-size: 10.5px; letter-spacing: 0.1em; padding: 6px 10px; }
+  .hm-featured__title { grid-area: title; white-space: normal !important; overflow: visible; font-size: 15px !important; line-height: 1.35; }
+  .hm-featured__go { grid-area: go; width: 40px; height: 40px; margin: 0; }
 }
