@@ -1,6 +1,11 @@
 import React from 'react';
 import { VOICE_BASE, VOICE_CITY_BY_SLUG, voiceCityPath } from '../lib/voiceCities';
-import { Wrap, Eyebrow, H2, BookBtn, TopBanner, Faq } from './cfl/shared';
+import { ArrowRight, Check, PhoneX, Moon, CalendarX } from '@phosphor-icons/react';
+import { Eyebrow, H2, BookBtn, Shell, Faq, Steps, CtaPanel, tidy } from './cfl/shared';
+import '../styles/pages/cfl.css';
+
+const TONES = ['cfl-tile ll-sage', 'cfl-tile', 'cfl-tile cfl-tile--glass'];
+const ICONS = [PhoneX, Moon, CalendarX];
 
 // What the agent does is the same in every city; the city-specific copy lives in
 // lib/voiceCities.js. Kept short here so the local copy carries each page.
@@ -12,9 +17,9 @@ const CAPABILITIES = [
 ];
 
 const STEPS = [
-  ['Intake & scripting', 'We capture your best call flow, common questions, and service area.', '1–2 days'],
-  ['Build & test calls', 'We build the agent and run test calls until it meets our standard.', '2–3 days'],
-  ['Connect your line', 'Your existing number, calendar, and CRM — callers dial the same number.', '1 day'],
+  ['Intake & scripting', 'We capture your best call flow, common questions, and service area.', '1-2 days'],
+  ['Build & test calls', 'We build the agent and run test calls until it meets our standard.', '2-3 days'],
+  ['Connect your line', 'Your existing number, calendar, and CRM. Callers dial the same number.', '1 day'],
   ['Go live & tune', 'We review real calls for the first 30 days and adjust what we hear.', 'Ongoing'],
 ];
 
@@ -28,24 +33,15 @@ const voiceFaq = (c) => [
 
 function TranscriptCard({ c }) {
   return (
-    <div className="cfl-glass" lang={c.sampleLang || undefined}
-      style={{ padding: 20, borderRadius: 18, maxWidth: 420, width: '100%', justifySelf: 'end',
-        background: 'rgba(245,242,235,0.06)', border: '1px solid rgba(245,242,235,0.14)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, fontFamily: 'var(--font-mono)',
-        fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
+    <div className="cfl-transcript" lang={c.sampleLang || undefined}>
+      <div className="cfl-transcript__head">
         <span className="ll-live-dot" aria-hidden="true" />
         Sample call · {c.name}{c.sampleLang === 'es' ? ' · Español' : ''}
       </div>
-      <div style={{ display: 'grid', gap: 10 }}>
+      <div className="cfl-transcript__list">
         {c.sample.map(([role, text], i) => (
-          <div key={i} style={{ justifySelf: role === 'agent' ? 'end' : 'start', maxWidth: '88%',
-            padding: '10px 14px', borderRadius: 14, fontSize: 14, lineHeight: 1.5,
-            background: role === 'agent' ? 'var(--paper-000)' : 'rgba(245,242,235,0.12)',
-            color: role === 'agent' ? 'var(--ink-900)' : 'var(--paper-000)' }}>
-            <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-              textTransform: 'uppercase', opacity: 0.6, marginBottom: 3 }}>
-              {role === 'agent' ? 'AI agent' : 'Caller'}
-            </span>
+          <div key={i} className={`cfl-bubble cfl-bubble--${role === 'agent' ? 'agent' : 'caller'}`}>
+            <small>{role === 'agent' ? 'AI agent' : 'Caller'}</small>
             {text}
           </div>
         ))}
@@ -60,134 +56,112 @@ function AIVoiceCity({ slug }) {
   const nearby = c.nearby.map((s) => VOICE_CITY_BY_SLUG.get(s)).filter(Boolean);
 
   return (
-    <main style={{ fontFamily: 'var(--font-body)', overflowX: 'hidden' }}>
-      <TopBanner />
+    <Shell crumb={{ href: VOICE_BASE, label: 'AI Voice Agents' }}>
 
       {/* ── HERO ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)',
-        padding: 'clamp(32px,4vw,56px) 0', position: 'relative', overflow: 'hidden' }}>
-        <Wrap>
-          <nav aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 16 }}>
-            <a href={VOICE_BASE} style={{ color: 'var(--ink-300)', textDecoration: 'none' }}>AI Voice Agents</a>
-            <span style={{ color: 'rgba(245,242,235,0.4)', margin: '0 8px' }}>/</span>
-            <span style={{ color: 'rgba(245,242,235,0.75)' }}>{c.name}, FL</span>
+      <section className="cfl-wrap">
+        <div className="cfl-panel ll-forest cfl-hero">
+          <nav aria-label="Breadcrumb" className="cfl-crumb">
+            <a href={VOICE_BASE}>AI Voice Agents</a>
+            <span aria-hidden="true">/</span>
+            <span>{c.name}, FL</span>
           </nav>
           <div className="cfl-hero-grid">
             <div>
-              <Eyebrow light>AI voice agent · {c.name}, FL</Eyebrow>
-              <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(30px, 3.6vw, 46px)', lineHeight: 1.06, letterSpacing: '-0.035em' }}>
-                {c.headline}
-              </h1>
-              <p style={{ maxWidth: '54ch', margin: '16px 0 0', fontSize: 16, lineHeight: 1.6, color: 'rgba(245,242,235,0.75)' }}>{c.intro}</p>
-              <div style={{ marginTop: 24 }}><BookBtn label={`Hear a ${c.name} demo call`} /></div>
+              <Eyebrow>AI voice agent · {c.name}, FL</Eyebrow>
+              <h1 className="cfl-h1" style={{ fontSize: 'clamp(34px, 4.6vw, 56px)' }}>{c.headline}</h1>
+              <p className="cfl-lede">{tidy(c.intro)}</p>
+              <div className="cfl-actions"><BookBtn label={`Hear a ${c.name} demo call`} /></div>
             </div>
             <TranscriptCard c={c} />
           </div>
-        </Wrap>
+        </div>
       </section>
 
       {/* ── CITY CALL MOMENTS ── */}
-      <section style={{ background: 'var(--paper-000)', padding: 'clamp(64px,8vw,104px) 0' }}>
-        <Wrap>
+      <section className="cfl-wrap">
+        <div className="cfl-panel cfl-panel--bare">
           <Eyebrow>Calls {c.name} businesses miss</Eyebrow>
           <H2>Where {c.name} calls slip through today.</H2>
-          <div className="ll-grid-3" style={{ gap: 16, marginTop: 44 }}>
-            {c.moments.map(([t, d], i) => (
-              <div key={t} style={{ padding: '28px 24px', borderRadius: 16, background: 'var(--paper-100)', border: '1px solid var(--border-hair)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)', marginBottom: 12 }}>0{i + 1}</div>
-                <h3 style={{ margin: '0 0 10px', fontWeight: 700, fontSize: 18, letterSpacing: '-0.01em' }}>{t}</h3>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'var(--ink-500)' }}>{d}</p>
-              </div>
-            ))}
+          <div className="cfl-bento3">
+            {c.moments.map(([t, d], i) => {
+              const Icon = ICONS[i % 3];
+              return (
+                <div key={t} className={TONES[i % 3]}>
+                  <span className="cfl-tile__icon" aria-hidden="true"><Icon size={22} /></span>
+                  <div>
+                    <h3 className="cfl-tile__title">{t}</h3>
+                    <p className="cfl-tile__text">{tidy(d)}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </Wrap>
+        </div>
       </section>
 
       {/* ── WHAT IT HANDLES ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(64px,8vw,104px) 0' }}>
-        <Wrap>
-          <div className="ll-2col" style={{ gap: 48, alignItems: 'start' }}>
+      <section className="cfl-wrap">
+        <div className="cfl-panel ll-glass">
+          <div className="cfl-2col cfl-2col--start">
             <div>
               <Eyebrow>What the agent handles</Eyebrow>
-              <H2>Every call answered, qualified, and booked.</H2>
-              <div style={{ display: 'grid', gap: 18, marginTop: 28 }}>
+              <H2 small>Every call answered, qualified, and booked.</H2>
+              <div className="cfl-checks">
                 {CAPABILITIES.map(([t, d]) => (
-                  <div key={t} style={{ display: 'flex', gap: 12 }}>
-                    <span aria-hidden="true" style={{ color: 'var(--ink-400)', fontWeight: 700 }}>✓</span>
+                  <div key={t}>
+                    <span className="cfl-checks__icon" aria-hidden="true"><Check size={16} weight="bold" /></span>
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: 15 }}>{t}</div>
-                      <div style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)' }}>{d}</div>
+                      <strong>{t}</strong>
+                      <p>{d}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ display: 'grid', gap: 16 }}>
-              <div style={{ background: 'var(--paper-000)', borderRadius: 16, border: '1px solid var(--border-hair)', padding: '24px 24px' }}>
-                <div style={{ fontWeight: 700, marginBottom: 14 }}>Calls we train it for in {c.name}</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <div className="cfl-stack">
+              <div className="cfl-card">
+                <div className="cfl-card__title">Calls we train it for in {c.name}</div>
+                <div className="cfl-chips">
                   {c.calls.map((it) => <span key={it} className="cfl-chip">{it}</span>)}
                 </div>
               </div>
-              <div style={{ background: 'var(--ink-900)', color: 'var(--paper-000)', borderRadius: 16, padding: '24px 24px' }}>
-                <div style={{ fontWeight: 700, marginBottom: 14 }}>Areas it confirms coverage for</div>
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 9 }}>
+              <div className="cfl-card ll-forest">
+                <div className="cfl-card__title">Areas it confirms coverage for</div>
+                <ul className="cfl-list">
                   {c.areas.map((a) => (
-                    <li key={a} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'rgba(245,242,235,0.85)' }}>
-                      <span aria-hidden="true" style={{ color: 'var(--ink-300)' }}>→</span>{a}
-                    </li>
+                    <li key={a}><ArrowRight size={14} weight="bold" aria-hidden="true" />{a}</li>
                   ))}
                 </ul>
               </div>
             </div>
           </div>
-        </Wrap>
+        </div>
       </section>
 
       {/* ── PROCESS ── */}
-      <section style={{ background: 'var(--paper-000)', padding: 'clamp(44px,5vw,64px) 0', borderTop: '1px solid var(--border-hair)' }}>
-        <Wrap><div className="cfl-narrow">
+      <section className="cfl-wrap">
+        <div className="cfl-panel cfl-panel--paper">
           <Eyebrow>How it works</Eyebrow>
-          <h2 style={{ margin: 0, fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
-            Live in about a week. Managed after that.
-          </h2>
-          <ol className="cfl-steps">
-            {STEPS.map(([title, desc, when], i) => (
-              <li key={title} className="cfl-step">
-                <div className="cfl-step__mark">
-                  <span className="cfl-step__dot">{i + 1}</span>
-                  <span className="cfl-step__when">{when}</span>
-                </div>
-                <div className="cfl-step__title">{title}</div>
-                <p className="cfl-step__desc">{desc}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="cfl-nearby" style={{ marginTop: 40 }}>
+          <H2 small>Live in about a week. Managed after that.</H2>
+          <Steps steps={STEPS} />
+          <div className="cfl-nearby">
             <span className="cfl-nearby__label">AI voice agents near {c.name}</span>
             {nearby.map((n) => (
-              <a key={n.slug} href={voiceCityPath(n.slug)} className="cfl-nearby__link">{n.name} <span aria-hidden="true">→</span></a>
+              <a key={n.slug} href={voiceCityPath(n.slug)} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
             ))}
           </div>
-        </div></Wrap>
+        </div>
       </section>
 
       <Faq items={voiceFaq(c)} />
 
       {/* ── FINAL CTA ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)', padding: 'clamp(80px,10vw,128px) 0', textAlign: 'center' }}>
-        <Wrap>
-          <Eyebrow light>Free · 30 minutes · No obligation</Eyebrow>
-          <h2 style={{ margin: '0 auto', fontSize: 'clamp(32px, 5vw, 58px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.06, maxWidth: '20ch' }}>
-            Stop sending {c.name} callers to voicemail.
-          </h2>
-          <p style={{ margin: '24px auto 0', maxWidth: '54ch', fontSize: 17, lineHeight: 1.7, color: 'rgba(245,242,235,0.72)' }}>
-            On the call we review how your phone is answered today, play a sample call built for a {c.name} business like yours, and map out exactly what we would set up.
-          </p>
-          <div style={{ marginTop: 40 }}><BookBtn size="lg" label="Book my free strategy call" /></div>
-        </Wrap>
-      </section>
-    </main>
+      <CtaPanel
+        title={<>Stop sending {c.name} callers to voicemail.</>}
+        body={<>On the call we review how your phone is answered today, play a sample call built for a {c.name} business like yours, and map out exactly what we would set up.</>}
+      />
+    </Shell>
   );
 }
 

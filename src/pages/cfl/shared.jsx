@@ -1,51 +1,49 @@
 // Building blocks shared by the Central Florida hub (/grow) and its city pages
 // (/grow/<city>). Kept together so every page in the set looks and reads alike.
 import React from 'react';
+import { ArrowRight, Plus } from '@phosphor-icons/react';
 import { BOOKING_URL } from '../../lib/booking';
 import { CITIES, CFL_BASE, cityPath } from '../../lib/cfl';
 
 export const Wrap = ({ children, style }) => (
-  <div className="cfl-wrap" style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
+  <div className="cfl-wrap" style={style}>{children}</div>
 );
 
-export const Eyebrow = ({ children, light }) => (
-  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
-    color: light ? 'var(--ink-300)' : 'var(--ink-400)', marginBottom: 14 }}>
-    {children}
-  </div>
+export const Eyebrow = ({ children }) => <div className="cfl-eyebrow">{children}</div>;
+
+export const H2 = ({ children, small, style }) => (
+  <h2 className={`cfl-h2${small ? ' cfl-h2--sm' : ''}`} style={style}>{children}</h2>
 );
 
-export const H2 = ({ children, light, style }) => (
-  <h2 style={{ margin: 0, fontSize: 'clamp(28px, 3.6vw, 46px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1,
-    color: light ? 'var(--paper-000)' : 'var(--ink-900)', maxWidth: '24ch', ...style }}>
-    {children}
-  </h2>
-);
+/** Visible-copy tidy for shared city data: the same strings feed meta tags, so
+    the data stays as written and only the rendered body text loses its dashes. */
+export const tidy = (s) => s.replace(/(\d)\s*[–—]\s*(\d)/g, '$1-$2').replace(/\s*[—–]\s*/g, ', ');
 
 const trackSchedule = () => { if (window.fbq) window.fbq('track', 'Schedule'); };
 
-export const BookBtn = ({ size = 'md', label = 'Book a free strategy call', variant = 'light' }) => {
-  const lg = size === 'lg';
-  const light = variant === 'light';
-  return (
-    <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: lg ? '17px 30px' : '12px 22px',
-        background: light ? 'var(--paper-000)' : 'var(--ink-900)', color: light ? 'var(--ink-900)' : 'var(--paper-000)',
-        fontWeight: 700, fontSize: lg ? 15 : 13, fontFamily: 'var(--font-mono)', letterSpacing: '0.05em',
-        textTransform: 'uppercase', textDecoration: 'none', borderRadius: 999,
-        boxShadow: light ? '0 10px 30px rgba(0,0,0,0.25)' : '0 10px 24px rgba(26,38,16,0.25)' }}>
-      {label} <span aria-hidden="true">→</span>
-    </a>
-  );
-};
+export const BookBtn = ({ size = 'md', label = 'Book a free strategy call', variant = 'light' }) => (
+  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}
+    className={`cfl-btn cfl-btn--${variant === 'light' ? 'light' : 'dark'}${size === 'lg' ? ' cfl-btn--lg' : ''}`}>
+    <span>{label}</span>
+    <span className="cfl-btn__icon" aria-hidden="true"><ArrowRight size={size === 'lg' ? 18 : 16} weight="bold" /></span>
+  </a>
+);
 
-export const TopBanner = () => (
-  <div className="cfl-topbar">
-    <a href="/" className="cfl-topbar__brand">Loogo Labs</a>
-    <span aria-hidden="true" className="cfl-topbar__sep">/</span>
-    <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-topbar__cta">
-      Book a free <span className="cfl-topbar__long">strategy </span>call <span aria-hidden="true">→</span>
-    </a>
+/** Floating glass header pill shared by every Central Florida / city page. */
+export const TopBanner = ({ crumb }) => (
+  <div className="ll-nav cfl-nav">
+    <div className="ll-nav__bar ll-glass--dark cfl-nav__bar">
+      <a href="/" className="cfl-nav__brand">
+        <span className="cfl-nav__logo"><img src="/logo.png" alt="" /></span>
+        <span className="cfl-nav__brand-text">Loogo Labs</span>
+      </a>
+      {crumb && <a href={crumb.href} className="cfl-nav__crumb">{crumb.label}</a>}
+      <span className="cfl-nav__spacer" />
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-btn cfl-btn--light">
+        <span>Book a free <span className="cfl-nav__long">strategy </span>call</span>
+        <span className="cfl-btn__icon" aria-hidden="true"><ArrowRight size={16} weight="bold" /></span>
+      </a>
+    </div>
   </div>
 );
 
@@ -93,7 +91,7 @@ const project = ([lat, lon]) => [
 
 /** Stylised pin map of the service area; each pin links to its city page. */
 export const CflMap = ({ active }) => (
-  <div className="cfl-glass" style={{ padding: 12, maxWidth: 400, width: '100%', justifySelf: 'end' }}>
+  <div className="cfl-mapbox">
     <svg className="cfl-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of the Central Florida cities we serve"
       style={{ width: '100%', height: 'auto', display: 'block' }}>
       <defs>
@@ -138,106 +136,116 @@ export const SERVICES = [
 ];
 
 export const Services = ({ cityName }) => (
-  <section style={{ background: 'var(--paper-100)', padding: 'clamp(44px,5vw,64px) 0' }}>
-    <Wrap><div className="cfl-narrow">
-      <Eyebrow>What we do{cityName ? ` in ${cityName}` : ''}</Eyebrow>
-      <h2 style={{ margin: 0, fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
-        Get found. Get the job.
-      </h2>
+  <section className="cfl-wrap">
+    <div className="cfl-panel ll-sage">
+      <div className="cfl-head">
+        <div>
+          <Eyebrow>What we do{cityName ? ` in ${cityName}` : ''}</Eyebrow>
+          <H2>Get found. Get the job.</H2>
+        </div>
+      </div>
       <div className="cfl-services">
-        {SERVICES.map(({ title, desc, items }, i) => (
+        {SERVICES.map(({ title, desc, items }) => (
           <div key={title} className="cfl-service">
-            <div className="cfl-service__head">
-              <span className="cfl-service__num">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="cfl-service__title">{title}</h3>
-            </div>
+            <h3 className="cfl-service__title">{title}</h3>
             <p className="cfl-service__desc">{desc}</p>
             <div className="cfl-service__tags">{items.map((it) => <span key={it}>{it}</span>)}</div>
           </div>
         ))}
       </div>
-    </div></Wrap>
+    </div>
   </section>
 );
 
 const STEPS = [
   ['Strategy call', 'We review your Google profile, local rankings, and how fast leads hear back today.', '30 min'],
-  ['Build', 'Profile, city pages, follow-up, reviews, and booking — set up for your service area.', 'Week 1'],
+  ['Build', 'Profile, city pages, follow-up, reviews, and booking, set up for your service area.', 'Week 1'],
   ['Launch & test', 'Test leads run end-to-end so every message, alert, and booking is confirmed.', 'Week 2'],
   ['Manage & grow', 'A monthly report and call. We tune pages, campaigns, and sequences on results.', 'Ongoing'],
 ];
 
-export const Process = () => (
-  <section style={{ background: 'var(--paper-000)', padding: 'clamp(44px,5vw,64px) 0 clamp(28px,3vw,40px)', borderTop: '1px solid var(--border-hair)' }}>
-    <Wrap><div className="cfl-narrow">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
-        <div>
-          <Eyebrow>How it works</Eyebrow>
-          <h2 style={{ margin: 0, fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.15 }}>
-            Live in about two weeks.
-          </h2>
+/** Four-step timeline; `children` render under it (e.g. the nearby-cities strip). */
+export const Steps = ({ steps }) => (
+  <ol className="cfl-steps">
+    {steps.map(([title, desc, when], i) => (
+      <li key={title} className="cfl-step">
+        <div className="cfl-step__mark">
+          <span className="cfl-step__dot">{i + 1}</span>
+          <span className="cfl-step__when">{when}</span>
         </div>
-        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '36ch' }}>
-          Then managed every month — no hand-off, no DIY.
-        </p>
+        <div className="cfl-step__title">{title}</div>
+        <p className="cfl-step__desc">{desc}</p>
+      </li>
+    ))}
+  </ol>
+);
+
+export const Process = ({ children }) => (
+  <section className="cfl-wrap">
+    <div className="cfl-panel cfl-panel--paper">
+      <div className="cfl-head">
+        <H2 small>Live in about two weeks.</H2>
+        <p className="cfl-lede">Then managed every month: no hand-off, no DIY.</p>
       </div>
-      <ol className="cfl-steps">
-        {STEPS.map(([title, desc, when], i) => (
-          <li key={title} className="cfl-step">
-            <div className="cfl-step__mark">
-              <span className="cfl-step__dot">{i + 1}</span>
-              <span className="cfl-step__when">{when}</span>
-            </div>
-            <div className="cfl-step__title">{title}</div>
-            <p className="cfl-step__desc">{desc}</p>
-          </li>
-        ))}
-      </ol>
-    </div></Wrap>
+      <Steps steps={STEPS} />
+      {children}
+    </div>
   </section>
 );
 
 export const Faq = ({ items }) => {
   const [open, setOpen] = React.useState(0);
   return (
-    <section style={{ background: 'var(--paper-200)', padding: 'clamp(64px,8vw,104px) 0' }}>
-      <Wrap>
-        <Eyebrow>FAQ</Eyebrow>
-        <H2 style={{ marginBottom: 36 }}>Common questions.</H2>
-        <div style={{ display: 'grid', gap: 10 }}>
+    <section className="cfl-wrap">
+      <div className="cfl-panel cfl-panel--bare cfl-faq">
+        <div>
+          <Eyebrow>FAQ</Eyebrow>
+          <H2>Common questions.</H2>
+        </div>
+        <div className="cfl-faq__list">
           {items.map(([q, a], i) => (
-            <div key={q} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)', borderRadius: 14, overflow: 'hidden' }}>
-              <button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
-                style={{ width: '100%', padding: '20px 22px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, fontFamily: 'inherit' }}>
-                <span style={{ fontWeight: 600, fontSize: 15, color: 'var(--ink-900)', lineHeight: 1.4 }}>{q}</span>
-                <span aria-hidden="true" style={{ color: 'var(--ink-400)', fontSize: 22, transform: open === i ? 'rotate(45deg)' : 'none', transition: 'transform 160ms ease' }}>+</span>
+            <div key={q} className="cfl-faq__item">
+              <button className="cfl-faq__q" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}>
+                <span>{q}</span>
+                <span className="cfl-faq__toggle" aria-hidden="true"><Plus size={16} weight="bold" /></span>
               </button>
               {/* Kept in the DOM when closed so the answer text (which FAQPage
                   schema repeats) is always in the rendered markup. */}
-              <div hidden={open !== i} style={{ padding: '0 22px 22px', fontSize: 14, lineHeight: 1.75, color: 'var(--ink-500)' }}>{a}</div>
+              <div className="cfl-faq__a" hidden={open !== i}>{a}</div>
             </div>
           ))}
         </div>
-      </Wrap>
+      </div>
     </section>
   );
 };
 
-export const FinalCta = ({ cityName }) => (
-  <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-000)', padding: 'clamp(80px,10vw,128px) 0', textAlign: 'center' }}>
-    <Wrap>
-      <Eyebrow light>Free · 30 minutes · No obligation</Eyebrow>
-      <h2 style={{ margin: '0 auto', fontSize: 'clamp(32px, 5vw, 58px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.06, maxWidth: '20ch' }}>
-        See where {cityName || 'your business'} {cityName ? 'customers are finding your competitors' : 'is losing local customers'} — and how to fix it.
-      </h2>
-      <p style={{ margin: '24px auto 0', maxWidth: '54ch', fontSize: 17, lineHeight: 1.7, color: 'rgba(245,242,235,0.72)' }}>
-        On the call we pull up your Google profile and local rankings{cityName ? ` in ${cityName}` : ''}, check how fast a new lead hears back, and map out exactly what we would build.
-      </p>
-      <div style={{ marginTop: 40 }}><BookBtn size="lg" label="Book my free strategy call" /></div>
-      <div style={{ marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
-        3-month recommended · Month-to-month available
-      </div>
-    </Wrap>
+/** Closing forest panel; `children` replace the default copy (AI Voice pages). */
+export const CtaPanel = ({ eyebrow = 'Free · 30 minutes · No obligation', title, body, fine }) => (
+  <section className="cfl-wrap">
+    <div className="cfl-panel ll-forest cfl-panel--center" style={{ paddingTop: 'clamp(56px,8vw,104px)', paddingBottom: 'clamp(56px,8vw,104px)' }}>
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <H2>{title}</H2>
+      <p className="cfl-lede">{body}</p>
+      <div className="cfl-actions"><BookBtn size="lg" label="Book my free strategy call" /></div>
+      {fine && <div className="cfl-fine">{fine}</div>}
+    </div>
   </section>
+);
+
+export const FinalCta = ({ cityName }) => (
+  <CtaPanel
+    title={<>See where {cityName || 'your business'} {cityName ? 'customers are finding your competitors' : 'is losing local customers'} — and how to fix it.</>}
+    body={<>On the call we pull up your Google profile and local rankings{cityName ? ` in ${cityName}` : ''}, check how fast a new lead hears back, and map out exactly what we would build.</>}
+    fine="3-month recommended · Month-to-month available"
+  />
+);
+
+/** Page shell: ambient background, glass header, optional city rail. */
+export const Shell = ({ rail, active, crumb, children }) => (
+  <main className={`ll-shell cfl${rail ? ' cfl--rail' : ''}`}>
+    <TopBanner crumb={crumb} />
+    {rail && <CityRail active={active} />}
+    <div className="cfl-page">{children}</div>
+  </main>
 );
