@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `fence-installer-permit-wait-status-text`,
+    title: `Your Fence Customer Hears Nothing During the Permit Wait`,
+    excerpt: `The weeks between a signed fence contract and an approved permit are the quietest part of the job, and a short status text on a fixed day keeps the customer from guessing.`,
+    tags: `Customer Communication, Project Status, Fence Installers`,
+    content: `Nineteen days is a long time to hear nothing from someone you just paid. That is a believable permit wait for a fence job, and for most of it the customer has no idea whether you are working on their project or have forgotten it.
+
+Nothing is wrong on your side. The application is in, the city or the homeowners' association has it, and you are waiting like everyone else. But the customer doesn't see a waiting list. They see a deposit that left their account and a quiet phone.
+
+## What silence does to a signed job
+
+Quiet turns into questions, and the questions arrive in a bad order. First a text asking if everything is okay. Then a call, usually while you are on a ladder or digging post holes. Then a neighbor mentions that another company can start next week, and your customer starts wondering whether they picked the wrong one.
+
+A job can be fully sold and fully legitimate and still come apart during a wait. Not over price. Over not knowing.
+
+Every one of those calls also costs you twice. You lose the ten minutes, and you lose the first minute of the next conversation to being defensive.
+
+## Write down who is holding the job
+
+Before you send anything, get clear on one thing for each open job: who has it right now? It is always someone from a short list. You, because you haven't submitted yet. The city. The HOA. The customer, because they owe you a survey, a signature or a decision on where the gate goes. A supplier, because the material is on order.
+
+Most owners carry this in their heads. That works until you have eleven jobs open at once, a customer asks, and you have to go look.
+
+Put it where you can see it. If your system has a pipeline, make each waiting job sit in a stage named for who holds it, not a vague stage called "pending." If you only have a notebook, use the notebook. The point is that "who has it" is a written fact, not a feeling.
+
+## Send a status on a fixed day
+
+Here is the rule I would use: while a job is waiting on someone else, the customer gets a short text every Friday, or every seventh day, whichever you can actually keep up. It says who has the job, what you know, and when you will write again.
+
+> Hi Dana, quick update on your fence. The permit application went in on the 3rd and the city still has it. Nothing needed from you. I'll text you again next Friday either way.
+
+That is the whole message. It has no promise about a start date, because you don't control one. It does tell her where the job is, that she has no homework, and when she hears from you next.
+
+The words "either way" matter. A customer who knows an update is coming stops checking their phone and stops calling to ask.
+
+## Let the system send it, but keep the real news human
+
+This part is easy to automate. A message that repeats on a schedule, tied to the stage the job is sitting in, can go out without you touching it, and it stops the day the stage changes. You write the template once.
+
+What shouldn't be automated is any news that changes the plan. A permit that comes back needing a revised site plan, a setback problem, an HOA that wants a different picket style: that is a call from you, the same day, followed by a text so there is a record. A scheduled message sitting next to bad news makes it look like you didn't notice.
+
+## Where this falls short
+
+A weekly text will not rescue a job where the wait is truly unreasonable, or where you promised a timeline at the kitchen table that the city never agreed to. If you said two weeks and it is going to be six, the text just reminds them you were wrong.
+
+So I would stop quoting a date for the permit and quote a range with a reason, and say it out loud at signing: "the city sets this part, not me, and I will update you every Friday until it moves."
+
+It also does nothing for the customer who owes you something. If you are waiting on their survey, say so plainly in the text and ask for it. A friendly nudge about their own task is more useful than a cheerful update that hides it.
+
+## Pull your open permits today
+
+Make a list of every fence job where the deposit has cleared and the work hasn't started. Next to each, write who holds it and the date you last contacted the customer. Any job where that date is more than a week old gets the text above, from your own phone, today. Then decide whether you will keep sending it by hand or have your system send it for you on that stage.`,
+  },
+  {
     slug: `salon-december-chair-hours-regulars-first`,
     title: `Your Best Regulars Lose December to Whoever Texts First`,
     excerpt: `The hours before Christmas can't be stretched, and a first-come calendar hands them to strangers while your six-year clients get a Tuesday morning.`,
