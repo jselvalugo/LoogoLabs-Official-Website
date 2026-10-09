@@ -3,6 +3,7 @@ import { CATEGORIES, DRAFT_STORAGE_KEY as STORAGE_KEY, PRODUCTS, PRODUCTS_BY_SKU
 import { isLoggedIn } from '../lib/identity';
 import { SITE } from '../lib/seo';
 import { getSessionId } from '../lib/sessionTracker';
+import '../styles/pages/parksupply.css';
 
 // Unlisted: reachable only by direct link. It is kept out of the nav, footer,
 // sitemap and llms.txt (see `unlisted` in lib/seo.js) and served noindex.
@@ -68,7 +69,7 @@ const PROCESS = [
 /* ─────────────────────── primitives ─────────────────────── */
 
 const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 20px', ...style }}>{children}</div>
+  <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
 );
 
 const Eyebrow = ({ children, light }) => (
@@ -80,25 +81,26 @@ const Eyebrow = ({ children, light }) => (
 
 const btn = (variant = 'primary') => ({
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-  padding: '10px 16px', borderRadius: 'var(--radius-2)', cursor: 'pointer',
-  fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase',
+  minHeight: 44, padding: '10px 18px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+  fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 600, letterSpacing: '-0.005em', whiteSpace: 'nowrap',
+  transition: 'transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard)',
   ...(variant === 'primary'
-    ? { background: 'var(--ink-900)', color: 'var(--paper-000)', border: '2px solid var(--ink-900)' }
+    ? { background: 'var(--ink-900)', color: 'var(--paper-000)', border: '1px solid var(--ink-900)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.14), 0 10px 22px -12px rgba(26,38,16,0.55)' }
     : variant === 'ghost'
-      ? { background: 'transparent', color: 'var(--ink-600)', border: '1px solid var(--border-hair)' }
-      : { background: 'var(--paper-000)', color: 'var(--ink-900)', border: '2px solid var(--ink-900)' }),
+      ? { background: 'rgba(255,255,255,0.5)', color: 'var(--ink-700)', border: '1px solid rgba(26,38,16,0.12)' }
+      : { background: 'rgba(255,255,255,0.75)', color: 'var(--ink-900)', border: '1px solid rgba(26,38,16,0.14)', boxShadow: '0 8px 20px -14px rgba(26,38,16,0.4)' }),
 });
 
 const fieldStyle = {
   width: '100%', boxSizing: 'border-box', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--ink-900)',
-  background: 'var(--paper-000)', padding: '9px 11px', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)',
+  background: 'var(--paper-000)', padding: '11px 14px', minHeight: 44, borderRadius: 'var(--radius-2)', border: '1px solid rgba(26,38,16,0.12)', boxShadow: 'inset 0 1px 2px rgba(26,38,16,0.04)',
 };
 
 function Field({ label, value, onChange, type = 'text', placeholder, textarea }) {
   const id = React.useId();
   return (
     <div style={{ display: 'grid', gap: 5 }}>
-      <label htmlFor={id} style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-600)' }}>{label}</label>
+      <label htmlFor={id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)' }}>{label}</label>
       {textarea
         ? <textarea id={id} value={value} placeholder={placeholder} rows={3} onChange={(e) => onChange(e.target.value)} style={{ ...fieldStyle, resize: 'vertical' }} />
         : <input id={id} type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} style={fieldStyle} />}
@@ -199,7 +201,7 @@ export default function ParkSupply() {
     try { await document.fonts?.ready; } catch { /* print anyway */ }
     const prev = document.title;
     // The browser uses the document title as the default PDF filename.
-    document.title = `${SITE.name} Proposal ${draft.number}${draft.client.organization ? ` — ${draft.client.organization}` : ''}`;
+    document.title = `${SITE.name} Proposal ${draft.number}${draft.client.organization ? `, ${draft.client.organization}` : ''}`;
     window.print();
     document.title = prev;
   };
@@ -236,50 +238,49 @@ export default function ParkSupply() {
   };
 
   return (
-    <main style={{ fontFamily: 'var(--font-body)', background: 'var(--paper-100)', minHeight: '100vh' }}>
-      <style>{PAGE_CSS}</style>
+    <main className="ll-shell" style={{ fontFamily: 'var(--font-body)' }}>
 
       <div className="ps-screen">
         {/* ── TOP BAR ── */}
-        <header style={{ position: 'sticky', top: 0, zIndex: 30, background: 'var(--ink-900)', borderBottom: '1px solid rgba(216,211,198,0.2)' }}>
-          <Wrap style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56, gap: 12 }}>
+        <header className="ll-nav">
+          <div className="ll-nav__bar ll-glass--dark" style={{ justifyContent: 'space-between', gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
               {/* The mark is solid dark green, so it sits on a light chip against the dark bar. */}
-              <a href="/" aria-label="Loogo Labs — home"
-                style={{ display: 'flex', flexShrink: 0, background: 'var(--paper-000)', padding: 4, borderRadius: 'var(--radius-1)' }}>
-                <img src="/logo.png" alt="Loogo Labs" width="28" height="28" style={{ height: 28, width: 28, display: 'block' }} />
+              <a href="/" aria-label="Loogo Labs home" className="ll-nav__logo">
+                <img src="/logo.png" alt="Loogo Labs" width="28" height="28" />
               </a>
               <span style={{ color: 'var(--paper-000)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
-              <span className="ps-hide-sm" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>/ Park Supply</span>
+              <span className="ps-hide-sm" style={{ fontSize: 16, fontStyle: 'italic', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>Park Supply</span>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              style={{ ...btn('secondary'), padding: '7px 12px', background: 'var(--cyan-500)', borderColor: 'var(--cyan-500)', whiteSpace: 'nowrap' }}>
+              style={{ ...btn('secondary'), minHeight: 48, padding: '8px 18px', background: 'var(--paper-000)', borderColor: 'transparent' }}>
               {staff ? 'Proposal' : 'Quote'} · <span key={itemCount} className={itemCount ? 'ps-bump' : undefined}>{itemCount}</span>
               <span className="ps-hide-sm">&nbsp;item{itemCount === 1 ? '' : 's'}</span>
             </button>
-          </Wrap>
+          </div>
         </header>
 
         {/* ── HERO ── */}
-        <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-100)', padding: 'clamp(40px,6vw,72px) 0' }}>
+        <section style={{ padding: '28px 0 0' }}>
           <Wrap>
+           <div className="ps-hero ll-forest ll-bezel--dark">
             <Eyebrow light>Pet waste stations · Dog park amenities</Eyebrow>
-            <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(32px,4.6vw,56px)', lineHeight: 1.06, letterSpacing: '-0.03em', maxWidth: '20ch' }}>
-              Cleaner parks, <span style={{ color: 'var(--cyan-500)' }}>fewer complaints</span>.
+            <h1 className="ps-h1">
+              Cleaner parks, <em>fewer complaints</em>.
             </h1>
-            <p style={{ maxWidth: '60ch', margin: '20px 0 0', fontSize: 17, lineHeight: 1.6, color: 'var(--ink-200)' }}>
+            <p style={{ maxWidth: '60ch', margin: '24px 0 0', fontSize: 18, lineHeight: 1.6, color: 'var(--ink-200)' }}>
               Commercial-grade pet waste stations, refills, signage, and dog park amenities for parks departments,
               HOAs, property managers, and developers. Pick what your site needs, or let the planner build a starter list,
               then send it to us for a formal quote. No payment and no commitment.
             </p>
+           </div>
           </Wrap>
         </section>
 
         {/* ── HOW IT WORKS ── */}
         <section style={{ padding: 'clamp(32px,5vw,56px) 0 0' }}>
           <Wrap>
-            <Eyebrow>How it works</Eyebrow>
-            <h2 style={{ margin: '0 0 18px', fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>From list to installed, with a person at every step</h2>
+            <h2 className="ps-h2" style={{ marginBottom: 24 }}>From list to installed, with a person at every step</h2>
             <ol className="ps-steps">
               {PROCESS.map(([t, sub], i) => (
                 <li key={t}>
@@ -298,7 +299,7 @@ export default function ParkSupply() {
         <section style={{ padding: 'clamp(32px,5vw,56px) 0' }}>
           <Wrap>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
-              <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>Catalog</h2>
+              <h2 className="ps-h2">Catalog</h2>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>{visible.length} products · list prices, USD</span>
             </div>
 
@@ -335,7 +336,7 @@ export default function ParkSupply() {
                     <ul style={{ margin: '12px 0 0', padding: 0, listStyle: 'none', display: 'grid', gap: 4 }}>
                       {p.specs.map((s) => (
                         <li key={s} style={{ fontSize: 13, color: 'var(--ink-500)', display: 'flex', gap: 8 }}>
-                          <span aria-hidden style={{ color: 'var(--ink-300)' }}>—</span>{s}
+                          <span aria-hidden style={{ color: 'var(--ink-300)' }}>·</span>{s}
                         </li>
                       ))}
                     </ul>
@@ -360,12 +361,13 @@ export default function ParkSupply() {
         </section>
 
         {/* ── PROPOSAL BUILDER ── */}
-        <section ref={builderRef} style={{ padding: 'clamp(32px,5vw,56px) 0 80px', borderTop: '1px solid var(--border-hair)', background: 'var(--paper-000)', scrollMarginTop: 56 }}>
+        <section ref={builderRef} style={{ padding: '0 0 56px', scrollMarginTop: 96 }}>
           <Wrap>
+           <div className="ps-builder-wrap ll-glass">
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
               <div>
                 <Eyebrow>{staff ? 'Proposal' : 'Quote request'} {draft.number}</Eyebrow>
-                <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>{staff ? 'Build a proposal' : 'Your quote'}</h2>
+                <h2 className="ps-h2">{staff ? 'Build a proposal' : 'Your quote'}</h2>
               </div>
               <button type="button" onClick={startOver} style={btn('ghost')}>{staff ? 'New proposal' : 'Start over'}</button>
             </div>
@@ -374,7 +376,7 @@ export default function ParkSupply() {
               {/* Line items */}
               <div>
                 {draft.lines.length === 0 ? (
-                  <div style={{ padding: '36px 20px', border: '1px dashed var(--border-hair)', borderRadius: 'var(--radius-2)', textAlign: 'center', color: 'var(--ink-400)', fontSize: 14 }}>
+                  <div style={{ padding: '40px 20px', background: 'rgba(255,255,255,0.5)', border: '1px dashed rgba(26,38,16,0.18)', borderRadius: 'var(--radius-3)', textAlign: 'center', color: 'var(--ink-400)', fontSize: 14 }}>
                     Your quote is empty. Try the planner above, or add items from the catalog.
                   </div>
                 ) : (
@@ -403,7 +405,7 @@ export default function ParkSupply() {
                           )}
                           <div style={{ textAlign: 'right', fontWeight: 700, fontSize: 15, color: 'var(--ink-900)', whiteSpace: 'nowrap' }}>{usd(num(l.qty) * num(l.price))}</div>
                           <button type="button" aria-label={`Remove ${p.name}`} onClick={() => removeLine(l.sku)}
-                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-400)', fontSize: 20, lineHeight: 1, padding: 4 }}>×</button>
+                            className="ps-remove">×</button>
                         </div>
                       );
                     })}
@@ -421,7 +423,7 @@ export default function ParkSupply() {
                 <div className="ps-panel">
                   <Eyebrow>{staff ? 'Prepared for' : 'About you and the site'}</Eyebrow>
                   <div style={{ display: 'grid', gap: 12 }}>
-                    <Field label="Organization" value={draft.client.organization} onChange={setClient('organization')} placeholder="City of Winter Park — Parks & Rec" />
+                    <Field label="Organization" value={draft.client.organization} onChange={setClient('organization')} placeholder="City of Winter Park, Parks & Rec" />
                     <Field label="Project / park" value={draft.client.project} onChange={setClient('project')} placeholder="Lake Loop Trail improvements" />
                     <Field label="Location" value={draft.client.location} onChange={setClient('location')} placeholder="Winter Park, FL" />
                     <div className="ps-two">
@@ -457,11 +459,11 @@ export default function ParkSupply() {
                     <QuoteSent number={draft.number} email={draft.client.email} onNew={startOver} />
                   ) : (
                     <>
-                      <button type="button" onClick={submitQuote} disabled={submitState.status === 'sending'} style={{ ...btn('primary'), padding: '14px 16px', fontSize: 13 }}>
+                      <button type="button" onClick={submitQuote} disabled={submitState.status === 'sending'} style={{ ...btn('primary'), minHeight: 52, padding: '14px 20px', fontSize: 15 }}>
                         {submitState.status === 'sending' ? 'Sending…' : 'Request my quote'} <span aria-hidden>→</span>
                       </button>
                       <button type="button" onClick={printProposal} disabled={!draft.lines.length}
-                        style={{ ...btn('secondary'), padding: '12px 16px', opacity: draft.lines.length ? 1 : 0.4, cursor: draft.lines.length ? 'pointer' : 'not-allowed' }}>
+                        style={{ ...btn('secondary'), opacity: draft.lines.length ? 1 : 0.4, cursor: draft.lines.length ? 'pointer' : 'not-allowed' }}>
                         Print / save as PDF
                       </button>
                     </>
@@ -476,6 +478,7 @@ export default function ParkSupply() {
                 </div>
               </aside>
             </div>
+           </div>
           </Wrap>
         </section>
 
@@ -488,7 +491,7 @@ export default function ParkSupply() {
               <div style={{ fontWeight: 700, fontSize: 17 }}>{usd(totals.total)}</div>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              style={{ ...btn('secondary'), background: 'var(--paper-000)', borderColor: 'var(--paper-000)' }}>
+              style={{ ...btn('secondary'), background: 'var(--paper-000)', borderColor: 'transparent' }}>
               Review quote <span aria-hidden>→</span>
             </button>
           </div>
@@ -502,10 +505,12 @@ export default function ParkSupply() {
           )}
         </div>
 
-        <footer style={{ background: 'var(--ink-900)', color: 'var(--ink-200)', padding: '24px 0', fontSize: 13 }}>
-          <Wrap style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+        <footer style={{ padding: '0 0 24px', fontSize: 14 }}>
+          <Wrap>
+           <div className="ps-footer ll-forest">
             <span>© {new Date().getFullYear()} {SITE.name}</span>
             <a href={`mailto:${SITE.email}`} style={{ color: 'var(--paper-000)' }}>{SITE.email}</a>
+           </div>
           </Wrap>
         </footer>
       </div>
@@ -558,8 +563,7 @@ function SitePlanner({ onAdd }) {
       <Wrap>
         <div className="ps-planner">
           <div>
-            <Eyebrow>Quick start</Eyebrow>
-            <h2 style={{ margin: '0 0 6px', fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', color: 'var(--ink-900)' }}>What are you outfitting?</h2>
+            <h2 className="ps-h2" style={{ marginBottom: 10 }}>What are you outfitting?</h2>
             <p style={{ margin: '0 0 18px', color: 'var(--ink-600)', fontSize: 15, lineHeight: 1.5 }}>
               Pick a site and we’ll sketch a starter list. You can change every line before you send it.
             </p>
@@ -587,7 +591,7 @@ function SitePlanner({ onAdd }) {
                 const p = PRODUCTS_BY_SKU.get(sku);
                 return (
                   <li key={sku} style={{ display: 'grid', gridTemplateColumns: '44px 1fr auto', alignItems: 'center', gap: 10 }}>
-                    <img src={p.image} alt="" width="44" height="44" style={{ width: 44, height: 44, objectFit: 'contain', background: '#fff', borderRadius: 'var(--radius-1)', border: '1px solid var(--border-hair)' }} />
+                    <img src={p.image} alt="" width="44" height="44" style={{ width: 44, height: 44, objectFit: 'contain', background: '#fff', borderRadius: 12, border: '1px solid rgba(26,38,16,0.08)' }} />
                     <span style={{ fontSize: 14, color: 'var(--ink-900)', lineHeight: 1.3 }}>{p.name}</span>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-600)' }}>× {q}</span>
                   </li>
@@ -598,7 +602,7 @@ function SitePlanner({ onAdd }) {
               <span style={{ fontSize: 13, color: 'var(--ink-500)' }}>Estimate at list price</span>
               <span style={{ fontWeight: 700, fontSize: 20, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(est)}</span>
             </div>
-            <button type="button" onClick={() => onAdd(pairs, plan.label)} style={{ ...btn('primary'), width: '100%', marginTop: 14, padding: '13px 16px' }}>
+            <button type="button" onClick={() => onAdd(pairs, plan.label)} style={{ ...btn('primary'), width: '100%', marginTop: 16, minHeight: 50 }}>
               Add kit to my quote <span aria-hidden>+</span>
             </button>
           </div>
@@ -676,7 +680,7 @@ function ProposalDocument({ draft, totals }) {
           {c.contact && <div>Attn: {c.contact}</div>}
           {c.email && <div>{c.email}</div>}
           {c.phone && <div>{c.phone}</div>}
-          {!c.organization && !c.contact && <div style={{ color: B.ink400 }}>—</div>}
+          {!c.organization && !c.contact && <div style={{ color: B.ink400 }}>Not specified</div>}
         </DocCard>
         {(c.project || c.location) && (
           <DocCard label="Project">
@@ -740,7 +744,7 @@ function ProposalDocument({ draft, totals }) {
             <div className="ps-doc-label">Terms</div>
             <p style={{ margin: 0 }}>
               Pricing valid for {PROPOSAL_VALID_DAYS} days from issue. Freight and installation are estimates until confirmed at order.
-              Standard lead time 2–4 weeks from purchase order; amenities and custom signage may take longer. Purchase orders and
+              Standard lead time 2-4 weeks from purchase order; amenities and custom signage may take longer. Purchase orders and
               tax-exemption certificates accepted. Net 30 for approved public agencies.
             </p>
           </div>
@@ -814,103 +818,3 @@ function DocSum({ label, value }) {
 }
 
 const docTd = { borderBottom: `1px solid ${B.paper200}`, padding: '7px 10px', verticalAlign: 'top' };
-
-const PAGE_CSS = `
-.ps-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; scrollbar-width: thin; }
-.ps-chip { flex-shrink: 0; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border-hair); background: var(--paper-000);
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-600); cursor: pointer; }
-.ps-chip.is-active { background: var(--ink-900); border-color: var(--ink-900); color: var(--paper-000); }
-.ps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-.ps-card { display: flex; flex-direction: column; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
-.ps-photo { position: relative; margin: -18px -18px 0; height: 220px; padding: 14px; background: #fff;
-  border-bottom: 1px solid var(--border-hair); border-radius: var(--radius-2) var(--radius-2) 0 0; overflow: hidden; }
-.ps-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.ps-photo-sku { position: absolute; top: 10px; right: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(255,255,255,0.9);
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-400); }
-.ps-photo-note { position: absolute; left: 10px; bottom: 10px; padding: 3px 7px; border-radius: 999px; background: var(--paper-100);
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
-.ps-card { transition: border-color .15s, box-shadow .15s, transform .15s; }
-.ps-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hard-sm); border-color: var(--ink-900); }
-.ps-card.is-in { border-color: var(--ink-400); box-shadow: inset 0 0 0 1px var(--ink-400); }
-.ps-stepper { display: inline-flex; align-items: center; border: 2px solid var(--ink-900); border-radius: var(--radius-2); background: var(--paper-000); }
-.ps-stepper input { width: 42px; border: none; background: transparent; text-align: center; font: 600 14px var(--font-mono); color: var(--ink-900); -moz-appearance: textfield; }
-.ps-stepper input::-webkit-inner-spin-button, .ps-stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.ps-stepper button:hover { background: var(--paper-100); }
-.ps-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; counter-reset: none; }
-.ps-steps li { display: flex; gap: 12px; align-items: flex-start; padding: 16px; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-2); }
-.ps-steps strong { font-size: 15px; color: var(--ink-900); line-height: 1.3; }
-.ps-steps p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-600); }
-.ps-step-n { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
-  background: var(--ink-900); color: var(--paper-000); font: 700 13px var(--font-mono); }
-@media (max-width: 1000px) { .ps-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.ps-planner { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: start;
-  background: var(--paper-000); border: 2px solid var(--ink-900); border-radius: var(--radius-2); padding: clamp(18px, 3vw, 28px); box-shadow: var(--shadow-hard); }
-.ps-plan-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.ps-plan-tile { display: grid; gap: 3px; text-align: left; padding: 14px; border-radius: var(--radius-2); cursor: pointer;
-  border: 1px solid var(--border-hair); background: var(--paper-100); color: var(--ink-900); font-family: var(--font-body); transition: all .15s; }
-.ps-plan-tile strong { font-size: 15px; }
-.ps-plan-tile span { font-size: 12.5px; color: var(--ink-500); }
-.ps-plan-tile:hover { border-color: var(--ink-900); }
-.ps-plan-tile.is-active { background: var(--ink-900); border-color: var(--ink-900); color: var(--paper-000); }
-.ps-plan-tile.is-active span { color: var(--ink-200); }
-.ps-plan-preview { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 16px; }
-.ps-line.ps-line--buyer { grid-template-columns: minmax(0, 1fr) auto 96px 28px; }
-.ps-bump { display: inline-block; animation: ps-bump .45s ease; }
-@keyframes ps-bump { 0% { transform: scale(1); } 40% { transform: scale(1.6); } 100% { transform: scale(1); } }
-.ps-toast-wrap { position: fixed; left: 0; right: 0; bottom: 20px; display: flex; justify-content: center; pointer-events: none; z-index: 60; }
-.ps-toast { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--ink-900); color: var(--paper-000);
-  font-size: 14px; box-shadow: 0 8px 24px rgba(26,38,16,.25); animation: ps-toast-in .3s ease; max-width: calc(100vw - 32px); }
-@keyframes ps-toast-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-.ps-dock { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; display: none; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 10px 12px 10px 16px; border-radius: var(--radius-2); background: var(--ink-900); color: var(--paper-000); box-shadow: 0 10px 30px rgba(26,38,16,.3); }
-.ps-sent { position: relative; overflow: hidden; background: var(--paper-100); border: 2px solid var(--ink-900); border-radius: var(--radius-2); padding: 20px; }
-.ps-confetti span { position: absolute; top: -20px; left: calc(var(--i) * 8.3%); color: var(--ink-300); opacity: 0;
-  animation: ps-fall 1.8s ease-in calc(var(--i) * 0.07s) 1 both; }
-.ps-confetti span:nth-child(3n) { color: var(--ink-500); }
-@keyframes ps-fall { 0% { opacity: 0; transform: translateY(0) rotate(0); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(260px) rotate(200deg); } }
-@media (prefers-reduced-motion: reduce) {
-  .ps-card, .ps-card:hover { transition: none; transform: none; }
-  .ps-bump, .ps-toast, .ps-confetti span { animation: none; }
-  .ps-confetti { display: none; }
-}
-.ps-builder { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; }
-.ps-panel { background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 18px; }
-.ps-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.ps-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.ps-line { display: grid; grid-template-columns: minmax(0, 1fr) 76px 100px 96px 28px; align-items: center; gap: 12px;
-  padding: 12px 14px; background: var(--paper-100); border: 1px solid var(--border-hair); border-radius: var(--radius-2); }
-.ps-line-field { display: grid; gap: 3px; }
-.ps-line-field span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
-.ps-doc { display: none; }
-.ps-doc-label { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5E7C3A; margin-bottom: 5px; }
-.ps-doc-mono { font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
-@media (max-width: 860px) {
-  .ps-builder, .ps-planner { grid-template-columns: 1fr; }
-  .ps-dock { display: flex; }
-  .ps-toast-wrap { bottom: 84px; }
-}
-@media (max-width: 560px) {
-  .ps-hide-sm { display: none; }
-  .ps-line { grid-template-columns: 1fr 1fr 28px; }
-  .ps-line > :first-child { grid-column: 1 / 3; }
-  .ps-line > :nth-child(4) { grid-column: 1 / 3; text-align: left !important; }
-  .ps-line > :last-child { grid-column: 3; grid-row: 1; }
-  .ps-two, .ps-three { grid-template-columns: 1fr; }
-  .ps-line.ps-line--buyer { grid-template-columns: 1fr 1fr 28px; }
-  .ps-steps { grid-template-columns: 1fr; }
-}
-@media print {
-  @page {
-    margin: 12mm 12mm 16mm;
-    @bottom-left { font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: 0.1em; color: #5E7C3A; }
-    @bottom-right { content: "loogolabs.com  ·  Page " counter(page) " of " counter(pages); font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: 0.1em; color: #5E7C3A; }
-  }
-  body { background: #fff !important; }
-  body * { visibility: hidden; }
-  .ps-screen { display: none; }
-  .ps-doc, .ps-doc * { visibility: visible; }
-  .ps-doc { display: block; position: absolute; left: 0; top: 0; width: 100%; color: #1A2610; font-family: var(--font-body); font-size: 12px; }
-  /* Keep brand fills even when "Background graphics" is off in the print dialog. */
-  .ps-doc, .ps-doc * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-}
-`;
