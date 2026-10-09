@@ -1,21 +1,52 @@
 import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
-import Stat from '../components/surfaces/Stat';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
+import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 
-const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
+const Wrap = ({ children, style, className }) => (
+  <div className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
 );
 
+// Hero headline phrase that backspaces and retypes itself through our services. The first word is
+// rendered in full on the server, so crawlers and no-JS visitors read a normal
+// headline; screen readers get the stable phrase from the h1's aria-label.
+const ROTATING_WORDS = ['Email Marketing', 'Text Messaging', 'AI Call Answering', 'Review Automation', 'Local SEO'];
+
+function TypedWord({ words }) {
+  const [index, setIndex] = React.useState(0);
+  const [text, setText] = React.useState(words[0]);
+  const [phase, setPhase] = React.useState('hold'); // hold | delete | type
+
+  React.useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const word = words[index];
+    let t;
+    if (phase === 'hold') t = setTimeout(() => setPhase('delete'), 2400);
+    else if (phase === 'delete') {
+      if (text.length) t = setTimeout(() => setText(text.slice(0, -1)), 55);
+      else t = setTimeout(() => { setIndex((index + 1) % words.length); setPhase('type'); }, 280);
+    } else if (text.length < word.length) t = setTimeout(() => setText(word.slice(0, text.length + 1)), 95);
+    else setPhase('hold');
+    return () => clearTimeout(t);
+  }, [text, phase, index, words]);
+
+  return <span className="hm-typed" aria-hidden="true">{text}<span className="hm-typed__caret" /></span>;
+}
+
+// Each tile names the tools it retires, straight from the section copy.
 const features = [
-  ['01', 'CRM & Contacts', 'Manage every lead, client, and conversation in one place. No more juggling spreadsheets and disconnected inboxes — every contact, every pipeline stage, fully organized.'],
-  ['02', 'Email & SMS Marketing', 'Send campaigns, automate follow-ups, and reach your audience where they are. Build sequences that run while you sleep and never miss a lead again.'],
-  ['03', 'Social Media & AI Content', 'Schedule posts across every platform and generate content with 60+ AI-powered prompts. Stay consistent and visible without spending hours online every week.'],
-  ['04', 'Courses, Payments & Automation', 'Sell courses, build membership communities, collect payments, and automate your entire workflow — all without duct-taping a dozen apps together.'],
+  { title: 'CRM & Contacts', tone: 'inverse', retires: ['Spreadsheets', 'Scattered inboxes'],
+    body: 'Manage every lead, client, and conversation in one place. Every contact and every pipeline stage, fully organized, with no more juggling disconnected tools.' },
+  { title: 'Email & SMS Marketing', tone: 'paper', retires: ['Separate email tool', 'Manual follow-ups'],
+    body: 'Send campaigns, automate follow-ups, and reach your audience where they are. Build sequences that run while you sleep and never miss a lead again.' },
+  { title: 'Social Media & AI Content', tone: 'sage', retires: ['Social scheduler', 'Blank-page posts'],
+    body: 'Schedule posts across every platform and generate content with 60+ AI-powered prompts. Stay consistent and visible without spending hours online every week.' },
+  { title: 'Courses, Payments & Automation', tone: 'inverse', retires: ['Course platform', 'Payment links', 'A dozen apps'],
+    body: 'Sell courses, build membership communities, collect payments, and automate your entire workflow, all without duct-taping a dozen apps together.' },
 ];
 
 const voiceBotFeatures = [
@@ -27,39 +58,22 @@ const voiceBotFeatures = [
 
 function VoiceBotSection() {
   return (
-    <section className="ll-voicebot" style={{ position: 'relative', overflow: 'hidden', color: 'var(--paper-100)' }}>
-      <div className="ll-voicebot-glow" aria-hidden="true" />
-      <Wrap style={{ padding: '44px 24px', position: 'relative' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span className="ll-live-dot" aria-hidden="true" />
-          <Badge tone="inverse">AI Voice Bot · Try it live</Badge>
-        </div>
-        <div className="ll-grid-2" style={{ gap: 24, alignItems: 'center', marginTop: 14 }}>
-          <div>
-            <h2 style={{ margin: 0, fontWeight: 700, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', maxWidth: '24ch' }}>
-              It answers the phone <span style={{ color: 'var(--cyan-500)' }}>so you don't have to.</span>
-            </h2>
-            <p style={{ maxWidth: '50ch', margin: '10px 0 0', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
-              Picks up every call, books the appointment, and texts back anyone it misses — 24/7, without hiring another employee.
-            </p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
+    <Wrap className="hm-section ll-reveal">
+      <Card tone="inverse" emphasis="strong" className="hm-voice">
+        <div>
+          <Badge tone="inverse">AI Voice Bot. Try it live</Badge>
+          <h2>It answers the phone <em>so you don't have to.</em></h2>
+          <p>Picks up every call, books the appointment, and texts back anyone it misses. Around the clock, without hiring another employee.</p>
+          <div className="hm-voice__cta">
             <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Test the AI Voice Bot</Button>
-            <span style={{ fontSize: 12, lineHeight: 1.4, color: 'var(--ink-300)' }}>
-              Book a slot and we'll set up a live call so you can hear it in action.
-            </span>
+            <small>Book a slot and we'll set up a live call so you can hear it.</small>
           </div>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 28px', marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--border-hair-inverse)' }}>
-          {voiceBotFeatures.map((t) => (
-            <span key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--ink-200)' }}>
-              <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--cyan-500)', flex: 'none' }} />
-              {t}
-            </span>
-          ))}
-        </div>
-      </Wrap>
-    </section>
+        <ul>
+          {voiceBotFeatures.map(t => <li key={t}>{t}</li>)}
+        </ul>
+      </Card>
+    </Wrap>
   );
 }
 
@@ -88,101 +102,50 @@ function ReferencesTicker() {
 // CTA that every other surface pushes. The mailto is a real link, so it also
 // backs the email on the Organization entity.
 function FounderNote() {
-  const [hover, setHover] = React.useState(false);
-  // width:100% — Home's <main> is a column flex container, and Wrap's auto side
-  // margins suppress cross-axis stretch, so a Wrap shrinks to its content unless
-  // it is wide enough to hit --container-max. Without this the rules below would
-  // sit narrower than every other section on the page.
   return (
-    <Wrap style={{ width: '100%', padding: '8px 24px 24px' }}>
-      <div style={{
-        borderTop: '1px solid var(--border-hair)',
-        borderBottom: '1px solid var(--border-hair)',
-        padding: '36px 0',
-        display: 'flex', flexWrap: 'wrap', gap: 32,
-        alignItems: 'flex-end', justifyContent: 'space-between',
-      }}>
-        <div>
-          <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Talk to a person</span>
-          <p style={{ margin: '14px 0 0', maxWidth: '38ch', fontSize: 'var(--fs-body)',
-            lineHeight: 'var(--lh-body)', color: 'var(--ink-600)' }}>
-            Not ready to book a call? Email me directly. It lands in my inbox, not a
-            ticket queue, and I answer it myself.
-          </p>
-        </div>
-        <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
-          <a
-            href={`mailto:${SITE.email}`}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 12,
-              fontSize: 'var(--fs-h3)', fontWeight: 700, letterSpacing: 'var(--ls-h3)',
-              color: hover ? 'var(--cyan-700)' : 'var(--ink-900)',
-              textDecoration: 'none',
-              borderBottom: '2px solid ' + (hover ? 'var(--cyan-500)' : 'var(--border-strong)'),
-              paddingBottom: 4,
-              transition: 'color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard)',
-            }}
-          >
-            {SITE.email}
-            <span aria-hidden="true" style={{
-              transform: hover ? 'translateX(3px)' : 'none',
-              transition: 'transform var(--dur-fast) var(--ease-standard)',
-            }}>→</span>
-          </a>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-            {SITE.founder} · Founder
-          </span>
-        </div>
+    <Wrap className="ll-reveal" style={{ paddingBottom: 48 }}>
+      <div className="hm-note ll-glass">
+        <p>Rather write than talk? Email me directly. It lands in my inbox, not a ticket queue, and I answer it myself.</p>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}<span aria-hidden="true">→</span></a>
       </div>
     </Wrap>
   );
 }
 
-// The founder, front and center — a deliberate break from the product-only
-// sections around it. Framed like a HUD/status readout to match the site's
-// retro-computing visual language rather than a soft "team member" card.
+// The founder, front and center: a deliberate break from the product-only
+// sections around it.
 function FounderSpotlight() {
   const [imgOk, setImgOk] = React.useState(true);
   return (
-    <section className="ll-grid-bg--inverse" style={{ position: 'relative', background: 'var(--ink-900)', color: 'var(--paper-100)' }}>
-      <Wrap style={{ padding: '64px 24px', position: 'relative', maxWidth: 640, textAlign: 'center' }}>
-        <div style={{ position: 'relative', width: 72, height: 72, margin: '0 auto' }}>
+    <Wrap className="hm-section ll-reveal">
+      <div className="hm-founder">
+        <div className="hm-founder__photo">
           {imgOk ? (
-            <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" onError={() => setImgOk(false)}
-              style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', display: 'block', border: '2px solid var(--paper-100)' }} />
+            <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" loading="lazy" onError={() => setImgOk(false)} />
           ) : (
-            <div style={{ width: 72, height: 72, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: 'var(--cyan-500)', background: 'var(--ink-800)', border: '2px solid var(--paper-100)' }}>DS</div>
+            <div className="hm-founder__fallback">DS</div>
           )}
+          <div className="hm-founder__name ll-glass">
+            <strong>David Selva</strong>
+            <span>Founder. 8+ years in performance marketing</span>
+          </div>
         </div>
-        <div style={{ marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>
-          David Selva
+        <div>
+          <span className="ll-eyebrow">About the founder</span>
+          <h2 style={{ marginTop: 16 }}>By day I run legal contracts. <em>By night, I run your marketing.</em></h2>
+          <p>
+            I'm David Selva. My day job is Contract Lifecycle Management (CLM) inside the legal tech
+            industry, building the systems that keep enterprise contracts moving without a single
+            approval falling through the cracks.
+          </p>
+          <p>
+            Loogo Labs is that same obsession pointed somewhere else: a performance-marketing
+            build for local businesses tired of losing leads to slow follow-up and duct-taped tools.
+            Every workflow running under the hood here, I designed and I run myself.
+          </p>
         </div>
-
-        <span className="ll-eyebrow" style={{ color: 'var(--cyan-500)', display: 'block', marginTop: 28 }}>About the founder</span>
-        <h2 style={{ margin: '14px auto 0', fontWeight: 700, fontSize: 'var(--fs-h1)', lineHeight: 1.15,
-          letterSpacing: 'var(--ls-h1)', maxWidth: '22ch' }}>
-          By day I run legal contracts. By night, I run your marketing.
-        </h2>
-        <p style={{ margin: '20px auto 0', maxWidth: '54ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
-          I'm David Selva. My day job is Contract Lifecycle Management (CLM) inside the legal tech
-          industry — building the systems that keep enterprise contracts moving without a single
-          approval falling through the cracks.
-        </p>
-        <p style={{ margin: '14px auto 0', maxWidth: '54ch', fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-200)' }}>
-          Loogo Labs is that same obsession pointed somewhere else — a performance-marketing side
-          build for local businesses tired of losing leads to slow follow-up and duct-taped tools.
-          Every workflow running under the hood here, I designed and I run myself.
-        </p>
-        <div style={{ marginTop: 24, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-          textTransform: 'uppercase', color: 'var(--cyan-500)' }}>
-          8+ years in performance marketing &amp; automation
-        </div>
-      </Wrap>
-    </section>
+      </div>
+    </Wrap>
   );
 }
 
@@ -190,20 +153,15 @@ function FounderSpotlight() {
 // the quiz hub a real internal link from the homepage while we're at it.
 function QuizTeaser({ onNavigate }) {
   return (
-    <Wrap style={{ padding: '40px 24px' }}>
+    <Wrap className="ll-reveal" style={{ paddingBottom: 24 }}>
       <a href={pathForPage('Quizzes')} onClick={(e) => { e.preventDefault(); onNavigate('Quizzes'); }}
         style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-        <Card emphasis="strong" padding={28} style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'grid', gap: 8, maxWidth: '52ch' }}>
-            <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Not ready to book a call?</span>
-            <h2 style={{ margin: 0, fontSize: 'var(--fs-h2)', lineHeight: 'var(--lh-h2)', color: 'var(--ink-900)' }}>
-              Take a 60-second fit check instead.
-            </h2>
-            <p style={{ margin: 0, fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-500)' }}>
-              Quick, free quizzes that tell you straight away whether one of our systems fits your business.
-            </p>
+        <Card tone="sage" className="hm-cta">
+          <div>
+            <h2>Not ready to book a call? Take a 60-second fit check.</h2>
+            <p>Quick, free quizzes that tell you straight away whether one of our systems fits your business.</p>
           </div>
-          <Button variant="secondary" size="lg" iconRight={<span>→</span>}>See our free quizzes</Button>
+          <Button variant="inverse" size="lg" iconRight={<span>→</span>} tabIndex={-1}>See the quizzes</Button>
         </Card>
       </a>
     </Wrap>
@@ -215,7 +173,6 @@ function QuizTeaser({ onNavigate }) {
 // never shifts for visitors when there is nothing to show.
 function FeaturedPostLine({ onNavigate }) {
   const [post, setPost] = React.useState(null);
-  const [hover, setHover] = React.useState(false);
   React.useEffect(() => {
     fetch('/.netlify/functions/get-posts')
       .then(r => r.json())
@@ -224,18 +181,12 @@ function FeaturedPostLine({ onNavigate }) {
   }, []);
   if (!post) return null;
   return (
-    <Wrap style={{ width: '100%' }}>
-      <a
-        href={`${BLOG_BASE}/${post.slug}`}
-        onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        className="ll-featured-line"
-        style={{ background: hover ? 'var(--paper-200)' : 'transparent' }}
-      >
-        <span className="ll-featured-line-tag">★ Featured on Industry LoogoBlog</span>
-        <span className="ll-featured-line-title" style={{ color: hover ? 'var(--cyan-700)' : 'var(--ink-900)' }}>{post.title}</span>
-        <span aria-hidden="true" style={{ marginLeft: 'auto', flex: 'none', fontFamily: 'var(--font-mono)', transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
+    <Wrap>
+      <a href={`${BLOG_BASE}/${post.slug}`} className="hm-featured ll-glass"
+        onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}>
+        <span className="hm-featured__tag">Featured on Industry LoogoBlog</span>
+        <span className="hm-featured__title">{post.title}</span>
+        <span className="hm-featured__go" aria-hidden="true">→</span>
       </a>
     </Wrap>
   );
@@ -243,35 +194,40 @@ function FeaturedPostLine({ onNavigate }) {
 
 function Home({ onNavigate }) {
   return (
-    <main style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <section style={{ position: 'relative', backgroundColor: 'var(--paper-000)', color: 'var(--ink-900)', padding: '40px 0 0' }}>
-        <Wrap style={{ position: 'relative', zIndex: 1 }}>
-          <div className="ll-hero-grid">
-          <div style={{ maxWidth: '46ch' }}>
-            <h1 style={{ margin: 0, fontWeight: 700, fontSize: 'clamp(34px, 4.4vw, 58px)', lineHeight: 1.08,
-              letterSpacing: '-0.03em', maxWidth: '15ch', color: 'var(--ink-900)' }}>
-              Email Marketing That Brings Customers Back. <span style={{ color: 'var(--cyan-700)' }}>We Run It for You</span>.
-            </h1>
-            <p style={{ maxWidth: '50ch', margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-500)' }}>
-              Email marketing is the cheapest way to turn the customers you already have into repeat
-              sales. We write the campaigns, build the automated follow-ups and send them for you —
-              for Central Florida small businesses, backed by 8+ years in performance marketing.
-            </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
-              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Get my email marketing plan</Button>
-              <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
+    <main>
+      <section className="hm-hero">
+        <Wrap>
+          <div className="hm-hero__grid">
+            <div>
+              <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Done-for-you email for Central Florida</span>
+              <h1 className="hm-hero__title" aria-label="Email Marketing That Brings Customers Back. We Run It for You.">
+                <TypedWord words={ROTATING_WORDS} /><span aria-hidden="true"> That Brings Customers Back.</span> <em aria-hidden="true">We Run It for You.</em>
+              </h1>
+              <p className="hm-hero__lede">
+                The cheapest way to turn customers you already have into repeat sales. We write the
+                campaigns, build the follow-ups and send them for you.
+              </p>
+              <div className="hm-hero__actions">
+                <Button variant="inverse" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Get my email plan</Button>
+                <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>See what's included</Button>
+              </div>
+            </div>
+            <div className="hm-hero__art">
+              <img src="/hero-blocks.webp" width="1200" height="921" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
+              <div className="hm-float hm-float--a ll-glass" aria-hidden="true">
+                <span className="hm-float__icon"><EnvelopeSimple size={20} weight="bold" /></span>
+                <div><strong>Win-back campaign</strong><span>Scheduled for Tuesday, 9:00</span></div>
+              </div>
+              <div className="hm-float hm-float--b ll-glass" aria-hidden="true">
+                <span className="hm-float__icon"><ArrowsClockwise size={20} weight="bold" /></span>
+                <div><strong>Follow-up sequence</strong><span>Sends after every visit</span></div>
+              </div>
             </div>
           </div>
-          <img className="ll-hero-art" src="/hero-blocks.webp" width="1200" height="921"
-            alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
-          </div>
 
-          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56, borderTop: '1px solid var(--border-hair)' }}>
-            {[['Tools replaced', '10+', ''], ['Monthly savings', '$400+', ''], ['Support', '24/7', '']].map(([l, v, u], i) => (
-              <div key={l} style={{ flex: 1, padding: '20px 0 32px', paddingLeft: i ? 24 : 0,
-                borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
-                <Stat label={l} value={v} unit={u} />
-              </div>
+          <div className="hm-stats ll-glass">
+            {[['10+', 'Tools replaced'], ['$400+', 'Saved every month'], ['24/7', 'Support']].map(([v, l]) => (
+              <div key={l}><span className="hm-stats__v">{v}</span><span className="hm-stats__l">{l}</span></div>
             ))}
           </div>
         </Wrap>
@@ -279,15 +235,17 @@ function Home({ onNavigate }) {
 
       <FeaturedPostLine onNavigate={onNavigate} />
 
-      <Wrap style={{ padding: '40px 24px 0' }}>
-        <SectionHeading eyebrow="What's included" title="Everything your business needs to grow — under one roof"
-          description="We built one platform that replaces your CRM, your email tool, your scheduling app, your course platform, your social scheduler, and more. One login. One monthly bill." />
-        <div className="ll-grid-4" style={{ gap: 16, marginTop: 36 }}>
-          {features.map(([n, t, d]) => (
-            <Card key={n} padding={24} tone="inverse" style={{ display: 'grid', gap: 12, alignContent: 'start' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--cyan-500)' }}>{n}</div>
-              <h3 style={{ margin: 0, fontSize: 'var(--fs-h3)', letterSpacing: 'var(--ls-h3)', color: 'var(--paper-100)' }}>{t}</h3>
-              <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-300)' }}>{d}</p>
+      <Wrap className="hm-section">
+        <SectionHeading title="Everything your business needs to grow, under one roof"
+          description="One platform that replaces your CRM, email tool, scheduling app, course platform and social scheduler. One login. One monthly bill." />
+        <div className="hm-bento">
+          {features.map(f => (
+            <Card key={f.title} tone={f.tone} className={`hm-tile ll-reveal${f.tone === 'inverse' ? ' hm-tile--dark' : ''}`}>
+              <div className="hm-tile__tools" aria-label="Replaces">
+                {f.retires.map(t => <span key={t}>{t}</span>)}
+              </div>
+              <h3>{f.title}</h3>
+              <p style={{ color: f.tone === 'inverse' ? 'var(--ink-200)' : 'var(--ink-500)' }}>{f.body}</p>
             </Card>
           ))}
         </div>
@@ -297,19 +255,23 @@ function Home({ onNavigate }) {
 
       <FounderSpotlight />
 
-      <Wrap style={{ padding: '40px 24px' }}>
-        <SectionHeading eyebrow="Why work with us" title="Consultants who can actually build it"
-          description="Most agencies hand you a strategy deck. Most dev shops wait for a spec. We sit in the middle — performance marketers who write the backend code, wire the tracking, and ship the AI that makes your spend work harder." />
-        <div className="ll-grid-2" style={{ gap: 24, marginTop: 36 }}>
-          {[['Performance marketing, engineered', 'We run paid media like an engineering problem: clean server-side tracking, real attribution, tight testing loops. Every dollar gets measured against revenue — not clicks, not impressions.'],
-            ['AI consulting that ships', 'No slide-deck AI strategy. We find where AI actually moves your numbers — lead qualification, voice agents, content ops, reporting — then build and deploy it into your workflow.'],
-            ['Software & backend expertise', 'APIs, data pipelines, CRM integrations, custom automations. When your marketing hits a technical wall, we don\'t file a ticket with someone else — we write the code ourselves.'],
-            ['A partner, not a vendor', 'You work directly with the people doing the work. We learn your business, sit in on your numbers, and stay accountable to outcomes — strategy, execution, and the tech underneath it all.']].map(([k, v]) => (
-            <Card key={k} padding={24} emphasis="strong">
-              <div style={{ fontSize: 'var(--fs-body)', fontWeight: 600 }}>{k}</div>
-              <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-400)', marginTop: 6 }}>{v}</div>
-            </Card>
-          ))}
+      <Wrap className="hm-section">
+        <div className="hm-why">
+          <div className="hm-why__head">
+            <SectionHeading title="Consultants who can actually build it"
+              description="Most agencies hand you a strategy deck. Most dev shops wait for a spec. We sit in the middle: performance marketers who write the backend code, wire the tracking, and ship the AI that makes your spend work harder." />
+          </div>
+          <div className="hm-why__list">
+            {[['Performance marketing, engineered', 'We run paid media like an engineering problem: clean server-side tracking, real attribution, tight testing loops. Every dollar gets measured against revenue, not clicks or impressions.'],
+              ['AI consulting that ships', 'No slide-deck AI strategy. We find where AI actually moves your numbers (lead qualification, voice agents, content ops, reporting) then build and deploy it into your workflow.'],
+              ['Software & backend expertise', 'APIs, data pipelines, CRM integrations, custom automations. When your marketing hits a technical wall, we don\'t file a ticket with someone else. We write the code ourselves.'],
+              ['A partner, not a vendor', 'You work directly with the people doing the work. We learn your business, sit in on your numbers, and stay accountable to outcomes: strategy, execution, and the tech underneath it all.']].map(([k, v]) => (
+              <Card key={k} className="hm-why__item ll-reveal">
+                <h3>{k}</h3>
+                <p>{v}</p>
+              </Card>
+            ))}
+          </div>
         </div>
       </Wrap>
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import { ArrowLeft, ArrowRight, X, Check, ThumbsUp, Lightning, ChatsCircle, CursorClick, ChartLineUp } from '@phosphor-icons/react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
 import { getSessionId } from '../lib/sessionTracker';
+import '../styles/pages/landing.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -11,49 +13,42 @@ const fire = (event, params) => { if (window.fbq) window.fbq('track', event, par
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
 const trackBook = () => { fire('Schedule'); openBooking(); };
 
+/* Range strings keep their stored value; only the displayed dash changes. */
+const show = (s) => s.replace(/\u2013/g, '-');
+
 /* ─────────────────────── primitives ─────────────────────── */
-const Card = ({ children, style }) => (
-  <div style={{ maxWidth: 640, margin: '0 auto', width: '100%', ...style }}>{children}</div>
+const Card = ({ children, wide, tone = 'glass', className = '' }) => (
+  <div className={`lp-card lp-card--${tone}${wide ? ' lp-card--wide' : ''} ${className}`}>{children}</div>
 );
 
-const Eyebrow = ({ children }) => (
-  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
-    color: 'var(--cyan-700)', marginBottom: 14, textAlign: 'center' }}>
-    {children}
-  </div>
-);
+const Eyebrow = ({ children }) => <div className="lp-eyebrow">{children}</div>;
 
-const StepHeading = ({ children }) => (
-  <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,4vw,34px)', fontWeight: 700,
-    letterSpacing: '-0.03em', lineHeight: 1.2, color: 'var(--ink-900)', textAlign: 'center' }}>
-    {children}
-  </h2>
-);
+const StepHeading = ({ children }) => <h2 className="lp-h2">{children}</h2>;
 
-const ContinueRow = ({ onNext, label }) => (
-  <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center' }}>
-    <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={onNext} fullWidth>{label}</Button>
+const ContinueRow = ({ onNext, label, variant = 'inverse' }) => (
+  <div className="lp-continue">
+    <Button variant={variant} size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={onNext} fullWidth>{label}</Button>
   </div>
 );
 
 /* ─────────────────────── data ─────────────────────── */
 const problems = [
-  ['Techs forget to ask, every time', "The job's done and the truck's already at the next stop — asking for a review is the first thing that gets skipped when things get busy."],
+  ['Techs forget to ask, every time', "The job's done and the truck's already at the next stop, and asking for a review is the first thing that gets skipped when things get busy."],
   ['Requests sent days later get ignored', "By the time someone remembers to send the text, the customer has already moved on. Response rates fall off fast after the first 24 hours."],
   ['No system means no consistency', "Some customers get asked, most don't. There's no way to know your real review velocity if half of it depends on someone remembering."],
 ];
 
 const capabilities = [
-  ['Fires The Moment A Job Closes', 'Triggered off the same status update your team already makes — no extra step for anyone.'],
-  ['Texts And Emails, Automatically', 'Sends through whichever channel gets the best response, with no one manually sending anything.'],
-  ['One-Click Reply Templates', 'Replying to a new review takes one tap instead of writing a response from scratch every time.'],
-  ['Live Rating & Volume Dashboard', 'See your review count, star rating, and trend over time in one place — not spread across five tabs.'],
+  ['Fires The Moment A Job Closes', 'Triggered off the same status update your team already makes, no extra step for anyone.', Lightning],
+  ['Texts And Emails, Automatically', 'Sends through whichever channel gets the best response, with no one manually sending anything.', ChatsCircle],
+  ['One-Click Reply Templates', 'Replying to a new review takes one tap instead of writing a response from scratch every time.', CursorClick],
+  ['Live Rating & Volume Dashboard', 'See your review count, star rating, and trend over time in one place, not spread across five tabs.', ChartLineUp],
 ];
 
 const comparison = [
   ['Time to send a request', 'Instant, automatic', 'Whenever someone remembers'],
   ['Consistency', 'Every job, every time', 'Depends on who\'s on shift'],
-  ['Response rate', 'Higher — sent within minutes', 'Drops fast after 24 hours'],
+  ['Response rate', 'Higher, sent within minutes', 'Drops fast after 24 hours'],
   ['Reply time on new reviews', 'One click', 'Written from scratch'],
 ];
 
@@ -67,7 +62,7 @@ function TestimonialImage({ src, alt }) {
   if (failed) return null;
   return (
     <img src={src} alt={alt} onError={() => setFailed(true)}
-      style={{ width: '100%', borderRadius: 'var(--radius-2)', border: '1px solid var(--border-hair)', display: 'block' }} />
+      className="lp-proof__img" />
   );
 }
 
@@ -157,27 +152,25 @@ export default function ReputationAutopilot() {
 
   if (isResult) {
     body = notDecisionMaker ? (
-      <Card style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 16 }}>👍</div>
-        <h2 style={{ margin: '0 0 14px', fontSize: 26, fontWeight: 700, color: 'var(--ink-900)' }}>
-          No problem — bring in the decision-maker.
-        </h2>
-        <p style={{ margin: '0 0 28px', fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-500)' }}>
-          Share this page with them, or book the call together — a 15-minute walkthrough is enough for anyone to see the fit.
+      <Card>
+        <div className="lp-result-icon"><ThumbsUp size={26} weight="duotone" /></div>
+        <h2 className="lp-h2">No problem. Bring in the decision-maker.</h2>
+        <p className="lp-lede">
+          Share this page with them, or book the call together. A 15-minute walkthrough is enough for anyone to see the fit.
         </p>
-        <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>Book the call anyway</Button>
+        <div className="lp-continue">
+          <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>Book the call anyway</Button>
+        </div>
       </Card>
     ) : (
-      <Card style={{ textAlign: 'center' }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="ok">You qualify</Badge></div>
-        <h2 style={{ margin: '18px 0 14px', fontSize: 28, fontWeight: 700, color: 'var(--ink-900)', lineHeight: 1.2 }}>
-          This is exactly what Reputation Autopilot was built for.
-        </h2>
-        <p style={{ margin: '0 0 32px', fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-500)' }}>
+      <Card tone="forest">
+        <div className="lp-center"><Badge tone="ok">You qualify</Badge></div>
+        <h2 className="lp-h2">This is exactly what Reputation Autopilot was built for.</h2>
+        <p className="lp-lede">
           Book a free 20-minute fit call. We'll show you exactly what a review request would look like for your
           business, and how many reviews you're likely missing right now.
         </p>
-        <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook} fullWidth>Book My Free Fit Call</Button>
+        <ContinueRow onNext={trackBook} label="Book My Free Fit Call" variant="primary" />
       </Card>
     );
   } else if (isContactStep) {
@@ -185,7 +178,7 @@ export default function ReputationAutopilot() {
       <Card>
         <Eyebrow>Fit check · Almost done</Eyebrow>
         <StepHeading>Where should we send your results?</StepHeading>
-        <div style={{ display: 'grid', gap: 16 }}>
+        <div className="lp-fields">
           <Input label="Full name" value={contact.fullName}
             onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))}
             placeholder="Jane Smith" />
@@ -203,20 +196,11 @@ export default function ReputationAutopilot() {
       <Card>
         <Eyebrow>Fit check · Question {qi + 1} of {QUIZ_STEPS.length}</Eyebrow>
         <StepHeading>{q.question}</StepHeading>
-        <div style={{ display: 'grid', gap: 10 }}>
+        <div className="lp-options">
           {q.options.map((opt) => (
-            <button key={opt} onClick={() => chooseQuiz(qi, q.key, opt)} style={{
-              textAlign: 'left', padding: '16px 18px', background: 'var(--paper-100)',
-              border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)',
-              fontSize: 14.5, fontWeight: 600, color: 'var(--ink-800)', cursor: 'pointer',
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12,
-              transition: 'border-color 140ms ease, background 140ms ease',
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--cyan-700)'; e.currentTarget.style.background = 'var(--paper-200)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-hair)'; e.currentTarget.style.background = 'var(--paper-100)'; }}
-            >
-              {opt}
-              <span style={{ color: 'var(--cyan-700)', flexShrink: 0 }}>→</span>
+            <button key={opt} className="lp-option" onClick={() => chooseQuiz(qi, q.key, opt)}>
+              {show(opt)}
+              <span className="lp-option__chip" aria-hidden="true"><ArrowRight size={14} weight="bold" /></span>
             </button>
           ))}
         </div>
@@ -227,69 +211,61 @@ export default function ReputationAutopilot() {
 
     if (id === 'hero') {
       body = (
-        <Card style={{ textAlign: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+        <Card wide className="lp-hero">
+          <div className="lp-center lp-hero__badge">
             <span className="ll-live-dot" aria-hidden="true" />
             <Badge tone="accent">Reputation Autopilot</Badge>
           </div>
-          <h1 style={{ margin: '20px 0 0', fontWeight: 700, fontSize: 'clamp(30px,5.4vw,50px)', lineHeight: 1.1,
-            letterSpacing: '-0.03em', color: 'var(--ink-900)' }}>
-            Every Completed Job Becomes <span style={{ color: 'var(--cyan-700)' }}>A 5-Star Review Request.</span>
+          <h1 className="lp-h1">
+            Every Completed Job Becomes <em>A 5-Star Review Request.</em>
           </h1>
-          <p style={{ margin: '20px 0 0', fontSize: 16, lineHeight: 1.6, color: 'var(--ink-500)' }}>
-            The moment a job is marked done, your customer gets a text asking for a Google review — no
+          <p className="lp-lede">
+            The moment a job is marked done, your customer gets a text asking for a Google review. No
             spreadsheet, no sticky note, no forgetting.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginTop: 40,
-            borderTop: '1px solid var(--border-hair)' }}>
-            {[['+40%', 'More reviews collected'], ['< 5 min', 'After job completion'], ['24/7', 'Runs itself'], ['1 click', 'To reply']].map(([val, label], i) => (
-              <div key={label} style={{ padding: '18px 6px 0', minWidth: 0,
-                borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px,4vw,24px)', fontWeight: 700,
-                  letterSpacing: '-0.03em', color: 'var(--cyan-700)', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px,2vw,9.5px)', letterSpacing: '0.06em',
-                  textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 6 }}>{label}</div>
+          <div className="lp-stats">
+            {[['+40%', 'More reviews collected'], ['< 5 min', 'After job completion'], ['24/7', 'Runs itself'], ['1 click', 'To reply']].map(([val, label]) => (
+              <div key={label} className="lp-stat">
+                <div className="lp-stat__val">{val}</div>
+                <div className="lp-stat__label">{label}</div>
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(1)} label="Start My 60-Second Fit Check" />
-          <p style={{ marginTop: 14, fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.08em',
-            textTransform: 'uppercase', color: 'var(--ink-400)' }}>Takes 60 seconds · No cost · No obligation</p>
+          <div className="lp-hero__cta">
+            <ContinueRow onNext={() => go(1)} label="Start My 60-Second Fit Check" />
+            <p className="lp-fine">Takes 60 seconds · No cost · No obligation</p>
+          </div>
         </Card>
       );
     } else if (id === 'problem') {
       body = (
-        <Card>
+        <Card wide tone="forest">
           <Eyebrow>The real cost of asking by hand</Eyebrow>
-          <StepHeading>Manually asking for reviews doesn't scale — so most owners just stop.</StepHeading>
-          <div style={{ display: 'grid', gap: 12 }}>
+          <StepHeading>Manually asking for reviews doesn't scale, so most owners just stop.</StepHeading>
+          <div className="lp-problems">
             {problems.map(([title, desc]) => (
-              <div key={title} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
-                borderRadius: 'var(--radius-2)', padding: '20px 20px', display: 'grid', gap: 10 }}>
-                <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(255,74,61,0.1)',
-                  border: '1px solid rgba(255,74,61,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 700, fontSize: 12, color: 'var(--status-danger)' }}>✕</div>
-                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--ink-900)' }}>{title}</h3>
-                <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{desc}</p>
+              <div key={title} className="lp-problem">
+                <div className="lp-problem__x" aria-hidden="true"><X size={14} weight="bold" /></div>
+                <h3>{show(title)}</h3>
+                <p>{desc}</p>
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(2)} label="See How It Works" />
+          <ContinueRow onNext={() => go(2)} label="See How It Works" variant="primary" />
         </Card>
       );
     } else if (id === 'capabilities') {
       body = (
-        <Card>
+        <Card wide>
           <Eyebrow>What it actually does</Eyebrow>
           <StepHeading>A review request that fires itself the second the job is done.</StepHeading>
-          <div style={{ display: 'grid', gap: 10 }}>
-            {capabilities.map(([title, desc], i) => (
-              <div key={title} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
-                borderRadius: 'var(--radius-2)', padding: '18px 20px', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cyan-700)', flexShrink: 0, paddingTop: 2 }}>0{i + 1}</span>
+          <div className="lp-caps">
+            {capabilities.map(([title, desc, Icon], i) => (
+              <div key={title} className={`lp-cap${i === 0 ? ' lp-cap--lead' : ''}`}>
+                <span className="lp-cap__icon" aria-hidden="true"><Icon size={22} weight="duotone" /></span>
                 <div>
-                  <h3 style={{ margin: '0 0 6px', fontSize: 14.5, fontWeight: 700, color: 'var(--ink-900)' }}>{title}</h3>
-                  <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.55, color: 'var(--ink-500)' }}>{desc}</p>
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
                 </div>
               </div>
             ))}
@@ -299,24 +275,20 @@ export default function ReputationAutopilot() {
       );
     } else if (id === 'comparison') {
       body = (
-        <Card>
+        <Card wide>
           <Eyebrow>Automated vs. asking by hand</Eyebrow>
           <StepHeading>Side by side, it's not close.</StepHeading>
-          <div style={{ display: 'grid', gap: 8 }}>
-            {comparison.map(([feat, automated, manual]) => (
-              <div key={feat} style={{ background: 'var(--paper-100)', border: '1px solid var(--border-hair)',
-                borderRadius: 'var(--radius-2)', padding: '14px 18px' }}>
-                <div style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink-900)', marginBottom: 10 }}>{feat}</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0',
-                  borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Automated</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--cyan-700)' }}>{automated}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0',
-                  borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Asking By Hand</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-500)' }}>{manual}</span>
-                </div>
+          <div className="lp-compare" role="table">
+            <div className="lp-compare__head" role="row">
+              <span role="columnheader" />
+              <span role="columnheader" className="lp-compare__us">Automated</span>
+              <span role="columnheader">Asking By Hand</span>
+            </div>
+            {comparison.map(([feat, a, b]) => (
+              <div key={feat} className="lp-compare__row" role="row">
+                <span role="rowheader" className="lp-compare__feat">{feat}</span>
+                <span role="cell" className="lp-compare__us"><em className="lp-compare__tag">Automated</em><Check size={14} weight="bold" aria-hidden="true" /> {show(a)}</span>
+                <span role="cell" className="lp-compare__them"><em className="lp-compare__tag">Asking By Hand</em>{show(b)}</span>
               </div>
             ))}
           </div>
@@ -325,10 +297,10 @@ export default function ReputationAutopilot() {
       );
     } else if (id === 'proof') {
       body = (
-        <Card>
+        <Card wide tone="sage">
           <Eyebrow>What clients say</Eyebrow>
           <StepHeading>Real reviews from real Loogo Labs clients.</StepHeading>
-          <div style={{ display: 'grid', gap: 16 }}>
+          <div className="lp-proof">
             {testimonialImages.map((t) => <TestimonialImage key={t.src} {...t} />)}
           </div>
           <ContinueRow onNext={() => go(QUIZ_START)} label="Start My 60-Second Fit Check" />
@@ -338,47 +310,43 @@ export default function ReputationAutopilot() {
   }
 
   return (
-    <main style={{ fontFamily: 'var(--font-body)', overflowX: 'hidden', background: 'var(--paper-000)', minHeight: '100vh',
-      display: 'flex', flexDirection: 'column' }}>
+    <main className="ll-shell lp">
 
-      {/* ── STICKY TOP BAR: logo mark only + progress ── */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--paper-000)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', padding: '16px 24px' }}>
-          <div style={{ justifySelf: 'start' }}>
+      {/* ── FLOATING GLASS HEADER: back, logo, progress ── */}
+      <div className="ll-nav lp-nav">
+        <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
+          <div className="lp-nav__side">
             {step > 0 && !isResult && (
-              <button onClick={() => go(step - 1)} style={{ background: 'none', border: 'none', cursor: 'pointer',
-                fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
-                ← Back
+              <button className="lp-back" onClick={() => go(step - 1)}>
+                <ArrowLeft size={16} weight="bold" aria-hidden="true" /> Back
               </button>
             )}
           </div>
-          <img src="/logo.png" alt="" style={{ height: 22, width: 'auto', justifySelf: 'center' }} />
-          <div style={{ justifySelf: 'end' }}>
+          <span className="ll-nav__logo lp-nav__logo"><img src="/logo.png" alt="" /></span>
+          <div className="lp-nav__side lp-nav__side--end">
             {!isResult && !isIntroStep && (
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--ink-400)' }}>
-                {step - QUIZ_START + 1}/{quizProgressTotal}
-              </span>
+              <span className="lp-count">{step - QUIZ_START + 1}/{quizProgressTotal}</span>
             )}
           </div>
-        </div>
-        <div style={{ height: 3, background: 'var(--border-hair)' }}>
-          <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--cyan-700)', transition: 'width 240ms ease' }} />
+          <div className="lp-progress" aria-hidden="true">
+            <div className="lp-progress__fill" style={{ width: `${progressPct}%` }} />
+          </div>
         </div>
       </div>
 
       {/* ── STEP CONTENT ── */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: 'clamp(32px,6vw,64px) 24px' }}>
-        <div style={{ width: '100%' }}>{body}</div>
+      <div className="lp-stage">
+        <div key={step} className="lp-stage__inner">{body}</div>
       </div>
 
       {/* ── SLIM LEGAL FOOTER ── */}
-      <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-hair)',
-        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 16,
-        fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-400)' }}>
-        <span>© {new Date().getFullYear()} Loogo Labs</span>
-        <a href="/privacy" style={{ color: 'var(--ink-400)', textDecoration: 'none' }}>Privacy</a>
-        <a href="/terms" style={{ color: 'var(--ink-400)', textDecoration: 'none' }}>Terms</a>
-      </div>
+      <footer className="lp-footer">
+        <div className="lp-footer__pill ll-glass">
+          <span>© {new Date().getFullYear()} Loogo Labs</span>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </div>
+      </footer>
     </main>
   );
 }

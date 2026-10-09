@@ -28,16 +28,16 @@ export const SERVICE_PACKAGES = [
       },
     ],
     steps: [
-      ['Grant access', 'Add us as a manager on your profile — we send simple instructions.'],
+      ['Grant access', 'Add us as a manager on your profile; we send simple instructions.'],
       ['Baseline snapshot', 'We record where you rank today in the areas you serve.'],
-      ['Rebuild', 'Categories, services, description, photos, Q&A, and posts — done for you.'],
+      ['Rebuild', 'Categories, services, description, photos, Q&A, and posts, done for you.'],
       ['After snapshot', 'We re-check your rankings and send the before/after report.'],
     ],
     needs: ['Manager access to your Google Business Profile', 'Your list of services and service areas', 'Up to 10 photos (for Makeover + Content)'],
     faq: [
       ['Do you guarantee I will rank #1?', 'No one honestly can. We fix everything that is in your control and show you the before/after so you can see what changed.'],
-      ['I don\'t have a profile yet — can you help?', 'Yes. We can create and verify it with you; verification timing is set by Google.'],
-      ['Will you change my business name?', 'No. We use your real business name exactly as it appears on your signage — keyword stuffing can get a profile suspended.'],
+      ['I don\'t have a profile yet. Can you help?', 'Yes. We can create and verify it with you; verification timing is set by Google.'],
+      ['Will you change my business name?', 'No. We use your real business name exactly as it appears on your signage. Keyword stuffing can get a profile suspended.'],
     ],
   },
   {
@@ -48,7 +48,7 @@ export const SERVICE_PACKAGES = [
     from: '$399',
     headline: 'Wake up the happy customers you already have.',
     accent: '$399, done in 14 days.',
-    summary: 'Most businesses have hundreds of satisfied past customers who were never asked for a review. We ask them for you — by text and email — and set you up to keep the reviews coming.',
+    summary: 'Most businesses have hundreds of satisfied past customers who were never asked for a review. We ask them for you (by text and email) and set you up to keep the reviews coming.',
     cardDescription: 'We import your past customers, run a one-time SMS & email review campaign, and hand over reply templates and a QR review card. Delivered in 14 days.',
     metaTitle: 'Review Kickstart — Review Campaign for Past Customers',
     metaDescription: 'A one-time SMS and email review campaign to your past customers, plus reply templates and a QR review card design. $399, delivered in 14 days.',
@@ -62,14 +62,14 @@ export const SERVICE_PACKAGES = [
       },
     ],
     steps: [
-      ['Send your list', 'A spreadsheet or CRM export of past customers — we tidy it up.'],
+      ['Send your list', 'A spreadsheet or CRM export of past customers; we tidy it up.'],
       ['Approve the message', 'We write the text and email; nothing sends until you sign off.'],
       ['Campaign runs', 'Requests go out by SMS and email, with a polite follow-up.'],
       ['Wrap-up', 'You get the results summary, reply templates, and your QR card.'],
     ],
     needs: ['A list of past customers (name plus phone and/or email)', 'Your Google review link (or we find it)', 'Your logo for the QR card'],
     faq: [
-      ['Is this allowed by Google?', 'Yes. We ask every customer for honest feedback — we never offer incentives or filter out unhappy customers, both of which break Google\'s rules.'],
+      ['Is this allowed by Google?', 'Yes. We ask every customer for honest feedback. We never offer incentives or filter out unhappy customers, both of which break Google\'s rules.'],
       ['How many reviews will I get?', 'It depends on your list size and how customers feel about you, so we don\'t promise a number. You see exactly who was asked and the results.'],
       ['Do my customers need to have opted in?', 'You should only send us customers you have a business relationship with and permission to contact. Every message includes an opt-out.'],
     ],
@@ -86,7 +86,7 @@ export const SERVICE_PACKAGES = [
     cardDescription: '5 or 10 SEO city/service pages, written for your service areas and published on your site.',
     metaTitle: 'City Page Pack — Local SEO City & Service Pages',
     metaDescription: 'Five or ten SEO city/service pages written and published on your website for the areas you serve. $499 for 5, $899 for 10.',
-    turnaround: 'Published in 10–14 days',
+    turnaround: 'Published in 10-14 days',
     tiers: [
       {
         name: '5 pages',
@@ -102,7 +102,7 @@ export const SERVICE_PACKAGES = [
     ],
     steps: [
       ['Pick your areas', 'Tell us the cities and services that matter most to you.'],
-      ['We research & write', 'Each page is written for that area — no copy-paste with the city swapped.'],
+      ['We research & write', 'Each page is written for that area, no copy-paste with the city swapped.'],
       ['You review', 'You approve every page before it goes live.'],
       ['We publish', 'Pages go live on your site with titles, meta, and internal links set.'],
     ],

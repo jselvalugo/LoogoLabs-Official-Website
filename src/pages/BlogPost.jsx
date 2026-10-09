@@ -2,6 +2,8 @@ import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { hasConsent } from '../lib/cookieConsent';
+import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
+import '../styles/pages/blog.css';
 
 export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
@@ -21,7 +23,7 @@ export default function BlogPost({ slug, onNavigate }) {
       .then(data => {
         if (data) {
           setPost(data);
-          // One counted view per slug per browser session — reloading or
+          // One counted view per slug per browser session; reloading or
           // re-reading the same post in this tab shouldn't inflate the count.
           // Gated on the Analytics cookie category: no consent, no request.
           if (hasConsent('analytics')) {
@@ -51,19 +53,28 @@ export default function BlogPost({ slug, onNavigate }) {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.1em' }}>Loading…</div>
+      <div className="lb-page">
+        <div className="lb-wrap lb-post-state" role="status" aria-live="polite">
+          <span className="lb-skel lb-skel--hero" />
+          <span className="lb-skel lb-skel--line" />
+          <span className="lb-skel lb-skel--line lb-skel--short" />
+          <span className="lb-visually-hidden">Loading post</span>
+        </div>
       </div>
     );
   }
 
   if (notFound || !post) {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--paper-100)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', padding: '0 24px' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 16 }}>404</div>
-          <div style={{ fontSize: 'var(--fs-h2)', fontWeight: 700, marginBottom: 24, color: 'var(--ink-900)' }}>Post not found.</div>
-          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to Industry LoogoBlog</a>
+      <div className="lb-page">
+        <div className="lb-wrap lb-post-state">
+          <div className="lb-notfound ll-glass">
+            <span className="lb-empty__kicker">404</span>
+            <h1 className="lb-notfound__title">Post not found.</h1>
+            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
+              <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Back to Industry LoogoBlog
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -73,90 +84,65 @@ export default function BlogPost({ slug, onNavigate }) {
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
+    <div className="lb-page">
+      <div className="lb-wrap">
 
       {post.featured ? (
         <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} />
       ) : (
-        <>
-      {/* ── HERO HEADER ── */}
-      <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
+      /* ── HERO HEADER ── */
+      <header className="lb-hero ll-forest">
+        {/* Back nav: a real breadcrumb link, so the post is not an orphan */}
+        <nav aria-label="Breadcrumb" className="lb-hero__nav">
+          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
+            <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
+          </a>
+        </nav>
 
-          {/* Back nav — a real breadcrumb link, so the post is not an orphan */}
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)' }}>
-            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
-              style={{ ...backBtnInverse, textDecoration: 'none' }}>
-              ← Industry LoogoBlog
-            </a>
-          </nav>
+        <div className="lb-hero__body">
+          <h1 className="lb-hero__title">{post.title}</h1>
 
-          {/* Hero content */}
-          <div style={{ maxWidth: 800, padding: 'clamp(36px,5vw,64px) 0 clamp(40px,5vw,72px)' }}>
-            {/* Title */}
-            <h1 style={{ margin: '0 0 32px', fontWeight: 800, fontSize: 'clamp(28px,4.5vw,58px)', lineHeight: 1.08, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
-              {post.title}
-            </h1>
-
-            {/* Meta row */}
-            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--ink-700)', border: '1px solid rgba(216,211,198,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'var(--paper-200)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
-                  {post.author ? post.author[0].toUpperCase() : 'L'}
-                </div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-300)', letterSpacing: '0.06em' }}>{post.author}</span>
-              </div>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
-              <time dateTime={post.published_at || undefined} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{date}</time>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-600)' }}>·</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{post.read_time} min read</span>
-            </div>
+          <div className="lb-hero__meta">
+            <span className="lb-hero__author">
+              <span className="lb-avatar">{post.author ? post.author[0].toUpperCase() : 'L'}</span>
+              {post.author}
+            </span>
+            <span aria-hidden="true">·</span>
+            <time dateTime={post.published_at || undefined}>{date}</time>
+            <span aria-hidden="true">·</span>
+            <span>{post.read_time} min read</span>
           </div>
         </div>
-      </div>
-
-        </>
+      </header>
       )}
 
       {/* ── BODY ── */}
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
-        <div className="ll-post-layout">
+      <div className="ll-post-layout lb-post">
 
           {/* Article content */}
-          <article style={{ paddingTop: 'clamp(40px,5vw,64px)', paddingBottom: 'clamp(56px,7vw,96px)' }}>
+          <article className="lb-article">
             {post.excerpt && !post.featured && (
-              <p style={{ margin: '0 0 40px', fontSize: 20, lineHeight: 1.65, color: 'var(--ink-500)', fontWeight: 400, borderLeft: '3px solid var(--ink-700)', paddingLeft: 20 }}>
-                {post.excerpt}
-              </p>
+              <p className="lb-standfirst">{post.excerpt}</p>
             )}
 
-            <div style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>
+            <div className="lb-prose">
               {renderMarkdown(post.content, { dropCap: !!post.featured })}
             </div>
 
             {tags.length > 0 && (
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
-                {tags.map(tag => (
-                  <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-500)', background: 'var(--paper-200)', border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-1)', padding: '4px 10px' }}>
-                    {tag}
-                  </span>
-                ))}
+              <div className="lb-tags lb-post__tags">
+                {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
               </div>
             )}
 
-            {/* Author bio — the personal signature on every post, not just a byline */}
+            {/* Author bio: the personal signature on every post, not just a byline */}
             {post.author === 'David Selva' && (
-              <div style={{ marginTop: 48, padding: '24px 28px', background: 'var(--paper-200)',
-                border: '1px solid var(--border-hair)', borderRadius: 'var(--radius-2)',
-                display: 'flex', gap: 18, alignItems: 'flex-start' }}>
-                <img src="/founder-david-selva.jpg" alt="David Selva" width={56} height={56}
-                  style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover', flexShrink: 0, border: '2px solid var(--ink-900)' }} />
+              <div className="lb-bio ll-glass">
+                <img src="/founder-david-selva.jpg" alt="David Selva" width={56} height={56} className="lb-bio__img" />
                 <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 6 }}>
-                    Written by
-                  </div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-900)' }}>David Selva</div>
-                  <p style={{ margin: '6px 0 0', fontSize: 14, lineHeight: 1.6, color: 'var(--ink-500)', maxWidth: '54ch' }}>
+                  <div className="lb-bio__kicker">Written by</div>
+                  <div className="lb-bio__name">David Selva</div>
+                  <p className="lb-bio__text">
                     Founder of Loogo Labs. I build and run the follow-up, booking and review systems that
                     keep local service businesses from losing leads, and Industry LoogoBlog is where I write down
                     what holds up once those systems are live, and what doesn't.
@@ -166,41 +152,39 @@ export default function BlogPost({ slug, onNavigate }) {
             )}
 
             {/* CTA box */}
-            <div style={{ marginTop: 72, padding: 'clamp(28px,4vw,44px)', background: 'var(--ink-900)', border: '1px solid var(--ink-800)' }}>
-              <h3 style={{ margin: '0 0 14px', fontSize: 'clamp(18px,2.5vw,26px)', fontWeight: 700, lineHeight: 1.2, color: 'var(--paper-100)', letterSpacing: '-0.02em' }}>
-                Want this running in your business?
-              </h3>
-              <p style={{ margin: '0 0 24px', fontSize: 15, lineHeight: 1.65, color: 'var(--ink-300)' }}>
+            <div className="lb-cta ll-forest">
+              <h3 className="lb-cta__title">Want this running in your business?</h3>
+              <p className="lb-cta__text">
                 We set it up, run it, and optimize it every month. You just run your business.
               </p>
               <a
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-900)', background: 'var(--paper-200)', padding: '12px 20px', textDecoration: 'none', fontWeight: 700, transition: 'background 120ms ease' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'var(--paper-100)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'var(--paper-200)'; }}
+                className="lb-cta__btn"
                 onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
               >
-                Book a free strategy call →
+                Book a free strategy call
+                <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
               </a>
             </div>
 
             {/* Back link */}
-            <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--border-hair)' }}>
-              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} style={{ ...backBtn, textDecoration: 'none' }}>← Back to Industry LoogoBlog</a>
+            <div className="lb-post__back">
+              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
+                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Back to Industry LoogoBlog
+              </a>
             </div>
           </article>
-        </div>
+      </div>
       </div>
     </div>
   );
 }
 
-// Header for the featured post. Where the standard header is a compact dark
-// band, this one is a full editorial opener: featured kicker, display-size
-// title, the excerpt promoted to a standfirst, and a ruled byline strip. A
-// reading-progress bar rides the top of the viewport while you read.
+// Header for the featured post: a full editorial opener on a floating forest
+// panel (featured kicker, display-size title, the excerpt as a standfirst and
+// a byline strip). A reading-progress bar rides the top of the viewport.
 function FeaturedHero({ post, tags, date, onNavigate }) {
   const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
@@ -214,58 +198,41 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
     return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
   }, []);
 
-  const mono = { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' };
-  const cell = { padding: '18px 0', display: 'grid', gap: 6, alignContent: 'start' };
-
   return (
     <>
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
-      <header className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', color: 'var(--paper-100)', borderBottom: '6px solid var(--cyan-500)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 32px' }}>
-          <nav aria-label="Breadcrumb" style={{ paddingTop: 68, paddingBottom: 24, borderBottom: '1px solid rgba(216,211,198,0.10)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}
-              style={{ ...backBtnInverse, textDecoration: 'none' }}>
-              ← Industry LoogoBlog
-            </a>
-            <span style={{ ...mono, fontSize: 10, color: 'var(--ink-900)', background: 'var(--cyan-500)', padding: '5px 12px', fontWeight: 700 }}>
-              ★ Featured post
-            </span>
-          </nav>
+      <header className="lb-hero lb-hero--feature ll-forest">
+        <nav aria-label="Breadcrumb" className="lb-hero__nav">
+          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
+            <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
+          </a>
+          <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> Featured post</span>
+        </nav>
 
-          <div style={{ padding: 'clamp(44px,7vw,96px) 0 clamp(32px,4vw,48px)' }}>
-            <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,6.4vw,84px)', lineHeight: 0.98, letterSpacing: '-0.04em', maxWidth: '18ch' }}>
-              {post.title}
-            </h1>
-            {post.excerpt && (
-              <p style={{ margin: 'clamp(24px,3vw,36px) 0 0', maxWidth: '46ch', fontSize: 'clamp(18px,1.9vw,23px)', lineHeight: 1.55, color: 'var(--ink-200)' }}>
-                {post.excerpt}
-              </p>
+        <div className="lb-hero__body">
+          <h1 className="lb-hero__title lb-hero__title--xl">{post.title}</h1>
+          {post.excerpt && <p className="lb-hero__lede">{post.excerpt}</p>}
+        </div>
+
+        <div className="ll-feature-byline">
+          <div className="ll-feature-cell ll-feature-cell--author">
+            {post.author === 'David Selva' ? (
+              <img src="/founder-david-selva.jpg" alt="" width={40} height={40} className="lb-avatar lb-avatar--img" />
+            ) : (
+              <span className="lb-avatar">{post.author ? post.author[0].toUpperCase() : 'L'}</span>
             )}
+            <span className="ll-feature-cell">
+              <span className="ll-feature-cell__k">Written by</span>
+              <span className="ll-feature-cell__v ll-feature-cell__v--name">{post.author}</span>
+            </span>
           </div>
-
-          <div className="ll-feature-byline" style={{ borderTop: '1px solid rgba(216,211,198,0.18)' }}>
-            <div style={{ ...cell, gridAutoFlow: 'column', justifyContent: 'start', alignItems: 'center', gap: 12 }}>
-              {post.author === 'David Selva' ? (
-                <img src="/founder-david-selva.jpg" alt="" width={36} height={36}
-                  style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--paper-100)' }} />
-              ) : (
-                <span style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--ink-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
-                  {post.author ? post.author[0].toUpperCase() : 'L'}
-                </span>
-              )}
-              <span style={{ display: 'grid', gap: 4 }}>
-                <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Written by</span>
-                <span style={{ fontSize: 15, fontWeight: 700 }}>{post.author}</span>
-              </span>
-            </div>
-            <div style={cell}>
-              <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Published</span>
-              <time dateTime={post.published_at || undefined} style={{ ...mono, color: 'var(--paper-100)' }}>{date}</time>
-            </div>
-            <div style={cell}>
-              <span style={{ ...mono, fontSize: 9, color: 'var(--ink-400)' }}>Read time</span>
-              <span style={{ ...mono, color: 'var(--paper-100)' }}>{post.read_time} min</span>
-            </div>
+          <div className="ll-feature-cell">
+            <span className="ll-feature-cell__k">Published</span>
+            <time dateTime={post.published_at || undefined} className="ll-feature-cell__v">{date}</time>
+          </div>
+          <div className="ll-feature-cell">
+            <span className="ll-feature-cell__k">Read time</span>
+            <span className="ll-feature-cell__v">{post.read_time} min</span>
           </div>
         </div>
       </header>
@@ -276,21 +243,21 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
 function renderMarkdown(text, { dropCap = false } = {}) {
   if (!text) return null;
   const blocks = text.split(/\n\n+/);
-  // The drop cap goes on the first plain paragraph only — never a heading or list.
+  // The drop cap goes on the first plain paragraph only, never a heading or list.
   const firstPara = dropCap
     ? blocks.findIndex(b => { const t = b.trim(); return t && !/^(#{2,3} |> |[-*] )/.test(t); })
     : -1;
   return blocks.map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
-    if (trimmed.startsWith('## ')) return <h2 key={i} style={h2Style}>{inlineRender(trimmed.slice(3))}</h2>;
-    if (trimmed.startsWith('### ')) return <h3 key={i} style={h3Style}>{inlineRender(trimmed.slice(4))}</h3>;
+    if (trimmed.startsWith('## ')) return <h2 key={i}>{inlineRender(trimmed.slice(3))}</h2>;
+    if (trimmed.startsWith('### ')) return <h3 key={i}>{inlineRender(trimmed.slice(4))}</h3>;
     const lines = trimmed.split('\n');
     if (lines.every(l => l.trim().startsWith('- ') || l.trim().startsWith('* '))) {
       return (
-        <ul key={i} style={{ margin: '0 0 28px', paddingLeft: 24, lineHeight: 1.8 }}>
+        <ul key={i}>
           {lines.map((l, j) => (
-            <li key={j} style={{ fontSize: 17, color: 'var(--ink-700)', marginBottom: 8 }}>
+            <li key={j}>
               {inlineRender(l.trim().slice(2))}
             </li>
           ))}
@@ -299,12 +266,12 @@ function renderMarkdown(text, { dropCap = false } = {}) {
     }
     if (trimmed.startsWith('> ')) {
       return (
-        <blockquote key={i} style={{ margin: '0 0 28px', paddingLeft: 20, borderLeft: '3px solid var(--ink-600)', color: 'var(--ink-500)', fontSize: 19, fontStyle: 'italic', lineHeight: 1.65 }}>
+        <blockquote key={i}>
           {inlineRender(trimmed.slice(2))}
         </blockquote>
       );
     }
-    return <p key={i} className={i === firstPara ? 'll-dropcap' : undefined} style={{ margin: '0 0 28px', fontSize: 17, lineHeight: 1.8, color: 'var(--ink-700)' }}>{inlineRender(trimmed)}</p>;
+    return <p key={i} className={i === firstPara ? 'll-dropcap' : undefined}>{inlineRender(trimmed)}</p>;
   });
 }
 
@@ -314,16 +281,12 @@ function inlineRender(text) {
   let last = 0, match;
   while ((match = re.exec(text)) !== null) {
     if (match.index > last) parts.push(text.slice(last, match.index));
-    if (match[1]) parts.push(<strong key={match.index} style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{match[2]}</strong>);
+    if (match[1]) parts.push(<strong key={match.index}>{match[2]}</strong>);
     else if (match[3]) parts.push(<em key={match.index}>{match[4]}</em>);
-    else if (match[5]) parts.push(<code key={match.index} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88em', background: 'var(--paper-200)', padding: '2px 6px', borderRadius: 3, color: 'var(--ink-800)' }}>{match[6]}</code>);
+    else if (match[5]) parts.push(<code key={match.index}>{match[6]}</code>);
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
   return parts.length === 1 ? parts[0] : parts;
 }
 
-const backBtn = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', padding: 0, transition: 'color 120ms ease' };
-const backBtnInverse = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', padding: 0, transition: 'color 120ms ease' };
-const h2Style = { fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 700, letterSpacing: '-0.02em', margin: '48px 0 16px', color: 'var(--ink-900)', lineHeight: 1.2 };
-const h3Style = { fontSize: 'clamp(17px,2vw,22px)', fontWeight: 600, letterSpacing: '-0.015em', margin: '36px 0 12px', color: 'var(--ink-900)', lineHeight: 1.25 };

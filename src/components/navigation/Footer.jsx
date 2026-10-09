@@ -77,7 +77,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap = 'Operatio
             Industry LoogoBlog posts are free to republish under{' '}
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
               rel="noopener noreferrer license">CC BY 4.0</a>
-            {' '}— credit Loogo Labs and take it.
+            {' '}with credit to Loogo Labs.
           </span>
           {onAdmin && (
             <button type="button" onClick={onAdmin} className="ll-footer__admin">Admin</button>

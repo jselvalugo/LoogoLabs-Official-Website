@@ -38,14 +38,14 @@ export const PRODUCTS = [
     sku: 'PWS-300', category: 'stations', price: 459, unit: 'each',
     name: 'Recycled-Plastic Station',
     image: '/park-supply/pws-300.svg', illustration: true,
-    desc: 'Made from post-consumer recycled plastic. Will not rust, rot, or need repainting — ideal near water.',
+    desc: 'Made from post-consumer recycled plastic. Will not rust, rot, or need repainting, ideal near water.',
     specs: ['100% recycled HDPE lumber', '10-gal receptacle', 'Holds 800 roll bags', 'Qualifies for green-procurement goals'],
   },
   {
     sku: 'PWS-050', category: 'stations', price: 219, unit: 'each', model: 'HBD002',
     name: 'Compact Dispenser Station',
     image: '/park-supply/pws-050.jpg',
-    desc: 'Dispenser and sign on a post, no receptacle — for locations already served by an existing trash can.',
+    desc: 'Dispenser and sign on a post, no receptacle, for locations already served by an existing trash can.',
     specs: ['6′7″ tall overall (250 × 2000 mm)', 'Keyed-lock dispenser', 'Includes 200 starter bags', 'Surface-mount base plate'],
   },
 
@@ -54,7 +54,7 @@ export const PRODUCTS = [
     sku: 'DSP-R1', category: 'dispensers', price: 69, unit: 'each', model: 'HBD220104',
     name: 'Roll Bag Dispenser',
     image: '/park-supply/dsp-r1.jpg',
-    desc: 'Tear-off roll dispenser that cuts waste — patrons take one bag at a time.',
+    desc: 'Tear-off roll dispenser that cuts waste, so patrons take one bag at a time.',
     specs: ['5.9″ × 5.9″ × 14.2″ (150 × 150 × 360 mm)', 'Keyed-lock refill door', 'Post or wall mount'],
   },
   {
@@ -91,30 +91,30 @@ export const PRODUCTS = [
   // ── Bags & liners ──
   {
     sku: 'BAG-R2000', category: 'bags', price: 59, unit: 'case',
-    name: 'Roll Bags — Case of 2,000',
+    name: 'Roll Bags, case of 2,000',
     image: '/park-supply/bag-r2000.svg', illustration: true,
     desc: 'Standard refill for roll dispensers.',
     specs: ['0.6 mil HDPE', '9″ × 13″', '10 rolls of 200'],
   },
   {
     sku: 'BAG-C1600', category: 'bags', price: 99, unit: 'case',
-    name: 'Compostable Roll Bags — Case of 1,600',
+    name: 'Compostable Roll Bags, case of 1,600',
     image: '/park-supply/bag-c1600.svg', illustration: true,
     desc: 'Certified compostable option for sustainability-minded parks.',
     specs: ['ASTM D6400 certified', '9″ × 13″', '8 rolls of 200'],
   },
   {
     sku: 'BAG-H2000', category: 'bags', price: 54, unit: 'case',
-    name: 'Header Bags — Case of 2,000',
+    name: 'Header Bags, case of 2,000',
     image: '/park-supply/bag-h2000.svg', illustration: true,
     desc: 'Refill for header-style dispensers.',
     specs: ['0.6 mil HDPE', '8″ × 12″', '10 packs of 200'],
   },
   {
     sku: 'LNR-10', category: 'bags', price: 49, unit: 'case',
-    name: 'Receptacle Liners — Case of 200',
+    name: 'Receptacle Liners, case of 200',
     image: '/park-supply/lnr-10.svg', illustration: true,
-    desc: 'Heavy-duty liners sized for 10–15 gal receptacles.',
+    desc: 'Heavy-duty liners sized for 10-15 gal receptacles.',
     specs: ['1.2 mil', '24″ × 33″', 'Fits RCP-10 and station cans'],
   },
 
@@ -151,7 +151,7 @@ export const PRODUCTS = [
     sku: 'MNT-PLATE', category: 'signage', price: 45, unit: 'each',
     name: 'Surface-Mount Base Plate Kit',
     image: '/park-supply/mnt-plate.svg', illustration: true,
-    desc: 'Mount any station onto concrete or pavers — no digging.',
+    desc: 'Mount any station onto concrete or pavers. No digging.',
     specs: ['Steel base plate', 'Concrete anchors included'],
   },
 
@@ -165,7 +165,7 @@ export const PRODUCTS = [
   },
   {
     sku: 'AMN-AGILITY', category: 'amenities', price: 3450, unit: 'set',
-    name: 'Dog Agility Course — 5 Piece',
+    name: 'Dog Agility Course, 5 Piece',
     image: '/park-supply/amn-agility.svg', illustration: true,
     desc: 'Hurdle, weave poles, tunnel, stepping paws, and jump-through hoop.',
     specs: ['Recycled plastic and powder-coated steel', 'In-ground or surface mount', 'Commercial warranty'],
@@ -181,7 +181,7 @@ export const PRODUCTS = [
     sku: 'AMN-SHADE', category: 'amenities', price: 4850, unit: 'each',
     name: 'Shade Structure, 12′ × 12′',
     image: '/park-supply/amn-shade.svg', illustration: true,
-    desc: 'Hip-roof shade canopy — the most requested dog park upgrade in Florida heat.',
+    desc: 'Hip-roof shade canopy: the most requested dog park upgrade in Florida heat.',
     specs: ['UV-blocking fabric', 'Galvanized steel frame', 'Engineered for 130 mph wind load'],
   },
 

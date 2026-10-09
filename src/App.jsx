@@ -142,31 +142,13 @@ function App({ initialPath }) {
   else body = <NotFound onNavigate={navigate} />;
 
   return (
-    <div>
-      <a
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-          height: 36, background: 'var(--ink-900)',
-          borderBottom: '1px solid rgba(216,211,198,0.25)',
-          textDecoration: 'none',
-          fontFamily: 'var(--font-mono)', fontSize: 11,
-          letterSpacing: '0.12em', textTransform: 'uppercase',
-          color: 'var(--ink-300)',
-          transition: 'background 160ms ease',
-          overflow: 'hidden', whiteSpace: 'nowrap', padding: '0 16px',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(216,211,198,0.08)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink-900)'; }}
-        onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
-      >
-        <span style={{ color: 'var(--cyan-500)', fontSize: 7 }}>●</span>
+    <div className="ll-shell">
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="ll-topbar"
+        onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
         <span className="ll-topbar-text">
-          Email Marketing, done for you<span className="ll-topbar-long"> — campaigns that bring customers back</span>
+          Email marketing, done for you<span className="ll-topbar-long">. Campaigns that bring customers back</span>
         </span>
-        <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>→</span>
+        <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
         feature={{ page: 'LoogoNews', label: 'Industry LoogoBlog', badge: 'Fresh' }}

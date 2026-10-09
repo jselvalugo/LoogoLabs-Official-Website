@@ -1,5 +1,6 @@
 import React from 'react';
 import { BLOG_BASE } from '../lib/seo';
+import { ArrowRight, Sparkle, X } from '@phosphor-icons/react';
 
 // Tags/titles that mark a post as written for Central Florida small businesses.
 export const CFL_RE = /central florida|\bcfl\b|orlando|kissimmee|sanford|lakeland|winter park|small business|local business/i;
@@ -91,7 +92,7 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
           {[['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']].map(([page, text]) => (
             <li key={page}>
               <button type="button" className="ln-side__link" onClick={() => { onPick?.(); onNavigate(page); }}>
-                <span className="ln-side__title">{text} →</span>
+                <span className="ln-side__title ln-side__title--go">{text} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
               </button>
             </li>
           ))}
@@ -119,7 +120,7 @@ export default function BlogSidebar(props) {
       </aside>
 
       <button type="button" className="ln-side__fab" aria-expanded={open} aria-controls="ln-side-drawer" onClick={() => setOpen(o => !o)}>
-        {open ? '✕ Close' : '✦ Top posts'}
+        {open ? <><X size={14} weight="bold" aria-hidden="true" /> Close</> : <><Sparkle size={14} weight="fill" aria-hidden="true" /> Top posts</>}
       </button>
       {open && <div className="ln-side__scrim" onClick={() => setOpen(false)} />}
       <aside id="ln-side-drawer" className={`ln-side ln-side--drawer${open ? ' is-open' : ''}`} aria-label="Industry LoogoBlog highlights" hidden={!open}>
