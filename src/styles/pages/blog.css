@@ -240,3 +240,28 @@
 .lb-page--event .lb-cta__btn .lb-go__icon { background: #0F0D0A; color: #C9952A; }
 .lb-page--event .lb-back--pill { color: #C9952A; background: #1C1A16; border-color: rgba(201,149,42,.28); }
 .lb-event-logo { display: block; width: 96px; height: auto; margin-bottom: 24px; }
+
+/* Event posts: the ticket CTA floats in a sticky right rail on desktop and
+   docks to the bottom of the screen on smaller viewports. */
+.lb-page--event .lb-post { grid-template-columns: minmax(0, 68ch) 300px; gap: 56px; align-items: start; }
+.lb-cta__short { display: none; }
+.lb-event-rail { position: sticky; top: 112px; padding-top: 48px; }
+.lb-event-rail .lb-cta { margin-top: 0; padding: 28px; border-radius: var(--radius-3); }
+.lb-event-rail .lb-cta__title { font-size: 24px; }
+.lb-event-rail .lb-cta__text { font-size: 15px; }
+.lb-event-rail .lb-cta__btn { width: 100%; justify-content: space-between; }
+@media (max-width: 1080px) {
+  .lb-page--event .lb-post { grid-template-columns: minmax(0, 68ch); gap: 0; }
+  .lb-page--event { padding-bottom: 96px; }
+  .lb-event-rail { position: fixed; z-index: 40; left: 12px; right: 12px; bottom: 12px; top: auto; padding: 0; }
+  .lb-event-rail .lb-cta { display: flex; align-items: center; gap: 16px; padding: 12px 12px 12px 20px; border-radius: var(--radius-pill);
+    box-shadow: 0 18px 40px -12px rgba(0,0,0,.6); }
+  .lb-event-rail .lb-cta__title { margin: 0; flex: 1; font-size: 17px; }
+  .lb-event-rail .lb-cta__text, .lb-event-rail .lb-cta__long { display: none; }
+  .lb-event-rail .lb-cta__short { display: inline; }
+  .lb-event-rail .lb-cta__btn { width: auto; flex-shrink: 0; font-size: 14px; }
+}
+@media (max-width: 480px) {
+  .lb-event-rail .lb-cta__title { font-size: 15px; }
+  .lb-event-rail .lb-cta__btn { padding-left: 16px; }
+}

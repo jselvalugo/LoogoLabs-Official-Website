@@ -86,6 +86,31 @@ export default function BlogPost({ slug, onNavigate }) {
 
   const event = isEventPost(post);
 
+  const cta = (
+    <div className="lb-cta ll-forest">
+      <h3 className="lb-cta__title">{event
+        ? <><span className="lb-cta__long">Save your spot. It is free to attend.</span><span className="lb-cta__short">Cards &amp; Cocktails · Free · Nov 14</span></>
+        : 'Want this running in your business?'}</h3>
+      <p className="lb-cta__text">
+        {event
+          ? 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.'
+          : 'We set it up, run it, and optimize it every month. You just run your business.'}
+      </p>
+      <a
+        href={event ? EVENT_URL : BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="lb-cta__btn"
+        onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
+      >
+        {event
+          ? <><span className="lb-cta__long">Get tickets on Eventbrite</span><span className="lb-cta__short">Get tickets</span></>
+          : 'Book a free strategy call'}
+        <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
+      </a>
+    </div>
+  );
+
   return (
     <div className={event ? 'lb-page lb-page--event' : 'lb-page'}>
       <div className="lb-wrap">
@@ -155,25 +180,8 @@ export default function BlogPost({ slug, onNavigate }) {
               </div>
             )}
 
-            {/* CTA box */}
-            <div className="lb-cta ll-forest">
-              <h3 className="lb-cta__title">{event ? 'Save your spot. It is free to attend.' : 'Want this running in your business?'}</h3>
-              <p className="lb-cta__text">
-                {event
-                  ? 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.'
-                  : 'We set it up, run it, and optimize it every month. You just run your business.'}
-              </p>
-              <a
-                href={event ? EVENT_URL : BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lb-cta__btn"
-                onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
-              >
-                {event ? 'Get tickets on Eventbrite' : 'Book a free strategy call'}
-                <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
-              </a>
-            </div>
+            {/* CTA box: event posts float it in a side rail instead */}
+            {!event && cta}
 
             {/* Back link */}
             <div className="lb-post__back">
@@ -182,6 +190,7 @@ export default function BlogPost({ slug, onNavigate }) {
               </a>
             </div>
           </article>
+          {event && <aside className="lb-event-rail" aria-label="Event tickets">{cta}</aside>}
       </div>
       </div>
     </div>
