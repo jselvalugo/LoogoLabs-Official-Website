@@ -993,16 +993,15 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   opacity: 0; pointer-events: none; transition: opacity var(--dur-base) ease; }
 .ll-nav-scrim.open { opacity: 1; pointer-events: auto; }
 @media (min-width: 961px) { .ll-nav-mobile, .ll-nav-scrim, .ll-nav__wordmark { display: none; } }
-/* Mobile nav wordmark: EB Garamond, absolutely centred in the bar, with a warm
-   cream-to-amber gradient fill so it glows against the dark glass. */
+/* Mobile nav wordmark: EB Garamond, absolutely centred in the bar, in a deep
+   forest tone darker than the glass so it reads as pressed into it. A faint
+   light edge underneath keeps it legible. Line-height leaves room for the "g". */
 .ll-nav__wordmark {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -52%);
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   font-family: "EB Garamond", Garamond, "Times New Roman", serif; font-weight: 500;
-  font-size: 27px; line-height: 1; letter-spacing: 0.01em; white-space: nowrap; text-decoration: none;
-  color: #F3E7CF;
-  background: linear-gradient(100deg, #FBF4E4 0%, #F1D9A6 45%, #D9A65A 75%, #F3E7CF 100%);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 10px rgba(217, 166, 90, 0.18);
+  font-size: 27px; line-height: 1.3; padding: 0 2px; letter-spacing: 0.01em; white-space: nowrap; text-decoration: none;
+  color: #18230F;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.16), 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 @media (max-width: 360px) { .ll-nav__wordmark { font-size: 23px; } }
 @media (max-width: 960px) {
