@@ -160,7 +160,7 @@ export default function BlogPost({ slug, onNavigate }) {
               <h3 className="lb-cta__title">{event ? 'Save your spot. It is free to attend.' : 'Want this running in your business?'}</h3>
               <p className="lb-cta__text">
                 {event
-                  ? 'Register as a guest, grab a $25 VIP early-access pass, or request an $80 vendor table.'
+                  ? 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.'
                   : 'We set it up, run it, and optimize it every month. You just run your business.'}
               </p>
               <a
@@ -170,7 +170,7 @@ export default function BlogPost({ slug, onNavigate }) {
                 className="lb-cta__btn"
                 onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
               >
-                {event ? 'Register for the event' : 'Book a free strategy call'}
+                {event ? 'Get tickets on Eventbrite' : 'Book a free strategy call'}
                 <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
               </a>
             </div>
@@ -299,4 +299,4 @@ function inlineRender(text) {
   return parts.length === 1 ? parts[0] : parts;
 }
 
-const EVENT_URL = 'https://cards-and-cocktails.netlify.app/#register';
+const EVENT_URL = 'https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202';

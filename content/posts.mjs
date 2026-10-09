@@ -3159,21 +3159,33 @@ Take every estimate you sent in the last sixty days and sort it into three piles
   {
     slug: `cards-and-cocktails-pokemon-event-lakeland`,
     title: `Cards & Cocktails: A Pokémon TCG Night at Lugo's Craft Distillery`,
-    excerpt: `Saturday, November 14th, 2026 — buy, sell, and trade Pokémon cards in Lakeland with a craft cocktail in hand. Free to attend, VIP early access, and $80 vendor tables.`,
+    excerpt: `Saturday, November 14th, 2026 — buy, sell, and trade Pokémon cards in Lakeland with a craft cocktail in hand. Free to attend, family friendly with mocktails for kids, VIP early access, and $80 vendor tables.`,
     tags: `Events, Lakeland FL, Pokémon TCG`,
     content: `![Lugo's Craft Distillery logo](/blog/cards-and-cocktails-event.jpg)
 
 Most card shows happen under fluorescent lights in a convention hall. This one happens in a distillery.
 
-On **Saturday, November 14th, 2026**, Lugo's Craft Distillery in Lakeland is hosting **Cards & Cocktails** — a Pokémon trading card event where you can buy, sell, and trade with a craft cocktail in hand. Admission is free.
+On **Saturday, November 14th, 2026**, Lugo's Craft Distillery in Lakeland is hosting **Cards & Cocktails** — a Pokémon trading card event where you can buy, sell, and trade with a craft cocktail in hand. Admission is free, it is held outdoors, and it is open to the whole family, not just the 21+ crowd.
 
 ## The essentials
 
 - **Date:** Saturday, November 14th, 2026
 - **Public hours:** 2:00 – 10:00 PM (doors open at 2 PM)
-- **Location:** Lugo's Craft Distillery, 2500 Drane Field Rd, Lakeland, FL 33811
-- **Admission:** Free to attend — 21+ for bar service
-- **Register:** [cards-and-cocktails.netlify.app](https://cards-and-cocktails.netlify.app/#register)
+- **Location:** Lugo's Craft Distillery, 2500 Drane Field Rd, STE 208, Lakeland, FL 33811 (outdoor event)
+- **Admission:** Free to attend, all ages welcome. 21+ for alcohol
+- **Free collectible pin:** sign up ahead of time and you take one home
+- **Tickets:** [Eventbrite](https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202) or [cards-and-cocktails.netlify.app](https://cards-and-cocktails.netlify.app/#register)
+
+## Bring the kids: mocktails for everyone
+
+Pokémon has always been a family hobby, and this event treats it like one. The bar is pouring **mocktails for kids** and anyone who is not drinking, so younger Trainers get their own drink in hand while they trade.
+
+- Kids and teens are welcome all day. Bring the binder and let them do the deals
+- Mocktails are on the menu alongside the craft cocktails
+- Alcohol is 21+ only, and IDs are checked at the bar
+- It is outdoors, so dress for the weather and bring a bag for your trades
+
+If you have a young collector at home, this is a good first card show: free entry, a friendly crowd, and a pin to take home.
 
 ## What is on the tables
 
@@ -3191,7 +3203,7 @@ Pokémon is the headline, but vendors are bringing more than one game. Expect **
 
 ## The VIP experience — $25
 
-If you want first pick, this is the ticket. VIP guests get in at **1:00 PM**, a full hour before the public, to shop every vendor table before the crowd. It also includes one craft cocktail from the exclusive Pokémon-themed **PokeMenu**. Spots are limited, and checkout runs through Eventbrite.
+If you want first pick, this is the ticket. VIP guests get in at **1:00 PM**, a full hour before the public, to shop every vendor table before the crowd. It also includes one craft cocktail from the exclusive Pokémon-themed **PokeMenu**. Spots are limited, and checkout runs through [Eventbrite](https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202). VIP tickets are refundable up to 7 days before the event.
 
 ## Vendors: reserve your table — $80 all in
 
@@ -3208,8 +3220,8 @@ One policy worth knowing up front: the vendor fee is **non-refundable**. If you 
 
 ## How to get in
 
-Head to the [Cards & Cocktails registration page](https://cards-and-cocktails.netlify.app/#register) and pick one: attend free, reserve VIP early access, or request a vendor table. Registering as a free guest still gets you a confirmation and event updates.
+Grab your free ticket or VIP pass on [Eventbrite](https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202). Signing up is free and gets you a collectible pin on the day. Vendors can request a table on the [Cards & Cocktails registration page](https://cards-and-cocktails.netlify.app/#register).
 
-Must be 21+ to consume alcohol. Please drink responsibly — and bring your binder.`,
+Must be 21+ to consume alcohol. Please drink responsibly, grab the kids a mocktail, and bring your binder.`,
   },
 ];
