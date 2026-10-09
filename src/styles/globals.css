@@ -1118,11 +1118,12 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .hm-voice__cta { margin-top: 32px; display: grid; gap: 10px; justify-items: start; }
 .hm-voice__cta small { font-size: 13px; color: var(--ink-300); }
 
-.hm-founder { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 56px; align-items: center; }
+.hm-founder { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; align-items: center; }
 .hm-founder__photo { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius-4); overflow: hidden; box-shadow: var(--bezel); background: var(--ink-800); }
 .hm-founder__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hm-founder__fallback { display: grid; place-items: center; height: 100%; font-size: 64px; font-weight: 700; color: var(--ink-200); }
-.hm-founder__name { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 14px 18px; border-radius: 18px; }
+.hm-founder__name { position: absolute; left: 6px; right: 6px; bottom: 6px; padding: 8px 10px; border-radius: 14px; }
+.hm-founder__name strong { font-size: 13px !important; } .hm-founder__name span { display: none !important; }
 .hm-founder__name strong { display: block; font-size: 16px; color: var(--ink-900); }
 .hm-founder__name span { display: block; font-size: 13px; color: var(--ink-500); margin-top: 2px; }
 .hm-founder h2 { margin: 0; font-size: clamp(30px, 3.6vw, 52px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; color: var(--ink-900); text-wrap: balance; }
@@ -1156,7 +1157,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-why__head { position: static; }
   .hm-why { gap: 32px; }
   .hm-founder { gap: 32px; }
-  .hm-founder__photo { max-width: 420px; }
+  .hm-founder__photo { max-width: 160px; }
 }
 @media (max-width: 767px) {
   .hm-section { padding-top: 48px; padding-bottom: 48px; }

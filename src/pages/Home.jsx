@@ -127,7 +127,7 @@ function FounderSpotlight() {
           )}
           <div className="hm-founder__name ll-glass">
             <strong>David Selva</strong>
-            <span>Founder. 8+ years in performance marketing</span>
+            <span>Founder</span>
           </div>
         </div>
         <div>
