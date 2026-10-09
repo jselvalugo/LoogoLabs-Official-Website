@@ -156,7 +156,7 @@ function App({ initialPath }) {
       />
       <SeasonalGarland />
       <div onClick={handleLinkClick}>{body}</div>
-      <Footer note="One platform to launch, grow, and automate your online business. Replace 10–15 tools and save $400+ a month."
+      <Footer
         columns={[
           { title: 'Company', links: ['Mission', 'Company', 'Book a Call'] },
           { title: 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },

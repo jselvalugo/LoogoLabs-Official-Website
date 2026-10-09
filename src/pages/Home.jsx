@@ -127,7 +127,7 @@ function FounderSpotlight() {
           )}
           <div className="hm-founder__name ll-glass">
             <strong>David Selva</strong>
-            <span>Founder. 8+ years in performance marketing</span>
+            <span>Founder</span>
           </div>
         </div>
         <div>
@@ -199,13 +199,13 @@ function Home({ onNavigate }) {
         <Wrap>
           <div className="hm-hero__grid">
             <div>
-              <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Done-for-you email for Central Florida</span>
+              <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Meet David, your marketing partner</span>
               <h1 className="hm-hero__title" aria-label="Email Marketing That Brings Customers Back. We Run It for You.">
                 <TypedWord words={ROTATING_WORDS} /><span aria-hidden="true"> That Brings Customers Back.</span> <em aria-hidden="true">We Run It for You.</em>
               </h1>
               <p className="hm-hero__lede">
-                The cheapest way to turn customers you already have into repeat sales. We write the
-                campaigns, build the follow-ups and send them for you.
+                A partner, not a vendor. We learn your business, plan every campaign
+                with you, and stay in it for the long run, so your customers keep coming back.
               </p>
               <div className="hm-hero__actions">
                 <Button variant="inverse" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Get my email plan</Button>
