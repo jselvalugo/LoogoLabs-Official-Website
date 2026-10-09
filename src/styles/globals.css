@@ -335,7 +335,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ── October garland under the nav bar ── */
-.ll-garland { position: relative; height: 0; z-index: 5; pointer-events: none; }
+.ll-garland { position: relative; height: 64px; z-index: 5; pointer-events: none; }
 .ll-garland-strand { position: absolute; top: 0; transform-origin: top center;
   animation: ll-garland-sway 4.5s ease-in-out infinite alternate; }
 .ll-garland-strand svg { display: block; margin-left: -12px; }
@@ -1203,7 +1203,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .hm-wrap { width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
 .hm-section { padding-top: 72px; padding-bottom: 72px; }
 
-.hm-hero { padding: 56px 0 24px; }
+.hm-hero { padding: 8px 0 24px; }
 .hm-hero__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 32px; align-items: center; }
 .hm-pill {
   display: inline-flex; align-items: center; gap: 12px; padding: 6px 18px 6px 6px; border-radius: var(--radius-pill);
@@ -1319,7 +1319,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .hm-note a span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(245, 242, 235, 0.14); }
 
 @media (max-width: 960px) {
-  .hm-hero { padding: 64px 0 24px; }
+  .hm-hero { padding: 8px 0 24px; }
   .hm-hero__grid, .hm-voice, .hm-founder, .hm-why, .hm-cta { grid-template-columns: 1fr; }
   .hm-hero__art { justify-self: center; max-width: 520px; margin-top: 8px; }
   .hm-why__head { position: static; }
