@@ -1,25 +1,27 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { SITE } from '../lib/seo';
+import '../styles/pages/quiz.css';
 
 export default function Terms({ onNavigate }) {
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--paper-100)' }}>
+    <div className="lg-page">
 
       {/* Header */}
-      <div className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(48px,7vw,88px) 32px clamp(40px,5vw,64px)' }}>
-          <h1 style={{ margin: 0, fontWeight: 800, fontSize: 'clamp(36px,5vw,64px)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--paper-100)' }}>
+      <div className="lg-wrap">
+        <div className="lg-head ll-forest ll-bezel--dark">
+          <h1 className="lg-title">
             Terms of Service
           </h1>
-          <p style={{ margin: '20px 0 0', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', letterSpacing: '0.06em' }}>
+          <p className="lg-updated">
             Last updated: September 1, 2026
           </p>
         </div>
       </div>
 
       {/* Body */}
-      <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(48px,6vw,80px) 32px clamp(64px,8vw,96px)' }}>
+      <div className="lg-wrap">
+      <div className="lg-panel ll-glass">
 
         <Section title="1. Acceptance of Terms">
           <P>By accessing or using the website loogolabs.com or any services provided by David Selva, a sole proprietor doing business as Loogo Labs ("Loogo Labs," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use our website or services.</P>
@@ -86,9 +88,10 @@ export default function Terms({ onNavigate }) {
           <P><strong>David Selva, d/b/a Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
-        <div style={{ marginTop: 56, paddingTop: 28, borderTop: '1px solid var(--border-hair)' }}>
-          <button onClick={() => onNavigate('Privacy')} style={navBtn}>← Read our Privacy Policy</button>
+        <div className="lg-foot">
+          <button onClick={() => onNavigate('Privacy')} className="lg-navbtn">← Read our Privacy Policy</button>
         </div>
+      </div>
       </div>
     </div>
   );
@@ -96,26 +99,25 @@ export default function Terms({ onNavigate }) {
 
 function Section({ title, children }) {
   return (
-    <div style={{ marginBottom: 40 }}>
-      <h2 style={{ fontSize: 'clamp(16px,2vw,20px)', fontWeight: 700, letterSpacing: '-0.015em', color: 'var(--ink-900)', margin: '0 0 14px' }}>{title}</h2>
+    <section className="lg-section">
+      <h2>{title}</h2>
       {children}
-    </div>
+    </section>
   );
 }
 
 function P({ children }) {
-  return <p style={{ margin: '0 0 14px', fontSize: 16, lineHeight: 1.75, color: 'var(--ink-700)' }}>{children}</p>;
+  return <p className="lg-p">{children}</p>;
 }
 
 function UL({ items }) {
   return (
-    <ul style={{ margin: '0 0 14px', paddingLeft: 22 }}>
+    <ul className="lg-ul">
       {items.map((item, i) => (
-        <li key={i} style={{ fontSize: 16, lineHeight: 1.75, color: 'var(--ink-700)', marginBottom: 6 }}>{item}</li>
+        <li key={i}>{item}</li>
       ))}
     </ul>
   );
 }
 
 const linkStyle = { color: 'var(--cyan-700)', textDecoration: 'underline' };
-const navBtn = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', padding: 0 };
