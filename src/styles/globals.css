@@ -335,7 +335,10 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ── October garland under the nav bar ── */
-.ll-garland { position: relative; height: 64px; z-index: 5; pointer-events: none; }
+/* Same width as the floating nav pill, so every strand hangs from the bar. */
+.ll-garland { position: relative; height: 64px; z-index: 5; pointer-events: none;
+  width: calc(100% - 32px); max-width: calc(var(--container-max) + 48px); margin: 0 auto; }
+@media (max-width: 960px) { .ll-garland { width: calc(100% - 24px); } }
 .ll-garland-strand { position: absolute; top: 0; transform-origin: top center;
   animation: ll-garland-sway 4.5s ease-in-out infinite alternate; }
 .ll-garland-strand svg { display: block; margin-left: -12px; }
