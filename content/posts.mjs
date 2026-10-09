@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `salon-december-chair-hours-regulars-first`,
+    title: `Your Best Regulars Lose December to Whoever Texts First`,
+    excerpt: `The hours before Christmas can't be stretched, and a first-come calendar hands them to strangers while your six-year clients get a Tuesday morning.`,
+    tags: `Seasonal Booking, Client Retention, Salons & Spas`,
+    content: `The Friday before Christmas is the one day a stylist can't stretch, and most salons give it away by accident. Not to a bad client. To whoever happened to text first in the second week of December, while your best regulars, the ones with a party on the twenty-third, assumed you'd have room because you always have.
+
+You won't. A three-chair salon has a fixed number of hours between Thanksgiving and New Year's, and those hours are not equal. Some are worth far more than others, and the way they get filled is mostly luck.
+
+## Why December fills in the wrong order
+
+Regulars don't book the holidays the way they book a normal month. They book backward from an event: a family dinner, a work party, a wedding they're in. The appointment isn't a cadence, it's a deadline with a date attached.
+
+The trouble is that they remember the event around the first week of December and the appointment about four days before it. By then the prime slots, the Wednesday through Saturday before the big dates, went to whoever asked first. The regular who has been coming for six years gets a Tuesday at 10 AM and mentions it to her sister.
+
+Meanwhile the opposite problem sits in the same calendar. The first week of December and the dead days after New Year's are wide open, because nobody has an event attached to them.
+
+## Decide which hours are scarce before anyone asks
+
+Print December. With a pen, mark the days you already know will be requested: the Friday and Saturday before each major holiday, and any weekend with a date people tend to dress up for. Count the chair-hours on those days.
+
+Now ask one honest question: who do you want in those hours? For most owners the answer is existing clients, in order of how long they've been coming and how often they rebook. That isn't favoritism, it's the whole reason your book is stable.
+
+If you don't make that choice now, the calendar makes it for you, by timestamp.
+
+## Open the scarce days to regulars first
+
+This is the fix, and it's small. Sometime in the next two weeks, send a message to your regulars, and only your regulars, saying the holiday-week days are open to them before they open to anyone else, and that you'll start taking new clients for those days on a date you name. Make that date real, say the fifteenth of November, and keep it.
+
+The message should do three things:
+
+- Name the specific days that are about to disappear, not "the holidays."
+- Ask for the appointment, with a link or reply that books it. A message that only informs gets read and forgotten.
+- Say what happens after the open date, plainly, so nobody feels pressured and nobody feels cheated.
+
+I'd split the list by visit rhythm. Someone who comes every four weeks and was last in at the end of October doesn't need a December push; they need a slot that fits her cycle. Someone who comes twice a year and always asks for the week before Christmas needs the message first.
+
+## Be honest about the limit
+
+This doesn't create more hours. It decides who gets the ones you have, and it moves the decision from a race to a rule. I can't promise it fills your quiet days, and I won't make up a number for you. The first week of December is a separate problem; a short note offering a small perk for moving a booking earlier is worth trying, but treat it as an experiment.
+
+It also won't help if your regulars aren't reachable. If half your client list has no mobile number on file, the message goes to half your regulars, and the other half find out the way they always did.
+
+## Check this week
+
+Open last December's calendar and look at the Thursday through Saturday before Christmas. Count how many of those appointments belonged to clients who've been with you a year or more, and how many went to people you'd never seen before or haven't seen since. If the second number is higher than you'd like, you have your answer, and you have until mid-November to change it.`,
+  },
+  {
     slug: `driving-school-stalled-students-between-lessons`,
     title: `Your Driving Students Quit Between Lesson Three and Four`,
     excerpt: `A student who drifts away mid-course leaves an instructor's hour empty and a license unfinished, and a simple days-since-last-lesson check catches them while they still want to come back.`,
