@@ -204,8 +204,8 @@ function Home({ onNavigate }) {
                 <TypedWord words={ROTATING_WORDS} /><span aria-hidden="true"> That Brings Customers Back.</span> <em aria-hidden="true">We Run It for You.</em>
               </h1>
               <p className="hm-hero__lede">
-                The cheapest way to turn customers you already have into repeat sales. We write the
-                campaigns, build the follow-ups and send them for you.
+                A partner, not a vendor. We learn your business, plan every campaign
+                with you, and stay in it for the long run, so your customers keep coming back.
               </p>
               <div className="hm-hero__actions">
                 <Button variant="inverse" size="lg" iconRight={<span>→</span>} onClick={openBooking}>Get my email plan</Button>
