@@ -1,0 +1,69 @@
+/* Mobile compaction (≤767px).
+   On phones the long vertical stacks of cards made every page 8–16 screens
+   tall. Here those stacks become horizontal swipe rows (one card in view, the
+   next peeking in), and section spacing is trimmed. Desktop is untouched.
+   Selectors are prefixed with :root so they win over the page stylesheets,
+   which load after this file. */
+
+@media (max-width: 767px) {
+  /* ── Swipe rows ── */
+  :root :is(
+    .hm-bento, .hm-why__list,
+    .ll-staple-principles, .ll-staple-timeline,
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
+    .ll-staple-list
+  ) {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+    margin-inline: -24px;
+    padding: 4px 24px 14px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  :root :is(
+    .hm-bento, .hm-why__list,
+    .ll-staple-principles, .ll-staple-timeline,
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
+    .ll-staple-list
+  )::-webkit-scrollbar { display: none; }
+
+  :root :is(
+    .hm-bento, .hm-why__list,
+    .ll-staple-principles, .ll-staple-timeline,
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
+    .ll-staple-list
+  ) > * {
+    flex: 0 0 84%;
+    min-width: 0;
+    margin: 0 !important;
+    scroll-snap-align: start;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  /* The career list sits inside a rounded panel, so it scrolls within it. */
+  :root .ll-staple-list { margin-inline: 0; padding: 16px !important; scroll-padding-inline: 16px; }
+
+  /* ── Chip lists: one swipeable line instead of wrapping onto many ── */
+  :root :is(.av-proof, .av-ind__chips, .av-cities__links) {
+    display: flex !important; flex-wrap: nowrap !important; gap: 8px !important;
+    overflow-x: auto; scrollbar-width: none;
+    margin-inline: -24px; padding: 2px 24px 6px !important;
+  }
+  :root :is(.av-proof, .av-ind__chips, .av-cities__links)::-webkit-scrollbar { display: none; }
+  :root :is(.av-proof, .av-ind__chips, .av-cities__links) > * { flex: 0 0 auto; white-space: nowrap; }
+
+  /* ── Section rhythm ── */
+  :root .hm-section { padding-top: 32px; padding-bottom: 32px; }
+  :root .av-section { padding-top: 28px; padding-bottom: 28px; }
+  :root .ll-staple-section { padding-top: 40px; padding-bottom: 16px; }
+  :root .av-hero { padding-top: 28px; }
+
+  /* ── Footer fine print ── */
+  :root .ll-footer__license { font-size: 12px; line-height: 1.5; }
+}

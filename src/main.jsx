@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import '@fontsource/eb-garamond/latin-500.css';
 import './styles/globals.css';
+import './styles/mobile-compact.css';
 import App from './App';
 import { startSessionTracking } from './lib/sessionTracker';
 
