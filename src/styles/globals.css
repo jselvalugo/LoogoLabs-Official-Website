@@ -1211,3 +1211,14 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-pill__tag, .pk-pop, .pr-row__note, .pr-mock__chip, .lb-empty__kicker, .ps-photo-note,
   .av-call small, .av-phone small, .av-call__live, .cfl-transcript small, .cfl-transcript__head { font-size: 11px !important; }
 }
+
+/* Featured post pill: stack on phones so the title gets the full width. */
+@media (max-width: 767px) {
+  .hm-featured {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'tag tag' 'title go';
+    align-items: center; gap: 12px 12px; padding: 14px 14px 14px 18px; border-radius: var(--radius-3);
+  }
+  .hm-featured__tag { grid-area: tag; justify-self: start; font-size: 10.5px; letter-spacing: 0.1em; padding: 6px 10px; }
+  .hm-featured__title { grid-area: title; white-space: normal !important; overflow: visible; font-size: 15px !important; line-height: 1.35; }
+  .hm-featured__go { grid-area: go; width: 40px; height: 40px; margin: 0; }
+}
