@@ -31,6 +31,12 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
           <img src="/logo.png" alt="Loogo Labs" width="120" height="36" />
         </a>
 
+        {/* Mobile only: the serif wordmark centred in the bar. */}
+        <a href={pathForPage('Home')} className="ll-nav__wordmark" aria-hidden="true" tabIndex={-1}
+          onClick={e => { e.preventDefault(); handleNav('Home'); }}>
+          Loogo Labs
+        </a>
+
         <nav className="ll-nav-links" aria-label="Primary">
           {items.map(it => (
             <a key={it} href={pathForPage(it)} aria-current={it === active ? 'page' : undefined}

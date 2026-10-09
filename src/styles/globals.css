@@ -992,7 +992,19 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   opacity: 0; pointer-events: none; transition: opacity var(--dur-base) ease; }
 .ll-nav-scrim.open { opacity: 1; pointer-events: auto; }
-@media (min-width: 961px) { .ll-nav-mobile, .ll-nav-scrim { display: none; } }
+@media (min-width: 961px) { .ll-nav-mobile, .ll-nav-scrim, .ll-nav__wordmark { display: none; } }
+/* Mobile nav wordmark: EB Garamond, absolutely centred in the bar, with a warm
+   cream-to-amber gradient fill so it glows against the dark glass. */
+.ll-nav__wordmark {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -52%);
+  font-family: "EB Garamond", Garamond, "Times New Roman", serif; font-weight: 500;
+  font-size: 27px; line-height: 1; letter-spacing: 0.01em; white-space: nowrap; text-decoration: none;
+  color: #F3E7CF;
+  background: linear-gradient(100deg, #FBF4E4 0%, #F1D9A6 45%, #D9A65A 75%, #F3E7CF 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 10px rgba(217, 166, 90, 0.18);
+}
+@media (max-width: 360px) { .ll-nav__wordmark { font-size: 23px; } }
 @media (max-width: 960px) {
   .ll-nav-links, .ll-nav-feature-desktop, .ll-cta-desktop { display: none !important; }
   .ll-nav-burger { display: inline-flex; }
