@@ -1160,7 +1160,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 }
 @media (max-width: 767px) {
   .hm-section { padding-top: 48px; padding-bottom: 48px; }
-  .hm-hero__title { font-size: clamp(38px, 10.5vw, 52px); }
+  .hm-hero__title { font-size: clamp(34px, 9.8vw, 52px); }
   .hm-hero__lede { font-size: 17px; }
   .hm-pill { font-size: 13px; white-space: nowrap; padding-right: 14px; }
   .hm-pill__tag { padding: 5px 10px; font-size: 10px; }
@@ -1183,3 +1183,12 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-footer__license { color: var(--ink-300) !important; }
 .ll-footer__license a { color: var(--ink-100) !important; }
 .ll-footer__admin { color: var(--ink-400) !important; }
+
+/* Home hero: the retyped headline word. */
+.hm-typed { position: relative; white-space: nowrap; color: #B8691C; }
+.hm-typed__caret {
+  display: inline-block; width: 0.06em; height: 0.82em; margin-left: 0.04em; vertical-align: -0.04em;
+  border-radius: 2px; background: #B8691C; animation: hm-caret 1s steps(1) infinite;
+}
+@keyframes hm-caret { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hm-typed__caret { display: none; } }

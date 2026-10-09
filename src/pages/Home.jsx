@@ -11,6 +11,32 @@ const Wrap = ({ children, style, className }) => (
   <div className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
 );
 
+// Hero headline phrase that backspaces and retypes itself through our services. The first word is
+// rendered in full on the server, so crawlers and no-JS visitors read a normal
+// headline; screen readers get the stable phrase from the h1's aria-label.
+const ROTATING_WORDS = ['Email Marketing', 'Text Messaging', 'AI Call Answering', 'Review Automation', 'Local SEO'];
+
+function TypedWord({ words }) {
+  const [index, setIndex] = React.useState(0);
+  const [text, setText] = React.useState(words[0]);
+  const [phase, setPhase] = React.useState('hold'); // hold | delete | type
+
+  React.useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const word = words[index];
+    let t;
+    if (phase === 'hold') t = setTimeout(() => setPhase('delete'), 2400);
+    else if (phase === 'delete') {
+      if (text.length) t = setTimeout(() => setText(text.slice(0, -1)), 55);
+      else t = setTimeout(() => { setIndex((index + 1) % words.length); setPhase('type'); }, 280);
+    } else if (text.length < word.length) t = setTimeout(() => setText(word.slice(0, text.length + 1)), 95);
+    else setPhase('hold');
+    return () => clearTimeout(t);
+  }, [text, phase, index, words]);
+
+  return <span className="hm-typed" aria-hidden="true">{text}<span className="hm-typed__caret" /></span>;
+}
+
 // Each tile names the tools it retires, straight from the section copy.
 const features = [
   { title: 'CRM & Contacts', tone: 'inverse', retires: ['Spreadsheets', 'Scattered inboxes'],
@@ -174,8 +200,8 @@ function Home({ onNavigate }) {
           <div className="hm-hero__grid">
             <div>
               <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Done-for-you email for Central Florida</span>
-              <h1 className="hm-hero__title">
-                Email Marketing That Brings Customers Back. <em>We Run It for You.</em>
+              <h1 className="hm-hero__title" aria-label="Email Marketing That Brings Customers Back. We Run It for You.">
+                <TypedWord words={ROTATING_WORDS} /><span aria-hidden="true"> That Brings Customers Back.</span> <em aria-hidden="true">We Run It for You.</em>
               </h1>
               <p className="hm-hero__lede">
                 The cheapest way to turn customers you already have into repeat sales. We write the
