@@ -22,7 +22,16 @@ function TypedWord({ words }) {
   const [phase, setPhase] = React.useState('hold'); // hold | delete | type
 
   React.useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    // Reduce Motion (common on phones): still rotate, but swap whole words
+    // instead of typing them out letter by letter.
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const t = setTimeout(() => {
+        const next = (index + 1) % words.length;
+        setIndex(next);
+        setText(words[next]);
+      }, 3000);
+      return () => clearTimeout(t);
+    }
     const word = words[index];
     let t;
     if (phase === 'hold') t = setTimeout(() => setPhase('delete'), 2400);
