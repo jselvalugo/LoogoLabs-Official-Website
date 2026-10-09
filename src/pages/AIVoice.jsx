@@ -2,46 +2,57 @@ import React from 'react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 import { VOICE_CITIES, voiceCityPath } from '../lib/voiceCities';
+import {
+  Phone, CalendarCheck, Check, X, Minus, Plus, ArrowRight, ArrowDown,
+  Moon, Funnel, ChatsCircle, ShieldCheck, Microphone,
+} from '@phosphor-icons/react';
+import '../styles/pages/aivoice.css';
 
 const trackBook = () => { if (window.fbq) window.fbq('track', 'Schedule'); openBooking(); };
 
 /* ─────────────────────── primitives ─────────────────────── */
-const Wrap = ({ children, style }) => (
-  <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px', ...style }}>{children}</div>
-);
-
-const Eyebrow = ({ children, light }) => (
-  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
-    color: light ? 'var(--cyan-500)' : 'var(--ink-400)', marginBottom: 14 }}>
-    {children}
-  </div>
+const Wrap = ({ children, className, style }) => (
+  <div className={['av-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
 );
 
 /* ─────────────────────── waveform bars ─────────────────────── */
 const WAVE_BARS = [0.3, 0.7, 0.5, 1, 0.6, 0.85, 0.4, 0.9, 0.55, 0.75, 0.35, 0.95, 0.5, 0.8, 0.45, 1, 0.6, 0.7, 0.4, 0.9, 0.55, 0.65, 0.35, 0.85, 0.5, 0.75, 0.3, 0.95, 0.6, 0.8, 0.4, 0.7];
 
-const Waveform = ({ color = 'var(--cyan-500)', height = 56, animate = true, barCount = WAVE_BARS.length }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 3, height, overflow: 'hidden', minWidth: 0 }}>
+const Waveform = ({ height = 56, barCount = WAVE_BARS.length }) => (
+  <div className="av-wave" style={{ height }} aria-hidden="true">
     {WAVE_BARS.slice(0, barCount).map((h, i) => (
-      <div key={i} style={{
-        width: 3, flexShrink: 0, height: `${h * 100}%`, background: color, borderRadius: 2, opacity: 0.85,
-        animation: animate ? `waveBar 1.2s ease-in-out ${(i * 0.04).toFixed(2)}s infinite alternate` : 'none',
-      }} />
+      <i key={i} style={{ height: `${h * 100}%`, animationDelay: `${(i * 0.04).toFixed(2)}s` }} />
     ))}
   </div>
 );
 
 /* ─────────────────────── call transcript ─────────────────────── */
 const transcript = [
-  { role: 'caller', text: 'Hi, I need someone to look at my AC — it stopped working last night.' },
+  { role: 'caller', text: 'Hi, I need someone to look at my AC. It stopped working last night.' },
   { role: 'agent', text: "I'm so sorry to hear that, especially in this heat. We can absolutely help. Are you in the Orlando area?" },
   { role: 'caller', text: 'Yes, Winter Park.' },
   { role: 'agent', text: "Perfect, we service Winter Park. Are you available tomorrow between 8 and 11 A.M., or does the afternoon work better?" },
   { role: 'caller', text: 'Morning works.' },
-  { role: 'agent', text: "Great — I've got you down for tomorrow, 8 to 11 A.M. You'll get a confirmation text shortly. Is there anything else I can help with?" },
+  { role: 'agent', text: "Great, I've got you down for tomorrow, 8 to 11 A.M. You'll get a confirmation text shortly. Is there anything else I can help with?" },
 ];
 
 /* ─────────────────────── data ─────────────────────── */
+const heroStats = [
+  ['100%', 'Answer rate'],
+  ['< 1 s', 'Time to pick up'],
+  ['24 / 7', 'Always on'],
+  ['~1 week', 'To launch'],
+];
+
+const proofPoints = [
+  'Picks up in under 1 second',
+  'Never calls in sick',
+  'Zero hold time',
+  'Books directly into your calendar',
+  'Works in English and Spanish',
+  'Native CRM integration',
+];
+
 const problems = [
   ['62% of calls go unanswered', 'More than half the calls your business receives happen outside business hours. Every unanswered ring is a lead that just called your competitor.'],
   ['Voicemail gets deleted, not played', "The average person waits less than eight seconds before hanging up. They're not leaving a voicemail. They're googling someone else."],
@@ -49,16 +60,16 @@ const problems = [
 ];
 
 const capabilities = [
-  ['24/7 Live Call Answering', 'Never miss another call. Your AI agent picks up in under a second, day or night, weekends and holidays included.'],
-  ['Natural Lead Qualification', 'Asks the right questions in the right order — location, timeline, budget, urgency — and scores the lead before your team ever gets involved.'],
-  ['Appointment Booking', 'Syncs directly with your calendar and CRM pipeline. Prospects book a time slot during the call, and every lead is tagged automatically — no manual entry.'],
-  ['Objection Handling', 'Trained on your most common objections. Price shopping? Competition? Not ready? The agent has a scripted, on-brand response for each.'],
+  ['24/7 Live Call Answering', 'Never miss another call. Your AI agent picks up in under a second, day or night, weekends and holidays included.', Moon],
+  ['Natural Lead Qualification', 'Asks the right questions in the right order (location, timeline, budget, urgency) and scores the lead before your team ever gets involved.', Funnel],
+  ['Appointment Booking', 'Syncs directly with your calendar and CRM pipeline. Prospects book a time slot during the call, and every lead is tagged automatically, with no manual entry.', CalendarCheck],
+  ['Objection Handling', 'Trained on your most common objections. Price shopping? Competition? Not ready? The agent has a scripted, on-brand response for each.', ChatsCircle],
 ];
 
 const steps = [
-  ['01', 'Intake & scripting', 'We interview you (or your top salesperson) to capture your best call flow, objections, and closing language.', '1–2 days'],
-  ['02', 'Build & training', 'We build the voice agent, train it on your business, and run test calls until it meets our standard.', '2–3 days'],
-  ['03', 'Integration', 'We connect your phone system, CRM pipeline, and calendar. Zero downtime — runs alongside your existing setup.', '1 day'],
+  ['01', 'Intake & scripting', 'We interview you (or your top salesperson) to capture your best call flow, objections, and closing language.', '1-2 days'],
+  ['02', 'Build & training', 'We build the voice agent, train it on your business, and run test calls until it meets our standard.', '2-3 days'],
+  ['03', 'Integration', 'We connect your phone system, CRM pipeline, and calendar. Zero downtime: runs alongside your existing setup.', '1 day'],
   ['04', 'Go live & tune', 'The agent goes live. We monitor real calls for the first 30 days and tune based on what we hear.', 'Ongoing'],
 ];
 
@@ -67,537 +78,345 @@ const industries = [
   'Pest Control', 'Plumbing & Electric', 'Personal Injury Law', 'Auto Services',
 ];
 
+// Each cell: [kind, text]. kind = yes | no | meh (drives icon + color).
 const comparison = [
-  ['Available after hours', '✓  Always', '✕  Voicemail or missed'],
-  ['Answers in under 1 second', '✓  Every call', '—  Depends on hold queue'],
-  ['Books directly into calendar', '✓  Real time', '—  Manual follow-up'],
-  ['Handles 10 calls simultaneously', '✓  No limit', '✕  One call per person'],
-  ['Cost per call', '✓  Near zero', '✕  $15–$40 per handled call'],
+  ['Available after hours', ['yes', 'Always'], ['no', 'Voicemail or missed']],
+  ['Answers in under 1 second', ['yes', 'Every call'], ['meh', 'Depends on hold queue']],
+  ['Books directly into calendar', ['yes', 'Real time'], ['meh', 'Manual follow-up']],
+  ['Handles 10 calls simultaneously', ['yes', 'No limit'], ['no', 'One call per person']],
+  ['Cost per call', ['yes', 'Near zero'], ['no', '$15-$40 per handled call']],
 ];
 
 const differentiators = [
   ['Built and run by us, not configured by you', "Most AI voice tools hand you a dashboard and wish you luck. We interview your team, write the script, train the agent, and monitor real calls for the first 30 days."],
-  ['Every call feeds the CRM you already run on', 'No separate app, no manual export. Bookings, tags, and call outcomes land directly in your existing pipeline — next to your follow-up, reviews, and reporting.'],
+  ['Every call feeds the CRM you already run on', 'No separate app, no manual export. Bookings, tags, and call outcomes land directly in your existing pipeline, next to your follow-up, reviews, and reporting.'],
   ["A person still has the leash", "When a call goes outside its training, the agent hands off to your team instead of guessing. You're never one strange call away from a bad review."],
 ];
 
 const faqs = [
-  ['Does it sound like a robot?', 'No. Modern voice AI is indistinguishable from human agents in most calls. We train it on your specific vocabulary, cadence, and tone so it sounds like someone who works for you — not a generic IVR system.'],
+  ['Does it sound like a robot?', 'No. Modern voice AI is indistinguishable from human agents in most calls. We train it on your specific vocabulary, cadence, and tone so it sounds like someone who works for you, not a generic IVR system.'],
   ['What happens when a call gets too complex?', 'The agent knows its limits. If a caller asks something outside its training, it warmly offers to have a team member call them back, captures their info, and logs the ticket in your CRM.'],
   ['Will it work with our existing phone number?', 'Yes. We route calls through your existing number. No need to change your marketing, your signage, or your contacts. Callers dial the same number they always have.'],
-  ['How long does setup take?', "Most clients go live within a week of our first call. We handle the entire build — you show up for a 90-minute intake session and an approval call before launch."],
+  ['How long does setup take?', "Most clients go live within a week of our first call. We handle the entire build. You show up for a 90-minute intake session and an approval call before launch."],
 ];
+
+const CellIcon = ({ kind }) => {
+  const Icon = kind === 'yes' ? Check : kind === 'no' ? X : Minus;
+  return <span className={`av-mark av-mark--${kind}`} aria-hidden="true"><Icon size={12} weight="bold" /></span>;
+};
 
 /* ─────────────────────── main component ─────────────────────── */
 export default function AIVoice() {
   const [openFaq, setOpenFaq] = React.useState(null);
 
   return (
-    <main style={{ fontFamily: 'var(--font-body)', overflowX: 'hidden' }}>
-
-      {/* keyframes injected once */}
-      <style>{`
-        @keyframes waveBar {
-          from { transform: scaleY(0.35); opacity: 0.5; }
-          to   { transform: scaleY(1);    opacity: 1;   }
-        }
-        @keyframes pulseRing {
-          0%   { transform: scale(1);   opacity: 0.55; }
-          100% { transform: scale(1.9); opacity: 0;    }
-        }
-        @media (max-width: 640px) {
-          .aiv-compare-table { display: none; }
-          .aiv-compare-cards { display: flex !important; }
-          .aiv-industries-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+    <main className="av">
 
       {/* ── HERO ── */}
-      <section style={{ position: 'relative', background: 'var(--ink-900)', padding: 'clamp(48px,6vw,72px) 0 clamp(36px,4.5vw,56px)', overflow: 'hidden' }}>
-        <div className="ll-hero-grid-bg" aria-hidden="true" />
-        <Wrap style={{ position: 'relative', zIndex: 1 }}>
-          <h1 style={{
-            margin: 0, fontWeight: 700, fontSize: 'var(--fs-display-1)', lineHeight: 'var(--lh-display-1)',
-            letterSpacing: 'var(--ls-display-1)', color: 'var(--paper-100)', maxWidth: '17ch',
-          }}>
-            Your Business Answers Every Call. <span style={{ color: 'var(--cyan-500)' }}>Even the 2 A.M. Ones.</span>
-          </h1>
+      <section className="av-hero">
+        <Wrap>
+          <div className="av-hero__grid">
+            <div>
+              <span className="av-pill ll-glass"><span className="av-pill__tag">AI Voice</span>Works in English and Spanish</span>
+              <h1 className="av-hero__title">
+                Your Business Answers Every Call. <em>Even the 2 A.M. Ones.</em>
+              </h1>
+              <p className="av-hero__lede">
+                A custom AI voice agent that qualifies leads, books appointments, and handles objections
+                in your brand's voice, around the clock, without a single missed call.
+              </p>
+              <div className="av-hero__actions">
+                <Button variant="inverse" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={trackBook}>Book a free demo call</Button>
+                <Button variant="secondary" size="lg" iconRight={<ArrowDown size={16} weight="bold" />} onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>
+                  See how it works
+                </Button>
+              </div>
+            </div>
 
-          <p style={{ margin: '24px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)',
-            color: 'var(--ink-300)', maxWidth: '54ch' }}>
-            A custom AI voice agent that qualifies leads, books appointments, and handles objections
-            — in your brand's voice, around the clock, without a single missed call.
-          </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
-            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook}>Book a free demo call</Button>
-            <Button variant="secondary" size="lg" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>
-              See how it works ↓
-            </Button>
+            <div className="av-hero__art" aria-hidden="true">
+              <div className="av-call ll-forest">
+                <div className="av-call__top">
+                  <span className="av-call__icon"><Phone size={20} weight="fill" /></span>
+                  <div>
+                    <small>Incoming call</small>
+                    <strong>+1 (407) 555-0182</strong>
+                  </div>
+                  <span className="av-call__live"><span className="ll-live-dot" />Live</span>
+                </div>
+                <div className="av-call__wave">
+                  <Waveform height={44} />
+                  <span>0:47</span>
+                </div>
+                <div className="av-call__lines">
+                  <p className="av-bubble av-bubble--caller">{transcript[0].text}</p>
+                  <p className="av-bubble av-bubble--agent">{transcript[1].text}</p>
+                </div>
+              </div>
+              <div className="av-float av-float--a ll-glass">
+                <span className="av-float__icon"><CalendarCheck size={20} weight="bold" /></span>
+                <div><strong>Appointment booked</strong><span>Synced to your CRM</span></div>
+              </div>
+              <div className="av-float av-float--b ll-glass">
+                <span className="av-float__icon"><Microphone size={20} weight="bold" /></span>
+                <div><strong>Picks up in under 1 second</strong><span>Zero hold time</span></div>
+              </div>
+            </div>
           </div>
 
-          {/* waveform display */}
-          <div style={{ marginTop: 28, padding: '18px 22px',
-            background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)',
-            borderRadius: 'var(--radius-3)', display: 'flex', alignItems: 'center', gap: 16, maxWidth: 520 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-              <span className="ll-live-dot" aria-hidden="true" />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-                textTransform: 'uppercase', color: 'var(--cyan-500)', whiteSpace: 'nowrap' }}>Live</span>
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <Waveform height={32} animate />
-            </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)',
-              letterSpacing: '0.05em', flexShrink: 0 }}>0:47</span>
-          </div>
-
-          {/* stats */}
-          <div className="ll-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 32,
-            borderTop: '1px solid var(--border-hair-inverse)' }}>
-            {[
-              ['100%', 'Answer rate'],
-              ['< 1 s', 'Time to pick up'],
-              ['24 / 7', 'Always on'],
-              ['~1 week', 'To launch'],
-            ].map(([val, label], i) => (
-              <div key={label} style={{ flex: 1, padding: '20px 0 0', paddingLeft: i ? 24 : 0,
-                borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700,
-                  letterSpacing: '-0.03em', color: 'var(--cyan-500)', lineHeight: 1 }}>{val}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-                  textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 6 }}>{label}</div>
+          <div className="av-stats ll-glass">
+            {heroStats.map(([val, label]) => (
+              <div key={label}>
+                <span className="av-stats__v">{val}</span>
+                <span className="av-stats__l">{label}</span>
               </div>
             ))}
           </div>
+
+          <ul className="av-proof" aria-label="Highlights">
+            {proofPoints.map((txt) => (
+              <li key={txt}><Check size={14} weight="bold" aria-hidden="true" />{txt}</li>
+            ))}
+          </ul>
         </Wrap>
       </section>
-
-      {/* ── SOCIAL PROOF STRIP ── */}
-      <div style={{ background: 'var(--paper-200)', borderTop: '1px solid var(--border-hair)', borderBottom: '1px solid var(--border-hair)', padding: '16px 0' }}>
-        <Wrap>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 32px', justifyContent: 'center' }}>
-            {[
-              'Picks up in under 1 second',
-              'Never calls in sick',
-              'Zero hold time',
-              'Books directly into your calendar',
-              'Works in English and Spanish',
-              'Native CRM integration',
-            ].map((txt) => (
-              <span key={txt} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-                textTransform: 'uppercase', color: 'var(--ink-600)', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ color: 'var(--ink-400)', fontSize: 7 }}>●</span> {txt}
-              </span>
-            ))}
-          </div>
-        </Wrap>
-      </div>
 
       {/* ── PROBLEM ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow>The problem</Eyebrow>
-          <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,48px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--ink-900)', maxWidth: '22ch' }}>
-            Every unanswered call is a competitor's <span style={{ borderBottom: '3px solid var(--cyan-500)' }}>new customer.</span>
-          </h2>
-          <p style={{ margin: '20px 0 0', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-500)', maxWidth: '56ch' }}>
-            The average small business misses over 60% of inbound calls. Most of those callers never try again.
-            They find someone who answers — and they book with them instead.
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 1,
-            marginTop: 28, background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
-            {problems.map(([title, desc]) => (
-              <div key={title} style={{ background: 'var(--paper-100)', padding: '32px 28px', display: 'grid', gap: 12 }}>
-                <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,74,61,0.1)',
-                  border: '1px solid rgba(255,74,61,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 700, fontSize: 14, color: 'var(--status-danger)' }}>✕</div>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--ink-900)' }}>{title}</h3>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--ink-500)' }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </Wrap>
-      </section>
+      <Wrap className="av-section ll-reveal">
+        <span className="ll-eyebrow">The problem</span>
+        <h2 className="av-h2">Every unanswered call is a competitor's <em>new customer.</em></h2>
+        <p className="av-lede">
+          The average small business misses over 60% of inbound calls. Most of those callers never try again.
+          They find someone who answers, and they book with them instead.
+        </p>
+        <div className="av-problems">
+          {problems.map(([title, desc], i) => (
+            <div key={title} className={`av-problem ${i === 0 ? 'll-forest' : i === 1 ? 'av-paper' : 'll-sage'}`}>
+              <span className="av-problem__x" aria-hidden="true"><X size={16} weight="bold" /></span>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </Wrap>
 
       {/* ── LIVE DEMO ── */}
-      <section style={{ background: 'var(--ink-900)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, alignItems: 'center' }}>
-
-            {/* left: copy */}
-            <div>
-              <Eyebrow light>Live call simulation</Eyebrow>
-              <h2 style={{ margin: '0 0 20px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
-                letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--paper-100)', maxWidth: '20ch' }}>
-                It sounds like your best employee — on their best day.
-              </h2>
-              <p style={{ margin: '0 0 32px', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-300)' }}>
-                The AI doesn't read from a script. It holds a real conversation, adapts to what the caller says,
-                and guides them toward the outcome your business needs — a booked appointment.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
-                {['Speaks naturally — no robotic pauses or clipped sentences',
-                  'Handles interruptions and tangents gracefully',
-                  'Stays on-brand for every single call',
-                  'Confirms booking details before ending the call',
-                ].map((pt) => (
-                  <div key={pt} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                    <span style={{ color: 'var(--cyan-500)', fontWeight: 700, marginTop: 1, flexShrink: 0 }}>✓</span>
-                    <span style={{ fontSize: 14, color: 'var(--ink-200)', lineHeight: 1.6 }}>{pt}</span>
-                  </div>
-                ))}
-              </div>
-              <Button variant="inverse" onClick={trackBook}>Hear it on a live call</Button>
-            </div>
-
-            {/* right: phone transcript mockup */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={{
-                width: '100%', maxWidth: 360,
-                background: 'var(--ink-800)', borderRadius: 20,
-                border: '1px solid var(--border-hair-inverse)',
-                boxShadow: 'var(--shadow-soft-2)',
-                overflow: 'hidden',
-              }}>
-                {/* phone top bar */}
-                <div style={{ background: 'var(--ink-700)', padding: '14px 20px 12px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  borderBottom: '1px solid var(--border-hair-inverse)' }}>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.1em',
-                      textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 3 }}>Incoming call</div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--paper-100)' }}>+1 (407) 555-0182</div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span className="ll-live-dot" aria-hidden="true" />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--cyan-500)',
-                      letterSpacing: '0.1em', textTransform: 'uppercase' }}>Live</span>
-                  </div>
-                </div>
-
-                {/* waveform in phone */}
-                <div style={{ padding: '12px 20px', background: 'var(--ink-800)', display: 'flex', alignItems: 'center', gap: 12,
-                  borderBottom: '1px solid var(--border-hair-inverse)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-400)',
-                    letterSpacing: '0.08em', flexShrink: 0 }}>AI Agent</span>
-                  <div style={{ flex: 1 }}>
-                    <Waveform height={22} animate />
-                  </div>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-400)',
-                    letterSpacing: '0.08em' }}>1:12</span>
-                </div>
-
-                {/* transcript */}
-                <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 12,
-                  maxHeight: 320, overflowY: 'auto', background: 'var(--ink-900)' }}>
-                  {transcript.map((line, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: line.role === 'agent' ? 'flex-start' : 'flex-end' }}>
-                      <div style={{
-                        maxWidth: '82%', padding: '9px 13px', borderRadius: line.role === 'agent'
-                          ? '4px 14px 14px 4px' : '14px 4px 4px 14px',
-                        background: line.role === 'agent' ? 'rgba(216,211,198,0.10)' : 'var(--ink-700)',
-                        border: `1px solid ${line.role === 'agent' ? 'var(--border-hair-inverse)' : 'transparent'}`,
-                      }}>
-                        {line.role === 'agent' && (
-                          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.1em',
-                            textTransform: 'uppercase', color: 'var(--cyan-500)', marginBottom: 4 }}>AI Agent</div>
-                        )}
-                        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.55, color: 'var(--paper-100)' }}>
-                          {line.text}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                  {/* booked confirmation */}
-                  <div style={{ textAlign: 'center', padding: '10px 0' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6,
-                      background: 'rgba(216,211,198,0.12)', border: '1px solid var(--border-hair-inverse)',
-                      borderRadius: 'var(--radius-pill)', padding: '5px 12px' }}>
-                      <span style={{ color: 'var(--cyan-500)', fontSize: 11 }}>✓</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.1em',
-                        textTransform: 'uppercase', color: 'var(--cyan-500)' }}>Appointment booked · Synced to your CRM</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+      <Wrap className="av-section ll-reveal">
+        <div className="av-demo ll-forest">
+          <div>
+            <h2 className="av-h2 av-h2--light">It sounds like your best employee <em>on their best day.</em></h2>
+            <p className="av-demo__p">
+              The AI doesn't read from a script. It holds a real conversation, adapts to what the caller says,
+              and guides them toward the outcome your business needs: a booked appointment.
+            </p>
+            <ul className="av-demo__list">
+              {['Speaks naturally, with no robotic pauses or clipped sentences',
+                'Handles interruptions and tangents gracefully',
+                'Stays on-brand for every single call',
+                'Confirms booking details before ending the call',
+              ].map((pt) => (
+                <li key={pt}><Check size={14} weight="bold" aria-hidden="true" />{pt}</li>
+              ))}
+            </ul>
+            <Button variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={trackBook}>Hear it on a live call</Button>
           </div>
-        </Wrap>
-      </section>
+
+          {/* phone transcript mockup */}
+          <div className="av-phone ll-glass--dark">
+            <div className="av-phone__top">
+              <div>
+                <small>Incoming call</small>
+                <strong>+1 (407) 555-0182</strong>
+              </div>
+              <span className="av-call__live"><span className="ll-live-dot" aria-hidden="true" />Live</span>
+            </div>
+            <div className="av-phone__wave">
+              <small>AI Agent</small>
+              <Waveform height={22} />
+              <small>1:12</small>
+            </div>
+            <div className="av-phone__body">
+              {transcript.map((line, i) => (
+                <div key={i} className={`av-bubble av-bubble--${line.role}`}>
+                  {line.role === 'agent' && <small>AI Agent</small>}
+                  <p>{line.text}</p>
+                </div>
+              ))}
+              <div className="av-phone__done">
+                <span><Check size={12} weight="bold" aria-hidden="true" />Appointment booked. Synced to your CRM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Wrap>
 
       {/* ── CAPABILITIES ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow>What it does</Eyebrow>
-          <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '26ch' }}>
-            Everything your front desk does — plus everything they can't.
-          </h2>
-          <div className="ll-grid-4" style={{ gap: 16 }}>
-            {capabilities.map(([title, desc], i) => (
-              <div key={title} style={{
-                background: 'var(--paper-000)', border: '1px solid var(--border-hair)',
-                borderRadius: 'var(--radius-2)', padding: '28px 24px',
-                boxShadow: '3px 3px 0 var(--border-hair)',
-              }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em',
-                  color: 'var(--cyan-700)', marginBottom: 14 }}>0{i + 1}</div>
-                <h3 style={{ margin: '0 0 10px', fontSize: 16, fontWeight: 700,
-                  letterSpacing: '-0.01em', color: 'var(--ink-900)' }}>{title}</h3>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--ink-500)' }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </Wrap>
-      </section>
+      <Wrap className="av-section ll-reveal">
+        <h2 className="av-h2">Everything your front desk does, <em>plus everything they can't.</em></h2>
+        <div className="av-bento">
+          {capabilities.map(([title, desc, Icon], i) => (
+            <div key={title} className={`av-tile ${['ll-forest av-tile--dark', 'll-glass', 'll-sage', 'av-paper'][i]}`}>
+              <span className="av-tile__icon" aria-hidden="true"><Icon size={22} weight="bold" /></span>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </Wrap>
 
       {/* ── DIFFERENTIATOR ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow>Why Loogo Labs</Eyebrow>
-          <h2 style={{ margin: '0 0 16px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '22ch' }}>
-            Not a bot bolted onto your phone line.
-          </h2>
-          <p style={{ margin: '0 0 28px', fontSize: 16, lineHeight: 1.7, color: 'var(--ink-500)', maxWidth: '58ch' }}>
-            Plenty of tools will sell you a self-serve voice bot and leave the rest to you. That's not what this is.
-          </p>
-          <div className="ll-grid-3" style={{ gap: 20 }}>
-            {differentiators.map(([title, desc]) => (
-              <div key={title} style={{ background: 'var(--paper-000)', border: '1px solid var(--border-hair)',
-                borderTop: '3px solid var(--cyan-500)',
-                borderRadius: 'var(--radius-2)', padding: '28px 24px', display: 'grid', gap: 12, alignContent: 'start' }}>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em',
-                  lineHeight: 1.3, color: 'var(--ink-900)' }}>{title}</h3>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--ink-500)' }}>{desc}</p>
+      <Wrap className="av-section ll-reveal">
+        <div className="av-diff">
+          <div className="av-diff__head">
+            <span className="ll-eyebrow">Why Loogo Labs</span>
+            <h2 className="av-h2">Not a bot bolted onto <em>your phone line.</em></h2>
+            <p className="av-lede">
+              Plenty of tools will sell you a self-serve voice bot and leave the rest to you. That's not what this is.
+            </p>
+          </div>
+          <div className="av-diff__list">
+            {differentiators.map(([title, desc], i) => (
+              <div key={title} className={`av-diff__item ${i === 0 ? 'll-sage' : 'av-paper'}`}>
+                {i === 0 && <span className="av-tile__icon" aria-hidden="true"><ShieldCheck size={22} weight="bold" /></span>}
+                <h3>{title}</h3>
+                <p>{desc}</p>
               </div>
             ))}
           </div>
-        </Wrap>
-      </section>
+        </div>
+      </Wrap>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" style={{ background: 'var(--ink-900)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow light>The process</Eyebrow>
-          <h2 style={{ margin: '0 0 32px', fontSize: 'clamp(26px,3.5vw,42px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--paper-100)', maxWidth: '24ch' }}>
-            From first call to live agent in about a week.
-          </h2>
-          <div className="ll-step-row ll-grid-4" style={{ gap: 0 }}>
-            {steps.map(([num, title, desc, time], i) => (
-              <div key={num} style={{ padding: '0 28px 0', paddingLeft: i ? 28 : 0,
-                borderLeft: i ? '1px solid var(--border-hair-inverse)' : 'none', display: 'grid', gap: 12, alignContent: 'start' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 28, fontWeight: 700,
-                  color: 'var(--cyan-500)', letterSpacing: '-0.03em' }}>{num}</div>
-                <div style={{ fontWeight: 700, fontSize: 16, lineHeight: 1.25, color: 'var(--paper-100)' }}>{title}</div>
-                <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.65, color: 'var(--ink-400)' }}>{desc}</p>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-                  textTransform: 'uppercase', color: 'var(--cyan-500)' }}>{time}</span>
+      <Wrap className="av-section ll-reveal">
+        <section id="how-it-works" className="av-steps ll-forest">
+          <h2 className="av-h2 av-h2--light">From first call to live agent <em>in about a week.</em></h2>
+          <div className="av-steps__grid">
+            {steps.map(([num, title, desc, time]) => (
+              <div key={num} className="av-step">
+                <span className="av-step__time">{time}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
               </div>
             ))}
           </div>
-        </Wrap>
-      </section>
+        </section>
+      </Wrap>
 
       {/* ── INDUSTRIES ── */}
-      <section style={{ background: 'var(--paper-100)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40 }}>
-            <div>
-              <Eyebrow>Who it's built for</Eyebrow>
-              <h2 style={{ margin: '0 0 20px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
-                letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)' }}>
-                Any business where a missed call means a missed sale.
-              </h2>
-              <p style={{ margin: '0 0 32px', fontSize: 15, lineHeight: 1.7, color: 'var(--ink-500)' }}>
-                If your revenue is tied to inbound calls — emergency services, high-ticket appointments,
-                complex quotes — an AI voice agent pays for itself in the first week.
-              </p>
-              <Button variant="secondary" onClick={trackBook}>See if it fits your business</Button>
-            </div>
-            <div>
-              <div className="aiv-industries-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1,
-                background: 'var(--border-hair)', border: '1px solid var(--border-hair)' }}>
-                {industries.map((ind) => (
-                  <div key={ind} style={{ background: 'var(--paper-100)', padding: '18px 20px',
-                    display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ color: 'var(--cyan-700)', fontSize: 12, flexShrink: 0 }}>→</span>
-                    <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--ink-900)',
-                      letterSpacing: '-0.01em' }}>{ind}</span>
-                  </div>
-                ))}
-              </div>
+      <Wrap className="av-section ll-reveal">
+        <div className="av-ind ll-glass">
+          <div>
+            <h2 className="av-h2">Any business where a missed call means <em>a missed sale.</em></h2>
+            <p className="av-lede">
+              If your revenue is tied to inbound calls (emergency services, high-ticket appointments,
+              complex quotes), an AI voice agent pays for itself in the first week.
+            </p>
+            <div style={{ marginTop: 28 }}>
+              <Button variant="inverse" iconRight={<ArrowRight size={16} weight="bold" />} onClick={trackBook}>See if it fits your business</Button>
             </div>
           </div>
-        </Wrap>
-      </section>
+          <ul className="av-ind__chips">
+            {industries.map((ind) => <li key={ind}>{ind}</li>)}
+          </ul>
+        </div>
+      </Wrap>
 
       {/* ── COMPARISON TABLE ── */}
-      <section style={{ background: 'var(--paper-200)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow>AI vs. traditional</Eyebrow>
-          <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '26ch' }}>
-            How it stacks up against your current setup.
-          </h2>
+      <Wrap className="av-section ll-reveal">
+        <span className="ll-eyebrow">AI vs. traditional</span>
+        <h2 className="av-h2">How it stacks up against <em>your current setup.</em></h2>
 
-          {/* desktop/tablet: full table */}
-          <div className="aiv-compare-table" style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14,
-              background: 'var(--paper-000)', border: '1px solid var(--ink-900)',
-              boxShadow: '4px 4px 0 var(--ink-900)' }}>
-              <thead>
-                <tr style={{ background: 'var(--ink-900)', color: 'var(--paper-100)' }}>
-                  <th style={{ textAlign: 'left', padding: '14px 20px', fontFamily: 'var(--font-mono)',
-                    fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase',
-                    borderRight: '1px solid var(--border-hair-inverse)', width: '34%' }}>Capability</th>
-                  <th style={{ textAlign: 'center', padding: '14px 20px', fontFamily: 'var(--font-mono)',
-                    fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-500)',
-                    borderRight: '1px solid var(--border-hair-inverse)' }}>AI Voice Agent</th>
-                  <th style={{ textAlign: 'center', padding: '14px 20px', fontFamily: 'var(--font-mono)',
-                    fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>Traditional Setup</th>
+        {/* desktop/tablet: full table */}
+        <div className="av-compare av-compare-table">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Capability</th>
+                <th scope="col" className="av-compare__ai">AI Voice Agent</th>
+                <th scope="col">Traditional Setup</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparison.map(([feat, ai, trad]) => (
+                <tr key={feat}>
+                  <td>{feat}</td>
+                  <td className="av-compare__ai"><span className="av-cell"><CellIcon kind={ai[0]} />{ai[1]}</span></td>
+                  <td><span className={`av-cell av-cell--${trad[0]}`}><CellIcon kind={trad[0]} />{trad[1]}</span></td>
                 </tr>
-              </thead>
-              <tbody>
-                {comparison.map(([feat, ai, trad], i) => (
-                  <tr key={feat} style={{ borderTop: '1px solid var(--border-hair)',
-                    background: i % 2 === 1 ? 'var(--paper-100)' : 'var(--paper-000)' }}>
-                    <td style={{ padding: '14px 20px', color: 'var(--ink-700)', fontWeight: 600,
-                      borderRight: '1px solid var(--border-hair)' }}>{feat}</td>
-                    <td style={{ padding: '14px 20px', textAlign: 'center', color: ai.startsWith('✓') ? 'var(--cyan-700)' : 'var(--ink-500)',
-                      fontWeight: 600, borderRight: '1px solid var(--border-hair)' }}>{ai}</td>
-                    <td style={{ padding: '14px 20px', textAlign: 'center',
-                      color: trad.startsWith('✕') ? 'var(--status-danger)' : 'var(--ink-500)' }}>{trad}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-          {/* mobile: stacked cards — a 3-column table can't fit a phone width without truncating */}
-          <div className="aiv-compare-cards" style={{ display: 'none', flexDirection: 'column', gap: 12 }}>
-            {comparison.map(([feat, ai, trad]) => (
-              <div key={feat} style={{ background: 'var(--paper-000)', border: '1px solid var(--ink-900)',
-                borderRadius: 'var(--radius-2)', padding: '18px 20px', boxShadow: '3px 3px 0 var(--ink-900)' }}>
-                <div style={{ fontWeight: 700, fontSize: 14.5, color: 'var(--ink-900)', marginBottom: 12 }}>{feat}</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '8px 0', borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-                    textTransform: 'uppercase', color: 'var(--ink-400)' }}>AI Voice Agent</span>
-                  <span style={{ fontSize: 13.5, fontWeight: 600, color: ai.startsWith('✓') ? 'var(--cyan-700)' : 'var(--ink-500)' }}>{ai}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '8px 0', borderTop: '1px solid var(--border-hair)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-                    textTransform: 'uppercase', color: 'var(--ink-400)' }}>Traditional Setup</span>
-                  <span style={{ fontSize: 13.5, fontWeight: 600, color: trad.startsWith('✕') ? 'var(--status-danger)' : 'var(--ink-500)' }}>{trad}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Wrap>
-      </section>
+        {/* mobile: stacked cards; a 3-column table can't fit a phone width without truncating */}
+        <div className="av-compare-cards">
+          {comparison.map(([feat, ai, trad]) => (
+            <div key={feat} className="av-ccard">
+              <strong>{feat}</strong>
+              <div><small>AI Voice Agent</small><span className="av-cell"><CellIcon kind={ai[0]} />{ai[1]}</span></div>
+              <div><small>Traditional Setup</small><span className={`av-cell av-cell--${trad[0]}`}><CellIcon kind={trad[0]} />{trad[1]}</span></div>
+            </div>
+          ))}
+        </div>
+      </Wrap>
 
       {/* ── FAQ ── */}
-      <section style={{ background: 'var(--surface-sunken)', padding: 'clamp(32px,3.5vw,44px) 0' }}>
-        <Wrap>
-          <Eyebrow>Common questions</Eyebrow>
-          <h2 style={{ margin: '0 0 28px', fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700,
-            letterSpacing: '-0.03em', lineHeight: 1.15, color: 'var(--ink-900)', maxWidth: '24ch' }}>
-            Everything you've been wondering.
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 1, background: 'var(--border-hair)',
-            border: '1px solid var(--border-hair)' }}>
+      <Wrap className="av-section ll-reveal">
+        <div className="av-faq">
+          <h2 className="av-h2">Everything you've been <em>wondering.</em></h2>
+          <div className="av-faq__list">
             {faqs.map(([q, a], i) => {
               const open = openFaq === i;
               return (
-                <div key={q} style={{ background: open ? 'var(--paper-000)' : 'var(--paper-100)',
-                  transition: 'background 140ms ease' }}>
-                  <button onClick={() => setOpenFaq(open ? null : i)}
-                    style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                      padding: '22px 24px', background: 'none', border: 'none', cursor: 'pointer',
-                      textAlign: 'left', gap: 16 }}>
-                    <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink-900)',
-                      letterSpacing: '-0.01em' }}>{q}</span>
-                    <span style={{ fontSize: 18, color: open ? 'var(--cyan-700)' : 'var(--ink-400)', flexShrink: 0,
-                      transition: 'transform 200ms ease, color 200ms ease',
-                      transform: open ? 'rotate(45deg)' : 'none' }}>+</span>
+                <div key={q} className={`av-faq__item${open ? ' is-open' : ''}`}>
+                  <button onClick={() => setOpenFaq(open ? null : i)} aria-expanded={open}>
+                    <span>{q}</span>
+                    <span className="av-faq__plus" aria-hidden="true"><Plus size={16} weight="bold" /></span>
                   </button>
-                  {open && (
-                    <div style={{ padding: '0 24px 24px' }}>
-                      <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-600)' }}>{a}</p>
-                    </div>
-                  )}
+                  {open && <p>{a}</p>}
                 </div>
               );
             })}
           </div>
-        </Wrap>
-      </section>
+        </div>
+      </Wrap>
 
       {/* ── CENTRAL FLORIDA CITIES ── */}
-      <section style={{ background: 'var(--paper-000)', padding: 'clamp(28px,3vw,36px) 0', borderTop: '1px solid var(--border-hair)' }}>
-        <Wrap>
-          <Eyebrow>Central Florida</Eyebrow>
-          <h2 style={{ margin: 0, fontSize: 'clamp(26px,3.4vw,40px)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '24ch' }}>
-            AI voice agents for businesses in your city.
-          </h2>
-          <div className="cfl-nearby" style={{ marginTop: 28 }}>
+      <Wrap className="av-section ll-reveal">
+        <div className="av-cities av-paper">
+          <h2 className="av-h2">AI voice agents for businesses <em>in your city.</em></h2>
+          <div className="cfl-nearby av-cities__links">
             {VOICE_CITIES.map((c) => (
               <a key={c.slug} href={voiceCityPath(c.slug)} className="cfl-nearby__link">{c.name} <span aria-hidden="true">→</span></a>
             ))}
           </div>
-        </Wrap>
-      </section>
+        </div>
+      </Wrap>
 
       {/* ── FINAL CTA ── */}
-      <section className="ll-grid-bg--inverse" style={{ background: 'var(--ink-900)', padding: 'clamp(40px,4.5vw,52px) 0', color: 'var(--paper-100)', textAlign: 'center' }}>
-        <Wrap>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 14px',
-            background: 'var(--ink-800)', border: '1px solid var(--border-hair-inverse)', borderRadius: 'var(--radius-2)', marginBottom: 28 }}>
-            <span className="ll-live-dot" aria-hidden="true" />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan-500)' }}>
-              Accepting new clients
-            </span>
-          </div>
-
-          <h2 style={{ margin: '0 auto', fontSize: 'clamp(30px,5vw,54px)', fontWeight: 700,
-            letterSpacing: '-0.035em', lineHeight: 1.1, maxWidth: '18ch' }}>
-            Stop losing calls to voicemail.
-          </h2>
-          <p style={{ margin: '20px auto 0', fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.65,
-            color: 'var(--ink-300)', maxWidth: '46ch' }}>
+      <Wrap className="av-section av-section--last ll-reveal">
+        <div className="av-cta ll-forest">
+          <span className="av-cta__badge ll-glass--dark"><span className="ll-live-dot" aria-hidden="true" />Accepting new clients</span>
+          <h2>Stop losing calls <em>to voicemail.</em></h2>
+          <p>
             Book a free 30-minute strategy call. We'll audit your current call flow, show you what a
             voice agent would look like for your specific business, and give you a clear picture of ROI
             before you commit to anything.
           </p>
-          <div style={{ marginTop: 24 }}>
-            <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={trackBook}>Book my free strategy call</Button>
+          <div style={{ marginTop: 28 }}>
+            <Button variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={trackBook}>Book my free strategy call</Button>
           </div>
-
-          {/* trust row */}
-          <div style={{ marginTop: 28, paddingTop: 40,
-            borderTop: '1px solid var(--border-hair-inverse)',
-            display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px 40px' }}>
+          <ul className="av-cta__trust">
             {[
               'No setup fee for the first call',
               'Live within 1 week',
               'Dedicated 30-day tuning period',
               'Cancel anytime',
             ].map((txt) => (
-              <span key={txt} style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
-                textTransform: 'uppercase', color: 'var(--ink-400)',
-                display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ color: 'var(--cyan-500)' }}>✓</span> {txt}
-              </span>
+              <li key={txt}><Check size={14} weight="bold" aria-hidden="true" />{txt}</li>
             ))}
-          </div>
-        </Wrap>
-      </section>
+          </ul>
+        </div>
+      </Wrap>
 
     </main>
   );
