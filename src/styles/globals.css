@@ -1186,10 +1186,28 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-footer__admin { color: var(--ink-400) !important; }
 
 /* Home hero: the retyped headline word. */
-.hm-typed { position: relative; white-space: nowrap; color: #B8691C; }
+/* Own line with a fixed height, so the headline never reflows while typing. */
+.hm-typed { position: relative; display: block; min-height: 1em; white-space: nowrap; color: #B8691C; }
 .hm-typed__caret {
   display: inline-block; width: 0.06em; height: 0.82em; margin-left: 0.04em; vertical-align: -0.04em;
   border-radius: 2px; background: #B8691C; animation: hm-caret 1s steps(1) infinite;
 }
 @keyframes hm-caret { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .hm-typed__caret { display: none; } }
+
+/* ── Mobile polish: tap targets >= 44px and a readable text floor ── */
+@media (max-width: 767px) {
+  .ll-footer__col { gap: 0 18px !important; }
+  .ll-footer__link { min-height: 44px; align-items: center !important; font-size: 14px !important; }
+  .ll-footer__wordmark { display: inline-flex; min-height: 44px; align-items: center; }
+  .ll-footer__bottom { font-size: 11.5px !important; gap: 10px !important; }
+  .ll-footer__license, .ll-footer__license a, .ll-footer__admin { font-size: 11.5px !important; }
+  .ll-footer__admin { min-height: 44px; }
+  .ll-footer__license a { display: inline-flex; min-height: 32px; align-items: center; }
+  .lp-footer__pill a, .nq-footer a { min-height: 44px !important; display: inline-flex !important; align-items: center; padding: 0 8px !important; font-size: 13px !important; }
+  .cfl-crumb a { display: inline-flex; min-height: 44px; align-items: center; }
+  .ps-quote-foot a, a[href^="mailto:"] { display: inline-flex; min-height: 44px; align-items: center; }
+  /* Fine-print labels that dipped below 11px. */
+  .hm-pill__tag, .pk-pop, .pr-row__note, .pr-mock__chip, .lb-empty__kicker, .ps-photo-note,
+  .av-call small, .av-phone small, .av-call__live, .cfl-transcript small, .cfl-transcript__head { font-size: 11px !important; }
+}

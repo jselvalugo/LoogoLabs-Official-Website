@@ -199,7 +199,7 @@ function Home({ onNavigate }) {
         <Wrap>
           <div className="hm-hero__grid">
             <div>
-              <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Done-for-you email for Central Florida</span>
+              <span className="hm-pill ll-glass"><span className="hm-pill__tag">Orlando</span>Meet David, your marketing partner</span>
               <h1 className="hm-hero__title" aria-label="Email Marketing That Brings Customers Back. We Run It for You.">
                 <TypedWord words={ROTATING_WORDS} /><span aria-hidden="true"> That Brings Customers Back.</span> <em aria-hidden="true">We Run It for You.</em>
               </h1>
