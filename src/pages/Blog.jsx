@@ -1,6 +1,7 @@
 import React from 'react';
 import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
+import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
 import { ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
@@ -31,9 +32,12 @@ export default function Blog({ onNavigate }) {
 
   // An editor-picked featured post gets the spotlight layout. With none picked,
   // the newest post leads in the plain "Latest post" card, as before.
-  const spotlight = posts.find(p => p.featured) || null;
-  const featured = spotlight || posts[0] || null;
-  const rest = posts.filter(p => p !== featured);
+  // A pinned event post sits above everything, in the event's own finish.
+  const eventPost = posts.find(isEventPost) || null;
+  const regular = posts.filter(p => p !== eventPost);
+  const spotlight = regular.find(p => p.featured) || null;
+  const featured = spotlight || regular[0] || null;
+  const rest = regular.filter(p => p !== featured);
   // Quick-pick chips: the Central Florida collection plus the most-used tags.
   // A topic picked from the sidebar that isn't among them gets its own chip.
   const chips = React.useMemo(() => {
@@ -87,6 +91,7 @@ export default function Blog({ onNavigate }) {
         ) : (
           <div className="ln-layout">
            <div className="ln-layout__main">
+            {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} />}
             {spotlight
               ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} />
               : featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
@@ -185,6 +190,52 @@ function FeaturedSpotlight({ post, onNavigate }) {
             <dt>Length</dt><dd>{post.read_time} min read</dd>
           </dl>
         </aside>
+      </div>
+    </a>
+  );
+}
+
+function EventFeaturedCard({ post, onNavigate }) {
+  const [hover, setHover] = React.useState(false);
+  const t = EVENT_THEME;
+  return (
+    <a
+      href={`${BLOG_BASE}/${post.slug}`}
+      onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{ display: 'block', marginTop: 48, textDecoration: 'none', color: 'inherit' }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.gold }}>
+          Featured event · Nov 14, 2026
+        </span>
+        <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, ${t.gold}, transparent)` }} />
+      </div>
+      <div className="ll-2col" style={{
+        gap: 0,
+        background: `radial-gradient(ellipse 60% 60% at 15% 0%, rgba(201,149,42,.14), transparent 60%), linear-gradient(165deg, #0A0906 0%, ${t.ink} 55%, #160A06 100%)`,
+        border: `1px solid ${t.border}`, borderTop: `3px solid ${t.gold}`, borderRadius: 'var(--radius-4)', overflow: 'hidden', marginTop: 12,
+        boxShadow: hover ? '0 18px 48px rgba(201,149,42,.18)' : 'none', transition: 'box-shadow 160ms ease',
+      }}>
+        <div style={{ padding: 'clamp(28px,4vw,52px)', borderRight: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220 }}>
+          <img src={t.logo} alt="Lugo's Craft Distillery" style={{ width: '100%', maxWidth: 240, height: 'auto', filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+        </div>
+        <div style={{ padding: 'clamp(28px,4vw,52px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}>
+          <div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.muted, marginBottom: 14 }}>
+              Lakeland, FL · Free admission · 2–10 PM
+            </div>
+            <h2 style={{ margin: '0 0 18px', fontFamily: t.serif, fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: hover ? t.goldLight : t.cream, transition: 'color 120ms ease' }}>
+              {post.title}
+            </h2>
+            {post.excerpt && <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: t.muted }}>{post.excerpt}</p>}
+          </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: t.gold, fontWeight: 600 }}>
+            Event details
+            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, background: t.gold, color: t.ink, borderRadius: '50%', fontSize: 13, transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
+          </div>
+        </div>
       </div>
     </a>
   );

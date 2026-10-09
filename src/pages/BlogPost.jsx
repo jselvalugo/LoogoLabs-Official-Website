@@ -1,6 +1,7 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
+import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
 import { hasConsent } from '../lib/cookieConsent';
 import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
@@ -83,11 +84,13 @@ export default function BlogPost({ slug, onNavigate }) {
   const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
+  const event = isEventPost(post);
+
   return (
-    <div className="lb-page">
+    <div className={event ? 'lb-page lb-page--event' : 'lb-page'}>
       <div className="lb-wrap">
 
-      {post.featured ? (
+      {post.featured && !event ? (
         <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} />
       ) : (
       /* ── HERO HEADER ── */
@@ -100,6 +103,7 @@ export default function BlogPost({ slug, onNavigate }) {
         </nav>
 
         <div className="lb-hero__body">
+          {event && <img src={EVENT_THEME.logo} alt="Lugo's Craft Distillery" className="lb-event-logo" />}
           <h1 className="lb-hero__title">{post.title}</h1>
 
           <div className="lb-hero__meta">
@@ -153,18 +157,20 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* CTA box */}
             <div className="lb-cta ll-forest">
-              <h3 className="lb-cta__title">Want this running in your business?</h3>
+              <h3 className="lb-cta__title">{event ? 'Save your spot. It is free to attend.' : 'Want this running in your business?'}</h3>
               <p className="lb-cta__text">
-                We set it up, run it, and optimize it every month. You just run your business.
+                {event
+                  ? 'Register as a guest, grab a $25 VIP early-access pass, or request an $80 vendor table.'
+                  : 'We set it up, run it, and optimize it every month. You just run your business.'}
               </p>
               <a
-                href={BOOKING_URL}
+                href={event ? EVENT_URL : BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="lb-cta__btn"
-                onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}
+                onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
               >
-                Book a free strategy call
+                {event ? 'Register for the event' : 'Book a free strategy call'}
                 <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
               </a>
             </div>
@@ -245,13 +251,15 @@ function renderMarkdown(text, { dropCap = false } = {}) {
   const blocks = text.split(/\n\n+/);
   // The drop cap goes on the first plain paragraph only, never a heading or list.
   const firstPara = dropCap
-    ? blocks.findIndex(b => { const t = b.trim(); return t && !/^(#{2,3} |> |[-*] )/.test(t); })
+    ? blocks.findIndex(b => { const t = b.trim(); return t && !/^(#{2,3} |> |[-*] |!\[)/.test(t); })
     : -1;
   return blocks.map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
     if (trimmed.startsWith('## ')) return <h2 key={i}>{inlineRender(trimmed.slice(3))}</h2>;
     if (trimmed.startsWith('### ')) return <h3 key={i}>{inlineRender(trimmed.slice(4))}</h3>;
+    const img = trimmed.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+    if (img) return <figure key={i} className="lb-figure"><img src={img[2]} alt={img[1]} loading="lazy" /></figure>;
     const lines = trimmed.split('\n');
     if (lines.every(l => l.trim().startsWith('- ') || l.trim().startsWith('* '))) {
       return (
@@ -277,16 +285,18 @@ function renderMarkdown(text, { dropCap = false } = {}) {
 
 function inlineRender(text) {
   const parts = [];
-  const re = /(\*\*([^*]+)\*\*)|(\*([^*]+)\*)|(`([^`]+)`)/g;
+  const re = /(\*\*([^*]+)\*\*)|(\*([^*]+)\*)|(`([^`]+)`)|(\[([^\]]+)\]\((https?:\/\/[^)\s]+)\))/g;
   let last = 0, match;
   while ((match = re.exec(text)) !== null) {
     if (match.index > last) parts.push(text.slice(last, match.index));
     if (match[1]) parts.push(<strong key={match.index}>{match[2]}</strong>);
     else if (match[3]) parts.push(<em key={match.index}>{match[4]}</em>);
     else if (match[5]) parts.push(<code key={match.index}>{match[6]}</code>);
+    else if (match[7]) parts.push(<a key={match.index} href={match[9]} target="_blank" rel="noopener noreferrer">{match[8]}</a>);
     last = match.index + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
   return parts.length === 1 ? parts[0] : parts;
 }
 
+const EVENT_URL = 'https://cards-and-cocktails.netlify.app/#register';

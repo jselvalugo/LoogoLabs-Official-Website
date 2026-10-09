@@ -3156,4 +3156,60 @@ And if the crew cannot actually start for eight weeks, say so in the estimate. A
 
 Take every estimate you sent in the last sixty days and sort it into three piles: won, lost with a known reason, and never heard back. If the third pile is the tallest, you do not need more leads this month. You need a way to stay in the conversation for one more week. If you want to talk through what that looks like for your crew, book a call and bring the stack.`,
   },
+  {
+    slug: `cards-and-cocktails-pokemon-event-lakeland`,
+    title: `Cards & Cocktails: A Pokémon TCG Night at Lugo's Craft Distillery`,
+    excerpt: `Saturday, November 14th, 2026 — buy, sell, and trade Pokémon cards in Lakeland with a craft cocktail in hand. Free to attend, VIP early access, and $80 vendor tables.`,
+    tags: `Events, Lakeland FL, Pokémon TCG`,
+    content: `![Lugo's Craft Distillery logo](/blog/cards-and-cocktails-event.jpg)
+
+Most card shows happen under fluorescent lights in a convention hall. This one happens in a distillery.
+
+On **Saturday, November 14th, 2026**, Lugo's Craft Distillery in Lakeland is hosting **Cards & Cocktails** — a Pokémon trading card event where you can buy, sell, and trade with a craft cocktail in hand. Admission is free.
+
+## The essentials
+
+- **Date:** Saturday, November 14th, 2026
+- **Public hours:** 2:00 – 10:00 PM (doors open at 2 PM)
+- **Location:** Lugo's Craft Distillery, 2500 Drane Field Rd, Lakeland, FL 33811
+- **Admission:** Free to attend — 21+ for bar service
+- **Register:** [cards-and-cocktails.netlify.app](https://cards-and-cocktails.netlify.app/#register)
+
+## What is on the tables
+
+Pokémon is the headline, but vendors are bringing more than one game. Expect **Pokémon TCG**, **One Piece**, **Disney Lorcana**, and **Topps Chrome** — slabs, sealed product, singles, modern and vintage, plus apparel, art, and accessories.
+
+## Day-of schedule
+
+- **12:00 PM** — Vendor load-in and registration opens
+- **1:00 PM** — Vendor load-in closes (hard stop) and VIP early access begins
+- **2:00 PM** — Doors open to the public
+- **2:00 – 9:30 PM** — Market open, bar service running
+- **~6:00 PM** — Peak-hour programming: raffle and giveaways
+- **9:30 PM** — Soft close, bar last call, vendors may begin breaking down
+- **10:00 PM** — Event ends
+
+## The VIP experience — $25
+
+If you want first pick, this is the ticket. VIP guests get in at **1:00 PM**, a full hour before the public, to shop every vendor table before the crowd. It also includes one craft cocktail from the exclusive Pokémon-themed **PokeMenu**. Spots are limited, and checkout runs through Eventbrite.
+
+## Vendors: reserve your table — $80 all in
+
+Every vendor spot includes:
+
+- A tent — no need to bring your own
+- A table, set up and ready
+- Two complimentary cocktail tickets at the bar
+- Prime access to Lakeland's Pokémon community
+
+Vendors must arrive between **12:00 and 1:00 PM**. The 1:00 PM cutoff is a hard stop, because VIPs walk in at that moment. Submit the vendor form and you will get an invoice; your spot is confirmed once the $80 is paid.
+
+One policy worth knowing up front: the vendor fee is **non-refundable**. If you cannot make it, you can transfer your spot to another vendor — but you have to tell the organizers first, or the table goes to the waitlist.
+
+## How to get in
+
+Head to the [Cards & Cocktails registration page](https://cards-and-cocktails.netlify.app/#register) and pick one: attend free, reserve VIP early access, or request a vendor table. Registering as a free guest still gets you a confirmation and event updates.
+
+Must be 21+ to consume alcohol. Please drink responsibly — and bring your binder.`,
+  },
 ];

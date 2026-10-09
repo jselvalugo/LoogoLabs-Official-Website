@@ -209,3 +209,34 @@
   .lb-feature:hover, .lb-latest:hover, .lb-card:hover, .lb-cta__btn:hover { transform: none; }
   .lb-skel { animation: none; }
 }
+
+/* Inline images in post bodies. */
+.lb-figure { margin: 0 0 1.8em; }
+.lb-figure img { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; border-radius: var(--radius-3); }
+.lb-prose a { font-weight: 600; color: var(--ink-900); text-underline-offset: 3px; }
+
+/* Event posts (src/lib/featuredEvent.js): the event's own black-and-gold finish
+   in place of the forest palette. */
+.lb-page--event { background: #0F0D0A; color: #F0EBE0; }
+.lb-page--event .lb-hero, .lb-page--event .lb-cta {
+  background: radial-gradient(ellipse 55% 60% at 18% 0%, rgba(201,149,42,.16), transparent 60%),
+    linear-gradient(165deg, #0A0906 0%, #120F09 40%, #0F0D0A 70%, #160A06 100%);
+  border: 1px solid rgba(201,149,42,.28); box-shadow: none;
+}
+.lb-page--event .lb-hero__title, .lb-page--event .lb-cta__title { font-family: 'Playfair Display', 'Fraunces', Georgia, serif; color: #C9952A; }
+.lb-page--event .lb-hero__meta, .lb-page--event .lb-hero__author, .lb-page--event .lb-back--dark,
+.lb-page--event .lb-cta__text, .lb-page--event .lb-standfirst { color: #B5A99A; }
+.lb-page--event .lb-prose { color: #F0EBE0; }
+.lb-page--event .lb-prose h2, .lb-page--event .lb-prose h3, .lb-page--event .lb-prose strong { color: #C9952A; }
+.lb-page--event .lb-prose a { color: #E3B554; }
+.lb-page--event .lb-prose li::marker { color: #C9952A; }
+.lb-page--event .lb-figure img { border: 1px solid rgba(201,149,42,.28); }
+.lb-page--event .lb-tag { color: #C9952A; background: rgba(201,149,42,.08); border-color: rgba(201,149,42,.28); }
+.lb-page--event .ll-glass { background: #1C1A16; border-color: rgba(201,149,42,.22); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lb-page--event .lb-bio__name { color: #F0EBE0; }
+.lb-page--event .lb-bio__text, .lb-page--event .lb-bio__kicker { color: #B5A99A; }
+.lb-page--event .lb-cta__btn { background: #C9952A; color: #0F0D0A; }
+.lb-page--event .lb-cta__btn:hover { background: #E3B554; }
+.lb-page--event .lb-cta__btn .lb-go__icon { background: #0F0D0A; color: #C9952A; }
+.lb-page--event .lb-back--pill { color: #C9952A; background: #1C1A16; border-color: rgba(201,149,42,.28); }
+.lb-event-logo { display: block; width: 120px; height: auto; margin-bottom: 24px; filter: brightness(0) invert(1); opacity: .85; }

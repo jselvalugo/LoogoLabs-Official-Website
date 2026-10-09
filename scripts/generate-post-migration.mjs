@@ -8,6 +8,7 @@
 // requires an honest number).
 
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { posts } from '../content/posts.mjs';
 
 const MIGRATIONS_DIR = 'netlify/database/migrations';
@@ -76,7 +77,7 @@ ${statements}`;
   console.log(`Wrote ${dir}/migration.sql (${posts.length} posts)`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const name = process.argv[2];
   if (!name) {
     console.error('Usage: node scripts/generate-post-migration.mjs <migration_name>');

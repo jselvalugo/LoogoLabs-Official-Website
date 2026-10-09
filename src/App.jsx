@@ -18,8 +18,11 @@ import PressRelease from './pages/PressRelease';
 import ServicePackage from './pages/ServicePackage';
 import { SERVICE_PACKAGE_BY_PAGE } from './lib/servicePackages';
 import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
-import { BOOKING_URL, openBooking } from './lib/booking';
-import { applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
+import { openBooking } from './lib/booking';
+import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
+import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
+
+const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
 import { voiceCitySlugFromPage } from './lib/voiceCities';
 
@@ -143,10 +146,11 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="ll-topbar"
-        onClick={() => { if (window.fbq) window.fbq('track', 'Schedule'); }}>
+      <a href={`${BLOG_BASE}/${EVENT_POST_SLUG}`} className="ll-topbar ll-topbar--event"
+        onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
+        <span className="ll-topbar__gem" aria-hidden="true">◆</span>
         <span className="ll-topbar-text">
-          Email marketing, done for you<span className="ll-topbar-long">. Campaigns that bring customers back</span>
+          <span className="ll-topbar__gold">Cards &amp; Cocktails</span> · Nov 14<span className="ll-topbar-long"> · Pokémon TCG night in Lakeland · Free entry</span>
         </span>
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
