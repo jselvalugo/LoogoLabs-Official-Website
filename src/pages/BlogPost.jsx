@@ -2,11 +2,13 @@ import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
+import { useLang } from '../lib/i18n';
 import { hasConsent } from '../lib/cookieConsent';
 import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
 export default function BlogPost({ slug, onNavigate }) {
+  const es = useLang() === 'es';
   const [post, setPost] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [notFound, setNotFound] = React.useState(false);
@@ -59,7 +61,7 @@ export default function BlogPost({ slug, onNavigate }) {
           <span className="lb-skel lb-skel--hero" />
           <span className="lb-skel lb-skel--line" />
           <span className="lb-skel lb-skel--line lb-skel--short" />
-          <span className="lb-visually-hidden">Loading post</span>
+          <span className="lb-visually-hidden">{es ? 'Cargando artículo' : 'Loading post'}</span>
         </div>
       </div>
     );
@@ -71,9 +73,9 @@ export default function BlogPost({ slug, onNavigate }) {
         <div className="lb-wrap lb-post-state">
           <div className="lb-notfound ll-glass">
             <span className="lb-empty__kicker">404</span>
-            <h1 className="lb-notfound__title">Post not found.</h1>
+            <h1 className="lb-notfound__title">{es ? 'Artículo no encontrado.' : 'Post not found.'}</h1>
             <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
-              <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Back to Industry LoogoBlog
+              <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Volver a Industry LoogoBlog' : 'Back to Industry LoogoBlog'}
             </a>
           </div>
         </div>
@@ -82,19 +84,19 @@ export default function BlogPost({ slug, onNavigate }) {
   }
 
   const tags = post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
-  const date = post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+  const date = post.published_at ? new Date(post.published_at).toLocaleDateString(es ? 'es-US' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
   const event = isEventPost(post);
 
   const cta = (
     <div className="lb-cta ll-forest">
       <h3 className="lb-cta__title">{event
-        ? <><span className="lb-cta__long">Save your spot. It is free to attend.</span><span className="lb-cta__short">Cards &amp; Cocktails · Free · Nov 14</span></>
-        : 'Want this running in your business?'}</h3>
+        ? <><span className="lb-cta__long">{es ? 'Aparta tu lugar. La entrada es gratis.' : 'Save your spot. It is free to attend.'}</span><span className="lb-cta__short">{es ? 'Cards & Cocktails · Gratis · 14 nov.' : <>Cards &amp; Cocktails · Free · Nov 14</>}</span></>
+        : (es ? '¿Quieres esto funcionando en tu negocio?' : 'Want this running in your business?')}</h3>
       <p className="lb-cta__text">
         {event
-          ? 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.'
-          : 'We set it up, run it, and optimize it every month. You just run your business.'}
+          ? (es ? 'Consigue un boleto gratis (con un pin coleccionable) o un pase VIP de acceso anticipado de $25 en Eventbrite. Niños bienvenidos, mocktails incluidos.' : 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.')
+          : (es ? 'Lo configuramos, lo operamos y lo optimizamos cada mes. Tú solo te ocupas de tu negocio.' : 'We set it up, run it, and optimize it every month. You just run your business.')}
       </p>
       <a
         href={event ? EVENT_URL : BOOKING_URL}
@@ -104,8 +106,8 @@ export default function BlogPost({ slug, onNavigate }) {
         onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
       >
         {event
-          ? <><span className="lb-cta__long">Get tickets on Eventbrite</span><span className="lb-cta__short">Get tickets</span></>
-          : 'Book a free strategy call'}
+          ? <><span className="lb-cta__long">{es ? 'Consigue tus boletos en Eventbrite' : 'Get tickets on Eventbrite'}</span><span className="lb-cta__short">{es ? 'Boletos' : 'Get tickets'}</span></>
+          : (es ? 'Agenda una llamada de estrategia gratis' : 'Book a free strategy call')}
         <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
       </a>
     </div>
@@ -116,12 +118,12 @@ export default function BlogPost({ slug, onNavigate }) {
       <div className="lb-wrap">
 
       {post.featured && !event ? (
-        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} />
+        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} />
       ) : (
       /* ── HERO HEADER ── */
       <header className="lb-hero ll-forest">
         {/* Back nav: a real breadcrumb link, so the post is not an orphan */}
-        <nav aria-label="Breadcrumb" className="lb-hero__nav">
+        <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
           <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
@@ -139,7 +141,7 @@ export default function BlogPost({ slug, onNavigate }) {
             <span aria-hidden="true">·</span>
             <time dateTime={post.published_at || undefined}>{date}</time>
             <span aria-hidden="true">·</span>
-            <span>{post.read_time} min read</span>
+            <span>{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
           </div>
         </div>
       </header>
@@ -150,6 +152,9 @@ export default function BlogPost({ slug, onNavigate }) {
 
           {/* Article content */}
           <article className="lb-article">
+            {es && (
+              <p lang="es" style={{ margin: '0 0 16px', fontSize: 13, fontStyle: 'italic', color: 'var(--ink-500)' }}>Este artículo está disponible solo en inglés.</p>
+            )}
             {post.excerpt && !post.featured && (
               <p className="lb-standfirst">{post.excerpt}</p>
             )}
@@ -169,13 +174,14 @@ export default function BlogPost({ slug, onNavigate }) {
               <div className="lb-bio ll-glass">
                 <img src="/founder-david-selva.jpg" alt="David Selva" width={56} height={56} className="lb-bio__img" />
                 <div>
-                  <div className="lb-bio__kicker">Written by</div>
+                  <div className="lb-bio__kicker">{es ? 'Escrito por' : 'Written by'}</div>
                   <div className="lb-bio__name">David Selva</div>
                   <p className="lb-bio__text">
+                    {es ? 'Fundador de Loogo Labs. Creo y opero los sistemas de seguimiento, reservas y reseñas que evitan que los negocios de servicios locales pierdan prospectos, e Industry LoogoBlog es donde escribo lo que funciona una vez que esos sistemas están en marcha, y lo que no.' : <>
                     Founder of Loogo Labs. I build and run the follow-up, booking and review systems that
                     keep local service businesses from losing leads, and Industry LoogoBlog is where I write down
                     what holds up once those systems are live, and what doesn't.
-                  </p>
+                  </>}</p>
                 </div>
               </div>
             )}
@@ -186,11 +192,11 @@ export default function BlogPost({ slug, onNavigate }) {
             {/* Back link */}
             <div className="lb-post__back">
               <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
-                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Back to Industry LoogoBlog
+                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Volver a Industry LoogoBlog' : 'Back to Industry LoogoBlog'}
               </a>
             </div>
           </article>
-          {event && <aside className="lb-event-rail" aria-label="Event tickets">{cta}</aside>}
+          {event && <aside className="lb-event-rail" aria-label={es ? 'Boletos del evento' : 'Event tickets'}>{cta}</aside>}
       </div>
       </div>
     </div>
@@ -200,7 +206,7 @@ export default function BlogPost({ slug, onNavigate }) {
 // Header for the featured post: a full editorial opener on a floating forest
 // panel (featured kicker, display-size title, the excerpt as a standfirst and
 // a byline strip). A reading-progress bar rides the top of the viewport.
-function FeaturedHero({ post, tags, date, onNavigate }) {
+function FeaturedHero({ post, tags, date, onNavigate, es }) {
   const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
     const onScroll = () => {
@@ -217,11 +223,11 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
     <>
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       <header className="lb-hero lb-hero--feature ll-forest">
-        <nav aria-label="Breadcrumb" className="lb-hero__nav">
+        <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
           <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
-          <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> Featured post</span>
+          <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Artículo destacado' : 'Featured post'}</span>
         </nav>
 
         <div className="lb-hero__body">
@@ -237,16 +243,16 @@ function FeaturedHero({ post, tags, date, onNavigate }) {
               <span className="lb-avatar">{post.author ? post.author[0].toUpperCase() : 'L'}</span>
             )}
             <span className="ll-feature-cell">
-              <span className="ll-feature-cell__k">Written by</span>
+              <span className="ll-feature-cell__k">{es ? 'Escrito por' : 'Written by'}</span>
               <span className="ll-feature-cell__v ll-feature-cell__v--name">{post.author}</span>
             </span>
           </div>
           <div className="ll-feature-cell">
-            <span className="ll-feature-cell__k">Published</span>
+            <span className="ll-feature-cell__k">{es ? 'Publicado' : 'Published'}</span>
             <time dateTime={post.published_at || undefined} className="ll-feature-cell__v">{date}</time>
           </div>
           <div className="ll-feature-cell">
-            <span className="ll-feature-cell__k">Read time</span>
+            <span className="ll-feature-cell__k">{es ? 'Tiempo de lectura' : 'Read time'}</span>
             <span className="ll-feature-cell__v">{post.read_time} min</span>
           </div>
         </div>

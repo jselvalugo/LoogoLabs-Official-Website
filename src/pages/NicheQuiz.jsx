@@ -7,6 +7,8 @@ import { getSessionId } from '../lib/sessionTracker';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import '../styles/pages/quiz.css';
 import { NICHE_BY_PAGE, DECISION_NO, DECISION_YES } from '../lib/nicheQuizzes';
+import { NICHE_QUIZZES_ES } from '../lib/nicheQuizzes.es';
+import { useLang, LangToggle } from '../lib/i18n';
 
 // One component for every niche fit check in lib/nicheQuizzes.js:
 // intro → questions → name & email → result. Same funnel shape and lead
@@ -25,7 +27,9 @@ const StepHeading = ({ children }) => <h2 className="nq-step-title">{children}</
 const Arrow = () => <ArrowRight size={16} weight="bold" />;
 
 export default function NicheQuiz({ page }) {
+  const es = useLang() === 'es';
   const quiz = NICHE_BY_PAGE[page];
+  const t = es ? { ...quiz, ...NICHE_QUIZZES_ES[page] } : quiz;
   const questions = quiz.questions;
   // step 0 = intro, 1..n = questions, n+1 = contact, n+2 = result
   const CONTACT = questions.length + 1;
@@ -47,7 +51,7 @@ export default function NicheQuiz({ page }) {
     const full_name = contact.fullName.trim();
     const email = contact.email.trim();
     if (!full_name || !EMAIL_RE.test(email)) {
-      setError('Enter your full name and a valid email to see your results.');
+      setError(es ? 'Escribe tu nombre completo y un correo válido para ver tus resultados.' : 'Enter your full name and a valid email to see your results.');
       return;
     }
     setError('');
@@ -69,28 +73,29 @@ export default function NicheQuiz({ page }) {
     body = (
       <Card style={{ textAlign: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-          <Badge tone="accent">{quiz.label}</Badge>
+          <Badge tone="accent">{t.label}</Badge>
         </div>
-        <h1 className="nq-title">{quiz.headline}</h1>
-        <p className="nq-lede">{quiz.lede}</p>
+        <h1 className="nq-title">{t.headline}</h1>
+        <p className="nq-lede">{t.lede}</p>
         <div style={{ marginTop: 32 }}>
-          <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={() => go(1)} fullWidth>Start My 60-Second Fit Check</Button>
+          <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={() => go(1)} fullWidth>{es ? 'Empezar mi evaluación de 60 segundos' : 'Start My 60-Second Fit Check'}</Button>
         </div>
-        <p className="nq-fine">Takes 60 seconds · No cost · No obligation</p>
+        <p className="nq-fine">{es ? 'Toma 60 segundos · Sin costo · Sin compromiso' : 'Takes 60 seconds · No cost · No obligation'}</p>
       </Card>
     );
   } else if (step <= questions.length) {
     const qi = step - 1;
     const q = questions[qi];
+    const qt = es ? t.questions[qi] : q;
     body = (
       <Card>
-        <Eyebrow>Fit check · Question {qi + 1} of {questions.length}</Eyebrow>
-        <StepHeading>{q.question}</StepHeading>
+        <Eyebrow>{es ? `Evaluación · Pregunta ${qi + 1} de ${questions.length}` : <>Fit check · Question {qi + 1} of {questions.length}</>}</Eyebrow>
+        <StepHeading>{qt.question}</StepHeading>
         <div className="nq-options">
-          {q.options.map((opt) => (
+          {q.options.map((opt, oi) => (
             <button key={opt} onClick={() => choose(qi, q.key, opt)}
               className={`nq-option${answers[q.key] === opt ? ' is-selected' : ''}`} aria-pressed={answers[q.key] === opt}>
-              <span>{opt}</span>
+              <span>{qt.options[oi]}</span>
               <span className="nq-option__icon" aria-hidden="true"><ArrowRight size={16} weight="bold" /></span>
             </button>
           ))}
@@ -100,39 +105,43 @@ export default function NicheQuiz({ page }) {
   } else if (step === CONTACT) {
     body = (
       <Card>
-        <Eyebrow>Fit check · Almost done</Eyebrow>
-        <StepHeading>Where should we send your results?</StepHeading>
+        <Eyebrow>{es ? 'Evaluación · Casi listo' : 'Fit check · Almost done'}</Eyebrow>
+        <StepHeading>{es ? '¿A dónde te enviamos tus resultados?' : 'Where should we send your results?'}</StepHeading>
         <div style={{ display: 'grid', gap: 16 }}>
-          <Input label="Full name" value={contact.fullName}
-            onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))} placeholder="Jane Smith" />
-          <Input label="Email" type="email" value={contact.email}
+          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName}
+            onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))} placeholder={es ? 'María Pérez' : 'Jane Smith'} />
+          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email}
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
-            placeholder="jane@yourbusiness.com" error={error} />
+            placeholder={es ? 'maria@tunegocio.com' : 'jane@yourbusiness.com'} error={error} />
         </div>
         <div style={{ marginTop: 32 }}>
-          <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={submit} fullWidth>See My Results</Button>
+          <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={submit} fullWidth>{es ? 'Ver mis resultados' : 'See My Results'}</Button>
         </div>
       </Card>
     );
   } else {
     body = answers.decision_maker === DECISION_NO ? (
       <Card style={{ textAlign: 'center' }}>
-        <h2 className="nq-result-title">No problem. Bring in the decision-maker.</h2>
+        <h2 className="nq-result-title">{es ? 'No hay problema. Invita a quien toma la decisión.' : 'No problem. Bring in the decision-maker.'}</h2>
         <p className="nq-result-text">
-          Share this page with them, or book the call together: 15 minutes is enough to see the fit.
+          {es
+            ? 'Comparte esta página con esa persona, o agenden la llamada juntos: 15 minutos bastan para ver si es para ustedes.'
+            : 'Share this page with them, or book the call together: 15 minutes is enough to see the fit.'}
         </p>
-        <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>Book the call anyway</Button>
+        <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>{es ? 'Agendar la llamada de todos modos' : 'Book the call anyway'}</Button>
       </Card>
     ) : (
       <Card style={{ textAlign: 'center' }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="ok">You qualify</Badge></div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="ok">{es ? 'Calificas' : 'You qualify'}</Badge></div>
         <h2 className="nq-result-title" style={{ marginTop: 18 }}>
-          {quiz.product} is built for businesses like yours.
+          {es ? `${t.product} es ideal para negocios como el tuyo.` : <>{quiz.product} is built for businesses like yours.</>}
         </h2>
         <p className="nq-result-text">
-          {quiz.result} Book a free 20-minute fit call and we'll show you exactly how it would work for you.
+          {es
+            ? `${t.result} Agenda una llamada gratis de 20 minutos y te mostramos exactamente cómo funcionaría para ti.`
+            : <>{quiz.result} Book a free 20-minute fit call and we'll show you exactly how it would work for you.</>}
         </p>
-        <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={trackBook} fullWidth>Book My Free Fit Call</Button>
+        <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={trackBook} fullWidth>{es ? 'Agendar mi llamada gratis' : 'Book My Free Fit Call'}</Button>
       </Card>
     );
   }
@@ -146,7 +155,7 @@ export default function NicheQuiz({ page }) {
           <div className="nq-bar__side">
             {step > 0 && step < RESULT && (
               <button onClick={() => go(step - 1)} className="nq-back">
-                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Back
+                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Atrás' : 'Back'}
               </button>
             )}
           </div>
@@ -155,6 +164,7 @@ export default function NicheQuiz({ page }) {
             {step > 0 && step < RESULT && (
               <span className="nq-count">{step}/{CONTACT}</span>
             )}
+            <LangToggle />
           </div>
           <div className="nq-progress" aria-hidden="true">
             <div className="nq-progress__fill" style={{ width: `${progressPct}%` }} />
@@ -168,8 +178,8 @@ export default function NicheQuiz({ page }) {
 
       <footer className="nq-footer">
         <span>© {new Date().getFullYear()} Loogo Labs</span>
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+        <a href="/privacy">{es ? 'Privacidad' : 'Privacy'}</a>
+        <a href="/terms">{es ? 'Términos' : 'Terms'}</a>
       </footer>
     </main>
   );

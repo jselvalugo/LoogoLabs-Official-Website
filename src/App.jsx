@@ -21,6 +21,7 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
+import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
 
 const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
@@ -54,13 +55,15 @@ function App({ initialPath }) {
   const init = getInitialState(initialPath);
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
+  const es = useLang() === 'es';
 
   const navigate = React.useCallback((target, param, { push = true } = {}) => {
     const slug = target === 'BlogPost' ? param : null;
     setPage(target);
     setPostSlug(slug);
     if (push) {
-      const next = pathForPage(target, slug);
+      // Stay in the visitor's language: internal paths are English, so add /es.
+      const next = localizePath(pathForPage(target, slug), currentLang());
       if (next !== window.location.pathname) window.history.pushState({}, '', next);
       window.scrollTo(0, 0);
     }
@@ -71,6 +74,7 @@ function App({ initialPath }) {
   // view did not, so a visitor (and any crawler following history) got stuck.
   React.useEffect(() => {
     const onPop = () => {
+      syncLangToPath(window.location.pathname);
       const next = routeForPath(window.location.pathname);
       setPage(next.page);
       setPostSlug(next.slug);
@@ -83,8 +87,8 @@ function App({ initialPath }) {
   // its own head once the post arrives. Everything else is known up front.
   React.useEffect(() => {
     if (page === 'BlogPost' || page === 'Admin') return;
-    applyHead(headForPage(page));
-  }, [page]);
+    applyHead(headForPage(page, es ? 'es' : 'en'));
+  }, [page, es]);
 
   // Internal links are now real hrefs so crawlers can follow them. Intercept the
   // clicks that stay on the site and route them without a reload; let modified
@@ -150,22 +154,22 @@ function App({ initialPath }) {
         onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
         <span className="ll-topbar__gem" aria-hidden="true">◆</span>
         <span className="ll-topbar-text">
-          <span className="ll-topbar__gold">Cards &amp; Cocktails</span> · Nov 14<span className="ll-topbar-long"> · Pokémon TCG night in Lakeland · Free entry</span>
+          <span className="ll-topbar__gold">Cards &amp; Cocktails</span>{es ? ' · 14 de nov' : ' · Nov 14'}<span className="ll-topbar-long">{es ? ' · Noche de Pokémon TCG en Lakeland · Entrada gratis' : ' · Pokémon TCG night in Lakeland · Free entry'}</span>
         </span>
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: 'Industry LoogoBlog', badge: 'Fresh' }}
-        cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
+        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog', badge: es ? 'Nuevo' : 'Fresh' }}
+        cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
       />
       <SeasonalGarland />
       <div onClick={handleLinkClick}>{body}</div>
       <Footer
         columns={[
-          { title: 'Company', links: ['Mission', 'Company', 'Book a Call'] },
-          { title: 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Book a Call'] },
+          { title: es ? 'Plataforma' : 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
-          { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
+          { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
