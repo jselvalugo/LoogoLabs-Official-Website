@@ -5,6 +5,7 @@ import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
 import { getSessionId } from '../lib/sessionTracker';
+import { useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,6 +78,38 @@ const QUIZ_STEPS = [
     options: ["Yes, that's me", "No, I'd need to check with someone"] },
 ];
 
+const TESTIMONIAL_ALT_ES = [
+  'Recomendación de 5 estrellas en Facebook de Sally Butler para Loogo Labs',
+  'Recomendación de 5 estrellas en Facebook de Kristin Pitts para Loogo Labs',
+];
+
+const problems_ES = [
+  ['Los técnicos se olvidan de pedirla, siempre', 'El trabajo está hecho y el camión ya va para la siguiente parada, y pedir una reseña es lo primero que se salta cuando hay mucho trabajo.'],
+  ['Las solicitudes enviadas días después se ignoran', 'Para cuando alguien se acuerda de mandar el texto, el cliente ya pasó la página. La tasa de respuesta cae rápido después de las primeras 24 horas.'],
+  ['Sin un sistema no hay constancia', 'A algunos clientes se les pide, a la mayoría no. No hay forma de saber tu ritmo real de reseñas si la mitad depende de que alguien se acuerde.'],
+];
+
+const capabilities_ES = [
+  ['Se activa en cuanto se cierra un trabajo', 'Se dispara con la misma actualización de estado que tu equipo ya hace, sin pasos extra para nadie.', Lightning],
+  ['Textos y correos, automáticamente', 'Envía por el canal que mejor responde, sin que nadie tenga que mandar nada a mano.', ChatsCircle],
+  ['Plantillas de respuesta con un clic', 'Responder a una reseña nueva toma un toque en lugar de escribir una respuesta desde cero cada vez.', CursorClick],
+  ['Panel de calificación y volumen en vivo', 'Ve tu número de reseñas, tu calificación y la tendencia en un solo lugar, no repartido en cinco pestañas.', ChartLineUp],
+];
+
+const comparison_ES = [
+  ['Tiempo para enviar la solicitud', 'Inmediato y automático', 'Cuando alguien se acuerde'],
+  ['Constancia', 'Cada trabajo, siempre', 'Depende de quién esté de turno'],
+  ['Tasa de respuesta', 'Más alta, enviada en minutos', 'Cae rápido después de 24 horas'],
+  ['Tiempo para responder reseñas nuevas', 'Un clic', 'Escrita desde cero'],
+];
+
+const QUIZ_STEPS_ES = [
+  { question: '¿Qué tipo de negocio tienes?', options: ['Servicios para el hogar (HVAC, plomería, electricidad, techos)', 'Médico, dental y bienestar', 'Servicios legales y profesionales', 'Salón, spa y fitness', 'Otro tipo de negocio'] },
+  { question: '¿Cuántos trabajos o citas completa tu negocio en una semana promedio?', options: ['0-10', '11-25', '26-50', '50+'] },
+  { question: '¿Qué es lo que más te está costando ahora mismo?', options: ['No estamos recibiendo suficientes reseñas nuevas', 'Las malas reseñas nos están bajando en Google', 'No hay tiempo para pedirle reseñas a cada cliente', 'No sabemos cómo nos comparamos con la competencia'] },
+  { question: '¿Eres el dueño o la persona que decide sobre herramientas como esta?', options: ['Sí, soy yo', 'No, tendría que consultarlo con alguien'] },
+];
+
 const PRE_QUIZ_STEPS = ['hero', 'problem', 'capabilities', 'comparison', 'proof'];
 const QUIZ_START = PRE_QUIZ_STEPS.length; // index of the first quiz question
 const QUIZ_END = QUIZ_START + QUIZ_STEPS.length; // index of the contact step
@@ -89,6 +122,7 @@ export default function ReputationAutopilot() {
   const [answers, setAnswers] = React.useState({});
   const [contact, setContact] = React.useState({ fullName: '', email: '' });
   const [contactError, setContactError] = React.useState('');
+  const es = useLang() === 'es';
 
   const go = (n) => {
     setStep(n);
@@ -120,7 +154,7 @@ export default function ReputationAutopilot() {
     const fullName = contact.fullName.trim();
     const email = contact.email.trim();
     if (!fullName || !EMAIL_RE.test(email)) {
-      setContactError('Enter your full name and a valid email to see your results.');
+      setContactError(es ? 'Escribe tu nombre completo y un correo válido para ver tus resultados.' : 'Enter your full name and a valid email to see your results.');
       return;
     }
     setContactError('');
@@ -154,39 +188,39 @@ export default function ReputationAutopilot() {
     body = notDecisionMaker ? (
       <Card>
         <div className="lp-result-icon"><ThumbsUp size={26} weight="duotone" /></div>
-        <h2 className="lp-h2">No problem. Bring in the decision-maker.</h2>
+        <h2 className="lp-h2">{es ? 'No hay problema. Invita a quien toma la decisión.' : 'No problem. Bring in the decision-maker.'}</h2>
         <p className="lp-lede">
-          Share this page with them, or book the call together. A 15-minute walkthrough is enough for anyone to see the fit.
+          {es ? 'Compártele esta página o agenden la llamada juntos. Una demostración de 15 minutos basta para ver si encaja.' : 'Share this page with them, or book the call together. A 15-minute walkthrough is enough for anyone to see the fit.'}
         </p>
         <div className="lp-continue">
-          <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>Book the call anyway</Button>
+          <Button variant="secondary" size="lg" onClick={trackBook} fullWidth>{es ? 'Agendar la llamada de todos modos' : 'Book the call anyway'}</Button>
         </div>
       </Card>
     ) : (
       <Card tone="forest">
-        <div className="lp-center"><Badge tone="ok">You qualify</Badge></div>
-        <h2 className="lp-h2">This is exactly what Reputation Autopilot was built for.</h2>
+        <div className="lp-center"><Badge tone="ok">{es ? 'Calificas' : 'You qualify'}</Badge></div>
+        <h2 className="lp-h2">{es ? 'Justo para esto se creó Reputation Autopilot.' : 'This is exactly what Reputation Autopilot was built for.'}</h2>
         <p className="lp-lede">
-          Book a free 20-minute fit call. We'll show you exactly what a review request would look like for your
-          business, and how many reviews you're likely missing right now.
+          {es ? 'Agenda una llamada gratis de 20 minutos. Te mostramos exactamente cómo se vería una solicitud de reseña para tu negocio, y cuántas reseñas probablemente estás dejando pasar ahora mismo.' : <>Book a free 20-minute fit call. We'll show you exactly what a review request would look like for your
+          business, and how many reviews you're likely missing right now.</>}
         </p>
-        <ContinueRow onNext={trackBook} label="Book My Free Fit Call" variant="primary" />
+        <ContinueRow onNext={trackBook} label={es ? 'Agendar mi llamada gratis' : 'Book My Free Fit Call'} variant="primary" />
       </Card>
     );
   } else if (isContactStep) {
     body = (
       <Card>
-        <Eyebrow>Fit check · Almost done</Eyebrow>
-        <StepHeading>Where should we send your results?</StepHeading>
+        <Eyebrow>{es ? 'Evaluación · Casi terminas' : 'Fit check · Almost done'}</Eyebrow>
+        <StepHeading>{es ? '¿A dónde te enviamos tus resultados?' : 'Where should we send your results?'}</StepHeading>
         <div className="lp-fields">
-          <Input label="Full name" value={contact.fullName}
+          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName}
             onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))}
-            placeholder="Jane Smith" />
-          <Input label="Email" type="email" value={contact.email}
+            placeholder={es ? 'María García' : 'Jane Smith'} />
+          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email}
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
-            placeholder="jane@yourbusiness.com" error={contactError} />
+            placeholder={es ? 'maria@tunegocio.com' : 'jane@yourbusiness.com'} error={contactError} />
         </div>
-        <ContinueRow onNext={confirmContact} label="See My Results" />
+        <ContinueRow onNext={confirmContact} label={es ? 'Ver mis resultados' : 'See My Results'} />
       </Card>
     );
   } else if (isQuizStep) {
@@ -194,12 +228,12 @@ export default function ReputationAutopilot() {
     const q = QUIZ_STEPS[qi];
     body = (
       <Card>
-        <Eyebrow>Fit check · Question {qi + 1} of {QUIZ_STEPS.length}</Eyebrow>
-        <StepHeading>{q.question}</StepHeading>
+        <Eyebrow>{es ? `Evaluación · Pregunta ${qi + 1} de ${QUIZ_STEPS.length}` : <>Fit check · Question {qi + 1} of {QUIZ_STEPS.length}</>}</Eyebrow>
+        <StepHeading>{es ? QUIZ_STEPS_ES[qi].question : q.question}</StepHeading>
         <div className="lp-options">
-          {q.options.map((opt) => (
+          {q.options.map((opt, oi) => (
             <button key={opt} className="lp-option" onClick={() => chooseQuiz(qi, q.key, opt)}>
-              {show(opt)}
+              {es ? QUIZ_STEPS_ES[qi].options[oi] : show(opt)}
               <span className="lp-option__chip" aria-hidden="true"><ArrowRight size={14} weight="bold" /></span>
             </button>
           ))}
@@ -217,14 +251,14 @@ export default function ReputationAutopilot() {
             <Badge tone="accent">Reputation Autopilot</Badge>
           </div>
           <h1 className="lp-h1">
-            Every Completed Job Becomes <em>A 5-Star Review Request.</em>
+            {es ? <>Cada trabajo terminado se convierte en <em>una solicitud de reseña de 5 estrellas.</em></> : <>Every Completed Job Becomes <em>A 5-Star Review Request.</em></>}
           </h1>
           <p className="lp-lede">
-            The moment a job is marked done, your customer gets a text asking for a Google review. No
-            spreadsheet, no sticky note, no forgetting.
+            {es ? 'En cuanto un trabajo se marca como terminado, tu cliente recibe un texto pidiéndole una reseña en Google. Sin hojas de cálculo, sin notitas, sin olvidos.' : <>The moment a job is marked done, your customer gets a text asking for a Google review. No
+            spreadsheet, no sticky note, no forgetting.</>}
           </p>
           <div className="lp-stats">
-            {[['+40%', 'More reviews collected'], ['< 5 min', 'After job completion'], ['24/7', 'Runs itself'], ['1 click', 'To reply']].map(([val, label]) => (
+            {(es ? [['+40%', 'Más reseñas recibidas'], ['< 5 min', 'Después de terminar el trabajo'], ['24/7', 'Funciona solo'], ['1 clic', 'Para responder']] : [['+40%', 'More reviews collected'], ['< 5 min', 'After job completion'], ['24/7', 'Runs itself'], ['1 click', 'To reply']]).map(([val, label]) => (
               <div key={label} className="lp-stat">
                 <div className="lp-stat__val">{val}</div>
                 <div className="lp-stat__label">{label}</div>
@@ -232,18 +266,18 @@ export default function ReputationAutopilot() {
             ))}
           </div>
           <div className="lp-hero__cta">
-            <ContinueRow onNext={() => go(1)} label="Start My 60-Second Fit Check" />
-            <p className="lp-fine">Takes 60 seconds · No cost · No obligation</p>
+            <ContinueRow onNext={() => go(1)} label={es ? 'Empezar mi evaluación de 60 segundos' : 'Start My 60-Second Fit Check'} />
+            <p className="lp-fine">{es ? 'Toma 60 segundos · Sin costo · Sin compromiso' : 'Takes 60 seconds · No cost · No obligation'}</p>
           </div>
         </Card>
       );
     } else if (id === 'problem') {
       body = (
         <Card wide tone="forest">
-          <Eyebrow>The real cost of asking by hand</Eyebrow>
-          <StepHeading>Manually asking for reviews doesn't scale, so most owners just stop.</StepHeading>
+          <Eyebrow>{es ? 'El costo real de pedirlas a mano' : 'The real cost of asking by hand'}</Eyebrow>
+          <StepHeading>{es ? 'Pedir reseñas a mano no es sostenible, así que la mayoría de los dueños simplemente deja de hacerlo.' : "Manually asking for reviews doesn't scale, so most owners just stop."}</StepHeading>
           <div className="lp-problems">
-            {problems.map(([title, desc]) => (
+            {(es ? problems_ES : problems).map(([title, desc]) => (
               <div key={title} className="lp-problem">
                 <div className="lp-problem__x" aria-hidden="true"><X size={14} weight="bold" /></div>
                 <h3>{show(title)}</h3>
@@ -251,16 +285,16 @@ export default function ReputationAutopilot() {
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(2)} label="See How It Works" variant="primary" />
+          <ContinueRow onNext={() => go(2)} label={es ? 'Ver cómo funciona' : 'See How It Works'} variant="primary" />
         </Card>
       );
     } else if (id === 'capabilities') {
       body = (
         <Card wide>
-          <Eyebrow>What it actually does</Eyebrow>
-          <StepHeading>A review request that fires itself the second the job is done.</StepHeading>
+          <Eyebrow>{es ? 'Lo que realmente hace' : 'What it actually does'}</Eyebrow>
+          <StepHeading>{es ? 'Una solicitud de reseña que se envía sola en cuanto se termina el trabajo.' : 'A review request that fires itself the second the job is done.'}</StepHeading>
           <div className="lp-caps">
-            {capabilities.map(([title, desc, Icon], i) => (
+            {(es ? capabilities_ES : capabilities).map(([title, desc, Icon], i) => (
               <div key={title} className={`lp-cap${i === 0 ? ' lp-cap--lead' : ''}`}>
                 <span className="lp-cap__icon" aria-hidden="true"><Icon size={22} weight="duotone" /></span>
                 <div>
@@ -270,40 +304,40 @@ export default function ReputationAutopilot() {
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(3)} label="See The Comparison" />
+          <ContinueRow onNext={() => go(3)} label={es ? 'Ver la comparación' : 'See The Comparison'} />
         </Card>
       );
     } else if (id === 'comparison') {
       body = (
         <Card wide>
-          <Eyebrow>Automated vs. asking by hand</Eyebrow>
-          <StepHeading>Side by side, it's not close.</StepHeading>
+          <Eyebrow>{es ? 'Automatizado vs. pedirlas a mano' : 'Automated vs. asking by hand'}</Eyebrow>
+          <StepHeading>{es ? 'Lado a lado, no hay comparación.' : "Side by side, it's not close."}</StepHeading>
           <div className="lp-compare" role="table">
             <div className="lp-compare__head" role="row">
               <span role="columnheader" />
-              <span role="columnheader" className="lp-compare__us">Automated</span>
-              <span role="columnheader">Asking By Hand</span>
+              <span role="columnheader" className="lp-compare__us">{es ? 'Automatizado' : 'Automated'}</span>
+              <span role="columnheader">{es ? 'Pedirlas a mano' : 'Asking By Hand'}</span>
             </div>
-            {comparison.map(([feat, a, b]) => (
+            {(es ? comparison_ES : comparison).map(([feat, a, b]) => (
               <div key={feat} className="lp-compare__row" role="row">
                 <span role="rowheader" className="lp-compare__feat">{feat}</span>
-                <span role="cell" className="lp-compare__us"><em className="lp-compare__tag">Automated</em><Check size={14} weight="bold" aria-hidden="true" /> {show(a)}</span>
-                <span role="cell" className="lp-compare__them"><em className="lp-compare__tag">Asking By Hand</em>{show(b)}</span>
+                <span role="cell" className="lp-compare__us"><em className="lp-compare__tag">{es ? 'Automatizado' : 'Automated'}</em><Check size={14} weight="bold" aria-hidden="true" /> {show(a)}</span>
+                <span role="cell" className="lp-compare__them"><em className="lp-compare__tag">{es ? 'Pedirlas a mano' : 'Asking By Hand'}</em>{show(b)}</span>
               </div>
             ))}
           </div>
-          <ContinueRow onNext={() => go(4)} label="See What Clients Say" />
+          <ContinueRow onNext={() => go(4)} label={es ? 'Ver lo que dicen los clientes' : 'See What Clients Say'} />
         </Card>
       );
     } else if (id === 'proof') {
       body = (
         <Card wide tone="sage">
-          <Eyebrow>What clients say</Eyebrow>
-          <StepHeading>Real reviews from real Loogo Labs clients.</StepHeading>
+          <Eyebrow>{es ? 'Lo que dicen los clientes' : 'What clients say'}</Eyebrow>
+          <StepHeading>{es ? 'Reseñas reales de clientes reales de Loogo Labs.' : 'Real reviews from real Loogo Labs clients.'}</StepHeading>
           <div className="lp-proof">
-            {testimonialImages.map((t) => <TestimonialImage key={t.src} {...t} />)}
+            {testimonialImages.map((t, i) => <TestimonialImage key={t.src} src={t.src} alt={es ? TESTIMONIAL_ALT_ES[i] : t.alt} />)}
           </div>
-          <ContinueRow onNext={() => go(QUIZ_START)} label="Start My 60-Second Fit Check" />
+          <ContinueRow onNext={() => go(QUIZ_START)} label={es ? 'Empezar mi evaluación de 60 segundos' : 'Start My 60-Second Fit Check'} />
         </Card>
       );
     }
@@ -317,13 +351,14 @@ export default function ReputationAutopilot() {
         <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
           <div className="lp-nav__side">
             {step > 0 && !isResult && (
-              <button className="lp-back" onClick={() => go(step - 1)}>
-                <ArrowLeft size={16} weight="bold" aria-hidden="true" /> Back
+              <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step - 1)}>
+                <ArrowLeft size={16} weight="bold" aria-hidden="true" /> <span className="lp-back__label">{es ? 'Atrás' : 'Back'}</span>
               </button>
             )}
           </div>
           <span className="ll-nav__logo lp-nav__logo"><img src="/logo.png" alt="" /></span>
           <div className="lp-nav__side lp-nav__side--end">
+            <LangToggle />
             {!isResult && !isIntroStep && (
               <span className="lp-count">{step - QUIZ_START + 1}/{quizProgressTotal}</span>
             )}
@@ -343,8 +378,8 @@ export default function ReputationAutopilot() {
       <footer className="lp-footer">
         <div className="lp-footer__pill ll-glass">
           <span>© {new Date().getFullYear()} Loogo Labs</span>
-          <a href="/privacy">Privacy</a>
-          <a href="/terms">Terms</a>
+          <a href="/privacy">{es ? 'Privacidad' : 'Privacy'}</a>
+          <a href="/terms">{es ? 'Términos' : 'Terms'}</a>
         </div>
       </footer>
     </main>
