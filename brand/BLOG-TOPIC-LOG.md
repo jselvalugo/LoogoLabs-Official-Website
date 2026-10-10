@@ -73,3 +73,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-08 | driving-school-stalled-students-between-lessons | Driving schools | Retention — days-since-last-lesson check, rebooking sequence & human call for stalled mid-course students
 - 2026-10-09 | salon-december-chair-hours-regulars-first | Salons & spas | Seasonal booking — holiday-week chair hours opened to regulars first, with a dated release to new clients
 - 2026-10-09 | fence-installer-permit-wait-status-text | Fence installers | Project status — weekly "who holds the job" text while a signed job waits on a permit or HOA approval
+- 2026-10-10 | plumber-pre-thanksgiving-kitchen-drain-check | Plumbing | Seasonal booking — pre-holiday kitchen drain & disposal check texted to past drain customers in early November

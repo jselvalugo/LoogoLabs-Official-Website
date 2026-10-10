@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `plumber-pre-thanksgiving-kitchen-drain-check`,
+    title: `Plumbers: Sell the Drain Check Before Thanksgiving Day`,
+    excerpt: `The Thanksgiving clog call is expensive for everyone, and most of the people who make it are customers you already have on file.`,
+    tags: `Seasonal Booking, Past-Customer Outreach, Plumbing`,
+    content: `The most expensive plumbing call of the year comes in at about the hour the turkey should be coming out. A kitchen sink that won't drain, eleven guests on the way, and a dispatcher who is already on call. Nobody wins that call. The customer pays holiday rates and wrecks their afternoon, and your tech spends Thanksgiving under someone else's sink.
+
+I have looked at enough of these call logs to say that most of those calls are not surprises. The drain has been slow since October. The disposal has been groaning for a month. The owner knew, and did nothing, because nothing was forcing the issue yet.
+
+## Who actually calls on the holiday
+
+Think about the people who ring you on Thanksgiving Day. They are rarely strangers. A good share are people whose kitchen drain or disposal you have already worked on, or who called about a slow sink last winter and said they'd think about it.
+
+That means you already have the list. It sits in your job history, and you don't need an ad to reach it. You need to pull it out before the week when everyone is cooking at once.
+
+## Build the list this week
+
+Open your completed jobs and filter for three kinds of work: kitchen drain clears, disposal installs or repairs, and any job where the tech's note says "slow" or "partial clog." Give them one tag, something like \`pre-holiday-drain\`. Keep the date of the last visit next to each name.
+
+Then add a second group by hand: any customer who asked for a quote on a drain or disposal and never booked. Those people already told you they have a problem.
+
+Expect the list to be rougher than you want. Notes are inconsistent and some jobs won't be labeled at all. Fix what you can in an hour and send to the rest anyway. A text that reaches a few people who don't need it costs you nothing.
+
+## What the text says
+
+Send it in the first week of November, before anyone has started planning the menu. Keep it short, from the shop and not from a campaign:
+
+> Hi Dana, it's the team at your plumber. Thanksgiving is the week the kitchen drain gets tested hardest. We're holding a few 30-minute drain and disposal checks before Nov. 20. Reply with a day and we'll fit you in.
+
+Three things make that work. It names the date, so the customer sees a reason to answer now. It says "a few," and you mean it: cap the slots you offer, because a limit is honest and it keeps your schedule from filling with low-value visits. And it asks for a reply, not a click, so a customer can answer from the couch.
+
+## Where this breaks down
+
+A check will not save every drain. Some pipes fail with no warning, and a visit three weeks early can't prevent that. Say so when someone asks, and don't promise a clean Thanksgiving.
+
+It also adds work to a month that is already full. If your crew is booked solid in November, cap the slots lower, or send only to customers whose last drain job was within two years. The point is to move a few emergency calls onto a calm Tuesday. It is not to double your workload.
+
+And price the check on its own. A flat price for a short visit is easier to say yes to than "come take a look," and it keeps the slot from turning into an hour of unpaid diagnosis.
+
+## Send it where the replies land
+
+If the replies go to a shared inbox that nobody watches on Saturdays, the text does more harm than good. Decide who answers before you send, and what they are allowed to offer. A reply that sits for three days looks worse than no text at all.
+
+## Check this week
+
+Open your job history and pull every kitchen drain or disposal job from the last two years. Count them and tag them. Then write down which three November dates you could realistically offer a 30-minute check. If you can fill the list and name the dates before Halloween, you are ready to send on the first.`,
+  },
+  {
     slug: `fence-installer-permit-wait-status-text`,
     title: `Your Fence Customer Hears Nothing During the Permit Wait`,
     excerpt: `The weeks between a signed fence contract and an approved permit are the quietest part of the job, and a short status text on a fixed day keeps the customer from guessing.`,
