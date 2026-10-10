@@ -1,6 +1,7 @@
 import React from 'react';
 import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
+import { useLang } from '../lib/i18n';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
 import { ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
@@ -9,6 +10,7 @@ import '../styles/pages/blog.css';
 const CFL = '__cfl';
 
 export default function Blog({ onNavigate }) {
+  const es = useLang() === 'es';
   const [posts, setPosts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [topic, setTopic] = React.useState(null);
@@ -71,7 +73,7 @@ export default function Blog({ onNavigate }) {
               Industry<br /><em>LoogoBlog.</em>
             </h1>
             <p className="ln-masthead__lede">
-              Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.
+              {es ? 'Hablamos claro para negocios de servicios locales: seguimiento más rápido de prospectos, más reseñas, menos inasistencias, reservas más inteligentes y agentes de voz con IA, además de los mitos de marketing que conviene ignorar.' : 'Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.'}
             </p>
           </div>
         </div>
@@ -84,59 +86,59 @@ export default function Blog({ onNavigate }) {
           <div className="lb-loading" role="status" aria-live="polite">
             <span className="lb-skel lb-skel--feature" />
             <div className="lb-skel-row"><span className="lb-skel" /><span className="lb-skel" /></div>
-            <span className="lb-visually-hidden">Loading posts</span>
+            <span className="lb-visually-hidden">{es ? 'Cargando artículos' : 'Loading posts'}</span>
           </div>
         ) : posts.length === 0 ? (
-          <EmptyState />
+          <EmptyState es={es} />
         ) : (
           <div className="ln-layout">
            <div className="ln-layout__main">
-            {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} />}
+            {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
             {spotlight
-              ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} />
-              : featured && <FeaturedCard post={featured} onNavigate={onNavigate} />}
+              ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} es={es} />
+              : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
 
             {(rest.length > 0 || filtering) && (
               <div className="lb-list">
                 <div className="lb-list__head">
                   <h2 className="lb-list__title">
-                    {filtering ? `Showing ${shown.length} of ${posts.length} posts` : 'Find a post'}
+                    {filtering ? (es ? `Mostrando ${shown.length} de ${posts.length} artículos` : `Showing ${shown.length} of ${posts.length} posts`) : (es ? 'Encuentra un artículo' : 'Find a post')}
                   </h2>
                   {filtering && (
-                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>Clear <X size={12} weight="bold" aria-hidden="true" /></button>
+                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar' : 'Clear'} <X size={12} weight="bold" aria-hidden="true" /></button>
                   )}
                 </div>
                 <div className="ln-find" role="search">
                   <label className="ln-find__search">
                     <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
-                    <input type="search" aria-label="Search posts" placeholder="Search posts, e.g. reviews or HVAC" value={query} onChange={e => setQuery(e.target.value)} />
+                    <input type="search" aria-label={es ? 'Buscar artículos' : 'Search posts'} placeholder={es ? 'Busca artículos, p. ej. reseñas o HVAC' : 'Search posts, e.g. reviews or HVAC'} value={query} onChange={e => setQuery(e.target.value)} />
                   </label>
                   <div className="ln-find__row">
-                    <div className="ln-find__chips" aria-label="Filter by topic">
-                      {[[null, 'All'], [CFL, 'Central Florida'], ...chipList.map(t => [t, t])].map(([value, text]) => (
+                    <div className="ln-find__chips" aria-label={es ? 'Filtrar por tema' : 'Filter by topic'}>
+                      {[[null, es ? 'Todos' : 'All'], [CFL, es ? 'Centro de Florida' : 'Central Florida'], ...chipList.map(t => [t, t])].map(([value, text]) => (
                         <button key={text} type="button" className="ln-find__chip" aria-pressed={topic === value} onClick={() => setTopic(value)}>
                           {text}
                         </button>
                       ))}
                     </div>
                     <label className="ln-find__sort">
-                      Sort
+                      {es ? 'Ordenar' : 'Sort'}
                       <select value={sort} onChange={e => setSort(e.target.value)}>
-                        <option value="newest">Newest</option>
-                        <option value="views">Most viewed</option>
-                        <option value="ranked">Best ranked</option>
+                        <option value="newest">{es ? 'Más recientes' : 'Newest'}</option>
+                        <option value="views">{es ? 'Más vistos' : 'Most viewed'}</option>
+                        <option value="ranked">{es ? 'Mejor valorados' : 'Best ranked'}</option>
                       </select>
                     </label>
                   </div>
                 </div>
                 {shown.length === 0 && (
                   <div className="lb-nomatch ll-glass">
-                    <p>No posts match those filters.</p>
-                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>Clear filters</button>
+                    <p>{es ? 'Ningún artículo coincide con esos filtros.' : 'No posts match those filters.'}</p>
+                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar filtros' : 'Clear filters'}</button>
                   </div>
                 )}
                 <div className="lb-grid">
-                  {shown.map((post, i) => <PostCard key={post.id} post={post} onNavigate={onNavigate} wide={!filtering && shown.length > 2 && i === 0} />)}
+                  {shown.map((post, i) => <PostCard key={post.id} post={post} onNavigate={onNavigate} es={es} wide={!filtering && shown.length > 2 && i === 0} />)}
                 </div>
               </div>
             )}
@@ -151,33 +153,33 @@ export default function Blog({ onNavigate }) {
 }
 
 const tagList = post => (post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : []);
-const fmtDate = (post, month) => (post.published_at
-  ? new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month, day: 'numeric' })
+const fmtDate = (post, month, es) => (post.published_at
+  ? new Date(post.published_at).toLocaleDateString(es ? 'es-US' : 'en-US', { year: 'numeric', month, day: 'numeric' })
   : '');
 const go = (onNavigate, post) => e => { e.preventDefault(); onNavigate('BlogPost', post.slug); };
 
 // The editor-picked featured post: a floating dark forest panel with a
 // display-size title and the excerpt set as a pull quote.
-function FeaturedSpotlight({ post, onNavigate }) {
+function FeaturedSpotlight({ post, onNavigate, es }) {
   const tags = tagList(post);
-  const date = fmtDate(post, 'long');
+  const date = fmtDate(post, 'long', es);
 
   return (
     <a
       href={`${BLOG_BASE}/${post.slug}`}
       onClick={go(onNavigate, post)}
-      aria-label={`Featured post: ${post.title}`}
+      aria-label={es ? `Artículo destacado: ${post.title}` : `Featured post: ${post.title}`}
       className="lb-feature"
     >
       <div className="ll-feature-panel ll-forest">
         <div className="ll-feature-main">
           <div className="lb-tags">
-            <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> Editor's pick</span>
+            <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Selección del editor' : "Editor's pick"}</span>
             {tags.map(tag => <span key={tag} className="lb-tag lb-tag--dark">{tag}</span>)}
           </div>
           <h2 className="ll-feature-title">{post.title}</h2>
           <span className="lb-go lb-go--dark">
-            Read the featured post
+            {es ? 'Leer el artículo destacado' : 'Read the featured post'}
             <span className="lb-go__icon"><ArrowRight size={16} weight="bold" aria-hidden="true" /></span>
           </span>
         </div>
@@ -185,9 +187,9 @@ function FeaturedSpotlight({ post, onNavigate }) {
         <aside className="ll-feature-side">
           {post.excerpt && <p className="ll-feature-quote">{post.excerpt}</p>}
           <dl className="ll-feature-meta">
-            <dt>By</dt><dd>{post.author}</dd>
-            {date && <><dt>Published</dt><dd><time dateTime={post.published_at}>{date}</time></dd></>}
-            <dt>Length</dt><dd>{post.read_time} min read</dd>
+            <dt>{es ? 'Por' : 'By'}</dt><dd>{post.author}</dd>
+            {date && <><dt>{es ? 'Publicado' : 'Published'}</dt><dd><time dateTime={post.published_at}>{date}</time></dd></>}
+            <dt>{es ? 'Duración' : 'Length'}</dt><dd>{post.read_time} {es ? 'min de lectura' : 'min read'}</dd>
           </dl>
         </aside>
       </div>
@@ -195,7 +197,7 @@ function FeaturedSpotlight({ post, onNavigate }) {
   );
 }
 
-function EventFeaturedCard({ post, onNavigate }) {
+function EventFeaturedCard({ post, onNavigate, es }) {
   const [hover, setHover] = React.useState(false);
   const t = EVENT_THEME;
   return (
@@ -208,7 +210,7 @@ function EventFeaturedCard({ post, onNavigate }) {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.gold }}>
-          Featured event · Nov 14, 2026
+          {es ? 'Evento destacado · 14 nov. 2026' : 'Featured event · Nov 14, 2026'}
         </span>
         <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, ${t.gold}, transparent)` }} />
       </div>
@@ -224,7 +226,7 @@ function EventFeaturedCard({ post, onNavigate }) {
         <div style={{ padding: 'clamp(28px,4vw,52px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}>
           <div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.muted, marginBottom: 14 }}>
-              Lakeland, FL · Free admission · 2–10 PM
+              {es ? 'Lakeland, FL · Entrada gratis · 2–10 PM' : 'Lakeland, FL · Free admission · 2–10 PM'}
             </div>
             <h2 style={{ margin: '0 0 18px', fontFamily: t.serif, fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: hover ? t.goldLight : t.cream, transition: 'color 120ms ease' }}>
               {post.title}
@@ -232,7 +234,7 @@ function EventFeaturedCard({ post, onNavigate }) {
             {post.excerpt && <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: t.muted }}>{post.excerpt}</p>}
           </div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: t.gold, fontWeight: 600 }}>
-            Event details
+            {es ? 'Detalles del evento' : 'Event details'}
             <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, background: t.gold, color: t.ink, borderRadius: '50%', fontSize: 13, transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
           </div>
         </div>
@@ -241,20 +243,20 @@ function EventFeaturedCard({ post, onNavigate }) {
   );
 }
 
-function FeaturedCard({ post, onNavigate }) {
+function FeaturedCard({ post, onNavigate, es }) {
   const tags = tagList(post);
-  const date = fmtDate(post, 'long');
+  const date = fmtDate(post, 'long', es);
 
   return (
     <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-latest ll-glass">
       <div className="lb-latest__side">
         <div className="lb-tags">
-          <span className="lb-tag lb-tag--accent-light">Latest post</span>
+          <span className="lb-tag lb-tag--accent-light">{es ? 'Último artículo' : 'Latest post'}</span>
           {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
         </div>
         <div className="lb-meta">
           <time dateTime={post.published_at || undefined}>{date}</time>
-          <span>{post.read_time} min read</span>
+          <span>{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
         </div>
       </div>
       <div className="lb-latest__main">
@@ -263,7 +265,7 @@ function FeaturedCard({ post, onNavigate }) {
           {post.excerpt && <p className="lb-latest__excerpt">{post.excerpt}</p>}
         </div>
         <span className="lb-go">
-          Read the post
+          {es ? 'Leer el artículo' : 'Read the post'}
           <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
         </span>
       </div>
@@ -271,9 +273,9 @@ function FeaturedCard({ post, onNavigate }) {
   );
 }
 
-function PostCard({ post, onNavigate, wide }) {
+function PostCard({ post, onNavigate, wide, es }) {
   const tags = tagList(post);
-  const date = fmtDate(post, 'short');
+  const date = fmtDate(post, 'short', es);
 
   return (
     <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className={`lb-card ll-glass${wide ? ' lb-card--wide' : ''}`}>
@@ -288,7 +290,7 @@ function PostCard({ post, onNavigate, wide }) {
         <div className="lb-meta lb-meta--inline">
           <time dateTime={post.published_at || undefined}>{date}</time>
           <span aria-hidden="true">·</span>
-          <span>{post.read_time} min read</span>
+          <span>{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
         </div>
         <span className="lb-card__go" aria-hidden="true"><ArrowRight size={14} weight="bold" /></span>
       </div>
@@ -296,12 +298,12 @@ function PostCard({ post, onNavigate, wide }) {
   );
 }
 
-function EmptyState() {
+function EmptyState({ es }) {
   return (
     <div className="lb-empty ll-glass">
       <span className="lb-empty__icon" aria-hidden="true"><PencilSimpleLine size={22} weight="duotone" /></span>
-      <span className="lb-empty__kicker">Coming soon</span>
-      <p>First post is being written. Check back soon.</p>
+      <span className="lb-empty__kicker">{es ? 'Muy pronto' : 'Coming soon'}</span>
+      <p>{es ? 'Estamos escribiendo el primer artículo. Vuelve pronto.' : 'First post is being written. Check back soon.'}</p>
     </div>
   );
 }
