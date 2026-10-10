@@ -1,6 +1,7 @@
 import React from 'react';
 import Switch from '../forms/Switch';
 import { getConsent, setConsent } from '../../lib/cookieConsent';
+import { useLang } from '../../lib/i18n';
 
 const CATEGORIES = [
   {
@@ -20,6 +21,12 @@ const CATEGORIES = [
     desc: 'Lets us measure ad performance and show relevant Loogo Labs content on other sites via the Meta Pixel.',
   },
 ];
+
+const CATEGORIES_ES = {
+  necessary: { title: 'Necesarias', desc: 'Indispensables para que el sitio funcione: navegación entre páginas, seguridad y recordar esta elección. Siempre activas.' },
+  analytics: { title: 'Analíticas', desc: 'Datos de tráfico agregados a nivel de ciudad: qué páginas se leen y cuánto duran las visitas. No se crea ningún perfil personal con ellos.' },
+  marketing: { title: 'Marketing', desc: 'Nos permiten medir el rendimiento de los anuncios y mostrar contenido relevante de Loogo Labs en otros sitios mediante el Meta Pixel.' },
+};
 
 const btnBase = {
   padding: '11px 18px', borderRadius: 'var(--radius-pill)', fontWeight: 600, fontSize: 14,
@@ -42,6 +49,7 @@ function loadMetaPixelIfGranted(consent) {
 function CookieConsent() {
   const [stage, setStage] = React.useState('hidden'); // hidden | banner | customize
   const [prefs, setPrefs] = React.useState({ analytics: false, marketing: false });
+  const es = useLang() === 'es';
 
   React.useEffect(() => {
     const existing = getConsent();
@@ -79,7 +87,7 @@ function CookieConsent() {
   return (
     <>
       {stage === 'banner' && (
-        <div role="region" aria-label="Cookie notice" className="ll-glass--dark" style={{
+        <div role="region" aria-label={es ? 'Aviso de cookies' : 'Cookie notice'} className="ll-glass--dark" style={{
           position: 'fixed', left: 16, right: 16, bottom: 16, zIndex: 90, margin: '0 auto',
           maxWidth: 'calc(var(--container-max) + 48px)', borderRadius: 'var(--radius-3)',
         }}>
@@ -88,16 +96,16 @@ function CookieConsent() {
             display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap',
           }}>
             <div style={{ flex: '1 1 320px', minWidth: 240 }}>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>We value your privacy</div>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>{es ? 'Valoramos tu privacidad' : 'We value your privacy'}</div>
               <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-200)', maxWidth: '68ch' }}>
-                We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze
-                our traffic. By clicking &ldquo;Accept All&rdquo;, you consent to our use of cookies.
+                {es ? 'Usamos cookies para mejorar tu experiencia de navegación, mostrarte anuncios o contenido personalizado y analizar nuestro tráfico. Al hacer clic en “Aceptar todas”, aceptas nuestro uso de cookies.' : (<>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze
+                our traffic. By clicking &ldquo;Accept All&rdquo;, you consent to our use of cookies.</>)}
               </p>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', flexShrink: 0 }}>
-              <button style={darkGhostBtn} onClick={() => setStage('customize')}>Customize</button>
-              <button style={darkGhostBtn} onClick={() => apply({ analytics: false, marketing: false })}>Decline</button>
-              <button style={darkPrimaryBtn} onClick={() => apply({ analytics: true, marketing: true })}>Accept All</button>
+              <button style={darkGhostBtn} onClick={() => setStage('customize')}>{es ? 'Personalizar' : 'Customize'}</button>
+              <button style={darkGhostBtn} onClick={() => apply({ analytics: false, marketing: false })}>{es ? 'Rechazar' : 'Decline'}</button>
+              <button style={darkPrimaryBtn} onClick={() => apply({ analytics: true, marketing: true })}>{es ? 'Aceptar todas' : 'Accept All'}</button>
             </div>
           </div>
         </div>
@@ -106,7 +114,7 @@ function CookieConsent() {
       {stage === 'customize' && (
         <>
           <div onClick={closeCustomize} style={{ position: 'fixed', inset: 0, zIndex: 95, background: 'rgba(26,38,16,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }} />
-          <div role="dialog" aria-modal="true" aria-label="Cookie preferences" style={{
+          <div role="dialog" aria-modal="true" aria-label={es ? 'Preferencias de cookies' : 'Cookie preferences'} style={{
             position: 'fixed', zIndex: 96, left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
             width: 'min(520px, calc(100vw - 32px))', maxHeight: 'calc(100vh - 48px)', overflowY: 'auto',
             background: 'var(--paper-000)', color: 'var(--ink-900)', border: '1px solid rgba(255,255,255,0.9)',
@@ -114,34 +122,34 @@ function CookieConsent() {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
               <div>
-                <span className="ll-eyebrow" style={{ color: 'var(--ink-500)' }}>Cookie Preferences</span>
-                <h3 style={{ margin: '8px 0 0', fontSize: 20, fontWeight: 700, letterSpacing: '-0.01em' }}>Choose what we can use.</h3>
+                <span className="ll-eyebrow" style={{ color: 'var(--ink-500)' }}>{es ? 'Preferencias de cookies' : 'Cookie Preferences'}</span>
+                <h3 style={{ margin: '8px 0 0', fontSize: 20, fontWeight: 700, letterSpacing: '-0.01em' }}>{es ? 'Elige qué podemos usar.' : 'Choose what we can use.'}</h3>
               </div>
-              <button aria-label="Close" onClick={closeCustomize}
+              <button aria-label={es ? 'Cerrar' : 'Close'} onClick={closeCustomize}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: 'var(--ink-400)', padding: 4 }}>
                 ×
               </button>
             </div>
             <p style={{ margin: '14px 0 0', fontSize: 13.5, lineHeight: 1.65, color: 'var(--ink-500)' }}>
-              Necessary cookies are always on because the site can&rsquo;t function without them. Everything else is your call.
+              {es ? 'Las cookies necesarias siempre están activas porque el sitio no funciona sin ellas. Todo lo demás lo decides tú.' : <>Necessary cookies are always on because the site can&rsquo;t function without them. Everything else is your call.</>}
             </p>
             <div style={{ display: 'grid', gap: 12, marginTop: 22 }}>
               {CATEGORIES.map(cat => (
                 <div key={cat.key} style={{ background: 'rgba(26,38,16,0.035)', borderRadius: 'var(--radius-2)', padding: '14px 16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-                    <span style={{ fontWeight: 700, fontSize: 14 }}>{cat.title}</span>
+                    <span style={{ fontWeight: 700, fontSize: 14 }}>{es ? CATEGORIES_ES[cat.key].title : cat.title}</span>
                     {cat.locked
-                      ? <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>Always on</span>
+                      ? <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>{es ? 'Siempre activas' : 'Always on'}</span>
                       : <Switch checked={prefs[cat.key]} onChange={(v) => setPrefs(p => ({ ...p, [cat.key]: v }))} />}
                   </div>
-                  <p style={{ margin: '8px 0 0', fontSize: 12.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{cat.desc}</p>
+                  <p style={{ margin: '8px 0 0', fontSize: 12.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{es ? CATEGORIES_ES[cat.key].desc : cat.desc}</p>
                 </div>
               ))}
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
-              <button style={lightGhostBtn} onClick={() => apply({ analytics: false, marketing: false })}>Decline All</button>
-              <button style={lightGhostBtn} onClick={() => apply(prefs)}>Save Preferences</button>
-              <button style={lightPrimaryBtn} onClick={() => apply({ analytics: true, marketing: true })}>Accept All</button>
+              <button style={lightGhostBtn} onClick={() => apply({ analytics: false, marketing: false })}>{es ? 'Rechazar todas' : 'Decline All'}</button>
+              <button style={lightGhostBtn} onClick={() => apply(prefs)}>{es ? 'Guardar preferencias' : 'Save Preferences'}</button>
+              <button style={lightPrimaryBtn} onClick={() => apply({ analytics: true, marketing: true })}>{es ? 'Aceptar todas' : 'Accept All'}</button>
             </div>
           </div>
         </>

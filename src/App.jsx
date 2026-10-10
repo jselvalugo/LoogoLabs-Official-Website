@@ -152,7 +152,7 @@ function App({ initialPath }) {
         onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
         <span className="ll-topbar__gem" aria-hidden="true">◆</span>
         <span className="ll-topbar-text">
-          <span className="ll-topbar__gold">Cards &amp; Cocktails</span> · Nov 14<span className="ll-topbar-long"> · Pokémon TCG night in Lakeland · Free entry</span>
+          <span className="ll-topbar__gold">Cards &amp; Cocktails</span>{es ? ' · 14 de nov' : ' · Nov 14'}<span className="ll-topbar-long">{es ? ' · Noche de Pokémon TCG en Lakeland · Entrada gratis' : ' · Pokémon TCG night in Lakeland · Free entry'}</span>
         </span>
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
@@ -164,10 +164,10 @@ function App({ initialPath }) {
       <div onClick={handleLinkClick}>{body}</div>
       <Footer
         columns={[
-          { title: 'Company', links: ['Mission', 'Company', 'Book a Call'] },
-          { title: 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Book a Call'] },
+          { title: es ? 'Plataforma' : 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
-          { title: 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
+          { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
