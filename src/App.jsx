@@ -21,6 +21,7 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
+import { useLang } from './lib/i18n';
 
 const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
@@ -54,6 +55,7 @@ function App({ initialPath }) {
   const init = getInitialState(initialPath);
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
+  const es = useLang() === 'es';
 
   const navigate = React.useCallback((target, param, { push = true } = {}) => {
     const slug = target === 'BlogPost' ? param : null;
@@ -155,8 +157,8 @@ function App({ initialPath }) {
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: 'Industry LoogoBlog', badge: 'Fresh' }}
-        cta={<Button size="sm" variant="primary" onClick={openBooking}>Book a free call</Button>}
+        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog', badge: es ? 'Nuevo' : 'Fresh' }}
+        cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
       />
       <SeasonalGarland />
       <div onClick={handleLinkClick}>{body}</div>

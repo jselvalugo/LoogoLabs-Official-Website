@@ -1243,3 +1243,21 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-featured__title { grid-area: title; white-space: normal !important; overflow: visible; font-size: 15px !important; line-height: 1.35; }
   .hm-featured__go { grid-area: go; width: 40px; height: 40px; margin: 0; }
 }
+
+/* ── Language toggle (EN | ES) ── */
+.ll-lang {
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px; flex-shrink: 0;
+  border-radius: var(--radius-pill); border: 1px solid rgba(245, 242, 235, 0.18); background: rgba(245, 242, 235, 0.06);
+}
+.ll-lang__opt {
+  border: 0; background: transparent; color: var(--ink-200, rgba(245, 242, 235, 0.75)); cursor: pointer;
+  font: 600 12px/1 var(--font-mono, monospace); letter-spacing: 0.08em; padding: 7px 9px; border-radius: var(--radius-pill);
+}
+.ll-lang__opt:hover { color: var(--paper-000); }
+.ll-lang__opt.on { background: var(--paper-000); color: var(--ink-900); }
+.ll-lang__opt:focus-visible { outline: 2px solid var(--paper-000); outline-offset: 2px; }
+/* Main nav: on phones the bar holds the centred wordmark, so the toggle moves
+   into the slide-down menu; on desktop the menu copy is never shown. */
+.ll-lang--menu { align-self: flex-start; margin-top: 12px; }
+@media (max-width: 960px) { .ll-lang--bar { display: none; } }
+@media (min-width: 961px) { .ll-lang--menu { display: none; } }
