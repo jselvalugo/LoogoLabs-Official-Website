@@ -25,6 +25,7 @@ import {
   KNOWS_ABOUT, jsonLdForPage, ldGraph, splitTags, url,
 } from '../src/lib/seo.js';
 import { SERVICE_AREA } from '../src/lib/content.js';
+import { localizePath } from '../src/lib/lang.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -128,9 +129,10 @@ function headTags(head) {
     `<meta name="description" content="${esc(head.description)}" />`,
     `<meta name="robots" content="${esc(head.robots)}" />`,
     `<link rel="canonical" href="${esc(head.canonical)}" />`,
+    ...(head.alternates || []).map((a) => `<link rel="alternate" hreflang="${esc(a.hreflang)}" href="${esc(a.href)}" />`),
     `<meta property="og:type" content="${esc(head.ogType)}" />`,
     `<meta property="og:site_name" content="${esc(SITE.name)}" />`,
-    `<meta property="og:locale" content="${esc(SITE.locale)}" />`,
+    `<meta property="og:locale" content="${esc(head.lang === 'es' ? 'es_US' : SITE.locale)}" />`,
     `<meta property="og:title" content="${esc(head.title)}" />`,
     `<meta property="og:description" content="${esc(head.description)}" />`,
     `<meta property="og:url" content="${esc(head.canonical)}" />`,
@@ -161,9 +163,21 @@ function renderPage({ head, body, ssr = false }) {
     .replace(/[ \t]*<link rel="canonical"[^>]*>\s*/g, '')
     .replace(/[ \t]*<script type="application\/ld\+json"[\s\S]*?<\/script>\s*/g, '');
 
+  if (head.lang === 'es') html = html.replace(/<html lang="[^"]*"/, '<html lang="es"');
   html = html.replace('</head>', `  ${headTags(head)}\n  </head>`);
   return html.replace('<div id="root"></div>', `<div id="root"${ssr ? ' data-ssr' : ''}>${body}</div>`);
 }
+
+// Pages that have a Spanish twin under /es: every listed route.
+const ES_PATHS = new Set(ROUTES.filter((r) => !r.unlisted).map((r) => r.path));
+
+// The app writes internal links as English paths and points them at /es while
+// the visitor browses in Spanish. Do the same in the pre-rendered Spanish HTML,
+// so a crawler reading /es/... follows Spanish links.
+const localizeLinks = (html) => html.replace(/href="(\/[^"?#]*)([^"]*)"/g, (m, path, rest) => {
+  const p = path.length > 1 ? path.replace(/\/+$/, '') : path;
+  return ES_PATHS.has(p) ? `href="${localizePath(p, 'es')}${rest}"` : m;
+});
 
 function write(routePath, html) {
   const dir = routePath === '/' ? DIST : join(DIST, routePath.replace(/^\//, ''));
@@ -235,6 +249,18 @@ for (const route of ROUTES) {
     write(route.path, renderPage({ head, body: await render(route.path), ssr: true }));
   } else {
     write(route.path, renderPage({ head, body: shell(HEADINGS[route.page] ?? route.page, route.description, extra) }));
+  }
+  written += 1;
+
+  // Spanish twin at /es/... with its own head, hreflang pair, and Spanish copy.
+  if (route.unlisted) continue;
+  const esHead = headForPage(route.page, 'es');
+  const esPath = localizePath(route.path, 'es');
+  if (route.page === 'LoogoNews') {
+    esHead.jsonLd = [...jsonLdForPage('LoogoNews', 'es'), blogLd(allPosts)];
+    write(esPath, renderPage({ head: esHead, body: localizeLinks(shell('LoogoBlog de la industria', esHead.description, extra)) }));
+  } else {
+    write(esPath, renderPage({ head: esHead, body: localizeLinks(await render(esPath)), ssr: true }));
   }
   written += 1;
 }
@@ -326,8 +352,9 @@ Sitemap: ${url('/sitemap.xml')}
 
 const buildDate = new Date().toISOString();
 
-const urlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
-    <loc>${esc(loc)}</loc>
+const urlEntry = ({ loc, lastmod, changefreq, priority, alternates = [] }) => `  <url>
+    <loc>${esc(loc)}</loc>${alternates.map((a) => `
+    <xhtml:link rel="alternate" hreflang="${esc(a.hreflang)}" href="${esc(a.href)}" />`).join('')}
     <lastmod>${esc(lastmod)}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -336,12 +363,13 @@ const urlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
 const newestPost = allPosts[0]?.published_at ?? buildDate;
 
 const sitemapEntries = [
-  ...ROUTES.filter((r) => !r.unlisted).map((r) => urlEntry({
-    loc: url(r.path),
+  ...ROUTES.filter((r) => !r.unlisted).flatMap((r) => ['en', 'es'].map((lang) => urlEntry({
+    loc: url(localizePath(r.path, lang)),
     lastmod: r.page === 'LoogoNews' ? newestPost : buildDate,
     changefreq: r.changefreq,
     priority: r.priority,
-  })),
+    alternates: headForPage(r.page).alternates,
+  }))),
   ...allPosts.map((p) => urlEntry({
     loc: url(`${BLOG_BASE}/${p.slug}`),
     lastmod: p.published_at ?? buildDate,
@@ -351,7 +379,7 @@ const sitemapEntries = [
 ];
 
 writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${sitemapEntries.join('\n')}
 </urlset>
 `);

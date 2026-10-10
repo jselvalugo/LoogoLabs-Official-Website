@@ -11,6 +11,9 @@ import { NICHE_QUIZZES } from './nicheQuizzes.js';
 import { GROW_FAQ, SERVICE_AREA } from './content.js';
 import { SERVICE_PACKAGES } from './servicePackages.js';
 import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from './cfl.js';
+import { localizePath, stripLang } from './lang.js';
+import { metaEs } from './seo.es.js';
+import { GROW_FAQ_ES } from './cfl.es.js';
 import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityPageKey, voiceCitySlugFromPage } from './voiceCities.js';
 
 export const SITE = {
@@ -263,7 +266,8 @@ export function normalizePath(pathname = '/') {
 
 /** Resolve a browser path to { page, slug }. Unknown paths return page 'NotFound'. */
 export function routeForPath(pathname) {
-  const p = normalizePath(pathname);
+  // /es/... is the Spanish twin of the same page: same key, different language.
+  const p = normalizePath(stripLang(normalizePath(pathname)));
   if (p === '/admin') return { page: 'Admin', slug: null };
   if (p.startsWith(`${BLOG_BASE}/`)) {
     const slug = p.slice(BLOG_BASE.length + 1);
@@ -305,8 +309,8 @@ const clamp = (text, max = 155) => {
   return `${s.slice(0, max - 1).replace(/[\s,;:.—-]+$/, '')}…`;
 };
 
-/** Head metadata for a static route. */
-export function headForPage(page) {
+/** Head metadata for a static route, in English ('en') or Spanish ('es'). */
+export function headForPage(page, lang = 'en') {
   const route = BY_PAGE.get(page);
   if (!route) {
     return {
@@ -319,16 +323,26 @@ export function headForPage(page) {
       jsonLd: [],
     };
   }
+  const es = lang === 'es' && !route.unlisted ? metaEs(page) : null;
   return {
-    title: fitTitle(route.title),
-    description: clamp(route.description),
-    canonical: url(route.path),
+    lang: es ? 'es' : 'en',
+    title: fitTitle(es ? es.title : route.title),
+    description: clamp(es ? es.description : route.description),
+    canonical: url(es ? localizePath(route.path, 'es') : route.path),
+    alternates: route.unlisted ? [] : alternatesFor(route.path),
     robots: route.unlisted ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     ogType: 'website',
     image: url(route.image || SITE.ogImage),
-    jsonLd: route.unlisted ? [] : jsonLdForPage(page),
+    jsonLd: route.unlisted ? [] : jsonLdForPage(page, es ? 'es' : 'en'),
   };
 }
+
+/** hreflang links pairing a page with its Spanish twin; English is the default. */
+export const alternatesFor = (path) => [
+  { hreflang: 'en', href: url(path) },
+  { hreflang: 'es', href: url(localizePath(path, 'es')) },
+  { hreflang: 'x-default', href: url(path) },
+];
 
 /** Head metadata for a single post. Accepts an API row or a content/posts.mjs entry. */
 export function headForPost(post) {
@@ -533,17 +547,20 @@ export const voiceCityServiceLd = (city) => ({
 });
 
 /** The JSON-LD graph nodes a given static page should carry. */
-export function jsonLdForPage(page) {
-  const crumbBase = { name: 'Home', path: '/' };
+export function jsonLdForPage(page, lang = 'en') {
+  const es = lang === 'es';
+  const crumbBase = { name: es ? 'Inicio' : 'Home', path: es ? '/es' : '/' };
+  const loc = (path) => (es ? localizePath(path, 'es') : path);
   const route = BY_PAGE.get(page);
   const nodes = [];
   if (page === 'Home') {
     nodes.push({
       '@type': 'WebPage',
-      '@id': url('/#webpage'),
-      url: url('/'),
-      name: route.title,
-      description: route.description,
+      '@id': url(`${loc('/')}#webpage`),
+      url: url(loc('/')),
+      name: es ? metaEs('Home').title : route.title,
+      description: es ? metaEs('Home').description : route.description,
+      inLanguage: es ? 'es-US' : 'en-US',
       isPartOf: { '@id': url('/#website') },
       about: { '@id': url('/#organization') },
     });
@@ -551,14 +568,14 @@ export function jsonLdForPage(page) {
     const citySlug = citySlugFromPage(page);
     const voiceSlug = voiceCitySlugFromPage(page);
     nodes.push(breadcrumbLd(citySlug
-      ? [crumbBase, { name: 'Central Florida', path: '/grow' }, { name: CITY_BY_SLUG.get(citySlug).name, path: route.path }]
+      ? [crumbBase, { name: es ? 'Florida Central' : 'Central Florida', path: loc('/grow') }, { name: CITY_BY_SLUG.get(citySlug).name, path: loc(route.path) }]
       : voiceSlug
-        ? [crumbBase, { name: 'AI Voice Agents', path: VOICE_BASE }, { name: VOICE_CITY_BY_SLUG.get(voiceSlug).name, path: route.path }]
-        : [crumbBase, { name: route.label || route.page, path: route.path }]));
+        ? [crumbBase, { name: es ? 'Agentes de voz con IA' : 'AI Voice Agents', path: loc(VOICE_BASE) }, { name: VOICE_CITY_BY_SLUG.get(voiceSlug).name, path: loc(route.path) }]
+        : [crumbBase, { name: (es && metaEs(page)?.title.split(/ [|:] /)[0]) || route.label || route.page, path: loc(route.path) }]));
     if (citySlug) nodes.push(cityServiceLd(CITY_BY_SLUG.get(citySlug)));
     if (voiceSlug) nodes.push(voiceCityServiceLd(VOICE_CITY_BY_SLUG.get(voiceSlug)));
   }
-  if (page === 'GrowCFL') nodes.push(faqLd(), localBusinessLd());
+  if (page === 'GrowCFL') nodes.push(es ? faqLd(GROW_FAQ_ES, '/es/grow') : faqLd(), localBusinessLd());
   return nodes;
 }
 
@@ -595,6 +612,16 @@ export function applyHead(head) {
   if (typeof document === 'undefined' || !head) return;
 
   document.title = head.title;
+  if (head.lang) document.documentElement.lang = head.lang;
+  document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+  (head.alternates || []).forEach(({ hreflang, href }) => {
+    const el = document.createElement('link');
+    el.setAttribute('rel', 'alternate');
+    el.setAttribute('hreflang', hreflang);
+    el.setAttribute('href', href);
+    el.setAttribute(HEAD_MARK, '');
+    document.head.appendChild(el);
+  });
   setMeta('name', 'description', head.description);
   setMeta('name', 'robots', head.robots);
 

@@ -5,8 +5,11 @@ import React from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import { Writable } from 'node:stream';
 import App from './App';
+import { langFromPath, setRenderLang } from './lib/i18n';
 
 export function render(path) {
+  // /es/... routes render in Spanish; everything else in English.
+  setRenderLang(langFromPath(path));
   return new Promise((resolve, reject) => {
     let html = '';
     const sink = new Writable({

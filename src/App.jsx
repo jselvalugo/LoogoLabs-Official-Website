@@ -21,7 +21,7 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
-import { useLang } from './lib/i18n';
+import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
 
 const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
@@ -62,7 +62,8 @@ function App({ initialPath }) {
     setPage(target);
     setPostSlug(slug);
     if (push) {
-      const next = pathForPage(target, slug);
+      // Stay in the visitor's language: internal paths are English, so add /es.
+      const next = localizePath(pathForPage(target, slug), currentLang());
       if (next !== window.location.pathname) window.history.pushState({}, '', next);
       window.scrollTo(0, 0);
     }
@@ -73,6 +74,7 @@ function App({ initialPath }) {
   // view did not, so a visitor (and any crawler following history) got stuck.
   React.useEffect(() => {
     const onPop = () => {
+      syncLangToPath(window.location.pathname);
       const next = routeForPath(window.location.pathname);
       setPage(next.page);
       setPostSlug(next.slug);
@@ -85,8 +87,8 @@ function App({ initialPath }) {
   // its own head once the post arrives. Everything else is known up front.
   React.useEffect(() => {
     if (page === 'BlogPost' || page === 'Admin') return;
-    applyHead(headForPage(page));
-  }, [page]);
+    applyHead(headForPage(page, es ? 'es' : 'en'));
+  }, [page, es]);
 
   // Internal links are now real hrefs so crawlers can follow them. Intercept the
   // clicks that stay on the site and route them without a reload; let modified
