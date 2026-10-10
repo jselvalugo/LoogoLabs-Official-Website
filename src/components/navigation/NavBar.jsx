@@ -95,10 +95,6 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>
           )}
-          <div className="ll-lang-row">
-            <span className="ll-lang-row__label">{lang === 'es' ? 'Idioma' : 'Language'}</span>
-            <LangToggle />
-          </div>
           <div className="ll-nav-mobile-cta">{cta}</div>
         </div>
       </div>

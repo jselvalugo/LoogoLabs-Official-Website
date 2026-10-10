@@ -3,7 +3,7 @@
 .lp { display: flex; flex-direction: column; font-family: var(--font-body); overflow-x: hidden; }
 
 /* ── Header pill ── */
-.lp-nav__bar { max-width: 720px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; overflow: hidden; }
+.lp-nav__bar { max-width: 720px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; }
 .lp-nav__side { display: flex; align-items: center; min-width: 0; }
 .lp-nav__side--end { flex-direction: row; justify-content: flex-end; align-items: center; gap: 10px; padding-right: 14px; }
 .lp-nav__logo img { width: 26px; height: auto; display: block; }

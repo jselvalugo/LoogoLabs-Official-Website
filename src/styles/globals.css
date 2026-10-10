@@ -1244,30 +1244,60 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-featured__go { grid-area: go; width: 40px; height: 40px; margin: 0; }
 }
 
-/* ── Language toggle (EN | ES) ──
-   One component everywhere: same height as the compact nav buttons so it lines
-   up with them in every header, dark glass by default. */
+/* ── Language switch ──
+   One component everywhere. Wide screens: a flag pill showing both options, the
+   same height as the compact nav buttons. Phones (and the main nav up to its
+   burger breakpoint): one flag button that opens a small dropdown. */
+.ll-langsw { position: relative; display: inline-flex; flex-shrink: 0; }
+.ll-flag { width: 18px; height: 12px; border-radius: 2px; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18); display: block; }
+
 .ll-lang {
-  display: inline-flex; align-items: center; gap: 2px; padding: 3px; flex-shrink: 0; height: 40px; box-sizing: border-box;
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px; height: 40px; box-sizing: border-box;
   border-radius: var(--radius-pill); border: 1px solid rgba(245, 242, 235, 0.18); background: rgba(245, 242, 235, 0.06);
 }
 .ll-lang__opt {
-  display: inline-grid; place-items: center; height: 100%; min-width: 38px; padding: 0 10px;
+  display: inline-flex; align-items: center; gap: 6px; height: 100%; padding: 0 10px 0 8px;
   border: 0; background: transparent; color: rgba(245, 242, 235, 0.72); cursor: pointer;
   font: 600 12px/1 var(--font-mono, monospace); letter-spacing: 0.08em; border-radius: var(--radius-pill);
-  transition: background var(--dur-base, 160ms) ease, color var(--dur-base, 160ms) ease;
+  transition: background var(--dur-base, 160ms) ease, color var(--dur-base, 160ms) ease, opacity var(--dur-base, 160ms) ease;
 }
+.ll-lang__opt:not(.on) .ll-flag { opacity: 0.6; }
 .ll-lang__opt:hover { color: var(--paper-000); }
+.ll-lang__opt:hover .ll-flag { opacity: 1; }
 .ll-lang__opt.on { background: var(--paper-000); color: var(--ink-900); }
-.ll-lang__opt:focus-visible { outline: 2px solid var(--paper-000); outline-offset: 2px; }
-@media (max-width: 640px) { .ll-lang { height: 36px; } .ll-lang__opt { min-width: 34px; padding: 0 8px; } }
 
-/* Main nav: on phones and tablets the bar holds the centred wordmark, so the
-   toggle moves into the slide-down menu as a labelled row. */
-.ll-lang-row {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 14px 4px 4px; margin-top: 6px; border-top: 1px solid rgba(245, 242, 235, 0.12);
+.ll-lang-dd { display: none; position: relative; }
+.ll-lang-dd__btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 10px 0 11px; cursor: pointer;
+  border-radius: var(--radius-pill); border: 1px solid rgba(245, 242, 235, 0.18); background: rgba(245, 242, 235, 0.08);
+  color: var(--paper-000); font: 600 12px/1 var(--font-mono, monospace); letter-spacing: 0.08em;
 }
-.ll-lang-row__label { font: 600 11px/1 var(--font-mono, monospace); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245, 242, 235, 0.6); }
-@media (max-width: 960px) { .ll-lang--bar { display: none; } }
-@media (min-width: 961px) { .ll-lang-row { display: none; } }
+.ll-lang-dd__menu {
+  position: absolute; top: calc(100% + 10px); right: 0; z-index: 60; min-width: 172px; padding: 6px;
+  display: flex; flex-direction: column; gap: 2px; border-radius: 16px;
+  background: var(--ink-800); border: 1px solid rgba(245, 242, 235, 0.16);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.5);
+}
+.ll-lang-dd__item {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 12px; border: 0; border-radius: 10px; cursor: pointer;
+  background: transparent; color: var(--paper-000); font: 500 15px/1.2 var(--font-body); text-align: left;
+}
+.ll-lang-dd__item span { flex: 1; }
+.ll-lang-dd__item:hover, .ll-lang-dd__item.on { background: rgba(245, 242, 235, 0.1); }
+.ll-lang__opt:focus-visible, .ll-lang-dd__btn:focus-visible, .ll-lang-dd__item:focus-visible { outline: 2px solid var(--paper-000); outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .ll-langsw .ll-lang { display: none; }
+  .ll-langsw .ll-lang-dd { display: block; }
+  /* A round flag-only button: small enough to sit beside a centred logo. */
+  .ll-lang-dd__btn { width: 40px; height: 40px; padding: 0; justify-content: center; }
+  .ll-lang-dd__code, .ll-lang-dd__chev { display: none; }
+}
+/* Main nav: from the burger breakpoint down, the bar is tight (centred
+   wordmark), so it uses the dropdown already. */
+@media (max-width: 960px) {
+  .ll-lang--bar .ll-lang { display: none; }
+  .ll-lang--bar .ll-lang-dd { display: block; }
+  .ll-lang--bar .ll-lang-dd__btn { width: 44px; height: 44px; padding: 0; justify-content: center; }
+  .ll-lang--bar .ll-lang-dd__code, .ll-lang--bar .ll-lang-dd__chev { display: none; }
+}
