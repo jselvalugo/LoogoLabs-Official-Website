@@ -1244,20 +1244,30 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-featured__go { grid-area: go; width: 40px; height: 40px; margin: 0; }
 }
 
-/* ── Language toggle (EN | ES) ── */
+/* ── Language toggle (EN | ES) ──
+   One component everywhere: same height as the compact nav buttons so it lines
+   up with them in every header, dark glass by default. */
 .ll-lang {
-  display: inline-flex; align-items: center; gap: 2px; padding: 3px; flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px; flex-shrink: 0; height: 40px; box-sizing: border-box;
   border-radius: var(--radius-pill); border: 1px solid rgba(245, 242, 235, 0.18); background: rgba(245, 242, 235, 0.06);
 }
 .ll-lang__opt {
-  border: 0; background: transparent; color: var(--ink-200, rgba(245, 242, 235, 0.75)); cursor: pointer;
-  font: 600 12px/1 var(--font-mono, monospace); letter-spacing: 0.08em; padding: 7px 9px; border-radius: var(--radius-pill);
+  display: inline-grid; place-items: center; height: 100%; min-width: 38px; padding: 0 10px;
+  border: 0; background: transparent; color: rgba(245, 242, 235, 0.72); cursor: pointer;
+  font: 600 12px/1 var(--font-mono, monospace); letter-spacing: 0.08em; border-radius: var(--radius-pill);
+  transition: background var(--dur-base, 160ms) ease, color var(--dur-base, 160ms) ease;
 }
 .ll-lang__opt:hover { color: var(--paper-000); }
 .ll-lang__opt.on { background: var(--paper-000); color: var(--ink-900); }
 .ll-lang__opt:focus-visible { outline: 2px solid var(--paper-000); outline-offset: 2px; }
-/* Main nav: on phones the bar holds the centred wordmark, so the toggle moves
-   into the slide-down menu; on desktop the menu copy is never shown. */
-.ll-lang--menu { align-self: flex-start; margin-top: 12px; }
+@media (max-width: 640px) { .ll-lang { height: 36px; } .ll-lang__opt { min-width: 34px; padding: 0 8px; } }
+
+/* Main nav: on phones and tablets the bar holds the centred wordmark, so the
+   toggle moves into the slide-down menu as a labelled row. */
+.ll-lang-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 4px 4px; margin-top: 6px; border-top: 1px solid rgba(245, 242, 235, 0.12);
+}
+.ll-lang-row__label { font: 600 11px/1 var(--font-mono, monospace); letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245, 242, 235, 0.6); }
 @media (max-width: 960px) { .ll-lang--bar { display: none; } }
-@media (min-width: 961px) { .ll-lang--menu { display: none; } }
+@media (min-width: 961px) { .ll-lang-row { display: none; } }

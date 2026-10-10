@@ -2,12 +2,15 @@ import React from 'react';
 import { pathForPage } from '../../lib/seo';
 import { LangToggle, useLang } from '../../lib/i18n';
 
-const ES_LABELS = { Home: 'Inicio', Mission: 'Misión', AIVoice: 'AI Voice' };
+const LABELS = {
+  en: { AIVoice: 'AI Voice' },
+  es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA' },
+};
 
 function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
   const [open, setOpen] = React.useState(false);
   const lang = useLang();
-  const label = it => (lang === 'es' && ES_LABELS[it]) || it;
+  const label = it => LABELS[lang][it] || it;
 
   // Close on Escape and stop the page scrolling behind the open menu.
   React.useEffect(() => {
@@ -92,7 +95,10 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>
           )}
-          <LangToggle className="ll-lang--menu" />
+          <div className="ll-lang-row">
+            <span className="ll-lang-row__label">{lang === 'es' ? 'Idioma' : 'Language'}</span>
+            <LangToggle />
+          </div>
           <div className="ll-nav-mobile-cta">{cta}</div>
         </div>
       </div>
