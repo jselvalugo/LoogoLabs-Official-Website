@@ -11,6 +11,47 @@
 
 export const posts = [
   {
+    slug: `snow-removal-renewal-cutoff-before-first-storm`,
+    title: `Your Snow Route Fills Up the Night of the First Storm`,
+    excerpt: `Seasonal snow customers who renew in the middle of a storm get squeezed into a route that was already full, so set a renewal date and a stop count before the first flake.`,
+    tags: `Seasonal Contracts, Renewals, Snow Removal`,
+    content: `The first storm of the winter is the worst possible time to find out how many driveways you are plowing. Your phone fills with "are you still doing us this year?" texts from last season's customers, three new neighbors want on the route tonight, and you are trying to decide whether stop forty-one fits between stop forty and the church lot that has to be open by six.
+
+It never fits. Every added stop pushes every later stop back, and the people at the end of the route are the ones who notice. That is how a good season starts with complaints.
+
+## The route has a number, and you probably haven't written it down
+
+Plowing is a capacity business. A truck can only hit so many stops before the first ones have been buried again. Ask yourself: with one truck and one driver, how many driveways can I clear in a normal six-inch storm before the early ones are a mess? Pick a number you would stand behind, and write it down.
+
+I'll use invented figures. Say your truck holds 38 residential stops and two small lots. That is the ceiling. Every renewal and every new customer is a claim on one of those 40 slots, and right now you are handing slots out by whoever texts first, on the worst night of the year to be doing it.
+
+## Move the decision to October
+
+Contract season is now, while the ground is still bare and nobody is angry about snow. Pull your list of last year's seasonal customers and tag each one. Then send one message to everyone on it, by text and email, with three things in it:
+
+- the price for the season, or the new price if it is changing
+- a renewal date, such as November 1, that you actually mean
+- one plain sentence saying that after that date their slot goes to the waiting list
+
+That last sentence feels harsh to write. It is the kindest part, because it tells people the truth about how the route works. Most customers will answer within a day or two if you give them a date and a one-word way to reply.
+
+## Renewals first, then the waiting list
+
+On November 2, count. If 31 of your 40 stops renewed, you have nine open slots, and you can say so honestly. Open them in order: first the neighbors of existing stops, since a driveway next door costs you almost no drive time, and then everyone else.
+
+Keep a simple waiting list with a tag. When someone calls in December, you can say "I'm full for this season, but you're first on the list if a slot opens," which is a better answer than a reluctant yes that wrecks the route. A customer who got a straight no and a spot on the list has a reason to answer your renewal text early next October.
+
+## Where this breaks down
+
+A text does not replace a conversation with your commercial accounts. A property manager with a lot contract wants a signed agreement and a clear trigger depth, and no reminder message handles that. Call those people yourself. The message is for the driveways, where a one-word reply is all you need.
+
+Also, a cutoff only works if you hold it once. If you make exceptions for everyone who texts on November 5, next year's date means nothing.
+
+## Check this week
+
+Write down your stop ceiling today, then tag last year's seasonal customers and pick your renewal date. If you only get one of those done this week, make it the ceiling, because every other decision hangs off it.`,
+  },
+  {
     slug: `plumber-pre-thanksgiving-kitchen-drain-check`,
     title: `Plumbers: Sell the Drain Check Before Thanksgiving Day`,
     excerpt: `The Thanksgiving clog call is expensive for everyone, and most of the people who make it are customers you already have on file.`,
