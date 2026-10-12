@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `septic-pumping-next-due-date-logged-at-the-visit`,
+    title: `Septic Pumping Is a Three-Year Sale. Log the Next Date Today.`,
+    excerpt: `A customer you pumped this week will not think about you again for years, so the next-due date has to be written down before your truck leaves the driveway.`,
+    tags: `Recurring Service, Reminders, Septic Services`,
+    content: `Think about a septic customer you pumped in the fall of 2023. If your cycle for that tank is three years, they are due about now. Do you know that without digging through paper invoices? Does anyone on your team?
+
+Most septic companies I look at have the same hole. The job gets done well, the invoice goes out, and the one fact that makes the next sale possible, the date the tank is due again, lives in a driver's memory or a line on a carbon copy.
+
+## Why this sale gets lost
+
+A pump-out is the opposite of a sprinkler blowout or a furnace tune-up. Nothing in the customer's life reminds them. The tank is buried, the lid is hidden under grass, and if it is working they never think about it. Three years go by and the only thing that brings it back to mind is a slow drain or a wet patch in the yard.
+
+By then you are not selling maintenance. You are answering an emergency, and the customer is calling whichever company comes up first. Maybe that is you, maybe not. Either way you have turned a predictable, schedulable job into a scramble for both sides.
+
+## Record the date at the visit
+
+The cheapest moment to capture the next date is while you are standing at the tank. You know the size, you know how full it was, and you know what the household looks like. That is the moment to decide the interval.
+
+Before the truck leaves, someone puts three things on the customer record:
+
+- **Next due month and year.** Not "in a few years." An actual month.
+- **The interval you chose and why**, in one short line, such as "1,000 gallon, family of five, every 3 years."
+- **Anything the next crew needs**, like where the lid is or that the access is under a deck.
+
+If the driver enters it from a phone before pulling out, it gets done. If it waits for the office to key in invoices on Friday, a share of them will never be entered.
+
+## Tell the customer the date, too
+
+Put the same month on the invoice and in the text receipt: "Your tank is due again around October 2029. I'll text you ahead of time." Now the customer has heard the date from you once, and they have a reason to expect your message when it comes.
+
+Be honest that it is an estimate. A household that adds a teenager or a garbage disposal changes the schedule, and you would rather say so than have them hold you to a date.
+
+## Send the reminder early, and make it one reply
+
+Six weeks before the due month, text the customer. Short is better:
+
+> Hi, it's David from the septic crew. Your tank was last pumped in October 2023 and comes due this fall. Want me to hold a day? Reply YES and I'll send two dates.
+
+That last part matters. A reminder that says "call us to schedule" asks the customer to do the work. A reminder that offers two specific dates asks for one word.
+
+If nobody answers, follow up once after two weeks, and then leave it alone. A third message starts to feel like pressure on something they cannot see or judge for themselves.
+
+## What this will not do
+
+Some customers will sell the house or switch to a cheaper company, and no reminder fixes either. Some will tell you the tank was pumped by someone else last year. Update the record and move the date. That is still better than not knowing.
+
+It also does not work on a list you never collected permission for. Only message people who gave you their number in the course of the job, and honor a stop request the same day.
+
+## Check one thing this week
+
+Open your records and count how many jobs from the last three years have a next-due month filled in. If the answer is "I'm not sure where that would even be," start with the next five trucks: make the driver enter the month before leaving, and check on Friday that all five have one.`,
+  },
+  {
     slug: `sprinkler-blowout-assigned-week-default-yes`,
     title: `Sprinkler Blowouts: Give Every Customer a Week, Not a Wait`,
     excerpt: `Nobody books a sprinkler blowout until the forecast says freeze, and then everybody books it the same day, so assign the week yourself and let customers say no.`,
