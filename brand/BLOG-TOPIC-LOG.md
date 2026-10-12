@@ -75,3 +75,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-09 | fence-installer-permit-wait-status-text | Fence installers | Project status — weekly "who holds the job" text while a signed job waits on a permit or HOA approval
 - 2026-10-10 | plumber-pre-thanksgiving-kitchen-drain-check | Plumbing | Seasonal booking — pre-holiday kitchen drain & disposal check texted to past drain customers in early November
 - 2026-10-11 | snow-removal-renewal-cutoff-before-first-storm | Snow removal | Seasonal contracts — renewal cutoff date & stop-count ceiling set in October, waiting list after
+- 2026-10-12 | sprinkler-blowout-assigned-week-default-yes | Irrigation / sprinkler services | Seasonal booking — pre-assigned blowout week by route area, reply-to-change default
