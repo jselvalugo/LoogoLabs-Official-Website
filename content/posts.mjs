@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `sprinkler-blowout-assigned-week-default-yes`,
+    title: `Sprinkler Blowouts: Give Every Customer a Week, Not a Wait`,
+    excerpt: `Nobody books a sprinkler blowout until the forecast says freeze, and then everybody books it the same day, so assign the week yourself and let customers say no.`,
+    tags: `Seasonal Booking, Default Scheduling, Irrigation`,
+    content: `Nobody calls to winterize their sprinklers on a warm October afternoon. They call the morning after the weather app shows 28 degrees, all at once, and your phone rings forty times before you have finished coffee.
+
+You can do maybe eight blowouts a day. The other customers wait, worry about cracked pipes, and a few of them hire whoever answers first. The work was never hard to sell. It is hard to spread out.
+
+## Why the calls bunch up
+
+Customers treat a blowout as a chore with no date on it. They know they should do it, they have no reason to do it today, and so they wait for something to force the decision. The freeze forecast is that something.
+
+The mistake is waiting for the customer to choose a date. A person who has to pick from a calendar will put it off. A person who is told "you're down for the week of October 26" has only one question to answer, and it is an easy one.
+
+## Assign the week yourself
+
+Pull last year's blowout customers and sort them by neighborhood or route, not by name. Your trucks already think in areas, so let the schedule do the same. Give each area a week, starting a few weeks before your region's usual first hard freeze.
+
+Here is an invented example. You have 120 past customers. Four areas of about 30 each. Area A gets the week of October 19, B the 26th, C gets November 2, D gets November 9. Each area fits inside a week with room left over for the callbacks and the emergencies.
+
+Then send one text and one email to each customer:
+
+- the week their area is scheduled
+- the price, stated plainly
+- the line "Reply CHANGE if that week doesn't work and I'll find you another"
+
+No reply means yes. That default is the whole idea. Most people will not answer at all, and that silence is a booking.
+
+## Handle the people who push back
+
+Some will reply CHANGE. Move them into an open slot in a later area's week, and write down which day you offered. A few will say they already did it themselves, or that they are moving. Tag them and take them off the list, which keeps next year's list clean.
+
+Expect a handful to be unhappy that you scheduled them without asking. They are rarer than you would guess, and a one-line apology plus a new date settles it.
+
+## Where this goes wrong
+
+A default only works with real customers who have agreed to be contacted, so use your own past-customer list and honor any stop request immediately. It also fails if you are sloppy about the week. If you promise October 26 and arrive November 3, the next default will not be trusted.
+
+And it does not cover the new customers who show up after the first freeze. They still need a normal booking process, and you should keep a few open days at the end of the season for them.
+
+## One thing to do before Friday
+
+Take last year's job list and sort it into four route areas. Write a week next to each one and count how many customers land in each. If one week is far heavier than the others, rebalance it now, before a single text goes out.`,
+  },
+  {
     slug: `snow-removal-renewal-cutoff-before-first-storm`,
     title: `Your Snow Route Fills Up the Night of the First Storm`,
     excerpt: `Seasonal snow customers who renew in the middle of a storm get squeezed into a route that was already full, so set a renewal date and a stop count before the first flake.`,
