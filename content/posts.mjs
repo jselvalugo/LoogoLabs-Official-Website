@@ -11,6 +11,60 @@
 
 export const posts = [
   {
+    slug: `veterinary-holiday-hours-emergency-referral-text`,
+    title: `Set Your Clinic's Holiday Hours Before Anyone Needs You`,
+    excerpt: `A sick pet on Christmas Eve sends the owner to your listing, your phone and your door, and all three need to say the same thing.`,
+    tags: `Holiday Hours, After-Hours Coverage, Veterinary Clinics`,
+    content: `A woman drives to your clinic at 3 PM on Christmas Eve with a dog that has been vomiting since lunch. The lot is empty and the door is locked. Your Google listing said you were open until 5, because nobody ever changed it.
+
+That is not a staffing failure. You closed early on purpose, and you told your team weeks ago. The one place you never told was the one place she looked.
+
+## Three places say your hours
+
+When a pet owner is worried, they check your hours in three places, usually in this order: your Google listing, your phone line, and your front door. Most clinics fix the door sign and stop there.
+
+The listing is what people trust first, because it is on their phone in the car. The phone is what they try next. The door is what they find out about last, in person, with the animal.
+
+If those three disagree, the owner goes with whichever one they saw first and blames you for the others.
+
+## Why October is the time to do this
+
+Nothing about holiday hours is urgent in October, which is exactly why it works. You are not busy yet and nobody is panicking. The listing lets you enter special hours for specific dates well ahead of time, so you can finish the whole job in one sitting.
+
+In December you will be short-staffed, behind on boarding paperwork, and answering a different crisis every hour. Holiday hours will lose to all of it. I have watched that happen enough times that I now treat this as an October job.
+
+## What to write down
+
+Pull up a calendar and list every date your hours change between now and New Year's Day. Not just the days you are closed. Include the early closes, the day-after days, and the Saturday that falls inside a short week.
+
+For each date, write one line: the date, the hours, and where an owner should go when you are closed. That last part is the piece most clinics skip.
+
+> Thursday, November 26: closed. Emergencies: call the 24-hour hospital on Route 9 at the number below.
+
+Call that hospital yourself and ask for their holiday hours. Do not assume they are open. Plenty of emergency clinics run on skeleton crews or divert cases on holidays, and sending an owner to a closed referral is worse than sending them nowhere.
+
+## Put the same lines everywhere
+
+Once you have the list, copy it to four places in one sitting.
+
+- Your Google listing, as special hours for each date.
+- A short banner at the top of your website and your booking page.
+- Your voicemail greeting, which should name the emergency hospital and give its number.
+- An automatic text that goes to anyone who calls while you are closed and leaves no message.
+
+That last one is what the missed-call text-back on the platform handles. When the phone rings on a closed day, the caller gets a text within seconds that says you are closed, gives your reopening date, and names the emergency clinic with its number. The worried owner does not wait for a voicemail they may never check. You can write a holiday version of the text and switch it on for just those dates.
+
+## Where this stops working
+
+A text cannot triage a pet. If the message says "closed, call this number," it is doing its job. If it starts guessing at symptoms, it is doing something you should not trust it with. Keep the wording to hours and a referral, and let your doctors do the medicine.
+
+Also expect a few owners to show up anyway. A sign on the door with the same text, and the emergency number printed large, takes care of them.
+
+## Look up your own Thanksgiving
+
+Open your Google listing on your phone and search for the clinic's name. Look at what it says for Thanksgiving and Christmas Eve. If it shows a normal day, you have found the problem, and you have about six weeks to fix it before the first owner finds it for you.`,
+  },
+  {
     slug: `septic-pumping-next-due-date-logged-at-the-visit`,
     title: `Septic Pumping Is a Three-Year Sale. Log the Next Date Today.`,
     excerpt: `A customer you pumped this week will not think about you again for years, so the next-due date has to be written down before your truck leaves the driveway.`,
