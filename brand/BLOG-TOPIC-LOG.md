@@ -78,3 +78,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-12 | sprinkler-blowout-assigned-week-default-yes | Irrigation / sprinkler services | Seasonal booking — pre-assigned blowout week by route area, reply-to-change default
 - 2026-10-12 | septic-pumping-next-due-date-logged-at-the-visit | Septic services | Recurring service — next-due month logged at the pump-out, told to customer, early reply-YES reminder
 - 2026-10-13 | veterinary-holiday-hours-emergency-referral-text | Veterinary clinics | Holiday hours — one dated list across listing, website, voicemail & closed-day text with emergency-hospital referral
+- 2026-10-13 | alterations-shop-ready-for-pickup-unclaimed-garments | Alterations & dry cleaning | Pickup — same-day ready text, dated holding-fee reminders & a stated disposal date for unclaimed garments
