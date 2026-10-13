@@ -77,3 +77,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-11 | snow-removal-renewal-cutoff-before-first-storm | Snow removal | Seasonal contracts — renewal cutoff date & stop-count ceiling set in October, waiting list after
 - 2026-10-12 | sprinkler-blowout-assigned-week-default-yes | Irrigation / sprinkler services | Seasonal booking — pre-assigned blowout week by route area, reply-to-change default
 - 2026-10-12 | septic-pumping-next-due-date-logged-at-the-visit | Septic services | Recurring service — next-due month logged at the pump-out, told to customer, early reply-YES reminder
+- 2026-10-13 | veterinary-holiday-hours-emergency-referral-text | Veterinary clinics | Holiday hours — one dated list across listing, website, voicemail & closed-day text with emergency-hospital referral
