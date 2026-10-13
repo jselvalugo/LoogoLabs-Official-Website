@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `alterations-shop-ready-for-pickup-unclaimed-garments`,
+    title: `Walk Your Alterations Rail and Count the Orphans`,
+    excerpt: `Every hemmed pair of pants nobody collects is finished work you cannot be paid for, and a dated pickup text sequence clears the rail without an awkward phone call.`,
+    tags: `Customer Follow-Up, Pickup Reminders, Alterations & Dry Cleaning`,
+    content: `Walk to the back of your shop and look at the rail. Count every garment that has been finished for more than a month and still has no one coming for it. Say it's 25 pieces, and the average job was $30. That is $750 of completed work hanging in the dark, plus the floor space it sits on.
+
+I would bet most shop owners already know that number is not zero. What they don't have is a routine that makes it smaller.
+
+## Why they don't come
+
+Almost nobody abandons a garment on purpose. The customer meant to come Saturday, then there was a birthday, then the wedding got moved. Thirty days later, picking up the dress feels like admitting they forgot, so they put it off again.
+
+That small embarrassment is the real problem. The longer an item hangs, the harder it gets for the customer to walk in. A shop that waits and says nothing makes that worse.
+
+## The ready text goes out the day it's finished
+
+The first message costs you nothing and does most of the work. When the item comes off the machine, mark it ready and let a text go to the customer that same day.
+
+Keep it plain: the item is done, here are your hours, and here is the last day you can come in without an extra fee. Naming that date up front is what separates this from a nag. You are telling them the terms, not scolding them later.
+
+Write it the way you'd say it across the counter. "Your blue coat is hemmed and on the rail. We're open until 6 tonight and from 9 tomorrow."
+
+## Three more touches, then a decision
+
+If nothing happens, schedule the rest in advance so no one has to remember them.
+
+- **Day 7:** A short reminder with your hours and the question "Want us to hold it for the weekend?" A reply costs them one word.
+- **Day 21:** A text that names the storage date. "After the 30th we start charging a small holding fee." Pick a fee you are willing to enforce, or don't mention one.
+- **Day 45:** A last notice saying what happens next. You donate it, or you keep it in a bag out front for a final week.
+
+That's four messages in all, and only the last one carries any pressure. Stop the sequence the moment the customer picks up, which the platform can do automatically once you mark the order collected.
+
+## Decide the ending before you need it
+
+The worst part of the unclaimed rail is that you've never told yourself what you'll do about it. So you don't do anything, for years.
+
+Write one sentence on your intake slip: "Items not collected after 90 days may be donated." Customers read it, and a few come back for exactly that reason. Check that wording against whatever your state expects before you rely on it, because the rules differ from place to place and I'm not going to guess at yours.
+
+## Where this goes wrong
+
+Texts are useless if the number on the ticket is wrong. Read it back at drop-off. A stale or mistyped number is a common reason a garment looks ignored when the customer simply never got your message. When a text bounces, you need another route, like a postcard or a call from the person who took the order.
+
+Also, don't send reminders that say "come in today" on a day you are closed. A message that sends someone to a dark shop teaches people to ignore you.
+
+## This week
+
+Pull the five oldest items off the rail. Look up each customer, check the phone number is real, and send each of them one short, friendly text that says it's ready and when you're open. Watch how many come in by Saturday. That count is roughly what a standing sequence would do for you every month.`,
+  },
+  {
     slug: `veterinary-holiday-hours-emergency-referral-text`,
     title: `Set Your Clinic's Holiday Hours Before Anyone Needs You`,
     excerpt: `A sick pet on Christmas Eve sends the owner to your listing, your phone and your door, and all three need to say the same thing.`,
