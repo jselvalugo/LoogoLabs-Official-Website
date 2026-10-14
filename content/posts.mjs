@@ -11,6 +11,295 @@
 
 export const posts = [
   {
+    slug: `alterations-shop-ready-for-pickup-unclaimed-garments`,
+    title: `Walk Your Alterations Rail and Count the Orphans`,
+    excerpt: `Every hemmed pair of pants nobody collects is finished work you cannot be paid for, and a dated pickup text sequence clears the rail without an awkward phone call.`,
+    tags: `Customer Follow-Up, Pickup Reminders, Alterations & Dry Cleaning`,
+    content: `Walk to the back of your shop and look at the rail. Count every garment that has been finished for more than a month and still has no one coming for it. Say it's 25 pieces, and the average job was $30. That is $750 of completed work hanging in the dark, plus the floor space it sits on.
+
+I would bet most shop owners already know that number is not zero. What they don't have is a routine that makes it smaller.
+
+## Why they don't come
+
+Almost nobody abandons a garment on purpose. The customer meant to come Saturday, then there was a birthday, then the wedding got moved. Thirty days later, picking up the dress feels like admitting they forgot, so they put it off again.
+
+That small embarrassment is the real problem. The longer an item hangs, the harder it gets for the customer to walk in. A shop that waits and says nothing makes that worse.
+
+## The ready text goes out the day it's finished
+
+The first message costs you nothing and does most of the work. When the item comes off the machine, mark it ready and let a text go to the customer that same day.
+
+Keep it plain: the item is done, here are your hours, and here is the last day you can come in without an extra fee. Naming that date up front is what separates this from a nag. You are telling them the terms, not scolding them later.
+
+Write it the way you'd say it across the counter. "Your blue coat is hemmed and on the rail. We're open until 6 tonight and from 9 tomorrow."
+
+## Three more touches, then a decision
+
+If nothing happens, schedule the rest in advance so no one has to remember them.
+
+- **Day 7:** A short reminder with your hours and the question "Want us to hold it for the weekend?" A reply costs them one word.
+- **Day 21:** A text that names the storage date. "After the 30th we start charging a small holding fee." Pick a fee you are willing to enforce, or don't mention one.
+- **Day 45:** A last notice saying what happens next. You donate it, or you keep it in a bag out front for a final week.
+
+That's four messages in all, and only the last one carries any pressure. Stop the sequence the moment the customer picks up, which the platform can do automatically once you mark the order collected.
+
+## Decide the ending before you need it
+
+The worst part of the unclaimed rail is that you've never told yourself what you'll do about it. So you don't do anything, for years.
+
+Write one sentence on your intake slip: "Items not collected after 90 days may be donated." Customers read it, and a few come back for exactly that reason. Check that wording against whatever your state expects before you rely on it, because the rules differ from place to place and I'm not going to guess at yours.
+
+## Where this goes wrong
+
+Texts are useless if the number on the ticket is wrong. Read it back at drop-off. A stale or mistyped number is a common reason a garment looks ignored when the customer simply never got your message. When a text bounces, you need another route, like a postcard or a call from the person who took the order.
+
+Also, don't send reminders that say "come in today" on a day you are closed. A message that sends someone to a dark shop teaches people to ignore you.
+
+## This week
+
+Pull the five oldest items off the rail. Look up each customer, check the phone number is real, and send each of them one short, friendly text that says it's ready and when you're open. Watch how many come in by Saturday. That count is roughly what a standing sequence would do for you every month.`,
+  },
+  {
+    slug: `veterinary-holiday-hours-emergency-referral-text`,
+    title: `Set Your Clinic's Holiday Hours Before Anyone Needs You`,
+    excerpt: `A sick pet on Christmas Eve sends the owner to your listing, your phone and your door, and all three need to say the same thing.`,
+    tags: `Holiday Hours, After-Hours Coverage, Veterinary Clinics`,
+    content: `A woman drives to your clinic at 3 PM on Christmas Eve with a dog that has been vomiting since lunch. The lot is empty and the door is locked. Your Google listing said you were open until 5, because nobody ever changed it.
+
+That is not a staffing failure. You closed early on purpose, and you told your team weeks ago. The one place you never told was the one place she looked.
+
+## Three places say your hours
+
+When a pet owner is worried, they check your hours in three places, usually in this order: your Google listing, your phone line, and your front door. Most clinics fix the door sign and stop there.
+
+The listing is what people trust first, because it is on their phone in the car. The phone is what they try next. The door is what they find out about last, in person, with the animal.
+
+If those three disagree, the owner goes with whichever one they saw first and blames you for the others.
+
+## Why October is the time to do this
+
+Nothing about holiday hours is urgent in October, which is exactly why it works. You are not busy yet and nobody is panicking. The listing lets you enter special hours for specific dates well ahead of time, so you can finish the whole job in one sitting.
+
+In December you will be short-staffed, behind on boarding paperwork, and answering a different crisis every hour. Holiday hours will lose to all of it. I have watched that happen enough times that I now treat this as an October job.
+
+## What to write down
+
+Pull up a calendar and list every date your hours change between now and New Year's Day. Not just the days you are closed. Include the early closes, the day-after days, and the Saturday that falls inside a short week.
+
+For each date, write one line: the date, the hours, and where an owner should go when you are closed. That last part is the piece most clinics skip.
+
+> Thursday, November 26: closed. Emergencies: call the 24-hour hospital on Route 9 at the number below.
+
+Call that hospital yourself and ask for their holiday hours. Do not assume they are open. Plenty of emergency clinics run on skeleton crews or divert cases on holidays, and sending an owner to a closed referral is worse than sending them nowhere.
+
+## Put the same lines everywhere
+
+Once you have the list, copy it to four places in one sitting.
+
+- Your Google listing, as special hours for each date.
+- A short banner at the top of your website and your booking page.
+- Your voicemail greeting, which should name the emergency hospital and give its number.
+- An automatic text that goes to anyone who calls while you are closed and leaves no message.
+
+That last one is what the missed-call text-back on the platform handles. When the phone rings on a closed day, the caller gets a text within seconds that says you are closed, gives your reopening date, and names the emergency clinic with its number. The worried owner does not wait for a voicemail they may never check. You can write a holiday version of the text and switch it on for just those dates.
+
+## Where this stops working
+
+A text cannot triage a pet. If the message says "closed, call this number," it is doing its job. If it starts guessing at symptoms, it is doing something you should not trust it with. Keep the wording to hours and a referral, and let your doctors do the medicine.
+
+Also expect a few owners to show up anyway. A sign on the door with the same text, and the emergency number printed large, takes care of them.
+
+## Look up your own Thanksgiving
+
+Open your Google listing on your phone and search for the clinic's name. Look at what it says for Thanksgiving and Christmas Eve. If it shows a normal day, you have found the problem, and you have about six weeks to fix it before the first owner finds it for you.`,
+  },
+  {
+    slug: `septic-pumping-next-due-date-logged-at-the-visit`,
+    title: `Septic Pumping Is a Three-Year Sale. Log the Next Date Today.`,
+    excerpt: `A customer you pumped this week will not think about you again for years, so the next-due date has to be written down before your truck leaves the driveway.`,
+    tags: `Recurring Service, Reminders, Septic Services`,
+    content: `Think about a septic customer you pumped in the fall of 2023. If your cycle for that tank is three years, they are due about now. Do you know that without digging through paper invoices? Does anyone on your team?
+
+Most septic companies I look at have the same hole. The job gets done well, the invoice goes out, and the one fact that makes the next sale possible, the date the tank is due again, lives in a driver's memory or a line on a carbon copy.
+
+## Why this sale gets lost
+
+A pump-out is the opposite of a sprinkler blowout or a furnace tune-up. Nothing in the customer's life reminds them. The tank is buried, the lid is hidden under grass, and if it is working they never think about it. Three years go by and the only thing that brings it back to mind is a slow drain or a wet patch in the yard.
+
+By then you are not selling maintenance. You are answering an emergency, and the customer is calling whichever company comes up first. Maybe that is you, maybe not. Either way you have turned a predictable, schedulable job into a scramble for both sides.
+
+## Record the date at the visit
+
+The cheapest moment to capture the next date is while you are standing at the tank. You know the size, you know how full it was, and you know what the household looks like. That is the moment to decide the interval.
+
+Before the truck leaves, someone puts three things on the customer record:
+
+- **Next due month and year.** Not "in a few years." An actual month.
+- **The interval you chose and why**, in one short line, such as "1,000 gallon, family of five, every 3 years."
+- **Anything the next crew needs**, like where the lid is or that the access is under a deck.
+
+If the driver enters it from a phone before pulling out, it gets done. If it waits for the office to key in invoices on Friday, a share of them will never be entered.
+
+## Tell the customer the date, too
+
+Put the same month on the invoice and in the text receipt: "Your tank is due again around October 2029. I'll text you ahead of time." Now the customer has heard the date from you once, and they have a reason to expect your message when it comes.
+
+Be honest that it is an estimate. A household that adds a teenager or a garbage disposal changes the schedule, and you would rather say so than have them hold you to a date.
+
+## Send the reminder early, and make it one reply
+
+Six weeks before the due month, text the customer. Short is better:
+
+> Hi, it's David from the septic crew. Your tank was last pumped in October 2023 and comes due this fall. Want me to hold a day? Reply YES and I'll send two dates.
+
+That last part matters. A reminder that says "call us to schedule" asks the customer to do the work. A reminder that offers two specific dates asks for one word.
+
+If nobody answers, follow up once after two weeks, and then leave it alone. A third message starts to feel like pressure on something they cannot see or judge for themselves.
+
+## What this will not do
+
+Some customers will sell the house or switch to a cheaper company, and no reminder fixes either. Some will tell you the tank was pumped by someone else last year. Update the record and move the date. That is still better than not knowing.
+
+It also does not work on a list you never collected permission for. Only message people who gave you their number in the course of the job, and honor a stop request the same day.
+
+## Check one thing this week
+
+Open your records and count how many jobs from the last three years have a next-due month filled in. If the answer is "I'm not sure where that would even be," start with the next five trucks: make the driver enter the month before leaving, and check on Friday that all five have one.`,
+  },
+  {
+    slug: `sprinkler-blowout-assigned-week-default-yes`,
+    title: `Sprinkler Blowouts: Give Every Customer a Week, Not a Wait`,
+    excerpt: `Nobody books a sprinkler blowout until the forecast says freeze, and then everybody books it the same day, so assign the week yourself and let customers say no.`,
+    tags: `Seasonal Booking, Default Scheduling, Irrigation`,
+    content: `Nobody calls to winterize their sprinklers on a warm October afternoon. They call the morning after the weather app shows 28 degrees, all at once, and your phone rings forty times before you have finished coffee.
+
+You can do maybe eight blowouts a day. The other customers wait, worry about cracked pipes, and a few of them hire whoever answers first. The work was never hard to sell. It is hard to spread out.
+
+## Why the calls bunch up
+
+Customers treat a blowout as a chore with no date on it. They know they should do it, they have no reason to do it today, and so they wait for something to force the decision. The freeze forecast is that something.
+
+The mistake is waiting for the customer to choose a date. A person who has to pick from a calendar will put it off. A person who is told "you're down for the week of October 26" has only one question to answer, and it is an easy one.
+
+## Assign the week yourself
+
+Pull last year's blowout customers and sort them by neighborhood or route, not by name. Your trucks already think in areas, so let the schedule do the same. Give each area a week, starting a few weeks before your region's usual first hard freeze.
+
+Here is an invented example. You have 120 past customers. Four areas of about 30 each. Area A gets the week of October 19, B the 26th, C gets November 2, D gets November 9. Each area fits inside a week with room left over for the callbacks and the emergencies.
+
+Then send one text and one email to each customer:
+
+- the week their area is scheduled
+- the price, stated plainly
+- the line "Reply CHANGE if that week doesn't work and I'll find you another"
+
+No reply means yes. That default is the whole idea. Most people will not answer at all, and that silence is a booking.
+
+## Handle the people who push back
+
+Some will reply CHANGE. Move them into an open slot in a later area's week, and write down which day you offered. A few will say they already did it themselves, or that they are moving. Tag them and take them off the list, which keeps next year's list clean.
+
+Expect a handful to be unhappy that you scheduled them without asking. They are rarer than you would guess, and a one-line apology plus a new date settles it.
+
+## Where this goes wrong
+
+A default only works with real customers who have agreed to be contacted, so use your own past-customer list and honor any stop request immediately. It also fails if you are sloppy about the week. If you promise October 26 and arrive November 3, the next default will not be trusted.
+
+And it does not cover the new customers who show up after the first freeze. They still need a normal booking process, and you should keep a few open days at the end of the season for them.
+
+## One thing to do before Friday
+
+Take last year's job list and sort it into four route areas. Write a week next to each one and count how many customers land in each. If one week is far heavier than the others, rebalance it now, before a single text goes out.`,
+  },
+  {
+    slug: `snow-removal-renewal-cutoff-before-first-storm`,
+    title: `Your Snow Route Fills Up the Night of the First Storm`,
+    excerpt: `Seasonal snow customers who renew in the middle of a storm get squeezed into a route that was already full, so set a renewal date and a stop count before the first flake.`,
+    tags: `Seasonal Contracts, Renewals, Snow Removal`,
+    content: `The first storm of the winter is the worst possible time to find out how many driveways you are plowing. Your phone fills with "are you still doing us this year?" texts from last season's customers, three new neighbors want on the route tonight, and you are trying to decide whether stop forty-one fits between stop forty and the church lot that has to be open by six.
+
+It never fits. Every added stop pushes every later stop back, and the people at the end of the route are the ones who notice. That is how a good season starts with complaints.
+
+## The route has a number, and you probably haven't written it down
+
+Plowing is a capacity business. A truck can only hit so many stops before the first ones have been buried again. Ask yourself: with one truck and one driver, how many driveways can I clear in a normal six-inch storm before the early ones are a mess? Pick a number you would stand behind, and write it down.
+
+I'll use invented figures. Say your truck holds 38 residential stops and two small lots. That is the ceiling. Every renewal and every new customer is a claim on one of those 40 slots, and right now you are handing slots out by whoever texts first, on the worst night of the year to be doing it.
+
+## Move the decision to October
+
+Contract season is now, while the ground is still bare and nobody is angry about snow. Pull your list of last year's seasonal customers and tag each one. Then send one message to everyone on it, by text and email, with three things in it:
+
+- the price for the season, or the new price if it is changing
+- a renewal date, such as November 1, that you actually mean
+- one plain sentence saying that after that date their slot goes to the waiting list
+
+That last sentence feels harsh to write. It is the kindest part, because it tells people the truth about how the route works. Most customers will answer within a day or two if you give them a date and a one-word way to reply.
+
+## Renewals first, then the waiting list
+
+On November 2, count. If 31 of your 40 stops renewed, you have nine open slots, and you can say so honestly. Open them in order: first the neighbors of existing stops, since a driveway next door costs you almost no drive time, and then everyone else.
+
+Keep a simple waiting list with a tag. When someone calls in December, you can say "I'm full for this season, but you're first on the list if a slot opens," which is a better answer than a reluctant yes that wrecks the route. A customer who got a straight no and a spot on the list has a reason to answer your renewal text early next October.
+
+## Where this breaks down
+
+A text does not replace a conversation with your commercial accounts. A property manager with a lot contract wants a signed agreement and a clear trigger depth, and no reminder message handles that. Call those people yourself. The message is for the driveways, where a one-word reply is all you need.
+
+Also, a cutoff only works if you hold it once. If you make exceptions for everyone who texts on November 5, next year's date means nothing.
+
+## Check this week
+
+Write down your stop ceiling today, then tag last year's seasonal customers and pick your renewal date. If you only get one of those done this week, make it the ceiling, because every other decision hangs off it.`,
+  },
+  {
+    slug: `plumber-pre-thanksgiving-kitchen-drain-check`,
+    title: `Plumbers: Sell the Drain Check Before Thanksgiving Day`,
+    excerpt: `The Thanksgiving clog call is expensive for everyone, and most of the people who make it are customers you already have on file.`,
+    tags: `Seasonal Booking, Past-Customer Outreach, Plumbing`,
+    content: `The most expensive plumbing call of the year comes in at about the hour the turkey should be coming out. A kitchen sink that won't drain, eleven guests on the way, and a dispatcher who is already on call. Nobody wins that call. The customer pays holiday rates and wrecks their afternoon, and your tech spends Thanksgiving under someone else's sink.
+
+I have looked at enough of these call logs to say that most of those calls are not surprises. The drain has been slow since October. The disposal has been groaning for a month. The owner knew, and did nothing, because nothing was forcing the issue yet.
+
+## Who actually calls on the holiday
+
+Think about the people who ring you on Thanksgiving Day. They are rarely strangers. A good share are people whose kitchen drain or disposal you have already worked on, or who called about a slow sink last winter and said they'd think about it.
+
+That means you already have the list. It sits in your job history, and you don't need an ad to reach it. You need to pull it out before the week when everyone is cooking at once.
+
+## Build the list this week
+
+Open your completed jobs and filter for three kinds of work: kitchen drain clears, disposal installs or repairs, and any job where the tech's note says "slow" or "partial clog." Give them one tag, something like \`pre-holiday-drain\`. Keep the date of the last visit next to each name.
+
+Then add a second group by hand: any customer who asked for a quote on a drain or disposal and never booked. Those people already told you they have a problem.
+
+Expect the list to be rougher than you want. Notes are inconsistent and some jobs won't be labeled at all. Fix what you can in an hour and send to the rest anyway. A text that reaches a few people who don't need it costs you nothing.
+
+## What the text says
+
+Send it in the first week of November, before anyone has started planning the menu. Keep it short, from the shop and not from a campaign:
+
+> Hi Dana, it's the team at your plumber. Thanksgiving is the week the kitchen drain gets tested hardest. We're holding a few 30-minute drain and disposal checks before Nov. 20. Reply with a day and we'll fit you in.
+
+Three things make that work. It names the date, so the customer sees a reason to answer now. It says "a few," and you mean it: cap the slots you offer, because a limit is honest and it keeps your schedule from filling with low-value visits. And it asks for a reply, not a click, so a customer can answer from the couch.
+
+## Where this breaks down
+
+A check will not save every drain. Some pipes fail with no warning, and a visit three weeks early can't prevent that. Say so when someone asks, and don't promise a clean Thanksgiving.
+
+It also adds work to a month that is already full. If your crew is booked solid in November, cap the slots lower, or send only to customers whose last drain job was within two years. The point is to move a few emergency calls onto a calm Tuesday. It is not to double your workload.
+
+And price the check on its own. A flat price for a short visit is easier to say yes to than "come take a look," and it keeps the slot from turning into an hour of unpaid diagnosis.
+
+## Send it where the replies land
+
+If the replies go to a shared inbox that nobody watches on Saturdays, the text does more harm than good. Decide who answers before you send, and what they are allowed to offer. A reply that sits for three days looks worse than no text at all.
+
+## Check this week
+
+Open your job history and pull every kitchen drain or disposal job from the last two years. Count them and tag them. Then write down which three November dates you could realistically offer a 30-minute check. If you can fill the list and name the dates before Halloween, you are ready to send on the first.`,
+  },
+  {
     slug: `fence-installer-permit-wait-status-text`,
     title: `Your Fence Customer Hears Nothing During the Permit Wait`,
     excerpt: `The weeks between a signed fence contract and an approved permit are the quietest part of the job, and a short status text on a fixed day keeps the customer from guessing.`,

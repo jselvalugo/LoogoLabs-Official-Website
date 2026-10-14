@@ -3,9 +3,9 @@
 .lp { display: flex; flex-direction: column; font-family: var(--font-body); overflow-x: hidden; }
 
 /* ── Header pill ── */
-.lp-nav__bar { max-width: 720px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; overflow: hidden; }
+.lp-nav__bar { max-width: 720px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; }
 .lp-nav__side { display: flex; align-items: center; min-width: 0; }
-.lp-nav__side--end { justify-content: flex-end; padding-right: 14px; }
+.lp-nav__side--end { flex-direction: row; justify-content: flex-end; align-items: center; gap: 10px; padding-right: 14px; }
 .lp-nav__logo img { width: 26px; height: auto; display: block; }
 .lp-back {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: var(--radius-pill);
@@ -186,6 +186,15 @@
   .lp-compare__tag { display: block; font-style: normal; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 4px; font-weight: 400; }
   .lp-proof { grid-template-columns: 1fr; }
   .lp-option { font-size: 15px; padding-left: 18px; }
-  .lp-nav__side--end { padding-right: 10px; }
+  .lp-nav__side--end { padding-right: 10px; gap: 8px; }
   .lp-progress { left: 22px; right: 22px; }
+}
+
+/* Narrow phones: icon-only Back, hide the step counter so the language toggle fits
+   and the logo stays centred. */
+@media (max-width: 640px) {
+  .lp-nav__bar { gap: 8px; }
+  .lp-back { padding: 0 12px; min-width: 44px; justify-content: center; }
+  .lp-back__label { display: none; }
+  .lp-nav__side--end .lp-count { display: none; }
 }

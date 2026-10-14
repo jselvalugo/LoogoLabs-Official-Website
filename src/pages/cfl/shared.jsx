@@ -4,6 +4,7 @@ import React from 'react';
 import { ArrowRight, Plus } from '@phosphor-icons/react';
 import { BOOKING_URL } from '../../lib/booking';
 import { CITIES, CFL_BASE, cityPath } from '../../lib/cfl';
+import { LangToggle, useLang } from '../../lib/i18n';
 
 export const Wrap = ({ children, style }) => (
   <div className="cfl-wrap" style={style}>{children}</div>
@@ -21,16 +22,21 @@ export const tidy = (s) => s.replace(/(\d)\s*[–—]\s*(\d)/g, '$1-$2').replace
 
 const trackSchedule = () => { if (window.fbq) window.fbq('track', 'Schedule'); };
 
-export const BookBtn = ({ size = 'md', label = 'Book a free strategy call', variant = 'light' }) => (
+export const BookBtn = ({ size = 'md', label, variant = 'light' }) => {
+  const es = useLang() === 'es';
+  return (
   <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}
     className={`cfl-btn cfl-btn--${variant === 'light' ? 'light' : 'dark'}${size === 'lg' ? ' cfl-btn--lg' : ''}`}>
-    <span>{label}</span>
+    <span>{label || (es ? 'Agenda una llamada de estrategia gratis' : 'Book a free strategy call')}</span>
     <span className="cfl-btn__icon" aria-hidden="true"><ArrowRight size={size === 'lg' ? 18 : 16} weight="bold" /></span>
   </a>
-);
+  );
+};
 
 /** Floating glass header pill shared by every Central Florida / city page. */
-export const TopBanner = ({ crumb }) => (
+export const TopBanner = ({ crumb }) => {
+  const es = useLang() === 'es';
+  return (
   <div className="ll-nav cfl-nav">
     <div className="ll-nav__bar ll-glass--dark cfl-nav__bar">
       <a href="/" className="cfl-nav__brand">
@@ -39,22 +45,28 @@ export const TopBanner = ({ crumb }) => (
       </a>
       {crumb && <a href={crumb.href} className="cfl-nav__crumb">{crumb.label}</a>}
       <span className="cfl-nav__spacer" />
+      <LangToggle />
       <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-btn cfl-btn--light">
-        <span>Book a free <span className="cfl-nav__long">strategy </span>call</span>
+        {es
+          ? <span>Agenda <span className="cfl-nav__long">una llamada </span>gratis</span>
+          : <span>Book a free <span className="cfl-nav__long">strategy </span>call</span>}
         <span className="cfl-btn__icon" aria-hidden="true"><ArrowRight size={16} weight="bold" /></span>
       </a>
     </div>
   </div>
-);
+  );
+};
 
 /** The floating glass bar listing every city page. */
-export const CityRail = ({ active }) => (
-  <nav className="cfl-rail" aria-label="Central Florida cities">
-    <div className="cfl-rail__title">Central Florida</div>
+export const CityRail = ({ active }) => {
+  const es = useLang() === 'es';
+  return (
+  <nav className="cfl-rail" aria-label={es ? 'Ciudades de la Florida Central' : 'Central Florida cities'}>
+    <div className="cfl-rail__title">{es ? 'Florida Central' : 'Central Florida'}</div>
     <ul className="cfl-rail__list">
       <li>
         <a className="cfl-rail__link" href={CFL_BASE} aria-current={active ? undefined : 'page'}>
-          All of Central FL <small>HUB</small>
+          {es ? 'Toda la Florida Central' : 'All of Central FL'} <small>HUB</small>
         </a>
       </li>
       {CITIES.map((c) => (
@@ -66,10 +78,11 @@ export const CityRail = ({ active }) => (
       ))}
     </ul>
     <a className="cfl-rail__cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}>
-      Free strategy call
+      {es ? 'Llamada de estrategia gratis' : 'Free strategy call'}
     </a>
   </nav>
-);
+  );
+};
 
 // Approximate city-center coordinates, projected onto the hero map. Not a
 // survey-grade map — just enough to put each pin in the right part of the region.
@@ -135,17 +148,28 @@ export const SERVICES = [
   { title: 'Revenue reporting', desc: 'See which searches and campaigns turned into booked jobs.', items: ['Lead sources', 'Monthly call'] },
 ];
 
-export const Services = ({ cityName }) => (
+export const SERVICES_ES = [
+  { title: 'SEO local y Google Maps', desc: 'Aparece en el mapa de Google en las ciudades y vecindarios que atiendes.', items: ['Perfil de Empresa en Google', 'Páginas por ciudad', 'Directorios'] },
+  { title: 'Seguimiento instantáneo', desc: 'Cada llamada, formulario y mensaje recibe respuesta en segundos.', items: ['Texto por llamada perdida', 'SMS y email', 'Inglés y español'] },
+  { title: 'Generación de reseñas', desc: 'Una solicitud de reseña automática después de cada trabajo.', items: ['Solicitudes automáticas', 'Alertas', 'Plantillas de respuesta'] },
+  { title: 'Campañas por email y SMS', desc: 'Campañas de temporada en Florida que traen de vuelta a tus clientes.', items: ['Hechas por nosotros', 'Listas segmentadas'] },
+  { title: 'Reservas y CRM', desc: 'Todos tus clientes en un solo embudo, con reservas en línea y recordatorios.', items: ['Embudo de ventas', 'Calendario', 'App móvil'] },
+  { title: 'Reportes de ingresos', desc: 'Mira qué búsquedas y campañas se convirtieron en trabajos agendados.', items: ['Origen de clientes', 'Llamada mensual'] },
+];
+
+export const Services = ({ cityName }) => {
+  const es = useLang() === 'es';
+  return (
   <section className="cfl-wrap">
     <div className="cfl-panel ll-sage">
       <div className="cfl-head">
         <div>
-          <Eyebrow>What we do{cityName ? ` in ${cityName}` : ''}</Eyebrow>
-          <H2>Get found. Get the job.</H2>
+          <Eyebrow>{es ? 'Lo que hacemos' : 'What we do'}{cityName ? (es ? ` en ${cityName}` : ` in ${cityName}`) : ''}</Eyebrow>
+          <H2>{es ? 'Que te encuentren. Gánate el trabajo.' : 'Get found. Get the job.'}</H2>
         </div>
       </div>
       <div className="cfl-services">
-        {SERVICES.map(({ title, desc, items }) => (
+        {(es ? SERVICES_ES : SERVICES).map(({ title, desc, items }) => (
           <div key={title} className="cfl-service">
             <h3 className="cfl-service__title">{title}</h3>
             <p className="cfl-service__desc">{desc}</p>
@@ -155,13 +179,21 @@ export const Services = ({ cityName }) => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 const STEPS = [
   ['Strategy call', 'We review your Google profile, local rankings, and how fast leads hear back today.', '30 min'],
   ['Build', 'Profile, city pages, follow-up, reviews, and booking, set up for your service area.', 'Week 1'],
   ['Launch & test', 'Test leads run end-to-end so every message, alert, and booking is confirmed.', 'Week 2'],
   ['Manage & grow', 'A monthly report and call. We tune pages, campaigns, and sequences on results.', 'Ongoing'],
+];
+
+const STEPS_ES = [
+  ['Llamada de estrategia', 'Revisamos tu perfil de Google, tu posición local y qué tan rápido reciben respuesta tus clientes hoy.', '30 min'],
+  ['Construcción', 'Perfil, páginas por ciudad, seguimiento, reseñas y reservas, configurados para tu área de servicio.', 'Semana 1'],
+  ['Lanzamiento y prueba', 'Probamos contactos de principio a fin para confirmar cada mensaje, alerta y reserva.', 'Semana 2'],
+  ['Gestión y crecimiento', 'Un reporte y una llamada cada mes. Ajustamos páginas, campañas y secuencias según los resultados.', 'Continuo'],
 ];
 
 /** Four-step timeline; `children` render under it (e.g. the nearby-cities strip). */
@@ -180,27 +212,31 @@ export const Steps = ({ steps }) => (
   </ol>
 );
 
-export const Process = ({ children }) => (
+export const Process = ({ children }) => {
+  const es = useLang() === 'es';
+  return (
   <section className="cfl-wrap">
     <div className="cfl-panel cfl-panel--paper">
       <div className="cfl-head">
-        <H2 small>Live in about two weeks.</H2>
-        <p className="cfl-lede">Then managed every month: no hand-off, no DIY.</p>
+        <H2 small>{es ? 'En vivo en unas dos semanas.' : 'Live in about two weeks.'}</H2>
+        <p className="cfl-lede">{es ? 'Y luego administrado cada mes: sin traspasos, sin hacerlo tú mismo.' : 'Then managed every month: no hand-off, no DIY.'}</p>
       </div>
-      <Steps steps={STEPS} />
+      <Steps steps={es ? STEPS_ES : STEPS} />
       {children}
     </div>
   </section>
-);
+  );
+};
 
 export const Faq = ({ items }) => {
   const [open, setOpen] = React.useState(0);
+  const es = useLang() === 'es';
   return (
     <section className="cfl-wrap">
       <div className="cfl-panel cfl-panel--bare cfl-faq">
         <div>
-          <Eyebrow>FAQ</Eyebrow>
-          <H2>Common questions.</H2>
+          <Eyebrow>{es ? 'Preguntas frecuentes' : 'FAQ'}</Eyebrow>
+          <H2>{es ? 'Preguntas comunes.' : 'Common questions.'}</H2>
         </div>
         <div className="cfl-faq__list">
           {items.map(([q, a], i) => (
@@ -221,25 +257,38 @@ export const Faq = ({ items }) => {
 };
 
 /** Closing forest panel; `children` replace the default copy (AI Voice pages). */
-export const CtaPanel = ({ eyebrow = 'Free · 30 minutes · No obligation', title, body, fine }) => (
+export const CtaPanel = ({ eyebrow, title, body, fine }) => {
+  const es = useLang() === 'es';
+  return (
   <section className="cfl-wrap">
     <div className="cfl-panel ll-forest cfl-panel--center" style={{ paddingTop: 'clamp(56px,8vw,104px)', paddingBottom: 'clamp(56px,8vw,104px)' }}>
-      <Eyebrow>{eyebrow}</Eyebrow>
+      <Eyebrow>{eyebrow || (es ? 'Gratis · 30 minutos · Sin compromiso' : 'Free · 30 minutes · No obligation')}</Eyebrow>
       <H2>{title}</H2>
       <p className="cfl-lede">{body}</p>
-      <div className="cfl-actions"><BookBtn size="lg" label="Book my free strategy call" /></div>
+      <div className="cfl-actions"><BookBtn size="lg" label={es ? 'Agendar mi llamada de estrategia gratis' : 'Book my free strategy call'} /></div>
       {fine && <div className="cfl-fine">{fine}</div>}
     </div>
   </section>
-);
+  );
+};
 
-export const FinalCta = ({ cityName }) => (
+export const FinalCta = ({ cityName }) => {
+  const es = useLang() === 'es';
+  if (es) return (
+    <CtaPanel
+      title={<>{cityName ? `Descubre dónde los clientes de ${cityName} están encontrando a tu competencia` : 'Descubre dónde tu negocio está perdiendo clientes locales'}, y cómo arreglarlo.</>}
+      body={<>En la llamada revisamos tu perfil de Google y tu posición local{cityName ? ` en ${cityName}` : ''}, medimos qué tan rápido recibe respuesta un nuevo cliente y te mostramos exactamente lo que construiríamos.</>}
+      fine="Recomendado 3 meses · Mes a mes disponible"
+    />
+  );
+  return (
   <CtaPanel
     title={<>See where {cityName || 'your business'} {cityName ? 'customers are finding your competitors' : 'is losing local customers'} — and how to fix it.</>}
     body={<>On the call we pull up your Google profile and local rankings{cityName ? ` in ${cityName}` : ''}, check how fast a new lead hears back, and map out exactly what we would build.</>}
     fine="3-month recommended · Month-to-month available"
   />
-);
+  );
+};
 
 /** Page shell: ambient background, glass header, optional city rail. */
 export const Shell = ({ rail, active, crumb, children }) => (

@@ -1,0 +1,86 @@
+// Spanish copy for the fixed-price packages in lib/servicePackages.js, keyed by
+// page. Tier, step, need and FAQ arrays run parallel to the English ones.
+export const SERVICE_PACKAGES_ES = {
+  GBPMakeover: {
+    badge: 'Renovación del Perfil de Empresa en Google',
+    cardTitle: 'Renovación del Perfil de Empresa en Google',
+    from: 'Desde $299',
+    headline: 'Convierte tu perfil de Google en tu mejor vendedor.',
+    accent: 'Desde $299.',
+    summary: 'Tu Perfil de Empresa en Google suele ser lo primero que ven tus clientes. Lo reconstruimos de principio a fin para que se vea completo, confiable y listo para ganarse la llamada.',
+    cardDescription: 'Optimización completa del perfil, categorías, servicios, fotos editadas, preguntas y respuestas iniciales, un mes de publicaciones y una comparación de posiciones antes y después.',
+    turnaround: 'Listo en 7 días',
+    tiers: [
+      { name: 'Renovación',
+        items: ['Optimización completa del perfil', 'Categorías principales y secundarias', 'Servicios y descripciones redactados', 'Preguntas y respuestas con dudas reales de clientes', 'Comparación de posiciones antes y después'] },
+      { name: 'Renovación + Contenido',
+        items: ['Todo lo de Renovación', '10 fotos editadas y publicadas', '4 semanas de publicaciones en Google redactadas y programadas'] },
+    ],
+    steps: [
+      ['Danos acceso', 'Agréganos como administradores de tu perfil; te enviamos instrucciones sencillas.'],
+      ['Foto inicial', 'Registramos dónde apareces hoy en las zonas que atiendes.'],
+      ['Reconstrucción', 'Categorías, servicios, descripción, fotos, preguntas y respuestas y publicaciones, todo hecho por nosotros.'],
+      ['Foto final', 'Revisamos de nuevo tus posiciones y te enviamos el reporte de antes y después.'],
+    ],
+    needs: ['Acceso de administrador a tu Perfil de Empresa en Google', 'Tu lista de servicios y zonas de servicio', 'Hasta 10 fotos (para Renovación + Contenido)'],
+    faq: [
+      ['¿Me garantizan el primer lugar?', 'Nadie puede garantizarlo honestamente. Arreglamos todo lo que está bajo tu control y te mostramos el antes y después para que veas qué cambió.'],
+      ['Todavía no tengo perfil. ¿Me pueden ayudar?', 'Sí. Podemos crearlo y verificarlo contigo; los tiempos de verificación los define Google.'],
+      ['¿Van a cambiar el nombre de mi negocio?', 'No. Usamos el nombre real de tu negocio tal como aparece en tu letrero. Rellenar el nombre con palabras clave puede hacer que suspendan tu perfil.'],
+    ],
+  },
+  ReviewKickstart: {
+    badge: 'Review Kickstart',
+    cardTitle: 'Review Kickstart',
+    from: '$399',
+    headline: 'Despierta a los clientes satisfechos que ya tienes.',
+    accent: '$399, listo en 14 días.',
+    summary: 'La mayoría de los negocios tienen cientos de clientes satisfechos a quienes nunca se les pidió una reseña. Nosotros se la pedimos por ti (por mensaje de texto y correo) y te dejamos listo para que las reseñas sigan llegando.',
+    cardDescription: 'Importamos a tus clientes anteriores, hacemos una campaña única de reseñas por SMS y correo, y te entregamos plantillas de respuesta y una tarjeta de reseñas con código QR. Listo en 14 días.',
+    turnaround: 'Entregado en 14 días',
+    tiers: [
+      { name: 'Review Kickstart',
+        items: ['Importamos y limpiamos tu lista de clientes anteriores', 'Campaña única de reseñas por SMS y correo', 'Plantillas para responder reseñas (positivas y negativas)', 'Diseño de tarjeta de reseñas con QR, lista para imprimir', 'Resumen de resultados al día 14'] },
+    ],
+    steps: [
+      ['Envía tu lista', 'Una hoja de cálculo o exportación de tu CRM con tus clientes anteriores; nosotros la organizamos.'],
+      ['Aprueba el mensaje', 'Redactamos el texto y el correo; nada se envía hasta que lo apruebes.'],
+      ['Corre la campaña', 'Las solicitudes salen por SMS y correo, con un recordatorio amable.'],
+      ['Cierre', 'Recibes el resumen de resultados, las plantillas de respuesta y tu tarjeta QR.'],
+    ],
+    needs: ['Una lista de clientes anteriores (nombre y teléfono y/o correo)', 'Tu enlace de reseñas de Google (o lo buscamos nosotros)', 'Tu logo para la tarjeta QR'],
+    faq: [
+      ['¿Google permite esto?', 'Sí. Le pedimos a cada cliente su opinión honesta. Nunca ofrecemos incentivos ni filtramos a los clientes insatisfechos, porque ambas cosas violan las reglas de Google.'],
+      ['¿Cuántas reseñas voy a recibir?', 'Depende del tamaño de tu lista y de lo que tus clientes piensen de ti, así que no prometemos un número. Ves exactamente a quién se le pidió y los resultados.'],
+      ['¿Mis clientes tienen que haber dado su consentimiento?', 'Solo debes enviarnos clientes con quienes tengas una relación comercial y permiso para contactarlos. Cada mensaje incluye la opción de darse de baja.'],
+    ],
+  },
+  CityPages: {
+    badge: 'Paquete de páginas por ciudad',
+    cardTitle: 'Paquete de páginas por ciudad',
+    from: 'Desde $499',
+    headline: 'Aparece en cada ciudad que atiendes.',
+    accent: '5 páginas por $499.',
+    summary: 'Los clientes buscan “servicio + ciudad.” Si tu sitio solo tiene una página sobre un pueblo, eres invisible en todos los demás. Redactamos y publicamos páginas de ciudad y servicio genuinamente locales para tu sitio.',
+    cardDescription: '5 o 10 páginas SEO de ciudad y servicio, redactadas para tus zonas de servicio y publicadas en tu sitio.',
+    turnaround: 'Publicado en 10-14 días',
+    tiers: [
+      { name: '5 páginas',
+        items: ['5 páginas de ciudad/servicio redactadas', 'Detalles locales de cada zona', 'Títulos, meta y enlaces internos configurados', 'Publicadas en tu sitio'] },
+      { name: '10 páginas',
+        items: ['10 páginas de ciudad/servicio redactadas', 'Todo lo del paquete de 5 páginas', 'El mejor precio por página'] },
+    ],
+    steps: [
+      ['Elige tus zonas', 'Dinos las ciudades y servicios que más te importan.'],
+      ['Investigamos y redactamos', 'Cada página se escribe para esa zona, sin copiar y pegar cambiando solo la ciudad.'],
+      ['Tú revisas', 'Apruebas cada página antes de que se publique.'],
+      ['Publicamos', 'Las páginas salen en tu sitio con títulos, meta y enlaces internos configurados.'],
+    ],
+    needs: ['Tu lista de ciudades y servicios objetivo', 'Acceso a tu sitio web (o el contacto de tu encargado web)', 'Fotos de trabajos locales o ejemplos de proyectos que tengas'],
+    faq: [
+      ['¿Con qué plataformas web trabajan?', 'WordPress, Wix, Squarespace, Webflow, GoDaddy y casi todas las demás. Si no podemos publicar directamente, te enviamos las páginas listas para pegar.'],
+      ['¿Son la misma página con el nombre de la ciudad cambiado?', 'No. Las páginas duplicadas y pobres pueden perjudicarte. Cada página se escribe sobre esa zona y el trabajo que haces ahí.'],
+      ['¿Qué tan pronto van a posicionarse?', 'Los buscadores necesitan tiempo para encontrar y confiar en páginas nuevas, normalmente de semanas a unos meses. No prometemos posiciones específicas.'],
+    ],
+  },
+};

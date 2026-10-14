@@ -1,8 +1,16 @@
 import React from 'react';
 import { pathForPage } from '../../lib/seo';
+import { LangToggle, useLang } from '../../lib/i18n';
+
+const LABELS = {
+  en: { AIVoice: 'AI Voice' },
+  es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA' },
+};
 
 function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
   const [open, setOpen] = React.useState(false);
+  const lang = useLang();
+  const label = it => LABELS[lang][it] || it;
 
   // Close on Escape and stop the page scrolling behind the open menu.
   React.useEffect(() => {
@@ -40,7 +48,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
         <nav className="ll-nav-links" aria-label="Primary">
           {items.map(it => (
             <a key={it} href={pathForPage(it)} aria-current={it === active ? 'page' : undefined}
-              className="ll-nav__link" onClick={e => { e.preventDefault(); handleNav(it); }}>{it}</a>
+              className="ll-nav__link" onClick={e => { e.preventDefault(); handleNav(it); }}>{label(it)}</a>
           ))}
         </nav>
 
@@ -53,10 +61,11 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>
           )}
+          <LangToggle className="ll-lang--bar" />
           <div style={{ display: 'contents' }} className="ll-cta-desktop">
             {cta}
           </div>
-          <button className="ll-nav-burger" onClick={() => setOpen(o => !o)} aria-label={open ? 'Close menu' : 'Open menu'}
+          <button className="ll-nav-burger" onClick={() => setOpen(o => !o)} aria-label={open ? (lang === 'es' ? 'Cerrar menú' : 'Close menu') : (lang === 'es' ? 'Abrir menú' : 'Open menu')}
             aria-expanded={open} aria-controls="ll-nav-mobile">
             {open
               ? <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
@@ -73,7 +82,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
                 className={`ll-nav-mobile-link${on ? ' on' : ''}`}
                 style={{ transitionDelay: open ? `${60 + i * 40}ms` : '0ms' }}
                 onClick={e => { e.preventDefault(); handleNav(it); }}>
-                <span className="ll-nav-mobile-label">{it}</span>
+                <span className="ll-nav-mobile-label">{label(it)}</span>
                 <span className="ll-nav-mobile-arrow" aria-hidden="true">→</span>
               </a>
             );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BLOG_BASE } from '../lib/seo';
+import { useLang } from '../lib/i18n';
 import { ArrowRight, Sparkle, X } from '@phosphor-icons/react';
 
 // Tags/titles that mark a post as written for Central Florida small businesses.
@@ -52,8 +53,9 @@ function Section({ label, children }) {
 }
 
 function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
+  const es = useLang() === 'es';
   const s = React.useMemo(() => buildSidebar(posts), [posts]);
-  const views = p => `${(p.views || 0).toLocaleString('en-US')} views`;
+  const views = p => (es ? `${(p.views || 0).toLocaleString('es-US')} vistas` : `${(p.views || 0).toLocaleString('en-US')} views`);
   const list = (items, meta, numbered) => (
     <ol className="ln-side__list">
       {items.map((p, i) => <PostLink key={p.id} post={p} index={numbered ? i : null} meta={meta?.(p)} onNavigate={onNavigate} onPick={onPick} />)}
@@ -63,15 +65,15 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
   return (
     <>
       {s.cfl.length > 0 && (
-        <Section label="Central Florida small business">{list(s.cfl, p => `${p.read_time} min read`)}</Section>
+        <Section label={es ? 'Pequeños negocios del centro de Florida' : 'Central Florida small business'}>{list(s.cfl, p => (es ? `${p.read_time} min de lectura` : `${p.read_time} min read`))}</Section>
       )}
-      <Section label="Most viewed">{list(s.mostViewed, views, true)}</Section>
-      <Section label="Best ranked">{list(s.bestRanked, p => (p.featured ? "Editor's pick" : views(p)), true)}</Section>
+      <Section label={es ? 'Más vistos' : 'Most viewed'}>{list(s.mostViewed, views, true)}</Section>
+      <Section label={es ? 'Mejor valorados' : 'Best ranked'}>{list(s.bestRanked, p => (p.featured ? (es ? 'Selección del editor' : "Editor's pick") : views(p)), true)}</Section>
       {s.quickReads.length > 0 && (
-        <Section label="Quick reads · 5 min or less">{list(s.quickReads, p => `${p.read_time} min`)}</Section>
+        <Section label={es ? 'Lecturas rápidas · 5 min o menos' : 'Quick reads · 5 min or less'}>{list(s.quickReads, p => `${p.read_time} min`)}</Section>
       )}
       {s.topics.length > 0 && (
-        <Section label="Browse by topic">
+        <Section label={es ? 'Explorar por tema' : 'Browse by topic'}>
           <div className="ln-side__tags">
             {s.topics.map(([t, n]) => (
               <button
@@ -87,9 +89,9 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
           </div>
         </Section>
       )}
-      <Section label="Explore">
+      <Section label={es ? 'Explorar' : 'Explore'}>
         <ul className="ln-side__list">
-          {[['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']].map(([page, text]) => (
+          {(es ? [['GrowCFL', 'Crece en el centro de Florida'], ['Quizzes', 'Quizzes de marketing gratis'], ['Packages', 'Servicios en paquete']] : [['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']]).map(([page, text]) => (
             <li key={page}>
               <button type="button" className="ln-side__link" onClick={() => { onPick?.(); onNavigate(page); }}>
                 <span className="ln-side__title ln-side__title--go">{text} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
@@ -105,7 +107,9 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
 // Sticky glass panel beside the post list on wide screens; on narrow screens it
 // collapses into a floating button that opens the same panel as a drawer.
 export default function BlogSidebar(props) {
+  const es = useLang() === 'es';
   const [open, setOpen] = React.useState(false);
+  const label = es ? 'Lo más destacado de Industry LoogoBlog' : 'Industry LoogoBlog highlights';
   React.useEffect(() => {
     if (!open) return;
     const onKey = e => { if (e.key === 'Escape') setOpen(false); };
@@ -115,15 +119,15 @@ export default function BlogSidebar(props) {
 
   return (
     <>
-      <aside className="ln-side ln-side--docked" aria-label="Industry LoogoBlog highlights">
+      <aside className="ln-side ln-side--docked" aria-label={label}>
         <SidebarBody {...props} />
       </aside>
 
       <button type="button" className="ln-side__fab" aria-expanded={open} aria-controls="ln-side-drawer" onClick={() => setOpen(o => !o)}>
-        {open ? <><X size={14} weight="bold" aria-hidden="true" /> Close</> : <><Sparkle size={14} weight="fill" aria-hidden="true" /> Top posts</>}
+        {open ? <><X size={14} weight="bold" aria-hidden="true" /> {es ? 'Cerrar' : 'Close'}</> : <><Sparkle size={14} weight="fill" aria-hidden="true" /> {es ? 'Más leídos' : 'Top posts'}</>}
       </button>
       {open && <div className="ln-side__scrim" onClick={() => setOpen(false)} />}
-      <aside id="ln-side-drawer" className={`ln-side ln-side--drawer${open ? ' is-open' : ''}`} aria-label="Industry LoogoBlog highlights" hidden={!open}>
+      <aside id="ln-side-drawer" className={`ln-side ln-side--drawer${open ? ' is-open' : ''}`} aria-label={label} hidden={!open}>
         <SidebarBody {...props} onPick={() => setOpen(false)} />
       </aside>
     </>

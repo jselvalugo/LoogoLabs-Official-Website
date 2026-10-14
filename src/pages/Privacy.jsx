@@ -1,9 +1,12 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { SITE } from '../lib/seo';
+import { useLang } from '../lib/i18n';
 import '../styles/pages/quiz.css';
 
 export default function Privacy({ onNavigate }) {
+  const es = useLang() === 'es';
+  if (es) return <PrivacyES onNavigate={onNavigate} />;
   return (
     <div className="lg-page">
 
@@ -148,3 +151,128 @@ function UL({ items }) {
 }
 
 const linkStyle = { color: 'var(--cyan-700)', textDecoration: 'underline' };
+
+const noteStyle = { fontSize: '0.85rem', opacity: 0.75, fontStyle: 'italic' };
+
+function PrivacyES({ onNavigate }) {
+  return (
+    <div className="lg-page">
+
+      {/* Header */}
+      <div className="lg-wrap">
+        <div className="lg-head ll-forest ll-bezel--dark">
+          <h1 className="lg-title">
+            Política de Privacidad
+          </h1>
+          <p className="lg-updated">
+            Última actualización: 1 de octubre de 2026
+          </p>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="lg-wrap">
+      <div className="lg-panel ll-glass">
+
+        <p className="lg-p" style={noteStyle}>Traducción de cortesía. En caso de discrepancia, prevalece la versión en inglés.</p>
+
+        <Section title="1. Quiénes somos">
+          <P>David Selva, propietario único que opera bajo el nombre comercial Loogo Labs ("Loogo Labs", "nosotros" o "nuestro"), opera el sitio web loogolabs.com y ofrece servicios de automatización de marketing y plataformas de negocio a pequeñas y medianas empresas. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos tu información personal cuando visitas nuestro sitio web o interactúas con nuestros servicios.</P>
+          <P>Si tienes preguntas sobre esta política, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a>.</P>
+        </Section>
+
+        <Section title="2. Información que recopilamos">
+          <P>Recopilamos la información que nos proporcionas directamente, incluyendo:</P>
+          <UL items={[
+            'Nombre completo y nombre de tu negocio',
+            'Correo electrónico',
+            'Tipo de negocio o industria',
+            'Las herramientas y el software que usas actualmente',
+            'Los retos de negocio que describes en nuestro formulario de contacto',
+            'Cómo supiste de nosotros (fuente de referencia)',
+            'Cualquier nota o mensaje que nos envíes directamente',
+          ]} />
+          <P>También recopilamos cierta información de forma automática cuando visitas nuestro sitio web, incluyendo:</P>
+          <UL items={[
+            'Dirección IP y ubicación aproximada (país/región)',
+            'Tipo de navegador y sistema operativo',
+            'Páginas visitadas y tiempo en cada página',
+            'El sitio web o enlace que te trajo hasta aquí',
+          ]} />
+        </Section>
+
+        <Section title="3. Cómo usamos tu información">
+          <P>Usamos la información que recopilamos para:</P>
+          <UL items={[
+            'Responder a tu consulta y agendar llamadas de estrategia',
+            'Prestar, administrar y mejorar nuestros servicios',
+            'Enviarte información relevante sobre nuestra plataforma (solo si diste tu consentimiento o hiciste una consulta)',
+            'Medir y analizar cómo se usa nuestro sitio web para poder mejorarlo',
+            'Cumplir con obligaciones legales',
+          ]} />
+          <P>No vendemos tu información personal a ningún tercero. No usamos tu información para ningún fin que no sea coherente con lo descrito en esta política.</P>
+        </Section>
+
+        <Section title="4. Cómo compartimos tu información">
+          <P>Compartimos tu información solo en las siguientes circunstancias limitadas:</P>
+          <UL items={[
+            'Proveedores de servicios: Usamos herramientas de terceros para operar nuestro negocio, incluyendo nuestro CRM y plataforma de marketing, el hospedaje del sitio web (Netlify) y herramientas de reserva de citas. Estos proveedores acceden a tu información solo en la medida necesaria para cumplir sus funciones y están obligados a protegerla.',
+            'Requisitos legales: Podemos divulgar tu información si lo exige la ley, una orden judicial o una autoridad gubernamental.',
+            'Transferencias de negocio: Si Loogo Labs es adquirida o se fusiona con otra empresa, tu información podría transferirse como parte de esa transacción. Te lo notificaremos si eso ocurre.',
+          ]} />
+          <P>No compartimos tu información con anunciantes, intermediarios de datos ni terceros no afiliados para sus propios fines de marketing.</P>
+        </Section>
+
+        <Section title="5. Cookies y seguimiento">
+          <P>Te pedimos tu consentimiento antes de usar cualquier cosa más allá de lo que el sitio necesita para funcionar, mediante el aviso de cookies que aparece en tu primera visita. Estas son las categorías que usamos:</P>
+          <UL items={[
+            'Cookies necesarias: Indispensables para que el sitio funcione — navegación entre páginas, seguridad y recordar tu elección de cookies. Siempre activas y no se pueden desactivar.',
+            'Cookies de analítica: Datos agregados de tráfico a nivel de ciudad para saber qué páginas se leen, cuánto duran las visitas y de dónde llega el tráfico. La duración de la visita se asocia a un ID aleatorio por pestaña que se descarta al cerrarla. Si en esa misma visita también envías un quiz o una solicitud de cotización, guardamos ese mismo ID con tu envío para ver qué páginas y fuentes de tráfico generan consultas; no se usa para rastrearte entre visitas ni en otros sitios. No se crea ningún perfil personal a partir de él. Solo se activan si lo permites.',
+            'Cookies de marketing: Hacen funcionar el Meta Pixel, que usamos para medir el rendimiento de los anuncios y mostrar contenido relevante de Loogo Labs en otros sitios. Solo se activan si lo permites.',
+          ]} />
+          <P>Puedes cambiar tu elección en cualquier momento desde el enlace &ldquo;Cookie Preferences&rdquo; en el pie de página del sitio, o desde la configuración de tu navegador. Desactivar las cookies puede afectar algunas funciones del sitio.</P>
+        </Section>
+
+        <Section title="6. Conservación de datos">
+          <P>Conservamos tu información personal durante el tiempo necesario para cumplir los fines descritos en esta política — por lo general, mientras tengamos una relación comercial activa o potencial contigo, o según lo exija la ley.</P>
+          <P>Si quieres que eliminemos tu información, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a> y procesaremos tu solicitud en un plazo de 30 días.</P>
+        </Section>
+
+        <Section title="7. Seguridad de los datos">
+          <P>Tomamos medidas técnicas y organizativas razonables para proteger tu información personal contra el acceso, la divulgación o la destrucción no autorizados. Nuestro sitio web se sirve mediante HTTPS. Nuestra base de datos está alojada en una infraestructura con controles de acceso y cifrado en reposo.</P>
+          <P>Ningún método de transmisión por internet es 100% seguro. No podemos garantizar una seguridad absoluta, pero la tomamos en serio y te notificaremos de inmediato en caso de una brecha que afecte tus datos.</P>
+        </Section>
+
+        <Section title="8. Tus derechos">
+          <P>Según el lugar donde te encuentres, podrías tener derecho a:</P>
+          <UL items={[
+            'Acceder a la información personal que tenemos sobre ti',
+            'Solicitar la corrección de información inexacta',
+            'Solicitar la eliminación de tu información',
+            'Darte de baja de las comunicaciones de marketing en cualquier momento respondiendo "stop" o enviándonos un correo',
+            'Presentar una queja ante una autoridad de protección de datos en tu jurisdicción',
+          ]} />
+          <P>Para ejercer cualquiera de estos derechos, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a>.</P>
+        </Section>
+
+        <Section title="9. Privacidad de menores">
+          <P>Nuestro sitio web y servicios no están dirigidos a menores de 13 años. No recopilamos a sabiendas información personal de menores de 13 años. Si llegamos a saber que lo hemos hecho, eliminaremos esa información de inmediato.</P>
+        </Section>
+
+        <Section title="10. Cambios a esta política">
+          <P>Podemos actualizar esta Política de Privacidad de vez en cuando. Cuando lo hagamos, actualizaremos la fecha de "Última actualización" al inicio de esta página. Si los cambios son importantes, haremos esfuerzos razonables para notificarte. El uso continuo de nuestro sitio web después de publicados los cambios constituye tu aceptación de la política actualizada.</P>
+        </Section>
+
+        <Section title="11. Contacto">
+          <P>Si tienes preguntas sobre esta política, escribe a <a href={`mailto:${SITE.email}`} style={linkStyle}>{SITE.email}</a> o envíanos una carta:</P>
+          <P><strong>David Selva, d/b/a Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
+        </Section>
+
+        <div className="lg-foot">
+          <button onClick={() => onNavigate('Terms')} className="lg-navbtn">Lee nuestros Términos de Servicio →</button>
+        </div>
+      </div>
+      </div>
+    </div>
+  );
+}
