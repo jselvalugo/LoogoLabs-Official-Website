@@ -80,3 +80,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-13 | veterinary-holiday-hours-emergency-referral-text | Veterinary clinics | Holiday hours — one dated list across listing, website, voicemail & closed-day text with emergency-hospital referral
 - 2026-10-13 | alterations-shop-ready-for-pickup-unclaimed-garments | Alterations & dry cleaning | Pickup — same-day ready text, dated holding-fee reminders & a stated disposal date for unclaimed garments
 - 2026-10-14 | pest-control-rodent-job-what-to-expect-text | Pest control | Post-service expectations — same-afternoon "what to expect" text, day-seven reply-1/2 check-in & booked recheck for rodent jobs
+- 2026-10-14 | home-inspector-report-delivered-deadline-text | Home inspectors | Buyer follow-up — recording the buyer's response deadline at booking, report-delivered text, midpoint call-slot offer & day-before text

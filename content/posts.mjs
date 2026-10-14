@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `home-inspector-report-delivered-deadline-text`,
+    title: `Your Inspection Report Is Read on the Last Day Possible`,
+    excerpt: `Buyers open a forty-page report days late and call when their window is nearly shut, so put their deadline in your own texts and offer two call times.`,
+    tags: `Buyer Follow-Up, Report Delivery, Home Inspectors`,
+    content: `Your report lands in the buyer's inbox at 6 PM on a Thursday, and then you hear nothing for five days. On day six the phone rings. The buyer has just read all forty pages for the first time, found a word they don't understand, and their window to ask the seller for anything closes tomorrow.
+
+That call is not their fault, and it is not really yours either. It is a gap in what happens between "report delivered" and "decision due," and most inspection businesses leave it empty.
+
+## The report is not the finish line
+
+I think of an inspection as two products. One is the report. The other is the buyer making a decision in time. You are paid for the first, but the buyer judges you on the second, because the decision is the thing they are scared of.
+
+Most inspectors send the report, attach a friendly line, and move on to the next house. The buyer, meanwhile, is also packing, arranging a loan, and fielding opinions from relatives. A document that arrives on a Thursday night gets opened on Saturday, skimmed on Sunday, and understood on the day it is nearly too late.
+
+Here is a picture to work with. Say you finish an inspection on a Tuesday, and the buyer's contract gives them a fixed number of days to ask for repairs or walk away. I don't know your state's rules or their contract, and I won't guess. The buyer or their agent does know, and it is a single date you can ask for.
+
+## Put their date in your own text
+
+At booking, ask one extra question: "What is the last day you can respond to the seller about the inspection?" Put the answer in the job record next to the address. Most buyers will check their paperwork and tell you. Some will say they don't know and ask you to hold on. Either answer is useful.
+
+Then send three short texts over the life of the job, from a number the buyer can reply to.
+
+The first goes out the hour the report is delivered. It says the report is in their email, that the summary page at the front is the one to read first, and that their last day to respond is the date you recorded. It names the thing they should do next: pick a time for a call with you.
+
+The second goes out about halfway between delivery and their date, and only if they have not replied. It asks one thing: have you had a chance to read the summary, and would a ten-minute call help? It offers two specific times.
+
+The third goes out the morning before their last day. It is the shortest of all. It tells them tomorrow is the day, and that you are free for questions until a stated hour this afternoon.
+
+> Hi, it's David at the inspection company. Your report for the Maple Street house is in your email. Start with the summary on page one. Your last day to reply to the seller is Friday. Want a call? Reply with Wed morning or Thu evening.
+
+That is an invented example, and you should write yours in your own words, but notice what it does. It gives one instruction, one date, and two choices.
+
+## Why a call slot beats "call me anytime"
+
+"Call with any questions" puts the work on the buyer. A frightened first-time buyer does not know what a good question looks like, so they say nothing. Two named times turn it into a yes-or-no reply, and a reply is easy.
+
+Keep the call short and keep it honest. Walk them through the summary page. Tell them which items are cheap and ordinary for a house of that age and which ones are worth getting a specialist to price. You are not telling them whether to buy. You are telling them what the report says, in the order they need it, before their date.
+
+## Where this does not help
+
+A text does not fix a report that is hard to read. If buyers keep asking what the same three terms mean, that is a report problem, and the sequence just exposes it faster. Also, a buyer who is sure they are walking away will not need any of this, and a reply of "we're good, thanks" should stop the remaining messages. Make sure it does.
+
+Texts also cannot give legal advice or promise what a seller will agree to. Keep the wording on what is in the report and what the date is.
+
+## Try this week
+
+Open your last three inspection jobs and find the day each report was sent. Then look at when each buyer first contacted you afterward. If any of them reached out within two days of their deadline, add the one booking question about their last day to respond, and send the first text on your very next job.`,
+  },
+  {
     slug: `pest-control-rodent-job-what-to-expect-text`,
     title: `Tell the Mouse Customer What Day Four Sounds Like`,
     excerpt: `The first cold nights send mice inside, and the angriest calls come from customers who were never told the scratching in the wall can last a week after you treat.`,
