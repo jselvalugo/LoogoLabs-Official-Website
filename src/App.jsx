@@ -161,7 +161,7 @@ function App({ initialPath }) {
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
       <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog', badge: es ? 'Nuevo' : 'Fresh' }}
+        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
       />
       <SeasonalGarland />
