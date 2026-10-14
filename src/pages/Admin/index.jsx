@@ -9,7 +9,7 @@ import Links from './Links';
 
 const NAV = [
   { id: 'posts', label: 'Posts' },
-  { id: 'leads', label: 'Quiz Leads' },
+  { id: 'leads', label: 'Leads CRM' },
   { id: 'proposals', label: 'Proposals' },
   { id: 'analytics', label: 'Analytics' },
   { id: 'links', label: 'Backlinks' },

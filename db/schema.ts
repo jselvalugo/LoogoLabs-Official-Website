@@ -19,10 +19,27 @@ export const leads = pgTable('leads', {
   city: text('city'),
   region: text('region'),
   country: text('country'),
+  // CRM pipeline stage: new | contacted | qualified | proposal | won | lost.
   status: text('status').default('new'),
+  // The visitor's own submission details (quiz extras, partnership form).
   notes: text('notes').default(''),
   // site_sessions.id of the visit this lead came from (Analytics consent only).
   session_id: uuid('session_id'),
+  // Admin-maintained CRM fields.
+  phone: text('phone'),
+  company: text('company'),
+  deal_value: numeric('deal_value'),
+  follow_up_at: timestamp('follow_up_at'),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// CRM timeline for a lead: notes, logged calls/emails/meetings, stage changes.
+export const lead_activity = pgTable('lead_activity', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  lead_id: uuid('lead_id').notNull().references(() => leads.id, { onDelete: 'cascade' }),
+  kind: text('kind').notNull().default('note'),
+  body: text('body').notNull().default(''),
+  created_at: timestamp('created_at').defaultNow(),
 });
 
 // One row per (deduplicated, one-per-session) blog post view, so views can be

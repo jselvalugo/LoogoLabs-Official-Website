@@ -163,6 +163,8 @@ function BrandPartners() {
           email: form.email.trim(),
           business_type: form.company.trim(),
           pain_point: labels,
+          company: form.company.trim(),
+          phone: form.phone.trim(),
           notes,
           session_id: getSessionId(),
         }),

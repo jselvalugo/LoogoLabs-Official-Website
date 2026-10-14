@@ -19,6 +19,8 @@ export default async (req, context) => {
   // Park Supply quote requests carry their line items here; cap it so the
   // public endpoint cannot be used to stuff arbitrarily large rows.
   const notes = typeof body.notes === 'string' ? body.notes.slice(0, 8000) : '';
+  const company = typeof body.company === 'string' ? body.company.trim().slice(0, 200) || null : null;
+  const phone = typeof body.phone === 'string' ? body.phone.trim().slice(0, 50) || null : null;
   const session_id = UUID_RE.test(body.session_id || '') ? body.session_id : null;
   const geo = context?.geo || {};
   const city = geo.city || null;
@@ -27,8 +29,8 @@ export default async (req, context) => {
   const { sql } = getDatabase();
 
   const [lead] = await sql`
-    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point, city, region, country, notes, session_id)
-    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country}, ${notes}, ${session_id})
+    INSERT INTO leads (full_name, email, source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point, city, region, country, notes, session_id, company, phone)
+    VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country}, ${notes}, ${session_id}, ${company}, ${phone})
     RETURNING *
   `;
 
