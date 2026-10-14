@@ -6,7 +6,7 @@ import {
   Phone, CalendarCheck, Check, X, Minus, Plus, ArrowRight, ArrowDown,
   Moon, Funnel, ChatsCircle, ShieldCheck, Microphone,
 } from '@phosphor-icons/react';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 import '../styles/pages/aivoice.css';
 
 const trackBook = () => { if (window.fbq) window.fbq('track', 'Schedule'); openBooking(); };
@@ -208,6 +208,7 @@ const CellIcon = ({ kind }) => {
 export default function AIVoice() {
   const [openFaq, setOpenFaq] = React.useState(null);
   const es = useLang() === 'es';
+  const toHref = useHref();
   const T = es
     ? { transcript: transcript_ES, heroStats: heroStats_ES, proofPoints: proofPoints_ES, problems: problems_ES, capabilities: capabilities_ES, steps: steps_ES, industries: industries_ES, comparison: comparison_ES, differentiators: differentiators_ES, faqs: faqs_ES, demoPoints: demoPoints_ES, trustPoints: trustPoints_ES }
     : { transcript, heroStats, proofPoints, problems, capabilities, steps, industries, comparison, differentiators, faqs, demoPoints, trustPoints };
@@ -490,7 +491,7 @@ export default function AIVoice() {
           <h2 className="av-h2">{es ? <>Agentes de voz con IA para negocios <em>en tu ciudad.</em></> : <>AI voice agents for businesses <em>in your city.</em></>}</h2>
           <div className="cfl-nearby av-cities__links">
             {VOICE_CITIES.map((c) => (
-              <a key={c.slug} href={voiceCityPath(c.slug)} className="cfl-nearby__link">{c.name} <span aria-hidden="true">→</span></a>
+              <a key={c.slug} href={toHref(voiceCityPath(c.slug))} className="cfl-nearby__link">{c.name} <span aria-hidden="true">→</span></a>
             ))}
           </div>
         </div>

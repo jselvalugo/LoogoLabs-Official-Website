@@ -2,13 +2,14 @@ import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 import { hasConsent } from '../lib/cookieConsent';
 import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
 export default function BlogPost({ slug, onNavigate }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   const [post, setPost] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [notFound, setNotFound] = React.useState(false);
@@ -74,7 +75,7 @@ export default function BlogPost({ slug, onNavigate }) {
           <div className="lb-notfound ll-glass">
             <span className="lb-empty__kicker">404</span>
             <h1 className="lb-notfound__title">{es ? 'Artículo no encontrado.' : 'Post not found.'}</h1>
-            <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
+            <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
               <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Volver a Industry LoogoBlog' : 'Back to Industry LoogoBlog'}
             </a>
           </div>
@@ -124,7 +125,7 @@ export default function BlogPost({ slug, onNavigate }) {
       <header className="lb-hero ll-forest">
         {/* Back nav: a real breadcrumb link, so the post is not an orphan */}
         <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
-          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
+          <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
         </nav>
@@ -191,7 +192,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
             {/* Back link */}
             <div className="lb-post__back">
-              <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
+              <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
                 <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Volver a Industry LoogoBlog' : 'Back to Industry LoogoBlog'}
               </a>
             </div>
@@ -207,6 +208,7 @@ export default function BlogPost({ slug, onNavigate }) {
 // panel (featured kicker, display-size title, the excerpt as a standfirst and
 // a byline strip). A reading-progress bar rides the top of the viewport.
 function FeaturedHero({ post, tags, date, onNavigate, es }) {
+  const toHref = useHref();
   const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
     const onScroll = () => {
@@ -224,7 +226,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es }) {
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       <header className="lb-hero lb-hero--feature ll-forest">
         <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
-          <a href={BLOG_INDEX} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
+          <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
           <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Artículo destacado' : 'Featured post'}</span>

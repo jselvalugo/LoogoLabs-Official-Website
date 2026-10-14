@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import '../styles/pages/quiz.css';
 import { NICHE_BY_PAGE, DECISION_NO, DECISION_YES } from '../lib/nicheQuizzes';
 import { NICHE_QUIZZES_ES } from '../lib/nicheQuizzes.es';
-import { useLang, LangToggle } from '../lib/i18n';
+import { useHref, useLang, LangToggle } from '../lib/i18n';
 
 // One component for every niche fit check in lib/nicheQuizzes.js:
 // intro → questions → name & email → result. Same funnel shape and lead
@@ -28,6 +28,7 @@ const Arrow = () => <ArrowRight size={16} weight="bold" />;
 
 export default function NicheQuiz({ page }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   const quiz = NICHE_BY_PAGE[page];
   const t = es ? { ...quiz, ...NICHE_QUIZZES_ES[page] } : quiz;
   const questions = quiz.questions;
@@ -159,7 +160,7 @@ export default function NicheQuiz({ page }) {
               </button>
             )}
           </div>
-          <a href="/quizzes" className="ll-nav__logo" aria-label="Loogo Labs"><img src="/logo.png" alt="Loogo Labs" /></a>
+          <a href={toHref('/quizzes')} className="ll-nav__logo" aria-label="Loogo Labs"><img src="/logo.png" alt="Loogo Labs" /></a>
           <div className="nq-bar__side nq-bar__side--end">
             {step > 0 && step < RESULT && (
               <span className="nq-count">{step}/{CONTACT}</span>
@@ -178,8 +179,8 @@ export default function NicheQuiz({ page }) {
 
       <footer className="nq-footer">
         <span>© {new Date().getFullYear()} Loogo Labs</span>
-        <a href="/privacy">{es ? 'Privacidad' : 'Privacy'}</a>
-        <a href="/terms">{es ? 'Términos' : 'Terms'}</a>
+        <a href={toHref('/privacy')}>{es ? 'Privacidad' : 'Privacy'}</a>
+        <a href={toHref('/terms')}>{es ? 'Términos' : 'Terms'}</a>
       </footer>
     </main>
   );

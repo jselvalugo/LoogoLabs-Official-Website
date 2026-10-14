@@ -4,7 +4,7 @@ import React from 'react';
 import { GROW_FAQ as faqs } from '../lib/content';
 import { CITIES, cityPath } from '../lib/cfl';
 import { CITIES_ES, GROW_FAQ_ES, COUNTY_ES } from '../lib/cfl.es';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 import { ArrowRight, MapPin, UsersThree, Translate } from '@phosphor-icons/react';
 import { Eyebrow, H2, BookBtn, Shell, CflMap, Services, Process, Faq, FinalCta } from './cfl/shared';
 import '../styles/pages/cfl.css';
@@ -41,6 +41,7 @@ const WHY_TONES = ['cfl-tile ll-sage', 'cfl-tile', 'cfl-tile cfl-tile--glass'];
 
 function GrowCFL() {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
     <Shell rail>
 
@@ -109,7 +110,7 @@ function GrowCFL() {
             {CITIES.map((c) => {
               const x = es ? CITIES_ES[c.slug] : c;
               return (
-              <a key={c.slug} href={cityPath(c.slug)} className="cfl-city-card">
+              <a key={c.slug} href={toHref(cityPath(c.slug))} className="cfl-city-card">
                 <span className="cfl-city-card__top">
                   <span className="cfl-city-card__name">{c.name}</span>
                   <span className="cfl-city-card__county">{es ? COUNTY_ES(c.county) : c.county}</span>

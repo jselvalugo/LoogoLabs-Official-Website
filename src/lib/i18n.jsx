@@ -5,6 +5,7 @@
 import React from 'react';
 
 import { ES_PREFIX, isEsPath, langFromPath, localizePath, stripLang } from './lang.js';
+import { localHref } from './seo.js';
 
 export { ES_PREFIX, langFromPath, localizePath, stripLang };
 
@@ -32,6 +33,12 @@ export function useLang() {
   const current = React.useSyncExternalStore(subscribe, () => lang, () => lang);
   React.useEffect(() => { document.documentElement.lang = current; }, [current]);
   return current;
+}
+
+/** href(path) for the current language — see localHref in lib/seo.js. */
+export function useHref() {
+  const current = useLang();
+  return React.useCallback((href) => localHref(href, current), [current]);
 }
 
 /** Pick the string for the current language: pick(lang, { en: '…', es: '…' }). */

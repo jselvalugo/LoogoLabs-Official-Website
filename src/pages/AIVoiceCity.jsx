@@ -1,7 +1,7 @@
 import React from 'react';
 import { VOICE_BASE, VOICE_CITY_BY_SLUG, voiceCityPath } from '../lib/voiceCities';
 import { VOICE_CITIES_ES } from '../lib/voiceCities.es';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 import { ArrowRight, Check, PhoneX, Moon, CalendarX } from '@phosphor-icons/react';
 import { Eyebrow, H2, BookBtn, Shell, Faq, Steps, CtaPanel, tidy } from './cfl/shared';
 import '../styles/pages/cfl.css';
@@ -76,6 +76,7 @@ function TranscriptCard({ c, es }) {
 
 function AIVoiceCity({ slug }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   const base = VOICE_CITY_BY_SLUG.get(slug);
   if (!base) return null;
   const c = es ? { ...base, ...VOICE_CITIES_ES[base.slug] } : base;
@@ -89,7 +90,7 @@ function AIVoiceCity({ slug }) {
       <section className="cfl-wrap">
         <div className="cfl-panel ll-forest cfl-hero">
           <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="cfl-crumb">
-            <a href={VOICE_BASE}>{crumbLabel}</a>
+            <a href={toHref(VOICE_BASE)}>{crumbLabel}</a>
             <span aria-hidden="true">/</span>
             <span>{c.name}, FL</span>
           </nav>
@@ -175,7 +176,7 @@ function AIVoiceCity({ slug }) {
           <div className="cfl-nearby">
             <span className="cfl-nearby__label">{es ? `Agentes de voz con IA cerca de ${c.name}` : <>AI voice agents near {c.name}</>}</span>
             {nearby.map((n) => (
-              <a key={n.slug} href={voiceCityPath(n.slug)} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
+              <a key={n.slug} href={toHref(voiceCityPath(n.slug))} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
             ))}
           </div>
         </div>

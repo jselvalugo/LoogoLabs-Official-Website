@@ -4,7 +4,7 @@ import React from 'react';
 import { ArrowRight, Plus } from '@phosphor-icons/react';
 import { BOOKING_URL } from '../../lib/booking';
 import { CITIES, CFL_BASE, cityPath } from '../../lib/cfl';
-import { LangToggle, useLang } from '../../lib/i18n';
+import { LangToggle, useHref, useLang } from '../../lib/i18n';
 
 export const Wrap = ({ children, style }) => (
   <div className="cfl-wrap" style={style}>{children}</div>
@@ -36,14 +36,15 @@ export const BookBtn = ({ size = 'md', label, variant = 'light' }) => {
 /** Floating glass header pill shared by every Central Florida / city page. */
 export const TopBanner = ({ crumb }) => {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
   <div className="ll-nav cfl-nav">
     <div className="ll-nav__bar ll-glass--dark cfl-nav__bar">
-      <a href="/" className="cfl-nav__brand">
+      <a href={toHref('/')} className="cfl-nav__brand">
         <span className="cfl-nav__logo"><img src="/logo.png" alt="" /></span>
         <span className="cfl-nav__brand-text">Loogo Labs</span>
       </a>
-      {crumb && <a href={crumb.href} className="cfl-nav__crumb">{crumb.label}</a>}
+      {crumb && <a href={toHref(crumb.href)} className="cfl-nav__crumb">{crumb.label}</a>}
       <span className="cfl-nav__spacer" />
       <LangToggle />
       <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-btn cfl-btn--light">
@@ -60,18 +61,19 @@ export const TopBanner = ({ crumb }) => {
 /** The floating glass bar listing every city page. */
 export const CityRail = ({ active }) => {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
   <nav className="cfl-rail" aria-label={es ? 'Ciudades de la Florida Central' : 'Central Florida cities'}>
     <div className="cfl-rail__title">{es ? 'Florida Central' : 'Central Florida'}</div>
     <ul className="cfl-rail__list">
       <li>
-        <a className="cfl-rail__link" href={CFL_BASE} aria-current={active ? undefined : 'page'}>
+        <a className="cfl-rail__link" href={toHref(CFL_BASE)} aria-current={active ? undefined : 'page'}>
           {es ? 'Toda la Florida Central' : 'All of Central FL'} <small>HUB</small>
         </a>
       </li>
       {CITIES.map((c) => (
         <li key={c.slug}>
-          <a className="cfl-rail__link" href={cityPath(c.slug)} aria-current={active === c.slug ? 'page' : undefined}>
+          <a className="cfl-rail__link" href={toHref(cityPath(c.slug))} aria-current={active === c.slug ? 'page' : undefined}>
             {c.name} <small>{c.county.replace(' County', '').slice(0, 3).toUpperCase()}</small>
           </a>
         </li>
@@ -103,7 +105,9 @@ const project = ([lat, lon]) => [
 ];
 
 /** Stylised pin map of the service area; each pin links to its city page. */
-export const CflMap = ({ active }) => (
+export const CflMap = ({ active }) => {
+  const toHref = useHref();
+  return (
   <div className="cfl-mapbox">
     <svg className="cfl-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of the Central Florida cities we serve"
       style={{ width: '100%', height: 'auto', display: 'block' }}>
@@ -126,7 +130,7 @@ export const CflMap = ({ active }) => (
         const [x, y] = project(COORDS[c.slug]);
         const on = active === c.slug;
         return (
-          <a key={c.slug} href={cityPath(c.slug)} aria-label={`${c.name}, FL`}>
+          <a key={c.slug} href={toHref(cityPath(c.slug))} aria-label={`${c.name}, FL`}>
             {on && <circle cx={x} cy={y} r="40" fill="url(#cfl-glow)" />}
             <circle className="cfl-map-pin" cx={x} cy={y} r={on ? 8 : 6}
               fill={on ? 'var(--ink-300)' : 'var(--paper-000)'} stroke="var(--ink-900)" strokeWidth="2" />
@@ -137,7 +141,8 @@ export const CflMap = ({ active }) => (
       })}
     </svg>
   </div>
-);
+  );
+};
 
 export const SERVICES = [
   { title: 'Local SEO & Maps', desc: 'Rank in the map pack for the cities and neighborhoods you serve.', items: ['Google Business Profile', 'City pages', 'Citations'] },

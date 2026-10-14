@@ -1,7 +1,7 @@
 import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
 import { SITE, pathForPage, routeMeta } from '../../lib/seo';
-import { useLang } from '../../lib/i18n';
+import { useHref, useLang } from '../../lib/i18n';
 
 // Spanish display labels. The English label stays the lookup key.
 const LABELS_ES = {
@@ -43,6 +43,7 @@ const PROFILE_LINKS = new Set(['Facebook', 'Instagram', 'LinkedIn']);
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright = `© ${new Date().getFullYear()} Loogo Labs`, style, onNavigate, onAdmin }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   const label = (l) => (es && LABELS_ES[l]) || l;
   if (strap === undefined) strap = es ? 'Software operativo para industrias desatendidas' : 'Operational software for underserved industries';
   const go = (e, target) => { e.preventDefault(); onNavigate && onNavigate(target); window.scrollTo(0, 0); };
@@ -51,7 +52,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
       <div className="ll-footer__inner">
         <div className="ll-footer__top">
           <div className="ll-footer__brand">
-            <a href="/" className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
+            <a href={toHref('/')} className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
               {wordmark}
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}
@@ -79,7 +80,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
                 // Real anchors, not buttons: the footer is the site-wide internal
                 // link graph, and a crawler cannot follow an onClick handler.
                 if (target && routeMeta(target))
-                  return <a key={l} href={pathForPage(target)} className="ll-footer__link"
+                  return <a key={l} href={toHref(pathForPage(target))} className="ll-footer__link"
                     onClick={e => go(e, target)}>{label(l)}</a>;
                 return <span key={l} className="ll-footer__link ll-footer__link--muted">{label(l)}</span>;
               })}

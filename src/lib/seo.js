@@ -300,6 +300,22 @@ export function pathForPage(page, slug) {
 
 export const routeMeta = (page) => BY_PAGE.get(page) ?? null;
 
+// Pages that have a Spanish twin under /es: every listed route.
+const ES_PATHS = new Set(ROUTES.filter((r) => !r.unlisted).map((r) => r.path));
+
+/**
+ * An internal href in the given language: in Spanish, a link to a page with a
+ * Spanish twin points at /es/…; anything else (posts, assets, English) is left
+ * alone. Components render links through this so the pre-rendered Spanish HTML
+ * and the first client render carry the same hrefs.
+ */
+export function localHref(href, lang) {
+  if (lang !== 'es' || typeof href !== 'string' || !href.startsWith('/') || href.startsWith('//')) return href;
+  const [path, rest = ''] = href.split(/(?=[?#])/);
+  const p = path.length > 1 ? path.replace(/\/+$/, '') : path;
+  return ES_PATHS.has(p) ? `${localizePath(p, 'es')}${rest}` : href;
+}
+
 // ── Per-page head metadata ───────────────────────────────────────────────────
 
 // Google truncates titles past ~60 characters. Drop the brand suffix (and, for

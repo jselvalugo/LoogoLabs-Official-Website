@@ -1,6 +1,6 @@
 import React from 'react';
 import { pathForPage } from '../../lib/seo';
-import { LangToggle, useLang } from '../../lib/i18n';
+import { LangToggle, useHref, useLang } from '../../lib/i18n';
 
 const LABELS = {
   en: { AIVoice: 'AI Voice' },
@@ -10,6 +10,7 @@ const LABELS = {
 function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
   const [open, setOpen] = React.useState(false);
   const lang = useLang();
+  const toHref = useHref();
   const label = it => LABELS[lang][it] || it;
 
   // Close on Escape and stop the page scrolling behind the open menu.
@@ -34,27 +35,27 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
 
         {/* Logo: a real link so crawlers see a route back to the homepage. The
             mark is solid dark green, so it sits on a cream disc here. */}
-        <a href={pathForPage('Home')} aria-label="Loogo Labs, home" className="ll-nav__logo"
+        <a href={toHref(pathForPage('Home'))} aria-label="Loogo Labs, home" className="ll-nav__logo"
           onClick={e => { e.preventDefault(); handleNav('Home'); }}>
           <img src="/logo.png" alt="Loogo Labs" width="120" height="36" />
         </a>
 
         {/* Mobile only: the serif wordmark centred in the bar. */}
-        <a href={pathForPage('Home')} className="ll-nav__wordmark" aria-hidden="true" tabIndex={-1}
+        <a href={toHref(pathForPage('Home'))} className="ll-nav__wordmark" aria-hidden="true" tabIndex={-1}
           onClick={e => { e.preventDefault(); handleNav('Home'); }}>
           Loogo Labs
         </a>
 
         <nav className="ll-nav-links" aria-label="Primary">
           {items.map(it => (
-            <a key={it} href={pathForPage(it)} aria-current={it === active ? 'page' : undefined}
+            <a key={it} href={toHref(pathForPage(it))} aria-current={it === active ? 'page' : undefined}
               className="ll-nav__link" onClick={e => { e.preventDefault(); handleNav(it); }}>{label(it)}</a>
           ))}
         </nav>
 
         <div className="ll-nav__right">
           {feature && (
-            <a href={pathForPage(feature.page)} aria-current={active === feature.page ? 'page' : undefined}
+            <a href={toHref(pathForPage(feature.page))} aria-current={active === feature.page ? 'page' : undefined}
               className="ll-nav-feature ll-nav-feature-desktop" onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
               <span className="ll-nav-feature-dot" aria-hidden="true" />
               {feature.label}
@@ -78,7 +79,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
                     {items.map((it, i) => {
             const on = it === active;
             return (
-              <a key={it} href={pathForPage(it)} aria-current={on ? 'page' : undefined}
+              <a key={it} href={toHref(pathForPage(it))} aria-current={on ? 'page' : undefined}
                 className={`ll-nav-mobile-link${on ? ' on' : ''}`}
                 style={{ transitionDelay: open ? `${60 + i * 40}ms` : '0ms' }}
                 onClick={e => { e.preventDefault(); handleNav(it); }}>
@@ -88,7 +89,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
             );
           })}
           {feature && (
-            <a href={pathForPage(feature.page)} className="ll-nav-feature ll-nav-feature-mobile"
+            <a href={toHref(pathForPage(feature.page))} className="ll-nav-feature ll-nav-feature-mobile"
               onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
               <span className="ll-nav-feature-dot" aria-hidden="true" />
               {feature.label}

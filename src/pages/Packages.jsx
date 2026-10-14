@@ -5,7 +5,7 @@ import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGES } from '../lib/servicePackages';
 import { PARTNER_PROGRAMS } from './BrandPartners';
 import { SERVICE_PACKAGES_ES } from '../lib/servicePackages.es';
-import { useLang, localizePath } from '../lib/i18n';
+import { useHref, useLang, localizePath } from '../lib/i18n';
 import { ArrowRight, Check, Plus, Minus } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
 
@@ -225,6 +225,7 @@ function PackageCard({ pkg, es, esPkg }) {
 }
 
 function QuickStartSidebar({ onNavigate, es }) {
+  const toHref = useHref();
   return (
     <aside className="pk-sidebar ll-glass" aria-labelledby="quick-starts-heading">
       <div className="pk-sidebar__head">
@@ -236,7 +237,7 @@ function QuickStartSidebar({ onNavigate, es }) {
         {QUICK_STARTS.map((q0) => {
           const q = es ? { ...q0, ...QUICK_STARTS_ES[q0.page] } : q0;
           return (
-          <a key={q.page} href={pathForPage(q.page)} className="pk-quick"
+          <a key={q.page} href={toHref(pathForPage(q.page))} className="pk-quick"
             onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}>
             <span className="pk-tag" style={{ fontSize: 10 }}>{q.from}</span>
             <span className="pk-quick__title">{q.title} <ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
