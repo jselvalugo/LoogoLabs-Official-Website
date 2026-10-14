@@ -50,5 +50,18 @@ export default async (req, context) => {
     RETURNING id, number
   `;
 
+  // Every quote request is also a CRM lead, so it can be worked in the Leads
+  // pipeline; the proposal itself (line items, totals) stays in Proposals.
+  const summary = lines.map((l) => `${l.qty} × ${l.name}`).join('\n');
+  try {
+  await sql`
+    INSERT INTO leads (full_name, email, source, company, phone, business_type, deal_value, notes, city, region, country, session_id)
+    VALUES (${contact}, ${email}, 'park_supply', ${str(body.organization) || null}, ${str(body.phone, 40) || null},
+      ${str(body.project) || null}, ${total},
+      ${[`Proposal ${row.number}`, str(body.location) && `Location: ${str(body.location)}`, summary, str(body.scope, 4000)].filter(Boolean).join('\n\n')},
+      ${geo.city || null}, ${geo.subdivision?.name || null}, ${geo.country?.name || null}, ${UUID_RE.test(body.session_id || '') ? body.session_id : null})
+  `;
+  } catch { /* the proposal is saved; never fail the request over the CRM copy */ }
+
   return json(row, 201);
 };
