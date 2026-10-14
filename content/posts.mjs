@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `pest-control-rodent-job-what-to-expect-text`,
+    title: `Tell the Mouse Customer What Day Four Sounds Like`,
+    excerpt: `The first cold nights send mice inside, and the angriest calls come from customers who were never told the scratching in the wall can last a week after you treat.`,
+    tags: `Customer Expectations, Post-Service Follow-Up, Pest Control`,
+    content: `Your phone gets a particular call about ten days into a cold October. The customer had you out last week for mice, you set traps and sealed what you could reach, and now they are telling you they heard scratching in the wall again at 2 a.m. and want to know what they paid for.
+
+Nothing went wrong on your end. The job was done right. But the customer was never told what a good result sounds like on day four, so to them, noise means failure.
+
+## The gap is in what they were told
+
+A rodent job has a shape. Animals already inside don't leave the minute you finish. Some are still in the walls, some are working through the bait or hitting traps, and some are looking for the entry point you just closed. For a few days it can be noisier, not quieter.
+
+You know that. Your technician knows that. The homeowner standing in the kitchen while your tech talks fast and heads to the next stop does not. A verbal explanation to a stressed person is gone by bedtime.
+
+## Send one text the same afternoon
+
+Within an hour of leaving, send a short message in plain words. Mine would say what was done, then what the next week looks like:
+
+- You may still hear or see activity for several days. That is expected.
+- Please don't move or open the traps. We'll check them.
+- If you find something in a trap, leave it and text us. Don't touch it.
+- Here is the day we'll follow up, and here is what's covered if it isn't settled.
+
+Keep it under a hundred words. The last line matters most: name a follow-up day and say out loud what you'll do if it isn't solved.
+
+## Check in before they call you
+
+Set a second text for about day seven. One question, easy to answer: *Still hearing activity? Reply 1 for quiet, 2 for still noisy.*
+
+A "1" needs nothing from you. A "2" goes straight to your schedule as a recheck visit, booked while the customer is still being patient. That is a much cheaper conversation than the one that starts at day ten with the word *refund*.
+
+Don't wait for the reply to be perfect. Someone who answers "2" is telling you the job isn't done, which you want to know before they tell a review site.
+
+## Be honest about the limits
+
+This doesn't fix a job that really did miss something. If the entry point was never found, a friendly text won't change what's in the wall, and the recheck visit has to actually look. The text only works if the recheck is real.
+
+It also won't help a customer who never reads texts. For them, tape a one-page card by the traps and say the same four lines on it.
+
+## Check this week
+
+Pull your last five rodent jobs from October. For each, look at whether the customer called back, and how many days after the visit. If most calls land between day three and day ten, write the same-afternoon text and the day-seven check-in before the next cold night.`,
+  },
+  {
     slug: `alterations-shop-ready-for-pickup-unclaimed-garments`,
     title: `Walk Your Alterations Rail and Count the Orphans`,
     excerpt: `Every hemmed pair of pants nobody collects is finished work you cannot be paid for, and a dated pickup text sequence clears the rail without an awkward phone call.`,
