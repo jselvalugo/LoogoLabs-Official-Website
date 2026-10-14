@@ -57,6 +57,10 @@ const STATIC = {
     title: `Redacción y distribución de comunicados de prensa | ${BRAND}`,
     description: 'Redacción y distribución de comunicados de prensa en más de 350 sitios de noticias, afiliadas de televisión y Google News. Precios fijos desde $149.',
   },
+  BrandPartners: {
+    title: `Alianzas con marcas: estrategia de marketing y consultoría de IA | ${BRAND}`,
+    description: `Asóciate con ${BRAND} en estrategia de marketing y consultoría de IA. Proyectos a la medida de tu marca: postúlate en un minuto.`,
+  },
   Privacy: {
     title: `Política de privacidad | ${BRAND}`,
     description: `Cómo ${BRAND} recopila, usa y protege la información que compartes con nosotros.`,

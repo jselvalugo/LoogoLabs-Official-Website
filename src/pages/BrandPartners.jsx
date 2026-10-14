@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { getSessionId } from '../lib/sessionTracker';
+import { useLang } from '../lib/i18n';
 import { ArrowRight, Check } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
 
@@ -19,6 +20,17 @@ export const PARTNER_PROGRAMS = [
       '90-day roadmap your team can run',
       'Monthly strategy sessions',
     ],
+    es: {
+      title: 'Estrategia de Marketing',
+      tagline: 'Un plan claro de dónde vendrá tu próximo crecimiento.',
+      items: [
+        'Auditoría de tus canales, embudo y mensajes',
+        'Posicionamiento y ajuste de tu oferta',
+        'Plan de canales con presupuesto y metas',
+        'Hoja de ruta de 90 días que tu equipo puede ejecutar',
+        'Sesiones mensuales de estrategia',
+      ],
+    },
   },
   {
     id: 'ai_consulting',
@@ -31,11 +43,67 @@ export const PARTNER_PROGRAMS = [
       'Custom AI agents and automations',
       'Team training & rollout support',
     ],
+    es: {
+      title: 'Consultoría de IA',
+      tagline: 'Pon la IA a trabajar donde de verdad ahorra tiempo y dinero.',
+      items: [
+        'Evaluación de operaciones y flujos de trabajo',
+        'Mapa de oportunidades de IA ordenado por retorno',
+        'Selección de herramientas y plan de implementación',
+        'Agentes de IA y automatizaciones a la medida',
+        'Capacitación del equipo y apoyo en la implementación',
+      ],
+    },
   },
 ];
 
 const Arrow = <ArrowRight size={16} weight="bold" />;
 const Tick = () => <Check className="pk-check" size={16} weight="bold" aria-hidden="true" />;
+const COPY = {
+  en: {
+    badge: 'Brand partnerships',
+    h1: <>Partner with Loogo Labs. <em>Strategy and AI, built for your brand.</em></>,
+    lede: "We team up with brands on marketing strategy and AI consulting, scoped to where you are and where you want to go. Tell us about your brand and we'll reach out to plan the partnership.",
+    apply: 'Apply to partner',
+    meta: 'Custom scope · Project or retainer · Pricing on application',
+    tag: 'Partnership',
+    interested: "I'm interested",
+    thanksH: <>Thanks, <em>we've got it.</em></>,
+    thanksP: "We'll review your brand and reach out within two business days.",
+    formSub: 'Takes about a minute. No commitment.',
+    legend: "I'm interested in",
+    name: 'Full name *', email: 'Email *', company: 'Brand / company *', website: 'Website', phone: 'Phone',
+    budget: 'Monthly budget', select: 'Select…',
+    budgets: ['Under $1,000', '$1,000 – $3,000', '$3,000 – $10,000', '$10,000+', 'Not sure yet'],
+    goals: 'What do you want to achieve?',
+    errRequired: 'Please add your name, a valid email and your brand name.',
+    errProgram: 'Pick at least one program.',
+    errSend: 'Something went wrong. Please try again in a moment.',
+    sending: 'Sending…', submit: 'Submit application',
+  },
+  es: {
+    badge: 'Alianzas con marcas',
+    h1: <>Asóciate con Loogo Labs. <em>Estrategia e IA, hechas para tu marca.</em></>,
+    lede: 'Nos aliamos con marcas en estrategia de marketing y consultoría de IA, a la medida de dónde estás y hacia dónde quieres ir. Cuéntanos sobre tu marca y te contactaremos para planear la alianza.',
+    apply: 'Postularme',
+    meta: 'Alcance a la medida · Proyecto o mensualidad · Precio según la solicitud',
+    tag: 'Alianza',
+    interested: 'Me interesa',
+    thanksH: <>Gracias, <em>ya lo recibimos.</em></>,
+    thanksP: 'Revisaremos tu marca y te contactaremos en un plazo de dos días hábiles.',
+    formSub: 'Toma alrededor de un minuto. Sin compromiso.',
+    legend: 'Me interesa',
+    name: 'Nombre completo *', email: 'Correo electrónico *', company: 'Marca / empresa *', website: 'Sitio web', phone: 'Teléfono',
+    budget: 'Presupuesto mensual', select: 'Selecciona…',
+    budgets: ['Menos de $1,000', '$1,000 – $3,000', '$3,000 – $10,000', '$10,000+', 'Aún no lo sé'],
+    goals: '¿Qué quieres lograr?',
+    errRequired: 'Agrega tu nombre, un correo válido y el nombre de tu marca.',
+    errProgram: 'Elige al menos un programa.',
+    errSend: 'Algo salió mal. Inténtalo de nuevo en un momento.',
+    sending: 'Enviando…', submit: 'Enviar solicitud',
+  },
+};
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const fieldStyle = {
@@ -53,6 +121,9 @@ function Field({ label, children }) {
 }
 
 function BrandPartners() {
+  const lang = useLang();
+  const c = COPY[lang] || COPY.en;
+  const programs = lang === 'es' ? PARTNER_PROGRAMS.map((p) => ({ ...p, ...p.es })) : PARTNER_PROGRAMS;
   const [form, setForm] = React.useState({ full_name: '', email: '', company: '', website: '', phone: '', budget: '', goals: '' });
   const [interests, setInterests] = React.useState(() => {
     const pre = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('program') : null;
@@ -66,14 +137,15 @@ function BrandPartners() {
   async function submit(e) {
     e.preventDefault();
     if (!form.full_name.trim() || !EMAIL_RE.test(form.email.trim()) || !form.company.trim()) {
-      setError('Please add your name, a valid email and your brand name.');
+      setError(c.errRequired);
       return;
     }
-    if (interests.length === 0) { setError('Pick at least one program.'); return; }
+    if (interests.length === 0) { setError(c.errProgram); return; }
     setError('');
     setStatus('sending');
     const labels = PARTNER_PROGRAMS.filter((p) => interests.includes(p.id)).map((p) => p.title).join(' + ');
     const notes = [
+      lang === 'es' && 'Language: Spanish',
       `Brand: ${form.company.trim()}`,
       form.website.trim() && `Website: ${form.website.trim()}`,
       form.phone.trim() && `Phone: ${form.phone.trim()}`,
@@ -100,36 +172,33 @@ function BrandPartners() {
       setStatus('done');
     } catch {
       setStatus('error');
-      setError('Something went wrong. Please try again in a moment.');
+      setError(c.errSend);
     }
   }
 
   return (
     <main>
       <section className="pk-wrap pk-hero pk-hero--center">
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">Brand partnerships</Badge></div>
-        <h1 className="pk-title">Partner with Loogo Labs. <em>Strategy and AI, built for your brand.</em></h1>
-        <p className="pk-lede">
-          We team up with brands on marketing strategy and AI consulting, scoped to where you are and where you want to go.
-          Tell us about your brand and we'll reach out to plan the partnership.
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">{c.badge}</Badge></div>
+        <h1 className="pk-title">{c.h1}</h1>
+        <p className="pk-lede">{c.lede}</p>
         <div className="pk-hero__actions">
           <Button variant="inverse" size="lg" iconRight={Arrow}
             onClick={() => document.getElementById('partner-signup')?.scrollIntoView({ behavior: 'smooth' })}>
-            Apply to partner
+            {c.apply}
           </Button>
         </div>
-        <div className="pk-tag pk-hero__meta">Custom scope · Project or retainer · Pricing on application</div>
+        <div className="pk-tag pk-hero__meta">{c.meta}</div>
       </section>
 
       <section className="pk-wrap pk-section">
         <div className="sp-tiers" style={{ maxWidth: 880 }}>
-          {PARTNER_PROGRAMS.map((p, i) => {
+          {programs.map((p, i) => {
             const dark = i === 1;
             return (
               <div key={p.id} className={`pk-card sp-tier ${dark ? 'pk-card--dark ll-forest pk-dark' : 'pk-card--paper'}`}>
                 <div>
-                  <span className="pk-tag">Partnership</span>
+                  <span className="pk-tag">{c.tag}</span>
                   <h2 style={{ marginTop: 10 }}>{p.title}</h2>
                   <p style={{ marginTop: 8, fontSize: 14 }}>{p.tagline}</p>
                 </div>
@@ -141,7 +210,7 @@ function BrandPartners() {
                     setInterests((xs) => (xs.includes(p.id) ? xs : [...xs, p.id]));
                     document.getElementById('partner-signup')?.scrollIntoView({ behavior: 'smooth' });
                   }}>
-                  I'm interested
+                  {c.interested}
                 </Button>
               </div>
             );
@@ -153,18 +222,18 @@ function BrandPartners() {
         <div className="sp-needs pk-card--paper" style={{ padding: 28 }}>
           {status === 'done' ? (
             <div style={{ textAlign: 'center', padding: '24px 0' }}>
-              <h2 className="pk-h2">Thanks, <em>we've got it.</em></h2>
-              <p style={{ color: 'var(--ink-500)' }}>We'll review your brand and reach out within two business days.</p>
+              <h2 className="pk-h2">{c.thanksH}</h2>
+              <p style={{ color: 'var(--ink-500)' }}>{c.thanksP}</p>
             </div>
           ) : (
             <form onSubmit={submit} noValidate style={{ display: 'grid', gap: 16 }}>
               <div>
-                <h2 className="pk-h2" style={{ margin: 0 }}>Apply to partner</h2>
-                <p style={{ margin: '6px 0 0', color: 'var(--ink-500)', fontSize: 15 }}>Takes about a minute. No commitment.</p>
+                <h2 className="pk-h2" style={{ margin: 0 }}>{c.apply}</h2>
+                <p style={{ margin: '6px 0 0', color: 'var(--ink-500)', fontSize: 15 }}>{c.formSub}</p>
               </div>
               <fieldset style={{ border: 0, padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                <legend style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)', marginBottom: 8 }}>I'm interested in</legend>
-                {PARTNER_PROGRAMS.map((p) => (
+                <legend style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)', marginBottom: 8 }}>{c.legend}</legend>
+                {programs.map((p) => (
                   <label key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 'var(--radius-2)', cursor: 'pointer',
                     border: `1px solid ${interests.includes(p.id) ? 'var(--ink-900)' : 'rgba(26,38,16,0.14)'}`, background: 'var(--paper-000)', fontSize: 14 }}>
                     <input type="checkbox" checked={interests.includes(p.id)} onChange={() => toggle(p.id)} />
@@ -173,28 +242,24 @@ function BrandPartners() {
                 ))}
               </fieldset>
               <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
-                <Field label="Full name *"><input style={fieldStyle} value={form.full_name} onChange={set('full_name')} autoComplete="name" /></Field>
-                <Field label="Email *"><input style={fieldStyle} type="email" value={form.email} onChange={set('email')} autoComplete="email" /></Field>
-                <Field label="Brand / company *"><input style={fieldStyle} value={form.company} onChange={set('company')} autoComplete="organization" /></Field>
-                <Field label="Website"><input style={fieldStyle} value={form.website} onChange={set('website')} placeholder="https://" autoComplete="url" /></Field>
-                <Field label="Phone"><input style={fieldStyle} type="tel" value={form.phone} onChange={set('phone')} autoComplete="tel" /></Field>
-                <Field label="Monthly budget">
+                <Field label={c.name}><input style={fieldStyle} value={form.full_name} onChange={set('full_name')} autoComplete="name" /></Field>
+                <Field label={c.email}><input style={fieldStyle} type="email" value={form.email} onChange={set('email')} autoComplete="email" /></Field>
+                <Field label={c.company}><input style={fieldStyle} value={form.company} onChange={set('company')} autoComplete="organization" /></Field>
+                <Field label={c.website}><input style={fieldStyle} value={form.website} onChange={set('website')} placeholder="https://" autoComplete="url" /></Field>
+                <Field label={c.phone}><input style={fieldStyle} type="tel" value={form.phone} onChange={set('phone')} autoComplete="tel" /></Field>
+                <Field label={c.budget}>
                   <select style={fieldStyle} value={form.budget} onChange={set('budget')}>
-                    <option value="">Select…</option>
-                    <option>Under $1,000</option>
-                    <option>$1,000 – $3,000</option>
-                    <option>$3,000 – $10,000</option>
-                    <option>$10,000+</option>
-                    <option>Not sure yet</option>
+                    <option value="">{c.select}</option>
+                    {c.budgets.map((b) => <option key={b}>{b}</option>)}
                   </select>
                 </Field>
               </div>
-              <Field label="What do you want to achieve?">
+              <Field label={c.goals}>
                 <textarea style={{ ...fieldStyle, resize: 'vertical' }} rows={4} value={form.goals} onChange={set('goals')} />
               </Field>
               {error && <p role="alert" style={{ margin: 0, color: '#B91C1C', fontSize: 14 }}>{error}</p>}
               <Button type="submit" variant="inverse" size="lg" fullWidth iconRight={Arrow} disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending…' : 'Submit application'}
+                {status === 'sending' ? c.sending : c.submit}
               </Button>
             </form>
           )}

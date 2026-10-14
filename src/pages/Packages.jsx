@@ -5,7 +5,7 @@ import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGES } from '../lib/servicePackages';
 import { PARTNER_PROGRAMS } from './BrandPartners';
 import { SERVICE_PACKAGES_ES } from '../lib/servicePackages.es';
-import { useLang } from '../lib/i18n';
+import { useLang, localizePath } from '../lib/i18n';
 import { ArrowRight, Check, Plus, Minus } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
 
@@ -329,21 +329,21 @@ function Packages({ onNavigate }) {
               ); })}
             </div>
             <div className="pk-head pk-services-head">
-              <h2 className="pk-h2">Partner with us <em>as a brand.</em></h2>
-              <p>Marketing strategy and AI consulting partnerships, scoped to your brand. Apply and we'll reach out.</p>
+              <h2 className="pk-h2">{es ? <>Asóciate con nosotros <em>como marca.</em></> : <>Partner with us <em>as a brand.</em></>}</h2>
+              <p>{es ? 'Alianzas de estrategia de marketing y consultoría de IA, a la medida de tu marca. Postúlate y te contactamos.' : "Marketing strategy and AI consulting partnerships, scoped to your brand. Apply and we'll reach out."}</p>
             </div>
             <div className="pk-grid pk-grid--services">
-              {PARTNER_PROGRAMS.map((p) => (
+              {PARTNER_PROGRAMS.map((p0) => { const p = es ? { ...p0, ...p0.es } : p0; return (
                 <div key={p.id} className="pk-service ll-glass">
-                  <span className="pk-tag" style={{ fontSize: 10 }}>Brand partnership</span>
+                  <span className="pk-tag" style={{ fontSize: 10 }}>{es ? 'Alianza de marca' : 'Brand partnership'}</span>
                   <h3 className="pk-service-title">{p.title}</h3>
-                  <p className="pk-service-desc">{p.tagline} {p.items.slice(0, 3).join(', ')}, and more.</p>
+                  <p className="pk-service-desc">{p.tagline} {p.items.slice(0, 3).join(', ')}{es ? ' y más.' : ', and more.'}</p>
                   <Button variant="secondary" size="md" fullWidth iconRight={Arrow}
-                    onClick={() => { window.history.pushState({}, '', `${pathForPage('BrandPartners')}?program=${p.id}`); onNavigate('BrandPartners', null, { push: false }); window.scrollTo(0, 0); }}>
-                    Apply to partner
+                    onClick={() => { window.history.pushState({}, '', `${localizePath(pathForPage('BrandPartners'), es ? 'es' : 'en')}?program=${p.id}`); onNavigate('BrandPartners', null, { push: false }); window.scrollTo(0, 0); }}>
+                    {es ? 'Postularme' : 'Apply to partner'}
                   </Button>
                 </div>
-              ))}
+              ); })}
             </div>
             <p className="pk-note">{es ? 'La inversión en anuncios y el uso (SMS, llamadas, IA) se cobran al costo.' : 'Ad spend and usage (SMS, calls, AI) are billed at cost.'}</p>
           </div>
