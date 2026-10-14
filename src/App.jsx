@@ -15,6 +15,7 @@ import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
 import Packages from './pages/Packages';
 import PressRelease from './pages/PressRelease';
+import BrandPartners from './pages/BrandPartners';
 import ServicePackage from './pages/ServicePackage';
 import { SERVICE_PACKAGE_BY_PAGE } from './lib/servicePackages';
 import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
@@ -137,6 +138,7 @@ function App({ initialPath }) {
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
   else if (page === 'Packages') body = <Packages onNavigate={navigate} />;
   else if (page === 'PressRelease') body = <PressRelease />;
+  else if (page === 'BrandPartners') body = <BrandPartners />;
   else if (SERVICE_PACKAGE_BY_PAGE[page]) body = <ServicePackage key={page} page={page} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;

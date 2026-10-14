@@ -13,6 +13,7 @@ const SOURCE_PAGES = {
   ai_receptionist: 'AIReceptionist',
   reputation_autopilot: 'ReputationAutopilot',
   park_supply: 'ParkSupply',
+  brand_partnership: 'BrandPartners',
   ...NICHE_SOURCE_PAGES,
 };
 
@@ -20,6 +21,7 @@ const SOURCE_LABELS = {
   ai_receptionist: 'AI Receptionist',
   reputation_autopilot: 'Reputation Autopilot',
   park_supply: 'Park Supply quote',
+  brand_partnership: 'Brand partnership',
   ...NICHE_SOURCE_LABELS,
 };
 

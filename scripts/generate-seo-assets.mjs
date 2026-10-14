@@ -201,6 +201,7 @@ const HEADINGS = {
   Quizzes: 'Free fit-check quizzes for your business',
   Packages: 'Fixed scope. Fixed price. Done for you.',
   PressRelease: 'Get your business in the news. Starting at $149.',
+  BrandPartners: 'Marketing Strategy & AI Consulting for brands.',
   ParkSupply: 'Pet waste stations & dog park amenities',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',

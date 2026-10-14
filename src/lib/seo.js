@@ -208,6 +208,15 @@ export const ROUTES = [
     priority: '0.7',
     changefreq: 'monthly',
   },
+  {
+    page: 'BrandPartners',
+    path: '/packages/brand-partnerships',
+    title: `Brand Partnerships — Marketing Strategy & AI Consulting | ${SITE.name}`,
+    description:
+      'Partner with Loogo Labs on marketing strategy and AI consulting. Custom-scoped engagements for brands — apply in a minute.',
+    priority: '0.7',
+    changefreq: 'monthly',
+  },
   ...SERVICE_PACKAGES.map((p) => ({
     page: p.page,
     path: p.path,

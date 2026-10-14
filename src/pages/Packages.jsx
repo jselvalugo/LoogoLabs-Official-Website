@@ -3,6 +3,7 @@ import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
 import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGES } from '../lib/servicePackages';
+import { PARTNER_PROGRAMS } from './BrandPartners';
 import { ArrowRight, Check, Plus, Minus } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
 
@@ -205,6 +206,23 @@ function Packages({ onNavigate }) {
                   </div>
                   <p className="pk-service-desc">{s.description}</p>
                   <Button variant="secondary" size="md" fullWidth onClick={openBooking} iconRight={Arrow}>Get a quote</Button>
+                </div>
+              ))}
+            </div>
+            <div className="pk-head pk-services-head">
+              <h2 className="pk-h2">Partner with us <em>as a brand.</em></h2>
+              <p>Marketing strategy and AI consulting partnerships, scoped to your brand. Apply and we'll reach out.</p>
+            </div>
+            <div className="pk-grid pk-grid--services">
+              {PARTNER_PROGRAMS.map((p) => (
+                <div key={p.id} className="pk-service ll-glass">
+                  <span className="pk-tag" style={{ fontSize: 10 }}>Brand partnership</span>
+                  <h3 className="pk-service-title">{p.title}</h3>
+                  <p className="pk-service-desc">{p.tagline} {p.items.slice(0, 3).join(', ')}, and more.</p>
+                  <Button variant="secondary" size="md" fullWidth iconRight={Arrow}
+                    onClick={() => { window.history.pushState({}, '', `${pathForPage('BrandPartners')}?program=${p.id}`); onNavigate('BrandPartners', null, { push: false }); window.scrollTo(0, 0); }}>
+                    Apply to partner
+                  </Button>
                 </div>
               ))}
             </div>
