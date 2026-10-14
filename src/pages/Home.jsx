@@ -277,7 +277,7 @@ function Home({ onNavigate }) {
               </p>
               )}
               <div className="hm-hero__actions">
-                <Button variant="inverse" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Quiero mi plan de email' : 'Get my email plan'}</Button>
+                <Button variant="inverse" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Quiero mi plan a la medida' : 'Get my tailored plan'}</Button>
                 <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>{es ? 'Ver qué incluye' : "See what's included"}</Button>
               </div>
             </div>
