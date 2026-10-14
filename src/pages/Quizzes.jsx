@@ -4,7 +4,7 @@ import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
 import { NICHE_QUIZZES } from '../lib/nicheQuizzes';
 import { NICHE_QUIZZES_ES } from '../lib/nicheQuizzes.es';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 
 import { ArrowRight, Timer } from '@phosphor-icons/react';
 import '../styles/pages/quiz.css';
@@ -41,6 +41,7 @@ const QUIZZES_ES = {
 
 function Quizzes({ onNavigate }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
     <main className="qz-hub">
       <div className="qz-wrap qz-hero">
@@ -67,7 +68,7 @@ function Quizzes({ onNavigate }) {
       <div className="qz-wrap">
         <div className="qz-grid">
           {QUIZZES.map((q, i) => (
-            <a key={q.page} href={pathForPage(q.page)}
+            <a key={q.page} href={toHref(pathForPage(q.page))}
               onClick={(e) => { e.preventDefault(); onNavigate(q.page); }}
               className={`qz-card ${i === 0 ? 'qz-card--forest ll-forest ll-bezel--dark' : i === 1 ? 'qz-card--sage ll-sage ll-bezel' : 'll-glass'}`}>
               <div className="qz-card__body">

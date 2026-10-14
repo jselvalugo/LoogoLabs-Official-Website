@@ -1,13 +1,14 @@
 import React from 'react';
 import { ArrowRight } from '@phosphor-icons/react';
 import '../styles/pages/quiz.css';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 
 // Real 404 content. Netlify rewrites every unmatched path to the SPA shell, so
 // without this every typo'd URL rendered the homepage and returned 200 (a soft
 // 404, which search engines treat as a duplicate of the homepage).
 export default function NotFound({ onNavigate }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
     <main className="nf-page">
       <div className="nf-panel ll-glass">
@@ -25,10 +26,10 @@ export default function NotFound({ onNavigate }) {
         </p>
         )}
         <div className="nf-actions">
-          <a href="/" onClick={(e) => { e.preventDefault(); onNavigate('Home'); }} className="nf-btn nf-btn--solid">
+          <a href={toHref('/')} onClick={(e) => { e.preventDefault(); onNavigate('Home'); }} className="nf-btn nf-btn--solid">
             {es ? 'Ir a la página de inicio' : 'Go to the homepage'} <ArrowRight size={16} weight="bold" aria-hidden="true" />
           </a>
-          <a href="/loogonews" onClick={(e) => { e.preventDefault(); onNavigate('LoogoNews'); }} className="nf-btn nf-btn--glass">
+          <a href={toHref('/loogonews')} onClick={(e) => { e.preventDefault(); onNavigate('LoogoNews'); }} className="nf-btn nf-btn--glass">
             {es ? 'Leer Industry LoogoBlog' : 'Read Industry LoogoBlog'}
           </a>
         </div>

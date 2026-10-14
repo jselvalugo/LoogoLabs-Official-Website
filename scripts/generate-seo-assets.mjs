@@ -22,7 +22,7 @@ import { posts as sourcePosts } from '../content/posts.mjs';
 import { readTime } from './generate-post-migration.mjs';
 import {
   BLOG_BASE, BLOG_INDEX, ROUTES, SITE, blogLd, headForPage, headForPost,
-  KNOWS_ABOUT, jsonLdForPage, ldGraph, splitTags, url,
+  KNOWS_ABOUT, jsonLdForPage, ldGraph, localHref, splitTags, url,
 } from '../src/lib/seo.js';
 import { SERVICE_AREA } from '../src/lib/content.js';
 import { localizePath } from '../src/lib/lang.js';
@@ -168,16 +168,11 @@ function renderPage({ head, body, ssr = false }) {
   return html.replace('<div id="root"></div>', `<div id="root"${ssr ? ' data-ssr' : ''}>${body}</div>`);
 }
 
-// Pages that have a Spanish twin under /es: every listed route.
-const ES_PATHS = new Set(ROUTES.filter((r) => !r.unlisted).map((r) => r.path));
-
-// The app writes internal links as English paths and points them at /es while
-// the visitor browses in Spanish. Do the same in the pre-rendered Spanish HTML,
-// so a crawler reading /es/... follows Spanish links.
-const localizeLinks = (html) => html.replace(/href="(\/[^"?#]*)([^"]*)"/g, (m, path, rest) => {
-  const p = path.length > 1 ? path.replace(/\/+$/, '') : path;
-  return ES_PATHS.has(p) ? `href="${localizePath(p, 'es')}${rest}"` : m;
-});
+// The LoogoNews fallback is plain markup React replaces, so its links are
+// pointed at /es here. Hydrated pages render their /es links themselves (see
+// localHref in src/lib/seo.js): rewriting them after the fact made the HTML
+// differ from the client's first render.
+const localizeLinks = (html) => html.replace(/href="(\/[^"]*)"/g, (m, href) => `href="${localHref(href, 'es')}"`);
 
 function write(routePath, html) {
   const dir = routePath === '/' ? DIST : join(DIST, routePath.replace(/^\//, ''));
@@ -261,7 +256,7 @@ for (const route of ROUTES) {
     esHead.jsonLd = [...jsonLdForPage('LoogoNews', 'es'), blogLd(allPosts)];
     write(esPath, renderPage({ head: esHead, body: localizeLinks(shell('LoogoBlog de la industria', esHead.description, extra)) }));
   } else {
-    write(esPath, renderPage({ head: esHead, body: localizeLinks(await render(esPath)), ssr: true }));
+    write(esPath, renderPage({ head: esHead, body: await render(esPath), ssr: true }));
   }
   written += 1;
 }

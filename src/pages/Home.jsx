@@ -6,7 +6,7 @@ import Card from '../components/surfaces/Card';
 import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 
 const Wrap = ({ children, style, className }) => (
   <div className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -199,9 +199,10 @@ function FounderSpotlight() {
 // the quiz hub a real internal link from the homepage while we're at it.
 function QuizTeaser({ onNavigate }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   return (
     <Wrap className="ll-reveal" style={{ paddingBottom: 24 }}>
-      <a href={pathForPage('Quizzes')} onClick={(e) => { e.preventDefault(); onNavigate('Quizzes'); }}
+      <a href={toHref(pathForPage('Quizzes'))} onClick={(e) => { e.preventDefault(); onNavigate('Quizzes'); }}
         style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
         <Card tone="sage" className="hm-cta">
           <div>

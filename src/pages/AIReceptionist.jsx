@@ -5,7 +5,7 @@ import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
 import { getSessionId } from '../lib/sessionTracker';
-import { useLang, LangToggle } from '../lib/i18n';
+import { useHref, useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -125,6 +125,7 @@ export default function AIReceptionist() {
   const [contact, setContact] = React.useState({ fullName: '', email: '' });
   const [contactError, setContactError] = React.useState('');
   const es = useLang() === 'es';
+  const toHref = useHref();
 
   const go = (n) => {
     setStep(n);
@@ -380,8 +381,8 @@ export default function AIReceptionist() {
       <footer className="lp-footer">
         <div className="lp-footer__pill ll-glass">
           <span>© {new Date().getFullYear()} Loogo Labs</span>
-          <a href="/privacy">{es ? 'Privacidad' : 'Privacy'}</a>
-          <a href="/terms">{es ? 'Términos' : 'Terms'}</a>
+          <a href={toHref('/privacy')}>{es ? 'Privacidad' : 'Privacy'}</a>
+          <a href={toHref('/terms')}>{es ? 'Términos' : 'Terms'}</a>
         </div>
       </footer>
     </main>

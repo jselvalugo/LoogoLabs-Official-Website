@@ -1,7 +1,7 @@
 import React from 'react';
 import { CITY_BY_SLUG, CFL_BASE, cityPath } from '../lib/cfl';
 import { CITIES_ES } from '../lib/cfl.es';
-import { useLang } from '../lib/i18n';
+import { useHref, useLang } from '../lib/i18n';
 import { ArrowRight, MagnifyingGlass, ChartLineUp, Storefront, ChatsCircle } from '@phosphor-icons/react';
 import { Eyebrow, H2, BookBtn, Shell, CflMap, Services, Process, Faq, FinalCta, tidy } from './cfl/shared';
 import '../styles/pages/cfl.css';
@@ -27,6 +27,7 @@ const cityFaqEs = (c) => [
 
 function GrowCity({ slug }) {
   const es = useLang() === 'es';
+  const toHref = useHref();
   const base = CITY_BY_SLUG.get(slug);
   if (!base) return null;
   const c = es ? { ...base, ...CITIES_ES[base.slug] } : base;
@@ -40,7 +41,7 @@ function GrowCity({ slug }) {
       <section className="cfl-wrap">
         <div className="cfl-panel ll-forest cfl-hero">
           <nav aria-label="Breadcrumb" className="cfl-crumb">
-            <a href={CFL_BASE}>{hub}</a>
+            <a href={toHref(CFL_BASE)}>{hub}</a>
             <span aria-hidden="true">/</span>
             <span>{c.name}, FL</span>
           </nav>
@@ -123,7 +124,7 @@ function GrowCity({ slug }) {
         <div className="cfl-nearby">
           <span className="cfl-nearby__label">{es ? `También cerca de ${c.name}` : `Also serving near ${c.name}`}</span>
           {nearby.map((n) => (
-            <a key={n.slug} href={cityPath(n.slug)} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
+            <a key={n.slug} href={toHref(cityPath(n.slug))} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
           ))}
         </div>
       </Process>
