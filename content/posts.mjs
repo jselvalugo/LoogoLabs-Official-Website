@@ -2274,7 +2274,7 @@ An AI voice agent can do that when it's wired to the same calendar your advisor 
 
 By the time your advisor looks at the schedule, the appointment is on it with notes attached.
 
-## When the family does not know yet
+## The honest limits
 
 It won't diagnose the car, and you don't want it trying. No quotes, no parts availability dates, no negotiating on price. Those need eyes on the vehicle and somebody who owns the number.
 
