@@ -81,3 +81,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-13 | alterations-shop-ready-for-pickup-unclaimed-garments | Alterations & dry cleaning | Pickup — same-day ready text, dated holding-fee reminders & a stated disposal date for unclaimed garments
 - 2026-10-14 | pest-control-rodent-job-what-to-expect-text | Pest control | Post-service expectations — same-afternoon "what to expect" text, day-seven reply-1/2 check-in & booked recheck for rodent jobs
 - 2026-10-14 | home-inspector-report-delivered-deadline-text | Home inspectors | Buyer follow-up — recording the buyer's response deadline at booking, report-delivered text, midpoint call-slot offer & day-before text
+- 2026-10-15 | tax-preparer-extension-clients-one-missing-document | Tax preparers | Document collection — naming the single blocking document per extension client, dated slot & queue consequence, phone call after the second ask
