@@ -1301,3 +1301,38 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .ll-lang--bar .ll-lang-dd__btn { width: 44px; height: 44px; padding: 0; justify-content: center; }
   .ll-lang--bar .ll-lang-dd__code, .ll-lang--bar .ll-lang-dd__chev { display: none; }
 }
+
+/* ---- Welcome intro (first visit per session) ---- */
+.ll-welcome {
+  position: fixed; inset: 0; z-index: 10000;
+  display: grid; place-items: center;
+  background: var(--ink-900); color: var(--paper-100);
+  cursor: pointer;
+  transition: opacity 600ms ease, transform 700ms cubic-bezier(.7,0,.3,1);
+}
+.ll-welcome--out { opacity: 0; transform: translateY(-4%); pointer-events: none; }
+.ll-welcome-inner { text-align: center; padding: 0 16px; }
+.ll-welcome-mark { width: 96px; height: 96px; display: block; margin: 0 auto 28px; overflow: visible; }
+.ll-welcome-frame, .ll-welcome-letter {
+  fill: none; stroke-dasharray: 1; stroke-dashoffset: 1;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.ll-welcome-frame { stroke: var(--ink-300); stroke-width: 2; animation: ll-draw 900ms cubic-bezier(.6,0,.2,1) forwards; }
+.ll-welcome-letter { stroke: var(--paper-000); stroke-width: 9; animation: ll-draw 700ms cubic-bezier(.6,0,.2,1) 550ms forwards; }
+.ll-welcome-mark { animation: ll-mark-settle 900ms ease 1100ms both; }
+.ll-welcome-title, .ll-welcome-sub { margin: 0; opacity: 0; animation: ll-rise 700ms cubic-bezier(.2,.7,.2,1) forwards; }
+.ll-welcome-title {
+  font-family: "EB Garamond", Georgia, serif; font-weight: 500;
+  font-size: clamp(28px, 6vw, 48px); letter-spacing: -0.01em;
+  animation-delay: 1100ms;
+}
+.ll-welcome-sub { margin-top: 10px; font-family: var(--font-body); font-size: 16px; color: var(--ink-200); animation-delay: 1350ms; }
+@keyframes ll-draw { to { stroke-dashoffset: 0; } }
+@keyframes ll-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes ll-mark-settle { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .ll-welcome, .ll-welcome * { animation: none !important; transition: opacity 300ms ease !important; }
+  .ll-welcome-frame, .ll-welcome-letter { stroke-dashoffset: 0; }
+  .ll-welcome-title, .ll-welcome-sub { opacity: 1; }
+  .ll-welcome--out { transform: none; }
+}
