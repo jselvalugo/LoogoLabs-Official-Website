@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `tax-preparer-extension-clients-one-missing-document`,
+    title: `Name the One Missing Document in Every Extension File`,
+    excerpt: `A client who owes you "a few things" will send nothing, but a client who owes you one named document usually sends it the same night.`,
+    tags: `Document Collection, Follow-Up, Tax Preparers`,
+    content: `Every client still sitting in your extension pile is missing exactly one thing, and I would bet most of them have no idea which thing it is. You know it. They only know you "need some more information."
+
+That gap is why the pile stays a pile. The mid-October extended filing date is here or just behind us, and the clients left over are the ones who got a vague nudge in August, a vaguer one in September, and never found the single sheet of paper you were waiting on.
+
+## Why "just checking in" does not work
+
+A message like "Hi, still waiting on some documents for your return" asks the client to do homework before they can do the task. They have to remember what you asked for, work out what is missing, and decide if it is worth doing tonight. Most close the message and promise themselves the weekend.
+
+Now picture the same client getting this instead:
+
+> Hi Dana, your return is finished except for one page: the year-end statement from your business savings account. A photo of it is fine. Reply with it and I will file this week.
+
+That is a ten-minute job with a visible reward. There is nothing to interpret. The client either has the page or knows exactly who to call for it.
+
+## Build the list from your own files
+
+Open the list of extension clients and go through them one at a time. For each, write down the single document that is holding the return. If three things are missing, pick the one that blocks the work most, and ask for that first. You will send the others once the first lands.
+
+A small invented example: a shop with twelve extension clients opens the files and finds six waiting on a bank statement, three on a K-1 from a partner, two on a mortgage interest form, and one that is just an unsigned engagement letter. That is four different messages, not twelve. Once you see the list this way, the work of chasing shrinks to the time it takes to write four texts and paste each one.
+
+## Say what happens next, and by when
+
+The second half of the message matters as much as the first. Clients stall when nothing changes if they wait. So put a date on it that belongs to your calendar, not the government's:
+
+- The day you will do the work if the document arrives, so it feels like a booked slot.
+- The day after which the return moves to the back of your queue, so waiting has a cost.
+
+Pick those dates honestly. If you cannot actually promise to file within a week of receiving a page, do not say you can. A deadline you break teaches the client that your deadlines are soft.
+
+I will not hand you a reply rate, because it depends on your clients. I can say what I see when a practice switches from the general nudge to the named document: the replies come back in clumps, usually within a day, and they arrive as attachments rather than questions. The questions that do come are better ones, like "my bank only lets me download this as a spreadsheet, is that okay?"
+
+## Keep a human on the stuck ones
+
+Some clients will not answer a text, however clear. A man who has ignored two named requests is not confused anymore. He is avoiding something, whether that is a tax bill, a partner, or a shoebox of receipts. After the second named request goes unanswered, stop sending messages and pick up the phone. That call is also where you find out that the missing document is not the real problem.
+
+## Do this week
+
+Open your extension list and add a column called "the one thing." Fill it in for every client. Any row you cannot fill in is a client whose file you do not understand yet, and that is the one to review first, before you send anything at all.`,
+  },
+  {
     slug: `home-inspector-report-delivered-deadline-text`,
     title: `Your Inspection Report Is Read on the Last Day Possible`,
     excerpt: `Buyers open a forty-page report days late and call when their window is nearly shut, so put their deadline in your own texts and offer two call times.`,
