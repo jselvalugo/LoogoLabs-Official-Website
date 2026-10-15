@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `florist-sympathy-order-service-time-before-the-card`,
+    title: `Get the Funeral Service Time Before You Get the Card Message`,
+    excerpt: `A sympathy order phoned in while your hands are full of stems is the one most likely to land at the wrong place or the wrong hour, and four facts on the ticket prevent it.`,
+    tags: `Order Intake, Lead Response, Florists`,
+    content: `The sympathy arrangement that arrives after the service has started is not a late delivery. It is a mistake the family remembers, and it almost always traces back to the phone call that took the order.
+
+You know the call. Someone is crying, or trying not to. They want something white, they know the name of the person who died, and they are not sure what to write on the card. You are holding a bucket of stems with the phone against your shoulder. So you take the card message, you take the payment, and you promise it will be there. The one fact that decides whether you kept the promise, when the service actually starts, never made it onto the ticket.
+
+## Why this order is different from the others
+
+A birthday bouquet has a forgiving window. If it arrives at two instead of noon, the recipient is still happy. A sympathy order has a hard edge. The flowers have to be in the room before people arrive, at the right address, with the right family name on the right stand.
+
+That is also why the sender is the worst person to ask. They are not thinking about your delivery route. They are thinking about the person they lost, and they will answer whatever you ask last.
+
+## The four facts that make a ticket complete
+
+Before I care about the card wording, I want four things written on the ticket:
+
+- **The service start time**, not "Thursday" and not "the afternoon."
+- **The exact place**: the name of the chapel, church or home, and the street, since many places share a name or run two rooms.
+- **Whose name goes on the delivery**: the family the flowers are addressed to, spelled the way the family spells it.
+- **A second way to reach the sender**, in case your driver finds a locked side door.
+
+Everything else can be fixed on Wednesday. These four cannot be fixed at the door.
+
+## Make the order unfinished until they exist
+
+The change is a rule, not a tool: a sympathy ticket is not "taken" until all four boxes are filled. If you are on the phone, ask in that order, and read the time back out loud. If you cannot ask, because you are with another customer or the shop is closed, the ticket sits in a visible "missing details" pile instead of a finished one.
+
+This is where a short text helps. When a call goes unanswered or a web order comes in with half the form empty, send the person one message that asks only for what is missing:
+
+> Thank you for ordering flowers for the family. So I deliver on time, please reply with the service start time and the full name and address of the place. We will take care of the rest.
+
+It sounds ordinary, and it is. What it does is turn a gap you would discover on delivery morning into a gap you discover the afternoon before, while there is still someone to ask.
+
+## When the family does not know yet
+
+Some families do not know the time yet. The funeral home may still be arranging it, and you will get an order with "details to follow." Do not guess. Mark it open, tell the sender you will check back the next morning, and then actually do it. A sender who hears from you twice is not annoyed. A sender who hears nothing and then finds out the arrangement missed the service never forgets it.
+
+This will also not save a delivery that is simply too tight. If the service is at ten and you can only deliver at eleven, the useful thing is to say so on the phone, offer to send it to the family home instead, and let them choose. Taking money for something you cannot deliver in time is worse than refusing the sale.
+
+A small invented example: a shop takes five sympathy orders in a week. Two come in by phone with all four facts. Two arrive from the website with the time missing. One is "details to follow." Without the rule, all five look finished on the ticket rail. With it, three are clearly done and two are clearly waiting, and you know which two to text before closing.
+
+## Do this before the next order comes in
+
+Pull the last five sympathy tickets from your rail and check each one for the four facts. Count how many are missing the service time. If any are, print a card with the four lines, tape it next to the phone, and use it on the very next call.`,
+  },
+  {
     slug: `tax-preparer-extension-clients-one-missing-document`,
     title: `Name the One Missing Document in Every Extension File`,
     excerpt: `A client who owes you "a few things" will send nothing, but a client who owes you one named document usually sends it the same night.`,
@@ -2226,7 +2274,7 @@ An AI voice agent can do that when it's wired to the same calendar your advisor 
 
 By the time your advisor looks at the schedule, the appointment is on it with notes attached.
 
-## The honest limits
+## When the family does not know yet
 
 It won't diagnose the car, and you don't want it trying. No quotes, no parts availability dates, no negotiating on price. Those need eyes on the vehicle and somebody who owns the number.
 
