@@ -246,3 +246,5 @@
   .pk-card, .pk-service, .pk-quick, .sp-faq summary svg { transition: none; }
   .pk-card:hover, .pk-service:hover, .pk-quick:hover { transform: none; }
 }
+
+.pk-pricing { margin-top: 24px; }

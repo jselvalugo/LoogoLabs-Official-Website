@@ -3,13 +3,11 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
-import { EnvelopeSimple, ArrowsClockwise, FileArrowDown } from '@phosphor-icons/react';
+import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
+import BrandingPricingCard from '../components/surfaces/BrandingPricingCard';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 import { useHref, useLang } from '../lib/i18n';
-
-// Shared Drive folder holding the design services package pricing (public link).
-const PRICING_URL = 'https://drive.google.com/drive/folders/1AXIj-llGRsfnO5gFHRteLK7_gCdfhMJs';
 
 const Wrap = ({ children, style, className }) => (
   <div className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -285,15 +283,7 @@ function Home({ onNavigate }) {
                 <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>{es ? 'Ver qué incluye' : "See what's included"}</Button>
               </div>
             </div>
-            <a className="hm-pricing ll-glass" href={PRICING_URL} target="_blank" rel="noopener noreferrer">
-              <span className="hm-pricing__icon" aria-hidden="true"><FileArrowDown size={28} weight="bold" /></span>
-              <span className="hm-pricing__eyebrow">{es ? 'Servicios de diseño' : 'Design services'}</span>
-              <strong className="hm-pricing__title">{es ? 'Precios de nuestros paquetes' : 'Package pricing'}</strong>
-              <span className="hm-pricing__text">
-                {es ? 'Todos los paquetes, lo que incluye cada uno y su precio, en un solo lugar.' : 'Every package, what it includes and what it costs, in one place.'}
-              </span>
-              <span className="hm-pricing__btn">{es ? 'Descargar precios' : 'Download pricing'}<span aria-hidden="true">↓</span></span>
-            </a>
+            <BrandingPricingCard es={es} className="hm-pricing" />
           </div>
 
           <div className="hm-stats ll-glass">

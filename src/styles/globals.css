@@ -1073,28 +1073,35 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .hm-hero__lede { margin: 28px 0 0; max-width: 48ch; font-size: 19px; line-height: 1.6; color: var(--ink-500); }
 .hm-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
-.hm-pricing {
-  justify-self: end; width: 100%; max-width: 440px;
+.hm-pricing { justify-self: end; max-width: 440px; }
+.ll-pricing {
+  width: 100%;
   display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
   padding: 32px; border-radius: var(--radius-4); color: var(--ink-900); text-decoration: none;
   transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard);
 }
-.hm-pricing:hover { transform: translateY(-3px); }
-.hm-pricing:focus-visible { outline: 2px solid var(--ink-900); outline-offset: 4px; }
-.hm-pricing__icon {
+.ll-pricing:hover { transform: translateY(-3px); }
+.ll-pricing:focus-visible { outline: 2px solid var(--ink-900); outline-offset: 4px; }
+.ll-pricing__icon {
   display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 8px;
   border-radius: 16px; background: var(--ink-900); color: var(--paper-000);
 }
-.hm-pricing__eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-400); }
-.hm-pricing__title { font-size: 30px; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; }
-.hm-pricing__text { font-size: 16px; line-height: 1.55; color: var(--ink-500); }
-.hm-pricing__btn {
+.ll-pricing__eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-400); }
+.ll-pricing__title { font-size: 30px; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; }
+.ll-pricing__text { font-size: 16px; line-height: 1.55; color: var(--ink-500); }
+.ll-pricing__btn {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; padding: 14px 22px;
   border-radius: var(--radius-pill); background: var(--ink-900); color: var(--paper-000);
   font-size: 16px; font-weight: 600;
   transition: background var(--dur-base) var(--ease-standard);
 }
-.hm-pricing:hover .hm-pricing__btn { background: var(--ink-700); }
+.ll-pricing:hover .ll-pricing__btn { background: var(--ink-700); }
+.ll-pricing__body { display: flex; flex-direction: column; gap: 10px; }
+.ll-pricing--wide { flex-direction: row; align-items: center; gap: 24px; }
+.ll-pricing--wide .ll-pricing__icon { margin-bottom: 0; flex: none; }
+.ll-pricing--wide .ll-pricing__body { flex: 1; gap: 6px; }
+.ll-pricing--wide .ll-pricing__title { font-size: 24px; }
+.ll-pricing--wide .ll-pricing__btn { margin-top: 0; flex: none; }
 
 .hm-stats {
   margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); border-radius: var(--radius-4); padding: 8px;
@@ -1193,9 +1200,10 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-pill { font-size: 13px; white-space: nowrap; padding-right: 14px; }
   .hm-pill__tag { padding: 5px 10px; font-size: 10px; }
   .hm-hero__actions > * { flex: 1 1 100%; justify-content: center; }
-  .hm-pricing { padding: 24px; border-radius: var(--radius-3); }
-  .hm-pricing__title { font-size: 26px; }
-  .hm-pricing__btn { align-self: stretch; justify-content: center; }
+  .ll-pricing { padding: 24px; border-radius: var(--radius-3); }
+  .ll-pricing__title, .ll-pricing--wide .ll-pricing__title { font-size: 26px; }
+  .ll-pricing--wide { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .ll-pricing__btn, .ll-pricing--wide .ll-pricing__btn { align-self: stretch; justify-content: center; margin-top: 14px; }
   .hm-stats { margin-top: 36px; border-radius: var(--radius-3); }
   .hm-stats > div { padding: 12px 10px; }
   .hm-stats__l { font-size: 12px; }
