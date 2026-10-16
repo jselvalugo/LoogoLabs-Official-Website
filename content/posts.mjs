@@ -11,6 +11,66 @@
 
 export const posts = [
   {
+    slug: `hvac-first-heat-smell-text-triage`,
+    title: `The First-Heat Smell Text Needs a Triage Rule, Not a Queue`,
+    excerpt: `Most "my furnace smells" texts in October are harmless dust, but one in the pile is not, and a queue cannot tell which is which.`,
+    tags: `Lead Response, Safety Triage, HVAC`,
+    content: `Every year the first cold night turns on a few thousand furnaces that have sat idle since spring, and the next morning your phone fills with the same message in different words: it smells like something is burning. Almost all of them are nothing. One of them, someday, will not be, and if all of them sit in the same inbox in the order they arrived, you will treat them the same.
+
+I want to describe the rule I would put in place before the first cold snap, because it is a small piece of setup and it changes what happens to the one message that matters.
+
+## Why a queue is the wrong tool
+
+A queue answers messages in the order they came in. That is fair, and it is exactly wrong here. A customer asking whether the burnt-dust smell is normal and a customer who says the house smells like gas are not the same priority, and the message sitting at the top of your list does not know the difference.
+
+On a busy morning the person working the inbox is also booking tune-ups, answering price questions and chasing parts. The danger message looks like the others. It is short, it is frightened, and it is typed with one thumb.
+
+## Sort by words, before anyone reads
+
+The fix is to let the system sort the inbound text before a person looks at it. You are not diagnosing anything. You are matching a short list of words you choose, and sending that message down a different path.
+
+Make two lists.
+
+**The urgent list.** Words like gas, rotten egg, carbon monoxide, alarm going off, headache, dizzy, sparks, smoke. Any message containing one of these skips the queue.
+
+**The ordinary list.** Words like burning smell, dusty, first time on, smells like hot dust. These get the calm reply.
+
+Anything that matches neither goes to your normal inbox. The lists will be imperfect, and that is fine, because they only have to be better than reading in arrival order.
+
+## What the urgent path does
+
+When a message matches the urgent list, two things happen at once, and neither waits for business hours.
+
+- The customer gets an immediate text with your safety instruction, written by you, in plain words. For example: *If you smell gas or your carbon monoxide alarm is sounding, leave the house now, take everyone with you, and call your gas company or emergency services from outside. Then call us.*
+- A person on your team gets an alert that rings through to a phone, not a line in a list, with the customer's name and number.
+
+Check the exact wording of that safety text against your local gas utility's guidance and whatever your state requires of a licensed contractor. It is your policy, so it has to be right for where you work. I am not going to tell you the one correct sentence, because it varies.
+
+The human call matters more than the text. A text can say leave. Only a voice can find out whether they did.
+
+## What the ordinary path does
+
+The common message is harmless, and the customer still wants an answer. Send a short reply the same hour:
+
+- Name the thing they are probably smelling, a seasonal dust burn-off after months idle, as something that often fades after the furnace has run for a while.
+- Tell them what would change your answer: a smell that is still there after a day of running, a smell that is not dust, any alarm, anyone feeling unwell.
+- Give them the word to reply if any of that is true, so the message moves to the urgent path by their own choice.
+
+I would write "often," not "always." You are describing what usually happens, not promising what is in their house.
+
+## Where this goes wrong
+
+Keyword sorting misses people who describe a problem in words you did not list. Someone writes "the house smells weird and my kid is sleepy" and no keyword fires. This is why the ordinary reply invites them to escalate, and why a person should still skim the inbox every few hours during the first cold week.
+
+It also over-triggers. Someone will text "no gas smell, just dust" and get the urgent response. I accept that. A needless safety text costs a few seconds. A missed one costs far more.
+
+Do not let the system close an urgent message by itself. A person marks it handled after speaking to the customer, and until then it stays red.
+
+## Check this week
+
+Open your inbox from last October, or the first cold week of any year you have. Search it for the words "smell" and "burning." Read the replies you sent, and look at how long each one waited. If you cannot tell a harmless one from a dangerous one at a glance, your customers' messages are being sorted by luck, and the two word lists above are the afternoon of work that fixes it.`,
+  },
+  {
     slug: `florist-sympathy-order-service-time-before-the-card`,
     title: `Get the Funeral Service Time Before You Get the Card Message`,
     excerpt: `A sympathy order phoned in while your hands are full of stems is the one most likely to land at the wrong place or the wrong hour, and four facts on the ticket prevent it.`,
