@@ -133,7 +133,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Home', 'Mission', 'AIVoice'];
+  const nav = ['Home', 'Packages', 'BrandPartners'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -168,7 +168,7 @@ function App({ initialPath }) {
       <div onClick={handleLinkClick}>{body}</div>
       <Footer
         columns={[
-          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Book a Call'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'AI Voice', 'Book a Call'] },
           { title: es ? 'Plataforma' : 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
