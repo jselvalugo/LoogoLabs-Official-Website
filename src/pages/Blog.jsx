@@ -61,11 +61,11 @@ export default function Blog({ onNavigate }) {
   const clearFilters = () => { setTopic(null); setQuery(''); setSort('newest'); };
 
   return (
-    <div className="lb-page">
+    <div className="lb-page" role="main">
       <div className="lb-wrap">
 
       {/* ── MASTHEAD ── */}
-      <header className="ln-masthead ll-forest">
+      <div className="ln-masthead ll-forest">
         <img className="ln-masthead__art" src="/loogonews-masthead.webp" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
         <div className="ln-masthead__inner">
           <div className="ln-masthead__copy">
@@ -77,7 +77,7 @@ export default function Blog({ onNavigate }) {
             </p>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* ── CONTENT ── */}
       <div className="lb-content">

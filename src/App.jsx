@@ -152,6 +152,7 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
+      <aside aria-label={es ? 'Próximo evento' : 'Upcoming event'}>
       <a href={`${BLOG_BASE}/${EVENT_POST_SLUG}`} className="ll-topbar ll-topbar--event"
         onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
         <span className="ll-topbar__gem" aria-hidden="true">◆</span>
@@ -160,6 +161,7 @@ function App({ initialPath }) {
         </span>
         <span className="ll-topbar__arrow" aria-hidden="true">→</span>
       </a>
+      </aside>
       <NavBar items={nav} active={page} onNavigate={navigate}
         feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}

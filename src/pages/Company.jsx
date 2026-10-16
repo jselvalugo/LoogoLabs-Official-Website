@@ -80,7 +80,7 @@ function Company({ onNavigate }) {
             <span className="ll-eyebrow">{es ? 'Quién soy como emprendedor' : 'Who I am as an entrepreneur'}</span>
             {es ? <h2 className="ll-staple-h2">Lo que me <em>trajo hasta aquí.</em></h2> : <h2 className="ll-staple-h2">What got <em>me here.</em></h2>}
           </div>
-          <ol className="ll-staple-list ll-bezel" style={{ background: 'var(--paper-000)' }}>
+          <ol tabIndex={0} className="ll-staple-list ll-bezel" style={{ background: 'var(--paper-000)' }}>
             {(es ? DISCIPLINES_ES : DISCIPLINES).map(([t, d], i) => (
               <li key={i}>
                 <span className="ll-staple-num" aria-hidden="true">{ICONS[i]}</span>

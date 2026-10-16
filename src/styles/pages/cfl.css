@@ -295,7 +295,7 @@
 }
 .cfl-rail__link:hover { background: rgba(245, 242, 235, 0.12); }
 .cfl-rail__link[aria-current="page"] { background: var(--paper-000); color: var(--ink-900); font-weight: 700; }
-.cfl-rail__link small { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; opacity: 0.55; }
+.cfl-rail__link small { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; opacity: 0.8; }
 .cfl-rail__cta {
   display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 8px; padding: 0 14px; border-radius: var(--radius-pill);
   background: var(--paper-000); color: var(--ink-900); text-decoration: none; font-size: 14px; font-weight: 600; white-space: nowrap;

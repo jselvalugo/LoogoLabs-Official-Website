@@ -57,7 +57,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
   if (loading) {
     return (
-      <div className="lb-page">
+      <div className="lb-page" role="main">
         <div className="lb-wrap lb-post-state" role="status" aria-live="polite">
           <span className="lb-skel lb-skel--hero" />
           <span className="lb-skel lb-skel--line" />
@@ -70,7 +70,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
   if (notFound || !post) {
     return (
-      <div className="lb-page">
+      <div className="lb-page" role="main">
         <div className="lb-wrap lb-post-state">
           <div className="lb-notfound ll-glass">
             <span className="lb-empty__kicker">404</span>
@@ -115,7 +115,7 @@ export default function BlogPost({ slug, onNavigate }) {
   );
 
   return (
-    <div className={event ? 'lb-page lb-page--event' : 'lb-page'}>
+    <div className={event ? 'lb-page lb-page--event' : 'lb-page'} role="main">
       <div className="lb-wrap">
 
       {post.featured && !event ? (
