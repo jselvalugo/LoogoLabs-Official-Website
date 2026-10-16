@@ -4,6 +4,7 @@ import Button from '../components/core/Button';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
 import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
+import BrandingPricingCard from '../components/surfaces/BrandingPricingCard';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 import { useHref, useLang } from '../lib/i18n';
@@ -282,17 +283,7 @@ function Home({ onNavigate }) {
                 <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>{es ? 'Ver qué incluye' : "See what's included"}</Button>
               </div>
             </div>
-            <div className="hm-hero__art">
-              <img src="/hero-blocks.webp" width="1200" height="921" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
-              <div className="hm-float hm-float--a ll-glass" aria-hidden="true">
-                <span className="hm-float__icon"><EnvelopeSimple size={20} weight="bold" /></span>
-                <div><strong>{es ? 'Campaña de reactivación' : 'Win-back campaign'}</strong><span>{es ? 'Programada para el martes, 9:00' : 'Scheduled for Tuesday, 9:00'}</span></div>
-              </div>
-              <div className="hm-float hm-float--b ll-glass" aria-hidden="true">
-                <span className="hm-float__icon"><ArrowsClockwise size={20} weight="bold" /></span>
-                <div><strong>{es ? 'Secuencia de seguimiento' : 'Follow-up sequence'}</strong><span>{es ? 'Se envía después de cada visita' : 'Sends after every visit'}</span></div>
-              </div>
-            </div>
+            <BrandingPricingCard es={es} className="hm-pricing" />
           </div>
 
           <div className="hm-stats ll-glass">

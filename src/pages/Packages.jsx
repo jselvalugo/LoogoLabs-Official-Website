@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../components/core/Button';
+import BrandingPricingCard from '../components/surfaces/BrandingPricingCard';
 import { pathForPage } from '../lib/seo';
 import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGES } from '../lib/servicePackages';
@@ -329,6 +330,7 @@ function Packages({ onNavigate }) {
                 </div>
               ); })}
             </div>
+            <BrandingPricingCard es={es} wide className="pk-pricing" />
             <div className="pk-head pk-services-head">
               <h2 className="pk-h2">{es ? <>Asóciate con nosotros <em>como marca.</em></> : <>Partner with us <em>as a brand.</em></>}</h2>
               <p>{es ? 'Alianzas de estrategia de marketing y consultoría de IA, a la medida de tu marca. Postúlate y te contactamos.' : "Marketing strategy and AI consulting partnerships, scoped to your brand. Apply and we'll reach out."}</p>
