@@ -4,7 +4,6 @@ import Button from '../components/core/Button';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
 import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
-import BrandingPricingCard from '../components/surfaces/BrandingPricingCard';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 import { useHref, useLang } from '../lib/i18n';
@@ -249,6 +248,49 @@ const WHY_ES = [
   ['Un socio, no un proveedor', 'Trabajas directamente con las personas que hacen el trabajo. Aprendemos tu negocio, revisamos tus números contigo y respondemos por los resultados: estrategia, ejecución y la tecnología detrás de todo.'],
 ];
 
+// A printed brand specimen: the monogram in flat ink with crop marks, the
+// palette as swatches, and a figure caption. Deliberately flat (no glow or
+// gradients) so it reads like a designer's proof sheet.
+const PLATE_SWATCHES = [
+  { name: 'Forest', es: 'Bosque', hex: '#1A2610' },
+  { name: 'Moss', es: 'Musgo', hex: '#5E7C3A' },
+  { name: 'Sage', es: 'Salvia', hex: '#C3D2A6' },
+  { name: 'Amber', es: 'Ámbar', hex: '#B8691C' },
+];
+
+function BrandPlate({ es }) {
+  return (
+    <figure className="hm-plate" aria-label={es ? 'El monograma de Loogo Labs' : 'The Loogo Labs monogram'}>
+      <div className="hm-plate__head">
+        <span>Loogo Labs</span>
+        <span>Orlando, FL</span>
+      </div>
+      <div className="hm-plate__stage" aria-hidden="true">
+        <span className="hm-plate__crop hm-plate__crop--tl" />
+        <span className="hm-plate__crop hm-plate__crop--tr" />
+        <span className="hm-plate__crop hm-plate__crop--bl" />
+        <span className="hm-plate__crop hm-plate__crop--br" />
+        <div className="hm-plate__mark">
+          {['tl', 'tr', 'bl', 'br'].map((t) => <span key={t} className={`hm-plate__tile hm-plate__tile--${t}`} />)}
+        </div>
+      </div>
+      <ul className="hm-plate__swatches">
+        {PLATE_SWATCHES.map((c) => (
+          <li key={c.hex}>
+            <span className="hm-plate__chip" style={{ background: c.hex }} aria-hidden="true" />
+            <span className="hm-plate__name">{es ? c.es : c.name}</span>
+            <span className="hm-plate__hex">{c.hex}</span>
+          </li>
+        ))}
+      </ul>
+      <figcaption className="hm-plate__caption">
+        <span>{es ? 'Fig. 01' : 'Fig. 01'}</span>
+        <span>{es ? 'El monograma' : 'The monogram'}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
 function Home({ onNavigate }) {
   const es = useLang() === 'es';
   return (
@@ -283,7 +325,7 @@ function Home({ onNavigate }) {
                 <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>{es ? 'Ver qué incluye' : "See what's included"}</Button>
               </div>
             </div>
-            <BrandingPricingCard es={es} className="hm-pricing" />
+            <BrandPlate es={es} />
           </div>
 
           <div className="hm-stats ll-glass">
