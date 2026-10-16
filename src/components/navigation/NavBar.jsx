@@ -3,8 +3,8 @@ import { pathForPage } from '../../lib/seo';
 import { LangToggle, useHref, useLang } from '../../lib/i18n';
 
 const LABELS = {
-  en: { AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Branding' },
-  es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Marca' },
+  en: { AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
+  es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
 };
 
 function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
