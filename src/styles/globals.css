@@ -1240,6 +1240,16 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .hm-pill { font-size: 13px; white-space: nowrap; padding-right: 14px; }
   .hm-pill__tag { padding: 5px 10px; font-size: 10px; }
   .hm-hero__actions > * { flex: 1 1 100%; justify-content: center; }
+  .hm-plate { max-width: 240px; padding: 12px 14px 10px; font-size: 9px; }
+  .hm-plate__head { padding-bottom: 8px; }
+  .hm-plate__stage { padding: 20px; }
+  .hm-plate__crop { width: 10px; height: 10px; }
+  .hm-plate__crop--tl, .hm-plate__crop--tr { top: 8px; } .hm-plate__crop--bl, .hm-plate__crop--br { bottom: 8px; }
+  .hm-plate__crop--tl, .hm-plate__crop--bl { left: 8px; } .hm-plate__crop--tr, .hm-plate__crop--br { right: 8px; }
+  .hm-plate__swatches { padding: 8px 0; gap: 6px; }
+  .hm-plate__chip { height: 14px; }
+  .hm-plate__name, .hm-plate__hex { display: none; }
+  .hm-plate__caption { padding-top: 8px; }
   .ll-pricing { padding: 24px; border-radius: var(--radius-3); }
   .ll-pricing__title, .ll-pricing--wide .ll-pricing__title { font-size: 26px; }
   .ll-pricing--wide { flex-direction: column; align-items: flex-start; gap: 10px; }
