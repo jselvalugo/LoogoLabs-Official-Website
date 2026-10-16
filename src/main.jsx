@@ -4,6 +4,7 @@ import '@fontsource/eb-garamond/latin-500.css';
 import './styles/globals.css';
 import './styles/mobile-compact.css';
 import App from './App';
+import WelcomeIntro from './components/feedback/WelcomeIntro';
 import { startSessionTracking } from './lib/sessionTracker';
 
 const root = document.getElementById('root');
@@ -19,5 +20,10 @@ const app = (
 // plain fallback that React replaces.
 if (root.hasAttribute('data-ssr')) ReactDOM.hydrateRoot(root, app);
 else ReactDOM.createRoot(root).render(app);
+
+// The welcome intro gets its own root so it stays out of the hydrated tree.
+const introRoot = document.createElement('div');
+document.body.appendChild(introRoot);
+ReactDOM.createRoot(introRoot).render(<WelcomeIntro />);
 
 startSessionTracking();
