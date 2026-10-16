@@ -67,6 +67,7 @@ export default function WelcomeIntro() {
 
   if (phase === 'hidden') return null;
   const es = window.location.pathname.startsWith('/es');
+  const title = es ? 'Bienvenido a Loogo Labs' : 'Welcome to Loogo Labs';
 
   return (
     <div className={`ll-welcome ll-welcome--${phase}`} role="dialog" aria-label={es ? 'Bienvenido a Loogo Labs' : 'Welcome to Loogo Labs'}>
@@ -82,9 +83,10 @@ export default function WelcomeIntro() {
         </div>
         <p className="ll-welcome-kicker">{es ? 'Sistemas en línea' : 'Systems online'}</p>
         <p className="ll-welcome-title">
-          {(es ? 'Bienvenido a Loogo Labs' : 'Welcome to Loogo Labs').split('').map((c, i) => (
+          {title.split('').map((c, i) => (
             <span key={i} style={{ animationDelay: `${1900 + i * 35}ms` }}>{c === ' ' ? ' ' : c}</span>
           ))}
+          <span className="ll-welcome-dot" style={{ animationDelay: `${1900 + title.length * 35 + 120}ms` }}>.</span>
         </p>
       </div>
       <button type="button" className="ll-welcome-enter" onClick={enter}>

@@ -1372,14 +1372,15 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .ll-welcome-ring--2 { inset: -30%; border-style: dashed; border-color: rgba(201,229,154,.18); animation-duration: 600ms, 14s; animation-direction: normal, reverse; }
 
 .ll-welcome-kicker {
-  margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .4em;
+  margin: 0 0 12px; font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: .4em;
   text-transform: uppercase; color: var(--wl-glow);
   opacity: 0; animation: wl-flicker 900ms steps(1) 1700ms forwards;
 }
 .ll-welcome-title {
-  margin: 0; font-family: var(--font-display); font-weight: 600;
-  font-size: clamp(26px, 5.5vw, 52px); letter-spacing: -0.02em;
+  margin: 0; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(26px, 5.5vw, 52px); line-height: 1; letter-spacing: -0.03em;
 }
+.ll-welcome-title .ll-welcome-dot { color: var(--wl-glow); text-shadow: 0 0 12px rgba(201,229,154,.8); }
 .ll-welcome-title span {
   display: inline-block; opacity: 0; filter: blur(8px);
   animation: wl-letter 600ms cubic-bezier(.16,1,.3,1) forwards;
@@ -1390,7 +1391,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   background: none; border: 0; cursor: pointer; padding: 12px 20px;
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+  font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
   color: var(--paper-100); white-space: nowrap; opacity: 0; transition: opacity 600ms ease, translate 600ms ease;
   translate: 0 12px; pointer-events: none;
 }
@@ -1429,7 +1430,8 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 
 @media (prefers-reduced-motion: reduce) {
   .ll-welcome *, .ll-welcome *::after { animation: none !important; }
-  .ll-welcome-tile, .ll-welcome-grid, .ll-welcome-ring, .ll-welcome-kicker, .ll-welcome-title span { opacity: 1; filter: none; }
+  .ll-welcome-tile, .ll-welcome-grid, .ll-welcome-ring, .ll-welcome-kicker, .ll-welcome-title .ll-welcome-dot { color: var(--wl-glow); text-shadow: 0 0 12px rgba(201,229,154,.8); }
+.ll-welcome-title span { opacity: 1; filter: none; }
   .ll-welcome-tile--ghost { opacity: 0; }
   .ll-welcome--out { transform: none; opacity: 0; filter: none; }
 }
