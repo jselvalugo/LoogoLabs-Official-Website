@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `preschool-tour-follow-up-same-afternoon`,
+    title: `Follow Up on the Preschool Tour Before the Next Tour Starts`,
+    excerpt: `Parents book three tours in a week and enroll where the visit still feels real by Friday, so a same-afternoon note with one dated next step is the director's job.`,
+    tags: `Enrollment, Tour Follow-Up, Preschools & Child Care`,
+    content: `Most parents who walk through your front door on a Tuesday have two other tours booked before the weekend. They are not choosing from a curriculum page. They are choosing from how each visit felt, and by Friday three separate visits have blurred into one vague impression.
+
+I see directors run a good tour and a thin follow-up. You walk the family past the toddler room, you answer every question, and the parent leaves with a brochure and your promise to "be in touch." Then the afternoon pickup rush starts, and the family goes to the next center with nothing from you but paper.
+
+## The parent is comparing, not deciding
+
+A parent in the middle of tour week is holding a mental scoreboard. Which place had the calmer hallway, which director remembered the child's name, which one made the next step easy. You can win that scoreboard without being the best center on it, as long as you are the only one who reaches out the same day.
+
+The reach-out has to be small and specific. A long email with a link to the enrollment packet reads like a form. A short text from the director reads like a person who noticed their kid.
+
+## The same-afternoon note
+
+Within two hours of the family leaving, they get a text from you. It has three parts: something you saw their child do, one honest sentence about timing, and one next step with a date on it.
+
+> Hi Dana, it was good to meet you and Theo today. He went straight to the water table in the two-year room and stayed there. I can hold a Monday start in that room until Thursday at noon. If you want it, reply HOLD and I will send the paperwork. If you have questions first, reply with them and I will call after one.
+
+The date does the work. "Let me know when you're ready" gives a busy parent permission to wait, and waiting is how they end up enrolled somewhere that asked them to decide.
+
+The hold has to be real. If you have a genuine waitlist, say so. If the room has space until the end of the month, say that. Invented urgency is easy for a parent to smell, and it costs you the trust the tour just built.
+
+## Write down three things during the tour
+
+The note only works if it has a detail in it, and the detail comes from the walk-through, not from memory at 4 PM. Before the family leaves, jot three things on the tour sheet:
+
+- The child's name and the age group they would join.
+- The start date they hope for.
+- The one worry they said out loud, whether it was naps, ratios or drop-off.
+
+The system can send the text the moment you mark the tour done. What it cannot do is notice that Theo loved the water table. That sentence is typed by you, in twenty seconds, and it is the reason the text gets answered. A message sent with the blank left unfilled looks exactly like what it is.
+
+## When there is no reply
+
+If nothing comes back by the third day, a person calls. Not a second text. Parents who ignore a message are usually busy, not uninterested, and a voicemail in the director's own voice that says "I have that Monday spot until tomorrow at noon" carries more weight than anything typed.
+
+After that call, stop. One tour, one text, one call. A fourth contact turns a good impression into a sales sequence.
+
+## Where this does not work
+
+Some families tour just to look, and no text will change that. Some are touring for a start date four months out, and a hold deadline that tight does not fit them. In those cases, ask on the tour when they want to start, and put that month in the note instead of a Thursday.
+
+If you have no opening at all, say so on the tour, not in the follow-up. A family you cannot place is better served by an honest waitlist spot and a time you will call when something opens.
+
+## Try it on your next tour
+
+Tomorrow, after the last tour of the day and before you do anything else, send that family the note. One detail about their child, one hold date, one reply word. Then count how many of your last five touring families heard from you the same day. I expect that number is closer to zero than you would like, and it is the part of enrollment you can change this week.`,
+  },
+  {
     slug: `hvac-first-heat-smell-text-triage`,
     title: `The First-Heat Smell Text Needs a Triage Rule, Not a Queue`,
     excerpt: `Most "my furnace smells" texts in October are harmless dust, but one in the pile is not, and a queue cannot tell which is which.`,
