@@ -7,6 +7,7 @@ import { useHref, useLang } from '../../lib/i18n';
 const LABELS_ES = {
   'Mission': 'Misión',
   'Company': 'Empresa',
+  'AI Voice': 'Voz con IA',
   'Book a Call': 'Agenda una llamada',
   'Industry LoogoBlog': 'LoogoBlog de la industria',
   'Central Florida': 'Centro de Florida',
@@ -20,6 +21,7 @@ const LABELS_ES = {
 const pageMap = {
   'Mission': 'Mission',
   'Company': 'Company',
+  'AI Voice': 'AIVoice',
   'Industry LoogoBlog': 'LoogoNews',
   'Central Florida': 'GrowCFL',
   'Quizzes': 'Quizzes',
