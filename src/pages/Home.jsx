@@ -3,10 +3,13 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import SectionHeading from '../components/surfaces/SectionHeading';
 import Card from '../components/surfaces/Card';
-import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
+import { EnvelopeSimple, ArrowsClockwise, FileArrowDown } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
 import { useHref, useLang } from '../lib/i18n';
+
+// Shared Drive folder holding the design services package pricing (public link).
+const PRICING_URL = 'https://drive.google.com/drive/folders/1AXIj-llGRsfnO5gFHRteLK7_gCdfhMJs';
 
 const Wrap = ({ children, style, className }) => (
   <div className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -282,17 +285,15 @@ function Home({ onNavigate }) {
                 <Button variant="secondary" size="lg" onClick={() => onNavigate('Mission')}>{es ? 'Ver qué incluye' : "See what's included"}</Button>
               </div>
             </div>
-            <div className="hm-hero__art">
-              <img src="/hero-blocks.webp" width="1200" height="921" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
-              <div className="hm-float hm-float--a ll-glass" aria-hidden="true">
-                <span className="hm-float__icon"><EnvelopeSimple size={20} weight="bold" /></span>
-                <div><strong>{es ? 'Campaña de reactivación' : 'Win-back campaign'}</strong><span>{es ? 'Programada para el martes, 9:00' : 'Scheduled for Tuesday, 9:00'}</span></div>
-              </div>
-              <div className="hm-float hm-float--b ll-glass" aria-hidden="true">
-                <span className="hm-float__icon"><ArrowsClockwise size={20} weight="bold" /></span>
-                <div><strong>{es ? 'Secuencia de seguimiento' : 'Follow-up sequence'}</strong><span>{es ? 'Se envía después de cada visita' : 'Sends after every visit'}</span></div>
-              </div>
-            </div>
+            <a className="hm-pricing ll-glass" href={PRICING_URL} target="_blank" rel="noopener noreferrer">
+              <span className="hm-pricing__icon" aria-hidden="true"><FileArrowDown size={28} weight="bold" /></span>
+              <span className="hm-pricing__eyebrow">{es ? 'Servicios de diseño' : 'Design services'}</span>
+              <strong className="hm-pricing__title">{es ? 'Precios de nuestros paquetes' : 'Package pricing'}</strong>
+              <span className="hm-pricing__text">
+                {es ? 'Todos los paquetes, lo que incluye cada uno y su precio, en un solo lugar.' : 'Every package, what it includes and what it costs, in one place.'}
+              </span>
+              <span className="hm-pricing__btn">{es ? 'Descargar precios' : 'Download pricing'}<span aria-hidden="true">↓</span></span>
+            </a>
           </div>
 
           <div className="hm-stats ll-glass">
