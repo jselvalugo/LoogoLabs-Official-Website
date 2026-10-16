@@ -1073,7 +1073,47 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 .hm-hero__lede { margin: 28px 0 0; max-width: 48ch; font-size: 19px; line-height: 1.6; color: var(--ink-500); }
 .hm-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
-.hm-pricing { justify-self: end; max-width: 440px; }
+.hm-plate {
+  justify-self: end; width: 100%; max-width: 460px; margin: 0;
+  padding: 22px 24px 18px; background: var(--paper-000); color: var(--ink-900);
+  border: 1px solid var(--border-hair); border-radius: 6px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.hm-plate__head, .hm-plate__caption {
+  display: flex; justify-content: space-between; gap: 12px; color: var(--ink-400);
+}
+.hm-plate__head { padding-bottom: 12px; border-bottom: 1px solid var(--ink-900); }
+.hm-plate__stage { position: relative; padding: 40px; }
+.hm-plate__crop { position: absolute; width: 16px; height: 16px; border-color: var(--ink-400); border-style: solid; border-width: 0; }
+.hm-plate__crop--tl { top: 16px; left: 16px; border-top-width: 1px; border-left-width: 1px; }
+.hm-plate__crop--tr { top: 16px; right: 16px; border-top-width: 1px; border-right-width: 1px; }
+.hm-plate__crop--bl { bottom: 16px; left: 16px; border-bottom-width: 1px; border-left-width: 1px; }
+.hm-plate__crop--br { bottom: 16px; right: 16px; border-bottom-width: 1px; border-right-width: 1px; }
+.hm-plate__mark { position: relative; aspect-ratio: 1; }
+.hm-plate__tile {
+  position: absolute; inset: 0; background: var(--ink-900);
+  -webkit-mask: url(/monogram.png) center / contain no-repeat;
+  mask: url(/monogram.png) center / contain no-repeat;
+  transition: transform 500ms cubic-bezier(.2,.7,.2,1);
+}
+.hm-plate__tile--tl { clip-path: inset(0 50% 50% 0); }
+.hm-plate__tile--tr { clip-path: inset(0 0 50% 50%); }
+.hm-plate__tile--bl { clip-path: inset(50% 50% 0 0); }
+.hm-plate__tile--br { clip-path: inset(50% 0 0 50%); }
+.hm-plate:hover .hm-plate__tile--tl { transform: translate(-6px, -6px); }
+.hm-plate:hover .hm-plate__tile--tr { transform: translate(6px, -6px); }
+.hm-plate:hover .hm-plate__tile--bl { transform: translate(-6px, 6px); }
+.hm-plate:hover .hm-plate__tile--br { transform: translate(6px, 6px); }
+.hm-plate__swatches {
+  list-style: none; margin: 0; padding: 14px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  border-top: 1px solid var(--ink-900); border-bottom: 1px solid var(--border-hair);
+}
+.hm-plate__swatches li { display: grid; gap: 4px; min-width: 0; }
+.hm-plate__chip { display: block; height: 36px; border-radius: 2px; }
+.hm-plate__name { color: var(--ink-900); font-size: 10px; }
+.hm-plate__hex { color: var(--ink-400); font-size: 10px; letter-spacing: .06em; }
+.hm-plate__caption { padding-top: 12px; }
+@media (prefers-reduced-motion: reduce) { .hm-plate__tile { transition: none; } }
 .ll-pricing {
   width: 100%;
   display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
@@ -1187,7 +1227,7 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 @media (max-width: 960px) {
   .hm-hero { padding: 8px 0 24px; }
   .hm-hero__grid, .hm-voice, .hm-founder, .hm-why, .hm-cta { grid-template-columns: 1fr; }
-  .hm-pricing { justify-self: stretch; max-width: none; }
+  .hm-plate { justify-self: center; max-width: 420px; }
   .hm-why__head { position: static; }
   .hm-why { gap: 32px; }
   .hm-founder { gap: 32px; }
@@ -1362,10 +1402,10 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   mask: url(/monogram.png) center / contain no-repeat;
   opacity: 0; animation: wl-tile-in 1100ms cubic-bezier(.16,1,.3,1) forwards;
 }
-.ll-welcome-tile--tl { clip-path: inset(0 52% 52% 0);  --from: translate(-60%, -60%) rotate(-25deg) scale(.4); animation-delay: 250ms; }
-.ll-welcome-tile--tr { clip-path: inset(0 0 52% 48%);  --from: translate(60%, -60%) rotate(25deg) scale(.4);   animation-delay: 450ms; }
-.ll-welcome-tile--bl { clip-path: inset(48% 52% 0 0);  --from: translate(-60%, 60%) rotate(25deg) scale(.4);   animation-delay: 650ms; }
-.ll-welcome-tile--br { clip-path: inset(48% 0 0 48%);  --from: translate(60%, 60%) rotate(-25deg) scale(.4);   animation-delay: 850ms; }
+.ll-welcome-tile--tl { clip-path: inset(0 50% 50% 0);  --from: translate(-60%, -60%) rotate(-25deg) scale(.4); animation-delay: 250ms; }
+.ll-welcome-tile--tr { clip-path: inset(0 0 50% 50%);  --from: translate(60%, -60%) rotate(25deg) scale(.4);   animation-delay: 450ms; }
+.ll-welcome-tile--bl { clip-path: inset(50% 50% 0 0);  --from: translate(-60%, 60%) rotate(25deg) scale(.4);   animation-delay: 650ms; }
+.ll-welcome-tile--br { clip-path: inset(50% 0 0 50%);  --from: translate(60%, 60%) rotate(-25deg) scale(.4);   animation-delay: 850ms; }
 .ll-welcome-tile--ghost {
   background: #7FF0FF; mix-blend-mode: screen; filter: blur(1px);
   --from: none; animation: wl-glitch 700ms steps(1) 1500ms forwards;
