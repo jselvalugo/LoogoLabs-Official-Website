@@ -3,6 +3,8 @@ import React from 'react';
 const SEEN_KEY = 'll-welcome-seen';
 const BOOT_MS = 3400;
 const EXIT_MS = 900;
+// If nobody swipes, the veil lifts on its own this long after the prompt shows.
+const AUTO_ENTER_MS = 2500;
 
 // The four quadrants of the monogram, as clip-path insets on the square mark.
 const TILES = ['tl', 'tr', 'bl', 'br'];
@@ -65,9 +67,14 @@ export default function WelcomeIntro() {
     };
   }, [phase === 'hidden', enter]);
 
+  React.useEffect(() => {
+    if (phase !== 'ready') return;
+    const t = setTimeout(enter, AUTO_ENTER_MS);
+    return () => clearTimeout(t);
+  }, [phase, enter]);
+
   if (phase === 'hidden') return null;
   const es = window.location.pathname.startsWith('/es');
-  const title = es ? 'Bienvenido a Loogo Labs' : 'Welcome to Loogo Labs';
 
   return (
     <div className={`ll-welcome ll-welcome--${phase}`} role="dialog" aria-label={es ? 'Bienvenido a Loogo Labs' : 'Welcome to Loogo Labs'}>
@@ -81,13 +88,6 @@ export default function WelcomeIntro() {
           <span className="ll-welcome-tile ll-welcome-tile--ghost" />
           <span className="ll-welcome-sheen" />
         </div>
-        <p className="ll-welcome-kicker">{es ? 'Sistemas en línea' : 'Systems online'}</p>
-        <p className="ll-welcome-title">
-          {title.split('').map((c, i) => (
-            <span key={i} style={{ animationDelay: `${1900 + i * 35}ms` }}>{c === ' ' ? ' ' : c}</span>
-          ))}
-          <span className="ll-welcome-dot" style={{ animationDelay: `${1900 + title.length * 35 + 120}ms` }}>.</span>
-        </p>
       </div>
       <button type="button" className="ll-welcome-enter" onClick={enter}>
         <span className="ll-welcome-chevrons" aria-hidden="true"><i /><i /></span>
