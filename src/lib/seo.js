@@ -189,6 +189,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // Unlisted ad landing page, like /branding.
+    page: 'BrandDesign',
+    path: '/brand-design',
+    title: `Logo & Brand Identity Design | ${SITE.name}`,
+    description:
+      'Custom logo, visual identity and brand guidelines for local businesses. Watch the intro, download pricing, and book a free brand call.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    image: '/og-image-ai-voice.jpg',
+    unlisted: true,
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,
