@@ -176,6 +176,19 @@ export const ROUTES = [
     image: '/og-image-ai-voice.jpg',
   },
   {
+    // Unlisted ad landing page: direct link only, kept out of nav, sitemap,
+    // llms.txt and served noindex.
+    page: 'BrandingFunnel',
+    path: '/branding',
+    title: `Logo & Brand Identity Design | ${SITE.name}`,
+    description:
+      'Custom logo, visual identity and brand guidelines for local businesses, ready to use everywhere. Take the free 60-second brand check.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    image: '/og-image-ai-voice.jpg',
+    unlisted: true,
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,
