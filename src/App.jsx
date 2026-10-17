@@ -37,6 +37,7 @@ const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
 const BrandingFunnel = React.lazy(() => import('./pages/BrandingFunnel'));
 const BrandDesign = React.lazy(() => import('./pages/BrandDesign'));
+const Consulting = React.lazy(() => import('./pages/Consulting'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
 
@@ -134,6 +135,7 @@ function App({ initialPath }) {
   if (page === 'ReputationAutopilot') return <><CookieConsent /><React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense></>;
   if (page === 'BrandingFunnel') return <><CookieConsent /><React.Suspense fallback={null}><BrandingFunnel /></React.Suspense></>;
   if (page === 'BrandDesign') return <><CookieConsent /><React.Suspense fallback={null}><BrandDesign /></React.Suspense></>;
+  if (page === 'Consulting') return <><CookieConsent /><React.Suspense fallback={null}><Consulting /></React.Suspense></>;
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 

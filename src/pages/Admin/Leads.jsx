@@ -28,6 +28,7 @@ const SOURCE_PAGES = {
   park_supply: 'ParkSupply',
   branding: 'BrandingFunnel',
   brand_design: 'BrandDesign',
+  consulting: 'Consulting',
   brand_partnership: 'BrandPartners',
   ...NICHE_SOURCE_PAGES,
 };

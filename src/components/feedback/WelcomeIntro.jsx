@@ -3,7 +3,7 @@ import { routeForPath } from '../../lib/seo';
 import { NICHE_BY_PAGE } from '../../lib/nicheQuizzes';
 
 // Ad funnels skip the intro: paid traffic should land straight on the offer.
-const FUNNEL_PAGES = new Set(['AIReceptionist', 'ReputationAutopilot', 'BrandingFunnel', 'BrandDesign']);
+const FUNNEL_PAGES = new Set(['AIReceptionist', 'ReputationAutopilot', 'BrandingFunnel', 'BrandDesign', 'Consulting']);
 const isFunnel = (page) => FUNNEL_PAGES.has(page) || Boolean(NICHE_BY_PAGE[page]);
 
 const SEEN_KEY = 'll-welcome-seen';

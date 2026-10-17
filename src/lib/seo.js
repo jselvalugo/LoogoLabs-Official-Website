@@ -201,6 +201,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // Unlisted ad landing page, like /brand-design.
+    page: 'Consulting',
+    path: '/consulting',
+    title: `Marketing Strategy & AI Consulting | ${SITE.name}`,
+    description:
+      'Marketing strategy and AI consulting for business owners: a clear growth plan, AI where it saves time, and help putting it in place. Book a free strategy call.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    image: '/og-image-ai-voice.jpg',
+    unlisted: true,
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,
