@@ -1,4 +1,10 @@
 import React from 'react';
+import { routeForPath } from '../../lib/seo';
+import { NICHE_BY_PAGE } from '../../lib/nicheQuizzes';
+
+// Ad funnels skip the intro: paid traffic should land straight on the offer.
+const FUNNEL_PAGES = new Set(['AIReceptionist', 'ReputationAutopilot', 'BrandingFunnel', 'BrandDesign']);
+const isFunnel = (page) => FUNNEL_PAGES.has(page) || Boolean(NICHE_BY_PAGE[page]);
 
 const SEEN_KEY = 'll-welcome-seen';
 const BOOT_MS = 3400;
@@ -21,7 +27,8 @@ export default function WelcomeIntro() {
   React.useEffect(() => {
     let seen = false;
     try { seen = sessionStorage.getItem(SEEN_KEY) === '1'; } catch {}
-    if (seen || window.location.pathname.startsWith('/admin')) return;
+    const { page } = routeForPath(window.location.pathname);
+    if (seen || page === 'Admin' || isFunnel(page)) return;
     try { sessionStorage.setItem(SEEN_KEY, '1'); } catch {}
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

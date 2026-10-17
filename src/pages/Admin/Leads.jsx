@@ -27,6 +27,7 @@ const SOURCE_PAGES = {
   reputation_autopilot: 'ReputationAutopilot',
   park_supply: 'ParkSupply',
   branding: 'BrandingFunnel',
+  brand_design: 'BrandDesign',
   brand_partnership: 'BrandPartners',
   ...NICHE_SOURCE_PAGES,
 };

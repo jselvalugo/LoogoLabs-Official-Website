@@ -208,6 +208,7 @@ const HEADINGS = {
   AIReceptionist: 'A Full-Time Receptionist. Without The Full-Time Cost.',
   ReputationAutopilot: 'Every Completed Job Becomes A 5-Star Review Request.',
   BrandingFunnel: 'A Brand That Makes You Look Like The Obvious Choice.',
+  BrandDesign: 'A Brand That Makes You Look Like The Obvious Choice.',
   Quizzes: 'Free fit-check quizzes for your business',
   Packages: 'Fixed scope. Fixed price. Done for you.',
   PressRelease: 'Get your business in the news. Starting at $149.',

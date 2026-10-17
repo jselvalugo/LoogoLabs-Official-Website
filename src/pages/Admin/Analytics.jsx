@@ -44,7 +44,7 @@ const DURATION_BUCKETS = [
 
 // Pages where a visit turns into a lead or a quote. Reading one of these after
 // a post counts as the post sending the reader somewhere useful.
-const MONEY_PATHS = ['/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/branding', '/quizzes', '/park-supply', '/grow', ...NICHE_QUIZZES.map(q => q.path)];
+const MONEY_PATHS = ['/ai-voice', '/ai-receptionist', '/reputation-autopilot', '/branding', '/brand-design', '/quizzes', '/park-supply', '/grow', ...NICHE_QUIZZES.map(q => q.path)];
 const POST_PREFIX = '/news/';
 const OPEN_PROPOSAL = ['new', 'reviewing', 'sent'];
 

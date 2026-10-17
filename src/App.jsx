@@ -36,6 +36,7 @@ const AIVoiceCity = React.lazy(() => import('./pages/AIVoiceCity'));
 const AIReceptionist = React.lazy(() => import('./pages/AIReceptionist'));
 const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot'));
 const BrandingFunnel = React.lazy(() => import('./pages/BrandingFunnel'));
+const BrandDesign = React.lazy(() => import('./pages/BrandDesign'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
 
@@ -132,6 +133,7 @@ function App({ initialPath }) {
   if (page === 'AIReceptionist') return <><CookieConsent /><React.Suspense fallback={null}><AIReceptionist /></React.Suspense></>;
   if (page === 'ReputationAutopilot') return <><CookieConsent /><React.Suspense fallback={null}><ReputationAutopilot /></React.Suspense></>;
   if (page === 'BrandingFunnel') return <><CookieConsent /><React.Suspense fallback={null}><BrandingFunnel /></React.Suspense></>;
+  if (page === 'BrandDesign') return <><CookieConsent /><React.Suspense fallback={null}><BrandDesign /></React.Suspense></>;
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
