@@ -85,3 +85,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-15 | florist-sympathy-order-service-time-before-the-card | Florists | Order intake — four facts (service start time, place, family name, second contact) required before a sympathy ticket counts as taken, with a missing-details text
 - 2026-10-16 | hvac-first-heat-smell-text-triage | HVAC | Inbound triage — urgent-word list routes gas/CO/alarm texts to an instant safety text and a ringing human call, ordinary burn-off smells get a calm "what's normal" reply with a reply-to-escalate
 - 2026-10-16 | preschool-tour-follow-up-same-afternoon | Preschools & child care | Enrollment — same-afternoon tour follow-up text with a child-specific detail, dated spot hold, day-three director call
+- 2026-10-17 | auto-repair-declined-repairs-revisit-date | Auto repair | Declined work — bucket and dated revisit per declined line, free re-check text two weeks before a named event, one revisit per item

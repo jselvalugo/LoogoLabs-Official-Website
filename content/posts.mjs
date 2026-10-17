@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `auto-repair-declined-repairs-revisit-date`,
+    title: `Every "Not Today" at Your Counter Needs a Revisit Date`,
+    excerpt: `A declined repair is three different situations under one label, and only you know which one is a cold snap away from a tow truck.`,
+    tags: `Declined Work, Seasonal Follow-Up, Auto Repair`,
+    content: `The most valuable list in your shop is one you have never written down: every repair a customer declined at the counter this fall. Right now those items sit on closed invoices, in a lane nobody owns, and the only follow-up they will ever get is the customer's own car deciding the question for them on a cold morning in a parking lot.
+
+I see this in shop after shop. The advisor writes up worn rear brakes, a weak battery and tires near the wear bars. The customer says "not today," pays for the oil change, and drives off. Everyone meant well. Nobody wrote down when "not today" should become "now."
+
+## "Not today" has an expiry date
+
+A declined repair is not one decision. It is three different situations wearing the same label. Some items are fine to ignore for a year. Some are fine until a specific event. A few are one cold snap away from a tow truck.
+
+October is when the difference starts to matter. Batteries that started the car all summer get tested by the first near-freezing night. Tires that gripped dry pavement get tested by the first wet cold one. And in six weeks half your customers will load the trunk and drive a long way to a relative's house.
+
+If your system only knows "declined," it cannot tell the customer, or you, which of those they are in.
+
+## Give every declined item a bucket and a date
+
+At the counter, when the customer says no, you mark the line with one of three buckets and a revisit date. Two minutes, no new software required, though the platform can hold it as a tagged field on the contact so the date triggers the text for you.
+
+- **Safe to wait.** Revisit at the next regular service. Date: that service interval.
+- **Wait until a named event.** Cold weather, a road trip, an inspection due date. Date: two to three weeks before that event.
+- **Don't wait.** You tell them once, plainly, why, and note that you told them. Date: this week.
+
+The point is that the date is written by you, at the moment you know the car best, not reconstructed in March from a pile of invoices.
+
+## The revisit text
+
+Two weeks before the date, the customer gets one text from the advisor who wrote up the car. It names the car and the item, and says what changed, not what is wrong.
+
+> Hi Marcus, this is Ellen at the shop. When you had the Accord in last month, we noted the battery was weak and you decided to wait. With the first cold mornings coming and the holiday drive, I would rather test it again for free than have it quit on you. I have Tuesday at 4 or Thursday at 8 open. Reply 1 or 2, or tell me to leave it.
+
+Notice what the text does not do. It does not quote a price, it does not threaten, and it does not offer a coupon. It offers a free re-check, two slots, and an easy way to say no. A customer who says "leave it" has now declined with fresh information, and that is a better position for both of you.
+
+## The re-check is the sale
+
+Most of these customers do not book the repair from the text. They book the re-check. Then the battery tests weak again, or the brake pad is thinner than last time, and the advisor shows the reading on the screen. You are not persuading. You are measuring, and the measurement does the talking.
+
+Be honest when the re-check comes back fine. Tell them it can wait, and move the revisit date. That one conversation is worth more to a skeptical customer than a dozen reminders, and it is the reason they believe you the next time you say "don't wait."
+
+## Where this goes wrong
+
+Texting every declined item from the last year at once is a blast, not a follow-up, and customers can tell. Start with the "wait until an event" bucket and the "don't wait" bucket only.
+
+Also, never revisit a repair you did not actually recommend with a reason. If the original write-up said "brakes need attention" and nothing else, you have nothing true to say two weeks before the date. The follow-up is only as good as the note taken at the counter.
+
+And keep one limit: one revisit per item, one call if it was a safety item and nobody answered. After that, the customer knows, and the choice is theirs.
+
+## Check this week
+
+Pull the last thirty days of invoices and count the lines customers declined. For each one, ask whether you could tell a customer today why it can wait and until when. If you cannot, start tomorrow: write the bucket and the date on every "not today" at the counter, and send the first revisit text before Thanksgiving traffic starts.`,
+  },
+  {
     slug: `preschool-tour-follow-up-same-afternoon`,
     title: `Follow Up on the Preschool Tour Before the Next Tour Starts`,
     excerpt: `Parents book three tours in a week and enroll where the visit still feels real by Friday, so a same-afternoon note with one dated next step is the director's job.`,
