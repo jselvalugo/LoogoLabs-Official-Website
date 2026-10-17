@@ -56,3 +56,37 @@
 @media (max-width: 720px) {
   .bd-caps { grid-template-columns: 1fr; }
 }
+
+/* ── Plain, information-first look: one soft white page, no cards ── */
+.bd.ll-shell { background: #FAF9F5; }
+.bd.ll-shell::before { display: none; }
+.bd .lp-nav__bar { background: #FAF9F5; border-bottom: 1px solid rgba(26, 38, 16, 0.1); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.bd .lp-nav__bar .ll-nav__logo { filter: none; }
+.bd .bd-nav__cta { background: var(--ink-900); color: var(--paper-000); }
+
+.bd-section { margin: 0; padding: 40px 16px; border-bottom: 1px solid rgba(26, 38, 16, 0.08); }
+.bd .lp-card, .bd .lp-card--glass, .bd .lp-card--forest, .bd .lp-card--sage {
+  background: none; border: 0; box-shadow: none; border-radius: 0; padding: 0;
+  -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--ink-900);
+}
+.bd .lp-h1 { font-size: clamp(32px, 5vw, 52px); }
+.bd .lp-card--forest .lp-h2 { color: var(--ink-900); margin-top: 0; }
+.bd .lp-card--forest .lp-lede, .bd .lp-card--forest .lp-h2 + .lp-lede { color: var(--ink-500); margin-top: 22px; }
+.bd .lp-card--forest .lp-eyebrow { color: var(--ink-400); }
+
+.bd .lp-problems, .bd .lp-caps, .bd-caps { grid-template-columns: 1fr; gap: 0; }
+.bd .lp-problem, .bd .lp-cap, .bd-steps li, .bd-faq details, .bd-plan {
+  background: none; border: 0; box-shadow: none; border-radius: 0; padding: 16px 0;
+  border-top: 1px solid rgba(26, 38, 16, 0.08); transform: none;
+}
+.bd .lp-cap { grid-template-columns: auto 1fr; gap: 14px; }
+.bd .lp-cap__icon { width: 32px; height: 32px; border-radius: 8px; }
+.bd .lp-problem { grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 4px; }
+.bd .lp-problem__x { grid-row: span 2; }
+.bd .lp-problem h3 { color: var(--ink-900); }
+.bd .lp-problem p { color: var(--ink-500); }
+.bd-plan--featured { background: none; color: inherit; border-left: 3px solid var(--ink-900); padding-left: 14px; }
+.bd-video { border-radius: 8px; box-shadow: none; }
+.bd .lp-proof__img { box-shadow: none; border: 1px solid rgba(26, 38, 16, 0.1); border-radius: 8px; }
+.bd .lp-card--forest .lp-result-icon { background: var(--ink-100); }
+@media (prefers-reduced-motion: no-preference) { .bd .lp-cap:hover { transform: none; } }
