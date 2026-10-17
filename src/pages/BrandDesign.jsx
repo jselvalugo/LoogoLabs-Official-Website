@@ -231,7 +231,7 @@ export default function BrandDesign() {
               </li>
             ))}
           </ol>
-          <CTA variant="inverse" />
+          <CTA />
         </div>
       </section>
 
@@ -252,7 +252,7 @@ export default function BrandDesign() {
                 </div>
               ))}
             </div>
-            <CTA variant="inverse" label="Choose My Package" />
+            <CTA label="Choose My Package" />
           </div>
         </section>
       )}

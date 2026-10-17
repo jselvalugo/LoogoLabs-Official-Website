@@ -90,3 +90,14 @@
 .bd .lp-proof__img { box-shadow: none; border: 1px solid rgba(26, 38, 16, 0.1); border-radius: 8px; }
 .bd .lp-card--forest .lp-result-icon { background: var(--ink-100); }
 @media (prefers-reduced-motion: no-preference) { .bd .lp-cap:hover { transform: none; } }
+
+/* Light cookie notice on this page. */
+.bd .lp-cap:nth-child(n) { grid-column: auto; grid-row: auto; }
+body:has(.bd) [aria-label="Cookie notice"] {
+  background: #FFFFFF; color: var(--ink-900); border: 1px solid rgba(26, 38, 16, 0.12);
+  box-shadow: 0 8px 24px -12px rgba(26, 38, 16, 0.25); -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+body:has(.bd) [aria-label="Cookie notice"] * { color: var(--ink-900); }
+body:has(.bd) [aria-label="Cookie notice"] p { color: var(--ink-500) !important; }
+body:has(.bd) [aria-label="Cookie notice"] button { color: var(--ink-900) !important; border-color: rgba(26, 38, 16, 0.2) !important; }
+body:has(.bd) [aria-label="Cookie notice"] button:last-child { background: var(--ink-900) !important; color: var(--paper-000) !important; }
