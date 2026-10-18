@@ -1482,3 +1482,4 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   .ll-welcome-tile--ghost { opacity: 0; }
   .ll-welcome--out { transform: none; opacity: 0; filter: none; }
 }
+@media (max-width: 900px) { .ll-admin-email-grid { grid-template-columns: 1fr !important; } }
