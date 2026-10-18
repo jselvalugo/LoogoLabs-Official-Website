@@ -253,7 +253,7 @@ const WHY_ES = [
 // gradients) so it reads like a designer's proof sheet.
 const PLATE_SWATCHES = [
   { name: 'Forest', es: 'Bosque', hex: '#1A2610' },
-  { name: 'Moss', es: 'Musgo', hex: '#5E7C3A' },
+  { name: 'Moss', es: 'Musgo', hex: '#536E33' },
   { name: 'Sage', es: 'Salvia', hex: '#C3D2A6' },
   { name: 'Amber', es: 'Ámbar', hex: '#B8691C' },
 ];
@@ -341,7 +341,7 @@ function Home({ onNavigate }) {
       <Wrap className="hm-section">
         <SectionHeading title={es ? 'Todo lo que tu negocio necesita para crecer, bajo un mismo techo' : 'Everything your business needs to grow, under one roof'}
           description={es ? 'Una sola plataforma que reemplaza tu CRM, herramienta de email, app de citas, plataforma de cursos y programador de redes. Un solo acceso. Una sola factura mensual.' : 'One platform that replaces your CRM, email tool, scheduling app, course platform and social scheduler. One login. One monthly bill.'} />
-        <div className="hm-bento">
+        <div tabIndex={0} className="hm-bento">
           {(es ? features_ES : features).map(f => (
             <Card key={f.title} tone={f.tone} className={`hm-tile ll-reveal${f.tone === 'inverse' ? ' hm-tile--dark' : ''}`}>
               <div className="hm-tile__tools" aria-label={es ? 'Reemplaza' : 'Replaces'}>
@@ -364,7 +364,7 @@ function Home({ onNavigate }) {
             <SectionHeading title={es ? 'Consultores que de verdad lo construyen' : 'Consultants who can actually build it'}
               description={es ? 'La mayoría de las agencias te entregan una presentación de estrategia. La mayoría de los desarrolladores esperan especificaciones. Nosotros estamos en el medio: especialistas en marketing de rendimiento que escriben el código del backend, conectan el seguimiento y ponen en marcha la IA que hace rendir más tu inversión.' : 'Most agencies hand you a strategy deck. Most dev shops wait for a spec. We sit in the middle: performance marketers who write the backend code, wire the tracking, and ship the AI that makes your spend work harder.'} />
           </div>
-          <div className="hm-why__list">
+          <div tabIndex={0} className="hm-why__list">
             {(es ? WHY_ES : [['Performance marketing, engineered', 'We run paid media like an engineering problem: clean server-side tracking, real attribution, tight testing loops. Every dollar gets measured against revenue, not clicks or impressions.'],
               ['AI consulting that ships', 'No slide-deck AI strategy. We find where AI actually moves your numbers (lead qualification, voice agents, content ops, reporting) then build and deploy it into your workflow.'],
               ['Software & backend expertise', 'APIs, data pipelines, CRM integrations, custom automations. When your marketing hits a technical wall, we don\'t file a ticket with someone else. We write the code ourselves.'],

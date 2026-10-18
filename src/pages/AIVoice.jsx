@@ -281,7 +281,7 @@ export default function AIVoice() {
             ))}
           </div>
 
-          <ul className="av-proof" aria-label={es ? 'Puntos destacados' : 'Highlights'}>
+          <ul tabIndex={0} className="av-proof" aria-label={es ? 'Puntos destacados' : 'Highlights'}>
             {T.proofPoints.map((txt) => (
               <li key={txt}><Check size={14} weight="bold" aria-hidden="true" />{txt}</li>
             ))}
@@ -297,7 +297,7 @@ export default function AIVoice() {
           The average small business misses over 60% of inbound calls. Most of those callers never try again.
           They find someone who answers, and they book with them instead.
         </>}</p>
-        <div className="av-problems">
+        <div tabIndex={0} className="av-problems">
           {T.problems.map(([title, desc], i) => (
             <div key={title} className={`av-problem ${i === 0 ? 'll-forest' : i === 1 ? 'av-paper' : 'll-sage'}`}>
               <span className="av-problem__x" aria-hidden="true"><X size={16} weight="bold" /></span>
@@ -339,7 +339,7 @@ export default function AIVoice() {
               <Waveform height={22} />
               <small>1:12</small>
             </div>
-            <div className="av-phone__body">
+            <div tabIndex={0} className="av-phone__body">
               {T.transcript.map((line, i) => (
                 <div key={i} className={`av-bubble av-bubble--${line.role}`}>
                   {line.role === 'agent' && <small>{aiLabel}</small>}
@@ -357,7 +357,7 @@ export default function AIVoice() {
       {/* ── CAPABILITIES ── */}
       <Wrap className="av-section ll-reveal">
         <h2 className="av-h2">{es ? <>Todo lo que hace tu recepción, <em>y todo lo que no puede hacer.</em></> : <>Everything your front desk does, <em>plus everything they can't.</em></>}</h2>
-        <div className="av-bento">
+        <div tabIndex={0} className="av-bento">
           {T.capabilities.map(([title, desc, Icon], i) => (
             <div key={title} className={`av-tile ${['ll-forest av-tile--dark', 'll-glass', 'll-sage', 'av-paper'][i]}`}>
               <span className="av-tile__icon" aria-hidden="true"><Icon size={22} weight="bold" /></span>
@@ -378,7 +378,7 @@ export default function AIVoice() {
               Plenty of tools will sell you a self-serve voice bot and leave the rest to you. That's not what this is.
             </>}</p>
           </div>
-          <div className="av-diff__list">
+          <div tabIndex={0} className="av-diff__list">
             {T.differentiators.map(([title, desc], i) => (
               <div key={title} className={`av-diff__item ${i === 0 ? 'll-sage' : 'av-paper'}`}>
                 {i === 0 && <span className="av-tile__icon" aria-hidden="true"><ShieldCheck size={22} weight="bold" /></span>}
@@ -394,7 +394,7 @@ export default function AIVoice() {
       <Wrap className="av-section ll-reveal">
         <section id="how-it-works" className="av-steps ll-forest">
           <h2 className="av-h2 av-h2--light">{es ? <>De la primera llamada al agente en vivo <em>en una semana, más o menos.</em></> : <>From first call to live agent <em>in about a week.</em></>}</h2>
-          <div className="av-steps__grid">
+          <div tabIndex={0} className="av-steps__grid">
             {T.steps.map(([num, title, desc, time]) => (
               <div key={num} className="av-step">
                 <span className="av-step__time">{time}</span>
@@ -419,7 +419,7 @@ export default function AIVoice() {
               <Button variant="inverse" iconRight={<ArrowRight size={16} weight="bold" />} onClick={trackBook}>{es ? 'Mira si encaja con tu negocio' : 'See if it fits your business'}</Button>
             </div>
           </div>
-          <ul className="av-ind__chips">
+          <ul tabIndex={0} className="av-ind__chips">
             {T.industries.map((ind) => <li key={ind}>{ind}</li>)}
           </ul>
         </div>
@@ -453,7 +453,7 @@ export default function AIVoice() {
         </div>
 
         {/* mobile: stacked cards; a 3-column table can't fit a phone width without truncating */}
-        <div className="av-compare-cards">
+        <div tabIndex={0} className="av-compare-cards">
           {T.comparison.map(([feat, ai, trad]) => (
             <div key={feat} className="av-ccard">
               <strong>{feat}</strong>

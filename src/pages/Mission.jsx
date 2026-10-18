@@ -110,7 +110,7 @@ function Mission({ onNavigate }) {
             <span className="ll-eyebrow">{es ? 'Lo que creemos' : 'What we believe'}</span>
             {es ? <h2 className="ll-staple-h2">Cuatro principios detrás de <em>todo lo que creamos.</em></h2> : <h2 className="ll-staple-h2">Four principles behind <em>everything we build.</em></h2>}
           </div>
-          <ol className="ll-staple-principles">
+          <ol tabIndex={0} className="ll-staple-principles">
             {(es ? PRINCIPLES_ES : PRINCIPLES).map(([t, d], i) => (
               <li key={t} className={`ll-reveal${i === 1 ? ' ll-staple-tile--sage' : i === 2 ? ' ll-staple-tile--glass' : ''}`}>
                 <span className="ll-staple-num" aria-hidden="true"><Icon i={i} /></span>
@@ -138,7 +138,7 @@ function Mission({ onNavigate }) {
       <section className="ll-staple-wrap ll-staple-section">
         {es ? <h2 className="ll-staple-h2">Cinco pasos. <em>Hechos por ti, cada vez.</em></h2> : <h2 className="ll-staple-h2">Five steps. <em>Done for you, every time.</em></h2>}
         <p className="ll-staple-sub">{es ? 'Cada cliente pasa por el mismo proceso comprobado. Nunca tienes que resolverlo solo.' : 'Every client goes through the same proven process. You never have to figure it out alone.'}</p>
-        <ol className="ll-staple-timeline">
+        <ol tabIndex={0} className="ll-staple-timeline">
           {(es ? STEPS_ES : STEPS).map(([t, d], i) => (
             <li key={i} className="ll-glass ll-reveal">
               <span className="ll-staple-node">{es ? 'Paso' : 'Step'} {i + 1}</span>

@@ -8,7 +8,7 @@ export default function Privacy({ onNavigate }) {
   const es = useLang() === 'es';
   if (es) return <PrivacyES onNavigate={onNavigate} />;
   return (
-    <div className="lg-page">
+    <div className="lg-page" role="main">
 
       {/* Header */}
       <div className="lg-wrap">
@@ -156,7 +156,7 @@ const noteStyle = { fontSize: '0.85rem', opacity: 0.75, fontStyle: 'italic' };
 
 function PrivacyES({ onNavigate }) {
   return (
-    <div className="lg-page">
+    <div className="lg-page" role="main">
 
       {/* Header */}
       <div className="lg-wrap">

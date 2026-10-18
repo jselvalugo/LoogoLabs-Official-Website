@@ -419,7 +419,7 @@ export default function ParkSupply() {
               </div>
 
               {/* Client + totals */}
-              <aside style={{ display: 'grid', gap: 20, alignContent: 'start' }}>
+              <div style={{ display: 'grid', gap: 20, alignContent: 'start' }}>
                 <div className="ps-panel">
                   <Eyebrow>{staff ? 'Prepared for' : 'About you and the site'}</Eyebrow>
                   <div style={{ display: 'grid', gap: 12 }}>
@@ -448,9 +448,7 @@ export default function ParkSupply() {
                     {totals.discount > 0 && <TotalRow label={`Discount (${num(draft.discountPct)}%)`} value={`−${usd(totals.discount)}`} />}
                     {totals.shipping > 0 && <TotalRow label="Freight" value={usd(totals.shipping)} />}
                     {totals.tax > 0 && <TotalRow label={`Tax (${num(draft.taxPct)}%)`} value={usd(totals.tax)} />}
-                    <div style={{ borderTop: '1px solid var(--border-hair)', marginTop: 6, paddingTop: 10 }}>
-                      <TotalRow label={staff ? 'Total' : 'Estimated total'} value={usd(totals.total)} strong />
-                    </div>
+                    <TotalRow label={staff ? 'Total' : 'Estimated total'} value={usd(totals.total)} strong divider />
                   </dl>
                 </div>
 
@@ -476,7 +474,7 @@ export default function ParkSupply() {
                     Your list saves in this browser. List prices valid {PROPOSAL_VALID_DAYS} days.
                   </p>
                 </div>
-              </aside>
+              </div>
             </div>
            </div>
           </Wrap>
@@ -520,9 +518,9 @@ export default function ParkSupply() {
   );
 }
 
-function TotalRow({ label, value, strong }) {
+function TotalRow({ label, value, strong, divider }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontWeight: strong ? 700 : 400, fontSize: strong ? 18 : 14, color: strong ? 'var(--ink-900)' : 'var(--ink-600)' }}>
+    <div style={{ ...(divider && { borderTop: '1px solid var(--border-hair)', marginTop: 6, paddingTop: 10 }), display: 'flex', justifyContent: 'space-between', gap: 12, fontWeight: strong ? 700 : 400, fontSize: strong ? 18 : 14, color: strong ? 'var(--ink-900)' : 'var(--ink-600)' }}>
       <dt>{label}</dt><dd style={{ margin: 0 }}>{value}</dd>
     </div>
   );
@@ -638,7 +636,7 @@ function QuoteSent({ number, email, onNew }) {
 // Brand palette as literal hex: print output should not depend on CSS variables
 // resolving, and these match the site tokens in styles/globals.css.
 const B = {
-  ink900: '#1A2610', ink700: '#263517', ink500: '#415A27', ink400: '#5E7C3A', ink200: '#B0C492',
+  ink900: '#1A2610', ink700: '#263517', ink500: '#415A27', ink400: '#536E33', ink200: '#B0C492',
   paper: '#FFFFFF', paper000: '#F5F2EB', paper100: '#EAE6DC', paper200: '#D8D3C6',
 };
 

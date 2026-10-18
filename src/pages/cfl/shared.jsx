@@ -40,7 +40,7 @@ export const TopBanner = ({ crumb }) => {
   return (
   <div className="ll-nav cfl-nav">
     <div className="ll-nav__bar ll-glass--dark cfl-nav__bar">
-      <a href={toHref('/')} className="cfl-nav__brand">
+      <a href={toHref('/')} className="cfl-nav__brand" aria-label="Loogo Labs, home">
         <span className="cfl-nav__logo"><img src="/logo.png" alt="" /></span>
         <span className="cfl-nav__brand-text">Loogo Labs</span>
       </a>
@@ -109,7 +109,7 @@ export const CflMap = ({ active }) => {
   const toHref = useHref();
   return (
   <div className="cfl-mapbox">
-    <svg className="cfl-map" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of the Central Florida cities we serve"
+    <svg className="cfl-map" viewBox={`0 0 ${W} ${H}`} role="group" aria-label="Map of the Central Florida cities we serve"
       style={{ width: '100%', height: 'auto', display: 'block' }}>
       <defs>
         <pattern id="cfl-dots" width="16" height="16" patternUnits="userSpaceOnUse">
