@@ -1368,117 +1368,49 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
 
 /* ---- Welcome intro (first visit per session) ---- */
 .ll-welcome {
-  --wl-glow: #C9E59A;
-  position: fixed; inset: 0; z-index: 10000; overflow: hidden;
+  position: fixed; inset: 0; z-index: 10000;
   display: grid; place-items: center;
-  background: radial-gradient(ellipse at 50% 45%, #22331A 0%, #0E1509 70%);
-  color: var(--paper-100);
-  transition: transform 900ms cubic-bezier(.76,0,.24,1), opacity 900ms ease, filter 900ms ease;
+  background: radial-gradient(ellipse at 50% 45%, #1C2A15 0%, #0E1509 75%);
+  transition: opacity 500ms ease, visibility 0s linear 500ms;
 }
-.ll-welcome--out { transform: translateY(-100%); opacity: .4; filter: blur(6px); pointer-events: none; }
-
-.ll-welcome-grid {
-  position: absolute; inset: -50% -50% 0; transform-origin: 50% 100%;
-  background-image:
-    linear-gradient(rgba(201,229,154,.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,229,154,.12) 1px, transparent 1px);
-  background-size: 56px 56px;
-  transform: perspective(600px) rotateX(62deg) translateY(30%);
-  mask-image: linear-gradient(to top, #000 0%, transparent 70%);
-  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 70%);
-  opacity: 0; animation: wl-fade 1200ms ease forwards, wl-grid-run 2.4s linear infinite;
+.ll-welcome--out { opacity: 0; visibility: hidden; pointer-events: none; }
+.ll-welcome--out .ll-welcome-stage { transform: scale(1.04); }
+.ll-welcome-stage {
+  display: grid; justify-items: center; gap: 28px;
+  transition: transform 500ms cubic-bezier(.16,1,.3,1);
 }
-.ll-welcome-scan {
-  position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0 1px, transparent 1px 3px);
-}
-.ll-welcome-scan::after {
-  content: ""; position: absolute; left: 0; right: 0; height: 22vh; top: -22vh;
-  background: linear-gradient(to bottom, transparent, rgba(201,229,154,.16), transparent);
-  animation: wl-sweep 3.2s cubic-bezier(.5,0,.5,1) 200ms infinite;
-}
-.ll-welcome-stage { position: relative; text-align: center; padding: 0 16px; }
-
 .ll-welcome-mark {
-  --size: clamp(150px, 34vmin, 260px);
-  position: relative; width: var(--size); height: var(--size); margin: 0 auto;
-  filter: drop-shadow(0 0 16px rgba(201,229,154,.5));
-  animation: wl-float 5s ease-in-out 3400ms infinite;
+  --size: clamp(96px, 20vmin, 148px);
+  position: relative; width: var(--size); height: var(--size);
 }
 .ll-welcome-tile {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, #F5F2EB 0%, var(--wl-glow) 55%, #86A45C 100%);
+  background: linear-gradient(135deg, #F5F2EB 0%, #C9E59A 60%, #9DBB6E 100%);
   -webkit-mask: url(/monogram.png) center / contain no-repeat;
   mask: url(/monogram.png) center / contain no-repeat;
-  opacity: 0; animation: wl-tile-in 1100ms cubic-bezier(.16,1,.3,1) forwards;
+  opacity: 0; animation: wl-tile-in 650ms cubic-bezier(.16,1,.3,1) forwards;
 }
-.ll-welcome-tile--tl { clip-path: inset(0 50% 50% 0);  --from: translate(-60%, -60%) rotate(-25deg) scale(.4); animation-delay: 250ms; }
-.ll-welcome-tile--tr { clip-path: inset(0 0 50% 50%);  --from: translate(60%, -60%) rotate(25deg) scale(.4);   animation-delay: 450ms; }
-.ll-welcome-tile--bl { clip-path: inset(50% 50% 0 0);  --from: translate(-60%, 60%) rotate(25deg) scale(.4);   animation-delay: 650ms; }
-.ll-welcome-tile--br { clip-path: inset(50% 0 0 50%);  --from: translate(60%, 60%) rotate(-25deg) scale(.4);   animation-delay: 850ms; }
-.ll-welcome-tile--ghost {
-  background: #7FF0FF; mix-blend-mode: screen; filter: blur(1px);
-  --from: none; animation: wl-glitch 700ms steps(1) 1500ms forwards;
+.ll-welcome-tile--tl { clip-path: inset(0 50% 50% 0);  --from: translate(-8%, -8%); animation-delay: 80ms; }
+.ll-welcome-tile--tr { clip-path: inset(0 0 50% 50%);  --from: translate(8%, -8%);  animation-delay: 160ms; }
+.ll-welcome-tile--bl { clip-path: inset(50% 50% 0 0);  --from: translate(-8%, 8%);  animation-delay: 240ms; }
+.ll-welcome-tile--br { clip-path: inset(50% 0 0 50%);  --from: translate(8%, 8%);   animation-delay: 320ms; }
+.ll-welcome-bar {
+  position: relative; display: block; width: 120px; height: 2px; overflow: hidden;
+  border-radius: 2px; background: rgba(245,242,235,.12);
 }
-.ll-welcome-sheen {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.85) 50%, transparent 60%);
-  background-size: 250% 100%; background-position: 150% 0;
-  -webkit-mask: url(/monogram.png) center / contain no-repeat;
-  mask: url(/monogram.png) center / contain no-repeat;
-  animation: wl-sheen 1200ms ease-in-out 2000ms forwards, wl-sheen 1400ms ease-in-out 6s infinite;
+.ll-welcome-bar::after {
+  content: ""; position: absolute; inset: 0; transform-origin: left; transform: scaleX(0);
+  background: #C9E59A; animation: wl-bar 1100ms cubic-bezier(.65,0,.35,1) 150ms forwards;
 }
-.ll-welcome-ring {
-  position: absolute; inset: -18%; border-radius: 50%;
-  border: 1px solid rgba(201,229,154,.35); border-top-color: var(--wl-glow);
-  opacity: 0; animation: wl-fade 600ms ease 1400ms forwards, wl-spin 6s linear infinite;
-}
-.ll-welcome-ring--2 { inset: -30%; border-style: dashed; border-color: rgba(201,229,154,.18); animation-duration: 600ms, 14s; animation-direction: normal, reverse; }
 
-
-.ll-welcome-enter {
-  position: absolute; left: 50%; bottom: max(32px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  background: none; border: 0; cursor: pointer; padding: 12px 20px;
-  font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
-  color: var(--paper-100); white-space: nowrap; opacity: 0; transition: opacity 600ms ease, translate 600ms ease;
-  translate: 0 12px; pointer-events: none;
-}
-.ll-welcome--ready .ll-welcome-enter { opacity: .85; translate: 0 0; pointer-events: auto; }
-.ll-welcome-enter:hover, .ll-welcome-enter:focus-visible { opacity: 1; color: var(--wl-glow); outline: none; }
-.ll-welcome-chevrons { display: grid; gap: 2px; }
-.ll-welcome-chevrons i {
-  display: block; width: 14px; height: 14px; margin: 0 auto;
-  border-left: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(45deg);
-  animation: wl-chev 1.6s ease-in-out infinite;
-}
-.ll-welcome-chevrons i:last-child { animation-delay: .2s; opacity: .5; }
-
-@keyframes wl-fade { to { opacity: 1; } }
-@keyframes wl-grid-run { to { background-position: 0 56px; } }
-@keyframes wl-sweep { to { top: 100vh; } }
 @keyframes wl-tile-in {
-  0% { opacity: 0; transform: var(--from); filter: blur(12px); }
-  60% { opacity: 1; }
-  100% { opacity: 1; transform: none; filter: none; }
+  from { opacity: 0; transform: var(--from); }
+  to { opacity: 1; transform: none; }
 }
-@keyframes wl-glitch {
-  0% { opacity: .7; transform: translate(-6px, 2px); clip-path: inset(10% 0 70% 0); }
-  15% { transform: translate(5px, -1px); clip-path: inset(55% 0 20% 0); }
-  30% { transform: translate(-3px, 0); clip-path: inset(30% 0 45% 0); background: #FF4FD8; }
-  45% { transform: translate(4px, 1px); clip-path: inset(75% 0 5% 0); }
-  60% { transform: translate(-2px, 0); clip-path: inset(5% 0 85% 0); background: #7FF0FF; }
-  100% { opacity: 0; }
-}
-@keyframes wl-sheen { from { background-position: 150% 0; } to { background-position: -50% 0; } }
-@keyframes wl-spin { to { transform: rotate(360deg); } }
-@keyframes wl-float { 50% { transform: translateY(-8px); } }
-@keyframes wl-chev { 0%,100% { transform: translateY(4px) rotate(45deg); } 50% { transform: translateY(-4px) rotate(45deg); } }
+@keyframes wl-bar { to { transform: scaleX(1); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ll-welcome *, .ll-welcome *::after { animation: none !important; }
-  .ll-welcome-tile, .ll-welcome-grid, .ll-welcome-ring { opacity: 1; filter: none; }
-  .ll-welcome-tile--ghost { opacity: 0; }
-  .ll-welcome--out { transform: none; opacity: 0; filter: none; }
+  .ll-welcome *, .ll-welcome *::after { animation: none !important; transition: none !important; }
+  .ll-welcome-tile { opacity: 1; }
+  .ll-welcome-bar::after { transform: none; }
 }
