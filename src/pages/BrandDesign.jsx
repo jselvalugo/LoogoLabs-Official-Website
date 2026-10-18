@@ -6,7 +6,8 @@ const content = {
   source: 'brand_design',
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
   // Empty shows the founder photo.
-  videoUrl: '',
+  videoUrl: '/brand-intro.mp4',
+  videoPoster: '/brand-intro-poster.jpg',
   badge: 'Branding Design',
   callout: 'Central Florida business owners:',
   h1: <>A Brand That Makes You Look Like <em>The Obvious Choice.</em></>,

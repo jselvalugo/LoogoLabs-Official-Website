@@ -50,7 +50,7 @@ const embedUrl = (url) => {
   return null;
 };
 
-function FounderVideo({ url, funnel }) {
+function FounderVideo({ url, poster = '/founder-david-selva.jpg', funnel }) {
   if (!url) {
     return (
       <div className="bd-video bd-video--poster">
@@ -64,7 +64,7 @@ function FounderVideo({ url, funnel }) {
     <div className="bd-video">
       {embed
         ? <iframe src={embed} title="Meet David, founder of Loogo Labs" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen loading="lazy" />
-        : <video src={url} poster="/founder-david-selva.jpg" controls playsInline preload="metadata" onPlay={() => fireCustom('VideoPlay', { funnel })} />}
+        : <video src={url} poster={poster} controls playsInline preload="metadata" onPlay={() => fireCustom('VideoPlay', { funnel })} />}
     </div>
   );
 }
@@ -175,7 +175,7 @@ export default function ScrollFunnel({ c }) {
           {hero.callout && <p className="bd-callout">{hero.callout}</p>}
           <h1 className="lp-h1">{hero.h1}</h1>
           <p className="lp-lede">{hero.lede}</p>
-          <FounderVideo url={c.videoUrl} funnel={c.source} />
+          <FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} />
           <p className="lp-fine">{c.videoCaption}</p>
           <CTA onClick={toSignup} />
           {c.scarcity && <p className="bd-scarcity">{c.scarcity}</p>}
