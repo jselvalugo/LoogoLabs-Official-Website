@@ -27,7 +27,7 @@ export default function Privacy({ onNavigate }) {
       <div className="lg-panel ll-glass">
 
         <Section title="1. Who We Are">
-          <P>Loogo Labs ("Loogo Labs," "we," "us," or "our") operates the website loogolabs.com and provides marketing automation and business platform services to small and mid-size businesses. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website or interact with our services.</P>
+          <P>David Selva, Loogo Labs ("Loogo Labs," "we," "us," or "our") operates the website loogolabs.com and provides marketing automation and business platform services to small and mid-size businesses. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you visit our website or interact with our services.</P>
           <P>If you have questions about this policy, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
         </Section>
 
@@ -115,7 +115,7 @@ export default function Privacy({ onNavigate }) {
 
         <Section title="11. Contact">
           <P>For questions about this policy, email <a href={`mailto:${SITE.email}`} style={linkStyle}>{SITE.email}</a> or write to us:</P>
-          <P><strong>Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
+          <P><strong>David Selva, Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
         <div className="lg-foot">
@@ -177,7 +177,7 @@ function PrivacyES({ onNavigate }) {
         <p className="lg-p" style={noteStyle}>Traducción de cortesía. En caso de discrepancia, prevalece la versión en inglés.</p>
 
         <Section title="1. Quiénes somos">
-          <P>Loogo Labs ("Loogo Labs", "nosotros" o "nuestro") opera el sitio web loogolabs.com y ofrece servicios de automatización de marketing y plataformas de negocio a pequeñas y medianas empresas. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos tu información personal cuando visitas nuestro sitio web o interactúas con nuestros servicios.</P>
+          <P>David Selva, Loogo Labs ("Loogo Labs", "nosotros" o "nuestro"), opera el sitio web loogolabs.com y ofrece servicios de automatización de marketing y plataformas de negocio a pequeñas y medianas empresas. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos tu información personal cuando visitas nuestro sitio web o interactúas con nuestros servicios.</P>
           <P>Si tienes preguntas sobre esta política, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a>.</P>
         </Section>
 
@@ -265,7 +265,7 @@ function PrivacyES({ onNavigate }) {
 
         <Section title="11. Contacto">
           <P>Si tienes preguntas sobre esta política, escribe a <a href={`mailto:${SITE.email}`} style={linkStyle}>{SITE.email}</a> o envíanos una carta:</P>
-          <P><strong>Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
+          <P><strong>David Selva, Loogo Labs</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
 
         <div className="lg-foot">
