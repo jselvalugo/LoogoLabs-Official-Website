@@ -42,7 +42,7 @@ const PRIMARY_PACKAGES = [
     includesPrev: 'Everything in Launch, plus',
     features: [
       'Email & SMS marketing campaigns',
-      'Conversation AI & Reviews AI',
+      'Conversation AI',
       'Social planner & Content AI',
       'Call tracking & attribution reporting',
       'Client portal, surveys & blog',
@@ -133,7 +133,7 @@ const PRIMARY_PACKAGES_ES = [
     includesPrev: 'Todo lo de Launch, más',
     features: [
       'Campañas de marketing por correo y SMS',
-      'Conversation AI y Reviews AI',
+      'Conversation AI',
       'Planificador de redes sociales y Content AI',
       'Seguimiento de llamadas y reportes de atribución',
       'Portal de clientes, encuestas y blog',
