@@ -53,7 +53,7 @@ export default function EmailMarketing() {
       <div className="ll-admin-content-header" style={{ padding: '20px 32px 16px', borderBottom: '1px solid var(--border-hair)', flexShrink: 0 }}>
         <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>Email Marketing</h1>
         <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-          {status === null ? 'Checking Resend…' : status.configured ? `Sending via Resend from ${status.from}` : 'Resend is not configured — set RESEND_API_KEY and RESEND_FROM in Netlify.'}
+          {status === null ? 'Checking Resend…' : status.configured ? `Sending via Resend from ${status.from}` : 'Resend is not configured — set RESEND_API_KEY in Netlify.'}
         </p>
       </div>
 

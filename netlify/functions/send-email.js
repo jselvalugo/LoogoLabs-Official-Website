@@ -14,11 +14,11 @@ export default async (req) => {
   if (auth !== `Bearer ${process.env.ADMIN_SECRET}`) return json({ error: 'Unauthorized' }, 401);
 
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM;
+  const from = process.env.RESEND_FROM || 'David at Loogo Labs <david@loogolabs.com>';
 
   if (req.method === 'GET') return json({ configured: !!(apiKey && from), from: from || null });
   if (req.method !== 'POST') return new Response(null, { status: 405 });
-  if (!apiKey || !from) return json({ error: 'Set RESEND_API_KEY and RESEND_FROM in Netlify environment variables.' }, 500);
+  if (!apiKey || !from) return json({ error: 'Set RESEND_API_KEY in Netlify environment variables.' }, 500);
 
   let body;
   try { body = await req.json(); } catch { return json({ error: 'Invalid JSON' }, 400); }
