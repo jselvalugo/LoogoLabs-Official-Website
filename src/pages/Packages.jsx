@@ -91,10 +91,10 @@ const STANDALONE_SERVICES = [
     description: 'Ongoing Google Business Profile management, citations, on-page fixes, local content, and monthly ranking reports.',
   },
   {
-    title: 'Google Ads Management',
+    title: 'Ads Management',
     price: '$500+',
-    unit: '/mo',
-    description: 'Campaign setup, keyword and negative lists, ad copy, conversion tracking, and ongoing bid and budget optimization.',
+    unit: '/mo per platform',
+    description: 'Google, Facebook & Instagram, and TikTok ads, run from one place: campaign setup, targeting and keywords, ad copy and creative, conversion tracking, and ongoing bid and budget optimization.',
   },
   {
     title: 'Web Design',
@@ -170,9 +170,9 @@ const STANDALONE_SERVICES_ES = [
     description: 'Manejo continuo del Perfil de Empresa en Google, citas en directorios, ajustes en la página, contenido local y reportes mensuales de posiciones.',
   },
   {
-    title: 'Manejo de Google Ads',
-    unit: '/mes',
-    description: 'Configuración de campañas, listas de palabras clave y negativas, textos de anuncios, seguimiento de conversiones y optimización continua de pujas y presupuesto.',
+    title: 'Manejo de publicidad',
+    unit: '/mes por plataforma',
+    description: 'Anuncios en Google, Facebook e Instagram, y TikTok, manejados desde un solo lugar: configuración de campañas, segmentación y palabras clave, textos y creativos, seguimiento de conversiones y optimización continua de pujas y presupuesto.',
   },
   {
     title: 'Diseño web',
