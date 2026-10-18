@@ -16,6 +16,21 @@ const fire = (event, params) => { if (window.fbq) window.fbq('track', event, par
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
 const scrollToSignup = () => document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+// Pick the hero copy that matches the ad: the first `c.heroVariants` key found
+// in the utm tags wins, so an ad tagged utm_content=ai_hook gets the AI hook.
+const pickVariant = (variants) => {
+  if (!variants) return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const tags = ['utm_content', 'utm_term', 'utm_campaign'].map((k) => (params.get(k) || '').toLowerCase()).join(' ');
+    const key = Object.keys(variants).find((k) => tags.includes(k));
+    return key ? variants[key] : null;
+  } catch { return null; }
+};
+
+// One punchy line that opens a section and pulls the reader into it.
+const Hook = ({ children }) => (children ? <p className="bd-hook">{children}</p> : null);
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Ad traffic arrives with utm_* tags; keep them with the lead.
@@ -35,7 +50,7 @@ const embedUrl = (url) => {
   return null;
 };
 
-function FounderVideo({ url, funnel }) {
+function FounderVideo({ url, poster = '/founder-david-selva.jpg', funnel }) {
   if (!url) {
     return (
       <div className="bd-video bd-video--poster">
@@ -49,7 +64,7 @@ function FounderVideo({ url, funnel }) {
     <div className="bd-video">
       {embed
         ? <iframe src={embed} title="Meet David, founder of Loogo Labs" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen loading="lazy" />
-        : <video src={url} poster="/founder-david-selva.jpg" controls playsInline preload="metadata" onPlay={() => fireCustom('VideoPlay', { funnel })} />}
+        : <video src={url} poster={poster} controls playsInline preload="metadata" onPlay={() => fireCustom('VideoPlay', { funnel })} />}
     </div>
   );
 }
@@ -127,6 +142,20 @@ export default function ScrollFunnel({ c }) {
   const toHref = useHref();
   const onBook = () => { fire('Schedule', { content_name: c.source }); openBooking(); };
   const toSignup = () => { fireCustom('FunnelScrollToForm', { funnel: c.source }); scrollToSignup(); };
+  // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
+  const [variant, setVariant] = React.useState(null);
+  React.useEffect(() => { setVariant(pickVariant(c.heroVariants)); }, [c.heroVariants]);
+  const hero = { callout: c.callout, h1: c.h1, lede: c.lede, ...variant };
+  const hooks = c.hooks || {};
+  // Hide the sticky mobile bar once the form itself is on screen.
+  const [formInView, setFormInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = document.getElementById('get-started');
+    if (!el || !('IntersectionObserver' in window)) return undefined;
+    const io = new IntersectionObserver(([e]) => setFormInView(e.isIntersecting), { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
     <main className="ll-shell lp bd">
       <div className="ll-nav lp-nav">
@@ -143,22 +172,32 @@ export default function ScrollFunnel({ c }) {
       <section className="bd-section">
         <div className="lp-card lp-card--glass lp-card--wide lp-hero">
           <div className="lp-center lp-hero__badge"><Badge tone="accent">{c.badge}</Badge></div>
-          <h1 className="lp-h1">{c.h1}</h1>
-          <p className="lp-lede">{c.lede}</p>
-          <FounderVideo url={c.videoUrl} funnel={c.source} />
+          {hero.callout && <p className="bd-callout">{hero.callout}</p>}
+          <h1 className="lp-h1">{hero.h1}</h1>
+          <p className="lp-lede">{hero.lede}</p>
+          <FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} />
           <p className="lp-fine">{c.videoCaption}</p>
           <CTA onClick={toSignup} />
+          {c.scarcity && <p className="bd-scarcity">{c.scarcity}</p>}
         </div>
       </section>
+
+      {c.stat && (
+        <section className="bd-section bd-stat">
+          <div className="bd-stat__val">{c.stat.value}</div>
+          <p className="bd-stat__label">{c.stat.label}</p>
+        </section>
+      )}
 
       {/* Problem */}
       <section className="bd-section">
         <div className="lp-card lp-card--forest lp-card--wide">
+          <Hook>{hooks.problems}</Hook>
           <div className="lp-eyebrow">{c.problemsEyebrow}</div>
           <h2 className="lp-h2">{c.problemsTitle}</h2>
           <div className="lp-problems">
-            {c.problems.map(([title, desc]) => (
-              <div key={title} className="lp-problem">
+            {c.problems.map(([title, desc], i) => (
+              <div key={i} className="lp-problem">
                 <div className="lp-problem__x" aria-hidden="true"><X size={14} weight="bold" /></div>
                 <h3>{title}</h3><p>{desc}</p>
               </div>
@@ -167,14 +206,30 @@ export default function ScrollFunnel({ c }) {
         </div>
       </section>
 
+      {c.checklist && (
+        <section className="bd-section">
+          <div className="lp-card lp-card--glass lp-card--wide">
+            <Hook>{hooks.checklist}</Hook>
+            <h2 className="lp-h2">{c.checklist.title}</h2>
+            <ul className="bd-checklist">
+              {c.checklist.items.map((item, i) => (
+                <li key={i}><span className="bd-checklist__box" aria-hidden="true"><Check size={14} weight="bold" /></span>{item}</li>
+              ))}
+            </ul>
+            <p className="bd-checklist__foot">{c.checklist.footer}</p>
+          </div>
+        </section>
+      )}
+
       {/* Deliverables */}
       <section className="bd-section">
         <div className="lp-card lp-card--glass lp-card--wide">
+          <Hook>{hooks.deliverables}</Hook>
           <div className="lp-eyebrow">What you get</div>
           <h2 className="lp-h2">{c.deliverablesTitle}</h2>
           <div className="lp-caps bd-caps">
-            {c.deliverables.map(([title, desc, Icon]) => (
-              <div key={title} className="lp-cap">
+            {c.deliverables.map(([title, desc, Icon], i) => (
+              <div key={i} className="lp-cap">
                 <span className="lp-cap__icon" aria-hidden="true"><Icon size={22} weight="duotone" /></span>
                 <div><h3>{title}</h3><p>{desc}</p></div>
               </div>
@@ -183,14 +238,38 @@ export default function ScrollFunnel({ c }) {
         </div>
       </section>
 
+      {c.compare && (
+        <section className="bd-section">
+          <div className="lp-card lp-card--glass lp-card--wide">
+            <Hook>{hooks.compare}</Hook>
+            <h2 className="lp-h2">{c.compare.title}</h2>
+            <div className="bd-compare" role="table">
+              <div className="bd-compare__row bd-compare__head" role="row">
+                <span role="columnheader" />
+                <span role="columnheader">{c.compare.cols[0]}</span>
+                <span role="columnheader" className="bd-compare__us">{c.compare.cols[1]}</span>
+              </div>
+              {c.compare.rows.map(([label, without, withUs], i) => (
+                <div key={i} className="bd-compare__row" role="row">
+                  <span role="rowheader" className="bd-compare__label">{label}</span>
+                  <span role="cell" className="bd-compare__them"><X size={12} weight="bold" aria-hidden="true" /> {without}</span>
+                  <span role="cell" className="bd-compare__us"><Check size={12} weight="bold" aria-hidden="true" /> {withUs}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Process */}
       <section className="bd-section">
         <div className="lp-card lp-card--glass lp-card--wide">
+          <Hook>{hooks.steps}</Hook>
           <div className="lp-eyebrow">How it works</div>
           <h2 className="lp-h2">{c.stepsTitle}</h2>
           <ol className="bd-steps">
             {c.steps.map(([title, desc], i) => (
-              <li key={title}>
+              <li key={i}>
                 <span className="bd-steps__n" aria-hidden="true">{i === c.steps.length - 1 ? <Check size={14} weight="bold" /> : i + 1}</span>
                 <div><h3>{title}</h3><p>{desc}</p></div>
               </li>
@@ -225,6 +304,7 @@ export default function ScrollFunnel({ c }) {
       {/* Proof */}
       <section className="bd-section">
         <div className="lp-card lp-card--sage lp-card--wide">
+          <Hook>{hooks.proof}</Hook>
           <div className="lp-eyebrow">What clients say</div>
           <h2 className="lp-h2">Real reviews from real Loogo Labs clients.</h2>
           <div className="lp-proof">
@@ -249,7 +329,13 @@ export default function ScrollFunnel({ c }) {
       {/* Sign-up */}
       <section className="bd-section" id="get-started">
         <SignupForm c={c} onBook={onBook} />
+        {c.scarcity && <p className="bd-scarcity">{c.scarcity}</p>}
       </section>
+
+      {/* Mobile: the form is always one tap away. */}
+      <div className={`bd-sticky${formInView ? ' bd-sticky--hidden' : ''}`} aria-hidden={formInView || undefined}>
+        <button type="button" onClick={toSignup}>{c.stickyLabel || 'Get started'} <ArrowDown size={14} weight="bold" aria-hidden="true" /></button>
+      </div>
 
       <footer className="lp-footer">
         <div className="lp-footer__pill ll-glass">
