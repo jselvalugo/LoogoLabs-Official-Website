@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `catering-holiday-party-headcount-lock-date`,
+    title: `The Office Party Headcount Is a Guess Until You Date It`,
+    excerpt: `A December party booked in October has a headcount that keeps moving, and the only fix is a lock date the client agreed to before the first number was given.`,
+    tags: `Holiday Booking, Headcount, Catering`,
+    content: `The number on a December party order is a guess, and you are the one who pays for the wrong guess. The client says sixty in October, sixty-eight on the Monday of party week, and fifty-five at ten the night before, after two departments decide to skip it. You already bought the protein for sixty-eight.
+
+None of those people are lying. An office manager collecting RSVPs from a dozen teams is doing their best with moving information. The problem is that nothing in your booking tells them when guessing has to stop.
+
+## Who this is for, and why it is October
+
+This is for the owner of a small catering company who is taking holiday party bookings right now. The calendar is filling up for the first three weeks of December, and every one of those orders carries a headcount that is not final. What follows is a way to make it final on a date you choose.
+
+## Put the lock date in the booking, not the invoice
+
+A headcount lock is the date after which the number can go up but not down. It has to be agreed at booking, in plain words, before the client has said any number at all. If it first appears on the final invoice, it reads as a penalty. If it appears at booking, it reads as how the job works.
+
+To pick yours, count backward from your own constraints. How many days before the event do you place your largest orders? When does your prep cook need a number to schedule the kitchen? Whatever that day is, add a day of cushion and that is the lock. For many shops it lands about a week out, but I would not take my number for yours. Use your own ordering calendar.
+
+Write it as one sentence in the booking confirmation: "Your final headcount is due by Friday, December 4. After that we can add guests at the same per-person price, and we can't reduce the order."
+
+## Ask for the number three times, on dates
+
+One request a week out does not work, because the office manager hasn't counted yet. Space the asks so that each one is easier to answer than the last.
+
+- **Two weeks before the lock:** a text from you asking for a rough number and how many are still undecided. This is not binding. It tells you where the order is heading.
+- **Three days before the lock:** a text with the number they gave you and a reply-with-the-new-number prompt. Most people just correct a figure. They don't build one from scratch.
+- **The morning of the lock:** a short text saying today is the day, and the number on file is what you will cook for. If you haven't heard, you call.
+
+Each message names the date and repeats the number on file. Nobody has to open an email and hunt for the policy.
+
+> Hi Dana, this is Marco at the kitchen. Friday is the lock day for your December 11 lunch, and I have 64 on file. If the number has changed, reply with the new one. If it's still 64, reply 64 and you're set.
+
+## Decide what happens after the lock before it happens
+
+The rule I gave above, adds at the same price and no reductions, is a decision you make once, now, while you are not on the phone with a client who wants a favor. Some shops add a small margin after the lock for guests who come as plus-ones. Others cap additions at a share of the original order, because past a point the extra food is a new order. Pick yours, and write it down.
+
+Then keep it, and keep it kindly. The first time you waive the lock for a good client, you've told every client the date is a suggestion. If you do make an exception, tell them it is one, and what it cost you.
+
+## The seam
+
+A lock date does not fix a client who simply does not know their number, and a text can't count people for them. If the office manager is stuck, the best thing you can do is offer a simple way to count: "Ask each team lead for a yes or no by Wednesday, and send me the total." That's a conversation, so it's yours, not the system's.
+
+Also, text only does the reminding. Someone on your side still has to look at the replies, update the order and tell the kitchen. If the answer lands in a thread nobody checks, the lock date is theater.
+
+## Do this before the weekend
+
+Open your December bookings and write down, for each one, the date its headcount locks. If you can't find one, you have a booking with no lock, and that is the one to message today. Send the sentence from above, with the date filled in, and ask them to reply to confirm.`,
+  },
+  {
     slug: `auto-repair-declined-repairs-revisit-date`,
     title: `Every "Not Today" at Your Counter Needs a Revisit Date`,
     excerpt: `A declined repair is three different situations under one label, and only you know which one is a cold snap away from a tow truck.`,
