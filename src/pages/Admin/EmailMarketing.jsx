@@ -65,7 +65,7 @@ export default function EmailMarketing() {
           <textarea style={{ ...inputStyle, minHeight: 320, resize: 'vertical', lineHeight: 1.5 }} value={body} onChange={(e) => setBody(e.target.value)} />
           <p style={{ fontSize: 12, color: 'var(--ink-400)', margin: '6px 0 0' }}>Plain text; blank lines become paragraphs. Use {'{{first_name}}'} or {'{{name}}'} to personalise.</p>
           <div style={{ ...labelStyle, marginTop: 16 }}>Reply-to (optional)</div>
-          <input style={inputStyle} value={replyTo} onChange={(e) => setReplyTo(e.target.value)} placeholder="you@loogolabs.com" />
+          <input style={inputStyle} value={replyTo} onChange={(e) => setReplyTo(e.target.value)} placeholder="david@loogolabs.com (default)" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 20 }}>
             <button onClick={send} disabled={!canSend}
               style={{ padding: '9px 18px', border: 'none', borderRadius: 'var(--radius-1)', background: canSend ? 'var(--ink-900)' : 'var(--ink-300)', color: 'var(--paper-000)', fontSize: 14, fontFamily: 'var(--font-body)', cursor: canSend ? 'pointer' : 'not-allowed' }}>

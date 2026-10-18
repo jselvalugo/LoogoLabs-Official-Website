@@ -14,7 +14,7 @@ export default async (req) => {
   if (auth !== `Bearer ${process.env.ADMIN_SECRET}`) return json({ error: 'Unauthorized' }, 401);
 
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM || 'David at Loogo Labs <david@loogolabs.com>';
+  const from = process.env.RESEND_FROM || 'David at Loogo Labs <david@marketing.loogolabs.com>';
 
   if (req.method === 'GET') return json({ configured: !!(apiKey && from), from: from || null });
   if (req.method !== 'POST') return new Response(null, { status: 405 });
@@ -43,7 +43,7 @@ export default async (req) => {
     const chunk = recipients.slice(i, i + 100);
     const payload = chunk.map((r) => {
       const msg = fill(text, r);
-      return { from, to: [r.email], subject: fill(subject, r), text: msg, html: toHtml(msg), ...(body.reply_to ? { reply_to: body.reply_to } : {}) };
+      return { from, to: [r.email], subject: fill(subject, r), text: msg, html: toHtml(msg), reply_to: body.reply_to || 'david@loogolabs.com' };
     });
     const res = await fetch('https://api.resend.com/emails/batch', {
       method: 'POST',
