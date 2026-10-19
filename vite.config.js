@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 // `vite preview` answers /mission and any unknown URL with dist/index.html — the
 // pre-rendered Home page — so the client hydrated Home's markup as another page
 // and threw hydration errors. Serve files the way Netlify does instead: a route's
-// own index.html, the app shell for /news/* (see netlify.toml), else 404.html.
+// own .html file, the app shell for /news/* (see netlify.toml), else 404.html.
 function netlifyLikePreview() {
   return {
     name: 'netlify-like-preview',
@@ -17,9 +17,9 @@ function netlifyLikePreview() {
         const [pathname, query = ''] = req.url.split('?');
         const path = decodeURIComponent(pathname);
         if (path === '/' || /\.[a-z0-9]+$/i.test(path)) return next();
-        const index = join(dist, path, 'index.html');
-        if (index.startsWith(dist) && existsSync(index)) {
-          req.url = `${path.replace(/\/?$/, '/')}index.html${query ? `?${query}` : ''}`;
+        const page = join(dist, `${path.replace(/\/$/, '')}.html`);
+        if (page.startsWith(dist) && existsSync(page)) {
+          req.url = `${path.replace(/\/$/, '')}.html${query ? `?${query}` : ''}`;
           return next();
         }
         if (path.startsWith('/news/')) { req.url = '/index.html'; return next(); }
