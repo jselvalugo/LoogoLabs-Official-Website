@@ -126,6 +126,8 @@ export const crm_instances = pgTable('crm_instances', {
   slug: text('slug').notNull().unique(),
   // active | suspended — a suspended instance cannot sign in.
   status: text('status').notNull().default('active'),
+  // At most one instance receives website form leads (see website_leads_into_crm).
+  receives_website_leads: boolean('receives_website_leads').notNull().default(false),
   created_at: timestamp('created_at').defaultNow(),
 });
 
@@ -195,6 +197,8 @@ export const crm_leads = pgTable('crm_leads', {
   converted_company_id: uuid('converted_company_id').references(() => crm_companies.id, { onDelete: 'set null' }),
   converted_contact_id: uuid('converted_contact_id').references(() => crm_contacts.id, { onDelete: 'set null' }),
   converted_opportunity_id: uuid('converted_opportunity_id'),
+  // The website form lead (leads table) this was copied from, if any.
+  website_lead_id: uuid('website_lead_id').unique().references(() => leads.id, { onDelete: 'set null' }),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });
