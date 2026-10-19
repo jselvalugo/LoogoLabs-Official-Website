@@ -5,6 +5,10 @@ import { STAGES, text, tokenHash } from '../lib/crm.js';
 // at https://crm.loogolabs.com/mcp/<token>. The token can also be sent as
 // "Authorization: Bearer <token>" to /mcp. Tokens are created in /admin →
 // CRM Instances, and each one is locked to a single instance.
+//
+// Scope: this server manages CRM data only (contacts, notes, pipeline, team
+// list). It has no access to the website, blog, leads, proposals, analytics,
+// email or the CRM instances/users themselves, which stay in /admin.
 export const config = { path: ['/mcp', '/mcp/*'] };
 
 const SERVER = { name: 'Loogo Labs CRM', version: '1.0.0' };
@@ -23,61 +27,61 @@ const contactProps = {
 const TOOLS = [
   {
     name: 'search_contacts',
-    title: 'Search contacts',
+    title: 'CRM: Search contacts',
     description: 'Find contacts by name, company, email or phone, optionally filtered by pipeline stage. An empty query lists the most recently updated contacts.',
     inputSchema: { type: 'object', properties: { query: { type: 'string' }, stage: stageEnum, limit: { type: 'integer', minimum: 1, maximum: 100, default: 25 } } },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'get_contact',
-    title: 'Get contact',
+    title: 'CRM: Get contact',
     description: 'Get one contact with all of its notes, newest first.',
     inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'create_contact',
-    title: 'Create contact',
+    title: 'CRM: Create contact',
     description: 'Add a new contact. Stage defaults to "lead".',
     inputSchema: { type: 'object', properties: contactProps, required: ['name'] },
   },
   {
     name: 'update_contact',
-    title: 'Update contact',
+    title: 'CRM: Update contact',
     description: 'Change fields on a contact, including moving it to another pipeline stage. Only the fields you pass are changed.',
     inputSchema: { type: 'object', properties: { id: { type: 'string' }, ...contactProps }, required: ['id'] },
     annotations: { idempotentHint: true },
   },
   {
     name: 'add_note',
-    title: 'Add note',
+    title: 'CRM: Add note',
     description: 'Add a note to a contact (a call summary, next step, etc). Notes show in the contact timeline and the overview activity feed.',
     inputSchema: { type: 'object', properties: { contact_id: { type: 'string' }, body: { type: 'string' } }, required: ['contact_id', 'body'] },
   },
   {
     name: 'delete_contact',
-    title: 'Delete contact',
+    title: 'CRM: Delete contact',
     description: 'Permanently delete a contact and all of its notes. Confirm with the user before calling this.',
     inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
     annotations: { destructiveHint: true },
   },
   {
     name: 'list_team',
-    title: 'List team',
+    title: 'CRM: List team',
     description: 'The users who can sign in to this CRM workspace, with their roles.',
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'pipeline_summary',
-    title: 'Pipeline summary',
+    title: 'CRM: Pipeline summary',
     description: 'Number of contacts and total deal value in each pipeline stage.',
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'recent_activity',
-    title: 'Recent activity',
+    title: 'CRM: Recent activity',
     description: 'The latest notes across all contacts.',
     inputSchema: { type: 'object', properties: { limit: { type: 'integer', minimum: 1, maximum: 100, default: 20 } } },
     annotations: { readOnlyHint: true },
@@ -217,7 +221,7 @@ async function handle(msg, auth) {
         protocolVersion: PROTOCOL_VERSIONS.includes(asked) ? asked : PROTOCOL_VERSIONS[0],
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER,
-        instructions: `Tools for the "${auth.instance_name}" workspace in Loogo Labs CRM. Pipeline stages: ${STAGES.join(', ')}. Use search_contacts to find a contact id before get_contact, update_contact or add_note.`,
+        instructions: `Loogo Labs CRM manages only the CRM: contacts, notes, the sales pipeline and the team list of the "${auth.instance_name}" workspace. It cannot change the Loogo Labs website, blog, website leads, proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Pipeline stages: ${STAGES.join(', ')}. Use search_contacts to find a contact id before get_contact, update_contact or add_note.`,
       });
     }
     case 'ping':
