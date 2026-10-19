@@ -15,6 +15,56 @@
 # Posts are the exception: one can be published from /admin without a rebuild,
 # so its slug has no file yet. Fall those through to the app, which fetches the
 # post and marks the page noindex if the slug really does not exist.
+# The CRM app (crm.html) owns every path on crm.loogolabs.com. Static assets
+# and functions are passed through first, because a forced rule would otherwise
+# shadow them too. /crm on the main domain serves the same app (handy before DNS
+# is live and for local preview).
+[[redirects]]
+  from = "https://crm.loogolabs.com/assets/*"
+  to = "/assets/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/fonts/*"
+  to = "/fonts/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/.netlify/*"
+  to = "/.netlify/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/admin-logo.png"
+  to = "/admin-logo.png"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/favicon.svg"
+  to = "/favicon.svg"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/*"
+  to = "/crm.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/crm/*"
+  to = "/crm.html"
+  status = 200
+
+[[redirects]]
+  from = "/crm"
+  to = "/crm.html"
+  status = 200
+
 # Pricing is withdrawn while plans are reworked; send old links home rather
 # than to a 404.
 [[redirects]]
@@ -70,6 +120,11 @@
 
 [[headers]]
   for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/crm.html"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 

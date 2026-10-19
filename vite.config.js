@@ -1,7 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // `vite preview` answers /mission and any unknown URL with dist/index.html — the
 // pre-rendered Home page — so the client hydrated Home's markup as another page
@@ -23,6 +26,7 @@ function netlifyLikePreview() {
           return next();
         }
         if (path.startsWith('/news/')) { req.url = '/index.html'; return next(); }
+        if (path === '/crm' || path.startsWith('/crm/')) { req.url = '/crm.html'; return next(); }
         res.statusCode = 404;
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.end(readFileSync(join(dist, '404.html')));
@@ -33,4 +37,10 @@ function netlifyLikePreview() {
 
 export default defineConfig({
   plugins: [react(), netlifyLikePreview()],
+  // crm.html is the separate CRM app served at crm.loogolabs.com (see netlify.toml).
+  build: {
+    rollupOptions: {
+      input: { main: resolve(__dirname, 'index.html'), crm: resolve(__dirname, 'crm.html') },
+    },
+  },
 });
