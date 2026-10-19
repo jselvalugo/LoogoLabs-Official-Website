@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `pet-sitter-visit-done-text-while-owner-is-away`,
+    title: `Traveling Owners Text "Did You Come?" Unless You Text First`,
+    excerpt: `An owner on a holiday trip cannot tell a quiet sitter from a missing one, so the visit-done text has to arrive before the worried one does.`,
+    tags: `Client Updates, Holiday Travel, Pet Sitters`,
+    content: `By Thursday of Thanksgiving week, the owner on a beach in another state has texted you three times: "Did you make it?" at 8:40, "Is she okay?" at 12:15, and a call you couldn't take because you were holding a leash in one hand and a bag in the other. You made it every time. The owner just has no way to know that, so they check, and each check pulls you out of the visit you are in.
+
+Nothing about your care is the issue. The silence is. When someone leaves a dog, a cat or a houseful of animals with a person they met twice, no news does not feel like good news.
+
+## The text owners are really asking for
+
+Look at what those anxious messages say. They are almost never complaints. They are requests for three facts: you came, the animal is fine, and the visit was the length you promised.
+
+So send those three facts before they ask. One text, within a few minutes of leaving the house:
+
+> Hi Priya, Biscuit's midday visit is done. I arrived at 12:10 and left at 12:45. He ate everything, went out twice, and is asleep on the couch.
+
+The arrival and departure times do the heavy lifting. They are the proof, and they answer "did you make it" and "did you stay the whole time" without the owner having to word either question.
+
+## Write one line, let the system write the rest
+
+You will not type a full message at every door, and you shouldn't. The visit is the job.
+
+What works is a short form on your phone with a few taps: which pet, how the meal went, and a single line of free text. Submitting it triggers the text. The system fills in the owner's name, the pet's name and the time, and your one line goes at the end. The extra effort is about fifteen seconds, and you do it on the walk back to the car.
+
+The free line is the part that matters. "He found a sock under the bed and was very pleased" tells the owner you were paying attention. A text that says only "visit complete" reads like a receipt, and an owner who gets receipts still wonders.
+
+Add a photo if the form lets you attach one. One photo beats three sentences.
+
+## The text that matters more is the late one
+
+The completed-visit text is the easy part. The harder part is the day you are running behind.
+
+Say your midday visit is booked for noon to 12:30, and a slow stop earlier has you pulling up at 1:05. If the owner finds out by their own check-in, you have turned a delay into a worry. If you tell them at 12:20, it is just a delay.
+
+So give yourself a rule: any visit that will start more than twenty minutes outside its window gets a heads-up text before the window closes. Keep it plain.
+
+> Hi Priya, I'm running about 35 minutes behind today and will reach Biscuit around 12:45. He's fine on his schedule, I just wanted you to know.
+
+Pick your own number instead of twenty. The point is to have a number, because you will not decide it fairly while stressed.
+
+## Where this falls short
+
+A text can't tell an owner something went wrong. If a pet is limping, refused food, or got out of a gate, that is a phone call, now, from you, and not a form submission. Build the form so one of its options is "call me," and make that choice ring your phone instead of sending a friendly message.
+
+Also, a stream of cheerful texts can set a trap. If every message sounds identical, owners stop reading them, and the one with real news disappears into the pile. That is why the free line should say something true and specific each time.
+
+## One change for your holiday week
+
+Pick your busiest holiday day. Count the visits you have booked that day and, for each one, write down whether the owner will hear from you before they have to ask. Then, for just that day, send the completed-visit text on every stop, with arrival and leaving times. At the end of the week, count how many owners texted you first. If the number is near zero, keep doing it.`,
+  },
+  {
     slug: `photographer-holiday-card-session-last-order-date`,
     title: `Your Holiday Session Needs a Last-Order Date, Not a Last Slot`,
     excerpt: `A family that books a card portrait on December 4th is buying a Christmas you cannot deliver unless you counted backward from the mailbox.`,

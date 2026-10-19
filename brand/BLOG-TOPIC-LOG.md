@@ -88,3 +88,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-17 | auto-repair-declined-repairs-revisit-date | Auto repair | Declined work — bucket and dated revisit per declined line, free re-check text two weeks before a named event, one revisit per item
 - 2026-10-18 | catering-holiday-party-headcount-lock-date | Catering | Holiday booking — headcount lock date agreed at booking, three dated number requests, stated after-lock add/no-reduce rule
 - 2026-10-19 | photographer-holiday-card-session-last-order-date | Photographers | Holiday booking — last-order date counted backward from the 24th, cards-by-Christmas vs digital-only products, date repeated in confirmation, reminder and gallery email
+- 2026-10-19 | pet-sitter-visit-done-text-while-owner-is-away | Pet sitters & dog walkers | Client updates — visit-done text with arrival/leave times and one personal line, plus a heads-up text when running late, for owners traveling over the holidays
