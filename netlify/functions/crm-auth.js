@@ -1,6 +1,5 @@
-import { getDatabase } from '@netlify/database';
 import {
-  createSession, currentUser, email, endSession, hashPassword, json, passwordProblem, verifyPassword,
+  createSession, currentUser, db, email, endSession, hashPassword, json, passwordProblem, verifyPassword,
 } from '../lib/crm.js';
 
 // CRM sign-in. POST { action: 'login' | 'logout' | 'me' | 'change_password' }.
@@ -8,7 +7,7 @@ export default async (req) => {
   if (req.method !== 'POST') return new Response(null, { status: 405 });
   let body;
   try { body = await req.json(); } catch { return json({ error: 'Invalid JSON' }, 400); }
-  const { sql } = getDatabase();
+  const { sql } = db();
 
   if (body.action === 'login') {
     const [user] = await sql`

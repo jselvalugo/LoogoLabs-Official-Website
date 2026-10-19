@@ -1,4 +1,4 @@
-import { pgTable, uuid, timestamp, text, integer, jsonb, numeric, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, timestamp, text, integer, jsonb, numeric, boolean, date } from 'drizzle-orm/pg-core';
 
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -148,29 +148,92 @@ export const crm_sessions = pgTable('crm_sessions', {
   expires_at: timestamp('expires_at').notNull(),
 });
 
-export const crm_contacts = pgTable('crm_contacts', {
+// CRM records — columns match src/crm/entities.js; see the crm_full_data_model migration.
+const crmOwner = () => uuid('owner_id').references(() => crm_users.id, { onDelete: 'set null' });
+const crmInstance = () => uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' });
+
+export const crm_companies = pgTable('crm_companies', {
   id: uuid('id').defaultRandom().primaryKey(),
-  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  instance_id: crmInstance(),
   name: text('name').notNull(),
-  company: text('company').notNull().default(''),
-  email: text('email').notNull().default(''),
-  phone: text('phone').notNull().default(''),
-  // lead | qualified | proposal | won | lost
-  stage: text('stage').notNull().default('lead'),
-  value: numeric('value'),
+  domain: text('domain'), website: text('website'), industry: text('industry'), type: text('type'),
+  employees: numeric('employees'), annual_revenue: numeric('annual_revenue'), phone: text('phone'),
+  address: text('address'), city: text('city'), state: text('state'), postal_code: text('postal_code'), country: text('country'),
+  owner_id: crmOwner(),
+  description: text('description'),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });
 
-export const crm_notes = pgTable('crm_notes', {
+export const crm_contacts = pgTable('crm_contacts', {
   id: uuid('id').defaultRandom().primaryKey(),
-  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
-  contact_id: uuid('contact_id').notNull().references(() => crm_contacts.id, { onDelete: 'cascade' }),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  title: text('title'),
+  company_id: uuid('company_id').references(() => crm_companies.id, { onDelete: 'set null' }),
+  email: text('email'), phone: text('phone'), mobile: text('mobile'),
+  lifecycle: text('lifecycle'), source: text('source'), linkedin: text('linkedin'),
+  address: text('address'), city: text('city'), state: text('state'), postal_code: text('postal_code'), country: text('country'),
+  owner_id: crmOwner(),
+  description: text('description'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_leads = pgTable('crm_leads', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  company_name: text('company_name'), title: text('title'), email: text('email'), phone: text('phone'), website: text('website'),
+  // new | contacted | qualified | unqualified | converted
+  status: text('status').notNull().default('new'),
+  rating: text('rating'), source: text('source'), estimated_value: numeric('estimated_value'),
+  industry: text('industry'), city: text('city'), country: text('country'),
+  owner_id: crmOwner(),
+  description: text('description'),
+  converted_at: timestamp('converted_at'),
+  converted_company_id: uuid('converted_company_id').references(() => crm_companies.id, { onDelete: 'set null' }),
+  converted_contact_id: uuid('converted_contact_id').references(() => crm_contacts.id, { onDelete: 'set null' }),
+  converted_opportunity_id: uuid('converted_opportunity_id'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_opportunities = pgTable('crm_opportunities', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  company_id: uuid('company_id').references(() => crm_companies.id, { onDelete: 'set null' }),
+  contact_id: uuid('contact_id').references(() => crm_contacts.id, { onDelete: 'set null' }),
+  // prospecting | qualification | proposal | negotiation | won | lost
+  stage: text('stage').notNull().default('prospecting'),
+  amount: numeric('amount'), probability: numeric('probability'), close_date: date('close_date'),
+  type: text('type'), source: text('source'), next_step: text('next_step'), lost_reason: text('lost_reason'),
+  owner_id: crmOwner(),
+  description: text('description'),
+  closed_at: timestamp('closed_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// Timeline for any record above; entity_type is the entities.js key ('contacts', ...).
+export const crm_activities = pgTable('crm_activities', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  entity_type: text('entity_type').notNull(),
+  entity_id: uuid('entity_id').notNull(),
+  // note | call | email | meeting | task
+  type: text('type').notNull().default('note'),
+  subject: text('subject'),
+  body: text('body'),
+  due_date: date('due_date'),
+  completed_at: timestamp('completed_at'),
+  owner_id: crmOwner(),
   user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
-  body: text('body').notNull(),
-  // Set when the note came from the MCP (no CRM user), e.g. "Claude (Jose's laptop)".
+  // Set when written through the MCP, e.g. "Claude (Jose's laptop)".
   author_label: text('author_label'),
   created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
 });
 
 // Tokens for the Loogo Labs CRM MCP server, one instance each — see create_crm_api_tokens.

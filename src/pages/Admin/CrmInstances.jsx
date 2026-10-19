@@ -204,7 +204,7 @@ function McpTokens({ inst, onTokens }) {
         <div style={{ flex: 1 }}>
           <div style={{ fontWeight: 600, fontSize: 14 }}>Claude connections (MCP)</div>
           <div style={{ fontSize: 12, color: 'var(--ink-400)' }}>
-            CRM only: lets Claude manage this workspace's contacts, notes and pipeline, and see its team. It cannot touch the website, blog, leads, proposals, analytics, or any users and passwords.
+            CRM only: lets Claude manage this workspace's companies, contacts, leads, opportunities and activities, and see its team. It cannot touch the website, blog, the website's Leads CRM or proposals, analytics, or any users and passwords.
           </div>
         </div>
         <button style={btn} onClick={create}>New connection</button>

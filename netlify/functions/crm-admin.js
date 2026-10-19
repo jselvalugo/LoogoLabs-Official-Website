@@ -1,5 +1,4 @@
-import { getDatabase } from '@netlify/database';
-import { ROLES, email, hashPassword, newToken, isSiteAdmin, json, passwordProblem, text, validEmail } from '../lib/crm.js';
+import { db, email, hashPassword, isSiteAdmin, json, newToken, passwordProblem, ROLES, text, validEmail } from '../lib/crm.js';
 
 const slugify = (v) => text(v, 60).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -7,7 +6,7 @@ const slugify = (v) => text(v, 60).toLowerCase().replace(/[^a-z0-9]+/g, '-').rep
 // takes { action, ...fields }. Guarded by the site admin token, not a CRM login.
 export default async (req) => {
   if (!isSiteAdmin(req)) return json({ error: 'Unauthorized' }, 401);
-  const { sql } = getDatabase();
+  const { sql } = db();
 
   if (req.method === 'GET') {
     const instances = await sql`

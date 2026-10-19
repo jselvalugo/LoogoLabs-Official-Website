@@ -4,6 +4,11 @@ import { getDatabase } from '@netlify/database';
 
 const scrypt = promisify(scryptCb);
 
+// One database handle per function instance. getDatabase() builds a new
+// connection pool on every call, so calling it per query would leak pools.
+let handle;
+export const db = () => (handle ??= getDatabase());
+
 export const STAGES = ['lead', 'qualified', 'proposal', 'won', 'lost'];
 export const ROLES = ['owner', 'member'];
 const SESSION_DAYS = 30;
@@ -38,7 +43,7 @@ export function passwordProblem(password) {
 export const tokenHash = (token) => createHash('sha256').update(token).digest('hex');
 
 export async function createSession(userId) {
-  const { sql } = getDatabase();
+  const { sql } = db();
   const { token } = newToken();
   const expires = new Date(Date.now() + SESSION_DAYS * 86400000);
   await sql`INSERT INTO crm_sessions (token_hash, user_id, expires_at) VALUES (${tokenHash(token)}, ${userId}, ${expires})`;
@@ -49,7 +54,7 @@ export async function createSession(userId) {
 export async function endSession(req) {
   const token = bearer(req);
   if (!token) return;
-  const { sql } = getDatabase();
+  const { sql } = db();
   await sql`DELETE FROM crm_sessions WHERE token_hash = ${tokenHash(token)}`;
 }
 
@@ -63,7 +68,7 @@ const bearer = (req) => {
 export async function currentUser(req) {
   const token = bearer(req);
   if (!token) return null;
-  const { sql } = getDatabase();
+  const { sql } = db();
   const [row] = await sql`
     SELECT u.id, u.email, u.name, u.role, u.instance_id, i.name AS instance_name, i.slug AS instance_slug
     FROM crm_sessions s
