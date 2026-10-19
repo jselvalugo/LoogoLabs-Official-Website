@@ -1,4 +1,5 @@
 import { db, email, hashPassword, isSiteAdmin, json, newToken, passwordProblem, ROLES, text, validEmail } from '../lib/crm.js';
+import { receiveWebsiteLeads } from '../lib/website-leads.js';
 
 const slugify = (v) => text(v, 60).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -75,15 +76,15 @@ export default async (req) => {
         }
         return json(row);
       }
-      // Website form leads are copied into this instance (netlify/lib/website-leads.js).
-      // Only one instance receives them; on: false stops them for everyone.
+      // Website form leads are copied into one instance (netlify/lib/website-leads.js).
+      // Turning it on also moves/copies the existing ones; on: false stops them for everyone.
       case 'set_website_leads': {
-        await sql`UPDATE crm_instances SET receives_website_leads = false WHERE receives_website_leads`;
-        if (body.on !== false) {
-          const [row] = await sql`UPDATE crm_instances SET receives_website_leads = true WHERE id = ${body.id} RETURNING id`;
-          if (!row) return json({ error: 'Not found' }, 404);
+        if (body.on === false) {
+          await sql`UPDATE crm_instances SET receives_website_leads = false WHERE receives_website_leads`;
+          return json({ ok: true });
         }
-        return json({ ok: true });
+        const result = await receiveWebsiteLeads(body.id);
+        return result ? json({ ok: true, ...result }) : json({ error: 'Not found' }, 404);
       }
       case 'delete_instance': {
         await sql`DELETE FROM crm_instances WHERE id = ${body.id}`;

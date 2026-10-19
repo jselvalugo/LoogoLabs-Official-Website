@@ -105,8 +105,12 @@ function Instance({ inst, onChange, onUsers, onDeleted, onWebsiteLeads }) {
 
   const websiteLeads = () => {
     const on = !inst.receives_website_leads;
-    if (on && !window.confirm(`Send new website form leads to "${inst.name}"? They stop going to any other instance.`)) return;
-    run(async () => { await crm('set_website_leads', { id: inst.id, on }); onWebsiteLeads(on); });
+    if (on && !window.confirm(`Send website form leads to "${inst.name}"? New ones stop going to any other instance, and website leads already in another instance move here (unless converted there).`)) return;
+    run(async () => {
+      const res = await crm('set_website_leads', { id: inst.id, on });
+      onWebsiteLeads(on);
+      if (on) window.alert(`"${inst.name}" now receives website leads. Moved ${res.moved}, copied ${res.copied} existing lead${res.copied === 1 ? '' : 's'}.`);
+    });
   };
   const toggle = () => run(async () => onChange(await crm('update_instance', { id: inst.id, status: suspended ? 'active' : 'suspended' })));
   const rename = () => {
