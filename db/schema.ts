@@ -118,3 +118,67 @@ export const site_sessions = pgTable('site_sessions', {
   region: text('region'),
   country: text('country'),
 });
+
+// Multi-tenant CRM (crm.loogolabs.com) — see the create_crm migration.
+export const crm_instances = pgTable('crm_instances', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: text('name').notNull(),
+  slug: text('slug').notNull().unique(),
+  // active | suspended — a suspended instance cannot sign in.
+  status: text('status').notNull().default('active'),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+export const crm_users = pgTable('crm_users', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  email: text('email').notNull(),
+  name: text('name').notNull().default(''),
+  password_hash: text('password_hash').notNull(),
+  // owner | member
+  role: text('role').notNull().default('member'),
+  created_at: timestamp('created_at').defaultNow(),
+  last_login_at: timestamp('last_login_at'),
+});
+
+export const crm_sessions = pgTable('crm_sessions', {
+  token_hash: text('token_hash').primaryKey(),
+  user_id: uuid('user_id').notNull().references(() => crm_users.id, { onDelete: 'cascade' }),
+  created_at: timestamp('created_at').defaultNow(),
+  expires_at: timestamp('expires_at').notNull(),
+});
+
+export const crm_contacts = pgTable('crm_contacts', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  company: text('company').notNull().default(''),
+  email: text('email').notNull().default(''),
+  phone: text('phone').notNull().default(''),
+  // lead | qualified | proposal | won | lost
+  stage: text('stage').notNull().default('lead'),
+  value: numeric('value'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_notes = pgTable('crm_notes', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  contact_id: uuid('contact_id').notNull().references(() => crm_contacts.id, { onDelete: 'cascade' }),
+  user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
+  body: text('body').notNull(),
+  // Set when the note came from the MCP (no CRM user), e.g. "Claude (Jose's laptop)".
+  author_label: text('author_label'),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+// Tokens for the Loogo Labs CRM MCP server, one instance each — see create_crm_api_tokens.
+export const crm_api_tokens = pgTable('crm_api_tokens', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  name: text('name').notNull().default(''),
+  token_hash: text('token_hash').notNull().unique(),
+  created_at: timestamp('created_at').defaultNow(),
+  last_used_at: timestamp('last_used_at'),
+});

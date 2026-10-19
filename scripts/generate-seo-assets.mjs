@@ -339,6 +339,7 @@ const AI_CRAWLERS = [
 ];
 const crawlRules = `Allow: /
 Disallow: /admin
+Disallow: /crm
 Disallow: /.netlify/`;
 
 writeFileSync(join(DIST, 'robots.txt'), `# ${SITE.name}
