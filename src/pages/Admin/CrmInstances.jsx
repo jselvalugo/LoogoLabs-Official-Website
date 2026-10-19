@@ -164,8 +164,66 @@ function Instance({ inst, onChange, onUsers, onDeleted }) {
       {adding
         ? <NewUser instanceId={inst.id} onCancel={() => setAdding(false)} onCreated={(row) => { onUsers((list) => [...list, row]); setAdding(false); }} />
         : <button style={{ ...btn, marginTop: 12 }} onClick={() => setAdding(true)}>Add user</button>}
+      <McpTokens inst={inst} onTokens={(fn) => onChange({ tokens: fn(inst.tokens || []) })} />
       {error && <div style={{ color: '#B42318', fontSize: 13, marginTop: 8 }}>{error}</div>}
     </Card>
+  );
+}
+
+// Connects Claude to this instance: each token gives a connector URL that can
+// read and edit this instance's contacts. The token is shown once.
+function McpTokens({ inst, onTokens }) {
+  const [fresh, setFresh] = React.useState(null);
+  const [error, setError] = React.useState('');
+  const tokens = inst.tokens || [];
+
+  async function create() {
+    const name = window.prompt('Name this connection (e.g. "Jose - Claude")');
+    if (name === null) return;
+    setError('');
+    try {
+      const row = await crm('create_token', { instance_id: inst.id, name });
+      setFresh(row);
+      const { token, ...rest } = row;
+      onTokens((list) => [...list, rest]);
+    } catch (err) { setError(err.message); }
+  }
+
+  async function revoke(t) {
+    if (!window.confirm(`Revoke "${t.name || 'unnamed'}"? Claude connected with it will stop working immediately.`)) return;
+    try {
+      await crm('delete_token', { id: t.id });
+      onTokens((list) => list.filter((x) => x.id !== t.id));
+      if (fresh?.id === t.id) setFresh(null);
+    } catch (err) { setError(err.message); }
+  }
+
+  return (
+    <div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px solid var(--border-hair)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ flex: 1, fontWeight: 600, fontSize: 14 }}>Claude connections (MCP)</div>
+        <button style={btn} onClick={create}>New connection</button>
+      </div>
+      {fresh && (
+        <div style={{ marginTop: 10, padding: 12, background: 'var(--paper-100)', borderRadius: 'var(--radius-1)', fontSize: 13 }}>
+          <div style={{ marginBottom: 6 }}>Copy this now; it will not be shown again. In Claude: Settings → Connectors → Add custom connector, name it <strong>Loogo Labs CRM</strong>, and paste:</div>
+          <code style={{ display: 'block', wordBreak: 'break-all', fontFamily: 'var(--font-mono)', fontSize: 12, userSelect: 'all' }}>{CRM_URL}/mcp/{fresh.token}</code>
+          <button style={{ ...btn, marginTop: 8, padding: '4px 10px' }} onClick={() => navigator.clipboard?.writeText(`${CRM_URL}/mcp/${fresh.token}`)}>Copy URL</button>{' '}
+          <button style={{ ...btn, marginTop: 8, padding: '4px 10px' }} onClick={() => setFresh(null)}>Done</button>
+        </div>
+      )}
+      {tokens.length === 0
+        ? <div style={{ fontSize: 13, color: 'var(--ink-400)', marginTop: 6 }}>No connections yet.</div>
+        : tokens.map((t) => (
+          <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, padding: '8px 0', borderBottom: '1px solid var(--border-hair)' }}>
+            <div style={{ flex: 1 }}>{t.name || 'Unnamed'}
+              <div style={{ color: 'var(--ink-400)' }}>Created {new Date(t.created_at).toLocaleDateString()} · {t.last_used_at ? `last used ${new Date(t.last_used_at).toLocaleString()}` : 'never used'}</div>
+            </div>
+            <button style={{ ...btn, padding: '4px 10px', color: '#B42318' }} onClick={() => revoke(t)}>Revoke</button>
+          </div>
+        ))}
+      {error && <div style={{ color: '#B42318', fontSize: 13, marginTop: 8 }}>{error}</div>}
+    </div>
   );
 }
 

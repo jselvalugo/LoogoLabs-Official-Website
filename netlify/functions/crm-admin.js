@@ -1,5 +1,5 @@
 import { getDatabase } from '@netlify/database';
-import { ROLES, email, hashPassword, isSiteAdmin, json, passwordProblem, text, validEmail } from '../lib/crm.js';
+import { ROLES, email, hashPassword, newToken, isSiteAdmin, json, passwordProblem, text, validEmail } from '../lib/crm.js';
 
 const slugify = (v) => text(v, 60).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -15,7 +15,13 @@ export default async (req) => {
       FROM crm_instances i ORDER BY i.created_at DESC`;
     const users = await sql`
       SELECT id, instance_id, email, name, role, created_at, last_login_at FROM crm_users ORDER BY created_at`;
-    return json(instances.map((i) => ({ ...i, users: users.filter((u) => u.instance_id === i.id) })));
+    const tokens = await sql`
+      SELECT id, instance_id, name, created_at, last_used_at FROM crm_api_tokens ORDER BY created_at`;
+    return json(instances.map((i) => ({
+      ...i,
+      users: users.filter((u) => u.instance_id === i.id),
+      tokens: tokens.filter((t) => t.instance_id === i.id),
+    })));
   }
   if (req.method !== 'POST') return new Response(null, { status: 405 });
 
@@ -55,7 +61,7 @@ export default async (req) => {
         }
         const [instance] = await sql`INSERT INTO crm_instances (name, slug) VALUES (${name}, ${slug}) RETURNING *`;
         const users = body.owner ? [await newUser(instance.id, body.owner, 'owner')] : [];
-        return json({ ...instance, contact_count: 0, users }, 201);
+        return json({ ...instance, contact_count: 0, users, tokens: [] }, 201);
       }
       case 'update_instance': {
         const status = body.status === undefined ? null : body.status;
@@ -101,6 +107,20 @@ export default async (req) => {
       }
       case 'delete_user': {
         await sql`DELETE FROM crm_users WHERE id = ${body.id}`;
+        return json({ ok: true });
+      }
+      // MCP tokens: the plain token is returned once, here, and never stored.
+      case 'create_token': {
+        const [instance] = await sql`SELECT id FROM crm_instances WHERE id = ${body.instance_id}`;
+        if (!instance) return json({ error: 'Instance not found' }, 404);
+        const { token, hash } = newToken('llcrm_');
+        const [row] = await sql`
+          INSERT INTO crm_api_tokens (instance_id, name, token_hash) VALUES (${instance.id}, ${text(body.name, 80)}, ${hash})
+          RETURNING id, instance_id, name, created_at, last_used_at`;
+        return json({ ...row, token }, 201);
+      }
+      case 'delete_token': {
+        await sql`DELETE FROM crm_api_tokens WHERE id = ${body.id}`;
         return json({ ok: true });
       }
       default:

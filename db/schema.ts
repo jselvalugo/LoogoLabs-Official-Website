@@ -168,5 +168,17 @@ export const crm_notes = pgTable('crm_notes', {
   contact_id: uuid('contact_id').notNull().references(() => crm_contacts.id, { onDelete: 'cascade' }),
   user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
   body: text('body').notNull(),
+  // Set when the note came from the MCP (no CRM user), e.g. "Claude (Jose's laptop)".
+  author_label: text('author_label'),
   created_at: timestamp('created_at').defaultNow(),
+});
+
+// Tokens for the Loogo Labs CRM MCP server, one instance each — see create_crm_api_tokens.
+export const crm_api_tokens = pgTable('crm_api_tokens', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: uuid('instance_id').notNull().references(() => crm_instances.id, { onDelete: 'cascade' }),
+  name: text('name').notNull().default(''),
+  token_hash: text('token_hash').notNull().unique(),
+  created_at: timestamp('created_at').defaultNow(),
+  last_used_at: timestamp('last_used_at'),
 });

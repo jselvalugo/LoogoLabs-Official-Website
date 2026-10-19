@@ -37,6 +37,19 @@
   status = 200
   force = true
 
+# Loogo Labs CRM MCP server (netlify/functions/crm-mcp.js, path /mcp).
+[[redirects]]
+  from = "https://crm.loogolabs.com/mcp/*"
+  to = "/mcp/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://crm.loogolabs.com/mcp"
+  to = "/mcp"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "https://crm.loogolabs.com/admin-logo.png"
   to = "/admin-logo.png"

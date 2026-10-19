@@ -28,7 +28,7 @@ export default async (req) => {
           SELECT stage, count(*)::int AS n, COALESCE(sum(value), 0)::float AS total
           FROM crm_contacts WHERE instance_id = ${inst} GROUP BY stage`;
         const activity = await sql`
-          SELECT n.id, n.body, n.created_at, c.id AS contact_id, c.name AS contact_name, u.name AS author
+          SELECT n.id, n.body, n.created_at, c.id AS contact_id, c.name AS contact_name, COALESCE(u.name, n.author_label) AS author
           FROM crm_notes n JOIN crm_contacts c ON c.id = n.contact_id LEFT JOIN crm_users u ON u.id = n.user_id
           WHERE n.instance_id = ${inst} ORDER BY n.created_at DESC LIMIT 20`;
         return json({ stages, activity });
@@ -57,7 +57,7 @@ export default async (req) => {
         return json({ ok: true });
       case 'list_notes':
         return json(await sql`
-          SELECT n.id, n.body, n.created_at, u.name AS author FROM crm_notes n LEFT JOIN crm_users u ON u.id = n.user_id
+          SELECT n.id, n.body, n.created_at, COALESCE(u.name, n.author_label) AS author FROM crm_notes n LEFT JOIN crm_users u ON u.id = n.user_id
           WHERE n.contact_id = ${body.contact_id} AND n.instance_id = ${inst} ORDER BY n.created_at DESC`);
       case 'add_note': {
         const note = text(body.body, 5000);
