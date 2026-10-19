@@ -5,7 +5,10 @@ const inputStyle = { padding: '8px 10px', border: '1px solid var(--border-hair)'
 const btn = { padding: '7px 14px', borderRadius: 999, border: '1px solid var(--border-hair)', background: 'var(--paper-000)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-body)' };
 const btnPrimary = { ...btn, background: 'var(--ink-900)', color: 'var(--paper-000)', borderColor: 'var(--ink-900)' };
 const label = { fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)', display: 'block', marginBottom: 4 };
-const CRM_URL = 'https://crm.loogolabs.com';
+// The CRM app and MCP are served on the main domain until crm.loogolabs.com is
+// attached in Netlify; switch these to the subdomain once it resolves.
+const CRM_URL = 'https://www.loogolabs.com/crm';
+const MCP_URL = 'https://www.loogolabs.com/mcp';
 
 async function crm(action, payload) {
   const res = await apiFetch('/.netlify/functions/crm-admin', { method: 'POST', body: JSON.stringify({ action, ...payload }) });
@@ -37,7 +40,7 @@ export default function CrmInstances() {
         <div style={{ flex: 1 }}>
           <h1 style={{ margin: 0, fontSize: 'var(--fs-h1)', fontWeight: 700, letterSpacing: 'var(--ls-h1)' }}>CRM Instances</h1>
           <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--ink-400)' }}>
-            Workspaces at <a href={CRM_URL} target="_blank" rel="noreferrer">crm.loogolabs.com</a> · {instances.length} instance{instances.length === 1 ? '' : 's'}
+            Workspaces at <a href={CRM_URL} target="_blank" rel="noreferrer">loogolabs.com/crm</a> · {instances.length} instance{instances.length === 1 ? '' : 's'}
           </p>
         </div>
         <button style={btnPrimary} onClick={() => setCreating((v) => !v)}>{creating ? 'Cancel' : 'New instance'}</button>
@@ -212,8 +215,8 @@ function McpTokens({ inst, onTokens }) {
       {fresh && (
         <div style={{ marginTop: 10, padding: 12, background: 'var(--paper-100)', borderRadius: 'var(--radius-1)', fontSize: 13 }}>
           <div style={{ marginBottom: 6 }}>Copy this now; it will not be shown again. In Claude: Settings → Connectors → Add custom connector, name it <strong>Loogo Labs CRM</strong>, and paste:</div>
-          <code style={{ display: 'block', wordBreak: 'break-all', fontFamily: 'var(--font-mono)', fontSize: 12, userSelect: 'all' }}>{CRM_URL}/mcp/{fresh.token}</code>
-          <button style={{ ...btn, marginTop: 8, padding: '4px 10px' }} onClick={() => navigator.clipboard?.writeText(`${CRM_URL}/mcp/${fresh.token}`)}>Copy URL</button>{' '}
+          <code style={{ display: 'block', wordBreak: 'break-all', fontFamily: 'var(--font-mono)', fontSize: 12, userSelect: 'all' }}>{MCP_URL}/{fresh.token}</code>
+          <button style={{ ...btn, marginTop: 8, padding: '4px 10px' }} onClick={() => navigator.clipboard?.writeText(`${MCP_URL}/${fresh.token}`)}>Copy URL</button>{' '}
           <button style={{ ...btn, marginTop: 8, padding: '4px 10px' }} onClick={() => setFresh(null)}>Done</button>
         </div>
       )}
