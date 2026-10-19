@@ -6,7 +6,6 @@ import Analytics from './Analytics';
 import Leads from './Leads';
 import Proposals from './Proposals';
 import Links from './Links';
-import EmailMarketing from './EmailMarketing';
 import CrmInstances from './CrmInstances';
 
 const NAV = [
@@ -14,7 +13,6 @@ const NAV = [
   { id: 'leads', label: 'Leads CRM' },
   { id: 'crm', label: 'CRM Instances' },
   { id: 'proposals', label: 'Proposals' },
-  { id: 'email', label: 'Email Marketing' },
   { id: 'analytics', label: 'Analytics' },
   { id: 'links', label: 'Backlinks' },
 ];
@@ -100,7 +98,6 @@ export default function Admin() {
             onChange={(row) => setProposals((prev) => prev.map((p) => (p.id === row.id ? row : p)))}
             onRemove={(id) => setProposals((prev) => prev.filter((p) => p.id !== id))} />
         )}
-        {subpage === 'email' && <EmailMarketing />}
         {subpage === 'analytics' && <Analytics />}
         {subpage === 'links' && <Links />}
       </main>
