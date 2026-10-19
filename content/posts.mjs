@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `photographer-holiday-card-session-last-order-date`,
+    title: `Your Holiday Session Needs a Last-Order Date, Not a Last Slot`,
+    excerpt: `A family that books a card portrait on December 4th is buying a Christmas you cannot deliver unless you counted backward from the mailbox.`,
+    tags: `Holiday Booking, Delivery Dates, Photographers`,
+    content: `A family books a holiday portrait session on December 4th, and in their head the card is already in the mail. In your calendar, that Saturday slot is open, so you take the booking and the deposit. Then the editing queue, the proofing round, the print order and the shipping time all show up, and the card lands on the 29th. You did good work. You also sold a result you could not deliver.
+
+The problem is that photographers publish a last *session* date and never a last *order* date. Those are two different calendar squares, and the customer only ever hears the first one.
+
+## Count backward from the mailbox
+
+Start at December 24th and walk backward, one step at a time. Write down your real numbers, not your best-case ones.
+
+- The day a print order must be placed to arrive by the 24th, including your shipping buffer.
+- The days you need between sending the gallery and that print deadline, because clients do not choose on the day you send it.
+- The days it takes you to edit, in a busy week, not a slow one.
+- The day of the session itself.
+
+Add those up from the back, and you get a date. Say your edit takes five days, the client needs three to choose, and prints need nine to arrive. That puts your last session for guaranteed delivery at about seventeen days before Christmas. Those are invented numbers; do the sum with your own. What matters is that the answer is almost never "the last Saturday before Christmas."
+
+## Sell two products, not one
+
+After that date, you can still shoot. You just sell something different: a digital-only gallery, delivered fast, with no promise about prints arriving by a holiday. Some families want exactly that. They will print locally, or send an emailed card, or simply want the pictures.
+
+So the booking page offers two clear choices:
+
+- **Cards by Christmas**, sessions through your cutoff date.
+- **Digital gallery**, sessions after it, with a stated delivery window.
+
+Say it in plain words, with the date. "Sessions on or before December 8th include delivery in time for Christmas. Later sessions are digital-only." Nobody argues with a date they were told at the moment they paid.
+
+## Put the date where they will see it twice
+
+A line on your website is not enough. The family reads the website once, in October, in a hurry.
+
+Put the order deadline in the booking confirmation text. Put it again in the reminder you send the day before the session, along with what to wear. Then put one more line in the gallery email: "Choose your favorites by this date and your cards arrive before Christmas." That third message is the one that does the work, because it arrives when the family is actually choosing.
+
+The system can send all three on its own, tied to the session date and the type they booked. You write the wording once. The only part that needs your head is the cutoff itself.
+
+## Where this doesn't help
+
+A cutoff date will not rescue you from a client who books in time and then sits on the gallery for two weeks. For that, the third message needs a follow-up, a short reminder on the date the choosing window closes. If they still miss it, you have not failed them; you told them twice, in writing, and they chose the digital option by default.
+
+## Do this before your sessions go on sale
+
+Take out a calendar this week and do the subtraction from the 24th with your own numbers. Write down the one date. Then open your booking confirmation and check whether that date appears anywhere in it. If it doesn't, add the sentence now, before the first holiday booking comes in, because every booking you take without it is a promise you made by accident.`,
+  },
+  {
     slug: `catering-holiday-party-headcount-lock-date`,
     title: `The Office Party Headcount Is a Guess Until You Date It`,
     excerpt: `A December party booked in October has a headcount that keeps moving, and the only fix is a lock date the client agreed to before the first number was given.`,
