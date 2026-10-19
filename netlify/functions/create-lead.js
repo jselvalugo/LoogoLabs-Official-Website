@@ -1,4 +1,5 @@
 import { getDatabase } from '@netlify/database';
+import { copyWebsiteLead } from '../lib/website-leads.js';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +34,7 @@ export default async (req, context) => {
     VALUES (${full_name}, ${email}, ${source || 'ai_receptionist'}, ${business_type || null}, ${missed_calls || null}, ${pain_point || null}, ${decision_maker || null}, ${job_volume || null}, ${review_pain_point || null}, ${city}, ${region}, ${country}, ${notes}, ${session_id}, ${company}, ${phone})
     RETURNING *
   `;
+  await copyWebsiteLead(lead);
 
   return new Response(JSON.stringify(lead), { status: 201, headers: { 'Content-Type': 'application/json' } });
 };

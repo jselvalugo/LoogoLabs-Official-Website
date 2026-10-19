@@ -53,6 +53,7 @@ export default function CrmInstances() {
             : instances.map((inst) => (
               <Instance key={inst.id} inst={inst}
                 onChange={(fields) => patch(inst.id, (i) => ({ ...i, ...fields }))}
+                onWebsiteLeads={(on) => setInstances((p) => p.map((i) => ({ ...i, receives_website_leads: on && i.id === inst.id })))}
                 onUsers={(fn) => patch(inst.id, (i) => ({ ...i, users: fn(i.users) }))}
                 onDeleted={() => setInstances((p) => p.filter((i) => i.id !== inst.id))} />
             ))}
@@ -95,13 +96,18 @@ function NewInstance({ onCreated }) {
   );
 }
 
-function Instance({ inst, onChange, onUsers, onDeleted }) {
+function Instance({ inst, onChange, onUsers, onDeleted, onWebsiteLeads }) {
   const [adding, setAdding] = React.useState(false);
   const [error, setError] = React.useState('');
   const suspended = inst.status === 'suspended';
 
   const run = async (fn) => { setError(''); try { await fn(); } catch (err) { setError(err.message); } };
 
+  const websiteLeads = () => {
+    const on = !inst.receives_website_leads;
+    if (on && !window.confirm(`Send new website form leads to "${inst.name}"? They stop going to any other instance.`)) return;
+    run(async () => { await crm('set_website_leads', { id: inst.id, on }); onWebsiteLeads(on); });
+  };
   const toggle = () => run(async () => onChange(await crm('update_instance', { id: inst.id, status: suspended ? 'active' : 'suspended' })));
   const rename = () => {
     const name = window.prompt('Workspace name', inst.name);
@@ -127,12 +133,14 @@ function Instance({ inst, onChange, onUsers, onDeleted }) {
         <div style={{ flex: 1, minWidth: 200 }}>
           <div style={{ fontWeight: 600, fontSize: 16 }}>
             {inst.name}
+            {inst.receives_website_leads && <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#DCFCE7', color: '#15803D' }}>Receives website leads</span>}
             {suspended && <span style={{ marginLeft: 8, fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#FDECEA', color: '#B42318' }}>Suspended</span>}
           </div>
           <div style={{ fontSize: 12, color: 'var(--ink-400)', fontFamily: 'var(--font-mono)' }}>
             {inst.slug} · {inst.contact_count} contacts · created {new Date(inst.created_at).toLocaleDateString()}
           </div>
         </div>
+        <button style={btn} onClick={websiteLeads}>{inst.receives_website_leads ? 'Stop website leads' : 'Receive website leads'}</button>
         <button style={btn} onClick={rename}>Rename</button>
         <button style={btn} onClick={toggle}>{suspended ? 'Reactivate' : 'Suspend'}</button>
         <button style={{ ...btn, color: '#B42318' }} onClick={remove}>Delete</button>
