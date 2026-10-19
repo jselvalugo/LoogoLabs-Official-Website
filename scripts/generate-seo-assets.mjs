@@ -174,10 +174,15 @@ function renderPage({ head, body, ssr = false }) {
 // differ from the client's first render.
 const localizeLinks = (html) => html.replace(/href="(\/[^"]*)"/g, (m, href) => `href="${localHref(href, 'es')}"`);
 
+// Routes are written as /mission.html, not /mission/index.html. Netlify answers
+// /mission with a 301 to /mission/ when only the folder exists, so every
+// canonical and sitemap URL (which have no trailing slash) was a redirect and
+// Google left them out of the index. With a .html file, /mission is a 200 and
+// /mission/ redirects to it.
 function write(routePath, html) {
-  const dir = routePath === '/' ? DIST : join(DIST, routePath.replace(/^\//, ''));
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'index.html'), html);
+  const file = routePath === '/' ? join(DIST, 'index.html') : join(DIST, `${routePath.replace(/^\//, '')}.html`);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, html);
 }
 
 // Fallback markup rendered before React mounts. Kept to the page's real heading,
