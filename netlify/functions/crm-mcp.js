@@ -55,6 +55,20 @@ const TOOLS = [
     inputSchema: { type: 'object', properties: { contact_id: { type: 'string' }, body: { type: 'string' } }, required: ['contact_id', 'body'] },
   },
   {
+    name: 'delete_contact',
+    title: 'Delete contact',
+    description: 'Permanently delete a contact and all of its notes. Confirm with the user before calling this.',
+    inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
+    annotations: { destructiveHint: true },
+  },
+  {
+    name: 'list_team',
+    title: 'List team',
+    description: 'The users who can sign in to this CRM workspace, with their roles.',
+    inputSchema: { type: 'object', properties: {} },
+    annotations: { readOnlyHint: true },
+  },
+  {
     name: 'pipeline_summary',
     title: 'Pipeline summary',
     description: 'Number of contacts and total deal value in each pipeline stage.',
@@ -149,6 +163,13 @@ async function runTool(name, args, auth) {
       await sql`UPDATE crm_contacts SET updated_at = now() WHERE id = ${contact.id}`;
       return row;
     }
+    case 'delete_contact': {
+      const [row] = await sql`DELETE FROM crm_contacts WHERE id = ${needId(args.id)} AND instance_id = ${inst} RETURNING id, name`;
+      if (!row) throw new ToolError('Contact not found');
+      return { deleted: row };
+    }
+    case 'list_team':
+      return sql`SELECT name, email, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`;
     case 'pipeline_summary': {
       const rows = await sql`
         SELECT stage, count(*)::int AS contacts, COALESCE(sum(value), 0)::float AS total_value
