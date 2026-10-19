@@ -1,189 +1,210 @@
-import { getDatabase } from '@netlify/database';
-import { STAGES, text, tokenHash } from '../lib/crm.js';
+import { db, tokenHash } from '../lib/crm.js';
+import {
+  CrmError, addActivity, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
+  listRecords, overview, updateActivity, updateRecord,
+} from '../lib/crm-records.js';
+import { ACTIVITY_FIELDS, ACTIVITY_TYPES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES } from '../../src/crm/entities.js';
 
 // "Loogo Labs CRM" — an MCP server (Streamable HTTP, stateless JSON responses)
 // at https://crm.loogolabs.com/mcp/<token>. The token can also be sent as
 // "Authorization: Bearer <token>" to /mcp. Tokens are created in /admin →
 // CRM Instances, and each one is locked to a single instance.
+//
+// Scope: this server manages CRM data only (companies, contacts, leads,
+// opportunities, activities, team list). It has no access to the website, blog,
+// the website's own Leads CRM and proposals in /admin, analytics, email, or the
+// CRM instances/users themselves, which stay in /admin.
 export const config = { path: ['/mcp', '/mcp/*'] };
 
-const SERVER = { name: 'Loogo Labs CRM', version: '1.0.0' };
+const SERVER = { name: 'Loogo Labs CRM', version: '2.0.0' };
 const PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
-const stageEnum = { type: 'string', enum: STAGES };
-const contactProps = {
-  name: { type: 'string', description: 'Full name of the contact' },
-  company: { type: 'string' },
-  email: { type: 'string' },
-  phone: { type: 'string' },
-  stage: { ...stageEnum, description: 'Pipeline stage' },
-  value: { type: ['number', 'null'], description: 'Deal value in US dollars' },
+const typeArg = { type: 'string', enum: ENTITY_KEYS, description: 'Record type' };
+const idArg = { type: 'string', description: 'Record id (from search_records)' };
+const describeField = (f) => `${f.key}${f.required ? ' (required)' : ''}: ${f.type === 'select' ? f.options.map((o) => o.id).join('|')
+  : f.type === 'ref' ? `${ENTITIES[f.to].label} id` : f.type === 'user' ? 'user id from list_team' : f.type}`;
+const FIELD_GUIDE = ENTITY_KEYS.map((k) => `${k}: ${ENTITIES[k].fields.map(describeField).join('; ')}`).join('\n');
+const valuesArg = {
+  type: 'object', additionalProperties: true,
+  description: `Field values by key. Pass an empty string or null to clear a field. Fields per type:\n${FIELD_GUIDE}`,
 };
 
 const TOOLS = [
   {
-    name: 'search_contacts',
-    title: 'Search contacts',
-    description: 'Find contacts by name, company, email or phone, optionally filtered by pipeline stage. An empty query lists the most recently updated contacts.',
-    inputSchema: { type: 'object', properties: { query: { type: 'string' }, stage: stageEnum, limit: { type: 'integer', minimum: 1, maximum: 100, default: 25 } } },
+    name: 'describe_crm',
+    title: 'CRM: Describe data model',
+    description: 'Lists the CRM record types (companies, contacts, leads, opportunities), every field with its type and allowed values, and activity types. Call this first if unsure which fields exist.',
+    inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
   {
-    name: 'get_contact',
-    title: 'Get contact',
-    description: 'Get one contact with all of its notes, newest first.',
-    inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
+    name: 'search_records',
+    title: 'CRM: Search records',
+    description: 'Search companies, contacts, leads or opportunities. query matches names, emails, phones and similar text; filters match exact field values (e.g. {"stage":"proposal"}, {"company_id":"..."}, {"status":["new","contacted"]}). Results include display names for linked records (company_id_name, owner_id_name).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        type: typeArg,
+        query: { type: 'string' },
+        filters: { type: 'object', additionalProperties: true },
+        sort: { type: 'string', description: 'field:asc or field:desc, default updated_at:desc' },
+        limit: { type: 'integer', minimum: 1, maximum: 200, default: 25 },
+        offset: { type: 'integer', minimum: 0, default: 0 },
+      },
+      required: ['type'],
+    },
     annotations: { readOnlyHint: true },
   },
   {
-    name: 'create_contact',
-    title: 'Create contact',
-    description: 'Add a new contact. Stage defaults to "lead".',
-    inputSchema: { type: 'object', properties: contactProps, required: ['name'] },
+    name: 'get_record',
+    title: 'CRM: Get record',
+    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts and opportunities; a contact\'s opportunities).',
+    inputSchema: { type: 'object', properties: { type: typeArg, id: idArg }, required: ['type', 'id'] },
+    annotations: { readOnlyHint: true },
   },
   {
-    name: 'update_contact',
-    title: 'Update contact',
-    description: 'Change fields on a contact, including moving it to another pipeline stage. Only the fields you pass are changed.',
-    inputSchema: { type: 'object', properties: { id: { type: 'string' }, ...contactProps }, required: ['id'] },
+    name: 'create_record',
+    title: 'CRM: Create record',
+    description: 'Create a company, contact, lead or opportunity. Link records with company_id / contact_id. Opportunity probability follows its stage unless given.',
+    inputSchema: { type: 'object', properties: { type: typeArg, values: valuesArg }, required: ['type', 'values'] },
+  },
+  {
+    name: 'update_record',
+    title: 'CRM: Update record',
+    description: 'Change fields on a record. Only the fields passed change. Use this to move an opportunity between stages or change a lead status.',
+    inputSchema: { type: 'object', properties: { type: typeArg, id: idArg, values: valuesArg }, required: ['type', 'id', 'values'] },
     annotations: { idempotentHint: true },
   },
   {
-    name: 'add_note',
-    title: 'Add note',
-    description: 'Add a note to a contact (a call summary, next step, etc). Notes show in the contact timeline and the overview activity feed.',
-    inputSchema: { type: 'object', properties: { contact_id: { type: 'string' }, body: { type: 'string' } }, required: ['contact_id', 'body'] },
+    name: 'delete_record',
+    title: 'CRM: Delete record',
+    description: 'Permanently delete a record and its activities. Linked records stay but lose the link. Confirm with the user before calling this.',
+    inputSchema: { type: 'object', properties: { type: typeArg, id: idArg }, required: ['type', 'id'] },
+    annotations: { destructiveHint: true },
   },
   {
-    name: 'delete_contact',
-    title: 'Delete contact',
-    description: 'Permanently delete a contact and all of its notes. Confirm with the user before calling this.',
+    name: 'convert_lead',
+    title: 'CRM: Convert lead',
+    description: 'Convert a lead into a contact, linked to a company (an existing company_id, else one matched or created from the lead\'s company name), and by default a new opportunity. The lead is kept and marked converted; its activities move to the new contact.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        lead_id: idArg,
+        company_id: { type: 'string', description: 'Attach to this existing company instead' },
+        create_company: { type: 'boolean', default: true },
+        create_opportunity: { type: 'boolean', default: true },
+        opportunity_name: { type: 'string' },
+        amount: { type: 'number' },
+        stage: { type: 'string', enum: OPPORTUNITY_STAGES.map((s) => s.id), default: 'qualification' },
+        close_date: { type: 'string', description: 'YYYY-MM-DD' },
+      },
+      required: ['lead_id'],
+    },
+  },
+  {
+    name: 'log_activity',
+    title: 'CRM: Log activity',
+    description: `Add a ${ACTIVITY_TYPES.map((t) => t.id).join(', ')} to any record's timeline. Tasks stay open until completed (set completed true to log a finished one); other types are recorded as done.`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        record_type: typeArg,
+        record_id: idArg,
+        type: { type: 'string', enum: ACTIVITY_TYPES.map((t) => t.id), default: 'note' },
+        subject: { type: 'string' },
+        body: { type: 'string' },
+        due_date: { type: 'string', description: 'YYYY-MM-DD, for tasks and meetings' },
+        owner_id: { type: 'string', description: 'Assignee, a user id from list_team' },
+        completed: { type: 'boolean' },
+      },
+      required: ['record_type', 'record_id'],
+    },
+  },
+  {
+    name: 'list_activities',
+    title: 'CRM: List activities',
+    description: 'Activities newest first, optionally for one record or one type. open_tasks true lists unfinished tasks by due date.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        record_type: typeArg, record_id: idArg,
+        type: { type: 'string', enum: ACTIVITY_TYPES.map((t) => t.id) },
+        open_tasks: { type: 'boolean' },
+        limit: { type: 'integer', minimum: 1, maximum: 200, default: 50 },
+      },
+    },
+    annotations: { readOnlyHint: true },
+  },
+  {
+    name: 'update_activity',
+    title: 'CRM: Update activity',
+    description: `Edit an activity (${ACTIVITY_FIELDS.map((f) => f.key).join(', ')}) or mark a task done with completed true (false reopens it).`,
+    inputSchema: {
+      type: 'object',
+      properties: { id: { type: 'string' }, values: { type: 'object', additionalProperties: true }, completed: { type: 'boolean' } },
+      required: ['id'],
+    },
+    annotations: { idempotentHint: true },
+  },
+  {
+    name: 'delete_activity',
+    title: 'CRM: Delete activity',
+    description: 'Permanently delete one activity. Confirm with the user first.',
     inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
     annotations: { destructiveHint: true },
   },
   {
+    name: 'pipeline_overview',
+    title: 'CRM: Pipeline overview',
+    description: 'Record counts, opportunities by stage (count, amount, probability-weighted amount), leads by status, open tasks and recent activity.',
+    inputSchema: { type: 'object', properties: {} },
+    annotations: { readOnlyHint: true },
+  },
+  {
     name: 'list_team',
-    title: 'List team',
-    description: 'The users who can sign in to this CRM workspace, with their roles.',
+    title: 'CRM: List team',
+    description: 'The users of this CRM workspace, with ids to use as owner_id.',
     inputSchema: { type: 'object', properties: {} },
-    annotations: { readOnlyHint: true },
-  },
-  {
-    name: 'pipeline_summary',
-    title: 'Pipeline summary',
-    description: 'Number of contacts and total deal value in each pipeline stage.',
-    inputSchema: { type: 'object', properties: {} },
-    annotations: { readOnlyHint: true },
-  },
-  {
-    name: 'recent_activity',
-    title: 'Recent activity',
-    description: 'The latest notes across all contacts.',
-    inputSchema: { type: 'object', properties: { limit: { type: 'integer', minimum: 1, maximum: 100, default: 20 } } },
     annotations: { readOnlyHint: true },
   },
 ];
 
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-class ToolError extends Error {}
-
-function cleanValue(v) {
-  if (v === null || v === '') return null;
-  const n = Number(v);
-  if (!Number.isFinite(n)) throw new ToolError('value must be a number');
-  return n;
+function describe() {
+  return {
+    record_types: Object.fromEntries(ENTITY_KEYS.map((k) => [k, {
+      label: ENTITIES[k].label,
+      fields: ENTITIES[k].fields.map((f) => ({ key: f.key, label: f.label, type: f.type, required: !!f.required,
+        ...(f.options && { options: f.options.map((o) => o.id) }), ...(f.to && { links_to: f.to }) })),
+    }])),
+    opportunity_stages: OPPORTUNITY_STAGES,
+    activity_types: ACTIVITY_TYPES.map((t) => t.id),
+  };
 }
-function needId(v, field = 'id') {
-  if (typeof v !== 'string' || !UUID.test(v)) throw new ToolError(`${field} must be a contact id from search_contacts`);
-  return v;
-}
-const clamp = (v, def) => Math.min(Math.max(parseInt(v, 10) || def, 1), 100);
 
-async function runTool(name, args, auth) {
-  const { sql } = getDatabase();
+async function runTool(name, a, auth) {
   const inst = auth.instance_id;
-
+  const audit = { label: auth.name ? `Claude (${auth.name})` : 'Claude' };
   switch (name) {
-    case 'search_contacts': {
-      const q = `%${text(args.query, 200).toLowerCase()}%`;
-      const stage = STAGES.includes(args.stage) ? args.stage : null;
-      return sql`
-        SELECT id, name, company, email, phone, stage, value::float AS value, updated_at FROM crm_contacts
-        WHERE instance_id = ${inst} AND (${stage}::text IS NULL OR stage = ${stage})
-          AND (lower(name) LIKE ${q} OR lower(company) LIKE ${q} OR lower(email) LIKE ${q} OR phone LIKE ${q})
-        ORDER BY updated_at DESC LIMIT ${clamp(args.limit, 25)}`;
+    case 'describe_crm': return describe();
+    case 'search_records': return listRecords(inst, a.type, { ...a, limit: a.limit ?? 25 });
+    case 'get_record': return getRecord(inst, a.type, a.id);
+    case 'create_record': return createRecord(inst, a.type, a.values || {}, audit);
+    case 'update_record': return updateRecord(inst, a.type, a.id, a.values || {});
+    case 'delete_record': return { deleted: await deleteRecord(inst, a.type, a.id) };
+    case 'convert_lead': return convertLead(inst, a.lead_id, a, audit);
+    case 'log_activity':
+      return addActivity(inst, { ...a, entity_type: a.record_type, entity_id: a.record_id }, audit);
+    case 'list_activities':
+      return listActivities(inst, { ...a, entity_type: a.record_type, entity_id: a.record_id, limit: a.limit ?? 50 });
+    case 'update_activity':
+      return updateActivity(inst, a.id, { ...(a.values || {}), ...('completed' in a && { completed: a.completed }) });
+    case 'delete_activity': return { deleted: await deleteActivity(inst, a.id) };
+    case 'pipeline_overview': return overview(inst);
+    case 'list_team': {
+      const { sql } = db();
+      return sql`SELECT id, name, email, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`;
     }
-    case 'get_contact': {
-      const [contact] = await sql`SELECT *, value::float AS value FROM crm_contacts WHERE id = ${needId(args.id)} AND instance_id = ${inst}`;
-      if (!contact) throw new ToolError('Contact not found');
-      const notes = await sql`
-        SELECT n.body, n.created_at, COALESCE(u.name, n.author_label) AS author FROM crm_notes n
-        LEFT JOIN crm_users u ON u.id = n.user_id WHERE n.contact_id = ${contact.id} ORDER BY n.created_at DESC`;
-      delete contact.instance_id;
-      return { ...contact, notes };
-    }
-    case 'create_contact': {
-      const name = text(args.name, 200);
-      if (!name) throw new ToolError('name is required');
-      const stage = args.stage ?? 'lead';
-      if (!STAGES.includes(stage)) throw new ToolError(`stage must be one of ${STAGES.join(', ')}`);
-      const [row] = await sql`
-        INSERT INTO crm_contacts (instance_id, name, company, email, phone, stage, value)
-        VALUES (${inst}, ${name}, ${text(args.company, 200)}, ${text(args.email, 320)}, ${text(args.phone, 60)}, ${stage}, ${cleanValue(args.value ?? null)})
-        RETURNING id, name, company, email, phone, stage, value::float AS value`;
-      return row;
-    }
-    case 'update_contact': {
-      const id = needId(args.id);
-      const has = (k) => Object.prototype.hasOwnProperty.call(args, k);
-      if (has('stage') && !STAGES.includes(args.stage)) throw new ToolError(`stage must be one of ${STAGES.join(', ')}`);
-      if (has('name') && !text(args.name, 200)) throw new ToolError('name cannot be empty');
-      const f = (k, max) => (has(k) ? text(args[k], max) : null);
-      const [row] = await sql`
-        UPDATE crm_contacts SET
-          name = COALESCE(${f('name', 200)}, name), company = COALESCE(${f('company', 200)}, company),
-          email = COALESCE(${f('email', 320)}, email), phone = COALESCE(${f('phone', 60)}, phone),
-          stage = COALESCE(${has('stage') ? args.stage : null}, stage),
-          value = CASE WHEN ${has('value')} THEN ${has('value') ? cleanValue(args.value) : null}::numeric ELSE value END,
-          updated_at = now()
-        WHERE id = ${id} AND instance_id = ${inst}
-        RETURNING id, name, company, email, phone, stage, value::float AS value`;
-      if (!row) throw new ToolError('Contact not found');
-      return row;
-    }
-    case 'add_note': {
-      const body = text(args.body, 5000);
-      if (!body) throw new ToolError('body is required');
-      const [contact] = await sql`SELECT id FROM crm_contacts WHERE id = ${needId(args.contact_id, 'contact_id')} AND instance_id = ${inst}`;
-      if (!contact) throw new ToolError('Contact not found');
-      const label = auth.name ? `Claude (${auth.name})` : 'Claude';
-      const [row] = await sql`
-        INSERT INTO crm_notes (instance_id, contact_id, body, author_label) VALUES (${inst}, ${contact.id}, ${body}, ${label})
-        RETURNING id, body, created_at`;
-      await sql`UPDATE crm_contacts SET updated_at = now() WHERE id = ${contact.id}`;
-      return row;
-    }
-    case 'delete_contact': {
-      const [row] = await sql`DELETE FROM crm_contacts WHERE id = ${needId(args.id)} AND instance_id = ${inst} RETURNING id, name`;
-      if (!row) throw new ToolError('Contact not found');
-      return { deleted: row };
-    }
-    case 'list_team':
-      return sql`SELECT name, email, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`;
-    case 'pipeline_summary': {
-      const rows = await sql`
-        SELECT stage, count(*)::int AS contacts, COALESCE(sum(value), 0)::float AS total_value
-        FROM crm_contacts WHERE instance_id = ${inst} GROUP BY stage`;
-      const by = Object.fromEntries(rows.map((r) => [r.stage, r]));
-      return STAGES.map((s) => ({ stage: s, contacts: by[s]?.contacts || 0, total_value: by[s]?.total_value || 0 }));
-    }
-    case 'recent_activity':
-      return sql`
-        SELECT n.body, n.created_at, c.id AS contact_id, c.name AS contact_name, COALESCE(u.name, n.author_label) AS author
-        FROM crm_notes n JOIN crm_contacts c ON c.id = n.contact_id LEFT JOIN crm_users u ON u.id = n.user_id
-        WHERE n.instance_id = ${inst} ORDER BY n.created_at DESC LIMIT ${clamp(args.limit, 20)}`;
-    default:
-      return undefined;
+    default: return undefined;
   }
 }
 
@@ -193,7 +214,7 @@ async function authenticate(req) {
   const header = req.headers.get('authorization') || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : fromPath;
   if (!token) return null;
-  const { sql } = getDatabase();
+  const { sql } = db();
   const [row] = await sql`
     UPDATE crm_api_tokens t SET last_used_at = now()
     FROM crm_instances i
@@ -217,7 +238,7 @@ async function handle(msg, auth) {
         protocolVersion: PROTOCOL_VERSIONS.includes(asked) ? asked : PROTOCOL_VERSIONS[0],
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER,
-        instructions: `Tools for the "${auth.instance_name}" workspace in Loogo Labs CRM. Pipeline stages: ${STAGES.join(', ')}. Use search_contacts to find a contact id before get_contact, update_contact or add_note.`,
+        instructions: `Loogo Labs CRM manages only the CRM data of the "${auth.instance_name}" workspace: companies, contacts, leads, opportunities, their activities, and the team list. It cannot change the Loogo Labs website, blog, the website's own lead forms and proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Record types: companies, contacts, leads, opportunities, each with an activity timeline (notes, calls, emails, meetings, tasks). Use search_records to find an id before reading or changing a record; call describe_crm for the full field list. This is data only: nothing here sends emails or runs automations.`,
       });
     }
     case 'ping':
@@ -230,8 +251,8 @@ async function handle(msg, auth) {
         if (out === undefined) return rpcError(id, -32602, `Unknown tool: ${params.name}`);
         return rpcResult(id, { content: [{ type: 'text', text: JSON.stringify(out, null, 2) }] });
       } catch (err) {
-        if (!(err instanceof ToolError)) console.error('crm-mcp tool failed', params.name, err);
-        return rpcResult(id, { isError: true, content: [{ type: 'text', text: err instanceof ToolError ? err.message : 'The CRM could not complete that request.' }] });
+        if (!(err instanceof CrmError)) console.error('crm-mcp tool failed', params.name, err);
+        return rpcResult(id, { isError: true, content: [{ type: 'text', text: err instanceof CrmError ? err.message : 'The CRM could not complete that request.' }] });
       }
     }
     default:
