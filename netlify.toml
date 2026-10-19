@@ -37,6 +37,15 @@
   status = 200
   force = true
 
+# MCP clients such as Claude probe /.well-known/oauth-* before connecting. The
+# catch-all below would answer with the CRM page and a 200, which a client reads
+# as broken OAuth metadata; answer with a real 404 so it uses the URL token.
+[[redirects]]
+  from = "https://crm.loogolabs.com/.well-known/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Loogo Labs CRM MCP server (netlify/functions/crm-mcp.js, path /mcp).
 [[redirects]]
   from = "https://crm.loogolabs.com/mcp/*"
