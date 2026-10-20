@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `laser-clinic-book-whole-package-at-checkout`,
+    title: `You Sold Six Sessions. How Many Are on the Calendar?`,
+    excerpt: `A package client who leaves with one booked session and five promised ones is a sale on paper and a drifting client in practice, and the fix happens at the front desk.`,
+    tags: `Laser Clinics, Package Booking, Client Retention`,
+    content: `Sell a six-session package, book the first appointment, and you have sold six visits and scheduled one. The other five exist only as a balance on a receipt and a client's good intentions.
+
+If you run a laser hair removal clinic, you know how this plays out. The client pays on Tuesday, picks a time for session one, and walks out happy. Six weeks later she has not rebooked, because nothing in her week reminds her to. By week ten she is embarrassed about the gap. By week fourteen she is a name on your list with four sessions unused and no reason to come back.
+
+## The package is not the product
+
+What you sell is a finished series, spaced the way your clinic sets it. The payment is only the first step. A client who completes all six is the one who tells her sister, and a client who stops at three is the one who quietly decides it did not work, even when the real reason was a calendar.
+
+I am not going to hand you a drop-off percentage, because I have not seen your numbers and yours will not match anyone else's. You can get your own in ten minutes, and I will show you how at the end.
+
+## Book the series before she leaves
+
+The fix is blunt: at checkout, book every session, or as many as your calendar will hold. You already know the gap between visits for each treatment area, so the dates are not a negotiation. Open the calendar with her, find a weekday and time that works, and place all of them in that same slot across the coming months.
+
+Some clinics only book two ahead because they worry about the far dates. That is fine, as long as the rule is written down: she never leaves with fewer than two future appointments, and the next one is booked at every visit.
+
+Say it plainly at the desk: "Your series runs on the spacing we use for your treatment area, so I am holding all six dates now. If one stops working, text me and we will move it." The line that matters is the last one. Moving an appointment is easy. Rebuilding a stalled client is not.
+
+## Make moving a date cheap
+
+Booking everything up front fails if changing a date feels like a hassle. Give her one way to do it, and tell her what it is.
+
+- A reminder text a week before each session, with a reply that asks to move it.
+- A reschedule that offers her two or three nearby slots instead of an open question.
+- A clear note that a moved session still has to land inside the spacing window your clinic uses, so she understands why the date matters.
+
+That last point is not scare language. It is the one honest reason the series needs dates rather than "whenever."
+
+## Where software earns its keep
+
+Hand-booking six visits for every package is real work at the desk, and it is easy to skip on a busy afternoon. This is the part worth automating. When a package is sold, the system can place the repeating holds, send the reminders on a schedule, and flag any client whose remaining sessions have no date attached. The booking logic still has to be yours, because it knows your spacing and your provider's availability, and a generic template will guess wrong.
+
+## What this will not fix
+
+It will not rescue a client who bought a package on impulse and regrets it. It will not hide the fact that your provider's Thursday schedule is full, and a client who needs Thursdays will be told so up front, which is better than learning it in week four. And booking six dates takes five extra minutes at checkout. On a slow day that is nothing. On a busy Saturday it is a line, so decide now who handles it.
+
+## Run this list on Friday
+
+Pull every client who still has sessions left on a package and no future appointment on the calendar. Count them, and add up the unused sessions. That number is the work you have already been paid for and have not delivered. Pick the five who have been silent longest and text each one two open slots this week.
+`,
+  },
+  {
     slug: `home-care-family-note-before-thanksgiving-visit`,
     title: `Write the Family Before Thanksgiving, Not After the Visit`,
     excerpt: `The son who flies in for Thanksgiving sees in three days what your caregivers have watched change for a year, and he will call someone the Monday after.`,
