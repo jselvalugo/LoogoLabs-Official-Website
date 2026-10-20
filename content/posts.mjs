@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `home-care-family-note-before-thanksgiving-visit`,
+    title: `Write the Family Before Thanksgiving, Not After the Visit`,
+    excerpt: `The son who flies in for Thanksgiving sees in three days what your caregivers have watched change for a year, and he will call someone the Monday after.`,
+    tags: `Home Care, Family Communication, Holiday Planning`,
+    content: `A daughter who lives four states away sees her mother for the first time since June, over Thanksgiving dinner, and notices the walker, the thinner arms, and the stack of unopened mail. She says nothing at the table. On the Monday after, she goes looking for help, and your agency is one of three phone numbers she calls.
+
+If you run a small in-home care agency, you already have this family in your client list. Their mother has been on your schedule for a year. Your caregivers have watched every one of those changes arrive slowly, one visit at a time, and nobody ever told the daughter any of it.
+
+## Why the week after Thanksgiving is different
+
+For most of the year, the person who pays attention to your client is you and your caregivers. Over a holiday weekend, a second set of eyes arrives with no history at all. Relatives who have only seen a parent on a screen all year walk in and see the gap between June and now in one afternoon.
+
+That gap lands as alarm, not as information. The relative does not think, "the agency has been managing this well." They think, "nobody told me it was this far along." Whether that thought is fair or not, it is the one that sends them searching.
+
+I am not going to give you a number for how many of your families will do this. I would guess more than you expect, and your own inbox from the first week of last December will tell you.
+
+## Send the note before they arrive
+
+The fix is a short message to the family contact on file, sent in the week before Thanksgiving. Not a newsletter. Not a holiday greeting. One note, written about that one client.
+
+It has three parts:
+
+- **One line on how things are.** "Your mother is eating well at breakfast and tires by mid-afternoon. We moved her shower visits to mornings in October."
+- **One line on what they might notice.** "You may see she is using the walker inside the house now. That started three weeks ago."
+- **One door.** "If anything worries you while you're here, text this number, or pick a time for a ten-minute call on Monday, the 30th, and I will have her care notes open."
+
+The second line does most of the work. Telling someone what they will see before they see it turns a shock into a thing the agency already knew about. The family stops asking "did anyone notice?" because the answer is already in their hand.
+
+## Offer the call slots yourself
+
+Do not write "call me if you have questions." People do not call, and then they call someone else. Put two or three specific slots in the note, and let them reply with a number.
+
+Block those slots on your calendar now. If you offer Monday at 10, Monday at 1:30 and Tuesday at 9, and four families reply, you know exactly what your first two days back look like, and you can plan the caregivers' notes around them. That is the part a system can handle for you: the note goes out on a date you pick, the replies come back tagged, and the call slots fill from your calendar without you juggling texts. The writing is still yours, because a note that sounds templated is worse than none.
+
+## What this will not do
+
+It will not make every family happy. Some will read "she tires by mid-afternoon" and decide it is time for more hours, and that is a conversation worth having on your terms, in a booked slot, not in a panic. It will not help where the client has no family contact on file, and it will not fix a bad month of care. If your caregivers have been missing visits, a nicer note makes that more visible, not less.
+
+It also takes time. Ten notes of three lines each is an hour of writing, and the hour has to be real attention to each client, not a copy-and-paste.
+
+## Do this before Friday
+
+Open your client list and mark every client who has a family member living out of town. Next to each name, write one thing that has changed since June. If you can fill in the line, that family gets a note next week. If you cannot, ask the caregiver on that case tomorrow, because that blank is the real finding.
+`,
+  },
+  {
     slug: `pet-sitter-visit-done-text-while-owner-is-away`,
     title: `Traveling Owners Text "Did You Come?" Unless You Text First`,
     excerpt: `An owner on a holiday trip cannot tell a quiet sitter from a missing one, so the visit-done text has to arrive before the worried one does.`,
