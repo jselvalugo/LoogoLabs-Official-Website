@@ -8,6 +8,11 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
 const wordmarks = [...CLIENT_WORDMARKS];
 const names = REFERENCES.filter((n) => !CLIENT_LOGOS[n]);
+// The looping band under the nav: every logo, then the script name.
+const loopItems = [
+  ...logos.map((name) => ({ name, ...CLIENT_LOGOS[name] })),
+  ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
+];
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
@@ -46,12 +51,20 @@ const content = {
 const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
 
 const reviews = [
-  { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
-  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
+  { src: '/testimonial-kristin-pitts.png', w: 1390, h: 458, alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
+  { src: '/testimonial-sally-butler.png', w: 1388, h: 576, alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
 ];
 
 export default function Consulting() {
   const c = content;
+  // Great Vibes for the script client name. Added here, not in the CSS, so the build keeps it.
+  React.useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, []);
   const toHref = useHref();
   // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
   const [variant, setVariant] = React.useState(null);
@@ -70,10 +83,37 @@ export default function Consulting() {
         <button type="button" className="cs-pill" onClick={toForm}>Apply</button>
       </header>
 
+      <section className="cs-loop" aria-label="Selected clients">
+        <div className="cs-loop__track">
+          {[0, 1].map((copy) => loopItems.map((item) => (
+            <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}`} aria-hidden={copy === 1 || undefined}>
+              {item.wordmark ? <span className="cs-script cs-loop__script">{item.wordmark}</span> : <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} />}
+            </div>
+          )))}
+        </div>
+      </section>
+
       <section className="cs-hero">
         <h1>{hero.h1}</h1>
         <p className="cs-lede">{hero.lede}</p>
         <div className="cs-video"><FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} /></div>
+        <div className="cs-proof" aria-label="Selected clients">
+          <p className="cs-proof__eyebrow">In good company</p>
+          <div className="cs-proof__cols">
+            {[0, 1].map((col) => (
+              <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
+                {loopItems.filter((_, i) => i % 2 === col).map((item) => (
+                  <div key={item.name} className={`cs-proof__tile${item.dark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
+                    {item.wordmark
+                      ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
+                      : <img src={item.src} width={item.w} height={item.h} alt={item.name} />}
+                    {item.caption && <span className="cs-proof__caption">{item.caption}</span>}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
         <button type="button" className="cs-textcta" onClick={toForm}>See if you qualify <ArrowDown size={18} weight="bold" /></button>
       </section>
 
@@ -95,12 +135,13 @@ export default function Consulting() {
         <h2>and <em>clients who say it best.</em></h2>
         <div className="cs-reviews" aria-label="Client reviews">
           <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
-          {reviews.map((r) => <img key={r.src} {...r} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
+          {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
           {logos.map((name) => (
-            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}`}>
-              <img src={CLIENT_LOGOS[name].src} alt={name} />
+            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}${CLIENT_LOGOS[name].caption ? ' cs-client--captioned' : ''}`}>
+              <img src={CLIENT_LOGOS[name].src} width={CLIENT_LOGOS[name].w} height={CLIENT_LOGOS[name].h} alt={name} />
+              {CLIENT_LOGOS[name].caption && <span className="cs-client__caption">{CLIENT_LOGOS[name].caption}</span>}
             </li>
           ))}
           {wordmarks.map((name) => (
