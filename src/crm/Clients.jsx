@@ -63,7 +63,7 @@ export function Dashboards({ version }) {
         <ClientSelect clients={others} value={adding} onChange={setAdding} />
         <button className="btn btn-primary" disabled={!adding} onClick={() => setSelected(adding)}>Set up dashboard</button>
       </div>
-      <p className="muted count">One white-labeled page per client with ad spend, views, engagement and conversions. Clients are company records.</p>
+      <p className="muted count">One Loogo Labs–branded page per client with ad spend, views, engagement and conversions. Clients are company records.</p>
       <div className="stats stats-3">
         <Stat k="Live dashboards" n={live.filter((c) => c.active).length} v={`${live.length} set up`} />
         <Stat k="Reporting revenue" n={money(mrr) || '$0'} v="per month" />
@@ -77,7 +77,7 @@ export function Dashboards({ version }) {
             <tbody>
               {live.map((c) => (
                 <tr key={c.company_id} onClick={() => setSelected(c.company_id)}>
-                  <td><span className="swatch" style={{ background: c.brand_color }} />{c.display_name || c.name}</td>
+                  <td>{c.display_name || c.name}</td>
                   <td><span className={`pill ${c.active ? 'approved' : ''}`}>{c.active ? 'Live' : 'Paused'}</span></td>
                   <td className="num">{money(c.monthly_fee)}</td>
                   <td className="hide-sm">{c.last_period ? day(c.last_period).replace(/ \d+,/, '') : <span className="muted">No data</span>}</td>
@@ -92,7 +92,9 @@ export function Dashboards({ version }) {
   );
 }
 
-const BLANK_PORTAL = { display_name: '', logo_url: '', brand_color: '#1A1A18', agency_name: '', welcome: '', monthly_fee: '', active: true };
+const BLANK_PORTAL = { display_name: '', welcome: '', monthly_fee: '', active: true };
+// Every client portal carries the Loogo Labs logo and green (no white-labeling).
+const LOOGO_GREEN = '#2D3B1F';
 const BLANK_METRIC = { period: thisMonth(), channel: '', spend: '', views: '', engagement: '', conversions: '' };
 
 function DashboardEditor({ companyId, onBack }) {
@@ -154,20 +156,15 @@ function DashboardEditor({ companyId, onBack }) {
 
       <div className="cols">
         <form className="card pad" onSubmit={savePortal}>
-          <div className="kicker">White-label branding</div>
+          <div className="kicker">Client portal</div>
           <div className="grid2">
-            <div><label className="label" htmlFor="p-name">Name on dashboard</label><input id="p-name" className="field" value={form.display_name} onChange={set('display_name')} /></div>
-            <div><label className="label" htmlFor="p-agency">Prepared by</label><input id="p-agency" className="field" placeholder="Your agency name" value={form.agency_name} onChange={set('agency_name')} /></div>
-            <div className="span2"><label className="label" htmlFor="p-logo">Logo URL</label><input id="p-logo" className="field" placeholder="https://…/logo.png" value={form.logo_url} onChange={set('logo_url')} /></div>
-            <div><label className="label" htmlFor="p-color">Brand color</label>
-              <span className="copy"><input id="p-color" type="color" className="colorpick" value={form.brand_color} onChange={set('brand_color')} /><input className="field" aria-label="Brand color hex" value={form.brand_color} onChange={set('brand_color')} /></span>
-            </div>
-            <div><label className="label" htmlFor="p-fee">Monthly reporting fee</label><input id="p-fee" className="field" inputMode="decimal" placeholder="$" value={form.monthly_fee} onChange={set('monthly_fee')} /></div>
+            <div className="span2"><label className="label" htmlFor="p-name">Client name shown in the portal</label><input id="p-name" className="field" value={form.display_name} onChange={set('display_name')} /></div>
+            <div className="span2"><label className="label" htmlFor="p-fee">Monthly reporting fee</label><input id="p-fee" className="field" inputMode="decimal" placeholder="$" value={form.monthly_fee} onChange={set('monthly_fee')} /></div>
             <div className="span2"><label className="label" htmlFor="p-welcome">Welcome note</label><textarea id="p-welcome" className="field" rows={2} value={form.welcome} onChange={set('welcome')} /></div>
           </div>
           <label className="check" style={{ marginTop: 14 }}><input type="checkbox" checked={form.active} onChange={set('active')} /> Dashboard link is live</label>
           {error && <div className="error">{error}</div>}
-          <div className="actions"><button className="btn btn-primary">{state.portal ? (saved ? 'Saved' : 'Save branding') : 'Create dashboard'}</button></div>
+          <div className="actions"><button className="btn btn-primary">{state.portal ? (saved ? 'Saved' : 'Save') : 'Create dashboard'}</button></div>
         </form>
 
         <div className="card pad">
@@ -178,7 +175,7 @@ function DashboardEditor({ companyId, onBack }) {
               <CopyLink href={portalLink(state.portal.share_token)} />
               <div className="actions"><button className="btn btn-small" onClick={rotate}>Issue a new link</button></div>
             </>
-          ) : <p className="muted" style={{ fontSize: 14 }}>Save the branding to create the client's link.</p>}
+          ) : <p className="muted" style={{ fontSize: 14 }}>Save to create the client's link.</p>}
         </div>
       </div>
 
@@ -213,7 +210,7 @@ function DashboardEditor({ companyId, onBack }) {
       )}
 
       <div className="section">Preview — what your client sees</div>
-      <PerformanceReport metrics={state.metrics} color={form.brand_color} />
+      <PerformanceReport metrics={state.metrics} color={LOOGO_GREEN} />
     </>
   );
 }

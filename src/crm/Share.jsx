@@ -2,8 +2,8 @@ import React from 'react';
 import { call } from './api';
 import { Comments, Media, PerformanceReport, StatusPill, canSeek, clock, day, parseClock, range } from './report';
 
-// What a client sees from a share link — no sign-in, branded with their
-// portal settings. /portal/<token> is their dashboard + approvals + recaps;
+// What a client sees from a share link — no sign-in, under the Loogo Labs
+// logo. /portal/<token> is their dashboard + approvals + recaps;
 // /recap/<token> is a single campaign one-pager they can forward.
 
 const share = (action, payload) => call('crm-share', action, payload);
@@ -21,9 +21,9 @@ function useTitle(title) {
 
 function BrandHeader({ brand, sub }) {
   return (
-    <header className="share-top" style={{ '--brand': brand.brand_color }}>
-      {brand.logo_url ? <img src={brand.logo_url} alt="" /> : <span className="mono" aria-hidden="true">{brand.name.slice(0, 1)}</span>}
-      <div style={{ flex: 1, minWidth: 0 }}>
+    <header className="share-top">
+      <img src="/email-logo.png" alt="Loogo Labs — AI, Marketing & Automation" />
+      <div className="share-for">
         <div className="share-name">{brand.name}</div>
         {sub && <div className="muted" style={{ fontSize: 13 }}>{sub}</div>}
       </div>
@@ -31,7 +31,7 @@ function BrandHeader({ brand, sub }) {
   );
 }
 
-const Footer = ({ brand }) => brand.agency_name && <p className="muted share-foot">Prepared by {brand.agency_name}</p>;
+const Footer = () => <p className="muted share-foot">Loogo Labs · AI, Marketing &amp; Automation</p>;
 
 function Problem({ message }) {
   return <div className="auth"><div className="card" style={{ textAlign: 'center' }}><h1 style={{ fontSize: 22 }}>Link unavailable</h1><p className="muted">{message}</p></div></div>;
@@ -84,7 +84,7 @@ function Portal({ token }) {
             ))}
           </div>
         )}
-        <Footer brand={state.brand} />
+        <Footer />
       </main>
     </div>
   );
@@ -272,7 +272,7 @@ function RecapPage({ token }) {
             <p className="pre">{r.next_steps}</p>
           </>
         )}
-        <Footer brand={r.brand} />
+        <Footer />
       </main>
     </div>
   );
