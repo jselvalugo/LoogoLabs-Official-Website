@@ -102,35 +102,35 @@
   background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); color: var(--cs-accent); font: 700 13px var(--font-display); letter-spacing: 0.02em; }
 .cs-client__name { font: 600 14px/1.25 var(--font-display); color: var(--ink-900); }
 
-/* Logo tiles: three across, one shared height, so they read as a set. */
-.cs-client.cs-client--logo { flex-basis: calc((100% - 20px) / 3); height: 84px; justify-content: center; padding: 12px; }
-.cs-client--logo img { display: block; max-height: 44px; max-width: 100%; width: auto; height: auto; }
-.cs-client.cs-client--logo.cs-client--dark { background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
-.cs-client--dark img { max-height: 58px; }
-.cs-client--chip img { max-height: 46px; border-radius: 8px; }
+/* Logo tiles: four across on desktop, one shared height, so they read as a set. */
+.cs-client.cs-client--logo { flex-basis: calc((100% - 30px) / 4); height: 96px; justify-content: center; padding: 12px; }
+.cs-client--logo img { display: block; max-height: 60px; max-width: 100%; width: auto; height: auto; }
+.cs-client.cs-client--logo.cs-client--dark { background: #000; border-color: rgba(235, 130, 38, 0.3); }
+.cs-client--dark img { max-height: 76px; }
+.cs-client--chip img { max-height: 60px; border-radius: 8px; }
 
-/* Name cards: three across on desktop. */
-.cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 20px) / 3); }
+/* Name cards: two across on desktop. */
+.cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 10px) / 2); }
 
 @media (max-width: 720px) {
   .cs-clients { gap: 8px; }
   .cs-client { flex-basis: calc((100% - 8px) / 2); padding: 8px 10px; gap: 8px; }
   .cs-client__mark { width: 30px; height: 30px; font-size: 12px; }
   .cs-client__name { font-size: 13px; }
-  .cs-client.cs-client--logo { flex-basis: calc((100% - 16px) / 3); height: 64px; padding: 8px; }
-  .cs-client--logo img { max-height: 30px; }
-  .cs-client--dark img { max-height: 40px; }
-  .cs-client--chip img { max-height: 32px; }
+  .cs-client.cs-client--logo { flex-basis: calc((100% - 8px) / 2); height: 76px; padding: 8px; }
+  .cs-client--logo img { max-height: 44px; }
+  .cs-client--dark img { max-height: 56px; }
+  .cs-client--chip img { max-height: 44px; }
   /* On phones names are two across; a lone last one takes the full width. */
   .cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 8px) / 2); }
   .cs-clients .cs-client.cs-client--wide { flex-basis: 100%; }
 }
 
 /* Gold script client name, full width under the logo tiles. */
-.cs-clients .cs-client.cs-client--script { flex-basis: 100%; flex-direction: column; justify-content: center; gap: 2px; padding: 18px 16px; background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
-.cs-script { font: 400 44px/1.1 'Great Vibes', cursive; background: linear-gradient(100deg, #F6D37A, #D4A537 55%, #B8861F); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.cs-script__sub { font: 600 11px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(246, 211, 122, 0.75); }
+.cs-clients .cs-client.cs-client--script { flex-basis: 100%; flex-direction: column; justify-content: center; gap: 0; padding: 10px 16px; background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
+.cs-script { font: 400 30px/1.1 'Great Vibes', cursive; background: linear-gradient(100deg, #F6D37A, #D4A537 55%, #B8861F); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cs-script__sub { font: 600 9px/1 var(--font-body); letter-spacing: 0.2em; margin-top: 4px; text-transform: uppercase; color: rgba(246, 211, 122, 0.75); }
 @media (max-width: 720px) {
-  .cs-clients .cs-client.cs-client--script { flex-basis: 100%; padding: 14px 12px; }
-  .cs-script { font-size: 36px; }
+  .cs-clients .cs-client.cs-client--script { flex-basis: 100%; padding: 8px 12px; }
+  .cs-script { font-size: 26px; }
 }

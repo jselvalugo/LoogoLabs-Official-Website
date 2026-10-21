@@ -7,6 +7,7 @@ export const CLIENT_LOGOS = {
   'Feche Consulting': { src: '/clients/feche-consulting.jpg' },
   'Riel Compliance Suite': { src: '/clients/riel-compliance-suite.jpg', chip: true },
   'Lugo’s Craft Distillery': { src: '/blog/lugos-craft-logo-on-dark.png', dark: true },
+  'Reef Ntwrks': { src: '/clients/reef-consulting.png' },
 };
 
 // Clients shown as gold script text instead of a logo. "Name - Subtitle" splits into two lines.
