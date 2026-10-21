@@ -78,7 +78,13 @@ export const Media = React.forwardRef(function Media({ url }, videoRef) {
   if (IMAGE.test(url)) return <a href={url} target="_blank" rel="noreferrer"><img className="media" src={url} alt="" /></a>;
   const embed = embedUrl(url);
   if (embed) return <div className="media embed"><iframe src={embed} title="Preview" allow="fullscreen; picture-in-picture" allowFullScreen /></div>;
-  return <p><a className="btn" href={url} target="_blank" rel="noreferrer">Open file ↗</a></p>;
+  // Big and gold so clients open the file before they approve.
+  return (
+    <a className="open-file" href={url} target="_blank" rel="noreferrer">
+      <span>Open file to review ↗</span>
+      <small>Opens in a new tab · please review before approving</small>
+    </a>
+  );
 });
 export const canSeek = (url) => !!url && VIDEO.test(url);
 
