@@ -3,6 +3,7 @@ import {
   CrmError, addActivity, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
   listRecords, overview, updateActivity, updateRecord,
 } from '../lib/crm-records.js';
+import * as clients from '../lib/crm-clients.js';
 
 // Everything a signed-in CRM user reads or writes, as POST { action, ... }.
 // Every call is scoped to the user's own instance (see netlify/lib/crm-records.js).
@@ -28,6 +29,25 @@ export default async (req) => {
       case 'add_activity': return json(await addActivity(inst, body.values || {}, audit), 201);
       case 'update_activity': return json(await updateActivity(inst, body.id, body.values || {}));
       case 'delete_activity': return json(await deleteActivity(inst, body.id));
+      // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
+      case 'clients': return json(await clients.listClients(inst));
+      case 'dashboard': return json(await clients.getDashboard(inst, body.company_id));
+      case 'save_portal': return json(await clients.savePortal(inst, body.company_id, body.values || {}));
+      case 'rotate_portal_link': return json(await clients.rotatePortalLink(inst, body.company_id));
+      case 'save_metric': return json(await clients.saveMetric(inst, body.company_id, body.values || {}));
+      case 'delete_metric': return json(await clients.deleteMetric(inst, body.id));
+      case 'metric_totals': return json(await clients.metricTotals(inst, body.company_id, body.from, body.to));
+      case 'approvals': return json(await clients.listApprovals(inst, body));
+      case 'get_approval': return json(await clients.getApproval(inst, body.id));
+      case 'save_approval': return json(await clients.saveApproval(inst, body.values || {}, audit));
+      case 'new_approval_version': return json(await clients.newApprovalVersion(inst, body.id, body.values || {}, audit));
+      case 'delete_approval': return json(await clients.deleteApproval(inst, body.id));
+      case 'approval_comment': return json(await clients.teamComment(inst, body.id, body.values || {}, me), 201);
+      case 'resolve_comment': return json(await clients.resolveComment(inst, body.id, body.resolved));
+      case 'delete_comment': return json(await clients.deleteComment(inst, body.id));
+      case 'recaps': return json(await clients.listRecaps(inst, body));
+      case 'save_recap': return json(await clients.saveRecap(inst, body.values || {}, audit));
+      case 'delete_recap': return json(await clients.deleteRecap(inst, body.id));
       case 'team': {
         const { sql } = db();
         return json(await sql`SELECT id, email, name, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`);

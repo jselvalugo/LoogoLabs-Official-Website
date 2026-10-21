@@ -1,6 +1,8 @@
 import React from 'react';
 import { call, data, getToken, setToken } from './api';
 import { ACTIVITY_TYPES, ENTITIES, LEAD_STATUSES, OPPORTUNITY_STAGES, optionLabel } from './entities';
+import { Approvals, Dashboards, Recaps } from './Clients';
+import { Drawer, Stat } from './report';
 
 const PAGES = [
   { id: 'overview', label: 'Overview', path: '' },
@@ -9,8 +11,19 @@ const PAGES = [
   { id: 'companies', label: 'Companies', path: '/companies', entity: 'companies' },
   { id: 'opportunities', label: 'Opportunities', path: '/opportunities', entity: 'opportunities' },
   { id: 'tasks', label: 'Tasks', path: '/tasks' },
+  { id: 'dashboards', label: 'Dashboards', path: '/dashboards' },
+  { id: 'approvals', label: 'Approvals', path: '/approvals' },
+  { id: 'recaps', label: 'Recaps', path: '/recaps' },
   { id: 'settings', label: 'Settings', path: '/settings' },
 ];
+
+// Top bar: record pages sit under one CRM menu; the rest are tabs.
+const NAV = [
+  'overview',
+  { id: 'crm', label: 'CRM', items: ['leads', 'contacts', 'companies', 'opportunities', 'tasks'] },
+  'dashboards', 'approvals', 'recaps', 'settings',
+];
+const pageLabel = (id) => PAGES.find((p) => p.id === id).label;
 
 const money = (n) => (n === null || n === undefined ? '' : `$${Math.round(Number(n)).toLocaleString('en-US')}`);
 const when = (d) => new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
@@ -74,7 +87,9 @@ export default function App() {
       <header className="top">
         <div className="brand"><img src="/admin-logo.png" alt="" />CRM</div>
         <nav className="nav">
-          {PAGES.map((p) => <button key={p.id} className={page === p.id ? 'on' : ''} onClick={() => go(p.id)}>{p.label}</button>)}
+          {NAV.map((n) => (typeof n === 'string'
+            ? <button key={n} className={page === n ? 'on' : ''} onClick={() => go(n)}>{pageLabel(n)}</button>
+            : <NavMenu key={n.id} group={n} page={page} go={go} />))}
         </nav>
         <div className="who hide-sm">{me.instance_name}<br />{me.name || me.email}</div>
         <button className="btn" onClick={signOut}>Sign out</button>
@@ -83,6 +98,9 @@ export default function App() {
         {page === 'overview' && <Overview />}
         {current.entity && <RecordList key={current.entity} entityKey={current.entity} />}
         {page === 'tasks' && <Tasks />}
+        {page === 'dashboards' && <Dashboards version={version} />}
+        {page === 'approvals' && <Approvals version={version} />}
+        {page === 'recaps' && <Recaps version={version} />}
         {page === 'settings' && <Settings me={me} />}
       </main>
       {drawer && (
@@ -131,6 +149,34 @@ function SignIn({ onSignedIn }) {
 }
 
 // ── Overview ────────────────────────────────────────────────────────────────
+
+function NavMenu({ group, page, go }) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+  const active = group.items.includes(page);
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const away = (e) => { if (!ref.current?.contains(e.target)) setOpen(false); };
+    const esc = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', away);
+    document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', away); document.removeEventListener('keydown', esc); };
+  }, [open]);
+  return (
+    <div className="menu" ref={ref}>
+      <button className={active ? 'on' : ''} aria-haspopup="true" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        {group.label}{active ? ` · ${pageLabel(page)}` : ''} <span aria-hidden="true">▾</span>
+      </button>
+      {open && (
+        <div className="menu-list" role="menu">
+          {group.items.map((id) => (
+            <button key={id} role="menuitem" className={page === id ? 'on' : ''} onClick={() => { setOpen(false); go(id); }}>{pageLabel(id)}</button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Overview() {
   const { open, version } = useCrm();
@@ -199,10 +245,6 @@ function Overview() {
       </div>
     </>
   );
-}
-
-function Stat({ k, n, v }) {
-  return <div className="card stat"><div className="k">{k}</div><div className="n">{n}</div>{v !== undefined && <div className="v">{v}</div>}</div>;
 }
 
 // ── Lists ───────────────────────────────────────────────────────────────────
@@ -444,28 +486,6 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
         </>
       )}
     </Drawer>
-  );
-}
-
-function Drawer({ title, kicker, onClose, children }) {
-  React.useEffect(() => {
-    const esc = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', esc);
-    return () => window.removeEventListener('keydown', esc);
-  }, [onClose]);
-  return (
-    <div className="drawer-bg" onClick={onClose}>
-      <aside className="drawer" role="dialog" aria-label={title} onClick={(e) => e.stopPropagation()}>
-        <div className="drawer-head">
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {kicker && <div className="kicker">{kicker}</div>}
-            <h2>{title}</h2>
-          </div>
-          <button className="btn" onClick={onClose}>Close</button>
-        </div>
-        {children}
-      </aside>
-    </div>
   );
 }
 
