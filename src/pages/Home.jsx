@@ -51,25 +51,25 @@ function TypedWord({ words }) {
 
 // Each tile names the tools it retires, straight from the section copy.
 const features = [
-  { title: 'CRM & Contacts', tone: 'inverse', retires: ['Spreadsheets', 'Scattered inboxes'],
-    body: 'Manage every lead, client, and conversation in one place. Every contact and every pipeline stage, fully organized, with no more juggling disconnected tools.' },
-  { title: 'Email & SMS Marketing', tone: 'paper', retires: ['Separate email tool', 'Manual follow-ups'],
-    body: 'Send campaigns, automate follow-ups, and reach your audience where they are. Build sequences that run while you sleep and never miss a lead again.' },
-  { title: 'Social Media & AI Content', tone: 'sage', retires: ['Social scheduler', 'Blank-page posts'],
-    body: 'Schedule posts across every platform and generate content with 60+ AI-powered prompts. Stay consistent and visible without spending hours online every week.' },
-  { title: 'Courses, Payments & Automation', tone: 'inverse', retires: ['Course platform', 'Payment links', 'A dozen apps'],
-    body: 'Sell courses, build membership communities, collect payments, and automate your entire workflow, all without duct-taping a dozen apps together.' },
+  { title: 'Positioning & Messaging', tone: 'inverse', retires: ['Unclear offer', 'Guessing at messaging'],
+    body: 'We find what makes your brand worth choosing, then sharpen your audience, messaging and offer so the right people understand you in seconds.' },
+  { title: 'Go-to-Market Strategy', tone: 'paper', retires: ['Random posting', 'No clear funnel'],
+    body: 'An audit of your channels, a plan with budget and targets, and a funnel that turns attention into users, subscribers and paying customers.' },
+  { title: 'Ads Strategy', tone: 'sage', retires: ['Wasted ad spend', 'No tracking'],
+    body: 'Meta, Google and YouTube campaigns built around targeting, creative and budgets that pay back, with results tracked to real revenue.' },
+  { title: 'Growth Plan', tone: 'inverse', retires: ['No roadmap', 'Guesswork'],
+    body: 'A 90-day roadmap with clear targets your team can run, reviewed against results so every month builds on the last.' },
 ];
 
 const features_ES = [
-  { title: 'CRM y contactos', tone: 'inverse', retires: ['Hojas de cálculo', 'Bandejas de entrada dispersas'],
-    body: 'Gestiona cada prospecto, cliente y conversación en un solo lugar. Cada contacto y cada etapa del embudo, todo organizado, sin malabares entre herramientas desconectadas.' },
-  { title: 'Marketing por email y SMS', tone: 'paper', retires: ['Herramienta de email aparte', 'Seguimientos manuales'],
-    body: 'Envía campañas, automatiza seguimientos y llega a tu audiencia donde está. Crea secuencias que trabajan mientras duermes y nunca vuelvas a perder un prospecto.' },
-  { title: 'Redes sociales y contenido con IA', tone: 'sage', retires: ['Programador de redes', 'Publicaciones desde cero'],
-    body: 'Programa publicaciones en todas las plataformas y genera contenido con más de 60 prompts de IA. Mantente constante y visible sin pasar horas en línea cada semana.' },
-  { title: 'Cursos, pagos y automatización', tone: 'inverse', retires: ['Plataforma de cursos', 'Enlaces de pago', 'Una docena de apps'],
-    body: 'Vende cursos, crea comunidades de membresía, cobra pagos y automatiza todo tu flujo de trabajo, sin tener que parchar una docena de apps.' },
+  { title: 'Posicionamiento y mensaje', tone: 'inverse', retires: ['Oferta poco clara', 'Mensaje a ciegas'],
+    body: 'Descubrimos qué hace que tu marca valga la pena elegir y afinamos tu audiencia, mensaje y oferta para que las personas correctas te entiendan en segundos.' },
+  { title: 'Estrategia de salida al mercado', tone: 'paper', retires: ['Publicaciones al azar', 'Sin embudo claro'],
+    body: 'Una auditoría de tus canales, un plan con presupuesto y metas, y un embudo que convierte la atención en usuarios, suscriptores y clientes que pagan.' },
+  { title: 'Estrategia de anuncios', tone: 'sage', retires: ['Gasto publicitario perdido', 'Sin medición'],
+    body: 'Campañas en Meta, Google y YouTube con segmentación, creatividades y presupuestos que se pagan solos, con resultados medidos en ingresos reales.' },
+  { title: 'Plan de crecimiento', tone: 'inverse', retires: ['Sin hoja de ruta', 'Adivinanzas'],
+    body: 'Un plan de 90 días con metas claras que tu equipo puede ejecutar, revisado con resultados para que cada mes construya sobre el anterior.' },
 ];
 
 const voiceBotFeatures_ES = [
@@ -338,8 +338,8 @@ function Home({ onNavigate }) {
       <FeaturedPostLine onNavigate={onNavigate} />
 
       <Wrap className="hm-section">
-        <SectionHeading title={es ? 'Todo lo que tu negocio necesita para crecer, bajo un mismo techo' : 'Everything your business needs to grow, under one roof'}
-          description={es ? 'Una sola plataforma que reemplaza tu CRM, herramienta de email, app de citas, plataforma de cursos y programador de redes. Un solo acceso. Una sola factura mensual.' : 'One platform that replaces your CRM, email tool, scheduling app, course platform and social scheduler. One login. One monthly bill.'} />
+        <SectionHeading title={es ? 'Estrategia que convierte tu marca en motor de crecimiento' : 'Strategy that turns your brand into a growth engine'}
+          description={es ? 'Estrategia de marketing y anuncios para marcas SaaS y creadores: cuatro servicios, un solo plan, pensado para los clientes que quieres.' : 'Marketing and ads strategy for SaaS brands and creators: four services, one plan, built around the customers you want.'} />
         <div tabIndex={0} className="hm-bento">
           {(es ? features_ES : features).map(f => (
             <Card key={f.title} tone={f.tone} className={`hm-tile ll-reveal${f.tone === 'inverse' ? ' hm-tile--dark' : ''}`}>
