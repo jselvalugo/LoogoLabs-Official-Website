@@ -110,3 +110,67 @@ export async function sendEmail({ to, cc, subject, html, text, replyTo }) {
   if (!res.ok) throw new CrmError(`Resend: ${body.message || `error ${res.status}`}`, 502);
   return body.id;
 }
+
+// Branded internal alert for a new website lead, sent to the Loogo Labs team.
+export function newLeadEmail(lead) {
+  const source = (lead.source || 'website').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const where = [lead.city, lead.region, lead.country].filter(Boolean).join(', ');
+  const crm = 'https://crm.loogolabs.com/leads';
+  const subject = `New lead: ${lead.full_name}${lead.company ? ` (${lead.company})` : ''} · ${source}`;
+  const row = (label, value) => (value ? `
+          <tr>
+            <td style="padding:10px 0;border-top:1px solid ${LINE};font:500 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:${MUTED};width:130px;vertical-align:top;">${label}</td>
+            <td style="padding:10px 0;border-top:1px solid ${LINE};font:15px/1.5 Georgia,'Times New Roman',serif;color:${INK};">${value}</td>
+          </tr>` : '');
+
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${esc(subject)}</title></head>
+<body style="margin:0;padding:0;background:${CREAM};">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(`${lead.full_name} just signed up from ${source}.`)}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${CREAM};">
+    <tr><td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid ${LINE};border-radius:14px;overflow:hidden;">
+        <tr><td style="padding:28px 36px 22px;border-bottom:4px solid ${GREEN};">
+          <img src="${LOGO}" width="260" alt="Loogo Labs — AI, Marketing &amp; Automation" style="display:block;width:260px;max-width:100%;height:auto;border:0;">
+        </td></tr>
+        <tr><td style="padding:34px 36px 8px;">
+          <div style="font:500 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${GREEN};">New website lead · ${esc(source)}</div>
+          <h1 style="margin:10px 0 0;font:400 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};">${esc(lead.full_name)}</h1>
+          <p style="margin:14px 0 0;font:16px/1.6 Helvetica,Arial,sans-serif;color:${INK};">Someone just registered on the website. They're already in Loogo Labs CRM as a new lead.</p>
+        </td></tr>
+        <tr><td style="padding:22px 36px 6px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            ${row('Email', `<a href="mailto:${esc(lead.email)}" style="color:${GREEN};">${esc(lead.email)}</a>`)}
+            ${row('Phone', lead.phone && `<a href="tel:${esc(lead.phone)}" style="color:${GREEN};">${esc(lead.phone)}</a>`)}
+            ${row('Business', lead.company && esc(lead.company))}
+            ${row('Source', esc(source))}
+            ${row('Location', where && esc(where))}
+            ${row('Notes', lead.notes && para(lead.notes))}
+          </table>
+        </td></tr>
+        <tr><td align="left" style="padding:26px 36px 34px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td style="background:${GREEN};border-radius:999px;">
+              <a href="${crm}" style="display:inline-block;padding:15px 34px;font:600 15px/1 Helvetica,Arial,sans-serif;color:#FFFFFF;text-decoration:none;letter-spacing:.02em;">Open in CRM →</a>
+            </td>
+          </tr></table>
+          <p style="margin:16px 0 0;font:13px/1.5 Helvetica,Arial,sans-serif;color:${MUTED};">Reply to this email to write to ${esc(lead.full_name)} directly.</p>
+        </td></tr>
+        <tr><td style="padding:20px 36px;background:${CREAM};border-top:1px solid ${LINE};">
+          <p style="margin:0;font:500 10px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:${MUTED};">Loogo Labs · AI, Marketing &amp; Automation · <a href="${SITE}" style="color:${MUTED};">loogolabs.com</a></p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  const text = [
+    `New website lead (${source})`, '',
+    `Name: ${lead.full_name}`, `Email: ${lead.email}`,
+    lead.phone && `Phone: ${lead.phone}`, lead.company && `Business: ${lead.company}`,
+    where && `Location: ${where}`, lead.notes && `Notes:\n${lead.notes}`, '',
+    `Open in CRM: ${crm}`,
+  ].filter((l) => typeof l === 'string').join('\n');
+
+  return { subject, html, text };
+}
