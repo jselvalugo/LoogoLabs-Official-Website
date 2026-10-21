@@ -66,7 +66,6 @@ export default function Consulting() {
       </header>
 
       <section className="cs-hero">
-        <span className="cs-eyebrow">Marketing &amp; ads strategy for SaaS &amp; creators</span>
         <h1>{hero.h1}</h1>
         <p className="cs-lede">{hero.lede}</p>
         <div className="cs-video"><FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} /></div>
