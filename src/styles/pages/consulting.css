@@ -176,6 +176,20 @@
   .cs-proof__caption { font: 600 10px/1 var(--font-body); letter-spacing: 0.08em; color: #F5F2EB; }
 }
 
+/* Mobile: the four service cards in a 2x2 block, and tighter space around the heading. */
+@media (max-width: 720px) {
+  .cs-light { padding-top: 56px; }
+  .cs-light h2 { font-size: 28px; }
+  .cs-link { margin: 18px auto; }
+  .cs-link::before { height: 36px; }
+  .cs-link::after { height: 18px; }
+  .cs-cards { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+  .cs-card { padding: 16px 14px; border-radius: 16px; }
+  .cs-card svg { width: 36px; height: 36px; padding: 7px; border-radius: 10px; }
+  .cs-card h3 { margin: 10px 0 4px; font-size: 16px; }
+  .cs-card p { font-size: 12.5px; line-height: 1.4; }
+  .cs-card__num { font-size: 30px; top: 8px; right: 10px; }
+}
 /* Mobile: no review block (the screenshots and their decorative stack), and tighter space
    after the service cards. */
 @media (max-width: 720px) {

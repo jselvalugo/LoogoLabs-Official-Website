@@ -4,6 +4,9 @@ import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../comp
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
 import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
+import '../styles/pages/landing.css';
+import '../styles/pages/brand-design.css';
+import '../styles/pages/consulting.css';
 
 const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
 const wordmarks = [...CLIENT_WORDMARKS];
@@ -12,11 +15,8 @@ const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name] }));
 // The mobile collage under the video: logos, then the script name.
 const proofItems = [
   ...beltItems,
-  ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
+  ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0], caption: name.split(' - ')[1] })),
 ];
-import '../styles/pages/landing.css';
-import '../styles/pages/brand-design.css';
-import '../styles/pages/consulting.css';
 
 const content = {
   source: 'consulting',
