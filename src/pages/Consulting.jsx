@@ -7,10 +7,11 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 
 const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
 const wordmarks = [...CLIENT_WORDMARKS];
-const names = REFERENCES.filter((n) => !CLIENT_LOGOS[n]);
-// The looping band under the nav: every logo, then the script name.
-const loopItems = [
-  ...logos.map((name) => ({ name, ...CLIENT_LOGOS[name] })),
+// The looping band under the nav: logos only.
+const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name] }));
+// The mobile collage under the video: logos, then the script name.
+const proofItems = [
+  ...beltItems,
   ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
 ];
 import '../styles/pages/landing.css';
@@ -85,7 +86,7 @@ export default function Consulting() {
 
       <section className="cs-loop" aria-label="Selected clients">
         <div className="cs-loop__track">
-          {[0, 1].map((copy) => loopItems.map((item) => (
+          {[0, 1].map((copy) => beltItems.map((item) => (
             <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}`} aria-hidden={copy === 1 || undefined}>
               {item.wordmark ? <span className="cs-script cs-loop__script">{item.wordmark}</span> : <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} />}
             </div>
@@ -102,7 +103,7 @@ export default function Consulting() {
           <div className="cs-proof__cols">
             {[0, 1].map((col) => (
               <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
-                {loopItems.filter((_, i) => i % 2 === col).map((item) => (
+                {proofItems.filter((_, i) => i % 2 === col).map((item) => (
                   <div key={item.name} className={`cs-proof__tile${item.dark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
                     {item.wordmark
                       ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
@@ -137,26 +138,6 @@ export default function Consulting() {
           <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
           {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
-        <ul className="cs-clients" aria-label="Selected clients">
-          {logos.map((name) => (
-            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}${CLIENT_LOGOS[name].caption ? ' cs-client--captioned' : ''}`}>
-              <img src={CLIENT_LOGOS[name].src} width={CLIENT_LOGOS[name].w} height={CLIENT_LOGOS[name].h} alt={name} />
-              {CLIENT_LOGOS[name].caption && <span className="cs-client__caption">{CLIENT_LOGOS[name].caption}</span>}
-            </li>
-          ))}
-          {wordmarks.map((name) => (
-            <li key={name} className="cs-client cs-client--script">
-              <span className="cs-script">{name.split(' - ')[0]}</span>
-              {name.split(' - ')[1] && <span className="cs-script__sub">{name.split(' - ')[1]}</span>}
-            </li>
-          ))}
-          {names.map((name, i) => (
-            <li key={name} className={`cs-client${i === names.length - 1 && names.length % 2 === 1 ? ' cs-client--wide' : ''}`}>
-              <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
-              <span className="cs-client__name">{name}</span>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section className="cs-form bd" id="get-started">
