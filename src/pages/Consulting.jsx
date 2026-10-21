@@ -8,6 +8,11 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
 const wordmarks = [...CLIENT_WORDMARKS];
 const names = REFERENCES.filter((n) => !CLIENT_LOGOS[n]);
+// The looping band under the nav: every logo, then the script name.
+const loopItems = [
+  ...logos.map((name) => ({ name, ...CLIENT_LOGOS[name] })),
+  ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
+];
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
@@ -77,6 +82,16 @@ export default function Consulting() {
         <img src="/logo.png" alt="Loogo Labs" className="cs-nav__logo" />
         <button type="button" className="cs-pill" onClick={toForm}>Apply</button>
       </header>
+
+      <section className="cs-loop" aria-label="Selected clients">
+        <div className="cs-loop__track">
+          {[0, 1].map((copy) => loopItems.map((item) => (
+            <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}`} aria-hidden={copy === 1 || undefined}>
+              {item.wordmark ? <span className="cs-script cs-loop__script">{item.wordmark}</span> : <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} />}
+            </div>
+          )))}
+        </div>
+      </section>
 
       <section className="cs-hero">
         <h1>{hero.h1}</h1>

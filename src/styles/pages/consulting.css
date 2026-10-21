@@ -117,10 +117,10 @@
   .cs-client { flex-basis: calc((100% - 8px) / 2); padding: 8px 10px; gap: 8px; }
   .cs-client__mark { width: 30px; height: 30px; font-size: 12px; }
   .cs-client__name { font-size: 13px; }
-  .cs-client.cs-client--logo { flex-basis: calc((100% - 8px) / 2); height: 76px; padding: 8px; }
-  .cs-client--logo img { max-height: 44px; }
-  .cs-client--dark img { max-height: 56px; }
-  .cs-client--chip img { max-height: 44px; }
+  .cs-clients .cs-client.cs-client--logo { flex-basis: 100%; height: 92px; padding: 10px 16px; }
+  .cs-client--logo img { max-height: 56px; }
+  .cs-client--dark img { max-height: 68px; }
+  .cs-client--chip img { max-height: 54px; }
   /* On phones names are two across; a lone last one takes the full width. */
   .cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 8px) / 2); }
   .cs-clients .cs-client.cs-client--wide { flex-basis: 100%; }
@@ -140,6 +140,21 @@
 .cs-client--captioned img { max-height: 54px; }
 .cs-client__caption { font: 600 11px/1 var(--font-body); letter-spacing: 0.08em; color: #F5F2EB; }
 @media (max-width: 720px) {
-  .cs-clients .cs-client.cs-client--captioned { flex-basis: 100%; height: 76px; flex-direction: row; gap: 10px; }
-  .cs-client--captioned img { max-height: 56px; }
+  .cs-clients .cs-client.cs-client--captioned { flex-basis: 100%; height: 92px; }
+}
+
+/* Looping client band under the nav: one copy then an identical copy, so the -50% loop is seamless. */
+.cs-loop { overflow: hidden; background: var(--cs-dark); padding: 14px 0; border-bottom: 1px solid rgba(245, 242, 235, 0.08);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.cs-loop__track { display: flex; width: max-content; animation: cs-loop 32s linear infinite; }
+.cs-loop:hover .cs-loop__track { animation-play-state: paused; }
+@keyframes cs-loop { to { transform: translateX(-50%); } }
+.cs-loop__item { flex: none; display: grid; place-items: center; height: 56px; min-width: 120px; padding: 8px 18px; margin-right: 14px; border-radius: 14px; background: #fff; }
+.cs-loop__item--dark { background: #000; box-shadow: inset 0 0 0 1px rgba(235, 130, 38, 0.3); }
+.cs-loop__item--chip { background: #0e1d34; }
+.cs-loop__item img { display: block; height: 38px; width: auto; }
+.cs-loop__script { font-size: 30px; line-height: 1; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .cs-loop { overflow-x: auto; }
+  .cs-loop__track { animation: none; }
 }
