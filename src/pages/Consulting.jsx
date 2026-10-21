@@ -96,8 +96,8 @@ export default function Consulting() {
         <ul className="cs-clients" aria-label="Selected clients">
           {REFERENCES.map((name) => (
             CLIENT_LOGOS[name] ? (
-              <li key={name} className="cs-client cs-client--logo">
-                <img src={CLIENT_LOGOS[name]} alt={name} />
+              <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}`}>
+                <img src={CLIENT_LOGOS[name].src} alt={name} />
               </li>
             ) : (
               <li key={name} className="cs-client">
