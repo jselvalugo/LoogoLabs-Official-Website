@@ -175,3 +175,22 @@
   .cs-proof__script { font-size: 30px; line-height: 1.1; color: #F6D37A; -webkit-text-fill-color: #F6D37A; background: none; }
   .cs-proof__caption { font: 600 10px/1 var(--font-body); letter-spacing: 0.08em; color: #F5F2EB; }
 }
+
+/* Mobile: no review block (the screenshots and their decorative stack), and tighter space
+   after the service cards. */
+@media (max-width: 720px) {
+  .cs-reviews-block { display: none; }
+  .cs-light { padding-bottom: 40px; }
+}
+/* Mobile collage: smaller tiles, with Dalitzandra on black. */
+@media (max-width: 720px) {
+  .cs-proof { max-width: 240px; margin-top: 22px; }
+  .cs-proof__eyebrow { margin-bottom: 10px; font-size: 10px; }
+  .cs-proof__cols { gap: 6px; }
+  .cs-proof__col { gap: 6px; }
+  .cs-proof__col--down { padding-top: 14px; }
+  .cs-proof__tile { padding: 8px; gap: 6px; border-radius: 10px; }
+  .cs-proof__tile img { max-height: 64px; }
+  .cs-proof__script { font-size: 22px; }
+  .cs-proof__caption { font-size: 9px; }
+}
