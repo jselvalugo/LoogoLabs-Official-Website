@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 /* Consulting landing: dark hero, cream story section, one form. */
 .cs { --cs-dark: var(--ink-900); --cs-cream: var(--paper-000); --cs-accent: #EB8226; overflow-x: hidden; background: var(--cs-dark); color: var(--cs-cream); font-family: var(--font-body); min-height: 100vh; }
 .cs em { font-style: normal; color: var(--cs-accent); }

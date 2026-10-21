@@ -46,12 +46,20 @@ const content = {
 const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
 
 const reviews = [
-  { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
-  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
+  { src: '/testimonial-kristin-pitts.png', w: 1390, h: 458, alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
+  { src: '/testimonial-sally-butler.png', w: 1388, h: 576, alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
 ];
 
 export default function Consulting() {
   const c = content;
+  // Great Vibes for the script client name. Added here, not in the CSS, so the build keeps it.
+  React.useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, []);
   const toHref = useHref();
   // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
   const [variant, setVariant] = React.useState(null);
@@ -95,12 +103,12 @@ export default function Consulting() {
         <h2>and <em>clients who say it best.</em></h2>
         <div className="cs-reviews" aria-label="Client reviews">
           <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
-          {reviews.map((r) => <img key={r.src} {...r} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
+          {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
           {logos.map((name) => (
             <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}`}>
-              <img src={CLIENT_LOGOS[name].src} alt={name} />
+              <img src={CLIENT_LOGOS[name].src} width={CLIENT_LOGOS[name].w} height={CLIENT_LOGOS[name].h} alt={name} />
             </li>
           ))}
           {wordmarks.map((name) => (
