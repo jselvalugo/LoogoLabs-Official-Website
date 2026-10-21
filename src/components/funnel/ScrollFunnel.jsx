@@ -12,13 +12,13 @@ import '../../styles/pages/brand-design.css';
 // Long-form scrolling ad funnel: hero + founder video, problem, deliverables,
 // process, optional pricing, reviews, FAQ, and a closing lead form that unlocks
 // booking. Each page passes its copy in `c`; see pages/BrandDesign.jsx.
-const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
-const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
+export const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
+export const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
 const scrollToSignup = () => document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
 // Pick the hero copy that matches the ad: the first `c.heroVariants` key found
 // in the utm tags wins, so an ad tagged utm_content=ai_hook gets the AI hook.
-const pickVariant = (variants) => {
+export const pickVariant = (variants) => {
   if (!variants) return null;
   try {
     const params = new URLSearchParams(window.location.search);
@@ -50,7 +50,7 @@ const embedUrl = (url) => {
   return null;
 };
 
-function FounderVideo({ url, poster = '/founder-david-selva.jpg', funnel }) {
+export function FounderVideo({ url, poster = '/founder-david-selva.jpg', funnel }) {
   if (!url) {
     return (
       <div className="bd-video bd-video--poster">
@@ -80,7 +80,7 @@ const testimonialImages = [
   { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
 ];
 
-function SignupForm({ c, onBook }) {
+export function SignupForm({ c, onBook }) {
   const [form, setForm] = React.useState({ fullName: '', email: '', phone: '', company: '' });
   const [error, setError] = React.useState('');
   const [done, setDone] = React.useState(false);
