@@ -6,6 +6,7 @@ import Card from '../components/surfaces/Card';
 import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
+import { REFERENCES } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 
 const Wrap = ({ children, style, className }) => (
@@ -106,8 +107,6 @@ function VoiceBotSection() {
     </Wrap>
   );
 }
-
-const REFERENCES = ['Feche Consulting', 'DaLife, LLC', 'House of Cars', 'Reef Ntwrks', 'Lugo’s Craft Distillery'];
 
 function ReferencesTicker() {
   const es = useLang() === 'es';
