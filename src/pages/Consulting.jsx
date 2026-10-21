@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Megaphone, ChartLineUp, ArrowDown } from '@phosphor-icons/react';
+import { Compass, Megaphone, ChartLineUp, Target, ArrowDown } from '@phosphor-icons/react';
 import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
@@ -12,17 +12,19 @@ const content = {
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
   videoUrl: '/brand-intro.mp4',
   videoPoster: '/brand-intro-poster.jpg',
-  h1: <>Marketing strategy that grows <em>your SaaS or creator brand.</em></>,
-  lede: 'Marketing strategy for SaaS brands and creators. We find where your next users, subscribers and buyers come from, then build the plan to get them.',
+  h1: <>Marketing strategy that grows <em>your SaaS or creator <span className="cs-stamped">brand.<span className="cs-stamp" aria-hidden="true">Growth Approved</span></span></em></>,
+  lede: 'Marketing and ads strategy for SaaS brands and creators. We find where your next users, subscribers and buyers come from, then build the plan and the campaigns to get them.',
   // Ad-matched headlines: tag the ad's utm_content with one of these keys.
   heroVariants: {
     saas: { h1: <>Turn trials into <em>paying customers.</em></>, lede: 'Positioning, acquisition channels and a 90-day growth plan built for SaaS.' },
     creator: { h1: <>Turn your audience <em>into a business.</em></>, lede: 'A content, launch and monetization strategy that grows revenue, not just followers.' },
+    ads: { h1: <>Ads that pay for themselves, <em>not just your ad platform.</em></>, lede: 'Paid ads strategy for SaaS and creators: targeting, creative, budgets and tracking tied to real revenue.' },
     strategy: { h1: <>Know which marketing <em>actually drives growth.</em></>, lede: 'An audit, a channel plan with budget and targets, and a 90-day roadmap you can run.' },
   },
   services: [
     ['Positioning', 'Audience, messaging and offer that convert.', Compass],
     ['Go-to-Market', 'Channels, content and launches, ranked by return.', Megaphone],
+    ['Ads Strategy', 'Meta, Google and YouTube ads with creative, targeting and budgets that pay back.', Target],
     ['Growth Plan', 'A 90-day roadmap with targets you can track.', ChartLineUp],
   ],
   signup: {
@@ -73,10 +75,11 @@ export default function Consulting() {
       <section className="cs-light">
         <h2>We help <em>SaaS brands and creators</em></h2>
         <Link />
-        <h2>grow with <em>a real marketing strategy,</em></h2>
+        <h2>grow with <em>a real marketing and ads strategy,</em></h2>
         <div className="cs-cards">
-          {c.services.map(([title, desc, Icon]) => (
+          {c.services.map(([title, desc, Icon], i) => (
             <div key={title} className="cs-card">
+              <span className="cs-card__num" aria-hidden="true">0{i + 1}</span>
               <Icon size={30} weight="duotone" aria-hidden="true" />
               <h3>{title}</h3>
               <p>{desc}</p>
