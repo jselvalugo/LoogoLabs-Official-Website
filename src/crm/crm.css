@@ -205,3 +205,4 @@ img.media { background: var(--field); }
   .card { break-inside: avoid; }
 }
 a.btn { color: inherit; text-decoration: none; display: inline-block; }
+.email-preview { width: 100%; height: 560px; border: 1px solid var(--line); border-radius: 10px; background: #F6F2E8; }

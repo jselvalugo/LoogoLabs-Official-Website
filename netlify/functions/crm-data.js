@@ -42,6 +42,8 @@ export default async (req) => {
       case 'save_approval': return json(await clients.saveApproval(inst, body.values || {}, audit));
       case 'new_approval_version': return json(await clients.newApprovalVersion(inst, body.id, body.values || {}, audit));
       case 'delete_approval': return json(await clients.deleteApproval(inst, body.id));
+      case 'approval_email': return json(await clients.approvalEmailFor(inst, body.id, body.values || {}, me));
+      case 'send_approval_email': return json(await clients.approvalEmailFor(inst, body.id, body.values || {}, me, { send: true }));
       case 'approval_comment': return json(await clients.teamComment(inst, body.id, body.values || {}, me), 201);
       case 'resolve_comment': return json(await clients.resolveComment(inst, body.id, body.resolved));
       case 'delete_comment': return json(await clients.deleteComment(inst, body.id));

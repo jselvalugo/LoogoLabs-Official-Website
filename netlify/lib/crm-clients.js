@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { db } from './crm.js';
 import { CrmError, needId } from './crm-records.js';
+import { approvalEmail, emailList, sendEmail } from './crm-email.js';
 
 // Client retention & reporting: white-labeled performance dashboards, content
 // approvals and campaign recaps. Team-side calls are scoped to the signed-in
@@ -382,4 +383,34 @@ export async function recapView(token) {
     title: r.title, start_date: ymd(r.start_date), end_date: ymd(r.end_date), summary: r.summary,
     metrics: r.metrics, highlights: r.highlights, next_steps: r.next_steps, updated_at: r.updated_at,
   };
+}
+
+// ── Approval request emails (Resend) ────────────────────────────────────────
+
+const LINK_BASE = /^(https:\/\/(www\.|crm\.)?loogolabs\.com(\/crm)?|http:\/\/localhost:\d+(\/crm)?)$/;
+
+// The branded email for an approval, plus suggested recipients (the client
+// company's contacts). send: true actually sends it and logs it on the company.
+export async function approvalEmailFor(inst, id, v, me, { send = false } = {}) {
+  const a = await approvalFor(inst, id);
+  const [portal] = await q('SELECT share_token, active, display_name FROM crm_client_portals WHERE company_id = $1', [a.company_id]);
+  if (!portal?.active) throw new CrmError("Set up this client's dashboard link first (Dashboards tab)");
+  const base = str(v.link_base, 200).replace(/\/$/, '');
+  if (!LINK_BASE.test(base)) throw new CrmError('Invalid link base');
+  const link = `${base}/portal/${portal.share_token}?item=${a.id}`;
+  const email = approvalEmail({
+    clientName: portal.display_name || a.company_name, title: a.title, kind: a.kind, version: a.version,
+    dueDate: ymd(a.due_date), note: str(v.note, 2000), link, senderName: me.name || null,
+  });
+  const contacts = await q(`SELECT name, email FROM crm_contacts WHERE company_id = $1 AND instance_id = $2 AND email IS NOT NULL AND email <> '' ORDER BY name`, [a.company_id, inst]);
+  if (!send) return { ...email, link, contacts };
+
+  const to = emailList(v.to);
+  if (!to.length) throw new CrmError('Add at least one recipient');
+  const cc = emailList(v.cc);
+  const messageId = await sendEmail({ to, cc, subject: email.subject, html: email.html, text: email.text, replyTo: me.email });
+  await q(`INSERT INTO crm_activities (instance_id, entity_type, entity_id, type, subject, body, user_id)
+    VALUES ($1, 'companies', $2, 'email', $3, $4, $5)`,
+  [inst, a.company_id, email.subject, `Approval request sent to ${[...to, ...cc].join(', ')}${v.note ? `\n\n${str(v.note, 2000)}` : ''}`, me.id]);
+  return { ok: true, id: messageId, to, cc };
 }
