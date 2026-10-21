@@ -31,7 +31,7 @@
 .cs-reviews > img { position: relative; z-index: 2; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(26, 38, 16, 0.12); }
 /* Kristin's review leads; the lower part of Sally's peeks out beneath it. */
 .cs-reviews > img:nth-of-type(1) { z-index: 3; }
-.cs-reviews > img:nth-of-type(2) { margin-top: -26%; }
+.cs-reviews > img:nth-of-type(2) { margin-top: -14%; }
 .cs-reviews__deck { position: absolute; inset: 0; z-index: 0; }
 .cs-reviews__deck span { position: absolute; inset: 0; border-radius: 18px; background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 10px 24px rgba(26, 38, 16, 0.08); }
 .cs-reviews__deck span:nth-child(1) { transform: translate(14px, 14px) rotate(2.5deg); }
