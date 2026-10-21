@@ -94,13 +94,13 @@ export default function Consulting() {
           {reviews.map((r) => <img key={r.src} {...r} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
-          {REFERENCES.map((name) => (
+          {[...REFERENCES.filter((n) => CLIENT_LOGOS[n]), ...REFERENCES.filter((n) => !CLIENT_LOGOS[n])].map((name, i, all) => (
             CLIENT_LOGOS[name] ? (
-              <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}`}>
+              <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}`}>
                 <img src={CLIENT_LOGOS[name].src} alt={name} />
               </li>
             ) : (
-              <li key={name} className="cs-client">
+              <li key={name} className={`cs-client${!CLIENT_LOGOS[name] && i === all.length - 1 && REFERENCES.filter((n) => !CLIENT_LOGOS[n]).length % 2 === 1 ? ' cs-client--wide' : ''}`}>
                 <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
                 <span className="cs-client__name">{name}</span>
               </li>
