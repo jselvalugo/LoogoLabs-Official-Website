@@ -10,6 +10,11 @@ import Company from './pages/Company';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
+// The /consulting page's styles load with the app, not with its lazy chunk, so the
+// pre-rendered HTML is styled from the first paint.
+import './styles/pages/landing.css';
+import './styles/pages/brand-design.css';
+import './styles/pages/consulting.css';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
