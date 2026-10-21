@@ -97,6 +97,23 @@ export default function Consulting() {
         <h1>{hero.h1}</h1>
         <p className="cs-lede">{hero.lede}</p>
         <div className="cs-video"><FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} /></div>
+        <div className="cs-proof" aria-label="Selected clients">
+          <p className="cs-proof__eyebrow">In good company</p>
+          <div className="cs-proof__cols">
+            {[0, 1].map((col) => (
+              <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
+                {loopItems.filter((_, i) => i % 2 === col).map((item) => (
+                  <div key={item.name} className={`cs-proof__tile${item.dark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
+                    {item.wordmark
+                      ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
+                      : <img src={item.src} width={item.w} height={item.h} alt={item.name} />}
+                    {item.caption && <span className="cs-proof__caption">{item.caption}</span>}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
         <button type="button" className="cs-textcta" onClick={toForm}>See if you qualify <ArrowDown size={18} weight="bold" /></button>
       </section>
 
