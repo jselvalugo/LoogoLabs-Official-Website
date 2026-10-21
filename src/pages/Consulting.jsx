@@ -42,8 +42,8 @@ const content = {
 const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
 
 const reviews = [
-  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
   { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
+  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
 ];
 
 export default function Consulting() {
