@@ -395,10 +395,13 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
         </div>
       )}
 
+      {mode === 'email' && <EmailComposer id={id} onDone={() => setMode(null)} />}
+
       <div style={{ marginTop: 16 }}><Media ref={video} url={item.media_url} /></div>
       {item.body && <div className="card pad pre draft">{item.body}</div>}
 
       <div className="actions">
+        {item.portal_token && <button className="btn btn-primary" onClick={() => setMode(mode === 'email' ? null : 'email')}>Email client</button>}
         <button className="btn" onClick={() => setMode(mode === 'version' ? null : 'version')}>New version</button>
         <button className="btn" onClick={() => setMode(mode === 'edit' ? null : 'edit')}>Edit</button>
         <button className="btn btn-danger" onClick={remove}>Delete</button>
@@ -422,6 +425,78 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
         {error && <div className="error">{error}</div>}
       </form>
     </Drawer>
+  );
+}
+
+// Sends the branded "please review" email through Resend, with a live preview.
+function EmailComposer({ id, onDone }) {
+  const [preview, setPreview] = React.useState(null);
+  const [picked, setPicked] = React.useState([]);
+  const [extra, setExtra] = React.useState('');
+  const [cc, setCc] = React.useState('');
+  const [note, setNote] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [busy, setBusy] = React.useState(false);
+  const [sent, setSent] = React.useState(null);
+  const linkBase = origin();
+
+  React.useEffect(() => {
+    const t = setTimeout(() => {
+      data('approval_email', { id, values: { note, link_base: linkBase } })
+        .then((p) => {
+          setPreview(p);
+          setPicked((cur) => (cur.length || preview ? cur : p.contacts.map((c) => c.email)));
+        })
+        .catch((e) => setError(e.message));
+    }, note ? 400 : 0);
+    return () => clearTimeout(t);
+  }, [id, note]);
+
+  const toggle = (email) => setPicked((p) => (p.includes(email) ? p.filter((x) => x !== email) : [...p, email]));
+
+  async function send(e) {
+    e.preventDefault();
+    setBusy(true); setError('');
+    try {
+      const to = [...picked, ...extra.split(/[,;\s]+/).filter(Boolean)];
+      setSent(await data('send_approval_email', { id, values: { to, cc, note, link_base: linkBase } }));
+    } catch (err) { setError(err.message); }
+    setBusy(false);
+  }
+
+  if (sent) {
+    return (
+      <div className="notice">
+        Sent to {[...sent.to, ...sent.cc].join(', ')}. It's logged on the company's activity timeline.{' '}
+        <button className="link" onClick={onDone}>Close</button>
+      </div>
+    );
+  }
+  return (
+    <form className="card convert" onSubmit={send}>
+      <strong>Email approval request</strong>
+      {!preview ? <p className="muted">{error || 'Loading…'}</p> : (
+        <>
+          <label className="label">To</label>
+          {preview.contacts.length === 0 && <p className="muted" style={{ fontSize: 13, margin: 0 }}>No contacts with an email on this company — add addresses below.</p>}
+          {preview.contacts.map((c) => (
+            <label key={c.email} className="check"><input type="checkbox" checked={picked.includes(c.email)} onChange={() => toggle(c.email)} /> {c.name} <span className="muted">{c.email}</span></label>
+          ))}
+          <input className="field" style={{ marginTop: 8 }} placeholder="Other addresses, comma separated" aria-label="Other recipients" value={extra} onChange={(e) => setExtra(e.target.value)} />
+          <label className="label" htmlFor="em-cc">Cc</label>
+          <input id="em-cc" className="field" placeholder="Optional" value={cc} onChange={(e) => setCc(e.target.value)} />
+          <label className="label" htmlFor="em-note">Personal note</label>
+          <textarea id="em-note" className="field" rows={3} placeholder="Optional — shows as a quote in the email" value={note} onChange={(e) => setNote(e.target.value)} />
+          <label className="label">Preview · <span style={{ color: 'var(--ink)' }}>{preview.subject}</span></label>
+          <iframe className="email-preview" title="Email preview" srcDoc={preview.html} sandbox="" />
+          {error && <div className="error">{error}</div>}
+          <div className="actions">
+            <button className="btn btn-primary" disabled={busy || (!picked.length && !extra.trim())}>{busy ? 'Sending…' : 'Send email'}</button>
+            <button type="button" className="btn" onClick={onDone}>Cancel</button>
+          </div>
+        </>
+      )}
+    </form>
   );
 }
 
