@@ -93,7 +93,7 @@
 
 /* Client cards under the reviews. */
 .cs-clients { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 880px; margin: 24px auto 0; }
-.cs-client { flex: 0 1 calc((100% - 24px) / 3); display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-align: left;
+.cs-client { flex: 0 1 calc((100% - 12px) / 2); display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-align: left;
   background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); border-radius: 18px; box-shadow: 0 12px 28px rgba(26, 38, 16, 0.08); }
 .cs-client__mark { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px;
   background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); color: var(--cs-accent); font: 700 15px var(--font-display); letter-spacing: 0.02em; }
@@ -101,7 +101,11 @@
 @media (max-width: 720px) {
   .cs-clients { gap: 10px; }
   .cs-client { flex-basis: calc((100% - 10px) / 2); padding: 12px; gap: 10px; }
-  .cs-client:last-child:nth-child(odd) { flex-basis: 100%; }
   .cs-client__mark { width: 36px; height: 36px; font-size: 13px; }
   .cs-client__name { font-size: 14px; }
 }
+
+/* A client who sent their logo: full-width card, logo at its own proportions. */
+.cs-client--logo { flex-basis: 100%; justify-content: center; padding: 18px 24px; }
+.cs-client--logo img { display: block; height: 52px; width: auto; max-width: 100%; }
+@media (max-width: 720px) { .cs-client--logo { flex-basis: 100%; } .cs-client--logo img { height: 44px; } }
