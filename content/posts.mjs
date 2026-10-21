@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `yoga-studio-intro-offer-second-class-booked`,
+    title: `Intro Students Take One Class and Vanish. Book Class Two`,
+    excerpt: `A new student who walks out of a first class with nothing on the calendar has quietly decided already, and a teacher's text that same afternoon is the cheapest way to change that.`,
+    tags: `Yoga Studios, Intro Offers, Student Retention`,
+    content: `Say your intro offer is two weeks of unlimited classes for a flat price, and twelve new students buy it this month. Eleven come to a class. Maybe three of them come to a second one. The offer did its job on paper, and the studio is back at the start with a new set of strangers next month.
+
+If you run a yoga studio, you know the quiet version of this. A new face finds a spot at the back, gets through the hour, thanks the teacher on the way out, and you never see that mat again. Nobody was unhappy. Nothing went wrong. It just never became a habit.
+
+## The first class is a trial, the second is a decision
+
+A student who has been once is still a visitor. A student who has booked a second class has started a routine, because there is now a time, a place and a reason to be there. Everything in your follow-up should aim at that one booking, and not at the membership.
+
+I am not going to quote you a conversion number. I do not know how good your classes are, how far people drive, or how many intro students you get. I do know the gap between class one and class two is where nearly everything is lost, so that is the only gap worth working on.
+
+## Send it from the teacher, within the hour
+
+After the first class, the student should get a text that looks like it came from the person who taught them, because it should. Keep it to what a person would say:
+
+- Their first name and the teacher's first name.
+- One thing the teacher noticed. Not praise for its own sake, just a fact: they held the long pose without shaking, or they asked a good question about their knee.
+- Two actual classes this week, with day and time, and an invitation to reply with 1 or 2 to take a spot.
+
+That last part matters. "Come back soon" asks the student to do the work of finding a time. Two named choices ask for one digit. Someone with a full week will answer a digit on the bus and will not open your schedule page.
+
+Write the specific line yourself, right after class, while you still remember the student. Do not let a template fill it in. A message that could have gone to anyone reads like it did.
+
+## What to do when they reply
+
+A reply of 1 or 2 should put the student on the roster for that class, and you should send back a confirmation with where to park and what to bring. If they ask for a different time, a person answers, not a rule. This is where the system helps: it sends the first text on schedule and holds the replies in one inbox, so the teacher is not hunting for a phone number between classes. It cannot choose the sentence about their knee, and it should not try.
+
+## Chase the silent ones, once
+
+Some will not reply. Three days later, send one more text from the same teacher, offering a class on a different day. After that, stop. A third nudge turns a pleasant studio into one more thing in their phone that wants something.
+
+Also decide the date their intro offer ends, and say it in the first text: "your two weeks run until the 14th." Students who know the offer has an end date treat the days as something to use. Those who do not tend to treat them as something they will get to.
+
+## What this will not fix
+
+If a new student walked out unwelcome, with no one telling them where to put their shoes, a text will not rescue the visit. Fix the first ten minutes of the class first. Follow-up multiplies a good first impression and does not stand in for one.
+
+## A count to run on Friday
+
+This Friday, pull the list of everyone who bought your intro offer in the last thirty days. Next to each name, write how many classes they have taken and whether a second is booked. Count the ones with exactly one class and nothing booked. Send those students a text from whichever teacher they met, with two class times, before the weekend. Then look again next Friday and see how many answered.`,
+  },
+  {
     slug: `remodeler-holiday-pause-dates-for-open-jobs`,
     title: `Your Crew Stops in December. Do Your Clients Know When?`,
     excerpt: `A half-finished kitchen with no word from the contractor for three weeks is how a good job turns into a bad review, and the fix is one dated note written in October.`,
