@@ -34,7 +34,9 @@
 .cs-footer a { color: inherit; }
 
 @media (max-width: 720px) {
-  .cs-cards, .cs-reviews { grid-template-columns: 1fr; }
+  .cs-cards { grid-template-columns: 1fr; }
+  .cs-reviews { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+  .cs-reviews img { border-radius: 12px; }
   .cs-hero { padding-top: 48px; }
 }
 .cs *, .cs *::before { box-sizing: border-box; }
