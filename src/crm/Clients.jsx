@@ -401,7 +401,7 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
       {item.body && <div className="card pad pre draft">{item.body}</div>}
 
       <div className="actions">
-        {item.portal_token && <button className="btn btn-primary" onClick={() => setMode(mode === 'email' ? null : 'email')}>Email client</button>}
+        <button className="btn btn-primary" onClick={() => setMode(mode === 'email' ? null : 'email')}>Email client</button>
         <button className="btn" onClick={() => setMode(mode === 'version' ? null : 'version')}>New version</button>
         <button className="btn" onClick={() => setMode(mode === 'edit' ? null : 'edit')}>Edit</button>
         <button className="btn btn-danger" onClick={remove}>Delete</button>
@@ -475,7 +475,7 @@ function EmailComposer({ id, onDone }) {
   return (
     <form className="card convert" onSubmit={send}>
       <strong>Email approval request</strong>
-      {!preview ? <p className="muted">{error || 'Loading…'}</p> : (
+      {!preview ? (error ? <p className="error">{error}</p> : <p className="muted">Loading…</p>) : (
         <>
           <label className="label">To</label>
           {preview.contacts.length === 0 && <p className="muted" style={{ fontSize: 13, margin: 0 }}>No contacts with an email on this company — add addresses below.</p>}
@@ -490,6 +490,7 @@ function EmailComposer({ id, onDone }) {
           <label className="label">Preview · <span style={{ color: 'var(--ink)' }}>{preview.subject}</span></label>
           <iframe className="email-preview" title="Email preview" srcDoc={preview.html} sandbox="" />
           {error && <div className="error">{error}</div>}
+          {!picked.length && !extra.trim() && <p className="muted" style={{ fontSize: 13, margin: '12px 0 0' }}>Tick a contact or type an address above to send.</p>}
           <div className="actions">
             <button className="btn btn-primary" disabled={busy || (!picked.length && !extra.trim())}>{busy ? 'Sending…' : 'Send email'}</button>
             <button type="button" className="btn" onClick={onDone}>Cancel</button>

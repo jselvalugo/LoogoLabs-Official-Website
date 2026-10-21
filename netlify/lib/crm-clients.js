@@ -394,7 +394,7 @@ const LINK_BASE = /^(https:\/\/(www\.|crm\.)?loogolabs\.com(\/crm)?|http:\/\/loc
 export async function approvalEmailFor(inst, id, v, me, { send = false } = {}) {
   const a = await approvalFor(inst, id);
   const [portal] = await q('SELECT share_token, active, display_name FROM crm_client_portals WHERE company_id = $1', [a.company_id]);
-  if (!portal?.active) throw new CrmError("Set up this client's dashboard link first (Dashboards tab)");
+  if (!portal?.active) throw new CrmError("This client has no live portal link yet. Open Dashboards, set up this client and save, then come back to send");
   const base = str(v.link_base, 200).replace(/\/$/, '');
   if (!LINK_BASE.test(base)) throw new CrmError('Invalid link base');
   const link = `${base}/portal/${portal.share_token}?item=${a.id}`;
