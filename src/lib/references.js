@@ -8,3 +8,6 @@ export const CLIENT_LOGOS = {
   'Riel Compliance Suite': { src: '/clients/riel-compliance-suite.jpg', chip: true },
   'Lugo’s Craft Distillery': { src: '/blog/lugos-craft-logo-on-dark.png', dark: true },
 };
+
+// Clients shown as gold script text instead of a logo. "Name - Subtitle" splits into two lines.
+export const CLIENT_WORDMARKS = ['Dalitzandra Padial - Women Mentorship'];

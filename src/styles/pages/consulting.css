@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 /* Consulting landing: dark hero, cream story section, one form. */
 .cs { --cs-dark: var(--ink-900); --cs-cream: var(--paper-000); --cs-accent: #EB8226; overflow-x: hidden; background: var(--cs-dark); color: var(--cs-cream); font-family: var(--font-body); min-height: 100vh; }
 .cs em { font-style: normal; color: var(--cs-accent); }
@@ -123,4 +124,13 @@
   /* On phones names are two across; a lone last one takes the full width. */
   .cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 8px) / 2); }
   .cs-clients .cs-client.cs-client--wide { flex-basis: 100%; }
+}
+
+/* Gold script client name, full width under the logo tiles. */
+.cs-clients .cs-client.cs-client--script { flex-basis: 100%; flex-direction: column; justify-content: center; gap: 2px; padding: 18px 16px; background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
+.cs-script { font: 400 44px/1.1 'Great Vibes', cursive; background: linear-gradient(100deg, #F6D37A, #D4A537 55%, #B8861F); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cs-script__sub { font: 600 11px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(246, 211, 122, 0.75); }
+@media (max-width: 720px) {
+  .cs-clients .cs-client.cs-client--script { flex-basis: 100%; padding: 14px 12px; }
+  .cs-script { font-size: 36px; }
 }
