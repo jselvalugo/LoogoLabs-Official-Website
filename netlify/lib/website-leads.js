@@ -1,4 +1,5 @@
 import { db } from './crm.js';
+import { newLeadEmail, sendEmail } from './crm-email.js';
 
 // Copies a website form lead (a row just written to `leads`) into the CRM
 // instance chosen to receive website leads, if there is one. Called by the
@@ -8,6 +9,22 @@ import { db } from './crm.js';
 const STATUS = { contacted: 'contacted', qualified: 'qualified', proposal: 'qualified', won: 'qualified', lost: 'unqualified' };
 
 export async function copyWebsiteLead(lead) {
+  await copyIntoCrm(lead);
+  await alertNewLead(lead);
+}
+
+// Emails the team a branded new-lead alert (LEAD_ALERT_TO, comma-separated).
+// Like the CRM copy, it must never fail the form.
+async function alertNewLead(lead) {
+  try {
+    const to = (process.env.LEAD_ALERT_TO || 'david@loogolabs.com').split(',').map((x) => x.trim()).filter(Boolean);
+    await sendEmail({ to, replyTo: lead.email, ...newLeadEmail(lead) });
+  } catch (err) {
+    console.error('Could not email the new lead alert', err);
+  }
+}
+
+async function copyIntoCrm(lead) {
   try {
     const { sql } = db();
     const [inst] = await sql`SELECT id FROM crm_instances WHERE receives_website_leads AND status = 'active'`;
@@ -57,7 +74,7 @@ export async function receiveWebsiteLeads(instanceId) {
     RETURNING id`;
 
   const missing = await sql`SELECT * FROM leads l WHERE NOT EXISTS (SELECT 1 FROM crm_leads c WHERE c.website_lead_id = l.id) ORDER BY created_at`;
-  for (const lead of missing) await copyWebsiteLead(lead);
+  for (const lead of missing) await copyIntoCrm(lead);
   // Their call logs and notes from the old Leads CRM come along too.
   if (missing.length) {
     await sql`
