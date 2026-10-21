@@ -1,0 +1,40 @@
+/* Consulting landing: dark hero, cream story section, one form. */
+.cs { --cs-dark: var(--ink-900); --cs-cream: var(--paper-000); --cs-accent: #EB8226; overflow-x: hidden; background: var(--cs-dark); color: var(--cs-cream); font-family: var(--font-body); min-height: 100vh; }
+.cs em { font-style: normal; color: var(--cs-accent); }
+
+.cs-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(26, 38, 16, 0.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(245, 242, 235, 0.08); }
+.cs-nav__logo { height: 28px; filter: brightness(0) invert(1); }
+.cs-pill { background: var(--cs-accent); color: #fff; border: 0; border-radius: 999px; padding: 10px 22px; font: 600 16px var(--font-body); cursor: pointer; }
+
+.cs-hero { max-width: 760px; margin: 0 auto; padding: 64px 20px 56px; text-align: center; }
+.cs-hero h1 { margin: 0; font: 600 clamp(38px, 7vw, 64px)/1.08 var(--font-display); letter-spacing: -0.02em; }
+.cs-lede { max-width: 34em; margin: 24px auto 40px; font-size: clamp(17px, 2.2vw, 19px); line-height: 1.65; color: rgba(245, 242, 235, 0.7); }
+.cs-video .bd-video { margin: 0; border-radius: 22px; overflow: hidden; border: 1px solid rgba(235, 130, 38, 0.45); box-shadow: 0 0 60px rgba(235, 130, 38, 0.18); }
+.cs-textcta { margin-top: 32px; display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; color: var(--cs-accent); font: 600 22px var(--font-body); cursor: pointer; }
+
+.cs-light { background: var(--cs-cream); color: var(--ink-900); padding: 80px 20px; text-align: center; }
+.cs-light h2 { max-width: 14em; margin: 0 auto; font: 600 clamp(30px, 5.5vw, 48px)/1.12 var(--font-display); letter-spacing: -0.02em; }
+.cs-light em { color: var(--ink-500); }
+.cs-link { display: flex; flex-direction: column; align-items: center; margin: 32px auto; }
+.cs-link::before { content: ''; width: 2px; height: 56px; background: var(--cs-accent); opacity: 0.6; }
+.cs-link span { width: 22px; height: 22px; border-radius: 50%; background: var(--cs-accent); box-shadow: 0 0 0 8px rgba(235, 130, 38, 0.15); }
+
+.cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
+.cs-card { background: var(--cs-dark); color: var(--cs-cream); border-radius: 22px; padding: 28px 22px; text-align: left; }
+.cs-card svg { color: var(--cs-accent); }
+.cs-card h3 { margin: 16px 0 6px; font: 600 22px var(--font-display); }
+.cs-card p { margin: 0; font-size: 15px; line-height: 1.5; color: rgba(245, 242, 235, 0.7); }
+
+.cs-reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
+.cs-reviews img { width: 100%; border-radius: 18px; box-shadow: 0 10px 30px rgba(26, 38, 16, 0.12); }
+
+.cs-form { background: var(--cs-cream); color: var(--ink-900); padding: 24px 20px 72px; }
+.cs-form > * { max-width: 640px; margin-inline: auto; }
+.cs-footer { background: var(--cs-cream); color: var(--ink-600) !important; display: flex; justify-content: center; gap: 20px; padding: 24px 20px 40px; font-size: 13px; color: rgba(245, 242, 235, 0.5); }
+.cs-footer a { color: inherit; }
+
+@media (max-width: 720px) {
+  .cs-cards, .cs-reviews { grid-template-columns: 1fr; }
+  .cs-hero { padding-top: 48px; }
+}
+.cs *, .cs *::before { box-sizing: border-box; }
