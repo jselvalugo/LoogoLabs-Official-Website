@@ -3,7 +3,11 @@ import { Compass, Megaphone, ChartLineUp, Target, ArrowDown } from '@phosphor-ic
 import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
-import { REFERENCES, CLIENT_LOGOS } from '../lib/references';
+import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
+
+const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
+const wordmarks = [...CLIENT_WORDMARKS];
+const names = REFERENCES.filter((n) => !CLIENT_LOGOS[n]);
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
@@ -94,17 +98,22 @@ export default function Consulting() {
           {reviews.map((r) => <img key={r.src} {...r} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
-          {REFERENCES.map((name) => (
-            CLIENT_LOGOS[name] ? (
-              <li key={name} className="cs-client cs-client--logo">
-                <img src={CLIENT_LOGOS[name]} alt={name} />
-              </li>
-            ) : (
-              <li key={name} className="cs-client">
-                <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
-                <span className="cs-client__name">{name}</span>
-              </li>
-            )
+          {logos.map((name) => (
+            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}`}>
+              <img src={CLIENT_LOGOS[name].src} alt={name} />
+            </li>
+          ))}
+          {wordmarks.map((name) => (
+            <li key={name} className="cs-client cs-client--script">
+              <span className="cs-script">{name.split(' - ')[0]}</span>
+              {name.split(' - ')[1] && <span className="cs-script__sub">{name.split(' - ')[1]}</span>}
+            </li>
+          ))}
+          {names.map((name, i) => (
+            <li key={name} className={`cs-client${i === names.length - 1 && names.length % 2 === 1 ? ' cs-client--wide' : ''}`}>
+              <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
+              <span className="cs-client__name">{name}</span>
+            </li>
           ))}
         </ul>
       </section>
