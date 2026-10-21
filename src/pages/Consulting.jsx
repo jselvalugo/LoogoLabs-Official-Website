@@ -64,6 +64,7 @@ export default function Consulting() {
       </header>
 
       <section className="cs-hero">
+        <span className="cs-eyebrow">Marketing strategy for SaaS &amp; creators</span>
         <h1>{hero.h1}</h1>
         <p className="cs-lede">{hero.lede}</p>
         <div className="cs-video"><FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} /></div>
@@ -75,8 +76,9 @@ export default function Consulting() {
         <Link />
         <h2>grow with <em>a real marketing strategy,</em></h2>
         <div className="cs-cards">
-          {c.services.map(([title, desc, Icon]) => (
+          {c.services.map(([title, desc, Icon], i) => (
             <div key={title} className="cs-card">
+              <span className="cs-card__num" aria-hidden="true">0{i + 1}</span>
               <Icon size={30} weight="duotone" aria-hidden="true" />
               <h3>{title}</h3>
               <p>{desc}</p>
