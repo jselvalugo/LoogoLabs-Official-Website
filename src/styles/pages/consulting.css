@@ -74,3 +74,5 @@
 @media (max-width: 720px) { .cs-reviews img { transform: none !important; } .cs-light { border-radius: 24px 24px 0 0; } }
 .cs .cs-form .lp-card { background: #fff; border-radius: 28px; padding: 40px 28px; border: 1px solid rgba(26, 38, 16, 0.08); border-top: 4px solid var(--cs-accent); box-shadow: 0 30px 70px rgba(26, 38, 16, 0.14); }
 .cs .cs-form .bd-cta button { background: linear-gradient(180deg, #F29A45, var(--cs-accent)) !important; color: #fff !important; border-color: var(--cs-accent); box-shadow: 0 10px 24px rgba(235, 130, 38, 0.35); }
+.cs-cards { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+@media (max-width: 720px) { .cs-cards { grid-template-columns: 1fr; } }

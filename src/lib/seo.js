@@ -204,9 +204,9 @@ export const ROUTES = [
     // Unlisted ad landing page, like /brand-design.
     page: 'Consulting',
     path: '/consulting',
-    title: `Marketing Strategy for SaaS Brands & Creators | ${SITE.name}`,
+    title: `Marketing & Ads Strategy for SaaS Brands & Creators | ${SITE.name}`,
     description:
-      'Marketing strategy for SaaS brands and creators: positioning, go-to-market and a 90-day growth plan. Book a free strategy call.',
+      'Marketing and ads strategy for SaaS brands and creators: positioning, go-to-market, paid ads and a 90-day growth plan. Book a free strategy call.',
     priority: '0.1',
     changefreq: 'monthly',
     image: '/og-image-ai-voice.jpg',
