@@ -104,7 +104,7 @@ export default function Consulting() {
             {[0, 1].map((col) => (
               <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
                 {proofItems.filter((_, i) => i % 2 === col).map((item) => (
-                  <div key={item.name} className={`cs-proof__tile${item.dark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
+                  <div key={item.name} className={`cs-proof__tile${item.dark || item.wordmark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
                     {item.wordmark
                       ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
                       : <img src={item.src} width={item.w} height={item.h} alt={item.name} />}
@@ -132,11 +132,14 @@ export default function Consulting() {
             </div>
           ))}
         </div>
-        <Link />
-        <h2>and <em>clients who say it best.</em></h2>
-        <div className="cs-reviews" aria-label="Client reviews">
-          <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
-          {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
+        {/* Reviews block: hidden on phones (see consulting.css). */}
+        <div className="cs-reviews-block">
+          <Link />
+          <h2>and <em>clients who say it best.</em></h2>
+          <div className="cs-reviews" aria-label="Client reviews">
+            <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
+            {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
+          </div>
         </div>
       </section>
 
