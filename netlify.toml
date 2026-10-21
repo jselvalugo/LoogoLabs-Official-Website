@@ -66,6 +66,12 @@
   force = true
 
 [[redirects]]
+  from = "https://crm.loogolabs.com/email-logo.png"
+  to = "/email-logo.png"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "https://crm.loogolabs.com/favicon.svg"
   to = "/favicon.svg"
   status = 200

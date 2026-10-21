@@ -34,7 +34,6 @@ const url = (v) => {
   if (!/^https?:\/\//i.test(s)) throw new CrmError('Links must start with http:// or https://');
   return s;
 };
-const color = (v) => (/^#[0-9a-f]{6}$/i.test(str(v)) ? str(v) : '#1A1A18');
 const ymd = (d) => (d instanceof Date
   ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   : d);
@@ -87,7 +86,7 @@ export async function getDashboard(inst, companyId) {
 export async function savePortal(inst, companyId, v) {
   const c = await company(inst, companyId);
   const vals = [
-    orNull(v.display_name, 200), url(v.logo_url), color(v.brand_color), orNull(v.agency_name, 200),
+    orNull(v.display_name, 200), null, '#2D3B1F', null,
     orNull(v.welcome, 2000), optNum(v.monthly_fee), v.active !== false,
   ];
   const [row] = await q(`
@@ -285,9 +284,10 @@ export async function metricTotals(inst, companyId, from, to) {
 // ── Client side (share tokens, no sign-in) ──────────────────────────────────
 
 const TOKEN = /^[A-Za-z0-9_-]{20,80}$/;
+// Portals are Loogo Labs–branded, not white-labeled: only the client's name
+// and welcome note vary.
 const brandOf = (p, companyName) => ({
-  name: p?.display_name || companyName, logo_url: p?.logo_url || null,
-  brand_color: p?.brand_color || '#1A1A18', agency_name: p?.agency_name || null, welcome: p?.welcome || null,
+  name: p?.display_name || companyName, brand_color: '#2D3B1F', welcome: p?.welcome || null,
 });
 
 async function portalByToken(token) {
