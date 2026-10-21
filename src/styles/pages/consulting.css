@@ -101,22 +101,26 @@
   background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); color: var(--cs-accent); font: 700 13px var(--font-display); letter-spacing: 0.02em; }
 .cs-client__name { font: 600 14px/1.25 var(--font-display); color: var(--ink-900); }
 
-/* Logo cards span the full width; so does a name card left alone on its row. */
-.cs-client.cs-client--wide { flex-basis: 100%; }
-.cs-client.cs-client--logo { flex-basis: 100%; justify-content: center; padding: 14px 18px; }
-.cs-client--logo img { display: block; height: 38px; width: auto; max-width: 100%; }
-.cs-client--logo.cs-client--dark { background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); padding: 16px; }
-.cs-client--dark img { height: 76px; }
-.cs-client--chip img { height: 48px; border-radius: 8px; }
+/* Logo tiles: three across, one shared height, so they read as a set. */
+.cs-client.cs-client--logo { flex-basis: calc((100% - 20px) / 3); height: 84px; justify-content: center; padding: 12px; }
+.cs-client--logo img { display: block; max-height: 44px; max-width: 100%; width: auto; height: auto; }
+.cs-client.cs-client--logo.cs-client--dark { background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
+.cs-client--dark img { max-height: 58px; }
+.cs-client--chip img { max-height: 46px; border-radius: 8px; }
+
+/* Name cards: three across on desktop. */
+.cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 20px) / 3); }
 
 @media (max-width: 720px) {
   .cs-clients { gap: 8px; }
   .cs-client { flex-basis: calc((100% - 8px) / 2); padding: 8px 10px; gap: 8px; }
   .cs-client__mark { width: 30px; height: 30px; font-size: 12px; }
   .cs-client__name { font-size: 13px; }
-  .cs-client.cs-client--logo, .cs-client.cs-client--wide { flex-basis: 100%; }
-  .cs-client--logo img { height: 32px; }
-  .cs-client--logo.cs-client--dark { padding: 12px; }
-  .cs-client--dark img { height: 64px; }
-  .cs-client--chip img { height: 42px; }
+  .cs-client.cs-client--logo { flex-basis: calc((100% - 16px) / 3); height: 64px; padding: 8px; }
+  .cs-client--logo img { max-height: 30px; }
+  .cs-client--dark img { max-height: 40px; }
+  .cs-client--chip img { max-height: 32px; }
+  /* On phones names are two across; a lone last one takes the full width. */
+  .cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 8px) / 2); }
+  .cs-clients .cs-client.cs-client--wide { flex-basis: 100%; }
 }
