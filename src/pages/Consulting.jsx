@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Robot, UsersThree, ArrowDown } from '@phosphor-icons/react';
+import { Compass, Megaphone, ChartLineUp, ArrowDown } from '@phosphor-icons/react';
 import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
@@ -12,27 +12,27 @@ const content = {
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
   videoUrl: '/brand-intro.mp4',
   videoPoster: '/brand-intro-poster.jpg',
-  h1: <>A clear plan for growth, <em>and AI that saves you time.</em></>,
-  lede: 'Marketing strategy and AI consulting for Central Florida small businesses. We find where your next customers come from, then help you put it in place.',
+  h1: <>Marketing strategy that grows <em>your SaaS or creator brand.</em></>,
+  lede: 'Marketing strategy for SaaS brands and creators. We find where your next users, subscribers and buyers come from, then build the plan to get them.',
   // Ad-matched headlines: tag the ad's utm_content with one of these keys.
   heroVariants: {
-    ai: { h1: <>Win back hours every week <em>with AI that actually works.</em></>, lede: 'We find where AI fits in your business, build it, and train your team to use it.' },
-    strategy: { h1: <>Know which marketing <em>actually brings in customers.</em></>, lede: 'An audit, a channel plan with budget and targets, and a 90-day roadmap your team can run.' },
-    marketing: { h1: <>Marketing that brings in customers, <em>not just likes.</em></>, lede: 'A clear plan, sharper messaging and numbers you can track.' },
+    saas: { h1: <>Turn trials into <em>paying customers.</em></>, lede: 'Positioning, acquisition channels and a 90-day growth plan built for SaaS.' },
+    creator: { h1: <>Turn your audience <em>into a business.</em></>, lede: 'A content, launch and monetization strategy that grows revenue, not just followers.' },
+    strategy: { h1: <>Know which marketing <em>actually drives growth.</em></>, lede: 'An audit, a channel plan with budget and targets, and a 90-day roadmap you can run.' },
   },
   services: [
-    ['Strategy', 'Audit, messaging and a 90-day roadmap.', Compass],
-    ['AI', 'Where AI saves time, ranked by return.', Robot],
-    ['Implementation', 'We build it and train your team.', UsersThree],
+    ['Positioning', 'Audience, messaging and offer that convert.', Compass],
+    ['Go-to-Market', 'Channels, content and launches, ranked by return.', Megaphone],
+    ['Growth Plan', 'A 90-day roadmap with targets you can track.', ChartLineUp],
   ],
   signup: {
-    title: "Let's talk about your growth.",
+    title: "Let's map your growth strategy.",
     lede: 'Free 20-minute strategy call. Only 2 new clients a month.',
     button: 'See If We’re a Fit',
     doneTitle: "You're in. Pick a time.",
-    doneLede: "Choose a 20-minute slot and we'll come prepared with first ideas for your business.",
+    doneLede: "Choose a 20-minute slot and we'll come prepared with first ideas for your brand.",
     bookLabel: 'Book My Free Strategy Call',
-    companyPlaceholder: 'Smith & Co.',
+    companyPlaceholder: 'Your SaaS or brand',
   },
 };
 
@@ -71,9 +71,9 @@ export default function Consulting() {
       </section>
 
       <section className="cs-light">
-        <h2>We help <em>Central Florida</em> businesses</h2>
+        <h2>We help <em>SaaS brands and creators</em></h2>
         <Link />
-        <h2>grow with <em>a real plan,</em></h2>
+        <h2>grow with <em>a real marketing strategy,</em></h2>
         <div className="cs-cards">
           {c.services.map(([title, desc, Icon]) => (
             <div key={title} className="cs-card">
