@@ -89,7 +89,8 @@ export default function Consulting() {
         </div>
         <Link />
         <h2>and <em>clients who say it best.</em></h2>
-        <div className="cs-reviews">
+        <div className="cs-reviews" aria-label="Client reviews">
+          <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
           {reviews.map((r) => <img key={r.src} {...r} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
         </div>
         <ul className="cs-clients" aria-label="Selected clients">

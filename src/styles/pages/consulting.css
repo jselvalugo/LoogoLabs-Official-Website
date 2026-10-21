@@ -15,9 +15,11 @@
 .cs-light { background: var(--cs-cream); color: var(--ink-900); padding: 80px 20px; text-align: center; }
 .cs-light h2 { max-width: 14em; margin: 0 auto; font: 600 clamp(30px, 5.5vw, 48px)/1.12 var(--font-display); letter-spacing: -0.02em; }
 .cs-light em { color: var(--ink-500); }
-.cs-link { display: flex; flex-direction: column; align-items: center; margin: 32px auto; }
-.cs-link::before { content: ''; width: 2px; height: 56px; background: var(--cs-accent); opacity: 0.6; }
-.cs-link span { width: 22px; height: 22px; border-radius: 50%; background: var(--cs-accent); box-shadow: 0 0 0 8px rgba(235, 130, 38, 0.15); }
+/* Connector between sections: a fading line with a ringed node. */
+.cs-link { position: relative; display: flex; flex-direction: column; align-items: center; margin: 40px auto; }
+.cs-link::before { content: ''; width: 2px; height: 72px; background: linear-gradient(180deg, transparent, var(--cs-accent)); opacity: 0.8; }
+.cs-link::after { content: ''; width: 2px; height: 36px; background: linear-gradient(180deg, var(--cs-accent), transparent); opacity: 0.5; }
+.cs-link span { position: absolute; top: 72px; left: 50%; width: 16px; height: 16px; transform: translate(-50%, -50%) rotate(45deg); border-radius: 4px; background: var(--cs-accent); box-shadow: 0 0 0 6px rgba(235, 130, 38, 0.14), 0 0 24px rgba(235, 130, 38, 0.5); }
 
 .cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
 .cs-card { background: var(--cs-dark); color: var(--cs-cream); border-radius: 22px; padding: 28px 22px; text-align: left; }
@@ -25,8 +27,13 @@
 .cs-card h3 { margin: 16px 0 6px; font: 600 22px var(--font-display); }
 .cs-card p { margin: 0; font-size: 15px; line-height: 1.5; color: rgba(245, 242, 235, 0.7); }
 
-.cs-reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
-.cs-reviews img { width: 100%; border-radius: 18px; box-shadow: 0 10px 30px rgba(26, 38, 16, 0.12); }
+.cs-reviews { position: relative; display: flex; flex-direction: column; max-width: 520px; margin: 48px auto 0; }
+.cs-reviews > img { position: relative; z-index: 2; width: 100%; border-radius: 18px; box-shadow: 0 10px 30px rgba(26, 38, 16, 0.12); }
+.cs-reviews > img + img { margin-top: -30%; }
+.cs-reviews__deck { position: absolute; inset: 0; z-index: 0; }
+.cs-reviews__deck span { position: absolute; inset: 0; border-radius: 18px; background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 10px 24px rgba(26, 38, 16, 0.08); }
+.cs-reviews__deck span:nth-child(1) { transform: translate(14px, 14px) rotate(2.5deg); }
+.cs-reviews__deck span:nth-child(2) { transform: translate(-12px, 24px) rotate(-2deg); }
 
 .cs-form { background: var(--cs-cream); color: var(--ink-900); padding: 24px 20px 72px; }
 .cs-form > * { max-width: 640px; margin-inline: auto; }
@@ -35,8 +42,9 @@
 
 @media (max-width: 720px) {
   .cs-cards { grid-template-columns: 1fr; }
-  .cs-reviews { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
-  .cs-reviews img { border-radius: 12px; }
+  .cs-reviews { margin-top: 36px; max-width: 100%; }
+  .cs-reviews > img + img { margin-top: -34%; }
+  .cs-reviews img, .cs-reviews__deck span { border-radius: 14px; }
   .cs-hero { padding-top: 48px; }
 }
 .cs *, .cs *::before { box-sizing: border-box; }
@@ -69,10 +77,8 @@
 .cs-card svg { padding: 10px; width: 50px; height: 50px; border-radius: 14px; background: rgba(235, 130, 38, 0.12); border: 1px solid rgba(235, 130, 38, 0.25); }
 
 .cs-reviews img { border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 18px 40px rgba(26, 38, 16, 0.14); }
-.cs-reviews img:nth-child(1) { transform: rotate(-1.2deg); }
-.cs-reviews img:nth-child(2) { transform: rotate(1.2deg); }
 
-@media (max-width: 720px) { .cs-reviews img { transform: none !important; } .cs-light { border-radius: 24px 24px 0 0; } }
+@media (max-width: 720px) { .cs-light { border-radius: 24px 24px 0 0; } }
 .cs .cs-form .lp-card { background: #fff; border-radius: 28px; padding: 40px 28px; border: 1px solid rgba(26, 38, 16, 0.08); border-top: 4px solid var(--cs-accent); box-shadow: 0 30px 70px rgba(26, 38, 16, 0.14); }
 .cs .cs-form .bd-cta button { background: linear-gradient(180deg, #F29A45, var(--cs-accent)) !important; color: #fff !important; border-color: var(--cs-accent); box-shadow: 0 10px 24px rgba(235, 130, 38, 0.35); }
 .cs-cards { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
