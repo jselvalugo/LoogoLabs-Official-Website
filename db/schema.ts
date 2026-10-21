@@ -249,3 +249,75 @@ export const crm_api_tokens = pgTable('crm_api_tokens', {
   created_at: timestamp('created_at').defaultNow(),
   last_used_at: timestamp('last_used_at'),
 });
+
+// Client retention & reporting — see the crm_client_reporting migration. A
+// client is a crm_companies row; share tokens open /portal/<t> and /recap/<t>.
+export const crm_client_portals = pgTable('crm_client_portals', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  company_id: uuid('company_id').notNull().unique().references(() => crm_companies.id, { onDelete: 'cascade' }),
+  display_name: text('display_name'), logo_url: text('logo_url'), brand_color: text('brand_color').default('#1A1A18'),
+  agency_name: text('agency_name'), welcome: text('welcome'), monthly_fee: numeric('monthly_fee'),
+  share_token: text('share_token').notNull().unique(),
+  active: boolean('active').notNull().default(true),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_client_metrics = pgTable('crm_client_metrics', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  company_id: uuid('company_id').notNull().references(() => crm_companies.id, { onDelete: 'cascade' }),
+  period: date('period').notNull(),
+  channel: text('channel').notNull().default('All channels'),
+  spend: numeric('spend').notNull().default('0'), views: numeric('views').notNull().default('0'),
+  engagement: numeric('engagement').notNull().default('0'), conversions: numeric('conversions').notNull().default('0'),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+export const crm_approvals = pgTable('crm_approvals', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  company_id: uuid('company_id').notNull().references(() => crm_companies.id, { onDelete: 'cascade' }),
+  title: text('title').notNull(),
+  // video | draft | image | other
+  kind: text('kind').notNull().default('video'),
+  media_url: text('media_url'), body: text('body'),
+  version: integer('version').notNull().default(1),
+  // pending | changes_requested | approved
+  status: text('status').notNull().default('pending'),
+  due_date: date('due_date'), decided_at: timestamp('decided_at'), decided_by: text('decided_by'),
+  created_by: uuid('created_by').references(() => crm_users.id, { onDelete: 'set null' }),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_approval_comments = pgTable('crm_approval_comments', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  approval_id: uuid('approval_id').notNull().references(() => crm_approvals.id, { onDelete: 'cascade' }),
+  version: integer('version').notNull().default(1),
+  author: text('author').notNull().default(''),
+  from_client: boolean('from_client').notNull().default(true),
+  timestamp_sec: numeric('timestamp_sec'),
+  body: text('body').notNull(),
+  resolved: boolean('resolved').notNull().default(false),
+  created_at: timestamp('created_at').defaultNow(),
+});
+
+export const crm_recaps = pgTable('crm_recaps', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  company_id: uuid('company_id').notNull().references(() => crm_companies.id, { onDelete: 'cascade' }),
+  title: text('title').notNull(),
+  start_date: date('start_date'), end_date: date('end_date'),
+  summary: text('summary'),
+  // [{ label, value, note }]
+  metrics: jsonb('metrics').notNull().default([]),
+  // [{ title, body, image_url }]
+  highlights: jsonb('highlights').notNull().default([]),
+  next_steps: text('next_steps'),
+  published: boolean('published').notNull().default(false),
+  share_token: text('share_token').notNull().unique(),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
