@@ -51,6 +51,19 @@ const content = {
 
 const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
 
+// Illustrative 30-day Meta Ads funnel for a SaaS or creator offer. Each figure follows
+// from the one before: $3,000 / 250,000 impressions = $12 CPM, 1.5% CTR = 3,750 clicks
+// ($0.80 each), 8% landing-page conversion = 300 leads ($10 each), 15% book a call = 45,
+// about 27% of calls close = 12 customers ($250 each).
+const results = [
+  ['Ad spend', '$3,000', 'Meta Ads · 30 days'],
+  ['Impressions', '250,000', '$12 CPM'],
+  ['Link clicks', '3,750', '1.5% CTR · $0.80 per click'],
+  ['Leads', '300', '8% page conversion · $10 per lead'],
+  ['Calls booked', '45', '15% of leads'],
+  ['New customers', '12', '$250 per customer'],
+];
+
 const reviews = [
   { src: '/testimonial-kristin-pitts.png', w: 1390, h: 458, alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
   { src: '/testimonial-sally-butler.png', w: 1388, h: 576, alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
@@ -141,6 +154,21 @@ export default function Consulting() {
             {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
           </div>
         </div>
+      </section>
+
+      <section className="cs-results" aria-labelledby="cs-results-title">
+        <p className="cs-results__eyebrow">Example campaign</p>
+        <h2 id="cs-results-title">Where every ad dollar <em>goes.</em></h2>
+        <ol className="cs-results__grid">
+          {results.map(([label, value, note], i) => (
+            <li key={label} className="cs-result">
+              <div className="cs-result__top"><span>{label}</span><span>0{i + 1}</span></div>
+              <div className="cs-result__value">{value}</div>
+              <div className="cs-result__note">{note}</div>
+            </li>
+          ))}
+        </ol>
+        <p className="cs-results__fine">Illustrative numbers for a SaaS or creator offer, not a client result. Your numbers depend on your offer, price and audience.</p>
       </section>
 
       <section className="cs-form bd" id="get-started">
