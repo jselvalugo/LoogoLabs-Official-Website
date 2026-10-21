@@ -12,7 +12,7 @@ const content = {
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
   videoUrl: '/brand-intro.mp4',
   videoPoster: '/brand-intro-poster.jpg',
-  h1: <>Marketing strategy that grows <em>your SaaS or creator brand.</em></>,
+  h1: <>Marketing strategy that grows <em>your SaaS or creator <span className="cs-stamped">brand.<span className="cs-stamp" aria-hidden="true">Growth Approved</span></span></em></>,
   lede: 'Marketing and ads strategy for SaaS brands and creators. We find where your next users, subscribers and buyers come from, then build the plan and the campaigns to get them.',
   // Ad-matched headlines: tag the ad's utm_content with one of these keys.
   heroVariants: {

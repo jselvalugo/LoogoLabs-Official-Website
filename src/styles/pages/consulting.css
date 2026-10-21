@@ -76,3 +76,10 @@
 .cs .cs-form .bd-cta button { background: linear-gradient(180deg, #F29A45, var(--cs-accent)) !important; color: #fff !important; border-color: var(--cs-accent); box-shadow: 0 10px 24px rgba(235, 130, 38, 0.35); }
 .cs-cards { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
 @media (max-width: 720px) { .cs-cards { grid-template-columns: 1fr; } }
+
+/* Rubber stamp over "brand" in the hero headline. */
+.cs-stamped { position: relative; display: inline-block; background: linear-gradient(100deg, #EB8226, #D9661A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cs-stamp { position: absolute; right: -0.4em; top: 0.1em; transform: translate(30%, -20%) rotate(12deg); white-space: nowrap;
+  padding: 5px 12px; border: 3px double #F4A24C; border-radius: 8px; color: #F4A24C; -webkit-text-fill-color: #F4A24C;
+  font: 800 clamp(11px, 1.5vw, 14px)/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; text-shadow: none;
+  background: rgba(26, 38, 16, 0.75); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); opacity: 0.95; }
