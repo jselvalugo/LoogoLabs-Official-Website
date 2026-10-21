@@ -149,3 +149,11 @@ body:has(.bd) [aria-label="Cookie notice"] button:last-child { background: var(-
   .bd-sticky { transition: transform 200ms ease, opacity 200ms ease; }
   .bd-sticky--hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
 }
+
+/* Minimal funnel: fewer elements, more air. */
+.bd--minimal .bd-section { margin-block: clamp(2.5rem, 6vw, 4.5rem); }
+.bd--minimal .lp-card { box-shadow: none; }
+.bd--minimal .lp-eyebrow { display: none; }
+.bd--minimal .lp-h1 { max-width: 16ch; margin-inline: auto; }
+.bd--minimal .lp-lede { max-width: 38ch; margin-inline: auto; }
+.bd--minimal .lp-cap p, .bd--minimal .bd-steps p { opacity: .8; }

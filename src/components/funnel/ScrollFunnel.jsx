@@ -157,7 +157,7 @@ export default function ScrollFunnel({ c }) {
     return () => io.disconnect();
   }, []);
   return (
-    <main className="ll-shell lp bd">
+    <main className={`ll-shell lp bd${c.minimal ? ' bd--minimal' : ''}`}>
       <div className="ll-nav lp-nav">
         <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
           <div className="lp-nav__side" />
@@ -176,7 +176,7 @@ export default function ScrollFunnel({ c }) {
           <h1 className="lp-h1">{hero.h1}</h1>
           <p className="lp-lede">{hero.lede}</p>
           <FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} />
-          <p className="lp-fine">{c.videoCaption}</p>
+          {c.videoCaption && <p className="lp-fine">{c.videoCaption}</p>}
           <CTA onClick={toSignup} />
           {c.scarcity && <p className="bd-scarcity">{c.scarcity}</p>}
         </div>
@@ -190,6 +190,7 @@ export default function ScrollFunnel({ c }) {
       )}
 
       {/* Problem */}
+      {c.problems?.length > 0 && (
       <section className="bd-section">
         <div className="lp-card lp-card--forest lp-card--wide">
           <Hook>{hooks.problems}</Hook>
@@ -205,6 +206,7 @@ export default function ScrollFunnel({ c }) {
           </div>
         </div>
       </section>
+      )}
 
       {c.checklist && (
         <section className="bd-section">
@@ -302,6 +304,7 @@ export default function ScrollFunnel({ c }) {
       )}
 
       {/* Proof */}
+      {!c.hideProof && (
       <section className="bd-section">
         <div className="lp-card lp-card--sage lp-card--wide">
           <Hook>{hooks.proof}</Hook>
@@ -312,6 +315,7 @@ export default function ScrollFunnel({ c }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* FAQ */}
       <section className="bd-section">
