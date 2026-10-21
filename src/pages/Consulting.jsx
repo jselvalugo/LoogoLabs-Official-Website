@@ -107,8 +107,9 @@ export default function Consulting() {
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
           {logos.map((name) => (
-            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}`}>
+            <li key={name} className={`cs-client cs-client--logo${CLIENT_LOGOS[name].dark ? ' cs-client--dark' : ''}${CLIENT_LOGOS[name].chip ? ' cs-client--chip' : ''}${CLIENT_LOGOS[name].caption ? ' cs-client--captioned' : ''}`}>
               <img src={CLIENT_LOGOS[name].src} width={CLIENT_LOGOS[name].w} height={CLIENT_LOGOS[name].h} alt={name} />
+              {CLIENT_LOGOS[name].caption && <span className="cs-client__caption">{CLIENT_LOGOS[name].caption}</span>}
             </li>
           ))}
           {wordmarks.map((name) => (
