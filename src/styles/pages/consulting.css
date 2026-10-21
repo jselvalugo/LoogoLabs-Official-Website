@@ -82,3 +82,18 @@
   padding: 5px 12px; border: 3px double #F4A24C; border-radius: 8px; color: #F4A24C; -webkit-text-fill-color: #F4A24C;
   font: 800 clamp(11px, 1.5vw, 14px)/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; text-shadow: none;
   background: rgba(26, 38, 16, 0.75); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); opacity: 0.95; }
+
+/* Client cards under the reviews. */
+.cs-clients { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 880px; margin: 24px auto 0; }
+.cs-client { flex: 0 1 calc((100% - 24px) / 3); display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-align: left;
+  background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); border-radius: 18px; box-shadow: 0 12px 28px rgba(26, 38, 16, 0.08); }
+.cs-client__mark { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); color: var(--cs-accent); font: 700 15px var(--font-display); letter-spacing: 0.02em; }
+.cs-client__name { font: 600 16px/1.3 var(--font-display); color: var(--ink-900); }
+@media (max-width: 720px) {
+  .cs-clients { gap: 10px; }
+  .cs-client { flex-basis: calc((100% - 10px) / 2); padding: 12px; gap: 10px; }
+  .cs-client:last-child:nth-child(odd) { flex-basis: 100%; }
+  .cs-client__mark { width: 36px; height: 36px; font-size: 13px; }
+  .cs-client__name { font-size: 14px; }
+}
