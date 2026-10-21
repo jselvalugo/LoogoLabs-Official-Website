@@ -3,7 +3,7 @@ import { Compass, Megaphone, ChartLineUp, Target, ArrowDown } from '@phosphor-ic
 import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
-import { REFERENCES } from '../lib/references';
+import { REFERENCES, CLIENT_LOGOS } from '../lib/references';
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
@@ -42,8 +42,8 @@ const content = {
 const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
 
 const reviews = [
-  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
   { src: '/testimonial-kristin-pitts.png', alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
+  { src: '/testimonial-sally-butler.png', alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
 ];
 
 export default function Consulting() {
@@ -95,10 +95,16 @@ export default function Consulting() {
         </div>
         <ul className="cs-clients" aria-label="Selected clients">
           {REFERENCES.map((name) => (
-            <li key={name} className="cs-client">
-              <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
-              <span className="cs-client__name">{name}</span>
-            </li>
+            CLIENT_LOGOS[name] ? (
+              <li key={name} className="cs-client cs-client--logo">
+                <img src={CLIENT_LOGOS[name]} alt={name} />
+              </li>
+            ) : (
+              <li key={name} className="cs-client">
+                <span className="cs-client__mark" aria-hidden="true">{name.replace(/[^A-Za-z ]/g, '').split(' ').filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join('')}</span>
+                <span className="cs-client__name">{name}</span>
+              </li>
+            )
           ))}
         </ul>
       </section>
