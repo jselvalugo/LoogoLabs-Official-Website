@@ -2,6 +2,7 @@ import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
+import { partnerFor } from '../lib/partnerPost';
 import { useHref, useLang } from '../lib/i18n';
 import { hasConsent } from '../lib/cookieConsent';
 import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
@@ -88,14 +89,21 @@ export default function BlogPost({ slug, onNavigate }) {
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString(es ? 'es-US' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
   const event = isEventPost(post);
+  const partner = partnerFor(post);
+  const lang = es ? 'es' : 'en';
+  const rail = event || !!partner;
 
   const cta = (
     <div className="lb-cta ll-forest">
-      <h3 className="lb-cta__title">{event
+      <h3 className="lb-cta__title">{partner
+        ? <><span className="lb-cta__long">{partner.ctaTitle[lang]}</span><span className="lb-cta__short">{partner.ctaShort[lang]}</span></>
+        : event
         ? <><span className="lb-cta__long">{es ? 'Aparta tu lugar. La entrada es gratis.' : 'Save your spot. It is free to attend.'}</span><span className="lb-cta__short">{es ? 'Cards & Cocktails · Gratis · 14 nov.' : <>Cards &amp; Cocktails · Free · Nov 14</>}</span></>
         : (es ? '¿Quieres esto funcionando en tu negocio?' : 'Want this running in your business?')}</h3>
       <p className="lb-cta__text">
-        {event
+        {partner
+          ? partner.ctaText[lang]
+          : event
           ? (es ? 'Consigue un boleto gratis (con un pin coleccionable) o un pase VIP de acceso anticipado de $25 en Eventbrite. Niños bienvenidos, mocktails incluidos.' : 'Grab a free ticket (with a collectible pin) or a $25 VIP early-access pass on Eventbrite. Kids welcome, mocktails included.')
           : (es ? 'Lo configuramos, lo operamos y lo optimizamos cada mes. Tú solo te ocupas de tu negocio.' : 'We set it up, run it, and optimize it every month. You just run your business.')}
       </p>
@@ -106,7 +114,9 @@ export default function BlogPost({ slug, onNavigate }) {
         className="lb-cta__btn"
         onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
       >
-        {event
+        {partner
+          ? <><span className="lb-cta__long">{partner.ctaButton[lang]}</span><span className="lb-cta__short">{partner.ctaButtonShort[lang]}</span></>
+          : event
           ? <><span className="lb-cta__long">{es ? 'Consigue tus boletos en Eventbrite' : 'Get tickets on Eventbrite'}</span><span className="lb-cta__short">{es ? 'Boletos' : 'Get tickets'}</span></>
           : (es ? 'Agenda una llamada de estrategia gratis' : 'Book a free strategy call')}
         <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
@@ -115,10 +125,10 @@ export default function BlogPost({ slug, onNavigate }) {
   );
 
   return (
-    <div className={event ? 'lb-page lb-page--event' : 'lb-page'} role="main">
+    <div className={['lb-page', event && 'lb-page--event', partner && `lb-page--partner lb-page--${partner.key}`, rail && 'lb-page--rail'].filter(Boolean).join(' ')} role="main">
       <div className="lb-wrap">
 
-      {post.featured && !event ? (
+      {post.featured && !rail ? (
         <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} />
       ) : (
       /* ── HERO HEADER ── */
@@ -132,6 +142,15 @@ export default function BlogPost({ slug, onNavigate }) {
 
         <div className="lb-hero__body">
           {event && <img src={EVENT_THEME.logo} alt="Lugo's Craft Distillery" className="lb-event-logo" />}
+          {partner && (
+            <div className="lb-partner-lockup">
+              <img src="/blog/loogo-labs-logo-cream.webp" alt="Loogo Labs" className="lb-partner-lockup__loogo" width={500} height={128} />
+              <span className="lb-partner-lockup__x" aria-hidden="true">×</span>
+              <img src={partner.logo} alt={partner.name} className="lb-partner-lockup__mark" width={72} height={72} />
+              <span className="lb-partner-lockup__name">{partner.name}</span>
+            </div>
+          )}
+          {partner && <div className="lb-partner-kicker">{partner.kicker}</div>}
           <h1 className="lb-hero__title">{post.title}</h1>
 
           <div className="lb-hero__meta">
@@ -188,7 +207,7 @@ export default function BlogPost({ slug, onNavigate }) {
             )}
 
             {/* CTA box: event posts float it in a side rail instead */}
-            {!event && cta}
+            {!rail && cta}
 
             {/* Back link */}
             <div className="lb-post__back">
@@ -197,7 +216,7 @@ export default function BlogPost({ slug, onNavigate }) {
               </a>
             </div>
           </article>
-          {event && <aside className="lb-event-rail" aria-label={es ? 'Boletos del evento' : 'Event tickets'}>{cta}</aside>}
+          {rail && <aside className="lb-event-rail" aria-label={partner ? (es ? 'Agenda una llamada' : 'Book a call') : (es ? 'Boletos del evento' : 'Event tickets')}>{cta}</aside>}
       </div>
       </div>
     </div>

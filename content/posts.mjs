@@ -4101,4 +4101,64 @@ Grab your free ticket or VIP pass on [Eventbrite](https://www.eventbrite.com/e/c
 
 Must be 21+ to consume alcohol. Please drink responsibly, grab the kids a mocktail, and bring your binder.`,
   },
+  {
+    slug: `loogo-labs-partners-with-pronomy-ai-support-agent`,
+    title: `Loogo Labs × Pronomy: An AI Support Agent That Answers, Acts, and Updates Your Tools`,
+    excerpt: `Loogo Labs is now a Pronomy partner. If your team works through hundreds of refund, cancellation and how-to tickets a day, we can put an AI agent on the queue that follows your rules and hands the hard ones to a person.`,
+    tags: `Partnership, AI Customer Support, Pronomy`,
+    content: `Look at yesterday's support queue and count how many tickets were the same five requests. Refund for last month. Cancel my plan. My payment failed. How do I reschedule. Where is the setting. For most teams that handle a lot of customers, that pile is most of the day, and each one still takes a person a few minutes of clicking.
+
+That is the work I want off your team's plate, and it is why **Loogo Labs is now partnering with Pronomy** ([pronomy.io](https://www.pronomy.io)). Starting today, we sell, scope and launch Pronomy for our clients.
+
+## What Pronomy is
+
+Pronomy is an AI support agent built for high-volume B2C support teams. Their own line for it is short: *it answers, it acts, it updates your tools.* It doesn't just draft a polite reply. It follows the same steps your best agent would, inside the tools you already use.
+
+It covers three kinds of work:
+
+- **Billing:** refunds and cancellations, retention offers, payment failures and disputes. It follows your billing flow step by step and can process refunds through Stripe or solidgate.
+- **Product:** FAQs, how-to questions, technical issues, plans and appointment changes. It answers from your knowledge base, reads screenshots customers attach, and checks the ticket history first.
+- **Operations:** classifying and tagging every incoming ticket, updating CRM and ticket fields, writing internal notes. In Pronomy's words, *the boring clicks, 200 times a day.*
+
+It plugs into Zendesk, Intercom, Freshdesk, HubSpot, Zoho Desk, Help Scout, Front and others, plus Slack, Notion, Confluence and Google Drive. If an internal tool has an API, Pronomy builds the connection as part of onboarding.
+
+## It follows your logic, not vibes
+
+This is the part that made me want to put my name next to it. Every ticket runs through the same sequence: \`read ticket → check history → verify user → update fields → choose flow\`. Then it runs a defined flow, not an improvised answer.
+
+> **Refund:** check eligibility → offer retention → process refund → update CRM → send confirmation.
+
+If a customer asks for a refund on an app they didn't use, the agent checks they're inside your refund window and haven't had one before. If you have a retention offer, it makes that first. If they say no, it processes the refund and logs every action on the ticket. Cancellations, plan changes, technical issues and triage each have their own flow written around your rules.
+
+## Built to escalate, not to bluff
+
+Pronomy's stance on safety is one I agree with: *better one extra escalation than one expensive mistake.*
+
+- **Keyword detection.** "Manager," "lawyer," "chargeback," "delete my data" are recognized in any language and sent straight to a person.
+- **Plain-text rules.** You write them the way you'd brief a new hire, such as "escalate if the user mentions health issues." No code.
+- **Emotional analysis.** Angry, frustrated or threatening customers go to a human, every time.
+
+The launch itself is cautious too. The agent starts in **internal-note mode**: it proposes replies but sends nothing. Your team reads its work on real tickets before a single answer reaches a customer, and you decide when it goes live.
+
+## How the pricing works
+
+You pay **per resolved ticket**, between **$0.25 and $0.65**. You don't pay per message or per agent seat.
+
+- A ticket with ten replies costs the same as one with two.
+- Escalated tickets are free.
+- Simple Q&A sits at the low end. Refunds, cancellations and plan changes sit at the high end.
+- No lock-in and no minimum term. The volume package is agreed before launch.
+
+Pronomy reports automation rates of 50–80% of tickets and CSAT 22% higher than human agents across the teams it runs for. Those are their numbers, not mine. Your real rate depends on how much of your queue is repeatable, and that's exactly what we measure before you commit.
+
+## Where Loogo Labs fits
+
+You work with us, start to finish. We review your tickets, map which workflows to automate first, and coordinate the launch with Pronomy's team. After go-live, flow updates, macro changes and quality reviews are usually handled within days at no extra charge. You don't file requests into a support portal.
+
+A note on fit: this is built for teams with real ticket volume, where the same billing and how-to questions arrive dozens of times a day. If your inbox is twenty emails a week, you don't need this yet, and I'll tell you so on the call.
+
+## Bring 20 tickets to the call
+
+Export 20 to 50 recent tickets and book a call with us. Leave out anything sensitive, or send them redacted. We'll sort them into billing, product and ops, show you which ones the agent would handle and which it would escalate, and give you a launch plan with a per-ticket pricing estimate. That part is free, and you're under no obligation to buy.`,
+  },
 ];
