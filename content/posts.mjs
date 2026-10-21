@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `remodeler-holiday-pause-dates-for-open-jobs`,
+    title: `Your Crew Stops in December. Do Your Clients Know When?`,
+    excerpt: `A half-finished kitchen with no word from the contractor for three weeks is how a good job turns into a bad review, and the fix is one dated note written in October.`,
+    tags: `Remodeling, Project Communication, Seasonal Planning`,
+    content: `Every remodeler has a stretch of the year when the crew simply is not there, and every client with a gutted bathroom notices it before the contractor mentions it. The silence is the problem, far more than the pause itself.
+
+If you run a remodeling company, you already know the shape of December. Subs take vacation. Suppliers close early and ship late. You have a day in your head when the last crew leaves and a day when work picks back up, and you have probably told almost nobody. The homeowner with a torn-up kitchen is guessing, and a guess made in a cold kitchen with no stove tends to be pessimistic.
+
+## What the client fills the gap with
+
+When you say nothing, the client writes the story for you. The crew has gone to another job. The project is stalled. The money was spent and nobody is coming back. None of that is true, but it is a reasonable reading of a quiet house.
+
+I am not going to give you a number for how many clients think this, because I only know the calls I have sat in on. What I can tell you is that the angry call in the first week of January is almost never about the pause. It is about finding out about the pause from an empty driveway.
+
+## Write the note in October
+
+Pull a list of every job that is open right now, meaning contracted and not finished. For each one, you need four facts before you send anything:
+
+- **The last day a crew is on site.** A real date, not "around the holidays."
+- **The first day work resumes.** Also a real date. If a material delivery decides it, say which one and what you will do if it slips.
+- **What the house will look like in between.** Is the water on? Is there a working bathroom? Is the dust sealed, are the tools gone, is the plastic going to stay up?
+- **One person who answers while the crew is away.** A name and a number, and what counts as worth calling about: a leak, a lock that does not work, an open wall in a cold spell.
+
+Then send each client a short text or email with those four facts, in that order, in plain words. Three or four sentences is enough. Say it as you would say it standing in their doorway.
+
+## Make the dates hold
+
+A date you give in October has to survive December, so build the schedule backward before you promise it. Call the subs whose work has to land first after the break and get a yes from each one for the restart week. Ask your suppliers for the delivery date on any long-lead item that the restart depends on. If a date does not hold, you want to learn that now, while you can still tell the client calmly.
+
+Where a job genuinely cannot restart on the date you hoped, say so in the same note. A later date given early is a scheduling fact. The same date given in January is a broken promise.
+
+## Send the restart text too
+
+The pause note is half of it. Two days before the first day back, send a second message: who is coming, around what time, and anything the client needs to clear or unlock. It also tells you something. If a client replies that they are away until the 8th, you have just saved a crew from a locked door.
+
+## Where the system helps and where it does not
+
+A reminder list on the platform can hold the two send dates for each open job and put the messages in front of you at the right time, so the note does not depend on you remembering in the middle of a busy week. It cannot decide your dates or call your subs. That part is yours, and it is the part that makes the message worth sending.
+
+## Do this week
+
+Open your job list and count the contracted jobs that will still be open on the first of December. For each, write down the last crew day and the restart day. If you cannot fill in either date for a job today, that job is your first phone call this week, and it is better to learn that now than from the homeowner in January.`,
+  },
+  {
     slug: `laser-clinic-book-whole-package-at-checkout`,
     title: `You Sold Six Sessions. How Many Are on the Calendar?`,
     excerpt: `A package client who leaves with one booked session and five promised ones is a sale on paper and a drifting client in practice, and the fix happens at the front desk.`,
