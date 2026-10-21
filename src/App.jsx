@@ -139,7 +139,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Home', 'Packages', 'BrandPartners'];
+  const nav = ['Home', 'BrandPartners'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
