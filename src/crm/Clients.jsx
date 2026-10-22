@@ -1,7 +1,7 @@
 import React from 'react';
 import { data } from './api';
 import {
-  Comments, Drawer, Media, PerformanceReport, Stat, StatusPill, canSeek, clock, count, day, money, parseClock, range,
+  Comments, Drawer, Media, PerformanceReport, Stat, StatusPill, canSeek, clock, count, day, money, parseClock, range, stamp,
 } from './report';
 
 // Team-side "Client retention & reporting" tabs: Dashboards, Approvals and
@@ -248,6 +248,7 @@ export function Approvals({ version }) {
           <option value="pending">Awaiting review</option>
           <option value="changes_requested">Changes requested</option>
           <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
           <option value="">All</option>
         </select>
         <button className="btn btn-primary" onClick={() => setOpen('new')}>Send for approval</button>
@@ -256,13 +257,14 @@ export function Approvals({ version }) {
       <div className="card" style={{ overflowX: 'auto' }}>
         {!rows ? <p className="muted" style={{ padding: 16 }}>Loading…</p> : rows.length === 0 ? <p className="muted" style={{ padding: 16 }}>Nothing here.</p> : (
           <table>
-            <thead><tr><th>Item</th><th>Client</th><th>Status</th><th className="hide-sm">Comments</th><th className="hide-sm">Due</th></tr></thead>
+            <thead><tr><th>Item</th><th>Client</th><th>Status</th><th className="hide-sm">Decided</th><th className="hide-sm">Comments</th><th className="hide-sm">Due</th></tr></thead>
             <tbody>
               {rows.map((a) => (
                 <tr key={a.id} onClick={() => setOpen(a.id)}>
                   <td><strong>{a.title}</strong> <span className="muted">· {kindLabel(a.kind)} · v{a.version}</span></td>
                   <td>{a.company_name}</td>
                   <td><StatusPill status={a.status} /></td>
+                  <td className="hide-sm">{a.decided_by ? <>{a.decided_by}<br /><span className="muted" style={{ fontSize: 12 }}>{stamp(a.decided_at)}</span></> : ''}</td>
                   <td className="hide-sm">{a.open_comments ? `${a.open_comments} open` : ''}</td>
                   <td className="hide-sm">{day(a.due_date)}</td>
                 </tr>
@@ -325,6 +327,8 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
   const [reply, setReply] = React.useState('');
   const [at, setAt] = React.useState('');
   const [error, setError] = React.useState('');
+  const [deciding, setDeciding] = React.useState(null); // 'approved' | 'rejected'
+  const [note, setNote] = React.useState('');
   const video = React.useRef(null);
 
   const load = React.useCallback(() => data('get_approval', { id }).then(setItem).catch((e) => setError(e.message)), [id]);
@@ -352,6 +356,15 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
       setReply(''); setAt('');
     } catch (err) { setError(err.message); }
   }
+  async function decide(e) {
+    e.preventDefault();
+    setError('');
+    try {
+      await data('decide_approval', { id, values: { decision: deciding, note } });
+      setDeciding(null); setNote('');
+      await load(); onSaved(id);
+    } catch (err) { setError(err.message); }
+  }
   async function resolve(c) {
     const row = await data('resolve_comment', { id: c.id, resolved: !c.resolved });
     setItem((p) => ({ ...p, comments: p.comments.map((x) => (x.id === c.id ? row : x)) }));
@@ -372,7 +385,7 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
     <Drawer title={item.title} kicker={`${item.company_name} · ${kindLabel(item.kind)} · v${item.version}`} onClose={onClose}>
       <div className="note-head" style={{ marginBottom: 12 }}>
         <StatusPill status={item.status} />
-        {item.decided_by && <span className="muted" style={{ fontSize: 13 }}>by {item.decided_by} · {day(item.decided_at)}</span>}
+        {item.decided_by && <span className="muted" style={{ fontSize: 13 }}>by {item.decided_by} · {stamp(item.decided_at)}</span>}
         {item.due_date && <span className="muted" style={{ fontSize: 13 }}>Review by {day(item.due_date)}</span>}
       </div>
       {item.portal_token
@@ -396,6 +409,26 @@ function ApprovalDrawer({ id, clients, defaultClient, onClose, onSaved, onDelete
 
       <div style={{ marginTop: 16 }}><Media ref={video} url={item.media_url} /></div>
       {item.body && <div className="card pad pre draft">{item.body}</div>}
+
+      <div className="card pad decide" style={{ marginTop: 16 }}>
+        {deciding ? (
+          <form onSubmit={decide}>
+            <strong>{deciding === 'approved' ? `Approve v${item.version}` : `Reject v${item.version}`}</strong>
+            <label className="label" htmlFor="t-note">Note (optional)</label>
+            <textarea id="t-note" className="field" rows={2} value={note} onChange={(e) => setNote(e.target.value)} />
+            <div className="actions">
+              <button className={`btn ${deciding === 'approved' ? 'btn-primary' : 'btn-danger'}`}>{deciding === 'approved' ? 'Approve' : 'Reject'}</button>
+              <button type="button" className="btn" onClick={() => setDeciding(null)}>Cancel</button>
+            </div>
+          </form>
+        ) : (
+          <div className="actions" style={{ marginTop: 0, alignItems: 'center' }}>
+            <span style={{ flex: 1 }}>Your decision is saved with your name, the date and the time.</span>
+            <button className="btn btn-danger" onClick={() => setDeciding('rejected')} disabled={item.status === 'rejected'}>Reject</button>
+            <button className="btn btn-primary" onClick={() => setDeciding('approved')} disabled={item.status === 'approved'}>Approve</button>
+          </div>
+        )}
+      </div>
 
       <div className="actions">
         <button className="btn btn-primary" onClick={() => setMode(mode === 'email' ? null : 'email')}>Email client</button>

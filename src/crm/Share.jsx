@@ -1,6 +1,6 @@
 import React from 'react';
 import { call } from './api';
-import { Comments, Media, PerformanceReport, StatusPill, canSeek, clock, day, parseClock, range } from './report';
+import { APPROVAL_STATUS, Comments, Media, PerformanceReport, StatusPill, canSeek, clock, day, parseClock, range, stamp } from './report';
 
 // What a client sees from a share link — no sign-in, under the Loogo Labs
 // logo. /portal/<token> is their dashboard + approvals + recaps;
@@ -163,13 +163,13 @@ function ApprovalView({ token, id, onBack }) {
       </div>
       <p className="muted count">
         Version {item.version}{item.due_date ? ` · please review by ${day(item.due_date)}` : ''}
-        {item.decided_by && ` · ${item.status === 'approved' ? 'approved' : 'changes requested'} by ${item.decided_by} on ${day(item.decided_at)}`}
+        {item.decided_by && ` · ${(APPROVAL_STATUS[item.status] || item.status).toLowerCase()} by ${item.decided_by} on ${stamp(item.decided_at)}`}
       </p>
 
       <Media ref={video} url={item.media_url} />
       {item.body && <div className="card pad pre draft">{item.body}</div>}
 
-      {item.status !== 'approved' && (
+      {item.status !== 'approved' && item.status !== 'rejected' && (
         <div className="card pad decide">
           {deciding ? (
             <form onSubmit={decide}>
