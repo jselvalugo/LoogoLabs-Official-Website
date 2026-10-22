@@ -32,11 +32,12 @@ const content = {
     ads: { h1: <>Ads that pay for themselves, <em>not just your ad platform.</em></>, lede: 'Paid ads strategy for SaaS and creators: targeting, creative, budgets and tracking tied to real revenue.' },
     strategy: { h1: <>Know which marketing <em>actually drives growth.</em></>, lede: 'An audit, a channel plan with budget and targets, and a 90-day roadmap you can run.' },
   },
+  // Meta ads only. Describes what we do, not guaranteed results (no promised ROAS or CAC).
   services: [
-    ['Positioning', 'Audience, messaging and offer that convert.', Compass],
-    ['Go-to-Market', 'Channels, content and launches, ranked by return.', Megaphone],
-    ['Ads Strategy', 'Meta, Google and YouTube ads with creative, targeting and budgets that pay back.', Target],
-    ['Growth Plan', 'A 90-day roadmap with targets you can track.', ChartLineUp],
+    ['Offer & Audience', 'We sharpen your offer and pick the audiences most likely to buy, before a dollar is spent.', Compass],
+    ['Creative Testing', 'Scroll-stopping video and image ads, tested in batches so the winners are clear fast.', Megaphone],
+    ['Lower CAC Campaigns', 'Meta campaigns structured to bring your cost per customer down, with budgets set from your numbers.', Target],
+    ['Tracking & Scaling', 'Pixel and Conversions API set up so you see your real CAC, then we scale only what pays back.', ChartLineUp],
   ],
   signup: {
     title: "Let's map your growth strategy.",
