@@ -109,7 +109,7 @@ export default function Consulting() {
       <section className="cs-loop" aria-label="Selected clients">
         <div className="cs-loop__track">
           {[0, 1].map((copy) => beltItems.map((item) => (
-            <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}`} aria-hidden={copy === 1 || undefined}>
+            <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}${item.fill ? ' cs-loop__item--fill' : ''}`} aria-hidden={copy === 1 || undefined}>
               {item.wordmark ? <span className="cs-script cs-loop__script">{item.wordmark}</span> : <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} />}
             </div>
           )))}
@@ -125,8 +125,8 @@ export default function Consulting() {
           <div className="cs-proof__cols">
             {[0, 1].map((col) => (
               <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
-                {proofItems.filter((_, i) => i % 2 === col).map((item) => (
-                  <div key={item.name} className={`cs-proof__tile${item.dark || item.wordmark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}`}>
+                {proofItems.filter((item, i) => (item.wordmark ? 1 : i % 2) === col).map((item) => (
+                  <div key={item.name} className={`cs-proof__tile${item.dark || item.wordmark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}${item.fill ? ' cs-proof__tile--fill' : ''}`}>
                     {item.wordmark
                       ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
                       : <img src={item.src} width={item.w} height={item.h} alt={item.name} />}

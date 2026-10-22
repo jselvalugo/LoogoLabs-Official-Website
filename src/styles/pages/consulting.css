@@ -245,3 +245,11 @@
   .cs-videos__strip::-webkit-scrollbar { display: none; }
   .cs-video-card { flex: 0 0 42%; scroll-snap-align: start; border-radius: 12px; }
 }
+
+/* A logo that carries its own background (Geros Studio) fills its tile edge to edge. */
+.cs-loop__item--fill { padding: 0; overflow: hidden; }
+.cs-loop__item--fill img { height: 56px; width: auto; }
+@media (max-width: 720px) {
+  .cs-proof__tile--fill { padding: 0; overflow: hidden; }
+  .cs-proof__tile--fill img { width: 100%; max-height: none; }
+}
