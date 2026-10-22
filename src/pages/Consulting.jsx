@@ -64,6 +64,15 @@ const results = [
   ['New customers', '12', '$250 per customer'],
 ];
 
+// Short-form video styles we produce for brands. Concept frames, not client work.
+const videos = [
+  ['contract-rules', 'Explainer series', 'AS-IS contract counts calendar days'],
+  ['money-mistakes', 'Podcast clip', '3 money mistakes I made in my 20s'],
+  ['morning-routine', 'Lifestyle tips', 'The 5-minute morning routine that fixed my focus'],
+  ['inbox-automation', 'Product demo', 'I automated my inbox in 10 minutes'],
+  ['weekly-brief', 'News brief', 'Why rent is rising faster than pay'],
+];
+
 const reviews = [
   { src: '/testimonial-kristin-pitts.png', w: 1390, h: 458, alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
   { src: '/testimonial-sally-butler.png', w: 1388, h: 576, alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
@@ -154,6 +163,21 @@ export default function Consulting() {
             {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
           </div>
         </div>
+      </section>
+
+      <section className="cs-videos" aria-labelledby="cs-videos-title">
+        <p className="cs-results__eyebrow">Short-form video</p>
+        <h2 id="cs-videos-title">Videos built to <em>stop the scroll.</em></h2>
+        <p className="cs-videos__lede">Branded Reels, Shorts and TikToks, one talking-head recording turned into a series in your look.</p>
+        <ul className="cs-videos__strip">
+          {videos.map(([file, kind, title]) => (
+            <li key={file} className="cs-video-card">
+              <img src={`/consulting/video-${file}.jpg`} width="540" height="960" alt={`${kind} video concept: ${title}`} loading="lazy" />
+              <span className="cs-video-card__kind">{kind}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="cs-results__fine">Concept examples of the styles we produce. Brand names shown are mock-ups.</p>
       </section>
 
       <section className="cs-results" aria-labelledby="cs-results-title">
