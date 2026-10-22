@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `real-estate-after-the-holidays-seller-call-booked`,
+    title: `"After the Holidays" Is a Seller Lead. Put a Date on It`,
+    excerpt: `A seller who says "after the holidays" has not said no, but unless a January call is booked before the conversation ends, you are one of three agents they half remember.`,
+    tags: `Seller Leads, Follow-Up, Real Estate`,
+    content: `Every agent hears it in October and November: "We're thinking about selling, but let's talk after the holidays." It sounds like a polite delay. In practice it is where most of those sellers get lost, because nothing in your calendar says what happens next, and the agent who calls them on January 3rd is usually the one who got a date on the calendar first.
+
+## What they actually mean
+
+When a seller says "after the holidays," they are rarely lying about the timing. They are telling you two things at once. The house is not going on the market in the next six weeks, and they do not want to be sold to in the meantime.
+
+Both are reasonable. The mistake is treating them as a reason to go quiet. Silence for ten weeks does not feel like respect to the seller. It feels like you stopped caring, and by the time you resurface, their memory of you is a single phone call from the fall.
+
+Say you talk to a couple on a Tuesday in late October who have owned their split-level for fifteen years. They want to look at pricing, but they are hosting family in November and do not want strangers walking through in December. That is a clear, specific plan. Your follow-up should be just as specific.
+
+## Book the January call before you hang up
+
+Do not say "I'll check back in the new year." That puts the whole job on your memory, and your memory is already full in January.
+
+Instead, offer a date right then: "Would the first Thursday in January work for a twenty-minute call? I'll put it on my calendar and send you a text now." If they say yes, send the calendar invitation before they have finished their coffee. A booked call, with a reminder that goes out the week before, is a different animal from a lead you promised to follow up with.
+
+If they will not commit to a day, ask for a week. If they will not commit to a week, ask for a month and make the month the date. A lead with "January" written on it is something you can list, count and search. A lead with "later" on it is a note to self that you will never read again.
+
+## Give them one job in the meantime
+
+The ten quiet weeks are not dead time. They are the part of the process where you can be useful without asking for anything.
+
+Pick one small task the seller can do before January that makes the first conversation faster. For that split-level couple it might be: "Find the paperwork from any work you've had done on the house, like the roof or the furnace, and put it in one folder." No pressure, no pitch. It also gives you a reason to text once in mid-November that has nothing to do with sales.
+
+The job should take them under an hour and should come up again in the January call. Then the call opens with "Did you find the roof paperwork?" and not with "So, are you still thinking about selling?"
+
+## Three messages, and no more
+
+Here is the whole sequence, and it can run itself on the platform once the lead is tagged:
+
+- **The day of the conversation:** a text confirming the January call date and time, with the one task described in a single sentence.
+- **Mid-November, or the week before Thanksgiving:** one short check-in on the task. No market update, no new listings, nothing that asks for a decision.
+- **The week before the call:** the reminder, with a line saying you will have a rough price range to talk through.
+
+Notice what is missing. There is no monthly newsletter and no "just checking in." A seller who is planning around the holidays does not want ten touches. They want three that each do something.
+
+It is worth being honest about the limit here. This will not rescue a seller who was never serious, and some of the January calls will end with "we've decided to stay." That is still a better answer than silence, and you learn it in week one of the year, not week eight.
+
+## Look for them this week
+
+Open your lead list and filter for anything from the last ninety days with a note or tag that says "after the holidays," "next spring," "next year" or "not yet." Count how many of them have a booked call or a dated next step. The leads without a date are the ones that go to whoever calls first in January.
+
+Pick the three warmest, send each one a short text this week, and offer a specific day for a January call. Then tag the rest with the month you expect to hear from them, so the next time you open that list, it tells you who to call and when.`,
+  },
+  {
     slug: `yoga-studio-intro-offer-second-class-booked`,
     title: `Intro Students Take One Class and Vanish. Book Class Two`,
     excerpt: `A new student who walks out of a first class with nothing on the calendar has quietly decided already, and a teacher's text that same afternoon is the cheapest way to change that.`,
