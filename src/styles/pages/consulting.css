@@ -208,3 +208,40 @@
   .cs-proof__script { font-size: 22px; }
   .cs-proof__caption { font-size: 9px; }
 }
+
+/* Example Meta Ads funnel before the form. */
+.cs-results { background: var(--cs-dark); color: var(--cs-cream); padding: 64px 20px; text-align: center; }
+.cs-results__eyebrow { margin: 0 0 10px; font: 600 12px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--cs-accent); }
+.cs-results h2 { margin: 0 auto; max-width: 14em; font: 600 clamp(28px, 5vw, 44px)/1.12 var(--font-display); letter-spacing: -0.02em; }
+.cs-results__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 880px; margin: 32px auto 0; text-align: left; }
+.cs-result { padding: 20px; border-radius: 18px; background: linear-gradient(160deg, rgba(245, 242, 235, 0.06), rgba(245, 242, 235, 0.02)); border: 1px solid rgba(245, 242, 235, 0.1); box-shadow: inset 0 -3px 0 var(--cs-accent); }
+.cs-result__top { display: flex; justify-content: space-between; font: 600 11px/1 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245, 242, 235, 0.6); }
+.cs-result__top span:last-child { color: var(--cs-accent); }
+.cs-result__value { margin: 18px 0 6px; font: 600 clamp(28px, 4vw, 38px)/1 var(--font-display); letter-spacing: -0.02em; }
+.cs-result__note { font-size: 14px; color: rgba(245, 242, 235, 0.65); }
+.cs-results__fine { max-width: 40em; margin: 20px auto 0; font-size: 12px; line-height: 1.5; color: rgba(245, 242, 235, 0.5); }
+@media (max-width: 720px) {
+  .cs-results { padding: 44px 16px; }
+  .cs-results__grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 22px; }
+  .cs-result { padding: 14px 12px; border-radius: 14px; }
+  .cs-result__top { font-size: 9px; letter-spacing: 0.12em; }
+  .cs-result__value { margin: 12px 0 4px; font-size: 24px; }
+  .cs-result__note { font-size: 11.5px; line-height: 1.35; }
+}
+
+/* Short-form video examples: a row of 9:16 frames; on phones a swipeable strip. */
+.cs-videos { background: var(--cs-dark); color: var(--cs-cream); padding: 64px 20px 8px; text-align: center; border-top: 1px solid rgba(245, 242, 235, 0.08); }
+.cs-videos h2 { margin: 0 auto; max-width: 14em; font: 600 clamp(28px, 5vw, 44px)/1.12 var(--font-display); letter-spacing: -0.02em; }
+.cs-videos__lede { max-width: 32em; margin: 14px auto 0; font-size: 16px; line-height: 1.6; color: rgba(245, 242, 235, 0.7); }
+.cs-videos__strip { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 1040px; margin: 32px auto 0; }
+.cs-video-card { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(245, 242, 235, 0.12); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); }
+.cs-video-card img { display: block; width: 100%; height: auto; }
+.cs-video-card__kind { position: absolute; left: 8px; bottom: 8px; padding: 5px 9px; border-radius: 999px; background: rgba(0, 0, 0, 0.7); font: 600 10px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+@media (max-width: 720px) {
+  .cs-videos { padding: 44px 0 4px; }
+  .cs-videos h2, .cs-videos__lede, .cs-videos .cs-results__fine { padding: 0 16px; }
+  .cs-videos__lede { font-size: 14px; }
+  .cs-videos__strip { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 16px 8px; margin-top: 22px; scrollbar-width: none; }
+  .cs-videos__strip::-webkit-scrollbar { display: none; }
+  .cs-video-card { flex: 0 0 42%; scroll-snap-align: start; border-radius: 12px; }
+}
