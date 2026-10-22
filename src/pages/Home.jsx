@@ -6,7 +6,7 @@ import Card from '../components/surfaces/Card';
 import { EnvelopeSimple, ArrowsClockwise } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { SITE, BLOG_BASE, pathForPage } from '../lib/seo';
-import { REFERENCES } from '../lib/references';
+import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 
 const Wrap = ({ children, style, className }) => (
@@ -108,20 +108,42 @@ function VoiceBotSection() {
   );
 }
 
+// Client logos as small chips; names without a logo fall back to text.
+const tickerItems = [
+  ...REFERENCES.map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name]?.ticker })),
+  ...CLIENT_WORDMARKS.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
+];
+
 function ReferencesTicker() {
   const es = useLang() === 'es';
-  const items = [...REFERENCES, ...REFERENCES];
+  // Great Vibes for the script client name.
+  React.useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, []);
   return (
     <div className="ll-ticker-bar" role="region" aria-label={es ? 'Clientes seleccionados' : 'Selected clients'}>
       <div className="ll-ticker-label"><span className="ll-ticker-live" aria-hidden="true" />{es ? 'En buena compañía' : 'In good company'}</div>
       <div className="ll-ticker-belt">
         <div className="ll-ticker-track">
-          {items.map((name, i) => (
-            <React.Fragment key={i}>
-              <span className="ll-ticker-ref">{name}</span>
+          {[0, 1].map((copy) => tickerItems.map((item) => (
+            <React.Fragment key={`${copy}-${item.name}`}>
+              {item.src ? (
+                <span className={`ll-ticker-logo${item.dark ? ' ll-ticker-logo--dark' : ''}${item.chip ? ' ll-ticker-logo--chip' : ''}${item.fill ? ' ll-ticker-logo--fill' : ''}`} aria-hidden={copy === 1 || undefined}>
+                  <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" />
+                  {item.caption && <span className="ll-ticker-logo__cap">{item.caption}</span>}
+                </span>
+              ) : item.wordmark ? (
+                <span className="ll-ticker-logo ll-ticker-logo--dark ll-ticker-logo--script" aria-hidden={copy === 1 || undefined}>{item.wordmark}</span>
+              ) : (
+                <span className="ll-ticker-ref" aria-hidden={copy === 1 || undefined}>{item.name}</span>
+              )}
               <span className="ll-ticker-sep" aria-hidden="true" />
             </React.Fragment>
-          ))}
+          )))}
         </div>
       </div>
     </div>
