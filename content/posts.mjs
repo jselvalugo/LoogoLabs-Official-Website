@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `tattoo-studio-design-approval-date-before-the-session`,
+    title: `The Deposit Holds the Chair. The Design Date Fills It`,
+    excerpt: `A tattoo studio can collect a deposit and still lose the session, because the drawing was never approved and the client quietly stopped answering.`,
+    tags: `Booking, No-Shows, Tattoo Studios`,
+    content: `A tattoo artist blocks a four-hour Saturday afternoon for a half sleeve. The client paid the deposit three weeks ago. On Thursday the artist still has not heard what the client thinks of the sketch, and on Saturday at two the chair sits empty. The deposit covers some of the loss. It does not cover the afternoon.
+
+I see this pattern in studios that think they have a no-show problem. Most of them have a different problem: the booking was complete on paper, but the design was never settled. A client who has not approved the drawing has not really committed to the day, and they know it before you do.
+
+## The deposit only proves one thing
+
+A deposit says the client was serious at the moment they paid. It says nothing about the next three weeks, when they are second-guessing the placement, waiting on a friend's opinion, or just busy.
+
+The step that actually predicts whether someone shows up is smaller and cheaper: have they looked at the final drawing and said yes? Until that happens, you have a held chair and an open question.
+
+So give the open question a date. When you take the deposit, tell the client in the same breath: "I'll send you the drawing five days before your session. I need a yes from you two days before to keep the day."
+
+## Put the approval on the calendar, not in the artist's head
+
+Artists are drawing, not chasing. If the approval depends on whoever remembers to check, it will be done for the clients who reply fast and skipped for the ones who go quiet, which is exactly backwards.
+
+Treat it as three dated steps tied to the session date:
+
+- **Five days before:** the artist's drawing goes out in a text or email, with one question: "Do you want this as drawn, or do you want one change?"
+- **Three days before:** if there is no reply, one short nudge saying you need a yes or a change by tomorrow night to keep the slot.
+- **Two days before:** the system checks for a reply and flags anyone who has not answered, so a person decides what happens next.
+
+Notice that the client can say yes with one word. If you make approval feel like homework, the people who most need to answer will be the ones who avoid it.
+
+## Decide what happens at the deadline
+
+This is the part owners skip, and it is why the nudges feel hollow. Decide in advance what a missed deadline means, and tell the client at booking.
+
+My suggestion: no answer by the deadline means the slot is released and the deposit moves to a rebooking within a window you name, say sixty days. Phrase it as a courtesy, not a penalty: "If I don't hear back, I'll give your day to someone on my list and we'll find you a new one."
+
+You may prefer a different rule, and that is fine. What matters is that the client heard it in advance and that you apply it the same way every time. A rule you enforce for some people and not others teaches everyone to ignore it.
+
+## Keep a standby list so a released slot is not a lost one
+
+Releasing a slot only helps if someone can take it. Keep a short list of people who said they could come in on short notice: a name, what they want done, and roughly how long it takes. When a day opens up, text three of them at once and give the first yes the slot.
+
+A big piece will not fit a short-notice day, and that is the limit of this. But small and mid-size work often does, and a four-hour hole filled with a two-hour job is still better than an empty afternoon.
+
+## Where this falls short
+
+It does not fix the person who approves the drawing and then does not show. For them the deposit and your rebooking rule are the protection. It also will not replace the conversation you have with a nervous first-timer. A text is fine for a clean yes. If someone replies "I'm not sure about the lettering," that should turn into a phone call from the artist, not another automated message.
+
+## Try this before your next consult
+
+Look at next week's calendar and, for each booked session, ask one question: has this client seen the final drawing and said yes? Count the ones who have not. Those are your real empty-chair risks, and none of them will look risky in the booking list.
+
+For the first one or two, send the drawing today with a deadline. Then write your released-slot rule down on one line, so you can add it to your next deposit conversation.`,
+  },
+  {
     slug: `real-estate-after-the-holidays-seller-call-booked`,
     title: `"After the Holidays" Is a Seller Lead. Put a Date on It`,
     excerpt: `A seller who says "after the holidays" has not said no, but unless a January call is booked before the conversation ends, you are one of three agents they half remember.`,
