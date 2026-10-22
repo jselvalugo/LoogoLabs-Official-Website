@@ -11,7 +11,9 @@ import { approvalEmail, emailList, sendEmail } from './crm-email.js';
 const q = (text, params = []) => db().sql.unsafe(text, params);
 const shareToken = () => randomBytes(24).toString('base64url');
 
-export const APPROVAL_STATUSES = ['pending', 'changes_requested', 'approved'];
+export const APPROVAL_STATUSES = ['pending', 'changes_requested', 'approved', 'rejected'];
+// Approved and rejected items are closed; everything else still needs a decision.
+const CLOSED = "('approved', 'rejected')";
 export const APPROVAL_KINDS = ['video', 'draft', 'image', 'other'];
 
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
@@ -67,7 +69,7 @@ export async function listClients(inst) {
     SELECT c.id AS company_id, c.name, c.type,
       p.id AS portal_id, p.display_name, p.brand_color, p.logo_url, p.monthly_fee, p.share_token, p.active,
       (SELECT max(period) FROM crm_client_metrics m WHERE m.company_id = c.id) AS last_period,
-      (SELECT count(*)::int FROM crm_approvals a WHERE a.company_id = c.id AND a.status <> 'approved') AS open_approvals,
+      (SELECT count(*)::int FROM crm_approvals a WHERE a.company_id = c.id AND a.status NOT IN ${CLOSED}) AS open_approvals,
       (SELECT count(*)::int FROM crm_recaps r WHERE r.company_id = c.id) AS recaps
     FROM crm_companies c
     LEFT JOIN crm_client_portals p ON p.company_id = c.id
@@ -135,7 +137,7 @@ export async function listApprovals(inst, { company_id, status } = {}) {
   const params = [inst];
   let where = 'a.instance_id = $1';
   if (company_id) { params.push(needId(company_id, 'company_id')); where += ` AND a.company_id = $${params.length}`; }
-  if (status === 'open') where += " AND a.status <> 'approved'";
+  if (status === 'open') where += ` AND a.status NOT IN ${CLOSED}`;
   else if (APPROVAL_STATUSES.includes(status)) { params.push(status); where += ` AND a.status = $${params.length}`; }
   const rows = await q(`
     SELECT a.*, c.name AS company_name,
@@ -209,6 +211,25 @@ export async function teamComment(inst, id, v, me) {
     VALUES ($1, $2, $3, false, $4, $5) RETURNING *`, [a.id, version, me.name || me.email, ts, body]);
   await q('UPDATE crm_approvals SET updated_at = now() WHERE id = $1', [a.id]);
   return commentRow(row);
+}
+
+// A team member approves or rejects an item from the CRM. The decision is stamped
+// with their name and the time, kept on the item and on the client's timeline.
+export async function teamDecision(inst, id, v, me) {
+  const a = await approvalFor(inst, id);
+  const decision = v.decision === 'approved' ? 'approved' : v.decision === 'rejected' ? 'rejected' : null;
+  if (!decision) throw new CrmError('Unknown decision');
+  const note = str(v.note, 4000);
+  const name = me.name || me.email;
+  const [row] = await q(`UPDATE crm_approvals SET status = $2, decided_at = now(), decided_by = $3, updated_at = now()
+    WHERE id = $1 RETURNING *`, [a.id, decision, name]);
+  const verb = decision === 'approved' ? 'Approved' : 'Rejected';
+  if (note) {
+    await q(`INSERT INTO crm_approval_comments (approval_id, version, author, from_client, body) VALUES ($1, $2, $3, false, $4)`,
+      [a.id, a.version, name, `${verb}: ${note}`]);
+  }
+  await logOnCompany(inst, a.company_id, `${verb} by ${name}: ${a.title} (v${a.version})`, note || null, { userId: me.id });
+  return approvalRow(row);
 }
 
 export async function resolveComment(inst, commentId, resolved) {

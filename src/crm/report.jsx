@@ -7,6 +7,8 @@ export const money = (n) => (n === null || n === undefined || n === '' ? '' : `$
 export const money2 = (n) => (Number.isFinite(n) ? `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—');
 export const count = (n) => Math.round(Number(n) || 0).toLocaleString('en-US');
 export const pct = (n) => (Number.isFinite(n) ? `${(n * 100).toFixed(1)}%` : '—');
+// Date and time, for decisions: "Oct 22, 2026, 3:14 PM".
+export const stamp = (d) => (d ? new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '');
 export const day = (d) => (d ? new Date(`${String(d).slice(0, 10)}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '');
 export const when = (d) => new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 export const monthLabel = (ym) => new Date(`${ym}-15T12:00:00`).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
@@ -193,6 +195,7 @@ export const APPROVAL_STATUS = {
   pending: 'Awaiting review',
   changes_requested: 'Changes requested',
   approved: 'Approved',
+  rejected: 'Rejected',
 };
 export const StatusPill = ({ status }) => <span className={`pill ${status}`}>{APPROVAL_STATUS[status] || status}</span>;
 

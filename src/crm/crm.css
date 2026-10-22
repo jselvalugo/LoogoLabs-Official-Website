@@ -149,6 +149,7 @@ table.static tbody tr { cursor: default; }
 .pill.approved { background: #E7F3EA; border-color: #BFE0C7; }
 .pill.changes_requested { background: #FDF0DD; border-color: #F1D3A3; }
 .pill.pending { background: #E9EEF8; border-color: #C9D5EC; }
+.pill.rejected { background: #F6E9E7; border-color: #EBC9C4; }
 .done-note { opacity: .6; }
 .ts { border: 1px solid var(--line); background: var(--field); border-radius: 6px; padding: 1px 7px; font-size: 12px; font-variant-numeric: tabular-nums; cursor: pointer; }
 .media { display: block; width: 100%; max-height: 420px; border-radius: 12px; background: #000; object-fit: contain; }
