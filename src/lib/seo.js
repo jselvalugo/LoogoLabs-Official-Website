@@ -209,7 +209,7 @@ export const ROUTES = [
       'Marketing and ads strategy for SaaS brands and creators: positioning, go-to-market, paid ads and a 90-day growth plan. Book a free strategy call.',
     priority: '0.1',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
+    image: '/og-image-consulting.jpg',
     unlisted: true,
   },
   {
