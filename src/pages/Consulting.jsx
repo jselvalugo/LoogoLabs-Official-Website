@@ -155,6 +155,7 @@ export default function Consulting() {
             </div>
           ))}
         </div>
+        <p className="cs-roas"><span className="cs-roas__tag">ROAS</span><span>We measure your return on ad spend <strong>to the last cent.</strong></span></p>
         {/* Reviews block: hidden on phones (see consulting.css). */}
         <div className="cs-reviews-block">
           <Link />

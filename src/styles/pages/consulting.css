@@ -253,3 +253,13 @@
   .cs-proof__tile--fill { padding: 0; overflow: hidden; }
   .cs-proof__tile--fill img { width: 100%; max-height: none; }
 }
+
+/* ROAS callout under the service cards. */
+.cs-roas { display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 760px; margin: 14px auto 0; padding: 14px 18px;
+  border-radius: 16px; background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 10px 24px rgba(26, 38, 16, 0.08);
+  font-size: 16px; color: var(--ink-800); text-align: left; }
+.cs-roas strong { color: var(--cs-accent); }
+.cs-roas__tag { flex: none; padding: 6px 10px; border-radius: 8px; background: var(--cs-dark); color: var(--cs-accent); font: 700 12px/1 var(--font-body); letter-spacing: 0.14em; }
+@media (max-width: 720px) {
+  .cs-roas { margin-top: 10px; padding: 12px 14px; font-size: 14px; gap: 10px; border-radius: 14px; }
+}
