@@ -6,7 +6,9 @@ export const REFERENCES = ['Feche Consulting', 'Reef Ntwrks', 'Lugo’s Craft Di
 export const CLIENT_LOGOS = {
   'Feche Consulting': { src: '/clients/feche-consulting.jpg', w: 600, h: 187 },
   'Riel Compliance Suite': { src: '/clients/riel-compliance-suite.jpg', w: 600, h: 181, chip: true },
-  'Lugo’s Craft Distillery': { src: '/blog/lugos-craft-logo-on-dark.png', w: 640, h: 624, dark: true },
+  'Lugo’s Craft Distillery': { src: '/blog/lugos-craft-logo-on-dark.png', w: 640, h: 624, dark: true,
+    // Wordmark only, for the small homepage ticker where the full logo would be unreadable.
+    ticker: { src: '/clients/lugos-craft-wordmark.png', w: 640, h: 263 } },
   'Reef Ntwrks': { src: '/clients/reef-consulting.png', w: 242, h: 116 },
   'Pronomy.io': { src: '/clients/pronomy.jpg', w: 480, h: 480, dark: true, caption: 'Pronomy.io' },
   'Geros Studio': { src: '/clients/geros-studio.jpg', w: 600, h: 220, fill: true },

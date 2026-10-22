@@ -1045,6 +1045,19 @@ p a:hover, dd a:hover, blockquote a:hover, .ll-prose a:hover { text-decoration-c
   letter-spacing: -0.01em !important; font-size: 17px !important; font-weight: 600 !important; }
 .ll-ticker-sep { background: var(--ink-300) !important; border-radius: 50%; transform: none !important; }
 
+/* Logo chips in the ticker: small, but each sits on its own background so it stays legible. */
+.ll-ticker-logo { flex: none; display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 10px;
+  background: #fff; box-shadow: inset 0 0 0 1px rgba(26, 38, 16, 0.1); white-space: nowrap; }
+.ll-ticker-logo img { display: block; height: 26px; width: auto; }
+.ll-ticker-logo--dark { background: #000; }
+.ll-ticker-logo--dark img { height: 36px; }
+.ll-ticker-logo--chip { background: #0e1d34; }
+.ll-ticker-logo--fill { padding: 0; overflow: hidden; }
+.ll-ticker-logo--fill img { height: 40px; }
+.ll-ticker-logo__cap { font: 600 11px/1 var(--font-body); letter-spacing: 0.04em; color: #F5F2EB; }
+.ll-ticker-logo--script { font: 400 22px/1 'Great Vibes', cursive; color: #F6D37A; padding: 0 14px; }
+.ll-ticker-bar .ll-ticker-sep { margin: 0 14px; }
+
 @media (prefers-reduced-transparency: reduce) {
   .ll-glass { background: rgba(250, 248, 243, 0.97); -webkit-backdrop-filter: none; backdrop-filter: none; }
   .ll-glass--dark { background: var(--ink-800); -webkit-backdrop-filter: none; backdrop-filter: none; }
