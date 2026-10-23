@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `plumber-shutoff-valve-photo-before-first-freeze`,
+    title: `Your Burst-Pipe Call Starts With "Where's Your Shutoff?"`,
+    excerpt: `The first twenty minutes of a burst-pipe call are spent finding a valve, and a text sent in November can make that call take two.`,
+    tags: `Plumbing, Seasonal Prep, Customer Communication`,
+    content: `The phone rings at 5:40 on a freezing Sunday morning. A homeowner is standing in a basement with water coming off the ceiling, and your first question is the same as always: "Do you know where your main shutoff is?" The honest answer is usually no. So you spend the first twenty minutes of an emergency walking someone through a house you have never seen, while the water keeps running.
+
+I would rather you spent those twenty minutes on the truck. This is a problem you can mostly solve in November, with one text.
+
+## The call you already know how to run
+
+Think about what a good emergency call sounds like on your end. You ask where the water comes into the house. You ask whether there is a wheel handle or a lever. You ask them to look behind the water heater, under the stairs, inside a closet, in the crawlspace. The customer is panicking, the flashlight on their phone is dying, and half the time the valve is stuck or buried behind boxes.
+
+Every minute of that is damage. It is also a bad first impression for a customer who is about to decide whether you are the plumber they call every time.
+
+## One text, sent in early November
+
+Pick the customers you have served in the last two or three years. Send them a short text from the shop's number:
+
+> Hi Dana, it's the team at Ridgeline Plumbing. Before the first hard freeze, can you do one thing for us? Find your main water shutoff, take a photo of it, and reply with the picture. If you can't find it, reply FIND and we'll tell you where to look on your next visit.
+
+That is the whole message. (Ridgeline is invented, so use your own name.) Keep it to two sentences if you can. No discount, no pitch. It reads as a plumber looking out for a customer, because it is.
+
+## What happens to the replies
+
+This is where the system matters. When a photo comes back, the platform attaches it to that customer's record, and you add a tag, something like \`shutoff-on-file\`. Now when that customer calls in a panic, the person answering opens the record, sees the photo, and says: "It's the lever behind the water heater, I'm looking at it right now. Turn it so the handle sits across the pipe."
+
+The customers who reply FIND get a different tag. Those are the jobs where your tech, on the next visit, spends two minutes pointing at the valve and takes the photo themselves. Nobody has to be sold anything for that to happen.
+
+## Where this breaks
+
+I will be straight about the limits. Not everyone replies, and I am not going to guess at a percentage because it depends on your list and how well people know you. Some photos will be blurry or of the wrong valve. A tenant does not know the answer, and a landlord may not either.
+
+Photos also get stale. A remodel or a replaced meter can move a shutoff. That is why the message only goes to recent customers, and why the tag should carry the year.
+
+And the photo does not replace a person. If the water is already everywhere, someone still needs to be on the phone, calm, giving one instruction at a time.
+
+## Why this is a November job
+
+Pipes do not burst on a schedule, but the calls bunch up in the first stretch of hard cold, and that is when your phone is already full. A text in November arrives while people are thinking about the holidays and still have time to go look. In January it arrives into a crisis.
+
+It also gives you a reason to be in their phone before the emergency, which is when they pick a plumber.
+
+## Your Tuesday test
+
+Open your customer list and pick five households you served last year. For each one, ask whether the person answering your phone tonight could tell them where their main shutoff is. If the answer is no for most of them, send the text to that list this week, and add the tag so you can see who has replied.
+`,
+  },
+  {
     slug: `tattoo-studio-design-approval-date-before-the-session`,
     title: `The Deposit Holds the Chair. The Design Date Fills It`,
     excerpt: `A tattoo studio can collect a deposit and still lose the session, because the drawing was never approved and the client quietly stopped answering.`,
