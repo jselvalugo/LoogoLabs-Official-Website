@@ -1,5 +1,5 @@
 import { db } from './crm.js';
-import { newLeadEmail, sendEmail } from './crm-email.js';
+import { alertRecipients, newLeadEmail, sendEmail } from './crm-email.js';
 
 // Copies a website form lead (a row just written to `leads`) into the CRM
 // instance chosen to receive website leads, if there is one. Called by the
@@ -13,12 +13,11 @@ export async function copyWebsiteLead(lead) {
   await alertNewLead(lead);
 }
 
-// Emails the team a branded new-lead alert (LEAD_ALERT_TO, comma-separated).
+// Emails a branded new-lead alert to alertRecipients() (ALERT_TO, comma-separated).
 // Like the CRM copy, it must never fail the form.
 async function alertNewLead(lead) {
   try {
-    const to = (process.env.LEAD_ALERT_TO || 'david@loogolabs.com').split(',').map((x) => x.trim()).filter(Boolean);
-    await sendEmail({ to, replyTo: lead.email, ...newLeadEmail(lead) });
+    await sendEmail({ to: alertRecipients(), replyTo: lead.email, ...newLeadEmail(lead) });
   } catch (err) {
     console.error('Could not email the new lead alert', err);
   }

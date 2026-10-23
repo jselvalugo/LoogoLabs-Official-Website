@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { db } from './crm.js';
 import { CrmError, needId } from './crm-records.js';
-import { approvalEmail, emailList, sendEmail } from './crm-email.js';
+import { alertRecipients, approvalEmail, emailList, portalActivityEmail, sendEmail } from './crm-email.js';
 
 // Client retention & reporting: white-labeled performance dashboards, content
 // approvals and campaign recaps. Team-side calls are scoped to the signed-in
@@ -370,6 +370,7 @@ export async function clientComment(token, id, v) {
     VALUES ($1, $2, $3, true, $4, $5) RETURNING *`, [a.id, version, author, ts, body]);
   await q('UPDATE crm_approvals SET updated_at = now() WHERE id = $1', [a.id]);
   await logOnCompany(p.instance_id, p.company_id, `Client comment on ${a.title}`, `${author}: ${body}`, { label: `${author} (client portal)` });
+  await alertPortalActivity(p, a, { event: 'comment', author, body, version, timestampSec: ts });
   return publicComment(row);
 }
 
@@ -389,7 +390,19 @@ export async function clientDecision(token, id, v) {
   await logOnCompany(p.instance_id, p.company_id,
     `${decision === 'approved' ? 'Client approved' : 'Client requested changes on'} ${a.title} (v${a.version})`,
     note || null, { label: `${author} (client portal)` });
+  await alertPortalActivity(p, a, { event: decision, author, body: note || null, version: a.version });
   return publicApproval(row);
+}
+
+// Emails the team an automated alert about client portal activity. It must
+// never fail the client's request, so errors are logged and swallowed.
+async function alertPortalActivity(p, a, v) {
+  try {
+    const email = portalActivityEmail({ clientName: p.display_name || p.company_name, title: a.title, ...v });
+    await sendEmail({ to: alertRecipients(), ...email });
+  } catch (err) {
+    console.error('Could not email the portal activity alert', err);
+  }
 }
 
 export async function recapView(token) {
