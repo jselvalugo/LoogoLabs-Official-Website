@@ -11,6 +11,58 @@
 
 export const posts = [
   {
+    slug: `dance-studio-costume-fee-stated-at-signup`,
+    title: `Say the Costume Fee at Signup, Not the Week It Posts`,
+    excerpt: `A family can agree to your tuition and still leave over a costume charge that landed on their card with no warning.`,
+    tags: `Dance Studios, Fees, Parent Communication`,
+    content: `A mother signs her daughter up for two classes in September. She pays the registration fee, sets up monthly tuition, and feels good about it. In November a charge shows up on her card with the word "costume" next to it, and it is bigger than a month of tuition. She did not know it was coming. By December she has emailed you a polite question, and by January her daughter is "taking a break."
+
+I doubt you lost her over the price. You lost her over the surprise.
+
+## The fee was always there
+
+Every studio owner knows costumes cost money. You know the number, the parents have heard something vague about it, and everybody assumes it was covered in the welcome packet. It was, on page three, in the paragraph nobody read.
+
+So the fee is not hidden, exactly. It is just never said out loud at the moment a parent can still say yes or no with a clear head. That is the whole problem, and it is cheaper to fix than most things on your list.
+
+## Say it once, at signup, in numbers
+
+When a family registers, the confirmation message should carry the total for the year, not only the monthly figure. Something like this:
+
+> Hi Maria, you're set for Tuesday Ballet 1 and Saturday Jazz 1. Tuition is $X a month. Costumes are a separate one-time charge for each class: $Y for ballet and $Z for jazz, billed in November. Reply QUESTION if you'd like to talk it through before the first class.
+
+Those letters are placeholders. Put your real numbers in, and put the month in. If a family takes three classes, three costume lines should appear, because that is what their card will show.
+
+Say the amount per class, not "costumes vary." A parent can plan around a number. She cannot plan around "varies."
+
+## Say it again before it posts
+
+A fee mentioned in September is forgotten by November. Not because parents are careless, but because September was eleven weeks ago and they have gotten a school calendar, a soccer schedule and three other registrations since.
+
+Set a second text to go out about two weeks before the charge date. Pull the amount from that family's own record, so the message says what *they* owe, not a studio-wide range:
+
+> Hi Maria, a quick note before it surprises you: the costume charge of $Y for Tuesday Ballet 1 goes on your card on November 8. If anything about that is a problem, reply and I'll call you.
+
+Notice the last line. A parent who is going to be upset will be upset either way. This way she tells you two weeks early, to your phone, and not on the day it posts.
+
+## Who reads the replies
+
+This part is easy to build and then ignore. If someone replies with a worry, a person needs to call within a day. A reminder text with no human behind it is worse than silence, because it invites a conversation and then leaves the parent hanging.
+
+I would also tag any family that replies with concern, so that on the first week of November you can see in one list who needs a call. For a small studio that is a handful of names, not a project.
+
+## Where this will not work
+
+It will not save every family. Some are in a tight month and a costume charge hurts however early they hear about it. For those, a phone call about splitting the charge into two dates is a better answer than a text. I would offer that on the call, not in the text, so you do not train everyone to ask.
+
+And I cannot tell you how many families you will keep. That depends on how much of your attrition is really about the fee. Some of it is about schedule or a teacher change. What you can do is look at it honestly: of last year's families who stopped between November and January, how many wrote anything about the costume charge?
+
+## Do this by Friday
+
+Pull up the registration confirmation your studio sends today, and read it as a parent would. If it does not show the costume charge per class and the month it is billed, add one sentence with both. Then put a reminder on your calendar for two weeks before the charge date, to send the second text.
+`,
+  },
+  {
     slug: `plumber-shutoff-valve-photo-before-first-freeze`,
     title: `Your Burst-Pipe Call Starts With "Where's Your Shutoff?"`,
     excerpt: `The first twenty minutes of a burst-pipe call are spent finding a valve, and a text sent in November can make that call take two.`,
