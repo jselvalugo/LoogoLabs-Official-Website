@@ -104,13 +104,10 @@ function ApprovalList({ items, onOpen }) {
   );
 }
 
-const NAME_KEY = 'll_portal_name';
-const savedName = () => { try { return localStorage.getItem(NAME_KEY) || ''; } catch { return ''; } };
-
 function ApprovalView({ token, id, onBack }) {
   const [item, setItem] = React.useState(null);
   const [error, setError] = React.useState('');
-  const [name, setName] = React.useState(savedName);
+  const [name, setName] = React.useState('');
   const [body, setBody] = React.useState('');
   const [at, setAt] = React.useState('');
   const [deciding, setDeciding] = React.useState(null); // 'approved' | 'changes_requested'
@@ -119,7 +116,6 @@ function ApprovalView({ token, id, onBack }) {
   const video = React.useRef(null);
 
   React.useEffect(() => { share('approval', { token, id }).then(setItem).catch((e) => setError(e.message)); }, [token, id]);
-  const remember = () => { try { localStorage.setItem(NAME_KEY, name); } catch { /* private mode */ } };
 
   if (error && !item) return <p className="error">{error}</p>;
   if (!item) return <p className="muted">Loading…</p>;
@@ -134,7 +130,6 @@ function ApprovalView({ token, id, onBack }) {
     setBusy(true);
     try {
       const c = await share('comment', { token, id, values: { author: name, body, timestamp_sec: ts } });
-      remember();
       setItem((p) => ({ ...p, comments: [...p.comments, c] }));
       setBody(''); setAt('');
     } catch (err) { setError(err.message); }
@@ -146,7 +141,6 @@ function ApprovalView({ token, id, onBack }) {
     setError(''); setBusy(true);
     try {
       const row = await share('decide', { token, id, values: { author: name, decision: deciding, note } });
-      remember();
       const fresh = await share('approval', { token, id });
       setItem({ ...fresh, ...row });
       setDeciding(null); setNote('');
@@ -175,7 +169,7 @@ function ApprovalView({ token, id, onBack }) {
             <form onSubmit={decide}>
               <strong>{deciding === 'approved' ? 'Approve this version' : 'Request changes'}</strong>
               <label className="label" htmlFor="d-name">Your name *</label>
-              <input id="d-name" className="field" required value={name} onChange={(e) => setName(e.target.value)} />
+              <input id="d-name" className="field" placeholder="e.g. Jane Smith" autoComplete="off" required value={name} onChange={(e) => setName(e.target.value)} />
               <label className="label" htmlFor="d-note">{deciding === 'approved' ? 'Anything to add? (optional)' : 'What should change? *'}</label>
               <textarea id="d-note" className="field" rows={3} required={deciding !== 'approved'} value={note} onChange={(e) => setNote(e.target.value)} />
               <div className="actions">
@@ -196,7 +190,7 @@ function ApprovalView({ token, id, onBack }) {
       <div className="section">Comments</div>
       <Comments comments={item.comments} version={item.version} onSeek={seekable ? seek : undefined} />
       <form onSubmit={comment} className="composer card pad" style={{ marginTop: 12 }}>
-        <input className="field" placeholder="Your name" aria-label="Your name" required value={name} onChange={(e) => setName(e.target.value)} />
+        <input className="field" placeholder="Your name" aria-label="Your name" autoComplete="off" required value={name} onChange={(e) => setName(e.target.value)} />
         <textarea className="field" rows={3} placeholder={seekable ? 'Pause the video where you want a change, then comment…' : 'Leave a comment…'} aria-label="Comment" required value={body}
           onFocus={() => { if (seekable && !at && video.current?.currentTime) setAt(clock(video.current.currentTime)); }}
           onChange={(e) => setBody(e.target.value)} />
