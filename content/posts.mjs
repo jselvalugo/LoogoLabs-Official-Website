@@ -11,6 +11,45 @@
 
 export const posts = [
   {
+    slug: `electrician-holiday-lights-reserved-service-block`,
+    title: `Hold Back a December Block Before the Lights Go Up`,
+    excerpt: `Most electricians sell out of service slots by the first week of December, so the porch outlet that dies with the lights on it waits behind everything else.`,
+    tags: `Seasonal Booking, Capacity Planning, Electricians`,
+    content: `If your crew can finish four service calls a day, the first two weeks of December hold about forty slots. Fill thirty of them with panel upgrades and remodel rough-ins that were booked in October, and you have ten left for a season that produces more small calls than any other. Those ten disappear by the second Monday.
+
+The calls are predictable. An outdoor outlet that worked all summer is dead the night the lights go up. A breaker trips every time the tree and the space heater run together. A homeowner wants a second plug on the garage ceiling for the inflatable. None of it is a big job, and all of it is urgent in the customer's mind, because the lights are already on the roof.
+
+## Why a full calendar makes this worse
+
+A full schedule feels like a good problem. Then the porch-outlet caller hears "we can get you in on the 19th," and she hires whoever can come Thursday. You did not lose her over price or skill. You lost her because the only open time was after the thing she needed it for.
+
+The large jobs booked in October were never going to be moved. The mistake is letting them take every slot, because nothing was set aside for the small calls you already know are coming.
+
+## Reserve the block, then sell it on purpose
+
+Pick three or four half-days between the first of December and the twentieth and mark them as held. Not open, held. They do not appear on your online booking page as ordinary service time, and your office does not give them to the first caller who asks about a ceiling fan.
+
+Then use them deliberately. In the first week of November, text customers you served in the past two years, especially anyone whose job involved an outdoor outlet, a new circuit, or a panel. Keep it short:
+
+> Hi Maria, it's David at the shop. If your holiday lights ever trip a breaker or an outside outlet quits, reply LIGHTS and I'll hold you a spot in our December check-in days before the schedule fills. Nothing to do if all is well.
+
+When someone replies, the system tags them, sends a booking link limited to the held days, and puts the job on the calendar. You are selling a visit before the problem exists, which is easier than apologizing for a wait after it does.
+
+## Handle the scary texts differently
+
+Some replies in December are not about convenience. "It smells like burning" or "the outlet is hot" should never wait in a booking queue. Set a short list of words that skips the automation entirely: the customer gets an immediate text telling them to turn off that breaker and call emergency services if there is smoke, and a person at your shop gets a ringing call to follow up. I would rather over-trigger that list than miss one.
+
+## Where this falls short
+
+A held block only works if you actually protect it. If a large job gets slid into it in November because the client was pushy, you are back where you started and the customers who replied LIGHTS are the ones who get bumped. Decide now who is allowed to release a held day, and the answer should be one person.
+
+It also will not make you busier in a slow December. If your calendar is already half empty, this is just a tidy way to book what you would have got anyway. The idea is for shops that sell out.
+
+## Your move this week
+
+Open your December calendar and count the open service slots from the first through the twentieth. If you have fewer than eight, pick three half-days and block them today, then write the November text before you do anything else with the list.`,
+  },
+  {
     slug: `dance-studio-costume-fee-stated-at-signup`,
     title: `Say the Costume Fee at Signup, Not the Week It Posts`,
     excerpt: `A family can agree to your tuition and still leave over a costume charge that landed on their card with no warning.`,
