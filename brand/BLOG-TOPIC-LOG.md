@@ -97,3 +97,5 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-22 | tattoo-studio-design-approval-date-before-the-session | Tattoo studios | Session booking — dated design-approval steps (drawing sent five days out, nudge at three, check at two), stated released-slot rule, standby list for short-notice openings
 - 2026-10-23 | plumber-shutoff-valve-photo-before-first-freeze | Plumbing | Pre-freeze prep — November text asking recent customers for a photo of their main shutoff, filed to the record with a tag, FIND reply for a tech-visit photo
 - 2026-10-23 | dance-studio-costume-fee-stated-at-signup | Dance studios | Fees — per-class costume charge and billing month stated in the signup confirmation, second text with the family's own amount two weeks before it posts, tagged concern replies get a call
+
+- 2026-10-24 | electrician-holiday-lights-reserved-service-block | Electricians | Seasonal booking — December service slots held back for holiday-lights calls, early-November LIGHTS reply text to past customers, urgent-word list skips the queue, one person allowed to release held days
