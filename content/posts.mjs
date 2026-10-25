@@ -11,6 +11,47 @@
 
 export const posts = [
   {
+    slug: `tire-shop-winter-swap-week-text-before-first-snow`,
+    title: `Text Last Year's Swap Customers Before the First Snow`,
+    excerpt: `Every driver who needs winter tires calls on the same morning, so the shop that offers a swap week in early November fills its calendar before the weather does.`,
+    tags: `Seasonal Booking, Customer Outreach, Tire Shops`,
+    content: `The first real snow lands on a Tuesday night, and by Wednesday at eight your phone has rung forty times. Every caller wants winter tires on today. You have six bays, two techs who called in the same cold, and a waiting list you are writing on the back of a work order. By Friday you have disappointed thirty people, and a few of them have already driven to the shop down the road.
+
+If you run a tire shop, you know this week. You also know it is not a surprise. It comes every year, on a date nobody can name, and it hits every customer at once because snow is the only reminder they ever get.
+
+## You already have the list
+
+Last winter you swapped a few hundred cars. Each one is in your system with a name, a phone number, a vehicle and a date. Those drivers will need the same swap again, and most of them will remember it only when the road turns white. Waiting for that moment means competing with every other shop for the same morning.
+
+The fix is to ask early, while the weather is still ordinary. Pull the list of everyone you swapped or stored tires for last season. In the first week of November, send each of them one text:
+
+> Hi Dana, it's the tire shop. Winter swap booking is open. Pick a week and we'll text you two times that fit: reply 1 for Nov 9–13, 2 for Nov 16–20, 3 for Nov 23–27. Reply LATER and we'll check in after Thanksgiving.
+
+Keep it that short. It names the shop, says what is open, gives three choices and one way out.
+
+## Why three weeks instead of a date
+
+Asking for an exact time in the first text makes people stall, because nobody knows their schedule that precisely. A week is easy to answer from a phone in a parking lot. Once someone replies 2, you send the follow-up with two real times in that week and let them tap one. That is two small decisions instead of one big one, and each takes ten seconds.
+
+It also spreads the load. If you sell tires, you know that a bay full of swaps on Monday and a dead Thursday costs the same payroll as a smooth week. Three windows push the work across November without you rearranging anything by hand.
+
+## Protect the days you cannot predict
+
+Do not give away every slot. A swap week is a promise to the people who answered, but the first snow will still bring customers who never read the text, plus the driver whose tire just failed. Hold back a couple of bays each day through the end of the month for walk-ins and flats, and write that rule down so the front desk does not fill them out of kindness.
+
+Then decide one thing before the text goes out: what happens when the snow arrives early. Say you pick the week of the 9th, and a storm hits on the 4th. Booked customers keep their time. Everyone who replied LATER, and everyone who stayed silent, goes on a first-come list ordered by the date they replied. Having the order settled in advance is what keeps the phone calls short.
+
+## What the text will not do
+
+I would not promise that every customer answers. Some will not, and some will buy tires from a competitor regardless. What changes is the size of the wave. The people who replied are no longer in it, so the morning of the first snow becomes a smaller, quieter version of the one you dread.
+
+Reading the replies matters too. A reply of 1 or 2 is a booking in progress. A silent number after a week deserves one gentle nudge, not a stream. A customer who says LATER has told you something real, and you should honor it by checking back exactly when you said you would.
+
+## This week
+
+Open your system and filter for every customer you swapped or stored tires for last winter. Count them, then count how many swap slots you can actually give in the three weeks after the first of November. If the first number is bigger than the second, you know how much of the rush has to be spread out, and you know it before the snow tells you.`,
+  },
+  {
     slug: `electrician-holiday-lights-reserved-service-block`,
     title: `Hold Back a December Block Before the Lights Go Up`,
     excerpt: `Most electricians sell out of service slots by the first week of December, so the porch outlet that dies with the lights on it waits behind everything else.`,

@@ -99,3 +99,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 - 2026-10-23 | dance-studio-costume-fee-stated-at-signup | Dance studios | Fees — per-class costume charge and billing month stated in the signup confirmation, second text with the family's own amount two weeks before it posts, tagged concern replies get a call
 
 - 2026-10-24 | electrician-holiday-lights-reserved-service-block | Electricians | Seasonal booking — December service slots held back for holiday-lights calls, early-November LIGHTS reply text to past customers, urgent-word list skips the queue, one person allowed to release held days
+- 2026-10-25 | tire-shop-winter-swap-week-text-before-first-snow | Tire shops | Seasonal booking — early-November text to last winter's swap customers offering three swap weeks (reply 1/2/3 or LATER), two-time follow-up, held walk-in bays, first-come order for early snow
