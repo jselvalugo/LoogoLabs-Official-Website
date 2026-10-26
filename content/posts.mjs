@@ -11,6 +11,60 @@
 
 export const posts = [
   {
+    slug: `counseling-practice-holiday-weeks-skip-dates-in-october`,
+    title: `Ask Standing Clients Which Holiday Weeks They'll Miss`,
+    excerpt: `A standing Tuesday at four turns into an empty hour the day before Thanksgiving, but only if you find out about the trip the day before.`,
+    tags: `Scheduling, Holiday Planning, Counseling Practices`,
+    content: `On the Monday before Thanksgiving, three clients cancel for Tuesday. One is driving to her sister's. One has a flight he booked in September. One just says the week got away from her. You have no one to offer those hours to, because it is the day before, and the person on your waiting list has already made plans too.
+
+None of those clients was careless. Each one knew weeks ago. You just never asked.
+
+## Standing appointments hide the calendar
+
+A weekly client holds a slot, and the slot feels permanent, so nobody on either side thinks about it until something collides with it. The client knows about the trip. You do not. The information exists, it just lives in their head and their family group chat.
+
+By December this gets worse, because there are more collisions: Thanksgiving week, two weeks around the 25th, New Year's. A client with a full-time job and two kids might miss three or four sessions in six weeks, and every one of them is announced late.
+
+## Ask in October, when it costs them nothing
+
+The cheapest moment to learn about a skipped week is before the client has made any decision to cancel, because then it is not a cancellation. It is a calendar question.
+
+Around the last week of October, text every standing client one message:
+
+> Hi Marcus, I'm putting together the holiday calendar. Which of these weeks will you miss? Reply with any of: Nov 23, Nov 30, Dec 21, Dec 28. Reply NONE if you'll be here for all of them.
+
+Name the weeks yourself. A client asked "do you have any plans?" will answer "not sure yet." A client shown four dates can answer in ten seconds from their phone.
+
+Keep the text free of anything clinical. It says nothing about what the appointment is for. Anyone glancing at a lock screen should learn only that a practice is asking about dates.
+
+## Record the answer where you can see it
+
+A reply sitting in a message thread is lost by Friday. Each answer should land on the client's record as a short note or a tag, like \`skip-nov-23\`, so that when you open the week of the 23rd you see a list instead of trying to remember.
+
+This is the part a system does well. The text goes out to a tagged list, replies matching a date get the tag applied, and a NONE reply gets its own tag so you know that client was asked and answered. Anyone who has not replied by the following Wednesday gets a single nudge, and after that you ask in person at the next session. That last step matters, because the clients who go quiet are often the ones with the most going on.
+
+## Offer the freed hour on purpose
+
+Once you know that two clients will be away the week of the 23rd, you have two real open hours, weeks early rather than hours early. Now you can do something with them.
+
+Message your waiting list, or anyone who asked about earlier slots, with the dates in plain words: "I have a Tuesday at four open the weeks of Nov 23 and Nov 30 only." Some people will take a one-off. Some will use it to try you before committing to a standing time. Some of those become new standing clients in January.
+
+Or leave the hour empty and use it. Charting you've been postponing, a call you owe a referral source, lunch. An empty hour you chose is better than an empty hour that happened to you.
+
+## Where this falls short
+
+It will not stop every last-minute cancellation. A child gets sick, a flight changes, someone has a hard week, and that is the nature of the work. It also depends on your policy being clear. If a client who says they'll be away is still billed, they need to have heard that earlier, in writing, and I would not introduce a new fee in the same text that asks about travel.
+
+Some clients will say they are unsure about a date and answer with a maybe. Take the maybe. Tag it, and ask once more two weeks before.
+
+This is also a hard season for many people, and a few will tell you they would rather not skip at all. Keep the NONE reply as easy as the others, and treat it as information worth noticing, not just a calendar entry.
+
+## Do this by Friday
+
+Open your list of standing clients and count how many you have for Thanksgiving week. Then write down the four dates you would put in the text. If the dates take you more than two minutes, your calendar is the problem, and that is worth knowing before you send anything to anyone.
+`,
+  },
+  {
     slug: `tire-shop-winter-swap-week-text-before-first-snow`,
     title: `Text Last Year's Swap Customers Before the First Snow`,
     excerpt: `Every driver who needs winter tires calls on the same morning, so the shop that offers a swap week in early November fills its calendar before the weather does.`,
