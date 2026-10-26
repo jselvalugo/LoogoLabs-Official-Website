@@ -47,6 +47,8 @@ const content = {
     doneLede: "Choose a 20-minute slot and we'll come prepared with first ideas for your brand.",
     bookLabel: 'Book My Free Strategy Call',
     companyPlaceholder: 'Your SaaS or brand',
+    // Sign-ups here join the newsletter (NEWSLETTER_SOURCES in create-lead.js).
+    fine: 'You’ll also get our newsletter. Unsubscribe anytime.',
   },
 };
 

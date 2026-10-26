@@ -1,5 +1,10 @@
 import { getDatabase } from '@netlify/database';
 import { copyWebsiteLead } from '../lib/website-leads.js';
+import { publicSubscribe } from '../lib/crm-marketing.js';
+
+// Forms whose sign-ups also join the email marketing list, tagged with the
+// source. The form itself tells people they will get the newsletter.
+const NEWSLETTER_SOURCES = ['consulting'];
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,6 +40,11 @@ export default async (req, context) => {
     RETURNING *
   `;
   await copyWebsiteLead(lead);
+  if (NEWSLETTER_SOURCES.includes(lead.source)) {
+    // Like the CRM copy, this must never fail the form.
+    await publicSubscribe({ email: lead.email, name: lead.full_name, tag: lead.source, source: lead.source })
+      .catch((err) => console.error('Could not add the lead to the newsletter', err));
+  }
 
   return new Response(JSON.stringify(lead), { status: 201, headers: { 'Content-Type': 'application/json' } });
 };

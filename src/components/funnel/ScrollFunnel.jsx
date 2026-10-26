@@ -134,6 +134,7 @@ export function SignupForm({ c, onBook }) {
       <div className="bd-cta">
         <Button type="submit" variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} fullWidth>{c.signup.button}</Button>
       </div>
+      {c.signup.fine && <p className="lp-fine">{c.signup.fine}</p>}
     </form>
   );
 }
