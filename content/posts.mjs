@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `junk-removal-wont-take-list-in-booking-confirmation`,
+    title: `Tell Them What the Truck Won't Take Before It Arrives`,
+    excerpt: `A crew that finds paint cans and a propane tank at the curb has to choose between an argument and a short load, and a two-line text sent the day before settles it.`,
+    tags: `Booking Confirmations, Customer Expectations, Junk Removal`,
+    content: `The worst minute of a junk removal job is not the heavy couch. It is the minute your crew lifts a tarp and finds eleven cans of old paint, a half-full propane tank and a pile of tires the customer assumed were "just part of the load."
+
+Now your lead has two bad options. Take the stuff and break a rule your disposal site will not bend on, or leave it and tell a homeowner who has already cleared a Saturday that part of the job is not happening. Either way, the review gets written from that driveway.
+
+I have watched this play out in shops of every size, and the pattern is always the same. The crew did nothing wrong. The customer was never told.
+
+## The confirmation text is doing too little
+
+Most booking confirmations I see say the date, the arrival window and a phone number. That is a receipt, not a briefing. The one thing that decides whether the job goes smoothly, which is what you will and will not haul, usually lives on a web page the customer never opened.
+
+So the fix is not a better web page. It is moving that information into the message people actually read, at the moment they are still able to act on it.
+
+## What the text should say
+
+Keep it to a few lines. Mine looks like this:
+
+> Hi Dana, you're booked for Saturday between 9 and 11. Quick note so nothing gets left behind: we can't take paint, propane, tires, batteries or anything with chemicals in it. If any of that is in the pile, reply with what and how many and I'll tell you what to do with it.
+
+Three things are worth noticing.
+
+- It names the items plainly. "Hazardous materials" means nothing to most people. "Paint" and "propane" do.
+- It gives the customer a job to do, which is to reply. A message with a task gets read.
+- It promises an answer, so the customer feels helped rather than warned.
+
+## What happens when they reply
+
+This part matters more than the text. If a customer answers "six paint cans and a tire," someone has to answer back the same day. In the system I set up for clients, that reply gets tagged on the contact record, so the crew lead sees it on the job card the morning of the job.
+
+Then the reply back is simple: here is where those items can go, and we will skip them on Saturday. Some owners also offer a flat extra fee to haul tires, if their site accepts them. That is your call. The point is that it is decided in advance, in writing, and not at the curb.
+
+If nobody replies, that is information too. Send one more text the evening before, shorter than the first: "Last check on the paint and propane list. Anything in the pile that shouldn't be?" Then stop. Two messages is enough.
+
+## Do the same for size
+
+The other surprise is the load that is twice what the customer described. Put one sentence in the same confirmation: "If the pile is bigger than you told us, the price follows what goes on the truck, and your lead will tell you the number before loading starts." Customers do not mind a bigger price. They mind a bigger price that shows up after the work is done.
+
+## Where this stops working
+
+I will be honest about the limit. A text does not stop someone from burying a can of solvent at the bottom of a bag. Your crew still needs the authority to say no on site, and they need to say it kindly. The text just means that, when they do, the customer has already seen the rule and cannot say nobody mentioned it.
+
+## Check this week
+
+Pull up the confirmation message your next three jobs will receive. Look for the words "paint," "propane" and "tires." If they are not there, add the won't-take list to that message today, and ask your crew leads to note which items they turned away on their next five jobs. That list is the one you should be sending.`,
+  },
+  {
     slug: `counseling-practice-holiday-weeks-skip-dates-in-october`,
     title: `Ask Standing Clients Which Holiday Weeks They'll Miss`,
     excerpt: `A standing Tuesday at four turns into an empty hour the day before Thanksgiving, but only if you find out about the trip the day before.`,
