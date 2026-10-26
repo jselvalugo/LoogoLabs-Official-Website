@@ -67,6 +67,9 @@ export default async (req) => {
       case 'email_sequences': return json(await mail.listSequences(inst));
       case 'save_sequence': return json(await mail.saveSequence(inst, body.values || {}));
       case 'delete_sequence': return json(await mail.deleteSequence(inst, body.id));
+      case 'email_settings': return json(await mail.getSettings(inst));
+      case 'save_email_settings': return json(await mail.saveSettings(inst, body.values || {}));
+      case 'email_preview': return json(await mail.previewEmail(inst, body.values || {}));
       case 'team': {
         const { sql } = db();
         return json(await sql`SELECT id, email, name, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`);

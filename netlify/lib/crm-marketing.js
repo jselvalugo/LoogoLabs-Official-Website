@@ -41,6 +41,7 @@ function needSetup() {
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const orNull = (v, max) => str(v, max) || null;
 const token = () => randomBytes(24).toString('base64url');
+const format = (v) => (v === 'html' ? 'html' : 'text');
 const tag = (v) => str(v, 60).toLowerCase().replace(/\s+/g, '-') || null;
 const tagList = (v) => [...new Set((Array.isArray(v) ? v : String(v || '').split(','))
   .map((x) => tag(String(x))).filter(Boolean))].slice(0, 30);
@@ -186,9 +187,9 @@ function cleanSteps(steps) {
     const days = Number(s.delay_days);
     if (!Number.isInteger(days) || days < 0 || days > 365) throw new CrmError(`Email ${i + 1}: wait must be 0–365 whole days`);
     const subject = str(s.subject, 200);
-    const body = str(s.body, 20000);
+    const body = str(s.body, 100000);
     if (!subject || !body) throw new CrmError(`Email ${i + 1} needs a subject and a message`);
-    return { delay_days: days, subject, preheader: str(s.preheader, 200), body };
+    return { delay_days: days, subject, preheader: str(s.preheader, 200), body, body_format: format(s.body_format), signature: s.signature !== false };
   });
 }
 
@@ -241,15 +242,17 @@ export async function listCampaigns(inst) {
 export async function saveCampaign(inst, values, { userId } = {}) {
   const name = str(values.name, 200);
   if (!name) throw new CrmError('Give the campaign a name');
-  const params = [inst, name, str(values.subject, 200), orNull(values.preheader, 200), str(values.body, 20000), tag(values.audience_tag)];
+  const params = [inst, name, str(values.subject, 200), orNull(values.preheader, 200), str(values.body, 100000), tag(values.audience_tag),
+    format(values.body_format), values.signature !== false];
   if (!values.id) {
-    const [row] = await q(`INSERT INTO crm_email_campaigns (instance_id, name, subject, preheader, body, audience_tag, created_by)
-      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [...params, userId || null]);
+    const [row] = await q(`INSERT INTO crm_email_campaigns (instance_id, name, subject, preheader, body, audience_tag, body_format, signature, created_by)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`, [...params, userId || null]);
     return row;
   }
   needId(values.id);
-  const [row] = await q(`UPDATE crm_email_campaigns SET name = $2, subject = $3, preheader = $4, body = $5, audience_tag = $6, updated_at = now()
-    WHERE id = $7 AND instance_id = $1 AND status = 'draft' RETURNING *`, [...params, values.id]);
+  const [row] = await q(`UPDATE crm_email_campaigns SET name = $2, subject = $3, preheader = $4, body = $5, audience_tag = $6,
+      body_format = $7, signature = $8, updated_at = now()
+    WHERE id = $9 AND instance_id = $1 AND status = 'draft' RETURNING *`, [...params, values.id]);
   if (!row) throw new CrmError('Only draft campaigns can be edited', 409);
   return row;
 }
@@ -305,9 +308,31 @@ export async function testCampaign(inst, id, to, { step } = {}) {
   } else {
     message = await draftCampaign(inst, id);
   }
-  const email = renderMarketingEmail(message, { email: address, name: '', unsubscribe_token: 'test-preview-link-not-active' });
+  const email = renderMarketingEmail(message, { email: address, name: '', unsubscribe_token: 'test-preview-link-not-active' }, await getSettings(inst));
   await deliver([{ to: address, ...email, subject: `[Test] ${email.subject}` }]);
   return { ok: true };
+}
+
+// ── Settings (signature) ────────────────────────────────────────────────────
+
+export async function getSettings(inst) {
+  const [row] = await q('SELECT signature, signature_format FROM crm_email_settings WHERE instance_id = $1', [inst]);
+  return row || { signature: '', signature_format: 'text' };
+}
+
+export async function saveSettings(inst, values) {
+  const [row] = await q(`INSERT INTO crm_email_settings (instance_id, signature, signature_format) VALUES ($1, $2, $3)
+    ON CONFLICT (instance_id) DO UPDATE SET signature = $2, signature_format = $3, updated_at = now()
+    RETURNING signature, signature_format`, [inst, str(values.signature, 20000), format(values.signature_format)]);
+  return row;
+}
+
+// The finished email for an unsaved draft, for the editor's live preview.
+export async function previewEmail(inst, message) {
+  const m = { subject: str(message?.subject, 200), preheader: str(message?.preheader, 200), body: str(message?.body, 100000),
+    body_format: format(message?.body_format), signature: message?.signature !== false };
+  const { html } = renderMarketingEmail(m, { email: 'subscriber@example.com', name: '', unsubscribe_token: 'preview' }, await getSettings(inst));
+  return { html };
 }
 
 // ── Rendering ───────────────────────────────────────────────────────────────
@@ -341,6 +366,16 @@ function blocks(body) {
     return `<p style="margin:16px 0 0;font:16px/1.6 Helvetica,Arial,sans-serif;color:${INK};">${inline(p)}</p>`;
   }).join('\n');
 }
+// HTML emails: merge values are escaped, and the plain-text copy is the HTML
+// with tags stripped.
+const mergeHtml = (s, sub) => merge(s, { name: esc(sub.name), email: esc(sub.email) });
+const stripHtml = (html) => html
+  .replace(/<(style|script|head)[\s\S]*?<\/\1>/gi, '')
+  .replace(/<a\s[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, '$2: $1')
+  .replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|div|h[1-6]|li|tr|table)>/gi, '\n\n')
+  .replace(/<[^>]+>/g, '')
+  .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+  .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 const plain = (body) => body
   .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '$1: $2')
   .replace(/\*\*([^*]+)\*\*/g, '$1')
@@ -348,9 +383,19 @@ const plain = (body) => body
 
 export const unsubscribeUrl = (t) => `${SITE}/.netlify/functions/email-unsubscribe?t=${encodeURIComponent(t)}`;
 
-export function renderMarketingEmail({ subject, preheader, body }, sub) {
+// `settings` holds the instance signature, added under the message unless the
+// message turns it off. HTML messages go in as written, inside the same
+// branded frame, so the unsubscribe footer is always there.
+export function renderMarketingEmail({ subject, preheader, body, body_format, signature }, sub, settings = {}) {
   const subj = merge(subject, sub);
-  const text = merge(body, sub);
+  const isHtml = body_format === 'html';
+  const text = isHtml ? mergeHtml(body, sub) : merge(body, sub);
+  const sig = signature !== false && settings.signature ? settings.signature : '';
+  const sigIsHtml = settings.signature_format === 'html';
+  const sigText = sigIsHtml ? mergeHtml(sig, sub) : merge(sig, sub);
+  const content = (isHtml ? text : blocks(text))
+    + (sig ? `\n<div style="margin-top:28px;">${sigIsHtml ? sigText : blocks(sigText)}</div>` : '');
+  const plainBody = (isHtml ? stripHtml(text) : plain(text)) + (sig ? `\n\n${sigIsHtml ? stripHtml(sigText) : plain(sigText)}` : '');
   const unsub = unsubscribeUrl(sub.unsubscribe_token);
   const address = process.env.EMAIL_POSTAL_ADDRESS || '';
   const html = `<!doctype html>
@@ -364,7 +409,7 @@ export function renderMarketingEmail({ subject, preheader, body }, sub) {
           <img src="${LOGO}" width="260" alt="Loogo Labs — AI, Marketing &amp; Automation" style="display:block;width:260px;max-width:100%;height:auto;border:0;">
         </td></tr>
         <tr><td style="padding:18px 36px 34px;">
-          ${blocks(text)}
+          ${content}
         </td></tr>
         <tr><td style="padding:20px 36px;background:${CREAM};border-top:1px solid ${LINE};">
           <p style="margin:0;font:12px/1.6 Helvetica,Arial,sans-serif;color:${MUTED};">You're getting this because you signed up for updates from Loogo Labs.
@@ -377,7 +422,7 @@ export function renderMarketingEmail({ subject, preheader, body }, sub) {
 </body></html>`;
   const footer = `\n\n—\nUnsubscribe: ${unsub}${address ? `\n${address}` : ''}`;
   return {
-    subject: subj, html, text: plain(text) + footer,
+    subject: subj, html, text: plainBody + footer,
     headers: { 'List-Unsubscribe': `<${unsub}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
   };
 }
@@ -432,8 +477,10 @@ export async function runQueue() {
   if (!claimed.length) { await finishCampaigns(); return { queued_steps: due.length, sent: 0 }; }
 
   const rows = await q(`SELECT x.id, x.step, sub.email, sub.name, sub.status AS sub_status, sub.unsubscribe_token,
-      c.subject AS c_subject, c.preheader AS c_preheader, c.body AS c_body, seq.steps
+      c.subject AS c_subject, c.preheader AS c_preheader, c.body AS c_body, c.body_format AS c_format, c.signature AS c_signature, seq.steps,
+      st.signature AS sig, st.signature_format AS sig_format
     FROM crm_email_sends x
+    LEFT JOIN crm_email_settings st ON st.instance_id = x.instance_id
     JOIN crm_email_subscribers sub ON sub.id = x.subscriber_id
     LEFT JOIN crm_email_campaigns c ON c.id = x.campaign_id
     LEFT JOIN crm_email_sequences seq ON seq.id = x.sequence_id
@@ -441,12 +488,12 @@ export async function runQueue() {
 
   const ready = [];
   for (const r of rows) {
-    const message = r.c_body !== null ? { subject: r.c_subject, preheader: r.c_preheader, body: r.c_body } : r.steps?.[r.step];
+    const message = r.c_body !== null ? { subject: r.c_subject, preheader: r.c_preheader, body: r.c_body, body_format: r.c_format, signature: r.c_signature } : r.steps?.[r.step];
     if (r.sub_status !== 'subscribed' || !message) {
       await q(`UPDATE crm_email_sends SET status = 'skipped', error = $2 WHERE id = $1`, [r.id, r.sub_status !== 'subscribed' ? 'Unsubscribed' : 'Email no longer exists']);
       continue;
     }
-    ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r) } });
+    ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r, { signature: r.sig, signature_format: r.sig_format }) } });
   }
 
   let sent = 0;
