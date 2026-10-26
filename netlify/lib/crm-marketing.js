@@ -315,9 +315,26 @@ export async function testCampaign(inst, id, to, { step } = {}) {
 
 // ── Settings (signature) ────────────────────────────────────────────────────
 
+// Used until a signature is saved in the editor.
+const DEFAULT_SIGNATURE = `<table role="presentation" cellpadding="0" cellspacing="0" style="border-top:1px solid ${LINE};padding-top:18px;width:100%;">
+  <tr><td style="font:16px/1.5 Helvetica,Arial,sans-serif;color:${INK};">
+    <p style="margin:0;">Talk soon,</p>
+    <p style="margin:10px 0 0;font:400 22px/1.2 Georgia,'Times New Roman',serif;color:${GREEN};">David Selva</p>
+    <p style="margin:2px 0 0;font:13px/1.5 Helvetica,Arial,sans-serif;color:${MUTED};">Founder, Loogo Labs · AI, Marketing &amp; Automation · Celebration, FL</p>
+    <p style="margin:10px 0 0;font:13px/1.7 Helvetica,Arial,sans-serif;">
+      <a href="mailto:david@loogolabs.com" style="color:${GREEN};">david@loogolabs.com</a> ·
+      <a href="${SITE}" style="color:${GREEN};">loogolabs.com</a> ·
+      <a href="${SITE}/booking" style="color:${GREEN};">Book a call</a><br>
+      <a href="https://www.instagram.com/loogolabs.fl" style="color:${MUTED};">Instagram</a> ·
+      <a href="https://www.facebook.com/loogolabs" style="color:${MUTED};">Facebook</a> ·
+      <a href="https://www.linkedin.com/company/loogolabs/" style="color:${MUTED};">LinkedIn</a>
+    </p>
+  </td></tr>
+</table>`;
+
 export async function getSettings(inst) {
   const [row] = await q('SELECT signature, signature_format FROM crm_email_settings WHERE instance_id = $1', [inst]);
-  return row || { signature: '', signature_format: 'text' };
+  return row || { signature: DEFAULT_SIGNATURE, signature_format: 'html' };
 }
 
 export async function saveSettings(inst, values) {
@@ -412,8 +429,10 @@ export function renderMarketingEmail({ subject, preheader, body, body_format, si
           ${content}
         </td></tr>
         <tr><td style="padding:20px 36px;background:${CREAM};border-top:1px solid ${LINE};">
-          <p style="margin:0;font:12px/1.6 Helvetica,Arial,sans-serif;color:${MUTED};">You're getting this because you signed up for updates from Loogo Labs.
-            <a href="${esc(unsub)}" style="color:${MUTED};">Unsubscribe</a>${address ? `<br>${esc(address)}` : ''}</p>
+          <p style="margin:0;font:12px/1.6 Helvetica,Arial,sans-serif;color:${MUTED};">You're getting this because you signed up for updates from Loogo Labs.${address ? `<br>${esc(address)}` : ''}</p>
+          <table role="presentation" cellpadding="0" cellspacing="0" style="margin:12px 0 0;"><tr><td style="border:1px solid ${MUTED};border-radius:999px;">
+            <a href="${esc(unsub)}" style="display:inline-block;padding:8px 18px;font:600 12px/1 Helvetica,Arial,sans-serif;color:${INK};text-decoration:none;">Unsubscribe</a>
+          </td></tr></table>
           <p style="margin:12px 0 0;font:500 10px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:${MUTED};">Loogo Labs · AI, Marketing &amp; Automation · <a href="${SITE}" style="color:${MUTED};">loogolabs.com</a></p>
         </td></tr>
       </table>
@@ -493,7 +512,8 @@ export async function runQueue() {
       await q(`UPDATE crm_email_sends SET status = 'skipped', error = $2 WHERE id = $1`, [r.id, r.sub_status !== 'subscribed' ? 'Unsubscribed' : 'Email no longer exists']);
       continue;
     }
-    ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r, { signature: r.sig, signature_format: r.sig_format }) } });
+    ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r, r.sig === null
+      ? { signature: DEFAULT_SIGNATURE, signature_format: 'html' } : { signature: r.sig, signature_format: r.sig_format }) } });
   }
 
   let sent = 0;
