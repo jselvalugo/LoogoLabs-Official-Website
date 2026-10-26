@@ -19,7 +19,10 @@
 .cs-link { position: relative; display: flex; flex-direction: column; align-items: center; margin: 40px auto; }
 .cs-link::before { content: ''; width: 2px; height: 72px; background: linear-gradient(180deg, transparent, var(--cs-accent)); opacity: 0.8; }
 .cs-link::after { content: ''; width: 2px; height: 36px; background: linear-gradient(180deg, var(--cs-accent), transparent); opacity: 0.5; }
-.cs-link span { position: absolute; top: 72px; left: 50%; width: 16px; height: 16px; transform: translate(-50%, -50%) rotate(45deg); border-radius: 4px; background: var(--cs-accent); box-shadow: 0 0 0 6px rgba(235, 130, 38, 0.14), 0 0 24px rgba(235, 130, 38, 0.5); }
+/* The joint sits in the line's flow, so it stays on the line at every size. */
+.cs-link span { order: 0; width: 10px; height: 10px; margin: 2px 0; border-radius: 50%; background: var(--cs-accent); box-shadow: 0 0 0 4px rgba(235, 130, 38, 0.16); }
+.cs-link::before { order: -1; }
+.cs-link::after { order: 1; }
 
 .cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
 .cs-card { background: var(--cs-dark); color: var(--cs-cream); border-radius: 22px; padding: 28px 22px; text-align: left; }
