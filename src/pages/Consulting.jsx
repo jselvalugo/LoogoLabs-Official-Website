@@ -21,7 +21,8 @@ const proofItems = [
 const content = {
   source: 'consulting',
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
-  videoUrl: '/brand-intro.mp4',
+  // Empty shows a "Video coming soon" placeholder until the new video is ready.
+  videoUrl: '',
   videoPoster: '/brand-intro-poster.jpg',
   h1: <>Marketing strategy that grows <em>your SaaS or creator <span className="cs-stamped">brand.<span className="cs-stamp" aria-hidden="true">Growth Approved</span></span></em></>,
   lede: 'Marketing and ads strategy for SaaS brands and creators. We find where your next users, subscribers and buyers come from, then build the plan and the campaigns to get them.',
@@ -122,7 +123,11 @@ export default function Consulting() {
       <section className="cs-hero">
         <h1>{hero.h1}</h1>
         <p className="cs-lede">{hero.lede}</p>
-        <div className="cs-video"><FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} /></div>
+        <div className="cs-video">
+          {c.videoUrl
+            ? <FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} />
+            : <div className="bd-video cs-video-soon" role="img" aria-label="Video coming soon"><span className="cs-video-soon__label">Video coming soon</span></div>}
+        </div>
         <div className="cs-proof" aria-label="Selected clients">
           <p className="cs-proof__eyebrow">In good company</p>
           <div className="cs-proof__cols">
