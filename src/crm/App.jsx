@@ -2,6 +2,7 @@ import React from 'react';
 import { call, data, getToken, setToken } from './api';
 import { ACTIVITY_TYPES, ENTITIES, LEAD_STATUSES, OPPORTUNITY_STAGES, optionLabel } from './entities';
 import { Approvals, Dashboards, Recaps } from './Clients';
+import { Audience, Automations, Campaigns } from './Email';
 import { Drawer, Stat } from './report';
 
 const PAGES = [
@@ -14,6 +15,9 @@ const PAGES = [
   { id: 'dashboards', label: 'Dashboards', path: '/dashboards' },
   { id: 'approvals', label: 'Approvals', path: '/approvals' },
   { id: 'recaps', label: 'Recaps', path: '/recaps' },
+  { id: 'audience', label: 'Audience', path: '/email/audience' },
+  { id: 'campaigns', label: 'Campaigns', path: '/email/campaigns' },
+  { id: 'automations', label: 'Automations', path: '/email/automations' },
   { id: 'settings', label: 'Settings', path: '/settings' },
 ];
 
@@ -21,7 +25,9 @@ const PAGES = [
 const NAV = [
   'overview',
   { id: 'crm', label: 'CRM', items: ['leads', 'contacts', 'companies', 'opportunities', 'tasks'] },
-  'dashboards', 'approvals', 'recaps', 'settings',
+  'dashboards', 'approvals', 'recaps',
+  { id: 'email', label: 'Email', items: ['campaigns', 'automations', 'audience'] },
+  'settings',
 ];
 const pageLabel = (id) => PAGES.find((p) => p.id === id).label;
 
@@ -101,6 +107,9 @@ export default function App() {
         {page === 'dashboards' && <Dashboards version={version} />}
         {page === 'approvals' && <Approvals version={version} />}
         {page === 'recaps' && <Recaps version={version} />}
+        {page === 'audience' && <Audience version={version} />}
+        {page === 'campaigns' && <Campaigns version={version} />}
+        {page === 'automations' && <Automations version={version} />}
         {page === 'settings' && <Settings me={me} />}
       </main>
       {drawer && (
