@@ -4,6 +4,7 @@ import {
   listRecords, overview, updateActivity, updateRecord,
 } from '../lib/crm-records.js';
 import * as clients from '../lib/crm-clients.js';
+import * as mail from '../lib/crm-marketing.js';
 
 // Everything a signed-in CRM user reads or writes, as POST { action, ... }.
 // Every call is scoped to the user's own instance (see netlify/lib/crm-records.js).
@@ -51,6 +52,21 @@ export default async (req) => {
       case 'recaps': return json(await clients.listRecaps(inst, body));
       case 'save_recap': return json(await clients.saveRecap(inst, body.values || {}, audit));
       case 'delete_recap': return json(await clients.deleteRecap(inst, body.id));
+      // Email marketing through Resend (netlify/lib/crm-marketing.js).
+      case 'email_overview': return json(await mail.overview(inst));
+      case 'email_subscribers': return json(await mail.listSubscribers(inst, body));
+      case 'save_subscriber': return json(await mail.saveSubscriber(inst, body.values || {}));
+      case 'delete_subscriber': return json(await mail.deleteSubscriber(inst, body.id));
+      case 'import_subscribers': return json(await mail.importSubscribers(inst, body.values || {}));
+      case 'email_campaigns': return json(await mail.listCampaigns(inst));
+      case 'save_campaign': return json(await mail.saveCampaign(inst, body.values || {}, audit));
+      case 'delete_campaign': return json(await mail.deleteCampaign(inst, body.id));
+      case 'campaign_audience': return json(await mail.campaignAudience(inst, body.audience_tag));
+      case 'send_campaign': return json(await mail.sendCampaign(inst, body.id));
+      case 'test_email': return json(await mail.testCampaign(inst, body.id, body.to || me.email, { step: body.step }));
+      case 'email_sequences': return json(await mail.listSequences(inst));
+      case 'save_sequence': return json(await mail.saveSequence(inst, body.values || {}));
+      case 'delete_sequence': return json(await mail.deleteSequence(inst, body.id));
       case 'team': {
         const { sql } = db();
         return json(await sql`SELECT id, email, name, role, last_login_at FROM crm_users WHERE instance_id = ${inst} ORDER BY created_at`);

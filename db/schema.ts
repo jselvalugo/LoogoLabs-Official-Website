@@ -1,4 +1,4 @@
-import { pgTable, uuid, timestamp, text, integer, jsonb, numeric, boolean, date } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, timestamp, text, integer, jsonb, numeric, boolean, date, unique } from 'drizzle-orm/pg-core';
 
 export const leads = pgTable('leads', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -321,3 +321,78 @@ export const crm_recaps = pgTable('crm_recaps', {
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });
+
+// Email marketing through Resend — see the crm_email_marketing migration. The
+// audience is a separate list from crm_contacts; the email-worker function
+// drains crm_email_sends within EMAIL_DAILY_LIMIT.
+export const crm_email_subscribers = pgTable('crm_email_subscribers', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  email: text('email').notNull(),
+  name: text('name'),
+  tags: text('tags').array().notNull().default([]),
+  // subscribed | unsubscribed
+  status: text('status').notNull().default('subscribed'),
+  source: text('source'),
+  unsubscribe_token: text('unsubscribe_token').notNull().unique(),
+  unsubscribed_at: timestamp('unsubscribed_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+}, (t) => [unique().on(t.instance_id, t.email)]);
+
+export const crm_email_campaigns = pgTable('crm_email_campaigns', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  subject: text('subject').notNull().default(''),
+  preheader: text('preheader'),
+  body: text('body').notNull().default(''),
+  // null = every subscriber
+  audience_tag: text('audience_tag'),
+  // draft | sending | sent
+  status: text('status').notNull().default('draft'),
+  recipients: integer('recipients').notNull().default(0),
+  created_by: uuid('created_by').references(() => crm_users.id, { onDelete: 'set null' }),
+  sent_at: timestamp('sent_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_email_sequences = pgTable('crm_email_sequences', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  // null = every new subscriber
+  trigger_tag: text('trigger_tag'),
+  // [{ delay_days, subject, body }]
+  steps: jsonb('steps').notNull().default([]),
+  active: boolean('active').notNull().default(false),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_email_enrollments = pgTable('crm_email_enrollments', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  sequence_id: uuid('sequence_id').notNull().references(() => crm_email_sequences.id, { onDelete: 'cascade' }),
+  subscriber_id: uuid('subscriber_id').notNull().references(() => crm_email_subscribers.id, { onDelete: 'cascade' }),
+  step: integer('step').notNull().default(0),
+  next_at: timestamp('next_at'),
+  // active | done | stopped
+  status: text('status').notNull().default('active'),
+  created_at: timestamp('created_at').defaultNow(),
+}, (t) => [unique().on(t.sequence_id, t.subscriber_id)]);
+
+export const crm_email_sends = pgTable('crm_email_sends', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  subscriber_id: uuid('subscriber_id').notNull().references(() => crm_email_subscribers.id, { onDelete: 'cascade' }),
+  campaign_id: uuid('campaign_id').references(() => crm_email_campaigns.id, { onDelete: 'cascade' }),
+  sequence_id: uuid('sequence_id').references(() => crm_email_sequences.id, { onDelete: 'cascade' }),
+  step: integer('step'),
+  // queued | sending | sent | failed | skipped
+  status: text('status').notNull().default('queued'),
+  resend_id: text('resend_id'),
+  error: text('error'),
+  sent_at: timestamp('sent_at'),
+  created_at: timestamp('created_at').defaultNow(),
+}, (t) => [unique().on(t.campaign_id, t.subscriber_id), unique().on(t.sequence_id, t.step, t.subscriber_id)]);
