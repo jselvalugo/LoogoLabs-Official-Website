@@ -100,3 +100,4 @@ Format: `- YYYY-MM-DD | slug | vertical | topic`
 
 - 2026-10-24 | electrician-holiday-lights-reserved-service-block | Electricians | Seasonal booking — December service slots held back for holiday-lights calls, early-November LIGHTS reply text to past customers, urgent-word list skips the queue, one person allowed to release held days
 - 2026-10-25 | tire-shop-winter-swap-week-text-before-first-snow | Tire shops | Seasonal booking — early-November text to last winter's swap customers offering three swap weeks (reply 1/2/3 or LATER), two-time follow-up, held walk-in bays, first-come order for early snow
+- 2026-10-26 | counseling-practice-holiday-weeks-skip-dates-in-october | Counseling practices | Holiday scheduling — late-October text naming four holiday weeks for standing clients to skip or confirm, replies tagged to the record, one nudge, freed hours offered to the waiting list
