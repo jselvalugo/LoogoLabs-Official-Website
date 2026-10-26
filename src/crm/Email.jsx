@@ -10,6 +10,71 @@ import { Drawer, Stat, count, stamp } from './report';
 const tagsText = (tags) => (tags || []).join(', ');
 const FORMAT_HELP = 'Plain text. Blank line = new paragraph · "# " = heading · [label](https://…) = link, or a button when on its own line · **bold** · {{first_name|there}} = their first name';
 
+const HTML_HELP = 'HTML code, inside the Loogo Labs frame (logo on top, unsubscribe footer below). Use inline styles and tables; most inboxes ignore <style> tags and scripts. {{first_name|there}} works here too';
+
+// Simple text or HTML code, the signature switch, and a live preview of the
+// finished email. Shared by campaigns, automation steps and the signature.
+function BodyEditor({ id, value, onChange, rows, sig = true }) {
+  const [preview, setPreview] = React.useState(null);
+  const html = value.body_format === 'html';
+  const set = (k, v) => onChange({ ...value, [k]: v });
+  React.useEffect(() => {
+    if (preview === null) return undefined;
+    const t = setTimeout(() => data('email_preview', { values: value }).then((r) => setPreview(r.html)).catch(() => {}), 400);
+    return () => clearTimeout(t);
+  }, [value.body, value.body_format, value.signature, value.subject, preview === null]);
+  return (
+    <>
+      <div className="list-row" style={{ marginTop: 14 }}>
+        <label className="label" htmlFor={id} style={{ flex: 1, margin: 0 }}>Message</label>
+        <select className="field" style={{ width: 'auto' }} aria-label="Message format" value={value.body_format || 'text'} onChange={(e) => set('body_format', e.target.value)}>
+          <option value="text">Simple text</option><option value="html">HTML code</option>
+        </select>
+        <button type="button" className="link" onClick={() => setPreview(preview === null ? '' : null)}>{preview === null ? 'Preview' : 'Hide preview'}</button>
+      </div>
+      <textarea id={id} className="field" rows={html ? Math.max(rows, 14) : rows} spellCheck={!html}
+        style={html ? { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 13 } : undefined}
+        placeholder={html ? '<h1 style="font-family:Georgia,serif;color:#2D3B1F;">Hey {{first_name|there}}</h1>' : undefined}
+        value={value.body} onChange={(e) => set('body', e.target.value)} />
+      <p className="muted" style={{ fontSize: 13 }}>{html ? HTML_HELP : FORMAT_HELP}.</p>
+      {sig && (
+        <label className="check"><input type="checkbox" checked={value.signature !== false} onChange={(e) => set('signature', e.target.checked)} /> Add my signature</label>
+      )}
+      {preview !== null && (
+        <iframe title="Email preview" sandbox="" srcDoc={preview || '<p style="font-family:sans-serif;color:#888;padding:16px">Loading preview…</p>'}
+          style={{ width: '100%', height: 520, border: '1px solid var(--line, #E3DDCD)', borderRadius: 12, marginTop: 10, background: '#fff' }} />
+      )}
+    </>
+  );
+}
+
+// The signature added under every campaign and automation email.
+function SignatureDrawer({ onClose }) {
+  const [form, setForm] = React.useState(null);
+  const [error, setError] = React.useState('');
+  const [msg, setMsg] = React.useState('');
+  React.useEffect(() => { data('email_settings').then((r) => setForm({ body: r.signature, body_format: r.signature_format })).catch((e) => setError(e.message)); }, []);
+  async function save(e) {
+    e.preventDefault();
+    setError(''); setMsg('');
+    try { await data('save_email_settings', { values: { signature: form.body, signature_format: form.body_format } }); setMsg('Signature saved. It goes on every email from now on.'); } catch (err) { setError(err.message); }
+  }
+  return (
+    <Drawer title="Email signature" kicker="Email marketing" onClose={onClose}>
+      <p className="muted">Added automatically under the message of every campaign and automation email, including ones already queued. Turn it off for a single email with “Add my signature”.</p>
+      {!form ? <p className="muted">{error || 'Loading…'}</p> : (
+        <form onSubmit={save}>
+          <BodyEditor id="sig-body" rows={6} sig={false} value={{ ...form, subject: 'Signature preview', signature: false }}
+            onChange={(v) => setForm({ body: v.body, body_format: v.body_format })} />
+          {error && <div className="error">{error}</div>}
+          {msg && <p className="notice">{msg}</p>}
+          <div className="actions"><button className="btn btn-primary">Save signature</button></div>
+        </form>
+      )}
+    </Drawer>
+  );
+}
+
 function useOverview(tick) {
   const [o, setO] = React.useState(null);
   React.useEffect(() => { data('email_overview').then(setO).catch(() => setO(null)); }, [tick]);
@@ -201,6 +266,7 @@ export function Campaigns({ version }) {
     <>
       <div className="head">
         <h1>Email campaigns</h1>
+        <button className="btn" onClick={() => setOpen('signature')}>Signature</button>
         <button className="btn btn-primary" onClick={() => setOpen('new')}>New campaign</button>
       </div>
       <p className="muted count">One-off emails to your whole list or one tag, sent through Resend.</p>
@@ -222,7 +288,8 @@ export function Campaigns({ version }) {
           </table>
         )}
       </div>
-      {open && (
+      {open === 'signature' && <SignatureDrawer onClose={() => setOpen(null)} />}
+      {open && open !== 'signature' && (
         <CampaignDrawer key={open === 'new' ? 'new' : open.id} campaign={open === 'new' ? null : open} o={o}
           onClose={() => setOpen(null)} onSaved={(row) => { setTick((t) => t + 1); setOpen(row); }}
           onDeleted={() => { setTick((t) => t + 1); setOpen(null); }} />
@@ -232,7 +299,7 @@ export function Campaigns({ version }) {
 }
 
 function CampaignDrawer({ campaign, o, onClose, onSaved, onDeleted }) {
-  const [form, setForm] = React.useState(() => campaign || { name: '', subject: '', preheader: '', body: '', audience_tag: '' });
+  const [form, setForm] = React.useState(() => campaign || { name: '', subject: '', preheader: '', body: '', body_format: 'text', signature: true, audience_tag: '' });
   const [error, setError] = React.useState('');
   const [msg, setMsg] = React.useState('');
   const [busy, setBusy] = React.useState(false);
@@ -285,9 +352,8 @@ function CampaignDrawer({ campaign, o, onClose, onSaved, onDeleted }) {
           <input id="c-subj" className="field" value={form.subject} onChange={set('subject')} />
           <label className="label" htmlFor="c-pre">Preview text</label>
           <input id="c-pre" className="field" placeholder="The grey line inboxes show after the subject" value={form.preheader || ''} onChange={set('preheader')} />
-          <label className="label" htmlFor="c-body">Message *</label>
-          <textarea id="c-body" className="field" rows={14} value={form.body} onChange={set('body')} />
-          <p className="muted" style={{ fontSize: 13 }}>{FORMAT_HELP}. The unsubscribe link and your address are added automatically.</p>
+          <BodyEditor id="c-body" rows={14} value={form} onChange={setForm} />
+          <p className="muted" style={{ fontSize: 13 }}>The unsubscribe link and your address are added automatically.</p>
         </fieldset>
         {editable && reach !== null && (
           <p className="muted" style={{ fontSize: 13 }}>
@@ -321,6 +387,7 @@ export function Automations({ version }) {
     <>
       <div className="head">
         <h1>Email automations</h1>
+        <button className="btn" onClick={() => setOpen('signature')}>Signature</button>
         <button className="btn btn-primary" onClick={() => setOpen('new')}>New automation</button>
       </div>
       <p className="muted count">A series of emails that starts when someone joins the list, or gets a tag, and goes out on a schedule — a welcome series, a nurture drip, a follow-up after a download.</p>
@@ -343,7 +410,8 @@ export function Automations({ version }) {
           </table>
         )}
       </div>
-      {open && (
+      {open === 'signature' && <SignatureDrawer onClose={() => setOpen(null)} />}
+      {open && open !== 'signature' && (
         <SequenceDrawer key={open === 'new' ? 'new' : open.id} seq={open === 'new' ? null : open} o={o}
           onClose={() => setOpen(null)} onSaved={(row) => { setTick((t) => t + 1); setOpen(row); }}
           onDeleted={() => { setTick((t) => t + 1); setOpen(null); }} />
@@ -352,7 +420,7 @@ export function Automations({ version }) {
   );
 }
 
-const blankStep = (first) => ({ delay_days: first ? 0 : 3, subject: '', preheader: '', body: '' });
+const blankStep = (first) => ({ delay_days: first ? 0 : 3, subject: '', preheader: '', body: '', body_format: 'text', signature: true });
 
 function SequenceDrawer({ seq, o, onClose, onSaved, onDeleted }) {
   const [form, setForm] = React.useState(() => (seq
@@ -363,6 +431,7 @@ function SequenceDrawer({ seq, o, onClose, onSaved, onDeleted }) {
   const [busy, setBusy] = React.useState(false);
   const set = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
   const setStep = (i, k) => (e) => setForm((p) => ({ ...p, steps: p.steps.map((s, j) => (j === i ? { ...s, [k]: e.target.value } : s)) }));
+  const putStep = (i) => (v) => setForm((p) => ({ ...p, steps: p.steps.map((s, j) => (j === i ? v : s)) }));
   const move = (i, d) => setForm((p) => {
     const steps = [...p.steps];
     [steps[i], steps[i + d]] = [steps[i + d], steps[i]];
@@ -417,13 +486,11 @@ function SequenceDrawer({ seq, o, onClose, onSaved, onDeleted }) {
               <input id={`q-s${i}`} className="field" value={s.subject} onChange={setStep(i, 'subject')} />
               <label className="label" htmlFor={`q-p${i}`}>Preview text</label>
               <input id={`q-p${i}`} className="field" value={s.preheader || ''} onChange={setStep(i, 'preheader')} />
-              <label className="label" htmlFor={`q-b${i}`}>Message</label>
-              <textarea id={`q-b${i}`} className="field" rows={7} value={s.body} onChange={setStep(i, 'body')} />
+              <BodyEditor id={`q-b${i}`} rows={7} value={s} onChange={putStep(i)} />
             </div>
           );
         })}
         <button type="button" className="btn btn-small" onClick={() => setForm((p) => ({ ...p, steps: [...p.steps, blankStep(!p.steps.length)] }))}>Add email</button>
-        <p className="muted" style={{ fontSize: 13 }}>{FORMAT_HELP}.</p>
 
         <label className="check" style={{ marginTop: 14 }}><input type="checkbox" checked={!!form.active} onChange={set('active')} /> On — new matching subscribers start it</label>
         {form.active && (
