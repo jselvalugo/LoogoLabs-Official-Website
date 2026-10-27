@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `auto-glass-chip-repair-quote-follow-up-before-first-frost`,
+    title: `Text Last Month's Chip Quotes Before the First Frost`,
+    excerpt: `A windshield chip quoted in September and never booked is a full replacement waiting for the first cold morning, and one honest text can bring that driver in while the repair is still cheap.`,
+    tags: `Quote Follow-Up, Seasonal Prep, Auto Glass Shops`,
+    content: `Somewhere in your quote book there are drivers who asked about a small chip in September, heard the price, said "I'll think about it," and drove away. Most of those chips are still small. The first hard frost is when some of them stop being small.
+
+I see this in shops every autumn. A chip repair is a thirty-minute job. A crack that has run across the glass is a replacement, with a different price, a different parts order and a longer appointment. The driver who hesitated over the cheaper job ends up buying the bigger one, and often blames the shop for the difference.
+
+## Why the quote goes quiet
+
+Nobody turned you down. The quote was fine, the driver was busy, and there was no date attached to anything. A chip does not hurt, so the decision slides. Your side has no better system: the quote lives on a pad, in a text thread, or in your head.
+
+The cost is not only the lost repair. It is the replacement you could have been spared from explaining. If you quoted a repair and the driver comes back in January with a crack, you are now the person delivering bad news about a problem you flagged months ago.
+
+## Mark every unbooked chip quote the day you give it
+
+The first change is small. When you quote a chip repair and it does not book on the spot, tag the contact with something plain, like "chip quote open," and note the date and where the chip is. Where it sits matters, because a chip in the driver's line of sight is handled differently from one near the edge.
+
+That tag is the whole list. Without it, you are trying to remember which of forty conversations were chips.
+
+## Send three messages, no more
+
+I would keep the follow-up to three texts, each with a reason to exist.
+
+- **Day three.** A short check-in from the person who gave the quote: "Still happy to fit in that chip repair whenever suits you. Here are two openings this week." Name the openings.
+- **Day twenty or so.** One line about why timing matters: temperature swings are what turn a small chip into a long crack, so the repair is cheaper now than it will be later. Say nothing you cannot stand behind, and leave out promises about what any particular chip will do.
+- **First frost week.** The one that does the work. Send it to everyone still tagged, with the price of the repair and the honest sentence that if the chip has spread, it may need a replacement instead, and you will tell them which when you see it.
+
+Each text offers a reply, such as "Reply 1 for Tuesday morning, 2 for Thursday afternoon." The reply books the slot and removes the tag. A driver who books is out of the sequence, so nobody gets a nudge about a job already on your calendar.
+
+## Keep a few slots empty on purpose
+
+If your whole week is already full of replacements, the frost-week text will bring in more repair jobs than you can fit. Hold two or three short slots for it. A chip repair is quick, so a gap between two longer jobs often does the trick.
+
+Also decide who answers when someone replies with a photo or a question instead of a number. One person, same day. A text that sits until Monday defeats the point of sending it before the weather.
+
+## Where this does not work
+
+Some of those drivers have already gone elsewhere, and some will tell you so. That is fine; say thanks and remove them from the list. A few chips will have spread before you ever write. The frost-week text should say plainly that you will look and tell them the truth, because a driver who hears the truth about a spread crack from you is more likely to come back for the next one.
+
+It also will not fix a quote you gave carelessly. If the price you named was vague, the follow-up only repeats the vagueness.
+
+## Count the open chips
+
+Open your quotes from the last six weeks and find every chip repair that never booked. Write down how many there are and which ones are in the driver's line of sight. Pick the first cold week on your calendar, and text the first name on that list today with two real openings.`,
+  },
+  {
     slug: `bakery-thanksgiving-pie-orders-close-date-pickup-windows`,
     title: `Close Thanksgiving Pie Orders Before the Oven Does`,
     excerpt: `A bakery that takes pie orders by phone, message and sticky note has three order books and no idea what Wednesday will look like, until a close date and pickup windows put it on one page.`,
