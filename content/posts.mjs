@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `bakery-thanksgiving-pie-orders-close-date-pickup-windows`,
+    title: `Close Thanksgiving Pie Orders Before the Oven Does`,
+    excerpt: `A bakery that takes pie orders by phone, message and sticky note has three order books and no idea what Wednesday will look like, until a close date and pickup windows put it on one page.`,
+    tags: `Seasonal Booking, Pre-Orders, Bakeries`,
+    content: `A bakery that takes Thanksgiving orders by phone, by direct message and on a sticky note by the register has three order books and no total. Nobody knows how many pies are promised until Wednesday afternoon, when the line is out the door and the oven is already full.
+
+I have watched this play out in small shops that make wonderful food. The problem is rarely the baking. It is that the orders arrive faster than anyone can count them, and the count only gets done when it is too late to change it.
+
+## Three order books, one oven
+
+Say you can bake about sixty pies on the Wednesday before Thanksgiving, and a few dozen more on Tuesday if you stay late. Orders trickle in for three weeks. Some come as voicemails you listen to on Monday. Some come as messages at ten at night. A few come from regulars who just say "put me down for two pumpkin" while buying a loaf.
+
+Nothing here is careless. It is simply that no single place adds it all up. So you say yes to each one, because saying no to a regular feels wrong, and on Tuesday you total the pile and find you have promised eighty-five.
+
+Now you are choosing which neighbors to disappoint, and you are making that choice at the worst possible moment.
+
+## Pick a close date and say it everywhere
+
+The fix starts with one date: the last day anyone can order. Count backward from your oven, not forward from the holiday. If Tuesday is your last full baking day and you want a clean Monday to buy ingredients and plan the trays, your close date is probably the Friday or Saturday ten days out.
+
+Then put that date in every place a customer might look: the counter sign, the website, your voicemail greeting, the bottom of every message you send. A date that lives in only one place will be missed by half of the people who need it.
+
+Decide too what happens after the date. My suggestion is a short, kind rule: after the close date you keep a small number of pies for walk-ins on a first-come basis, and nothing is promised. That one sentence saves you from a dozen awkward conversations.
+
+## Give every order a pickup window, not just a day
+
+The close date solves the count. Pickup windows solve the crush.
+
+"Wednesday" is not a pickup time. If forty people all arrive between four and six, half of them wait twenty minutes and you box pies with your coat still on. Instead, offer windows, such as eight to ten, ten to twelve, noon to two, and cap each window at a number your counter can serve without stress.
+
+When a window fills, it closes, and the customer picks another. This feels strict for about a day and then feels like relief. Customers do not mind choosing a window. They mind standing in a line for a pie they paid for.
+
+## Let the system send the confirmation
+
+This is where the platform earns its place. When an order comes in, whether the customer typed it into your order form or you entered it from a phone call, the system sends one text with the item, the pickup window and the close date. The reply is simple: "Reply CHANGE if this needs to move."
+
+Replies go to one person, tagged to the order. A CHANGE reply gets a call or a new window; nothing else needs a human. Two days before pickup, the same text goes out again with the window and the address of the door they should use.
+
+You end up with a list you can read at a glance: orders by window, with a running total. When the total reaches your oven's limit, the order form stops accepting new ones by itself.
+
+## Where this falls short
+
+It will not help the customer who decides on Wednesday morning, and it will not fix a recipe that takes longer than you planned. Some regulars will also feel a limit is a little cold at first, and a few will ask for exceptions. Decide in advance who is allowed to say yes to one, and let it be one person.
+
+It also only works if the phone orders get entered. A paper pad by the phone that nobody types in is the old problem wearing a new coat.
+
+## One tally to take today
+
+Open every place orders might be hiding, your voicemail, your messages and that sticky note, and count the pies you have already promised for Thanksgiving week. Write down the total next to your oven's real limit. If the first number is already above eighty percent of the second, pick your close date today and tell the next person who orders.`,
+  },
+  {
     slug: `junk-removal-wont-take-list-in-booking-confirmation`,
     title: `Tell Them What the Truck Won't Take Before It Arrives`,
     excerpt: `A crew that finds paint cans and a propane tank at the curb has to choose between an argument and a short load, and a two-line text sent the day before settles it.`,
