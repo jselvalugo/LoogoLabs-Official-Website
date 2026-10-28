@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `landscape-lighting-dusk-walkthrough-after-clocks-change`,
+    title: `Book Lighting Estimates at Dusk, Not at Two in the Afternoon`,
+    excerpt: `A landscape lighting quote walked at midday asks the homeowner to imagine the one thing you sell, and the clocks going back this Sunday finally put dusk inside the working day.`,
+    tags: `Estimates, Seasonal Booking, Landscape Lighting`,
+    content: `You walk a front yard at two in the afternoon, point at an oak and say "we would uplight this," and the homeowner nods at a tree. Then they go away to think about it. The one thing you sell cannot be seen in the conditions you are standing in.
+
+That is the oldest problem in lighting estimates, and the clocks go back this Sunday, the first of November. From then on, dusk arrives while your crew is still on the clock and while most homeowners are just getting home. For the next few months you can run estimates in the dark that sells the job.
+
+## Why the daytime walk loses
+
+At midday the homeowner is judging a price against a picture in their head. Your picture and theirs are not the same. They imagine a handful of floodlights; you are thinking about shadow, spacing and a quiet path. When the number arrives, it looks high against their picture, and the conversation turns into a conversation about cost.
+
+At dusk, ten minutes after the first fixture goes on, nobody asks what a fixture costs. They ask whether you can also do the side of the house.
+
+## Set the visit by the sunset, not by the clock
+
+The mistake I see is booking a "5 PM estimate" in a calendar built for daytime work. In early November the light is gone around then, but by December it is gone well before, and in January the window moves again. A fixed hour is right for two weeks and wrong after that.
+
+Instead, work out the sunset time for each booking day and set the arrival about twenty minutes before it. You want to be walking the property while there is still enough light to see what you are doing, and have the test fixtures lit as the sky drops.
+
+Put that rule in the booking form itself. When someone picks a day, the system shows only the arrival times that fit that day's sunset. The homeowner does not choose a time that cannot work, and you stop moving appointments by phone.
+
+## Tell them what the visit is
+
+A dusk visit takes longer than a quote, and a homeowner expecting ten minutes will be checking the clock. The confirmation text should say it plainly:
+
+- Arrival time, and that it is set by the sunset that day.
+- That you will light a few temporary fixtures so they can see it, so the porch light and any outside switches should be reachable.
+- That it runs about forty minutes.
+- Who is coming.
+
+Then, an evening or two before, a short reminder with the same four facts and a reply that moves the visit to another day. A reschedule on a short-day visit is cheap if you hear about it early and expensive if you hear about it at the gate.
+
+## Hold the early slots for people who asked
+
+Dusk is a narrow window, and you can fit perhaps two walkthroughs in an evening, a few if two people split the route. Treat those slots as the scarce thing they are. Hold the best ones for leads who have already said they want a lighting design, and keep a "walk it at dusk" offer for anyone whose daytime quote is still open.
+
+That last group is the quiet win. Look back through quotes you gave in daylight that never answered. A text that says "I can come back at dusk next week and show you what the tree and the front walk would look like lit, no charge for the visit" gives them a reason to reply that your price never did. I will not promise you a percentage. Count how many of them reply this month against how many replied to your last price follow-up.
+
+## Check this week
+
+Open your booking form and look at how it offers times for an estimate. If a lighting visit can be booked at any hour of the day, change it before Sunday so only the sunset-based times show. Then pull out your open daytime quotes and send the dusk offer to the oldest ten.`,
+  },
+  {
     slug: `auto-glass-chip-repair-quote-follow-up-before-first-frost`,
     title: `Text Last Month's Chip Quotes Before the First Frost`,
     excerpt: `A windshield chip quoted in September and never booked is a full replacement waiting for the first cold morning, and one honest text can bring that driver in while the repair is still cheap.`,
