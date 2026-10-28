@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `auto-body-shop-rental-coverage-end-date-in-drop-off-text`,
+    title: `Put the Rental's Last Day in the Drop-Off Text`,
+    excerpt: `A customer's rental coverage ends on a fixed date, your repair ends when the parts arrive, and the gap between the two lands on them unless you name it first.`,
+    tags: `Customer Updates, Repair Scheduling, Auto Body Shops`,
+    content: `The rental runs out on a Friday. The bumper cover shows up the following Monday. The customer finds out on Thursday night, when the rental counter tells them the daily rate is about to change and asks how they want to pay.
+
+I have watched that call land on a shop's front desk more than once, and it is never about the repair. It is about being surprised by a date that nobody said out loud. Two clocks are running on every insurance job. One belongs to you. The other belongs to the customer's coverage, and you are the only person who can see both.
+
+## Two dates, one customer
+
+Your date is the one on the work order: parts ordered, parts in, panels painted, car ready. It moves, and the customer expects it to move a little.
+
+The other date is the last day their policy pays for a rental. It does not move. If your ready date slips past it, every day after is the customer's money. A shop that tracks only its own date will keep being polite right up to the moment the customer is angry.
+
+Say the coverage is fourteen days and the car comes in on a Monday. The rental ends on the Sunday two weeks later. If the repair is booked for twelve days, you have two days of slack, and one late box from a parts supplier uses it all. That is arithmetic you can do at the counter in half a minute, before the car leaves the lot.
+
+## Write the end date into the drop-off text
+
+Before the customer walks out, send one text. Four facts, nothing more:
+
+- The day their rental coverage ends, as they told you or as the claim shows.
+- The day you currently expect the car to be ready.
+- The number of spare days between those two, stated as a number.
+- Who will text them when the ready date changes, by first name.
+
+Ask for the coverage end date at the counter and write it on the work order, in the same place you write the promised date. If they do not know it, that is useful to learn on day one, and the text says "please check and reply with it."
+
+Do not soften the spare-days line. "You have two spare days" is a fact. "We should be fine" is a hope.
+
+## Tag the job the moment the slack runs out
+
+Here is the part most shops skip. When the parts arrive, or fail to arrive, compare the two dates again. If the spare days are down to zero or below, put a tag on the job, something like \`rental gap\`, so it shows in a list and not just in someone's head.
+
+Then call that customer the same day. Not a text, a call, because they may need to phone their insurer to ask for more rental days, and that takes the insurer a day or two to answer. Tell them what you know, what the new ready date is, and that you will text them the minute the part is scanned in. Follow the call with a text that repeats the dates, so they have something to read back to the adjuster.
+
+You do not need to handle the extension for them. You need to give them the date early enough that they can.
+
+## Keep one list, look at it every morning
+
+The tag only works if somebody reads it. Each morning, whoever opens the shop pulls every open job with a rental gap and checks one thing: has anything changed since yesterday? Part arrived, painter behind, customer replied. Most mornings the answer is no, and the list takes two minutes. On the bad morning it saves a customer a bill they would have blamed on you.
+
+Be honest about the limit. This does not stop a part from being late, and some delays are the supplier's. What it changes is who hears about a delay first, and whether they hear it with enough time to do something.
+
+## Two dates from your last five jobs
+
+Open your last five finished insurance jobs and write down two dates for each: the day the customer's rental coverage ended and the day you actually handed back the keys. If any of them ran past it, find out whether the customer heard that from you or from the rental counter. Then add the coverage end date to your work order form, starting with the next car that comes in.`,
+  },
+  {
     slug: `landscape-lighting-dusk-walkthrough-after-clocks-change`,
     title: `Book Lighting Estimates at Dusk, Not at Two in the Afternoon`,
     excerpt: `A landscape lighting quote walked at midday asks the homeowner to imagine the one thing you sell, and the clocks going back this Sunday finally put dusk inside the working day.`,
