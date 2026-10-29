@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `tree-service-leaf-off-look-up-text-before-first-storm`,
+    title: `Ask Customers to Look Up Once the Leaves Are Down`,
+    excerpt: `The first big wind of winter sends every worried homeowner to the phone at once, and the crew ends up working the list in the order people called instead of the order of risk.`,
+    tags: `Seasonal Outreach, Job Prioritization, Tree Service`,
+    content: `A tree service gets forty calls the morning after the first real windstorm, and the crew works them in the order they came in. The woman who called at 7:05 about a branch on her fence goes before the man who called at 9:40 about a dead limb hanging over his bedroom roof. Nobody was careless. The list had one sort order, and it was the clock.
+
+I have watched this play out on the schedule board of more than one crew, and the fix is not a faster crew. It is getting the risk onto the list before the storm does, while people are still calm.
+
+## Why November is the month to ask
+
+A tree in full leaf hides its own problems. A dead limb looks the same as a live one from the driveway until the leaves drop, and then it stands out like a coat hanger in a closet. Within a couple of weeks of the leaves coming down, a homeowner can see in ten seconds what they could not see in July.
+
+That is the window. The customer can now see the problem, nothing is on fire yet, and they have not picked up the phone. Once the wind comes, you are taking calls from people who are scared, and scared people describe everything as urgent.
+
+## Send one text to everyone who has ever asked you for a quote
+
+Pull the people you quoted in the last two or three years: the trims they put off, the removals they said "maybe next year" to, the stump they never got around to. Tag them \`tree check\`. They already know your name, and they already believe they have a tree worth worrying about.
+
+The text asks them to do a small job, not to book one:
+
+> Hi Dana, it's Sam at Oak Ridge Tree Care. Leaves are down now, which makes it the easiest week of the year to spot a bad limb. From your yard, look up and check three things: branches with no buds or bark coming off, anything hanging over the roof or the lines, and any lean that wasn't there last year. Reply with a photo, or reply NONE if it all looks fine.
+
+Oak Ridge and Dana are invented, so use your own names. The three things are the point. Give people a short list and they check it. Ask them "any concerns?" and they will not answer.
+
+## Rank what comes back, don't just answer it
+
+Every reply goes into one of three tags:
+
+- **Over a roof, a line or a drive.** Something falls on something that matters. These get a call within two days and the earliest open slots.
+- **Dead or leaning, nothing under it.** A real job that can wait for a normal slot. Quote it this month.
+- **NONE.** Leave them alone until spring, then send the same text again.
+
+Now when the storm comes and the phone rings, you are not starting from nothing. Half the people on your list have already told you which tree it is, with a photo you can pull up. The caller with the dead limb over the bedroom is already tagged, already quoted, and already first.
+
+## Where this breaks
+
+A photo is not a diagnosis. I have seen a healthy tree look like trouble in a photo and a rotten one look fine, and you still have to go and look at anything you will be liable for. Treat the reply as a way to sort your visit order, not as a replacement for the visit.
+
+It also does not help the customer who never replies. Give it one nudge a week later, and after that let it go. If they will not answer a text about a branch over their kid's room, a third message will not change that.
+
+And some people will reply with thirty photos of their whole yard. That is a good problem. Take the top one and ask them to send the rest later.
+
+## Twenty names before Friday
+
+Open your contact list and count how many people you have quoted in the last three years who never booked. If the number is over fifty, you have enough to run this text. Write the three-item check in your own words, send it to the first twenty, and see how many replies come back with a photo before you send the rest.
+`,
+  },
+  {
     slug: `auto-body-shop-rental-coverage-end-date-in-drop-off-text`,
     title: `Put the Rental's Last Day in the Drop-Off Text`,
     excerpt: `A customer's rental coverage ends on a fixed date, your repair ends when the parts arrive, and the gap between the two lands on them unless you name it first.`,
