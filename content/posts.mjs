@@ -11,6 +11,58 @@
 
 export const posts = [
   {
+    slug: `flooring-installer-material-acclimation-start-date-text`,
+    title: `Tell Them Where the Flooring Boxes Go the Day They Arrive`,
+    excerpt: `Wood and laminate planks are often supposed to sit inside the house for days before anyone nails them down, and the boxes stacked in a cold garage quietly undo that plan.`,
+    tags: `Customer Updates, Job Prep, Flooring Installers`,
+    content: `Three days is the gap between delivering the planks and starting the install, and on a lot of jobs the customer has no idea what those three days are for. They see boxes. They put the boxes where boxes go, which is the garage, the porch or the corner of the dining room nearest the door.
+
+Then my crew shows up on Thursday, the material has been sitting in a cold garage since Monday, and you have two choices. Install anyway and hope, or send the crew home and lose a day. I have watched owners pick each one, and neither is a good Thursday.
+
+## The delivery is the start of the job
+
+Most installers know the reason the material waits. Many wood and laminate products are meant to sit in the rooms they will cover, at normal living temperature, before they go down. Your supplier's sheet says how long, and it differs by product, so I am not going to hand you a number. Use the one on the sheet.
+
+What the customer hears at the estimate is "we will deliver Monday and install Thursday." What they take from it is that Monday is a delivery day. It is not. Monday is when the clock starts, and it only runs if the boxes are in the right place and the heat is on.
+
+## Put both dates in the deposit confirmation
+
+When the deposit lands, the confirmation text should carry two dates, not one:
+
+> Hi Dana, it's Sam at Harbor Floors. Your planks arrive Monday the 3rd and install starts Thursday the 6th. The three days in between are part of the job: the boxes need to sit inside, in the rooms they're going into, with your heat at its normal setting. I'll text you Monday when they land.
+
+Harbor Floors and Dana are invented, so use your own. The sentence that matters is "the three days in between are part of the job." It tells the customer the wait is work, not delay.
+
+## Send the delivery-day text from the truck
+
+The moment the driver or your crew drops the order, send the second text. Keep it to three instructions:
+
+- Boxes go inside, in the rooms they'll cover, not the garage or porch.
+- Leave the cartons closed and flat, off the wall and not stacked against a cold window.
+- Keep the heat or air conditioning where you normally live.
+
+Ask for a photo reply of where the boxes ended up. A customer who sends you a picture of boxes in the living room has done the job. A customer who sends you a picture of boxes in the garage has just saved your Thursday, because you found out on Monday.
+
+## Tag it and look once
+
+The platform can do the bookkeeping. When the delivery text goes out, the job gets an \`acclimating\` tag. When a photo comes back and it looks right, the tag changes to \`boxes inside\`. If nothing comes back by evening, one nudge goes out the next morning.
+
+Then a single list on Wednesday: every job starting Thursday that still says \`acclimating\`. Those are the ones you call. It is a short list, often one or two names, and you make those calls on Wednesday while moving the boxes is still cheap.
+
+## What the photo can't tell you
+
+A photo does not tell you the temperature of the room, and it does not tell you whether the product needed three days or five. Read the supplier sheet on every new product, because it changes the dates you promise at the deposit.
+
+Some customers are away during the gap, or the house is empty and the heat is off by design. If you hear that at the estimate, either move the delivery or say plainly that the install date may slide. Better to lose the date at the deposit than at the door.
+
+And some floors do not need any of this. If the product does not need to sit, do not send the text. A message that does not apply teaches people to skip the ones that do.
+
+## Five installs, one question
+
+Pull your last five installs and write down, for each, the day the material landed and where the customer put it. If even one went in the garage, add the sentence about the three days to your next deposit confirmation, and send the delivery-day text on that job from your phone.
+`,
+  },
+  {
     slug: `tree-service-leaf-off-look-up-text-before-first-storm`,
     title: `Ask Customers to Look Up Once the Leaves Are Down`,
     excerpt: `The first big wind of winter sends every worried homeowner to the phone at once, and the crew ends up working the list in the order people called instead of the order of risk.`,
