@@ -11,6 +11,66 @@
 
 export const posts = [
   {
+    slug: `moving-company-building-rules-before-month-end-move`,
+    title: `Ask About the Elevator Before You Quote the Truck`,
+    excerpt: `A move that looks like four hours on the estimate becomes seven when the building only lets you use the freight elevator from ten to two.`,
+    tags: `Booking, Move Prep, Moving Companies`,
+    content: `The crew arrives at 8:00, the truck is on the street, and the building manager says the elevator is reserved for someone else until noon. Nobody told the customer to reserve it, and nobody on my side asked. Four paid movers now stand on a sidewalk, and the rest of the day's schedule starts to slip.
+
+This is the move that breaks the day, and it breaks it before a single box is lifted. It is also easy to prevent, because the facts that cause it exist days earlier, in a lease or a building handout that the customer can find in two minutes if somebody asks.
+
+## Why the last week of November is where it bites
+
+The calendar for the final week of the month fills up early, because leases turn over on the first. Thanksgiving takes a few days out of the middle, so the moves that remain get stacked tightly: a morning job, an afternoon job, a crew that cannot run long.
+
+When every job is back to back, one slow start does not cost you one hour. It pushes the second job, and the second customer starts calling. If you book moves for late November, the building rules on those jobs are the part you can still control.
+
+## What the building decides
+
+Not every move has this problem. A ground-floor house with a driveway rarely does. Apartments, condos, offices and anything with a shared door usually come with rules, and the rules tend to be the same few things:
+
+- Whether the freight elevator has to be reserved, and for what hours.
+- Where the truck is allowed to park, and for how long.
+- Whether the building wants proof of insurance on file before move day.
+
+None of these show up in the estimate unless you put them there. The customer assumes you know. You assume they would have mentioned it.
+
+## Ask three questions in the booking text
+
+When the deposit comes in, the confirmation text should carry the move date and three plain asks. Here is how mine would read:
+
+> Hi Marcus, it's Dee at Lantern Movers. You're booked for Saturday the 28th. Before then I need three things from your building: is the elevator reserved, where does the truck park, and do they want insurance papers from us. If you can send a photo of the move-in rules, that answers all of it. Reply with the photo or the word UNSURE and I'll call you.
+
+Lantern Movers, Dee and Marcus are invented. Swap in your own names and your own way of speaking.
+
+The photo matters more than it sounds. Customers describe building rules from memory, and memory says "I think it's anytime." A picture of the sheet on the lobby wall does not argue.
+
+## Tag what you do not know
+
+Every booking in a building gets a tag the day it is made, something like building unknown. The tag comes off when a photo arrives or when somebody on your side has read the rules out loud to the customer.
+
+Replying UNSURE should also add a tag, so those jobs sit on a separate list. These are the customers who need a call, and it is better to learn that on a Tuesday than on move morning.
+
+A reminder goes out once, three days after the first text, to anyone who has not answered. One nudge is enough. A third text mostly annoys the person you are about to spend a Saturday with.
+
+## Check the list on a set day
+
+Pick one day each week to look at the jobs still tagged building unknown for the next two weeks. I would make it Wednesday, because it leaves time to call before a weekend crew is committed.
+
+For each name on the list, there are only two outcomes: you have the rules, or you phone the customer or the building office. If the elevator hours turn out to be short, you can still reprice the job or move the start time. Doing that on the day, with a crew waiting, is a much worse conversation.
+
+## What this does not fix
+
+A text will not make a building manager answer the phone. Some buildings change their rules without telling tenants, and some customers will send a photo of the wrong page. You will still lose an occasional morning.
+
+What changes is the share of mornings you lose to something that was knowable a week ahead.
+
+## Try this week
+
+Open your next ten booked moves that involve a shared door. Count how many have the elevator, parking and insurance answers written in the job notes. For every one that does not, send the three-question text today.
+`,
+  },
+  {
     slug: `flooring-installer-material-acclimation-start-date-text`,
     title: `Tell Them Where the Flooring Boxes Go the Day They Arrive`,
     excerpt: `Wood and laminate planks are often supposed to sit inside the house for days before anyone nails them down, and the boxes stacked in a cold garage quietly undo that plan.`,
