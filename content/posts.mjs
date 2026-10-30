@@ -11,6 +11,68 @@
 
 export const posts = [
   {
+    slug: `party-rental-weather-call-time-stated-at-booking`,
+    title: `Name the Hour You'll Make the Rain Call`,
+    excerpt: `A bounce house and a tent can't go up in a storm, and the argument about who cancelled starts when the customer finds out at eleven for a noon party.`,
+    tags: `Booking, Weather Policy, Party Rentals`,
+    content: `It is 11:15 on Saturday, the party starts at noon, and the sky is the color of a wet sidewalk. The host is on the phone asking if the bounce house is still coming. My driver is asking the same thing from the truck. Nobody has decided anything, because nobody ever said when the deciding would happen.
+
+That gap is where almost every rental dispute I have seen about weather begins. The weather itself is nobody's fault. The silence before the decision is yours.
+
+## The problem is the timing, not the policy
+
+Most rental companies have a rain rule. It lives in the paperwork: no inflatables in wind or standing water, tents need dry ground to stake, reschedule or credit if conditions are unsafe. It is a perfectly sensible rule.
+
+What it usually leaves out is a clock. "Weather permitting" means the customer waits, you wait, and the call gets made at the last possible minute by whoever is most nervous. By then the host has already told forty people the party is on.
+
+## Pick one hour and write it down
+
+Choose a single time before delivery when you will look at the sky and decide. For a noon party with a two-hour setup, I would pick 8:00 that morning. For anything delivered the day before, pick 5:00 the evening prior.
+
+The exact hour matters less than having one. You are trading a vague promise for a number the customer can plan around.
+
+Then say it in the booking confirmation, in plain words:
+
+> Hi Priya, it's Sam at Orchard Hill Party Rentals. You're booked for Saturday at noon: one tent, twenty chairs. I make the weather call at 8:00 that morning and will text you one of three words: GO, MOVE or CANCEL. If it's MOVE, we pick a new day together at no charge.
+
+Orchard Hill, Sam and Priya are invented. Use your own names and your own terms.
+
+## Three words, not a paragraph
+
+At the chosen hour, send exactly one of three answers. GO means everything is on. MOVE means you will reschedule at no charge. CANCEL means the job is off and the deposit follows whatever your written rule says.
+
+Keeping it to three words does two things. The customer can't misread it, and you can't talk yourself into a fourth, mushy answer like "probably fine, we'll see."
+
+If the text says MOVE, add one more line: two open dates, so the reply is a number instead of a negotiation.
+
+## Tag it so nobody forgets
+
+Each booking with outdoor setup gets a tag when it is made, something like \`weather call\`. On the morning of the delivery, that tag is your list. Someone opens it at the chosen hour, makes the call job by job, and sends the word.
+
+Tags matter here because the person who made the booking is often not the person standing in the yard at 8:00. A tag is a list anyone can work from.
+
+When the text goes out, change the tag to \`weather sent\`. If a job still shows the first tag at 8:30, you know exactly which customer is waiting in silence.
+
+## The edge cases
+
+Some mornings are honestly unclear: dry at 8:00, a front arriving at 1:00. Decide using the hardest part of the job, not the average. If a tent has to be staked and checked before guests arrive, the morning forecast for the setup window is what counts, not the party hour.
+
+You will also be wrong sometimes. A GO that turns into a drizzle at 12:30 is a bad day, and no text prevents it. What the text does is make sure the customer heard your reasoning before it happened, instead of finding out after.
+
+I would also stop at one reminder. If someone does not answer GO within a couple of hours, call them. A fourth text to a person standing in a kitchen with a cake is not help.
+
+## What it saves you
+
+Picture a month with eight outdoor jobs and two bad mornings. With no clock, that is two phone fights, two refunds you gave to stop the arguing, and a driver idling. With a stated hour, it is two messages that match what was promised in writing.
+
+I won't claim a number for how many arguments disappear, because it depends on how many you have now. Count your own.
+
+## Before Friday
+
+Pull up your next outdoor booking and read the confirmation. If it says "weather permitting" and no hour, add a sentence naming the time you will decide and the three words you will send.
+`,
+  },
+  {
     slug: `moving-company-building-rules-before-month-end-move`,
     title: `Ask About the Elevator Before You Quote the Truck`,
     excerpt: `A move that looks like four hours on the estimate becomes seven when the building only lets you use the freight elevator from ten to two.`,
