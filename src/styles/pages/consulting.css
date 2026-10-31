@@ -232,23 +232,6 @@
   .cs-result__note { font-size: 11.5px; line-height: 1.35; }
 }
 
-/* Short-form video examples: a row of 9:16 frames; on phones a swipeable strip. */
-.cs-videos { background: var(--cs-dark); color: var(--cs-cream); padding: 64px 20px 8px; text-align: center; border-top: 1px solid rgba(245, 242, 235, 0.08); }
-.cs-videos h2 { margin: 0 auto; max-width: 14em; font: 600 clamp(28px, 5vw, 44px)/1.12 var(--font-display); letter-spacing: -0.02em; }
-.cs-videos__lede { max-width: 32em; margin: 14px auto 0; font-size: 16px; line-height: 1.6; color: rgba(245, 242, 235, 0.7); }
-.cs-videos__strip { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 1040px; margin: 32px auto 0; }
-.cs-video-card { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(245, 242, 235, 0.12); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); }
-.cs-video-card img { display: block; width: 100%; height: auto; }
-.cs-video-card__kind { position: absolute; left: 8px; bottom: 8px; padding: 5px 9px; border-radius: 999px; background: rgba(0, 0, 0, 0.7); font: 600 10px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
-@media (max-width: 720px) {
-  .cs-videos { padding: 44px 0 4px; }
-  .cs-videos h2, .cs-videos__lede, .cs-videos .cs-results__fine { padding: 0 16px; }
-  .cs-videos__lede { font-size: 14px; }
-  .cs-videos__strip { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 16px 8px; margin-top: 22px; scrollbar-width: none; }
-  .cs-videos__strip::-webkit-scrollbar { display: none; }
-  .cs-video-card { flex: 0 0 42%; scroll-snap-align: start; border-radius: 12px; }
-}
-
 /* A logo that carries its own background (Geros Studio) fills its tile edge to edge. */
 .cs-loop__item--fill { padding: 0; overflow: hidden; }
 .cs-loop__item--fill img { height: 56px; width: auto; }
