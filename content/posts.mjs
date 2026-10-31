@@ -11,6 +11,64 @@
 
 export const posts = [
   {
+    slug: `firewood-delivery-where-to-dump-text-before-first-cold-snap`,
+    title: `Ask Where the Wood Goes Before the Truck Leaves`,
+    excerpt: `A cord of firewood goes exactly one place, wherever the truck tips it, and by then it is too late to find out the customer meant the other side of the fence.`,
+    tags: `Delivery Prep, Seasonal Orders, Firewood Sellers`,
+    content: `A full load of firewood goes exactly one place: wherever the truck tips it. After that it is a pile of heavy, split logs that somebody has to move by hand, and the somebody is usually not happy.
+
+The first hard frost makes the same story for a small wood yard. The phone goes quiet in October, then one cold night later everyone wants wood by the weekend. You take the orders as fast as you can, and you find out what you didn't ask when the driver is already in the street.
+
+## The questions you skip when you are busy
+
+Taking a firewood order feels simple. How much, what kind, what day. Those are the questions you ask because they set the price.
+
+The ones that decide whether the delivery goes smoothly are different. Where does it go? Can the truck get there? Is the gate open? Is there a dog, a low wire, a soft lawn, a neighbor's car in the way? None of those change the invoice, so none of them make it into the call.
+
+Here is what that looks like on a bad day. The customer says "just put it by the house." The house has a driveway on one side and a lawn on the other. The driver picks the driveway. The customer wanted the back corner by the woodshed, forty steps from where the load landed. Now there's a free argument and an unpaid hour of wheelbarrow work.
+
+## One text, sent the moment the order is placed
+
+I would send this right after the order is confirmed, while the customer is still holding the phone:
+
+> Hi Marcus, it's Dana at Birch Hollow Firewood. Your delivery is set for Thursday afternoon. Two quick things so the driver puts it in the right spot: 1) send me a photo of where you want it dumped, or reply SAME if it's the driveway, and 2) tell me if the truck has to get past a gate, a low branch or soft ground. Reply UNSURE and I'll call you.
+
+Birch Hollow, Dana and Marcus are invented. Write it in your own voice.
+
+The photo does more than the words. People describe their yard badly and photograph it well. You'll see the slope, the fence and the width of the gap the truck needs to fit through.
+
+## Give the unsure customer a way out
+
+Some people don't know. They're renting, or they ordered for a parent, or they have never had wood delivered before. If the only option is a photo, they will ignore the text and you're back to guessing.
+
+That's why UNSURE is in the message. It turns a silent non-answer into a flagged one, and you can handle it with a two-minute call instead of a driver standing in the road.
+
+## Tag what you don't know
+
+Every open order gets a tag when it is booked, something like \`drop spot unknown\`. When the photo or SAME comes in, swap it for \`drop spot set\` and file the photo on the customer's record, so the driver can open it from the cab.
+
+An UNSURE reply gets a different tag, \`call before delivery\`. That one goes on a short list for whoever is dispatching, and it should be empty by the end of the day before.
+
+Tags are a list you can read in ten seconds. Memory isn't, especially in the second week of a cold snap when you have forty stops.
+
+## Nudge once, then phone
+
+If there's no answer by the next morning, send one reminder. Then pick up the phone. A third text to a person who hasn't answered two is not a better text, it's noise.
+
+There's a cost to calling, and I won't pretend otherwise. When every customer is slow to reply, a call per order eats the dispatcher's morning. In that case I'd order the list by delivery time and call the earliest first. The Friday deliveries can wait until Wednesday.
+
+## What this does not solve
+
+It won't fix a gate that is locked on delivery day, or a customer who changes their mind about the spot after the photo. It won't make a truck smaller. A short text catches the ordinary misses, which are most of them, and leaves the odd ones for a phone call.
+
+It also has nothing to say about wood quality or how much you stacked into a cord. Those are other conversations.
+
+## Try this before the next cold night
+
+Pull the last five deliveries you made. For each one, write down whether you knew the exact drop spot before the truck left. If you can't say yes for most of them, add a question about where the wood goes to your order confirmation this week.
+`,
+  },
+  {
     slug: `party-rental-weather-call-time-stated-at-booking`,
     title: `Name the Hour You'll Make the Rain Call`,
     excerpt: `A bounce house and a tent can't go up in a storm, and the argument about who cancelled starts when the customer finds out at eleven for a noon party.`,
