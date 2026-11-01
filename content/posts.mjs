@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `bookkeeper-missing-payee-forms-list-before-year-end`,
+    title: `Find the Missing Payee Forms in November, Not January`,
+    excerpt: `The contractor you paid in March will not answer a request for paperwork in January, so the list of who is missing has to exist while they still want to be paid.`,
+    tags: `Year-End Paperwork, Client Follow-Up, Bookkeeping`,
+    content: `Every January, a bookkeeper with a stack of small-contractor clients hits the same wall: the year is closed, the payments are made, and one payee's tax form is still missing. That payee has no reason left to answer you. The work was done, the check cleared, and your email is now a favor request.
+
+The fix is not a better January email. It is finding the gap while there is still a reason for the payee to reply.
+
+## Why the form goes missing in the first place
+
+Your client is a contractor, a salon owner, a landscaper. Somebody they hired in spring got paid on the spot. Nobody asked for the form because the job was urgent and the person was standing in the driveway.
+
+Then the payment lands in the books with a name and an amount, and nothing else. Nothing is wrong with the entry. It just has no paperwork attached, and the books look finished.
+
+I am not going to tell you which filings apply to which client. That depends on the client and on what you are engaged to prepare. The practical point holds either way: a payee with no form on file is a problem you can see from the books in November, and you cannot fix it from the books in January.
+
+## Build the list from the books, once, in the first week of November
+
+Pull every payee your client has paid this year. Sort by total paid. For each name, mark one of three things: form on file, form not on file, or not sure.
+
+You do not need to decide in November who actually needs one. You need the list of names with no form attached. That is a ten-minute job per client if the payee records are kept in a consistent place, and a long afternoon if they are not. Either way, you learn which kind of client you have.
+
+If the system holds your client records, put a custom field on each payee record for "form on file" and a tag for \`form missing\`. The tag is your working list. It empties as forms come in.
+
+## One request, written so the payee can answer it in a minute
+
+The ask goes from your client, not from you, because the payee knows your client. Draft it for them to approve:
+
+> Hi Tom, it's Alicia at Ridgeline Fence. I'm closing out my books for the year and I'm missing a tax form for the work you did for us in the spring. Here's the blank form. Fill it in, snap a photo and reply to this text, or reply CALL and my bookkeeper will walk you through it. I'd like it in by Friday the 20th.
+
+Ridgeline Fence, Alicia and Tom are invented, as is the date. Use the real ones.
+
+Two details carry it. A dated deadline, and a second way to answer for the payee who does not want to type out a tax number in a text. A phone call fixes that.
+
+## What happens when they do not reply
+
+Send one nudge, five days later, shorter than the first. After that, stop texting and have your client call. A payee who ignores two messages from a business may well pick up the phone for the owner who paid them.
+
+The ones still missing at the start of December are the genuine problems. Now you have weeks, not a deadline in your face, to decide with the client what to do about them. That decision is yours and theirs to make, and it is a much better one to make in early December than on the last day of January.
+
+## Where this does not work
+
+A one-time payee who has moved, closed their business or stopped answering may never send a form. A text will not change that. What you gain is the early warning: you hear about the problem while the client can still remember who the person was and how to reach them.
+
+## Do this before Friday
+
+Open one client's payee list for the year. Count the names with no form on file. If the number is zero, you are ahead of most. If it is not, write down the first name, and send that one request this week.`,
+  },
+  {
     slug: `firewood-delivery-where-to-dump-text-before-first-cold-snap`,
     title: `Ask Where the Wood Goes Before the Truck Leaves`,
     excerpt: `A cord of firewood goes exactly one place, wherever the truck tips it, and by then it is too late to find out the customer meant the other side of the fence.`,
