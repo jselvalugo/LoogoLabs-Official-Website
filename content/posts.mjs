@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `dumpster-rental-weight-limit-stated-in-booking-text`,
+    title: `Put the Weight Limit in the Booking Text, Not the Invoice`,
+    excerpt: `A dumpster customer who learns about the weight rule from the final bill feels tricked, and the fix is to say it twice before the container arrives.`,
+    tags: `Booking Confirmations, Pricing Clarity, Dumpster Rental`,
+    content: `The angriest call a dumpster rental office takes is not about a late drop-off. It is about the bill. The customer rented a container for a kitchen tear-out, filled it with plaster and old tile, and found a weight charge on the invoice that nobody mentioned. They are not wrong that nobody mentioned it. It was on the website, in a line they scrolled past.
+
+You were right on paper and you lost the customer anyway.
+
+## The rule is fair and the surprise is not
+
+Heavy debris is heavy. A container full of concrete weighs far more than a container full of cardboard, and the haul costs you accordingly. Charging by weight is reasonable.
+
+The trouble is timing. The customer learns the rule after the container is full and gone, at the moment they can do nothing about it. A fee you could have avoided, learned too late, reads as a trap.
+
+I will not guess how many of your jobs hit an overage. You have the scale tickets, so you can count them. If it is one job in twenty, this post is a small tune-up. If it is one in four, it is the biggest source of angry calls you have.
+
+## Say it in the booking text
+
+The moment a booking is confirmed, the customer is paying attention. That is when the rule goes in writing, in plain words, in the text itself and not behind a link:
+
+> Your 20-yard container (an invented example) is booked for Thursday. Price includes 2 tons. Anything over is charged per ton at the weighed amount, and you will see the number on your invoice. Concrete, dirt, brick, roofing shingles and tile are heavy: a few loads of those can use the whole 2 tons. Reply WEIGHT if you want us to call and talk through your project.
+
+Use your own tonnage, your own rate and your own list of heavy materials. The shape is what matters: what is included, what happens past it, which materials are the culprits, and a one-word way to ask a question.
+
+## Mark the heavy jobs when they reply
+
+Anyone who replies WEIGHT gets a tag on their record, \`heavy debris\`, and a call the same day. Some will turn out to be loading drywall and carpet, and you can tell them it is fine. Others will be breaking up a patio, and you can steer them toward a smaller container for the concrete alone, which some yards price differently.
+
+That call takes two minutes and removes the most expensive misunderstanding you have.
+
+## A check-in on day three
+
+Most rentals sit for several days. Halfway through is when a customer knows how full it is and still has time to act. Send one short text on the third day:
+
+> How full is the container? Reply FULL if you are done and want it picked up early, MORE if you need extra room, or OK if you are fine.
+
+FULL becomes a pickup request you can slot into a route. MORE becomes a swap conversation, with the customer choosing it knowingly instead of finding out on the invoice. OK means nothing needs doing, and the text cost you nothing.
+
+## Where this falls short
+
+Customers do not always know what their debris weighs, and a text will not teach them. Some will load the container with a pile of dirt after being told twice. When that happens, point to the booking text on the record. You are not trying to win an argument. You are making sure the person was warned in time to choose.
+
+It also does nothing for a rental booked by phone if nobody sends the text. Make sure the staff member who books it by voice triggers the same message, so every booking, from every source, gets it.
+
+## Look at one invoice this week
+
+Pull your last five invoices with an overage charge. Beside each one, check whether the customer was ever told about the weight rule in a message they would have seen before the container arrived. If the answer is no for even two of them, write the booking text above in your own numbers and add it to your confirmation.
+`,
+  },
+  {
     slug: `heating-oil-propane-gauge-reading-text-will-call-customers`,
     title: `Ask for the Gauge Reading Before the Cold Morning Does`,
     excerpt: `A will-call customer tells you they need fuel only when the tank is nearly empty, and on the first hard cold morning forty of them tell you at once.`,
