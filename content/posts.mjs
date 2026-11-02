@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `heating-oil-propane-gauge-reading-text-will-call-customers`,
+    title: `Ask for the Gauge Reading Before the Cold Morning Does`,
+    excerpt: `A will-call customer tells you they need fuel only when the tank is nearly empty, and on the first hard cold morning forty of them tell you at once.`,
+    tags: `Seasonal Outreach, Delivery Routing, Heating Fuel`,
+    content: `The first hard cold morning of the season, a fuel delivery office gets forty calls before nine. Every caller says the same thing: the tank is low. Some of them mean a quarter full. Some of them mean the gauge needle is resting on the bottom peg. On the phone, they all sound equally worried, and the truck gets routed in the order the phones rang.
+
+That is how a customer who is days from running out waits behind a customer who just likes to be careful.
+
+## Will-call means you find out last
+
+On a delivery schedule, you know when to show up. On will-call, the customer decides, and the customer is guessing. Most people read the gauge when they remember to, which is usually when the house feels cold or the heating bill comes up in conversation.
+
+So the information that matters most, how much is actually left, is the information you have the least of until the morning it is urgent. Then it arrives all at once, with no way to tell the real emergencies from the nervous ones.
+
+I am not going to tell you how many of your customers are close to empty right now. I do not know your list. That is exactly the point: neither do you, and you can find out this week.
+
+## One text, one number
+
+In the first week of November, before the cold arrives, send every will-call customer a short text from the business number. Something like:
+
+> Hi, it's the office at Maple Ridge Fuel (an invented name). Before the cold comes, can you look at your tank gauge and text back the number or a photo? If you can't find it, reply HELP and we will walk you through it. If you ever smell gas, leave the house and call the emergency line, do not text.
+
+Three things matter in that message. It asks for one thing, a number. It gives the customer a way out if they cannot find the gauge. And it puts the safety line in writing, because a message about tanks should say it.
+
+## Tag the answer so the route builds itself
+
+When the replies come in, tag each contact by what they said. Keep the bands wide, so your office staff can place a reply without arguing about it:
+
+- \`gauge low\` for a quarter or less
+- \`gauge middle\` for between a quarter and a half
+- \`gauge good\` for more than half
+- \`gauge unknown\` for HELP, photos nobody can read, and silence
+
+The platform can apply the tag from the reply and stamp the date next to it. Now Monday morning's route does not start with who called. It starts with a smart list: \`gauge low\`, oldest reading first.
+
+## What to do with the silent ones
+
+Some customers will not answer. Send one nudge three days later, and after that, pick up the phone. The people who ignore two texts about their heating fuel are not a low priority. They are the ones most likely to be surprised.
+
+Put the \`gauge unknown\` list on your own desk, not your dispatcher's. A call from the owner saying "I would rather check than have you run out in January" is a short call, and customers remember it.
+
+## Where this does not work
+
+A text reading is a guess made by someone standing in a basement. A needle on a gauge can stick, and a photo can show the wrong tank. Treat the reading as a way to order your list, not as a promise about what is in the tank. When a route is close to the line, your driver's eyes at the fill port still win.
+
+It also does nothing for the customer who never gave you a mobile number. If your will-call list has a gap there, that is worth knowing too.
+
+## The check for this week
+
+Open your will-call customer list and count how many have a mobile number on file and a reading from the last sixty days. Write down both numbers. If the second one is smaller than the first, write the gauge text above in your own words, and set it to go out to the first twenty names on Monday.
+`,
+  },
+  {
     slug: `bookkeeper-missing-payee-forms-list-before-year-end`,
     title: `Find the Missing Payee Forms in November, Not January`,
     excerpt: `The contractor you paid in March will not answer a request for paperwork in January, so the list of who is missing has to exist while they still want to be paid.`,
