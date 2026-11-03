@@ -3,6 +3,7 @@ import Button from '../components/core/Button';
 import { ArrowRight, ArrowDown, Blueprint, ChartLineUp, UsersThree, Lifebuoy } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { useLang } from '../lib/i18n';
+import { Reveal, Stagger, Item, Counter } from '../lib/motion';
 
 // The Mission page is the house style for editorial pages: floating forest hero,
 // bento principles, sage stat strip, step cards, closing CTA panel.
@@ -110,15 +111,15 @@ function Mission({ onNavigate }) {
             <span className="ll-eyebrow">{es ? 'Lo que creemos' : 'What we believe'}</span>
             {es ? <h2 className="ll-staple-h2">Cuatro principios detrás de <em>cómo trabajamos.</em></h2> : <h2 className="ll-staple-h2">Four principles behind <em>how we work.</em></h2>}
           </div>
-          <ol tabIndex={0} className="ll-staple-principles">
+          <Stagger as="ol" className="ll-staple-principles" gap={0.12}>
             {(es ? PRINCIPLES_ES : PRINCIPLES).map(([t, d], i) => (
-              <li key={t} className={`ll-reveal${i === 1 ? ' ll-staple-tile--sage' : i === 2 ? ' ll-staple-tile--glass' : ''}`}>
+              <Item as="li" key={t}>
                 <span className="ll-staple-num" aria-hidden="true"><Icon i={i} /></span>
                 <h3>{t}</h3>
                 <p>{d}</p>
-              </li>
+              </Item>
             ))}
-          </ol>
+          </Stagger>
         </div>
       </section>
 
@@ -127,7 +128,7 @@ function Mission({ onNavigate }) {
         <div className="ll-staple-stats ll-sage">
           {(es ? STATS_ES : STATS).map(([v, l]) => (
             <div key={v}>
-              <div className="ll-staple-stat-value">{v}</div>
+              <div className="ll-staple-stat-value"><Counter value={v} /></div>
               <div className="ll-staple-stat-label">{l}</div>
             </div>
           ))}
@@ -138,15 +139,15 @@ function Mission({ onNavigate }) {
       <section className="ll-staple-wrap ll-staple-section">
         {es ? <h2 className="ll-staple-h2">Cinco pasos, <em>del plan al sistema en vivo.</em></h2> : <h2 className="ll-staple-h2">Five steps, <em>from plan to live system.</em></h2>}
         <p className="ll-staple-sub">{es ? 'Cada cliente pasa por el mismo proceso. Sabes qué sigue y cuándo, desde la primera llamada.' : 'Every client goes through the same process. You know what comes next and when, from the first call.'}</p>
-        <ol tabIndex={0} className="ll-staple-timeline">
+        <Stagger as="ol" className="ll-staple-timeline" gap={0.1}>
           {(es ? STEPS_ES : STEPS).map(([t, d], i) => (
-            <li key={i} className="ll-glass ll-reveal">
+            <Item as="li" key={i}>
               <span className="ll-staple-node">{es ? 'Paso' : 'Step'} {i + 1}</span>
               <h3>{t}</h3>
               <p>{d}</p>
-            </li>
+            </Item>
           ))}
-        </ol>
+        </Stagger>
       </section>
 
       {/* ── Closing CTA ── */}

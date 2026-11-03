@@ -26,6 +26,7 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { citySlugFromPage } from './lib/cfl';
 import { voiceCitySlugFromPage } from './lib/voiceCities';
@@ -62,6 +63,9 @@ function App({ initialPath }) {
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
   const es = useLang() === 'es';
+  const reduce = useReducedMotion();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
 
   const navigate = React.useCallback((target, param, { push = true } = {}) => {
     const slug = target === 'BlogPost' ? param : null;
@@ -160,11 +164,21 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      <NavBar items={nav} active={page} onNavigate={navigate}
+      <NavBar items={nav} active={page} onNavigate={navigate} overHero={page === 'Home'}
         feature={{ page: 'LoogoNews', label: 'Blog' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
       />
-      <div onClick={handleLinkClick}>{body}</div>
+      <div onClick={handleLinkClick}>
+        {!mounted || reduce ? body : (
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={page + (postSlug || '')} className="ll-page"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}>
+              {body}
+            </motion.div>
+          </AnimatePresence>
+        )}
+      </div>
       <Footer
         columns={[
           { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Industry LoogoBlog', 'Book a Call'] },

@@ -5,6 +5,8 @@ import { openBooking } from '../lib/booking';
 import { SITE, pathForPage } from '../lib/seo';
 import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
+import { Reveal, Stagger, Item, Words, Parallax, Magnetic, EASE, useMounted } from '../lib/motion';
 
 const Wrap = ({ children, style, className, id }) => (
   <div id={id} className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -127,6 +129,30 @@ function Monogram({ es }) {
   );
 }
 
+function Hero({ es, children }) {
+  const ref = React.useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const mounted = useMounted();
+  const Inner = !mounted || reduce ? 'div' : motion.div;
+  const props = !mounted || reduce ? {} : { style: { y, opacity, scale } };
+  return (
+    <section ref={ref} className="hm-hero">
+      <Wrap>
+        <Inner className="hm-hero__grid" {...props}>{children}</Inner>
+      </Wrap>
+      {mounted && !reduce && (
+        <motion.div className="hm-hero__hint" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8, duration: 0.6 }}>
+          <span>{es ? 'Desliza' : 'Scroll'}</span><i />
+        </motion.div>
+      )}
+    </section>
+  );
+}
+
 function References() {
   const es = useLang() === 'es';
   const items = [
@@ -138,16 +164,121 @@ function References() {
       <div className="ll-ticker-label">{es ? 'Hemos trabajado con' : 'Work we have done for'}</div>
       <div className="ll-ticker-belt">
         <div className="ll-ticker-track">
-          {items.map((item) => (
+          {[0, 1].map(copy => items.map((item) => (
             item.src ? (
-              <span key={item.name} className={`ll-ticker-logo${item.dark ? ' ll-ticker-logo--dark' : ''}${item.chip ? ' ll-ticker-logo--chip' : ''}${item.fill ? ' ll-ticker-logo--fill' : ''}`}>
-                <img src={item.src} width={item.w} height={item.h} alt={item.name} loading="lazy" />
+              <span key={`${copy}-${item.name}`} aria-hidden={copy === 1 || undefined} className={`ll-ticker-logo${item.dark ? ' ll-ticker-logo--dark' : ''}${item.chip ? ' ll-ticker-logo--chip' : ''}${item.fill ? ' ll-ticker-logo--fill' : ''}`}>
+                <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" />
                 {item.caption && <span className="ll-ticker-logo__cap">{item.caption}</span>}
               </span>
             ) : (
-              <span key={item.name} className="ll-ticker-ref">{item.wordmark || item.name}</span>
+              <span key={`${copy}-${item.name}`} aria-hidden={copy === 1 || undefined} className="ll-ticker-ref">{item.wordmark || item.name}</span>
             )
-          ))}
+          )))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function useMedia(q) {
+  const [m, setM] = React.useState(false);
+  React.useEffect(() => {
+    const mq = window.matchMedia(q);
+    const on = () => setM(mq.matches);
+    on(); mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [q]);
+  return m;
+}
+
+// Accordion version: phones, reduced motion, and the server render.
+function Accordion({ es, items }) {
+  const [open, setOpen] = React.useState(0);
+  return (
+    <ul className="hm-acc">
+      {items.map((s, i) => {
+        const on = open === i;
+        return (
+          <li key={s.title}>
+            <button type="button" className="hm-acc__btn" aria-expanded={on} aria-controls={`svc-${i}`} onClick={() => setOpen(on ? -1 : i)}>
+              <span className="hm-acc__num">0{i + 1}</span>
+              <span className="hm-acc__title">{s.title}</span>
+              <span className="hm-acc__icon" aria-hidden="true" />
+            </button>
+            <div id={`svc-${i}`} className="hm-acc__panel" data-open={on} aria-hidden={!on}>
+              <div className="hm-acc__inner">
+                <div className="hm-acc__body">
+                  <p>{s.summary}</p>
+                  <div className="hm-acc__cols">
+                    <div className="hm-acc__col hm-acc__col--plan"><h4><i />{es ? 'Planeamos' : 'We plan'}</h4><ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul></div>
+                    <div className="hm-acc__col hm-acc__col--build"><h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul></div>
+                  </div>
+                  <div className="hm-acc__tags" aria-label={es ? 'Reemplaza' : 'Replaces'}>{s.retires.map(t => <span key={t}>{t}</span>)}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+// Pinned scroll scene: the viewport locks while the four services advance.
+function Scene({ es, items }) {
+  const ref = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    const i = Math.min(items.length - 1, Math.floor(v * items.length));
+    if (i !== active) setActive(i);
+  });
+  const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const s = items[active];
+  const jump = (i) => {
+    const el = ref.current; if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const h = el.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: top + (h * (i + 0.5)) / items.length, behavior: 'smooth' });
+  };
+  return (
+    <div ref={ref} className="hm-scene" style={{ height: `${items.length * 90 + 10}vh` }}>
+      <div className="hm-scene__pin">
+        <div className="hm-wrap hm-scene__grid">
+          <div className="hm-scene__left">
+            <span className="ll-sh__eyebrow">{es ? 'Qué hacemos' : 'What we do'}</span>
+            <h2 className="hm-scene__h2">{es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}</h2>
+            <ol className="hm-scene__nav">
+              {items.map((it, i) => (
+                <li key={it.title}>
+                  <button type="button" className={i === active ? 'on' : ''} onClick={() => jump(i)} aria-current={i === active ? 'step' : undefined}>
+                    <span>0{i + 1}</span>{it.title}
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
+          </div>
+          <div className="hm-scene__right">
+            <AnimatePresence mode="wait">
+              <motion.div key={active} className="hm-scene__card"
+                initial={{ opacity: 0, y: 40, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.98 }}
+                transition={{ duration: 0.45, ease: EASE }}>
+                <div className="hm-scene__num" aria-hidden="true">0{active + 1}</div>
+                <h3>{s.title}</h3>
+                <p>{s.summary}</p>
+                <div className="hm-acc__cols">
+                  <motion.div className="hm-acc__col hm-acc__col--plan" initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15, duration: 0.5, ease: EASE }}>
+                    <h4><i />{es ? 'Planeamos' : 'We plan'}</h4><ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul>
+                  </motion.div>
+                  <motion.div className="hm-acc__col hm-acc__col--build" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5, ease: EASE }}>
+                    <h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul>
+                  </motion.div>
+                </div>
+                <div className="hm-acc__tags" aria-label={es ? 'Reemplaza' : 'Replaces'}>{s.retires.map(t => <span key={t}>{t}</span>)}</div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
@@ -155,8 +286,10 @@ function References() {
 }
 
 function Explorer({ es }) {
-  const [open, setOpen] = React.useState(0);
   const items = es ? SERVICES_ES : SERVICES;
+  const reduce = useReducedMotion();
+  const wide = useMedia('(min-width: 961px)');
+  if (wide && !reduce) return <section id="services"><Scene es={es} items={items} /></section>;
   return (
     <Wrap className="hm-section" id="services">
       <div className="hm-plan">
@@ -169,38 +302,7 @@ function Explorer({ es }) {
             <span><i className="build" />{es ? 'Construimos' : 'We build'}</span>
           </div>
         </div>
-        <ul className="hm-acc">
-          {items.map((s, i) => {
-            const on = open === i;
-            return (
-              <li key={s.title}>
-                <button type="button" className="hm-acc__btn" aria-expanded={on} aria-controls={`svc-${i}`} onClick={() => setOpen(on ? -1 : i)}>
-                  <span className="hm-acc__num">0{i + 1}</span>
-                  <span className="hm-acc__title">{s.title}</span>
-                  <span className="hm-acc__icon" aria-hidden="true" />
-                </button>
-                <div id={`svc-${i}`} className="hm-acc__panel" data-open={on} aria-hidden={!on}>
-                  <div className="hm-acc__inner">
-                    <div className="hm-acc__body">
-                      <p>{s.summary}</p>
-                      <div className="hm-acc__cols">
-                        <div className="hm-acc__col hm-acc__col--plan">
-                          <h4><i />{es ? 'Planeamos' : 'We plan'}</h4>
-                          <ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul>
-                        </div>
-                        <div className="hm-acc__col hm-acc__col--build">
-                          <h4><i />{es ? 'Construimos' : 'We build'}</h4>
-                          <ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul>
-                        </div>
-                      </div>
-                      <div className="hm-acc__tags" aria-label={es ? 'Reemplaza' : 'Replaces'}>{s.retires.map(t => <span key={t}>{t}</span>)}</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <Accordion es={es} items={items} />
       </div>
     </Wrap>
   );
@@ -212,15 +314,15 @@ function Founder() {
   return (
     <Wrap className="hm-section">
       <div className="hm-founder">
-        <div>
+        <Parallax range={40}>
           <div className="hm-founder__photo">
             {imgOk
               ? <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} loading="lazy" onError={() => setImgOk(false)} />
               : <div className="hm-founder__fallback">DS</div>}
           </div>
           <p className="hm-founder__name"><strong>David Selva</strong>{es ? 'Fundador' : 'Founder'}</p>
-        </div>
-        <div>
+        </Parallax>
+        <Reveal>
           {es
             ? <h2>De día construyo sistemas de contratos. <em>El resto del tiempo, construyo tu marketing.</em></h2>
             : <h2>By day I build contract systems. <em>The rest of the time, I build your marketing.</em></h2>}
@@ -231,7 +333,7 @@ function Founder() {
             <p>I'm David Selva. My day job is contract lifecycle management inside legal tech: the systems that keep enterprise contracts moving without a single approval falling through the cracks.</p>
             <p>Loogo Labs is that same obsession pointed at marketing. You work with me and the people doing the work: we write the plan, we build it, and we stay to run it.</p>
           </>)}
-        </div>
+        </Reveal>
       </div>
     </Wrap>
   );
@@ -258,34 +360,35 @@ function Home({ onNavigate }) {
   const toHref = useHref();
   return (
     <main>
-      <section className="hm-hero">
-        <Wrap>
-          <div className="hm-hero__grid">
+      <Hero es={es}>
             <div>
-              {es ? (
-                <h1 className="hm-hero__title">Planeamos tu marketing. <em>Luego lo construimos.</em></h1>
-              ) : (
-                <h1 className="hm-hero__title">We plan your marketing. <em>Then we build it.</em></h1>
-              )}
+              <h1 className="hm-hero__title">
+                <Words text={es ? 'Planeamos tu marketing.' : 'We plan your marketing.'} delay={0.1} />{' '}
+                <Words as="em" text={es ? 'Luego lo construimos.' : 'Then we build it.'} delay={0.45} />
+              </h1>
+              <Reveal delay={0.9} y={16}>
               <p className="hm-hero__lede">
                 {es
                   ? 'Loogo Labs es un socio de marketing para marcas SaaS y creadores. Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el sistema que lo hace funcionar: seguimiento, automatizaciones, IA. Nada se queda esperando un traspaso.'
                   : 'Loogo Labs is a marketing partner for SaaS brands and creators. One team writes the strategy, runs the ads and email, and builds the system that makes it work: tracking, automations, AI. Nothing waits on a handoff.'}
               </p>
+              </Reveal>
+              <Reveal delay={1.05} y={16}>
               <div className="hm-hero__actions">
-                <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking} className="ll-on-dark-btn">{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>
-                <Button variant="secondary" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver qué hacemos' : 'See what we do'}</Button>
+                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
+                <Magnetic strength={0.15}><Button variant="secondary" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver qué hacemos' : 'See what we do'}</Button></Magnetic>
               </div>
+              </Reveal>
+              <Reveal delay={1.2} y={12}>
               <div className="hm-hero__meta">
                 <span>{es ? 'Estrategia y construcción, un mismo equipo' : 'Strategy and build, one team'}</span>
                 <span>{es ? 'Medido en ingresos, no en clics' : 'Measured in revenue, not clicks'}</span>
                 <span>{es ? 'Orlando, Florida' : 'Orlando, Florida'}</span>
               </div>
+              </Reveal>
             </div>
             <Monogram es={es} />
-          </div>
-        </Wrap>
-      </section>
+      </Hero>
 
       <References />
 
@@ -293,14 +396,16 @@ function Home({ onNavigate }) {
 
       <section className="hm-build ll-band" style={{ marginTop: 112 }}>
         <Wrap>
+          <Reveal>
           <SectionHeading eyebrow={es ? 'Qué construimos' : 'What we build'}
             title={es ? 'Consultores que de verdad lo construyen.' : 'Consultants who can actually build it.'}
             description={es ? 'La mayoría de las agencias te entregan una presentación. La mayoría de los desarrolladores esperan especificaciones. Nosotros estamos en el medio: especialistas en marketing que escriben el código, conectan el seguimiento y ponen en marcha la IA.' : 'Most agencies hand you a deck. Most dev shops wait for a spec. We sit in the middle: marketers who write the code, wire the tracking and ship the AI.'} />
-          <div className="hm-build__grid">
+          </Reveal>
+          <Stagger className="hm-build__grid" gap={0.12}>
             {(es ? BUILD_ES : BUILD).map(([k, v], i) => (
-              <div key={k} className="hm-build__tile">{BUILD_ICONS[i]}<h3>{k}</h3><p>{v}</p></div>
+              <Item key={k} className="hm-build__tile">{BUILD_ICONS[i]}<h3>{k}</h3><p>{v}</p></Item>
             ))}
-          </div>
+          </Stagger>
         </Wrap>
       </section>
 
@@ -308,35 +413,37 @@ function Home({ onNavigate }) {
 
       <Wrap className="hm-section">
         <div className="hm-local">
+          <Reveal>
           <SectionHeading eyebrow={es ? 'Para negocios locales' : 'For local businesses'}
             title={es ? 'Los mismos sistemas, listos para la tienda de la esquina.' : 'The same systems, ready-made for the shop down the street.'}
             description={es ? 'Lo que construimos a la medida para marcas SaaS también existe como sistemas listos que operamos para negocios de servicio en Florida Central.' : 'What we build custom for SaaS brands also exists as ready-made systems we run for service businesses in Central Florida.'} />
-          <ul className="hm-local__links">
+          </Reveal>
+          <Stagger as="ul" className="hm-local__links" gap={0.1}>
             {LOCAL.map(l => {
               const [t, d] = es ? l.es : l.en;
               return (
-                <li key={l.page}>
+                <Item key={l.page} as="li">
                   <a href={toHref(pathForPage(l.page))} onClick={e => { e.preventDefault(); onNavigate(l.page); }}>
                     <strong>{t}</strong><span>{d}</span><em aria-hidden="true">→</em>
                   </a>
-                </li>
+                </Item>
               );
             })}
-          </ul>
+          </Stagger>
         </div>
       </Wrap>
 
       <section className="hm-cta ll-band" style={{ marginTop: 112 }}>
         <Wrap>
           <div className="hm-cta__grid">
-            <div>
+            <Reveal>
               <h2>{es ? 'Cuéntanos qué quieres que crezca.' : 'Tell us what you want to grow.'}</h2>
               <p>{es ? 'Una llamada de 30 minutos. Revisamos dónde estás, qué está frenando el crecimiento y qué construiríamos primero. Sin presentación, sin compromiso.' : 'A 30-minute call. We look at where you are, what is holding growth back, and what we would build first. No deck, no commitment.'}</p>
-            </div>
-            <div className="hm-cta__side">
-              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>
+            </Reveal>
+            <Reveal className="hm-cta__side" delay={0.15}>
+              <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
               <a href={`mailto:${SITE.email}`}>{es ? '¿Prefieres escribir? ' : 'Rather write? '}{SITE.email}</a>
-            </div>
+            </Reveal>
           </div>
         </Wrap>
       </section>

@@ -7,8 +7,25 @@ const LABELS = {
   es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
 };
 
-function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
+function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero = false }) {
   const [open, setOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+  const [onHero, setOnHero] = React.useState(overHero);
+
+  // Compact after the first scroll; while the forest hero is under the bar,
+  // the bar goes dark so it reads as part of the hero.
+  React.useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      if (overHero) {
+        const hero = document.querySelector('.hm-hero');
+        setOnHero(hero ? hero.getBoundingClientRect().bottom > 64 : false);
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [overHero]);
   const lang = useLang();
   const toHref = useHref();
   const label = it => LABELS[lang][it] || it;
@@ -30,7 +47,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
 
   return (
     <>
-    <header className="ll-nav" style={style}>
+    <header className={`ll-nav${scrolled ? ' ll-nav--scrolled' : ''}${overHero && onHero ? ' ll-nav--hero' : ''}`} style={style}>
       <div className="ll-nav__bar">
 
         {/* Logo: a real link so crawlers see a route back to the homepage. The
