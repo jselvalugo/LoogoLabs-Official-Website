@@ -17,6 +17,7 @@
     "@netlify/database": "^2.0.0",
     "@phosphor-icons/react": "^2.1.7",
     "drizzle-orm": "^1.0.0-beta.22",
+    "flubber": "^0.4.2",
     "motion": "^12.43.0",
     "netlify-cli": "^27.1.2",
     "react": "^18.3.1",

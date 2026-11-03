@@ -7,6 +7,7 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, EASE, useMounted } from '../lib/motion';
+import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
   <div id={id} className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -102,28 +103,9 @@ const LOCAL = [
 ];
 
 function Monogram({ es }) {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    if (window.matchMedia('(hover: none)').matches) return undefined;
-    const stage = el.firstElementChild;
-    const move = (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      stage.style.transform = `rotateX(${(-y * 10).toFixed(2)}deg) rotateY(${(x * 10).toFixed(2)}deg)`;
-    };
-    const leave = () => { stage.style.transform = ''; };
-    el.addEventListener('mousemove', move);
-    el.addEventListener('mouseleave', leave);
-    return () => { el.removeEventListener('mousemove', move); el.removeEventListener('mouseleave', leave); };
-  }, []);
   return (
-    <figure ref={ref} className="hm-mark" aria-label={es ? 'El monograma de Loogo Labs' : 'The Loogo Labs monogram'}>
-      <div className="hm-mark__stage" aria-hidden="true">
-        {['tl', 'tr', 'bl', 'br'].map(t => <span key={t} className={`hm-mark__tile hm-mark__tile--${t}`} />)}
-      </div>
+    <figure className="hm-mark" aria-label={es ? 'El monograma de Loogo Labs' : 'The Loogo Labs monogram'}>
+      <LivingMonogram fill="var(--paper-000)" bg="var(--ink-900)" delay={1.1} />
       <figcaption className="hm-mark__caption"><span>Loogo Labs</span><span>Orlando, FL</span></figcaption>
     </figure>
   );
@@ -141,6 +123,10 @@ function Hero({ es, children }) {
   const props = !mounted || reduce ? {} : { style: { y, opacity, scale } };
   return (
     <section ref={ref} className="hm-hero">
+      <div className="hm-hero__bg" aria-hidden="true">
+        <AmbientShape index={2} className="hm-hero__shape hm-hero__shape--a" />
+        <AmbientShape index={1} className="hm-hero__shape hm-hero__shape--b" fill="rgba(184,105,28,0.16)" />
+      </div>
       <Wrap>
         <Inner className="hm-hero__grid" {...props}>{children}</Inner>
       </Wrap>
@@ -228,10 +214,16 @@ function Accordion({ es, items }) {
 function Scene({ es, items }) {
   const ref = React.useRef(null);
   const [active, setActive] = React.useState(0);
+  const [built, setBuilt] = React.useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const i = Math.min(items.length - 1, Math.floor(v * items.length));
+    const raw = v * items.length;
+    const i = Math.min(items.length - 1, Math.floor(raw));
     if (i !== active) setActive(i);
+    // Within each step: first half draws the plan (outline), second half fills the build.
+    const local = Math.min(1, Math.max(0, raw - i));
+    const b = Math.min(1, Math.max(0, (local - 0.35) / 0.45));
+    if (Math.abs(b - built) > 0.01) setBuilt(b);
   });
   const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
   const s = items[active];
@@ -265,6 +257,7 @@ function Scene({ es, items }) {
                 initial={{ opacity: 0, y: 40, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.98 }}
                 transition={{ duration: 0.45, ease: EASE }}>
                 <div className="hm-scene__num" aria-hidden="true">0{active + 1}</div>
+                <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} /></div>
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
                 <div className="hm-acc__cols">
@@ -433,8 +426,9 @@ function Home({ onNavigate }) {
         </div>
       </Wrap>
 
-      <section className="hm-cta ll-band" style={{ marginTop: 112 }}>
-        <Wrap>
+      <section className="hm-cta ll-band" style={{ marginTop: 112, position: 'relative', overflow: 'hidden' }}>
+        <AmbientShape index={3} className="hm-cta__shape" />
+        <Wrap style={{ position: 'relative' }}>
           <div className="hm-cta__grid">
             <Reveal>
               <h2>{es ? 'Cuéntanos qué quieres que crezca.' : 'Tell us what you want to grow.'}</h2>

@@ -851,6 +851,16 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .hm-scene__card > p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-500); max-width: 54ch; }
 .hm-scene__card .hm-acc__cols { gap: 32px; padding-top: 6px; border-top: 1px solid var(--border-hair); padding-top: 20px; }
 
+/* Morphing shapes */
+.hm-hero__bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hm-hero__shape { position: absolute; width: 70vmin; height: 70vmin; }
+.hm-hero__shape--a { left: -18vmin; bottom: -22vmin; }
+.hm-hero__shape--b { right: -10vmin; top: -26vmin; width: 60vmin; height: 60vmin; }
+.hm-scene__glyph { position: absolute; right: 36px; top: 56px; width: 150px; height: 150px; }
+.hm-scene__card h3, .hm-scene__card > p { padding-right: 170px; }
+.hm-cta__shape { position: absolute; right: -8vw; top: 50%; transform: translateY(-50%); width: 46vw; height: 46vw; max-width: 640px; max-height: 640px; pointer-events: none; }
+@media (max-width: 960px) { .hm-hero__shape { width: 90vw; height: 90vw; } .hm-cta__shape { width: 80vw; height: 80vw; right: -30vw; } }
+
 /* Page transitions */
 .ll-page { will-change: opacity, transform; }
 
