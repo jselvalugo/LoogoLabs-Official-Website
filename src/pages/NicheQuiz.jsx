@@ -152,7 +152,7 @@ export default function NicheQuiz({ page }) {
   return (
     <main className="ll-shell nq-page">
       <header className="ll-nav">
-        <div className="ll-nav__bar ll-glass--dark nq-bar">
+        <div className="ll-nav__bar nq-bar">
           <div className="nq-bar__side">
             {step > 0 && step < RESULT && (
               <button onClick={() => go(step - 1)} className="nq-back">
@@ -160,7 +160,7 @@ export default function NicheQuiz({ page }) {
               </button>
             )}
           </div>
-          <a href={toHref('/quizzes')} className="ll-nav__logo" aria-label="Loogo Labs"><img src="/logo.png" alt="Loogo Labs" /></a>
+          <a href={toHref('/quizzes')} className="ll-nav__logo" aria-label="Loogo Labs"><img src="/monogram.png" alt="Loogo Labs" /></a>
           <div className="nq-bar__side nq-bar__side--end">
             {step > 0 && step < RESULT && (
               <span className="nq-count">{step}/{CONTACT}</span>

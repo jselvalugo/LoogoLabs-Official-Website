@@ -351,7 +351,7 @@ export default function AIReceptionist() {
 
       {/* ── FLOATING GLASS HEADER: back, logo, progress ── */}
       <div className="ll-nav lp-nav">
-        <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
+        <div className="ll-nav__bar lp-nav__bar">
           <div className="lp-nav__side">
             {step > 0 && !isResult && (
               <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step - 1)}>
@@ -359,7 +359,7 @@ export default function AIReceptionist() {
               </button>
             )}
           </div>
-          <span className="ll-nav__logo lp-nav__logo"><img src="/logo.png" alt="" /></span>
+          <span className="ll-nav__logo lp-nav__logo"><img src="/monogram.png" alt="" /></span>
           <div className="lp-nav__side lp-nav__side--end">
             <LangToggle />
             {!isResult && !isIntroStep && (

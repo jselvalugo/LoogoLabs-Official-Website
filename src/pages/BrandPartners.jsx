@@ -114,7 +114,7 @@ const fieldStyle = {
 function Field({ label, children }) {
   return (
     <label style={{ display: 'grid', gap: 5 }}>
-      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)' }}>{label}</span>
+      <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--ink-700)' }}>{label}</span>
       {children}
     </label>
   );
@@ -234,7 +234,7 @@ function BrandPartners() {
                 <p style={{ margin: '6px 0 0', color: 'var(--ink-500)', fontSize: 15 }}>{c.formSub}</p>
               </div>
               <fieldset style={{ border: 0, padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                <legend style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)', marginBottom: 8 }}>{c.legend}</legend>
+                <legend style={{ fontSize: 13, fontWeight: 500, color: 'var(--ink-700)', marginBottom: 8 }}>{c.legend}</legend>
                 {programs.map((p) => (
                   <label key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 'var(--radius-2)', cursor: 'pointer',
                     border: `1px solid ${interests.includes(p.id) ? 'var(--ink-900)' : 'rgba(26,38,16,0.14)'}`, background: 'var(--paper-000)', fontSize: 14 }}>

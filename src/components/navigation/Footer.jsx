@@ -47,14 +47,15 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
   const es = useLang() === 'es';
   const toHref = useHref();
   const label = (l) => (es && LABELS_ES[l]) || l;
-  if (strap === undefined) strap = es ? 'Software operativo para industrias desatendidas' : 'Operational software for underserved industries';
+  if (strap === undefined) strap = es ? 'Marketing que planeamos y construimos' : 'Marketing we plan and build';
   const go = (e, target) => { e.preventDefault(); onNavigate && onNavigate(target); window.scrollTo(0, 0); };
   return (
-    <footer className="ll-footer ll-grid-bg--inverse" style={style}>
+    <footer className="ll-footer" style={style}>
       <div className="ll-footer__inner">
         <div className="ll-footer__top">
           <div className="ll-footer__brand">
             <a href={toHref('/')} className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
+              <span className="ll-footer__mark" aria-hidden="true" />
               {wordmark}
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}

@@ -31,19 +31,14 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
   return (
     <>
     <header className="ll-nav" style={style}>
-      <div className="ll-nav__bar ll-glass--dark">
+      <div className="ll-nav__bar">
 
         {/* Logo: a real link so crawlers see a route back to the homepage. The
             mark is solid dark green, so it sits on a cream disc here. */}
         <a href={toHref(pathForPage('Home'))} aria-label="Loogo Labs, home" className="ll-nav__logo"
           onClick={e => { e.preventDefault(); handleNav('Home'); }}>
-          <img src="/logo.png" alt="Loogo Labs" width="120" height="36" />
-        </a>
-
-        {/* Mobile only: the serif wordmark centred in the bar. */}
-        <a href={toHref(pathForPage('Home'))} className="ll-nav__wordmark" aria-hidden="true" tabIndex={-1}
-          onClick={e => { e.preventDefault(); handleNav('Home'); }}>
-          Loogo Labs
+          <img src="/monogram.png" alt="" width="28" height="28" />
+          <span className="ll-nav__name">Loogo Labs</span>
         </a>
 
         <nav className="ll-nav-links" aria-label="Primary">
@@ -57,7 +52,6 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
           {feature && (
             <a href={toHref(pathForPage(feature.page))} aria-current={active === feature.page ? 'page' : undefined}
               className="ll-nav-feature ll-nav-feature-desktop" onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
-              <span className="ll-nav-feature-dot" aria-hidden="true" />
               {feature.label}
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>
@@ -75,7 +69,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
           </button>
         </div>
 
-        <div id="ll-nav-mobile" className={`ll-nav-mobile ll-glass--dark${open ? ' open' : ''}`}>
+        <div id="ll-nav-mobile" className={`ll-nav-mobile${open ? ' open' : ''}`}>
                     {items.map((it, i) => {
             const on = it === active;
             return (
@@ -91,7 +85,6 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style }) {
           {feature && (
             <a href={toHref(pathForPage(feature.page))} className="ll-nav-feature ll-nav-feature-mobile"
               onClick={e => { e.preventDefault(); handleNav(feature.page); }}>
-              <span className="ll-nav-feature-dot" aria-hidden="true" />
               {feature.label}
               {feature.badge && <span className="ll-nav-feature-badge">{feature.badge}</span>}
             </a>

@@ -97,7 +97,7 @@ export default function Consulting() {
   return (
     <main className="cs">
       <header className="cs-nav">
-        <img src="/logo.png" alt="Loogo Labs" className="cs-nav__logo" />
+        <img src="/monogram.png" alt="Loogo Labs" className="cs-nav__logo" />
         <button type="button" className="cs-pill" onClick={toForm}>Apply</button>
       </header>
 

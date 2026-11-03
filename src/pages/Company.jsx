@@ -44,7 +44,7 @@ function Company({ onNavigate }) {
           <div className="ll-staple-founder ll-bezel">
             <img src="/founder-david-selva.jpg" alt={es ? `${SITE.founder}, fundador de ${SITE.name}` : `${SITE.founder}, founder of ${SITE.name}`} onError={() => setImgOk(false)} width={480} height={600} />
             <div className="ll-staple-founder-tag ll-glass">
-              <div style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{SITE.founder}</div>
+              <div style={{ fontWeight: 500, color: 'var(--ink-900)' }}>{SITE.founder}</div>
               <div className="ll-staple-meta">{es ? 'Fundador · De Coamo, PR a Celebration, FL' : 'Founder · Coamo, PR to Celebration, FL'}</div>
             </div>
           </div>
@@ -66,7 +66,7 @@ function Company({ onNavigate }) {
           )}
           {imgOk ? null : (
             <div style={{ marginTop: 24 }}>
-              <div style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{SITE.founder}</div>
+              <div style={{ fontWeight: 500, color: 'var(--ink-900)' }}>{SITE.founder}</div>
               <div className="ll-staple-meta">{es ? 'Fundador · De Coamo, PR a Celebration, FL' : 'Founder · Coamo, PR to Celebration, FL'}</div>
             </div>
           )}

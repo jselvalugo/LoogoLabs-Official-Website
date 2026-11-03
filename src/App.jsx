@@ -1,6 +1,5 @@
 import React from 'react';
 import NavBar from './components/navigation/NavBar';
-import SeasonalGarland from './components/navigation/SeasonalGarland';
 import Button from './components/core/Button';
 import Footer from './components/navigation/Footer';
 import CookieConsent from './components/feedback/CookieConsent';
@@ -26,10 +25,8 @@ import { SERVICE_PACKAGE_BY_PAGE } from './lib/servicePackages';
 import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
-import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
 import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
 
-const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
 import { voiceCitySlugFromPage } from './lib/voiceCities';
 
@@ -144,7 +141,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Home', 'BrandPartners'];
+  const nav = ['Mission', 'Company', 'BrandPartners'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -163,26 +160,15 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      <aside aria-label={es ? 'Próximo evento' : 'Upcoming event'}>
-      <a href={`${BLOG_BASE}/${EVENT_POST_SLUG}`} className="ll-topbar ll-topbar--event"
-        onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
-        <span className="ll-topbar__gem" aria-hidden="true">◆</span>
-        <span className="ll-topbar-text">
-          <span className="ll-topbar__gold">Cards &amp; Cocktails</span>{es ? ' · 14 de nov' : ' · Nov 14'}<span className="ll-topbar-long">{es ? ' · Noche de Pokémon TCG en Lakeland · Entrada gratis' : ' · Pokémon TCG night in Lakeland · Free entry'}</span>
-        </span>
-        <span className="ll-topbar__arrow" aria-hidden="true">→</span>
-      </a>
-      </aside>
       <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog' }}
+        feature={{ page: 'LoogoNews', label: 'Blog' }}
         cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
       />
-      <SeasonalGarland />
       <div onClick={handleLinkClick}>{body}</div>
       <Footer
         columns={[
-          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'AI Voice', 'Book a Call'] },
-          { title: es ? 'Plataforma' : 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Industry LoogoBlog', 'Book a Call'] },
+          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}

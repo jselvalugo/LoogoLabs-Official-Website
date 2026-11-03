@@ -160,9 +160,9 @@ export default function ScrollFunnel({ c }) {
   return (
     <main className="ll-shell lp bd">
       <div className="ll-nav lp-nav">
-        <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
+        <div className="ll-nav__bar lp-nav__bar">
           <div className="lp-nav__side" />
-          <span className="ll-nav__logo lp-nav__logo"><img src="/logo.png" alt="Loogo Labs" /></span>
+          <span className="ll-nav__logo lp-nav__logo"><img src="/monogram.png" alt="Loogo Labs" /></span>
           <div className="lp-nav__side lp-nav__side--end">
             <button className="bd-nav__cta" onClick={toSignup}>Get started</button>
           </div>

@@ -35,8 +35,8 @@ function LaunchPost({ onNavigate }) {
   return (
     <Wrap>
       <div style={{ display: 'grid', gridTemplateColumns: '200px minmax(0, var(--container-narrow))', gap: 48 }}>
-        <aside style={{ display: 'grid', gap: 10, alignContent: 'start', fontFamily: 'var(--font-mono)', fontSize: 11,
-          letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
+        <aside style={{ display: 'grid', gap: 10, alignContent: 'start', fontFamily: 'var(--font-body)', fontSize: 11,
+          letterSpacing: 0, textTransform: 'none', color: 'var(--ink-400)' }}>
           <span>Platform</span>
           <span>{p.product}</span>
           <span style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 10 }}>Written by<br /><span style={{ color: 'var(--ink-900)' }}>{p.author}</span></span>
@@ -44,7 +44,7 @@ function LaunchPost({ onNavigate }) {
         </aside>
         <article>
           <Badge tone="accent">{p.badge}</Badge>
-          <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-3)', lineHeight: 'var(--lh-display-3)', letterSpacing: 'var(--ls-display-3)' }}>{p.title}</h1>
+          <h1 style={{ margin: '18px 0 0', fontWeight: 500, fontSize: 'var(--fs-display-3)', lineHeight: 'var(--lh-display-3)', letterSpacing: 'var(--ls-display-3)' }}>{p.title}</h1>
           <p style={{ fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)', marginTop: 18, maxWidth: '54ch' }}>{p.lede}</p>
           <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 24, maxWidth: '60ch' }}>{p.body}</p>
           <h2 style={{ fontSize: 'var(--fs-h2)', letterSpacing: 'var(--ls-h2)', marginTop: 40 }}>What's included</h2>

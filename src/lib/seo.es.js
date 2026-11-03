@@ -14,8 +14,8 @@ const firstSentence = (s = '') => `${String(s).split('. ')[0].replace(/\.$/, '')
 
 const STATIC = {
   Home: {
-    title: `Agencia de marketing y automatización en Orlando | ${BRAND}`,
-    description: 'Una sola plataforma para lanzar, hacer crecer y automatizar tu negocio: CRM, seguimiento automático, reseñas y marketing, configurado y administrado por nosotros.',
+    title: `Socio de marketing que planea y construye | ${BRAND}`,
+    description: 'Un socio de marketing para marcas SaaS y creadores. Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el seguimiento, las automatizaciones y la IA que lo hacen funcionar.',
   },
   Mission: {
     title: `Nuestra misión: una plataforma, no 15 herramientas | ${BRAND}`,

@@ -41,8 +41,8 @@ export const SITE = {
   ogImageHeight: 628,
   themeColor: '#1a1f14',
   description:
-    'One platform to launch, grow, and automate your business — CRM, follow-up automation, reputation management, and marketing, set up and run for you.',
-  tagline: 'Marketing Systems, Automation, All-in-One CRM',
+    'A marketing partner for SaaS brands and creators. One team writes the strategy, runs the ads and email, and builds the tracking, automations and AI that make it work.',
+  tagline: 'We plan your marketing. Then we build it.',
   // Profiles that corroborate the Organization entity. Add Instagram, LinkedIn
   // and the Google Business Profile URL here as they go live — each one should
   // be a page that actually loads, since a sameAs pointing somewhere dead is a
@@ -84,7 +84,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `${SITE.name} | Orlando Marketing & Automation Agency`,
+    title: `${SITE.name} | Marketing partner that plans and builds`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',

@@ -8,10 +8,7 @@
 @media (max-width: 767px) {
   /* ── Swipe rows ── */
   :root :is(
-    .hm-bento, .hm-why__list,
-    .ll-staple-principles, .ll-staple-timeline,
-    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
-    .ll-staple-list
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards
   ) {
     display: flex !important;
     grid-template-columns: none !important;
@@ -26,17 +23,11 @@
     -webkit-overflow-scrolling: touch;
   }
   :root :is(
-    .hm-bento, .hm-why__list,
-    .ll-staple-principles, .ll-staple-timeline,
-    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
-    .ll-staple-list
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards
   )::-webkit-scrollbar { display: none; }
 
   :root :is(
-    .hm-bento, .hm-why__list,
-    .ll-staple-principles, .ll-staple-timeline,
-    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards,
-    .ll-staple-list
+    .av-problems, .av-bento, .av-diff__list, .av-steps__grid, .av-compare-cards
   ) > * {
     flex: 0 0 84%;
     min-width: 0;
@@ -45,9 +36,6 @@
     grid-column: auto !important;
     grid-row: auto !important;
   }
-
-  /* The career list sits inside a rounded panel, so it scrolls within it. */
-  :root .ll-staple-list { margin-inline: 0; padding: 16px !important; scroll-padding-inline: 16px; }
 
   /* ── Chip lists: one swipeable line instead of wrapping onto many ── */
   :root :is(.av-proof, .av-ind__chips, .av-cities__links) {
@@ -59,9 +47,7 @@
   :root :is(.av-proof, .av-ind__chips, .av-cities__links) > * { flex: 0 0 auto; white-space: nowrap; }
 
   /* ── Section rhythm ── */
-  :root .hm-section { padding-top: 32px; padding-bottom: 32px; }
   :root .av-section { padding-top: 28px; padding-bottom: 28px; }
-  :root .ll-staple-section { padding-top: 40px; padding-bottom: 16px; }
   :root .av-hero { padding-top: 28px; }
 
   /* ── Footer fine print ── */
