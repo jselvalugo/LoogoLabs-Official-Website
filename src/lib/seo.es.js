@@ -18,8 +18,8 @@ const STATIC = {
     description: 'Un socio de marketing para marcas SaaS y creadores. Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el seguimiento, las automatizaciones y la IA que lo hacen funcionar.',
   },
   Mission: {
-    title: `Nuestra misión: una plataforma, no 15 herramientas | ${BRAND}`,
-    description: 'La mayoría de los dueños manejan su negocio con 10 a 15 herramientas desconectadas. Creamos una sola plataforma que las reemplaza, y nos encargamos de la configuración, la capacitación y el soporte.',
+    title: `Nuestra misión: la mayoría de los planes de marketing nunca se construyen | ${BRAND}`,
+    description: 'Una agencia escribe la estrategia, un desarrollador espera las especificaciones y los meses pasan. Loogo Labs es un solo equipo que planea tu marketing y luego construye y opera el sistema que lo hace funcionar.',
   },
   Company: {
     title: `La empresa: conoce al fundador | ${BRAND}`,

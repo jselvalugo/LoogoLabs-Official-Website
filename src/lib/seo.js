@@ -92,9 +92,9 @@ export const ROUTES = [
   {
     page: 'Mission',
     path: '/mission',
-    title: `Our Mission — One Platform, Not 15 Tools | ${SITE.name}`,
+    title: `Our Mission — Most Marketing Plans Never Get Built | ${SITE.name}`,
     description:
-      'Most owners run their business across 10–15 disconnected tools. We built one platform that replaces them, and we handle setup, training, and support.',
+      'An agency writes the strategy, a developer waits for the spec, and months go by. Loogo Labs is one team that plans your marketing, then builds and runs the system that makes it work.',
     priority: '0.7',
     changefreq: 'monthly',
   },

@@ -270,18 +270,18 @@ function Packages({ onNavigate }) {
         <span className="ll-eyebrow">{es ? 'Paquetes' : 'Packages'}</span>
         {es ? (
           <>
-            <h1 className="pk-title">Un sistema de crecimiento completo, <em>creado y manejado por nosotros.</em></h1>
+            <h1 className="pk-title">Los sistemas que construimos, <em>en paquetes para negocios locales.</em></h1>
             <p className="pk-lede">
-              CRM, automatización, reseñas y seguimiento con IA en una sola plataforma, configurada por nuestro equipo y administrada cada mes.
-              Elige el paquete que corresponda a donde está tu negocio hoy, o empieza con un servicio rápido.
+              CRM, seguimiento automático, reseñas y atención de llamadas con IA, configurados por nuestro equipo y operados cada mes.
+              Elige el paquete que corresponda a donde está tu negocio hoy, o empieza con un solo servicio.
             </p>
           </>
         ) : (
           <>
-            <h1 className="pk-title">A complete growth system, <em>built and run for you.</em></h1>
+            <h1 className="pk-title">The systems we build, <em>packaged for local businesses.</em></h1>
             <p className="pk-lede">
-              CRM, automation, reviews, and AI follow-up on one platform, set up by our team and managed every month.
-              Pick the package that fits where your business is today, or grab a quick start to begin.
+              CRM, automated follow-up, reviews and AI call answering, set up by our team and run every month.
+              Pick the package that fits where your business is today, or start with a single service.
             </p>
           </>
         )}

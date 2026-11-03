@@ -172,6 +172,7 @@ function App({ initialPath }) {
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
+        style={page === 'Home' ? { marginTop: 0 } : undefined}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
       <CookieConsent />

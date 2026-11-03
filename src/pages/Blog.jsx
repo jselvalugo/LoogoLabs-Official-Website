@@ -73,7 +73,7 @@ export default function Blog({ onNavigate }) {
               Industry<br /><em>LoogoBlog.</em>
             </h1>
             <p className="ln-masthead__lede">
-              {es ? 'Hablamos claro para negocios de servicios locales: seguimiento más rápido de prospectos, más reseñas, menos inasistencias, reservas más inteligentes y agentes de voz con IA, además de los mitos de marketing que conviene ignorar.' : 'Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.'}
+              {es ? 'Notas de un equipo que planea el marketing y luego lo construye: posicionamiento, anuncios, email, seguimiento, automatizaciones e IA, además de los mitos de marketing que conviene ignorar.' : 'Notes from a team that plans marketing and then builds it: positioning, ads, email, tracking, automations and AI, plus the marketing myths worth ignoring.'}
             </p>
           </div>
         </div>
