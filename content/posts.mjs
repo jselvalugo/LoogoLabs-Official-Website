@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `house-cleaning-first-visit-entry-plan-text-after-booking`,
+    title: `Ask How the Crew Gets In Before the First Clean`,
+    excerpt: `A cleaning crew that waits on a porch for a customer who forgot the key has already lost the visit that was meant to win a weekly client.`,
+    tags: `Booking Details, First Visits, House Cleaning`,
+    content: `The most expensive fifteen minutes of a first cleaning visit are spent standing on the porch. Two cleaners drive forty minutes to a first-time customer's house, ring the bell, and nobody comes. The customer said they would leave a key under the planter. There is no planter. The crew waits fifteen minutes, calls the office, calls the customer, gets voicemail, and drives to the next job an hour late. The first visit, the one that is supposed to earn a standing weekly booking, has already gone wrong.
+
+None of that was the customer's fault, and none of it was the crew's. Nobody asked how the crew gets in.
+
+## Entry is a booking detail, not a day-of detail
+
+When someone books a first clean, you collect the date, the address, the size of the house and the price. The way into the house usually gets a vague "I'll leave it open" or "I'll be home." Both sound settled in the moment and both fall apart on the morning.
+
+People forget the alarm. They forget the dog. They forget that the front door sticks and only the side door works. A homeowner knows all of this so well that it never occurs to them to say it.
+
+## One text, three questions, sent after they book
+
+Send it the same day the booking is made, while the house is still on their mind. Plain words, no form to open:
+
+- Hi, this is the office. Your first clean is Tuesday at 9. Three quick things so my crew walks straight in.
+- How do they get in? Reply **HOME** if someone will be there, **KEY** if a key or code is set up, or **CALL** if you would rather talk it through.
+- Any pets loose in the house?
+- Any room we should skip?
+
+The first question is the one that matters. The other two are courtesy, and they save the crew an awkward surprise.
+
+## What you do with the answers
+
+Each reply gets a tag on the customer record: \`someone home\`, \`key set\`, or \`entry call\`. Do not try to be clever with the pets and skip-room answers. Paste them into the job notes the crew reads before they leave, and that is all.
+
+Anyone who replies CALL goes on a short list for the owner or office to phone that afternoon. Those are usually the people with an alarm system or a building front desk, and a two-minute call now beats a fifteen-minute wait on the porch.
+
+Then there is the silence. If there is no reply by the evening before, send one nudge: "Still need to know how my crew gets in tomorrow. Reply HOME, KEY, or CALL." If there is still nothing by the next morning, someone calls before the crew leaves the lot, not after they arrive.
+
+## Say what happens if the crew cannot get in
+
+This is the uncomfortable sentence, and it belongs in the first text or the confirmation, not in an argument later. Decide what your rule is. Maybe the crew waits ten minutes, then you charge a smaller trip fee, or reschedule at no charge the first time. I do not know your costs, so I will not tell you the number. I will tell you that a customer who read the rule on Monday takes it far better than one who hears it on Tuesday from a crew leader standing in their driveway.
+
+Write it in one sentence and put it right under the three questions.
+
+## Where this stops working
+
+A text will not fix a customer who ignores it. A few will say KEY and then forget to set the key out. That is why the morning call exists, and why the tag matters: it shows you at a glance which first cleans have a confirmed way in and which are a guess.
+
+It also does not replace the first-visit walkthrough. It only makes sure the crew gets to the door of the walkthrough.
+
+## Read your next three first-clean bookings
+
+Open your schedule and find the next three first-time cleans. For each one, look for where the way in is written down. If it is "will be home" in someone's memory, send the three-question text today and see how many answer before the evening before.`,
+  },
+  {
     slug: `boat-yard-winterization-add-ons-approved-in-haul-out-text`,
     title: `Get the Add-On Yeses Before the Boat Leaves the Water`,
     excerpt: `A boat on stands with its winterization half done is waiting on one owner's reply, and every day it waits is a day your crew works around it.`,
