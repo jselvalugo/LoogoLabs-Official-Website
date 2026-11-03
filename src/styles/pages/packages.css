@@ -233,3 +233,21 @@
 }
 
 .pk-pricing { margin-top: 24px; }
+
+/* Phones: shorter hero and sections, two-up service cards, compact plan cards. */
+@media (max-width: 767px) {
+  .pk-hero { padding-top: 32px; padding-bottom: 24px; }
+  .pk-lede { font-size: 16px; margin-top: 14px; }
+  .pk-section { padding-top: 36px; padding-bottom: 24px; }
+  .pk-head { margin-bottom: 20px; }
+  .pk-grid { gap: 12px; }
+  .pk-card { padding: 20px !important; }
+  .pk-price { font-size: 36px; }
+  .pk-services-head { margin-top: 40px; }
+  .pk-grid--services { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .pk-service { padding: 16px; gap: 8px; }
+  .pk-service-title { font-size: 16px; }
+  .pk-service-price { font-size: 24px; }
+  .pk-service-desc { font-size: 13px; }
+  .pk-diy { margin-top: 12px; gap: 12px; }
+}

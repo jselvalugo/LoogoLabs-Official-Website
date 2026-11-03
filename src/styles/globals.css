@@ -885,6 +885,97 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 /* Page transitions */
 .ll-page { will-change: opacity, transform; }
 
+
+/* ── Phone compaction: shorter sections, tighter rhythm ───────────────────── */
+@media (max-width: 767px) {
+  :root { --section-y: 56px; }
+  .hm-hero { min-height: 0; padding: 40px 0 36px; }
+  .hm-hero__title { font-size: clamp(38px, 11vw, 46px); }
+  .hm-hero__lede { font-size: 16px; margin-top: 18px; }
+  .hm-hero__actions { margin-top: 24px; gap: 10px; }
+  .hm-hero__meta { margin-top: 24px; }
+  .hm-mark { width: 104px; margin-top: 24px; }
+  .hm-hero__shape--a { display: none; }
+  .hm-hero__shape--b { width: 70vw; height: 70vw; top: -20vw; right: -24vw; }
+  .ll-ticker-bar { padding-top: 24px; }
+  .hm-section { padding-top: 56px; }
+  .ll-sh { gap: 10px; }
+  .ll-sh__title { font-size: 30px; }
+  .ll-sh__desc { font-size: 16px; }
+  .hm-plan { gap: 24px; }
+  .hm-plan__legend { margin-top: 16px; }
+  .hm-acc__btn { padding: 16px 0; }
+  .hm-acc__body { padding-bottom: 18px; gap: 14px; }
+  .hm-acc__body > p { font-size: 15px; }
+  .hm-acc__col li { font-size: 14px; }
+  /* Build band: four tiles become compact rows */
+  .hm-build { padding: 56px 0; }
+  .hm-build__grid { margin-top: 28px; border-left: 0; }
+  .hm-build__tile { padding: 18px 0 20px; border-right: 0; display: grid; grid-template-columns: 36px 1fr; column-gap: 14px; }
+  .hm-build__tile svg { width: 22px; height: 22px; margin: 2px 0 0; grid-row: span 2; }
+  .hm-build__tile h3 { font-size: 18px; }
+  .hm-build__tile p { font-size: 15px; margin-top: 6px; }
+  .hm-build__tile::before { display: none; }
+  .hm-founder { gap: 20px; }
+  .hm-founder__photo { max-width: 140px; }
+  .hm-founder h2 { font-size: 28px; }
+  .hm-founder p { font-size: 16px; margin-top: 14px; }
+  .hm-local { gap: 20px; }
+  .hm-local__links a { padding: 16px 0; }
+  .hm-local__links strong { font-size: 17px; }
+  .hm-local__links span { font-size: 14px; }
+  .hm-cta { padding: 56px 0; }
+  .hm-cta h2 { font-size: 36px; }
+  .hm-cta p { font-size: 16px; margin-top: 14px; }
+  .hm-cta__grid { gap: 24px; }
+  .hm-cta__shape { display: none; }
+  .ll-footer { padding: 40px 16px 20px; margin-top: 56px; }
+  .ll-footer__top { gap: 20px; padding-bottom: 24px; }
+  .ll-footer__col { gap: 6px; }
+
+  /* Editorial pages */
+  .ll-staple-hero { padding-top: 32px; }
+  .ll-staple-hero-inner { padding-bottom: 32px; gap: 24px; }
+  .ll-staple-title { font-size: clamp(34px, 10vw, 42px); }
+  .ll-staple-lede { font-size: 16px; margin-top: 18px; }
+  .ll-staple-actions { margin-top: 24px; }
+  .ll-staple-collapse { padding: 16px; }
+  .ll-staple-section, .ll-staple-band { padding-top: 56px; }
+  .ll-staple-h2 { font-size: 28px; }
+  .ll-staple-sub { font-size: 16px; margin-top: 12px; }
+  .ll-staple-split { gap: 20px; }
+  .ll-staple-principles li, .ll-staple-list li { padding: 18px 0; gap: 8px; grid-template-columns: 32px 1fr; column-gap: 12px; }
+  .ll-staple-principles p, .ll-staple-list p { grid-column: 2; font-size: 15px; margin-top: 6px; }
+  .ll-staple-principles h3, .ll-staple-list h3 { font-size: 18px; }
+  .ll-staple-num { width: 28px; height: 28px; }
+  .ll-staple-num svg { width: 15px; height: 15px; }
+  /* Stats: three across, small */
+  .ll-staple-stats { grid-template-columns: repeat(3, 1fr); }
+  .ll-staple-stats > div { padding: 16px 0; }
+  .ll-staple-stats > div + div { border-top: 0; border-left: 1px solid var(--border-hair); padding-left: 12px; }
+  .ll-staple-stat-value { font-size: 26px; }
+  .ll-staple-stat-label { font-size: 13px; }
+  /* Steps: compact rows with the step number inline */
+  .ll-staple-timeline { margin-top: 20px; }
+  .ll-staple-timeline li, .ll-staple-timeline li:nth-child(n) { padding: 16px 0; display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; align-items: baseline; }
+  .ll-staple-node { height: 24px; font-size: 12px; padding: 0 8px; }
+  .ll-staple-timeline h3 { margin: 0; font-size: 17px; }
+  .ll-staple-timeline p { grid-column: 2; margin-top: 4px; font-size: 14px; }
+  .ll-staple-cta { margin-top: 56px; }
+  .ll-staple-cta img { min-height: 180px; max-height: 220px; }
+  .ll-staple-cta-body { padding: 24px 20px 28px; }
+  .ll-staple-cta-body p { font-size: 15px; margin-top: 12px; }
+  .ll-staple-quote-hero { padding-top: 24px; gap: 20px; }
+  .ll-staple-founder { min-height: 0; aspect-ratio: 4 / 3; }
+  .ll-staple-quote blockquote { font-size: 24px; margin-top: 12px; }
+  /* Pricing download card stacks */
+  .ll-pricing { padding: 20px; }
+  .ll-pricing--wide { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .ll-pricing__btn, .ll-pricing--wide .ll-pricing__btn { align-self: stretch; justify-content: center; margin-top: 10px; }
+  .ll-pricing__title, .ll-pricing--wide .ll-pricing__title { font-size: 20px; }
+  .ll-menu__inner { padding: 88px 20px 24px; }
+}
+
 /* ── Legacy mobile helpers still referenced by some pages ──────────────────── */
 @media (max-width: 767px) {
   .ll-grid-2, .ll-grid-3, .ll-grid-4, .ll-grid-5, .ll-2col { grid-template-columns: 1fr !important; }
