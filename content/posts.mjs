@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `boat-yard-winterization-add-ons-approved-in-haul-out-text`,
+    title: `Get the Add-On Yeses Before the Boat Leaves the Water`,
+    excerpt: `A boat on stands with its winterization half done is waiting on one owner's reply, and every day it waits is a day your crew works around it.`,
+    tags: `Seasonal Booking, Work Approvals, Boat Yards`,
+    content: `A boat sits on stands at the back of the yard for nine days because the owner has not said yes to the shrink wrap. The engine is flushed. The fuel is treated. The one thing left is the part the owner has to approve, and the owner is on a work trip with a phone that rings out. Nobody on the crew can touch it, nobody wants to wrap it without a yes, and it takes up a spot you promised to someone else.
+
+This is the quiet cost of the haul-out season. It is not the hauling. It is the approvals that arrive late, one boat at a time, after the work has already started.
+
+## The approval is the bottleneck, not the labor
+
+Think about a yard with sixty boats to put away before the ground freezes. Every boat has a base job: haul, pressure wash, drain, winterize the engine. That part is a routine and your crew can do it in their sleep.
+
+Then each boat has a handful of optional decisions. Shrink wrap or a fitted cover. Batteries pulled and stored indoors, or left aboard. Bottom paint now, or in spring. Each one is a small question, and each one sits in a phone call you make after the boat is already out of the water.
+
+Calls go to voicemail. Owners say "let me think about it." A tired service manager writes the answer on the back of a work order, and in March nobody can read it.
+
+## Ask once, in writing, before haul-out
+
+The fix is to move the questions earlier and make them cheap to answer. When an owner books a haul-out date, the confirmation text carries the list, not a promise to call.
+
+Something like this, which you can reword in your own voice:
+
+- Your haul-out is Thursday the 14th.
+- Reply with the letters you want: **W** for shrink wrap, **B** for batteries stored inside, **P** for bottom paint now.
+- Reply **NONE** for the base job only.
+- We start the base job the day you reply, and we hold the extras until you do.
+
+Four lines, answered with a single letter from a phone on a dock. The reply gets a tag on the customer record for each letter, so the work order is built from what they actually said, not from what somebody remembers.
+
+## What this does not fix
+
+I will be plain about the limits. Some owners will not answer, no matter how short the question is. Some will answer W and then call to change it. A text does not make people decisive.
+
+What it does is shrink the pile. If most of your owners reply in the first two days, the ones left are a short list you can phone, instead of sixty boats you are chasing one at a time. One nudge text two days after the first, then a call from you for anyone still silent a week before their date.
+
+Also decide in advance what the base job includes when there is no reply. If the answer is "we do the base job and nothing else," say so in the first text. An owner who knows the default will often let it stand.
+
+## The morning list
+
+Once the tags exist, you have a list you have never had before: every boat with no answer yet. Sort it by haul-out date, soonest first. That is your phone list for the morning, and it is the only list that matters until it is empty.
+
+It also makes spring easier. When an owner calls in April asking whether the batteries were stored, you read the tag and the date they replied. No guessing, no argument.
+
+## Check one work order this week
+
+Pull the next five boats on your haul-out schedule. For each, find where the add-on decisions are written down and when the owner gave them. If any of the answers live only in a phone call or in someone's memory, write the four-line text above and send it to those five owners before their date. Then count how many replied by the second day.`,
+  },
+  {
     slug: `dumpster-rental-weight-limit-stated-in-booking-text`,
     title: `Put the Weight Limit in the Booking Text, Not the Invoice`,
     excerpt: `A dumpster customer who learns about the weight rule from the final bill feels tricked, and the fix is to say it twice before the container arrives.`,
