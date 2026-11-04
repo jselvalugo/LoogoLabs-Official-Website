@@ -2,6 +2,7 @@ import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
 import { SITE, pathForPage, routeMeta } from '../../lib/seo';
 import { useHref, useLang } from '../../lib/i18n';
+import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 
 // Spanish display labels. The English label stays the lookup key.
 const LABELS_ES = {
@@ -42,6 +43,7 @@ const externalLinks = {
 // entry corroborated by a visible rel="me" link is a stronger entity signal
 // than the schema claim on its own.
 const PROFILE_LINKS = new Set(['Facebook', 'Instagram', 'LinkedIn']);
+const SOCIAL_ICONS = { Facebook: FacebookLogo, Instagram: InstagramLogo, LinkedIn: LinkedinLogo };
 
 function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright = `© ${new Date().getFullYear()} Loogo Labs`, style, onNavigate, onAdmin }) {
   const es = useLang() === 'es';
@@ -58,15 +60,22 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
               <img src="/logo-horizontal-cream.svg" alt="Loogo Labs" width="172" height="44" />
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}
+            <div className="ll-footer__social">
+              {[...PROFILE_LINKS].map((l) => {
+                const Icon = SOCIAL_ICONS[l];
+                return <a key={l} href={externalLinks[l]} target="_blank" rel="noopener noreferrer me" aria-label={l}><Icon size={18} weight="light" /></a>;
+              })}
+            </div>
             <address className="ll-footer__address">
-              {SITE.address.recipient}<br />
-              {SITE.address.streetAddress}<br />
+              {SITE.address.recipient}<span className="ll-footer__sep">, </span><br />
+              {SITE.address.streetAddress}<span className="ll-footer__sep">, </span><br />
               {SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />
-              {SITE.address.countryName}
+              <span className="ll-footer__country">{SITE.address.countryName}</span>
             </address>
           </div>
           {columns.map(col => (
-            <nav key={col.title} className="ll-footer__col" aria-label={col.title}>
+            <nav key={col.title} aria-label={col.title}
+              className={`ll-footer__col${col.links.every((l) => PROFILE_LINKS.has(l)) ? ' ll-footer__col--social' : ''}${col.links.includes('Privacy Policy') ? ' ll-footer__col--legal' : ''}`}>
               <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>{col.title}</span>
               {col.links.map(l => {
                 const external = externalLinks[l];

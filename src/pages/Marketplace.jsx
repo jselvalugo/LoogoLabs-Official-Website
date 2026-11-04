@@ -173,7 +173,6 @@ function Marketplace() {
 
       <section className="mk-wrap mk-hero">
         <div className="mk-hero__copy">
-          <span className="ll-eyebrow">Loogo Labs Marketplace</span>
           <h1 className="mk-hero__title">Claude skills that work like <em>your marketing team.</em></h1>
           <p className="mk-hero__lede">
             Download a skill, add it to Claude, and it follows our playbook every time: ad copy, campaign briefs,
@@ -217,7 +216,6 @@ function Marketplace() {
 
       <section className="mk-how ll-forest">
         <div className="mk-wrap">
-          <span className="ll-eyebrow mk-how__eyebrow">How it works</span>
           <h2 className="mk-how__title">Three steps. No setup call.</h2>
           <ol className="mk-how__steps">
             <li><span>01</span><h3>Download</h3><p>Each skill is a small .zip with a SKILL.md inside: plain instructions you can read before you install.</p></li>
