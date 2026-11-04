@@ -363,7 +363,7 @@ export default function AIReceptionist() {
         <div className="ll-nav__bar lp-nav__bar">
           <div className="lp-nav__side">
             {step > 0 && !isResult && (
-              <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step - 1)}>
+              <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step === QUIZ_START ? 0 : step - 1)}>
                 <ArrowLeft size={16} weight="bold" aria-hidden="true" /> <span className="lp-back__label">{es ? 'Atrás' : 'Back'}</span>
               </button>
             )}
