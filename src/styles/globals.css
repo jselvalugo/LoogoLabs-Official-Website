@@ -1173,3 +1173,48 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 
 /* Invisible submit button so the phone keyboard's Go/Enter submits a form. */
 .ll-sr-submit { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; opacity: 0; }
+
+/* ── Hero founder block on phones/tablets ─────────────────────────────────────
+   One tidy row under the buttons instead of three loose pieces: character on
+   the left, name + role beside him, the monogram anchored on the right. */
+@media (max-width: 960px) {
+  .hm-hero .hm-hero__side {
+    order: 2; height: auto; min-height: 0; overflow: visible;
+    margin: 20px 24px 0; padding: 16px 0 0; border-top: 1px solid var(--border-hair);
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 16px;
+  }
+  .hm-hero .hm-hero__founder {
+    position: static; width: auto; margin: 0;
+    display: flex; align-items: center; gap: 18px; min-width: 0;
+  }
+  .hm-hero .hm-hero__founder img { flex: none; width: 84px; }
+  .hm-hero .hm-hero__founder figcaption {
+    position: static; white-space: normal; text-align: left; display: grid; gap: 6px;
+    font-size: 11px; color: var(--amber-500);
+  }
+  .hm-hero .hm-hero__founder figcaption strong { font-size: 14px; letter-spacing: 0.14em; color: var(--ink-900); }
+  .hm-hero .hm-hero__founder figcaption::before { position: static; display: block; width: 24px; height: 1px; background: var(--amber-500); margin-bottom: 4px; }
+  .hm-hero .hm-hero__founder { order: 1; }
+  .hm-hero .hm-hero__mark { order: 2; position: static; width: 48px; opacity: 0.9; align-self: center; }
+}
+@media (max-width: 767px) {
+  /* Phones: drop the "Explore what we do" link; its gold underline becomes the
+     divider above the founder row instead. */
+  .hm-hero__actions > .ll-btn--ghost { display: none; }
+  .hm-hero .hm-hero__side { margin: 28px 20px 0; padding-top: 20px; border-top-color: var(--amber-500); }
+  .hm-hero { padding-bottom: 20px; }
+}
+
+/* ── Claude Skills top bar (above the nav, scrolls away) ─────────────────── */
+.ll-topbar { display: block; background: var(--ink-900); color: var(--paper-100); text-decoration: none; border-bottom: 1px solid var(--amber-500); transition: background .25s; }
+.ll-topbar, .ll-topbar:visited, .ll-topbar:hover, .ll-topbar:focus-visible { color: var(--paper-100); }
+.ll-topbar:hover, .ll-topbar:focus-visible { background: var(--ink-800); }
+.ll-topbar__inner { max-width: 1440px; margin: 0 auto; min-height: 36px; padding: 8px 24px; display: flex; align-items: center; justify-content: center; gap: 12px;
+  font-family: var(--font-label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.3; text-align: center; }
+.ll-topbar__tag { color: var(--amber-500); white-space: nowrap; }
+.ll-topbar__sep { width: 1px; height: 12px; background: var(--border-hair-inverse); flex: none; }
+.ll-topbar__go { display: inline-flex; flex: none; transition: transform .3s cubic-bezier(.32,.72,0,1); }
+.ll-topbar:hover .ll-topbar__go { transform: translateX(3px); }
+@media (max-width: 420px) {
+  .ll-topbar__inner { padding: 8px 16px; gap: 10px; font-size: 10px; letter-spacing: 0.12em; }
+}

@@ -15,7 +15,7 @@ import './styles/pages/landing.css';
 import './styles/pages/brand-design.css';
 import './styles/pages/consulting.css';
 import './styles/pages/marketplace.css';
-import MarketplaceTab from './components/navigation/MarketplaceTab';
+import SkillsTopBar from './components/navigation/SkillsTopBar';
 // Loaded with the app, not lazily: a lazy chunk left the page empty for a beat
 // and the footer jumped to the top of the screen while it loaded.
 import Marketplace from './pages/Marketplace';
@@ -172,6 +172,7 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
+      {page !== 'Marketplace' && page !== 'MarketplaceThankYou' && <SkillsTopBar es={es} onNavigate={navigate} />}
       <NavBar items={nav} active={page} onNavigate={navigate} overHero={false} home={page === 'Home'}
         feature={{ page: 'LoogoNews', label: es ? 'Perspectivas' : 'Industry insights' }}
         cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}
@@ -197,7 +198,6 @@ function App({ initialPath }) {
         style={page === 'Home' ? { marginTop: 0 } : undefined}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
-      <MarketplaceTab active={page === 'Marketplace'} page={page} onNavigate={navigate} />
       <CookieConsent />
     </div>
   );

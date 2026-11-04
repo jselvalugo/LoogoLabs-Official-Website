@@ -51,7 +51,7 @@ const body = (md) => md.replace(/^---[\s\S]*?---\s*/, '');
 export const CATEGORIES = ['All', 'Brand', 'Social', 'Paid ads', 'Conversion', 'Sales', 'Local', 'Agency', 'Strategy', 'Tracking', 'Email'];
 
 export const SKILLS = [
-  // Lead magnet: free, unlocked with an email (tag "brand-brain" in the CRM email list).
+  // Free skills are lead magnets: each unlocks with an email (CRM email list tag = the skill's slug).
   {
     slug: 'brand-brain',
     name: 'Brand Brain',
@@ -71,6 +71,7 @@ export const SKILLS = [
     name: 'Ad Copy Workshop',
     category: 'Paid ads',
     tier: 'free',
+    leadMagnet: true,
     icon: 'Megaphone',
     tagline: 'Platform-ready ad copy in five angles, every line counted against the limit.',
     description:
@@ -84,6 +85,7 @@ export const SKILLS = [
     name: 'Campaign Brief Builder',
     category: 'Strategy',
     tier: 'free',
+    leadMagnet: true,
     icon: 'ClipboardText',
     tagline: 'Messy notes in, a one-page brief your whole team can work from out.',
     description:
@@ -97,6 +99,7 @@ export const SKILLS = [
     name: 'UTM & Tracking Plan',
     category: 'Tracking',
     tier: 'free',
+    leadMagnet: true,
     icon: 'LinkSimple',
     tagline: 'One naming convention, a full link sheet, and the events worth tracking.',
     description:
@@ -110,6 +113,7 @@ export const SKILLS = [
     name: 'SaaS Email Sequences',
     category: 'Email',
     tier: 'free',
+    leadMagnet: true,
     icon: 'EnvelopeSimple',
     tagline: 'Onboarding, trial-to-paid and win-back flows built around activation.',
     description:
