@@ -8,6 +8,11 @@ import { getSessionId } from '../lib/sessionTracker';
 import { useHref, useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
 
+// Phone keyboards: Enter in the name field moves to email instead of submitting.
+const nextOnEnter = (e) => {
+  if (e.key === 'Enter' && e.target.name === 'name') { e.preventDefault(); e.currentTarget.elements.email?.focus(); }
+};
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
@@ -213,14 +218,17 @@ export default function ReputationAutopilot() {
       <Card>
         <Eyebrow>{es ? 'Evaluación · Casi terminas' : 'Fit check · Almost done'}</Eyebrow>
         <StepHeading>{es ? '¿A dónde te enviamos tus resultados?' : 'Where should we send your results?'}</StepHeading>
-        <div className="lp-fields">
-          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName}
+        <form className="lp-fields" noValidate onKeyDown={nextOnEnter} onSubmit={(e) => { e.preventDefault(); confirmContact(); }}>
+          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName} name="name"
+            autoComplete="name" autoCapitalize="words" enterKeyHint="next"
             onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))}
             placeholder={es ? 'María García' : 'Jane Smith'} />
-          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email}
+          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email} name="email"
+            autoComplete="email" inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} enterKeyHint="go"
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
             placeholder={es ? 'maria@tunegocio.com' : 'jane@yourbusiness.com'} error={contactError} />
-        </div>
+          <button type="submit" className="ll-sr-submit" aria-hidden="true" tabIndex={-1} />
+        </form>
         <ContinueRow onNext={confirmContact} label={es ? 'Ver mis resultados' : 'See My Results'} />
       </Card>
     );
@@ -267,8 +275,9 @@ export default function ReputationAutopilot() {
             ))}
           </div>
           <div className="lp-hero__cta">
-            <ContinueRow onNext={() => go(1)} label={es ? 'Empezar mi evaluación de 60 segundos' : 'Start My 60-Second Fit Check'} />
+            <ContinueRow onNext={() => go(QUIZ_START)} label={es ? 'Empezar mi evaluación de 60 segundos' : 'Start My 60-Second Fit Check'} />
             <p className="lp-fine">{es ? 'Toma 60 segundos · Sin costo · Sin compromiso' : 'Takes 60 seconds · No cost · No obligation'}</p>
+            <button type="button" className="lp-skiplink" onClick={() => go(1)}>{es ? 'Primero quiero ver cómo funciona →' : 'Or see how it works first →'}</button>
           </div>
         </Card>
       );
@@ -352,7 +361,7 @@ export default function ReputationAutopilot() {
         <div className="ll-nav__bar lp-nav__bar">
           <div className="lp-nav__side">
             {step > 0 && !isResult && (
-              <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step - 1)}>
+              <button className="lp-back" aria-label={es ? 'Atrás' : 'Back'} onClick={() => go(step === QUIZ_START ? 0 : step - 1)}>
                 <ArrowLeft size={16} weight="bold" aria-hidden="true" /> <span className="lp-back__label">{es ? 'Atrás' : 'Back'}</span>
               </button>
             )}

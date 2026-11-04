@@ -102,7 +102,7 @@ export const NICHE_QUIZZES = [
     source: 'quiz_vacation_rental',
     path: '/quizzes/vacation-rental',
     label: 'Vacation Rental Direct Booking Check',
-    product: 'Guest messaging & direct bookings',
+    product: 'Guest messaging & direct booking',
     headline: 'Stop paying platform fees on guests who already love you.',
     lede: 'For short-term rental hosts and managers around Orlando, Kissimmee and Celebration. See how many repeat guests you could book direct.',
     description: 'For short-term rental hosts and managers in Central Florida: see how many repeat guests you could book direct.',
