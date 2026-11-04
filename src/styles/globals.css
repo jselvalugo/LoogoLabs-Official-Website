@@ -340,7 +340,8 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   color: var(--ink-400); cursor: pointer; font: 400 11px/1 var(--font-label); letter-spacing: 0.16em; border-radius: 0;
 }
 .ll-lang__opt:hover { color: var(--ink-900); }
-.ll-lang__opt.on { color: var(--ink-900); text-decoration: underline; text-underline-offset: 6px; text-decoration-color: var(--ink-900); }
+.ll-lang__opt.on { color: var(--ink-900); text-decoration: none; }
+.ll-lang__opt:not(.on) { color: var(--ink-300); }
 .ll-lang__opt { height: 32px; line-height: 1; }
 .ll-lang-dd { display: none; position: relative; }
 .ll-lang-dd__btn {
