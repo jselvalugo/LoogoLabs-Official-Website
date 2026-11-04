@@ -17,7 +17,7 @@ const EASE = [0.32, 0.72, 0, 1];
   and rests on the current page. On phones the burger opens a full-screen
   menu with large staggered links.
 */
-function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero = false }) {
+function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero = false, home = false }) {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [onHero, setOnHero] = React.useState(overHero);
@@ -57,7 +57,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
   const links = [...items.map(it => ({ key: it, page: it, label: label(it) })), ...(feature ? [{ key: feature.page, page: feature.page, label: feature.label }] : [])];
   const lit = hover ?? active;
   const dark = overHero && onHero && !scrolled;
-  const cls = ['ll-nav', scrolled ? 'll-nav--floating' : '', dark ? 'll-nav--dark' : '', open ? 'll-nav--open' : ''].filter(Boolean).join(' ');
+  const cls = ['ll-nav', home ? 'll-nav--home' : '', scrolled ? 'll-nav--floating' : '', dark ? 'll-nav--dark' : '', open ? 'll-nav--open' : ''].filter(Boolean).join(' ');
 
   return (
     <>
