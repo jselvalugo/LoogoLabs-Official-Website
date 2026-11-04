@@ -1170,3 +1170,6 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-cta__grid > .hm-buddy { top: 0; right: 0; width: 56px; }
   .hm-cta__grid.hm-has-buddy h2, .hm-cta__grid.hm-has-buddy p { padding-right: 62px; }
 }
+
+/* Invisible submit button so the phone keyboard's Go/Enter submits a form. */
+.ll-sr-submit { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; opacity: 0; }

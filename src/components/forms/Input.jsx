@@ -10,9 +10,9 @@ function Input({ label, hint, error, value, onChange, placeholder, type = 'text'
         onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         style={{
           fontFamily: mono ? 'var(--font-mono)' : 'var(--font-body)',
-          fontSize: 15, lineHeight: 1.4, color: 'var(--ink-900)',
+          fontSize: 16, lineHeight: 1.4, color: 'var(--ink-900)',
           background: disabled ? 'var(--paper-200)' : 'var(--paper-000)',
-          padding: '10px 12px', borderRadius: 'var(--radius-2)',
+          padding: '12px 14px', borderRadius: 'var(--radius-2)',
           border: '1px solid ' + (error ? 'var(--status-danger)' : focus ? 'var(--ink-900)' : 'var(--border-hair)'),
           outline: focus ? '2px solid var(--cyan-500)' : 'none', outlineOffset: 2,
           transition: 'border-color var(--dur-fast) var(--ease-standard)',

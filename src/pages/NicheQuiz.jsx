@@ -14,6 +14,11 @@ import { useHref, useLang, LangToggle } from '../lib/i18n';
 // intro → questions → name & email → result. Same funnel shape and lead
 // payload as the Reputation Autopilot quiz, minus the long intro sequence.
 
+// Phone keyboards: Enter in the name field moves to email instead of submitting.
+const nextOnEnter = (e) => {
+  if (e.key === 'Enter' && e.target.name === 'name') { e.preventDefault(); e.currentTarget.elements.email?.focus(); }
+};
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
@@ -108,13 +113,16 @@ export default function NicheQuiz({ page }) {
       <Card>
         <Eyebrow>{es ? 'Evaluación · Casi listo' : 'Fit check · Almost done'}</Eyebrow>
         <StepHeading>{es ? '¿A dónde te enviamos tus resultados?' : 'Where should we send your results?'}</StepHeading>
-        <div style={{ display: 'grid', gap: 16 }}>
-          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName}
+        <form style={{ display: 'grid', gap: 16 }} noValidate onKeyDown={nextOnEnter} onSubmit={(e) => { e.preventDefault(); submit(); }}>
+          <Input label={es ? 'Nombre completo' : 'Full name'} value={contact.fullName} name="name"
+            autoComplete="name" autoCapitalize="words" enterKeyHint="next"
             onChange={(e) => setContact((c) => ({ ...c, fullName: e.target.value }))} placeholder={es ? 'María Pérez' : 'Jane Smith'} />
-          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email}
+          <Input label={es ? 'Correo electrónico' : 'Email'} type="email" value={contact.email} name="email"
+            autoComplete="email" inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} enterKeyHint="go"
             onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))}
             placeholder={es ? 'maria@tunegocio.com' : 'jane@yourbusiness.com'} error={error} />
-        </div>
+          <button type="submit" className="ll-sr-submit" aria-hidden="true" tabIndex={-1} />
+        </form>
         <div style={{ marginTop: 32 }}>
           <Button variant="inverse" size="lg" iconRight={<Arrow />} onClick={submit} fullWidth>{es ? 'Ver mis resultados' : 'See My Results'}</Button>
         </div>
