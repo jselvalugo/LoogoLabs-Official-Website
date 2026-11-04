@@ -7,7 +7,7 @@ import { pathForPage } from '../../lib/seo';
 // Static tab pinned to the right edge of every page in the main site shell.
 // Hidden until the marketplace launches (see marketplaceEnabled), and only
 // rendered after mount so the pre-rendered HTML never contains it.
-function MarketplaceTab({ active, onNavigate }) {
+function MarketplaceTab({ active, page, onNavigate }) {
   const [show, setShow] = React.useState(false);
   const reduce = useReducedMotion();
   // On phones the nudge shrinks to its icon while the visitor scrolls down and
@@ -17,15 +17,25 @@ function MarketplaceTab({ active, onNavigate }) {
   React.useEffect(() => {
     if (!show) return undefined;
     let last = window.scrollY;
+    // Home on phones: stay an icon while the hero is on screen so the chip
+    // never sits on top of the founder photo in the hero's bottom-right corner.
+    const overHero = () => {
+      if (!window.matchMedia('(max-width: 720px)').matches) return false;
+      const hero = document.querySelector('.hm-hero');
+      return !!hero && hero.getBoundingClientRect().bottom > window.innerHeight - 80;
+    };
+    setCompact(overHero());
+    // Page changes animate in, so look again once the new page has rendered.
+    const recheck = setTimeout(() => setCompact(overHero()), 500);
     const onScroll = () => {
       const y = window.scrollY;
       if (Math.abs(y - last) < 8) return;
-      setCompact(y > 120 && y > last);
+      setCompact(overHero() || (y > 120 && y > last));
       last = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [show]);
+    return () => { clearTimeout(recheck); window.removeEventListener('scroll', onScroll); };
+  }, [show, page]);
   if (!show) return null;
 
   return (

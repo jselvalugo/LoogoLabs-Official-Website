@@ -423,20 +423,20 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-ticker-label { font-size: 15px; color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .ll-ticker-live { display: none; }
 .ll-ticker-belt { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.ll-ticker-track { display: flex; align-items: center; gap: 0 44px; width: max-content; animation: ll-marquee 36s linear infinite; }
+.ll-ticker-track { display: flex; align-items: center; gap: 0 52px; width: max-content; animation: ll-marquee 36s linear infinite; }
 .ll-ticker-belt:hover .ll-ticker-track { animation-play-state: paused; }
 @keyframes ll-marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .ll-ticker-track { animation: none; flex-wrap: wrap; width: auto; gap: 12px 36px; } .ll-ticker-track > [aria-hidden="true"] { display: none; } .ll-ticker-belt { -webkit-mask-image: none; mask-image: none; } }
 .ll-ticker-ref { font-size: 16px; font-weight: 500; color: var(--ink-700); white-space: nowrap; }
 .ll-ticker-sep { display: none; }
-.ll-ticker-logo { display: inline-flex; align-items: center; gap: 6px; height: 36px; white-space: nowrap;
-  filter: grayscale(1) contrast(1.05); opacity: 0.8; }
+.ll-ticker-logo { display: inline-flex; align-items: center; gap: 8px; height: 40px; white-space: nowrap;
+  filter: grayscale(1) contrast(1.05); opacity: 0.82; }
 .ll-ticker-logo img { display: block; height: 24px; width: auto; }
 .ll-ticker-logo--dark, .ll-ticker-logo--chip { background: var(--ink-900); padding: 0 10px; border-radius: var(--radius-1); }
 .ll-ticker-logo--dark img { height: 28px; }
 .ll-ticker-logo--fill { padding: 0; overflow: hidden; border-radius: var(--radius-1); }
 .ll-ticker-logo--fill img { height: 36px; }
-.ll-ticker-logo__cap { font: 500 12px/1 var(--font-body); color: var(--paper-000); }
+.ll-ticker-logo__cap { font: 500 14px/1 var(--font-body); color: var(--ink-900); letter-spacing: -0.01em; }
 .ll-ticker-logo--script { font: 500 15px/1 var(--font-body); color: var(--paper-000); padding: 0 12px; }
 
 /* ── Staple editorial patterns (Mission, Company, Packages …) ───────────────── */
@@ -748,7 +748,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 @media (prefers-reduced-motion: reduce) { .hm-acc__panel, .hm-acc__icon, .hm-acc__icon::after { transition: none; } }
 
 /* What we build: a forest band with four tiles. */
-.hm-build { padding: 112px 0; }
+.hm-build { padding: 112px 0; margin-top: 112px; }
 .hm-build__grid { margin-top: 56px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(27,42,18,0.18); border-left: 1px solid rgba(27,42,18,0.18); }
 .hm-build__tile { padding: 36px 32px 40px; border-right: 1px solid rgba(27,42,18,0.18); border-bottom: 1px solid rgba(27,42,18,0.18); position: relative; transition: background var(--dur-base) ease; }
 .hm-build__tile:hover { background: rgba(250,248,244,0.45); }
@@ -782,7 +782,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .hm-local__links em { font-style: normal; color: var(--ink-400); display: inline-block; transition: transform var(--dur-base) var(--ease-standard); }
 
 /* Closing band */
-.hm-cta { padding: 112px 0; }
+.hm-cta { padding: 112px 0; margin-top: 112px; }
 .hm-cta__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
 .hm-cta h2 { margin: 0; font-size: clamp(36px, 5vw, 68px); line-height: 1.02; letter-spacing: -0.01em; font-weight: 400; color: var(--paper-000); max-width: 14ch; }
 .hm-cta p { margin: 20px 0 0; max-width: 46ch; font-size: 17px; line-height: 1.6; color: var(--ink-200); }
@@ -1060,4 +1060,76 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-acc__cols { gap: 10px; }
   .hm-acc__col--plan, .hm-acc__col--build { padding: 16px 18px; }
   .hm-acc__col li { font-size: 15.5px; }
+}
+
+/* ── Home, phones: a shorter, easier read (desktop untouched) ─────────────────
+   Floating glass nav once you scroll, a condensed hero with the founder small
+   on the right, and tighter gaps between sections. Animations stay as they are. */
+@media (max-width: 900px) {
+  /* The header keeps its 64px slot so nothing jumps when the bar detaches. */
+  .ll-nav--home { height: 64px; }
+  .ll-nav--home .ll-nav__bar {
+    transition: background 280ms ease, border-color 280ms ease, height 320ms var(--ease-standard), margin 320ms var(--ease-standard),
+      border-radius 320ms var(--ease-standard), transform 320ms var(--ease-standard), box-shadow 280ms ease, padding 320ms var(--ease-standard);
+  }
+  .ll-nav--home.ll-nav--floating:not(.ll-nav--open) .ll-nav__bar {
+    height: 54px; margin: 0 10px; padding: 0 4px 0 14px; transform: translateY(8px); border-radius: 16px;
+    background: rgba(250, 248, 244, 0.62);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 12px 32px -16px rgba(27, 42, 18, 0.35), 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+  }
+  .ll-nav--home.ll-nav--floating .ll-nav__logo img { height: 28px; }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .ll-nav--home.ll-nav--floating:not(.ll-nav--open) .ll-nav__bar { background: rgba(250, 248, 244, 0.96); }
+  }
+}
+
+@media (max-width: 767px) {
+  /* Hero: no dead space on top; founder and monogram become one small row
+     tucked to the right under the buttons. */
+  .hm-hero { padding: 0 0 8px; }
+  .hm-hero__copy { padding: 28px 24px 0; }
+  .hm-hero__kicker { margin-bottom: 16px; }
+  .hm-hero__title { font-size: 40px; line-height: 1.02; }
+  .hm-hero__sub { margin-top: 14px; font-size: 11px; line-height: 1.6; }
+  .hm-hero__lede { margin-top: 14px; font-size: 15px; line-height: 1.6; }
+  .hm-hero__actions { margin-top: 22px; gap: 10px; }
+  .hm-hero__side { min-height: 0; height: 132px; margin-top: 4px; }
+  .hm-hero__mark { left: 24px; top: auto; bottom: 22px; width: 48px; opacity: 0.85; }
+  .hm-hero__founder { right: 72px; width: 108px; }
+  .hm-hero__founder figcaption { bottom: 38%; font-size: 9px; }
+
+  /* Client logos sit closer to the hero. */
+  .ll-ticker-bar { padding-top: 24px; gap: 14px; }
+  .ll-ticker-label { font-size: 13px; }
+
+  /* Section rhythm: one consistent, shorter gap. */
+  .hm-section { padding-top: 56px; }
+  .hm-build { margin-top: 56px; padding: 52px 0; }
+  .hm-cta { margin-top: 56px; padding: 56px 0 64px; }
+  .hm-build__grid { margin-top: 28px; }
+
+  /* Services accordion: same behaviour, less padding. */
+  .hm-acc__btn { padding: 16px 0; }
+  .hm-acc__body { gap: 14px; padding-bottom: 18px; }
+  .hm-acc__body > p { font-size: 15px; }
+  .hm-acc__col li { font-size: 14px; }
+
+  /* What we build: icon beside the title instead of above it. */
+  .hm-build__tile { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 14px; padding: 20px 18px 22px; }
+  .hm-build__tile svg { margin: 0; width: 24px; height: 24px; grid-row: 1; align-self: center; }
+  .hm-build__tile h3 { font-size: 20px; grid-column: 2; }
+  .hm-build__tile p { grid-column: 1 / -1; margin-top: 8px; font-size: 14px; line-height: 1.6; }
+
+  /* Local systems list */
+  .hm-local { gap: 20px; }
+  .hm-local__links a { padding: 16px 0; }
+  .hm-local__links strong { font-size: 20px; }
+  .hm-local__links span { font-size: 14px; }
+
+  /* Closing call to action */
+  .hm-cta h2 { font-size: 34px; }
+  .hm-cta p { font-size: 15px; margin-top: 14px; }
+  .hm-cta__grid { gap: 24px; }
 }

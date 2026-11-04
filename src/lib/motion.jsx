@@ -15,15 +15,27 @@ export function useMounted() {
   return m;
 }
 
+/* Pace: a page can wrap itself in <MotionPace pace={0.7}> to run its reveals a
+   little quicker (durations, delays and travel are scaled; the effects stay the
+   same). Default 1 leaves every other page exactly as it was. */
+const PaceContext = React.createContext({ pace: 1, amount: null });
+export function MotionPace({ pace = 1, amount = null, children }) {
+  const value = React.useMemo(() => ({ pace, amount }), [pace, amount]);
+  return <PaceContext.Provider value={value}>{children}</PaceContext.Provider>;
+}
+export const usePace = () => React.useContext(PaceContext);
+
 /* Reveal a block once as it scrolls into view. */
 export function Reveal({ children, delay = 0, y = 28, className, style, as = 'div', amount = 0.25, ...rest }) {
   const reduce = useReducedMotion(); const mounted = useMounted();
+  const { pace, amount: paceAmount } = usePace();
+  delay *= pace; y *= pace; if (paceAmount != null) amount = paceAmount;
   const Tag = motion[as] || motion.div;
   if (!mounted || reduce) { const Plain = as; return <Plain className={className} style={style} {...rest}>{children}</Plain>; }
   return (
     <Tag className={className} style={style}
       initial={{ opacity: 0, y }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount }}
-      transition={{ duration: 0.7, ease: EASE, delay }} {...rest}>
+      transition={{ duration: 0.7 * pace, ease: EASE, delay }} {...rest}>
       {children}
     </Tag>
   );
@@ -32,6 +44,8 @@ export function Reveal({ children, delay = 0, y = 28, className, style, as = 'di
 /* Stagger a list of children. Wrap each child in <Item>. */
 export function Stagger({ children, className, style, gap = 0.08, delay = 0, amount = 0.2, as = 'div' }) {
   const reduce = useReducedMotion(); const mounted = useMounted();
+  const { pace, amount: paceAmount } = usePace();
+  gap *= pace; delay *= pace; if (paceAmount != null) amount = paceAmount;
   const Tag = motion[as] || motion.div;
   if (!mounted || reduce) { const Plain = as; return <Plain className={className} style={style}>{children}</Plain>; }
   return (
@@ -43,10 +57,11 @@ export function Stagger({ children, className, style, gap = 0.08, delay = 0, amo
 }
 export function Item({ children, className, style, y = 24, as = 'div' }) {
   const reduce = useReducedMotion(); const mounted = useMounted();
+  const { pace } = usePace(); y *= pace;
   const Tag = motion[as] || motion.div;
   if (!mounted || reduce) { const Plain = as; return <Plain className={className} style={style}>{children}</Plain>; }
   return (
-    <Tag className={className} style={style} variants={{ hidden: { opacity: 0, y }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } } }}>
+    <Tag className={className} style={style} variants={{ hidden: { opacity: 0, y }, show: { opacity: 1, y: 0, transition: { duration: 0.6 * pace, ease: EASE } } }}>
       {children}
     </Tag>
   );
@@ -55,6 +70,7 @@ export function Item({ children, className, style, y = 24, as = 'div' }) {
 /* Headline whose words rise in one after another. */
 export function Words({ text, className, as = 'span', delay = 0, step = 0.05 }) {
   const reduce = useReducedMotion(); const mounted = useMounted();
+  const { pace } = usePace(); delay *= pace; step *= pace;
   const words = String(text).split(' ');
   const Tag = as;
   if (!mounted || reduce) return <Tag className={className}>{text}</Tag>;
@@ -64,7 +80,7 @@ export function Words({ text, className, as = 'span', delay = 0, step = 0.05 }) 
         <React.Fragment key={i}>
           <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', paddingBottom: '0.08em', marginBottom: '-0.08em' }} aria-hidden="true">
             <motion.span style={{ display: 'inline-block' }} initial={{ y: '110%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.8, ease: EASE, delay: delay + i * step }}>{w}</motion.span>
+              transition={{ duration: 0.8 * pace, ease: EASE, delay: delay + i * step }}>{w}</motion.span>
           </span>
           {i < words.length - 1 ? ' ' : ''}
         </React.Fragment>

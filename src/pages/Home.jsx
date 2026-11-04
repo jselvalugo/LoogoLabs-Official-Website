@@ -6,7 +6,7 @@ import { SITE, pathForPage } from '../lib/seo';
 import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
-import { Reveal, Stagger, Item, Words, Parallax, Magnetic, EASE, useMounted } from '../lib/motion';
+import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
@@ -149,7 +149,7 @@ function References() {
           {[0, 1].map(copy => items.map((item) => (
             item.src ? (
               <span key={`${copy}-${item.name}`} aria-hidden={copy === 1 || undefined} className={`ll-ticker-logo${item.dark ? ' ll-ticker-logo--dark' : ''}${item.chip ? ' ll-ticker-logo--chip' : ''}${item.fill ? ' ll-ticker-logo--fill' : ''}`}>
-                <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" />
+                <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" style={item.th ? { height: item.th } : undefined} />
                 {item.caption && <span className="ll-ticker-logo__cap">{item.caption}</span>}
               </span>
             ) : (
@@ -308,7 +308,11 @@ function StickyCta({ es }) {
 function Home({ onNavigate }) {
   const es = useLang() === 'es';
   const toHref = useHref();
+  // Phones: same animations, about 30% quicker, and blocks start revealing as
+  // soon as they peek in, so nobody waits on text while scrolling.
+  const phone = useMedia('(max-width: 767px)');
   return (
+    <MotionPace pace={phone ? 0.7 : 1} amount={phone ? 0.12 : null}>
     <main>
       <Hero es={es}>
             <div className="hm-hero__copy">
@@ -345,7 +349,7 @@ function Home({ onNavigate }) {
 
       <Explorer es={es} />
 
-      <section className="hm-build ll-band ll-band--tan" style={{ marginTop: 112 }}>
+      <section className="hm-build ll-band ll-band--tan">
         <Wrap>
           <Reveal>
           <SectionHeading eyebrow={es ? 'Qué construimos' : 'What we build'}
@@ -383,7 +387,7 @@ function Home({ onNavigate }) {
         </div>
       </Wrap>
 
-      <section className="hm-cta ll-band" style={{ marginTop: 112, position: 'relative', overflow: 'hidden' }}>
+      <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
         <AmbientShape index={3} className="hm-cta__shape" />
         <Wrap style={{ position: 'relative' }}>
           <div className="hm-cta__grid">
@@ -401,6 +405,7 @@ function Home({ onNavigate }) {
 
       <StickyCta es={es} />
     </main>
+    </MotionPace>
   );
 }
 
