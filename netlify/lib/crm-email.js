@@ -240,3 +240,52 @@ export function portalActivityEmail({ clientName, title, version, event, author,
 
   return { subject, html, text };
 }
+
+// Branded "your download is ready" email for a paid marketplace skill. Sent once per
+// order (netlify/functions/skill-order.js) so buyers always have the link in their inbox.
+export function skillDownloadEmail({ name, link, days }) {
+  const subject = `Your ${name} download`;
+  const preheader = `Your skill is ready. The download link keeps working for ${days} days.`;
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${esc(subject)}</title></head>
+<body style="margin:0;padding:0;background:${CREAM};">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${CREAM};">
+    <tr><td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid ${LINE};border-radius:14px;overflow:hidden;">
+        <tr><td style="padding:28px 36px 22px;border-bottom:4px solid ${GREEN};">
+          <img src="${LOGO}" width="260" alt="Loogo Labs — AI, Marketing &amp; Automation" style="display:block;width:260px;max-width:100%;height:auto;border:0;">
+        </td></tr>
+        <tr><td style="padding:34px 36px 8px;">
+          <div style="font:500 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:${GREEN};">Your download</div>
+          <h1 style="margin:10px 0 0;font:400 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};">${esc(name)}</h1>
+          <p style="margin:18px 0 0;font:16px/1.6 Helvetica,Arial,sans-serif;color:${INK};">Thanks for your purchase. Your skill is ready to download. Keep this email: the link works for ${days} days, so you can download it again on another computer.</p>
+          <p style="margin:12px 0 0;font:16px/1.6 Helvetica,Arial,sans-serif;color:${INK};"><b>To install:</b> in Claude, go to Settings → Capabilities → Skills → Upload skill and choose the .zip. In Claude Code, unzip it into <span style="font-family:Menlo,monospace;">~/.claude/skills/</span>.</p>
+        </td></tr>
+        <tr><td align="left" style="padding:26px 36px 34px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td style="background:${GREEN};border-radius:999px;">
+              <a href="${esc(link)}" style="display:inline-block;padding:15px 34px;font:600 15px/1 Helvetica,Arial,sans-serif;color:#FFFFFF;text-decoration:none;letter-spacing:.02em;">Download your skill →</a>
+            </td>
+          </tr></table>
+          <p style="margin:16px 0 0;font:13px/1.5 Helvetica,Arial,sans-serif;color:${MUTED};">Button not working? Paste this into your browser:<br><a href="${esc(link)}" style="color:${GREEN};word-break:break-all;">${esc(link)}</a></p>
+          <p style="margin:16px 0 0;font:13px/1.5 Helvetica,Arial,sans-serif;color:${MUTED};">Trouble with the file? Just reply to this email or write to david@loogolabs.com and we'll send it to you directly.</p>
+        </td></tr>
+        <tr><td style="padding:20px 36px;background:${CREAM};border-top:1px solid ${LINE};">
+          <p style="margin:0;font:14px/1.5 Helvetica,Arial,sans-serif;color:${INK};">Thanks,<br>The Loogo Labs team</p>
+          <p style="margin:12px 0 0;font:500 10px/1.4 Helvetica,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:${MUTED};">Loogo Labs LLC · AI, Marketing &amp; Automation · <a href="${SITE}" style="color:${MUTED};">loogolabs.com</a></p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+  const text = [
+    `Your ${name} download`, '',
+    `Thanks for your purchase. Your skill is ready. The link works for ${days} days:`,
+    link, '',
+    'To install: in Claude, Settings → Capabilities → Skills → Upload skill and choose the .zip. In Claude Code, unzip it into ~/.claude/skills/.', '',
+    'Trouble with the file? Reply to this email or write to david@loogolabs.com and we\'ll send it to you directly.', '',
+    'Thanks,\nThe Loogo Labs team · loogolabs.com',
+  ].join('\n');
+  return { subject, html, text };
+}
