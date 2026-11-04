@@ -61,13 +61,13 @@ const EXAMPLE = {
 
 // Outlet types in the distribution network. Shown as text wordmarks, not logos.
 const PLACEMENTS = [
-  { outlet: 'Google News', style: { fontWeight: 600 }, path: 'news.google.com', note: 'Indexed' },
-  { outlet: 'FOX affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business news' },
-  { outlet: 'NBC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station press releases' },
-  { outlet: 'CBS affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station news partners' },
-  { outlet: 'ABC affiliate', style: { fontWeight: 800, letterSpacing: '0.04em' }, path: 'local station business wire' },
-  { outlet: 'AP News', style: { fontWeight: 800 }, path: 'apnews.com/press-release', note: 'Add-on' },
-  { outlet: 'Barchart', style: { fontWeight: 700 }, path: 'barchart.com/story/news', note: 'Add-on' },
+  { outlet: 'Google News', style: { fontWeight: 500 }, path: 'news.google.com', note: 'Indexed' },
+  { outlet: 'FOX affiliate', style: { fontWeight: 500, letterSpacing: 0 }, path: 'local station business news' },
+  { outlet: 'NBC affiliate', style: { fontWeight: 500, letterSpacing: 0 }, path: 'local station press releases' },
+  { outlet: 'CBS affiliate', style: { fontWeight: 500, letterSpacing: 0 }, path: 'local station news partners' },
+  { outlet: 'ABC affiliate', style: { fontWeight: 500, letterSpacing: 0 }, path: 'local station business wire' },
+  { outlet: 'AP News', style: { fontWeight: 500 }, path: 'apnews.com/press-release', note: 'Add-on' },
+  { outlet: 'Barchart', style: { fontWeight: 500 }, path: 'barchart.com/story/news', note: 'Add-on' },
 ];
 
 const EXAMPLE_HEADLINE_ES = 'Lakeside Comfort HVAC abre su segunda sucursal en el centro de Florida';

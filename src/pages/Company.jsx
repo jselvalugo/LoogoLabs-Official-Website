@@ -17,7 +17,7 @@ const DISCIPLINES = [
   ['Project management',
     'Scoping, sequencing, managing stakeholders and landing work on time is how I run every Loogo Labs client. Discovery, setup, automations, training and support is a project plan, not a sales pitch.'],
   ['Marketing',
-    'Years in performance marketing showed me where small businesses really leak money: slow follow-up, scattered tools and no system behind the leads they already paid for. Loogo Labs exists to close those leaks.'],
+    'Years in performance marketing showed me where growth really leaks: a strategy nobody builds, tracking nobody trusts and leads nobody follows up. Loogo Labs exists to close those gaps, with the plan and the build in one place.'],
 ];
 
 const DISCIPLINES_ES = [
@@ -28,7 +28,7 @@ const DISCIPLINES_ES = [
   ['Gestión de proyectos',
     'Definir el alcance, ordenar las tareas, coordinar a las partes involucradas y entregar a tiempo es como manejo a cada cliente de Loogo Labs. Descubrimiento, configuración, automatizaciones, capacitación y soporte son un plan de proyecto, no un discurso de ventas.'],
   ['Marketing',
-    'Años en marketing de rendimiento me mostraron dónde los pequeños negocios realmente pierden dinero: seguimiento lento, herramientas dispersas y ningún sistema detrás de los prospectos por los que ya pagaron. Loogo Labs existe para cerrar esas fugas.'],
+    'Años en marketing de rendimiento me mostraron dónde se fuga el crecimiento: una estrategia que nadie construye, un seguimiento en el que nadie confía y prospectos a los que nadie da seguimiento. Loogo Labs existe para cerrar esas brechas, con el plan y la construcción en un mismo lugar.'],
 ];
 
 const ICONS = [FileText, Bank, Kanban, Megaphone].map((C) => <C key="i" size={22} weight="bold" />);
@@ -44,7 +44,7 @@ function Company({ onNavigate }) {
           <div className="ll-staple-founder ll-bezel">
             <img src="/founder-david-selva.jpg" alt={es ? `${SITE.founder}, fundador de ${SITE.name}` : `${SITE.founder}, founder of ${SITE.name}`} onError={() => setImgOk(false)} width={480} height={600} />
             <div className="ll-staple-founder-tag ll-glass">
-              <div style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{SITE.founder}</div>
+              <div style={{ fontWeight: 500, color: 'var(--ink-900)' }}>{SITE.founder}</div>
               <div className="ll-staple-meta">{es ? 'Fundador · De Coamo, PR a Celebration, FL' : 'Founder · Coamo, PR to Celebration, FL'}</div>
             </div>
           </div>
@@ -53,20 +53,20 @@ function Company({ onNavigate }) {
           <h1 style={{ margin: 0, font: 'inherit' }}><span className="ll-staple-kicker ll-staple-kicker--light">{es ? 'Conoce al fundador' : 'Meet the founder'}</span></h1>
           {es ? (
           <blockquote>
-            “La prestación de servicios ha sido mi carrera durante los últimos 5 años. Ahora la ofrezco a los
-            negocios de mi propia comunidad, porque cada dueño local merece un equipo que se presente,
-            cumpla lo prometido y trate su negocio como familia.”
+            “He pasado mi carrera construyendo sistemas que hacen que las cosas realmente se cumplan.
+            Loogo Labs es eso aplicado al marketing: escribimos el plan, construimos lo que necesita
+            y nos quedamos para operarlo. Nada se queda en una presentación.”
           </blockquote>
           ) : (
           <blockquote>
-            “Service delivery has been my career for the past 5 years. Now I deliver it for the
-            businesses in my own backyard, because every local owner deserves a team that shows
-            up, follows through and treats their business like family.”
+            “I have spent my career building systems that make things actually get done.
+            Loogo Labs is that applied to marketing: we write the plan, build what it needs
+            and stay to run it. Nothing gets left in a deck.”
           </blockquote>
           )}
           {imgOk ? null : (
             <div style={{ marginTop: 24 }}>
-              <div style={{ fontWeight: 700, color: 'var(--ink-900)' }}>{SITE.founder}</div>
+              <div style={{ fontWeight: 500, color: 'var(--ink-900)' }}>{SITE.founder}</div>
               <div className="ll-staple-meta">{es ? 'Fundador · De Coamo, PR a Celebration, FL' : 'Founder · Coamo, PR to Celebration, FL'}</div>
             </div>
           )}
@@ -102,13 +102,13 @@ function Company({ onNavigate }) {
             <h2 className="ll-staple-h2">{es ? 'Hablas con el fundador, no con un call center.' : 'You talk to the founder, not a call center.'}</h2>
             {es ? (
             <p>
-              Cuando trabajas con {SITE.name}, tienes a la persona que diseñó el sistema y lo opera.
-              Si tienes un negocio en el Centro de Florida y estás listo para dejar de perder prospectos, hablemos.
+              Cuando trabajas con {SITE.name}, tienes a la persona que escribió el plan y construyó el sistema.
+              Si tienes una marca SaaS, una audiencia o un negocio de servicios y quieres que el marketing por fin se construya, hablemos.
             </p>
             ) : (
             <p>
-              When you work with {SITE.name}, you get the person who designed the system and runs it.
-              If you are a Central Florida business owner ready to stop losing leads, let's talk.
+              When you work with {SITE.name}, you get the person who wrote the plan and built the system.
+              If you run a SaaS brand, an audience or a service business and want marketing that actually gets built, let's talk.
             </p>
             )}
             <div className="ll-staple-actions">

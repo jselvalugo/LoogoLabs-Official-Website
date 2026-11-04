@@ -17,7 +17,7 @@ function Input({ label, hint, error, value, onChange, placeholder, type = 'text'
           outline: focus ? '2px solid var(--cyan-500)' : 'none', outlineOffset: 2,
           transition: 'border-color var(--dur-fast) var(--ease-standard)',
         }} {...rest} />
-      {error ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--status-danger)' }}>{error}</span>
+      {error ? <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: 'var(--status-danger)' }}>{error}</span>
         : hint ? <span style={{ fontSize: 13, color: 'var(--ink-400)' }}>{hint}</span> : null}
     </div>
   );

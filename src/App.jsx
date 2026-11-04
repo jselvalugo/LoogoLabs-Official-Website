@@ -1,6 +1,5 @@
 import React from 'react';
 import NavBar from './components/navigation/NavBar';
-import SeasonalGarland from './components/navigation/SeasonalGarland';
 import Button from './components/core/Button';
 import Footer from './components/navigation/Footer';
 import CookieConsent from './components/feedback/CookieConsent';
@@ -26,10 +25,9 @@ import { SERVICE_PACKAGE_BY_PAGE } from './lib/servicePackages';
 import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
-import { PINNED_EVENT_SLUGS } from './lib/featuredEvent';
 import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-const [EVENT_POST_SLUG] = PINNED_EVENT_SLUGS;
 import { citySlugFromPage } from './lib/cfl';
 import { voiceCitySlugFromPage } from './lib/voiceCities';
 
@@ -65,6 +63,9 @@ function App({ initialPath }) {
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
   const es = useLang() === 'es';
+  const reduce = useReducedMotion();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
 
   const navigate = React.useCallback((target, param, { push = true } = {}) => {
     const slug = target === 'BlogPost' ? param : null;
@@ -144,7 +145,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Home', 'BrandPartners'];
+  const nav = ['Mission', 'Company'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -163,29 +164,29 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      <aside aria-label={es ? 'Próximo evento' : 'Upcoming event'}>
-      <a href={`${BLOG_BASE}/${EVENT_POST_SLUG}`} className="ll-topbar ll-topbar--event"
-        onClick={e => { e.preventDefault(); navigate('BlogPost', EVENT_POST_SLUG); }}>
-        <span className="ll-topbar__gem" aria-hidden="true">◆</span>
-        <span className="ll-topbar-text">
-          <span className="ll-topbar__gold">Cards &amp; Cocktails</span>{es ? ' · 14 de nov' : ' · Nov 14'}<span className="ll-topbar-long">{es ? ' · Noche de Pokémon TCG en Lakeland · Entrada gratis' : ' · Pokémon TCG night in Lakeland · Free entry'}</span>
-        </span>
-        <span className="ll-topbar__arrow" aria-hidden="true">→</span>
-      </a>
-      </aside>
-      <NavBar items={nav} active={page} onNavigate={navigate}
-        feature={{ page: 'LoogoNews', label: es ? 'LoogoBlog de la industria' : 'Industry LoogoBlog' }}
-        cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
+      <NavBar items={nav} active={page} onNavigate={navigate} overHero={false}
+        feature={{ page: 'LoogoNews', label: es ? 'Perspectivas' : 'Industry insights' }}
+        cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}
       />
-      <SeasonalGarland />
-      <div onClick={handleLinkClick}>{body}</div>
+      <div onClick={handleLinkClick}>
+        {!mounted || reduce ? body : (
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={page + (postSlug || '')} className="ll-page"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}>
+              {body}
+            </motion.div>
+          </AnimatePresence>
+        )}
+      </div>
       <Footer
         columns={[
-          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'AI Voice', 'Book a Call'] },
-          { title: es ? 'Plataforma' : 'Platform', links: ['Industry LoogoBlog', 'Central Florida', 'Quizzes', 'Packaged Services'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Industry LoogoBlog', 'Book a Call'] },
+          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
+        style={page === 'Home' ? { marginTop: 0 } : undefined}
         onNavigate={p => navigate(p === 'Launch notes' ? 'LoogoNews' : p)}
         onAdmin={() => navigate('Admin')} />
       <CookieConsent />

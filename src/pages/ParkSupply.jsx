@@ -73,7 +73,7 @@ const Wrap = ({ children, style }) => (
 );
 
 const Eyebrow = ({ children, light }) => (
-  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
+  <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none',
     color: light ? 'var(--cyan-500)' : 'var(--ink-400)', marginBottom: 12 }}>
     {children}
   </div>
@@ -82,7 +82,7 @@ const Eyebrow = ({ children, light }) => (
 const btn = (variant = 'primary') => ({
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
   minHeight: 44, padding: '10px 18px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
-  fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 600, letterSpacing: '-0.005em', whiteSpace: 'nowrap',
+  fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 500, letterSpacing: '-0.005em', whiteSpace: 'nowrap',
   transition: 'transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard)',
   ...(variant === 'primary'
     ? { background: 'var(--ink-900)', color: 'var(--paper-000)', border: '1px solid var(--ink-900)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.14), 0 10px 22px -12px rgba(26,38,16,0.55)' }
@@ -100,7 +100,7 @@ function Field({ label, value, onChange, type = 'text', placeholder, textarea })
   const id = React.useId();
   return (
     <div style={{ display: 'grid', gap: 5 }}>
-      <label htmlFor={id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-700)' }}>{label}</label>
+      <label htmlFor={id} style={{ fontSize: 13, fontWeight: 500, color: 'var(--ink-700)' }}>{label}</label>
       {textarea
         ? <textarea id={id} value={value} placeholder={placeholder} rows={3} onChange={(e) => onChange(e.target.value)} style={{ ...fieldStyle, resize: 'vertical' }} />
         : <input id={id} type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} style={fieldStyle} />}
@@ -243,13 +243,13 @@ export default function ParkSupply() {
       <div className="ps-screen">
         {/* ── TOP BAR ── */}
         <header className="ll-nav">
-          <div className="ll-nav__bar ll-glass--dark" style={{ justifyContent: 'space-between', gap: 12 }}>
+          <div className="ll-nav__bar" style={{ justifyContent: 'space-between', gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
               {/* The mark is solid dark green, so it sits on a light chip against the dark bar. */}
               <a href="/" aria-label="Loogo Labs home" className="ll-nav__logo">
-                <img src="/logo.png" alt="Loogo Labs" width="28" height="28" />
+                <img src="/monogram.png" alt="Loogo Labs" width="28" height="28" />
               </a>
-              <span style={{ color: 'var(--paper-000)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
+              <span style={{ color: 'var(--paper-000)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
               <span className="ps-hide-sm" style={{ fontSize: 16, fontStyle: 'italic', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>Park Supply</span>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
@@ -300,7 +300,7 @@ export default function ParkSupply() {
           <Wrap>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
               <h2 className="ps-h2">Catalog</h2>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>{visible.length} products · list prices, USD</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--ink-400)' }}>{visible.length} products · list prices, USD</span>
             </div>
 
             <div className="ps-chips" role="tablist" aria-label="Product categories">
@@ -328,7 +328,7 @@ export default function ParkSupply() {
                         <div style={{ width: 64, height: 64, borderRadius: 'var(--radius-2)', background: 'var(--paper-100)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
                           <CategoryIcon category={p.category} />
                         </div>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'var(--ink-400)' }}>{p.sku}</span>
+                        <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, color: 'var(--ink-400)' }}>{p.sku}</span>
                       </div>
                     )}
                     <h3 style={{ margin: '14px 0 6px', fontSize: 17, lineHeight: 1.3, letterSpacing: '-0.01em', color: 'var(--ink-900)' }}>{p.name}</h3>
@@ -342,8 +342,8 @@ export default function ParkSupply() {
                     </ul>
                     <div style={{ marginTop: 'auto', paddingTop: 18, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
                       <div>
-                        <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(p.price)}</div>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{p.unit}</div>
+                        <div style={{ fontSize: 20, fontWeight: 500, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(p.price)}</div>
+                        <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-400)' }}>{p.unit}</div>
                       </div>
                       {inProposal ? (
                         <Stepper label={p.name} value={num(inProposal.qty)} onChange={(q) => setQty(p.sku, q)} />
@@ -386,8 +386,8 @@ export default function ParkSupply() {
                       return (
                         <div key={l.sku} className={`ps-line${staff ? '' : ' ps-line--buyer'}`}>
                           <div style={{ minWidth: 0 }}>
-                            <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink-900)' }}>{p.name}</div>
-                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginTop: 2 }}>{p.sku} · {usd(l.price)} {p.unit}</div>
+                            <div style={{ fontWeight: 500, fontSize: 14, color: 'var(--ink-900)' }}>{p.name}</div>
+                            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-400)', marginTop: 2 }}>{p.sku} · {usd(l.price)} {p.unit}</div>
                           </div>
                           {staff ? (
                             <>
@@ -403,7 +403,7 @@ export default function ParkSupply() {
                           ) : (
                             <Stepper label={p.name} value={num(l.qty)} onChange={(q) => setQty(l.sku, q)} />
                           )}
-                          <div style={{ textAlign: 'right', fontWeight: 700, fontSize: 15, color: 'var(--ink-900)', whiteSpace: 'nowrap' }}>{usd(num(l.qty) * num(l.price))}</div>
+                          <div style={{ textAlign: 'right', fontWeight: 500, fontSize: 15, color: 'var(--ink-900)', whiteSpace: 'nowrap' }}>{usd(num(l.qty) * num(l.price))}</div>
                           <button type="button" aria-label={`Remove ${p.name}`} onClick={() => removeLine(l.sku)}
                             className="ps-remove">×</button>
                         </div>
@@ -483,10 +483,10 @@ export default function ParkSupply() {
         {itemCount > 0 && !builderInView && submitState.status !== 'sent' && (
           <div className="ps-dock">
             <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: 'var(--ink-200)' }}>
                 {itemCount} item{itemCount === 1 ? '' : 's'} · est.
               </div>
-              <div style={{ fontWeight: 700, fontSize: 17 }}>{usd(totals.total)}</div>
+              <div style={{ fontWeight: 500, fontSize: 17 }}>{usd(totals.total)}</div>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
               style={{ ...btn('secondary'), background: 'var(--paper-000)', borderColor: 'transparent' }}>
@@ -575,13 +575,13 @@ function SitePlanner({ onAdd }) {
               ))}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginTop: 18 }}>
-              <span style={{ fontSize: 14, color: 'var(--ink-700)', fontWeight: 600 }}>{plan.countLabel}</span>
+              <span style={{ fontSize: 14, color: 'var(--ink-700)', fontWeight: 500 }}>{plan.countLabel}</span>
               <Stepper label={plan.countLabel} value={count} min={1} max={50} onChange={setCount} />
             </div>
           </div>
 
           <div className="ps-plan-preview">
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 10 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: 'var(--ink-400)', marginBottom: 10 }}>
               Starter kit · {plan.label}
             </div>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
@@ -591,14 +591,14 @@ function SitePlanner({ onAdd }) {
                   <li key={sku} style={{ display: 'grid', gridTemplateColumns: '44px 1fr auto', alignItems: 'center', gap: 10 }}>
                     <img src={p.image} alt="" width="44" height="44" style={{ width: 44, height: 44, objectFit: 'contain', background: '#fff', borderRadius: 12, border: '1px solid rgba(26,38,16,0.08)' }} />
                     <span style={{ fontSize: 14, color: 'var(--ink-900)', lineHeight: 1.3 }}>{p.name}</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-600)' }}>× {q}</span>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--ink-600)' }}>× {q}</span>
                   </li>
                 );
               })}
             </ul>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderTop: '1px solid var(--border-hair)', marginTop: 14, paddingTop: 12 }}>
               <span style={{ fontSize: 13, color: 'var(--ink-500)' }}>Estimate at list price</span>
-              <span style={{ fontWeight: 700, fontSize: 20, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(est)}</span>
+              <span style={{ fontWeight: 500, fontSize: 20, color: 'var(--ink-900)', letterSpacing: '-0.02em' }}>{usd(est)}</span>
             </div>
             <button type="button" onClick={() => onAdd(pairs, plan.label)} style={{ ...btn('primary'), width: '100%', marginTop: 16, minHeight: 50 }}>
               Add kit to my quote <span aria-hidden>+</span>
@@ -619,7 +619,7 @@ function QuoteSent({ number, email, onNew }) {
       <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--ink-900)', color: 'var(--paper-000)', display: 'grid', placeItems: 'center', fontSize: 22 }}>✓</div>
       <h3 style={{ margin: '14px 0 4px', fontSize: 20, color: 'var(--ink-900)' }}>Quote request sent</h3>
       <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-600)', lineHeight: 1.5 }}>
-        Reference <strong style={{ fontFamily: 'var(--font-mono)' }}>{number}</strong>. Here’s what happens next:
+        Reference <strong style={{ fontFamily: 'var(--font-body)' }}>{number}</strong>. Here’s what happens next:
       </p>
       <ol style={{ margin: '14px 0 0', paddingLeft: 18, display: 'grid', gap: 6, fontSize: 14, color: 'var(--ink-700)' }}>
         <li>We contact you at {email || 'the email you gave us'} to talk through your site.</li>
@@ -656,16 +656,16 @@ function ProposalDocument({ draft, totals }) {
       <header style={{ background: B.ink900, color: B.paper000, borderRadius: 8, padding: '22px 26px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ background: B.paper000, borderRadius: 6, padding: 6, display: 'flex' }}>
-            <img src="/logo.png" alt="" style={{ height: 46, width: 46, display: 'block' }} />
+            <img src="/monogram.png" alt="" style={{ height: 46, width: 46, display: 'block' }} />
           </div>
           <div>
-            <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>{SITE.name}</div>
+            <div style={{ fontSize: 26, fontWeight: 500, letterSpacing: '-0.03em', lineHeight: 1 }}>{SITE.name}</div>
             <div className="ps-doc-mono" style={{ color: B.ink200, marginTop: 7 }}>Park Supply · Pet waste stations & dog park amenities</div>
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div className="ps-doc-mono" style={{ color: B.ink200 }}>Proposal</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 15, fontWeight: 600, marginTop: 4, letterSpacing: '0.02em' }}>{draft.number}</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 500, marginTop: 4, letterSpacing: '0.02em' }}>{draft.number}</div>
           <div style={{ fontSize: 10.5, marginTop: 6, color: B.paper200 }}>Issued {fmt(today)}</div>
           <div style={{ fontSize: 10.5, color: B.paper200 }}>Valid until {fmt(validUntil)}</div>
         </div>
@@ -674,7 +674,7 @@ function ProposalDocument({ draft, totals }) {
       {/* ── Parties ── */}
       <section style={{ display: 'grid', gridTemplateColumns: (c.project || c.location) ? '1fr 1fr 1fr' : '1fr 1fr', gap: 10, marginTop: 14 }}>
         <DocCard label="Prepared for">
-          {c.organization && <div style={{ fontWeight: 700 }}>{c.organization}</div>}
+          {c.organization && <div style={{ fontWeight: 500 }}>{c.organization}</div>}
           {c.contact && <div>Attn: {c.contact}</div>}
           {c.email && <div>{c.email}</div>}
           {c.phone && <div>{c.phone}</div>}
@@ -682,12 +682,12 @@ function ProposalDocument({ draft, totals }) {
         </DocCard>
         {(c.project || c.location) && (
           <DocCard label="Project">
-            {c.project && <div style={{ fontWeight: 700 }}>{c.project}</div>}
+            {c.project && <div style={{ fontWeight: 500 }}>{c.project}</div>}
             {c.location && <div>{c.location}</div>}
           </DocCard>
         )}
         <DocCard label="Prepared by">
-          <div style={{ fontWeight: 700 }}>{SITE.name}</div>
+          <div style={{ fontWeight: 500 }}>{SITE.name}</div>
           <div>{SITE.founder}, Founder</div>
           <div>{SITE.email}</div>
           <div>loogolabs.com</div>
@@ -718,17 +718,17 @@ function ProposalDocument({ draft, totals }) {
             const bg = i % 2 ? B.paper000 : B.paper;
             return (
               <tr key={l.sku} style={{ breakInside: 'avoid' }}>
-                <td style={{ ...docTd, background: bg, color: B.ink400, fontFamily: 'var(--font-mono)', width: 22 }}>{String(i + 1).padStart(2, '0')}</td>
+                <td style={{ ...docTd, background: bg, color: B.ink400, fontFamily: 'var(--font-body)', width: 22 }}>{String(i + 1).padStart(2, '0')}</td>
                 <td style={{ ...docTd, background: bg }}>
                   <div>
-                    <span style={{ fontWeight: 700 }}>{p.name}</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: B.ink400, marginLeft: 8, letterSpacing: '0.04em' }}>{p.sku}</span>
+                    <span style={{ fontWeight: 500 }}>{p.name}</span>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 9, color: B.ink400, marginLeft: 8, letterSpacing: 0 }}>{p.sku}</span>
                   </div>
                   <div style={{ color: B.ink500, fontSize: 10.5, marginTop: 2, lineHeight: 1.4 }}>{p.specs.join(' · ')}</div>
                 </td>
                 <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap' }}>{num(l.qty)} <span style={{ color: B.ink400 }}>{p.unit}</span></td>
                 <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap' }}>{usd(l.price)}</td>
-                <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap', fontWeight: 700 }}>{usd(num(l.qty) * num(l.price))}</td>
+                <td style={{ ...docTd, background: bg, textAlign: 'right', whiteSpace: 'nowrap', fontWeight: 500 }}>{usd(num(l.qty) * num(l.price))}</td>
               </tr>
             );
           })}
@@ -764,7 +764,7 @@ function ProposalDocument({ draft, totals }) {
           </div>
           <div style={{ background: B.ink900, color: B.paper000, padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <span className="ps-doc-mono" style={{ color: B.ink200 }}>Total (USD)</span>
-            <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em' }}>{usd(totals.total)}</span>
+            <span style={{ fontSize: 20, fontWeight: 500, letterSpacing: '-0.02em' }}>{usd(totals.total)}</span>
           </div>
         </div>
       </section>
@@ -789,8 +789,8 @@ function ProposalDocument({ draft, totals }) {
       {/* ── Sign-off ── */}
       <footer style={{ marginTop: 20, paddingTop: 12, borderTop: `2px solid ${B.ink900}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, breakInside: 'avoid' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img src="/logo.png" alt="" style={{ height: 26, width: 26 }} />
-          <span style={{ fontWeight: 700, letterSpacing: '-0.02em' }}>Thank you for considering {SITE.name}.</span>
+          <img src="/monogram.png" alt="" style={{ height: 26, width: 26 }} />
+          <span style={{ fontWeight: 500, letterSpacing: '-0.02em' }}>Thank you for considering {SITE.name}.</span>
         </div>
         <span className="ps-doc-mono" style={{ color: B.ink400 }}>{SITE.email} · loogolabs.com</span>
       </footer>

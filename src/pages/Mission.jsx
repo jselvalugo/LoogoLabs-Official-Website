@@ -1,60 +1,61 @@
 import React from 'react';
 import Button from '../components/core/Button';
-import { ArrowRight, ArrowDown, CurrencyDollar, Target, HandHeart, Lifebuoy } from '@phosphor-icons/react';
+import { ArrowRight, ArrowDown, Blueprint, ChartLineUp, UsersThree, Lifebuoy } from '@phosphor-icons/react';
 import { openBooking } from '../lib/booking';
 import { useLang } from '../lib/i18n';
+import { Reveal, Stagger, Item, Counter } from '../lib/motion';
 
 // The Mission page is the house style for editorial pages: floating forest hero,
 // bento principles, sage stat strip, step cards, closing CTA panel.
 // All of its building blocks are the reusable `ll-staple-*` classes in globals.css.
 
-const TOOLS = ['CRM', 'Email marketing', 'Scheduling', 'Course platform', 'Social scheduler', 'Review requests', 'Forms & funnels', 'Invoicing'];
+const TOOLS = ['Strategy deck', 'Agency retainer', 'Freelance dev', 'Ads vendor', 'Email tool', 'CRM setup', 'Analytics consultant', 'AI pilot'];
 
 const PRINCIPLES = [
-  ['Software should make you money, not cost more of it',
-    'We got tired of watching good businesses overpay for disconnected tools that barely talk to each other. We brought it all under one roof and made sure the math works from day one.'],
-  ['The outcome is the product',
-    'The goal is never the software. More leads followed up, more deals closed, more content published without burning hours, and more time to work on the business instead of inside it.'],
-  ['Done for you, not handed to you',
-    'Every account is configured, automated and taught by us. Nothing is left for you to figure out alone.'],
+  ['A plan is only worth what gets built',
+    'Most marketing strategies die between the deck and the dev queue. We write the plan and build what it needs, so nothing waits on a handoff and the numbers start moving in weeks, not quarters.'],
+  ['Revenue is the only scoreboard',
+    'Clicks, impressions and followers are inputs. We measure positioning, campaigns and automations against customers and revenue, with tracking we set up ourselves so the numbers are real.'],
+  ['One team, end to end',
+    'Strategy, ads, email, tracking, automations, AI. The people who plan your growth are the same people who build and run it. You never translate between an agency and a developer again.'],
   ['We stay until it runs itself',
-    'We are not done until your operations run on their own, and 24/7 support is included the whole way there.'],
+    'Launch is the start. We review results monthly, keep the system healthy and hand over documentation, so your growth does not depend on us being in the room.'],
 ];
 
-const STATS = [['10+', 'Tools replaced'], ['$400+', 'Saved every month'], ['24/7', 'Support included']];
+const STATS = [['1', 'Team from plan to build'], ['30 days', 'To a live system'], ['Monthly', 'Review against revenue']];
 
 const STEPS = [
-  ['Discovery', 'We learn your business: what tools you pay for, what costs you the most, and what the platform has to do first.'],
-  ['Setup', 'We configure your account, build your pipelines, import your contacts and connect your existing systems.'],
-  ['Automations', 'We build the workflows that matter most first: lead follow-up, appointment reminders, review requests.'],
-  ['Training', 'We walk your team through the platform until everyone is confident, with recordings, guides and a direct line to us.'],
-  ['Ongoing support', '24/7 support, always. As your business grows, the platform grows with it.'],
+  ['Diagnose', 'We learn your product, your customers and your numbers: where leads come from today, where they leak, and what growth is worth to you.'],
+  ['Plan', 'Positioning, channels, budget and targets in one document your team can read in ten minutes, with the build list it needs.'],
+  ['Build', 'Pages, tracking, pipeline, automations and AI, built by us and connected to the tools you already use.'],
+  ['Launch', 'Campaigns and sequences go live in batches, each with a clear test and a number it has to hit.'],
+  ['Run and review', 'Monthly reviews against revenue. What worked gets more budget, what did not gets rewritten. Every month builds on the last.'],
 ];
 
-const TOOLS_ES = ['CRM', 'Email marketing', 'Agenda de citas', 'Plataforma de cursos', 'Programador de redes', 'Solicitudes de reseñas', 'Formularios y embudos', 'Facturación'];
+const TOOLS_ES = ['Presentación de estrategia', 'Agencia por mes', 'Desarrollador freelance', 'Proveedor de anuncios', 'Herramienta de email', 'Configuración de CRM', 'Consultor de analítica', 'Piloto de IA'];
 
 const PRINCIPLES_ES = [
-  ['El software debe hacerte ganar dinero, no costarte más',
-    'Nos cansamos de ver a buenos negocios pagar de más por herramientas desconectadas que casi no se comunican entre sí. Reunimos todo bajo un mismo techo y nos aseguramos de que los números cuadren desde el primer día.'],
-  ['El resultado es el producto',
-    'La meta nunca es el software. Es dar seguimiento a más prospectos, cerrar más ventas, publicar más contenido sin quemar horas y tener más tiempo para trabajar en tu negocio en lugar de dentro de él.'],
-  ['Lo hacemos por ti, no te lo dejamos a ti',
-    'Cada cuenta la configuramos, automatizamos y enseñamos nosotros. No te dejamos nada para que lo resuelvas solo.'],
+  ['Un plan vale lo que se construye',
+    'La mayoría de las estrategias de marketing mueren entre la presentación y la fila de desarrollo. Escribimos el plan y construimos lo que necesita, así nada espera un traspaso y los números se mueven en semanas, no en trimestres.'],
+  ['Los ingresos son el único marcador',
+    'Clics, impresiones y seguidores son insumos. Medimos el posicionamiento, las campañas y las automatizaciones contra clientes e ingresos, con un seguimiento que configuramos nosotros para que los números sean reales.'],
+  ['Un solo equipo, de principio a fin',
+    'Estrategia, anuncios, email, seguimiento, automatizaciones, IA. Las personas que planean tu crecimiento son las mismas que lo construyen y lo operan. Nunca vuelves a traducir entre una agencia y un desarrollador.'],
   ['Nos quedamos hasta que funcione solo',
-    'No terminamos hasta que tus operaciones funcionen por sí solas, y el soporte 24/7 está incluido en todo el camino.'],
+    'El lanzamiento es el inicio. Revisamos resultados cada mes, mantenemos el sistema sano y entregamos documentación, para que tu crecimiento no dependa de que estemos en la sala.'],
 ];
 
-const STATS_ES = [['10+', 'Herramientas reemplazadas'], ['$400+', 'De ahorro cada mes'], ['24/7', 'Soporte incluido']];
+const STATS_ES = [['1', 'Equipo del plan a la construcción'], ['30 días', 'Hasta un sistema en vivo'], ['Mensual', 'Revisión contra ingresos']];
 
 const STEPS_ES = [
-  ['Descubrimiento', 'Conocemos tu negocio: qué herramientas pagas, qué te cuesta más y qué debe resolver primero la plataforma.'],
-  ['Configuración', 'Configuramos tu cuenta, creamos tus embudos, importamos tus contactos y conectamos tus sistemas actuales.'],
-  ['Automatizaciones', 'Primero creamos los flujos que más importan: seguimiento de prospectos, recordatorios de citas y solicitudes de reseñas.'],
-  ['Capacitación', 'Guiamos a tu equipo por la plataforma hasta que todos se sientan seguros, con grabaciones, guías y línea directa con nosotros.'],
-  ['Soporte continuo', 'Soporte 24/7, siempre. A medida que tu negocio crece, la plataforma crece contigo.'],
+  ['Diagnóstico', 'Conocemos tu producto, tus clientes y tus números: de dónde vienen los prospectos hoy, dónde se pierden y cuánto vale crecer.'],
+  ['Plan', 'Posicionamiento, canales, presupuesto y metas en un documento que tu equipo lee en diez minutos, con la lista de lo que hay que construir.'],
+  ['Construcción', 'Páginas, seguimiento, pipeline, automatizaciones e IA, construidos por nosotros y conectados a las herramientas que ya usas.'],
+  ['Lanzamiento', 'Campañas y secuencias salen en lotes, cada uno con una prueba clara y un número que debe alcanzar.'],
+  ['Operación y revisión', 'Revisiones mensuales contra ingresos. Lo que funciona recibe más presupuesto; lo que no, se reescribe. Cada mes construye sobre el anterior.'],
 ];
 
-const ICONS = [CurrencyDollar, Target, HandHeart, Lifebuoy];
+const ICONS = [Blueprint, ChartLineUp, UsersThree, Lifebuoy];
 function Icon({ i }) { const C = ICONS[i]; return <C size={20} weight="bold" />; }
 
 function Mission({ onNavigate }) {
@@ -70,34 +71,34 @@ function Mission({ onNavigate }) {
               <span className="ll-staple-kicker">{es ? 'Nuestra misión' : 'Our mission'}</span>
               {es ? (
               <h1 className="ll-staple-title">
-                Manejar un negocio no debería requerir <em>15 herramientas distintas.</em>
+                La mayoría de los planes de marketing <em>nunca se construyen.</em>
               </h1>
               ) : (
               <h1 className="ll-staple-title">
-                Running a business shouldn’t take <em>15 different tools.</em>
+                Most marketing plans <em>never get built.</em>
               </h1>
               )}
               {es ? (
               <p className="ll-staple-lede">
-                La mayoría de los dueños entran a 10-15 plataformas cada día solo para las operaciones básicas.
-                Creamos una mejor manera, y nos encargamos de cada paso para configurarte, capacitarte y hacerte crecer con ella.
+                Una agencia escribe la estrategia. Un desarrollador espera las especificaciones. Entre los dos, los meses pasan.
+                Loogo Labs existe para cerrar esa brecha: un solo equipo que planea tu marketing y luego construye y opera el sistema que lo hace funcionar.
               </p>
               ) : (
               <p className="ll-staple-lede">
-                Most owners log into 10-15 platforms every day just to run basic operations. We built a
-                better way, and we handle every step of getting you set up, trained and growing on it.
+                An agency writes the strategy. A developer waits for the spec. Between the two, months go by.
+                Loogo Labs exists to close that gap: one team that plans your marketing, then builds and runs the system that makes it work.
               </p>
               )}
               <div className="ll-staple-actions">
                 <Button variant="primary" iconRight={<ArrowRight size={16} weight="bold" />} onClick={openBooking}>{es ? 'Agenda una llamada de estrategia gratis' : 'Book a free strategy call'}</Button>
               </div>
             </div>
-            <div className="ll-staple-collapse ll-glass--dark" aria-label={es ? 'Muchas herramientas reemplazadas por una sola plataforma' : 'Many tools replaced by one platform'}>
+            <div className="ll-staple-collapse ll-glass--dark" aria-label={es ? 'Muchos proveedores reemplazados por un solo equipo' : 'Many vendors replaced by one team'}>
               <ul>
                 {(es ? TOOLS_ES : TOOLS).map((t) => <li key={t}>{t}</li>)}
               </ul>
               <div className="ll-staple-collapse-arrow" aria-hidden="true"><ArrowDown size={22} /></div>
-              <div className="ll-staple-collapse-one">{es ? 'Una sola plataforma. Configurada por ti.' : 'One platform. Set up for you.'}</div>
+              <div className="ll-staple-collapse-one">{es ? 'Un equipo. Del plan a la construcción.' : 'One team. From plan to build.'}</div>
             </div>
           </div>
         </div>
@@ -108,17 +109,17 @@ function Mission({ onNavigate }) {
         <div className="ll-staple-split">
           <div className="ll-staple-sticky">
             <span className="ll-eyebrow">{es ? 'Lo que creemos' : 'What we believe'}</span>
-            {es ? <h2 className="ll-staple-h2">Cuatro principios detrás de <em>todo lo que creamos.</em></h2> : <h2 className="ll-staple-h2">Four principles behind <em>everything we build.</em></h2>}
+            {es ? <h2 className="ll-staple-h2">Cuatro principios detrás de <em>cómo trabajamos.</em></h2> : <h2 className="ll-staple-h2">Four principles behind <em>how we work.</em></h2>}
           </div>
-          <ol tabIndex={0} className="ll-staple-principles">
+          <Stagger as="ol" className="ll-staple-principles" gap={0.12}>
             {(es ? PRINCIPLES_ES : PRINCIPLES).map(([t, d], i) => (
-              <li key={t} className={`ll-reveal${i === 1 ? ' ll-staple-tile--sage' : i === 2 ? ' ll-staple-tile--glass' : ''}`}>
+              <Item as="li" key={t}>
                 <span className="ll-staple-num" aria-hidden="true"><Icon i={i} /></span>
                 <h3>{t}</h3>
                 <p>{d}</p>
-              </li>
+              </Item>
             ))}
-          </ol>
+          </Stagger>
         </div>
       </section>
 
@@ -127,7 +128,7 @@ function Mission({ onNavigate }) {
         <div className="ll-staple-stats ll-sage">
           {(es ? STATS_ES : STATS).map(([v, l]) => (
             <div key={v}>
-              <div className="ll-staple-stat-value">{v}</div>
+              <div className="ll-staple-stat-value"><Counter value={v} /></div>
               <div className="ll-staple-stat-label">{l}</div>
             </div>
           ))}
@@ -136,17 +137,17 @@ function Mission({ onNavigate }) {
 
       {/* ── Timeline ── */}
       <section className="ll-staple-wrap ll-staple-section">
-        {es ? <h2 className="ll-staple-h2">Cinco pasos. <em>Hechos por ti, cada vez.</em></h2> : <h2 className="ll-staple-h2">Five steps. <em>Done for you, every time.</em></h2>}
-        <p className="ll-staple-sub">{es ? 'Cada cliente pasa por el mismo proceso comprobado. Nunca tienes que resolverlo solo.' : 'Every client goes through the same proven process. You never have to figure it out alone.'}</p>
-        <ol tabIndex={0} className="ll-staple-timeline">
+        {es ? <h2 className="ll-staple-h2">Cinco pasos, <em>del plan al sistema en vivo.</em></h2> : <h2 className="ll-staple-h2">Five steps, <em>from plan to live system.</em></h2>}
+        <p className="ll-staple-sub">{es ? 'Cada cliente pasa por el mismo proceso. Sabes qué sigue y cuándo, desde la primera llamada.' : 'Every client goes through the same process. You know what comes next and when, from the first call.'}</p>
+        <Stagger as="ol" className="ll-staple-timeline" gap={0.1}>
           {(es ? STEPS_ES : STEPS).map(([t, d], i) => (
-            <li key={i} className="ll-glass ll-reveal">
+            <Item as="li" key={i}>
               <span className="ll-staple-node">{es ? 'Paso' : 'Step'} {i + 1}</span>
               <h3>{t}</h3>
               <p>{d}</p>
-            </li>
+            </Item>
           ))}
-        </ol>
+        </Stagger>
       </section>
 
       {/* ── Closing CTA ── */}
@@ -157,15 +158,15 @@ function Mission({ onNavigate }) {
             <h2 className="ll-staple-h2">{es ? 'Nos mantenemos cerca de cada cliente.' : 'We stay close to every client.'}</h2>
             {es ? (
             <p>
-              Mantenemos una lista de clientes selecta. Si tienes un negocio local, ofreces servicios o
-              tienes una marca en línea y estás cansado del caos de herramientas, esta conversación vale 15 minutos.
-              Te diremos exactamente lo que la plataforma puede hacer por ti, sin presentaciones de ventas.
+              Mantenemos una lista de clientes selecta. Si tienes una marca SaaS, una audiencia o un negocio
+              de servicios y estás cansado de estrategias que nadie termina de construir, esta conversación vale 30 minutos.
+              Te diremos qué planearíamos y qué construiríamos primero, sin presentación de ventas.
             </p>
             ) : (
             <p>
-              We keep our client list intentional. If you are a local business, service provider or
-              online brand tired of the tool chaos, this conversation is worth 15 minutes. We will tell
-              you exactly what the platform can do for you, no pitch deck required.
+              We keep our client list intentional. If you run a SaaS brand, an audience or a service business
+              and you are tired of strategies nobody finishes building, this conversation is worth 30 minutes.
+              We will tell you what we would plan and what we would build first, no pitch deck required.
             </p>
             )}
             <div className="ll-staple-actions">

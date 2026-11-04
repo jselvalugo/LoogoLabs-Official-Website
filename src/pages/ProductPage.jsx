@@ -50,14 +50,14 @@ function ProductPage({ product = 'CartCaddy', onNavigate }) {
         <Wrap style={{ padding: '80px 24px 64px', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div>
             <Badge tone="accent">{c.industry}</Badge>
-            <h1 style={{ margin: '18px 0 0', fontWeight: 700, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
+            <h1 style={{ margin: '18px 0 0', fontWeight: 500, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
               letterSpacing: 'var(--ls-display-2)', maxWidth: '20ch' }}>{c.headline}</h1>
             <p style={{ maxWidth: '50ch', margin: '20px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>{c.lede}</p>
             <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
               <Button variant="primary" iconRight={<span>→</span>} onClick={openBooking}>Book a free call</Button>
               <Button variant="secondary" onClick={() => onNavigate('Products')}>All products</Button>
             </div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)', marginTop: 20 }}>{product} · one application of the Loogo engine</div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: 'var(--ink-300)', marginTop: 20 }}>{product} · one application of the Loogo engine</div>
           </div>
           <Placeholder label="HERO IMAGE — SUPPLY REAL ASSET" height={340} />
         </Wrap>
@@ -68,7 +68,7 @@ function ProductPage({ product = 'CartCaddy', onNavigate }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, marginTop: 36 }}>
           {c.steps.map(([n, t, d], i) => (
             <div key={n} style={{ padding: i ? '0 24px' : '0 24px 0 0', borderLeft: i ? '1px solid var(--border-hair)' : 'none' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', color: 'var(--cyan-700)' }}>{n}</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, letterSpacing: 0, color: 'var(--cyan-700)' }}>{n}</div>
               <h3 style={{ margin: '10px 0 8px', fontSize: 'var(--fs-h3)', letterSpacing: 'var(--ls-h3)' }}>{t}</h3>
               <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-400)' }}>{d}</p>
             </div>

@@ -11,16 +11,16 @@
 .pk-hero--center { text-align: center; }
 .pk-hero--center .pk-lede, .pk-hero--center .pk-title { margin-left: auto; margin-right: auto; }
 .pk-title {
-  margin: 20px 0 0; max-width: 20ch; font-weight: 700; font-size: clamp(38px, 6vw, 76px); line-height: 1.0;
+  margin: 20px 0 0; max-width: 20ch; font-weight: 500; font-size: clamp(38px, 6vw, 76px); line-height: 1.0;
   letter-spacing: -0.045em; color: var(--ink-900); text-wrap: balance;
 }
-.pk-title em, .pk-h2 em { font-style: italic; font-weight: 600; color: var(--ink-500); }
+.pk-title em, .pk-h2 em { font-style: italic; font-weight: 500; color: var(--ink-500); }
 .pk-lede { margin: 24px 0 0; max-width: 58ch; font-size: 19px; line-height: 1.6; color: var(--ink-500); text-wrap: pretty; }
 .pk-hero__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-.pk-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-400); }
+.pk-tag { font-family: var(--font-body); font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--ink-400); }
 .pk-hero__meta { margin-top: 18px; }
 .pk-h2 {
-  margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 700; line-height: 1.05; letter-spacing: -0.04em;
+  margin: 0; font-size: clamp(28px, 3.4vw, 46px); font-weight: 500; line-height: 1.05; letter-spacing: -0.04em;
   color: var(--ink-900); text-wrap: balance;
 }
 .pk-head { display: grid; gap: 12px; margin-bottom: 36px; }
@@ -41,24 +41,24 @@
   padding: 28px; border-radius: var(--radius-3);
   transition: transform var(--dur-base, 240ms) var(--ease-standard), box-shadow var(--dur-base, 240ms) var(--ease-standard);
 }
-.pk-card:hover { transform: translateY(-2px); }
-.pk-card--paper { background: linear-gradient(180deg, #FBFAF6 0%, var(--paper-000) 100%); border: 1px solid rgba(255,255,255,0.9);
-  box-shadow: var(--bezel), 0 30px 60px -40px rgba(26,38,16,0.3); }
-.pk-card--dark { border: 1px solid rgba(245,242,235,0.1); box-shadow: var(--bezel-dark), 0 40px 80px -36px rgba(10,16,6,0.6); }
+.pk-card:hover { transform: none; }
+.pk-card--paper { background: linear-gradient(180deg, #FBFAF6 0%, var(--paper-000) 100%); border: 1px solid var(--border-hair);
+   }
+.pk-card--dark { border: 1px solid rgba(245,242,235,0.1);  }
 .pk-card__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .pk-card h2 { margin: 0; font-size: 30px; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-900); }
 .pk-card p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink-500); }
-.pk-pop { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+.pk-pop { font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0; text-transform: none;
   padding: 6px 10px; border-radius: var(--radius-pill); background: rgba(245,242,235,0.12); color: var(--ink-200);
   border: 1px solid rgba(245,242,235,0.16); white-space: nowrap; }
 .pk-price-row { display: flex; align-items: baseline; gap: 6px; }
-.pk-price { font-size: 48px; font-weight: 700; letter-spacing: -0.045em; line-height: 1; color: var(--ink-900); }
+.pk-price { font-size: 48px; font-weight: 500; letter-spacing: -0.045em; line-height: 1; color: var(--ink-900); }
 .pk-per { color: var(--ink-400); font-size: 15px; }
 .pk-card .pk-tag { display: block; margin-top: 10px; line-height: 1.6; }
 .pk-ideal { font-size: 14px; color: var(--ink-500); padding: 12px 14px; border-radius: var(--radius-2); background: rgba(26,38,16,0.04); }
 .pk-ideal strong { color: var(--ink-700); }
 .pk-features { flex: 1; padding-top: 4px; }
-.pk-features__prev { font-size: 13px; font-weight: 600; color: var(--ink-700); margin-bottom: 12px; }
+.pk-features__prev { font-size: 13px; font-weight: 500; color: var(--ink-700); margin-bottom: 12px; }
 .pk-toggle { display: none; }
 
 .pk-card--dark h2, .pk-card--dark .pk-price { color: var(--paper-000); }
@@ -77,9 +77,9 @@
 .pk-grid--services { margin-top: 0; }
 .pk-service { display: flex; flex-direction: column; gap: 12px; height: 100%; box-sizing: border-box; padding: 24px; border-radius: var(--radius-3);
   transition: transform var(--dur-base, 240ms) var(--ease-standard); }
-.pk-service:hover { transform: translateY(-2px); }
+.pk-service:hover { transform: none; }
 .pk-service-title { margin: 0; font-size: 20px; letter-spacing: -0.02em; color: var(--ink-900); }
-.pk-service-price { font-size: 34px; font-weight: 700; letter-spacing: -0.04em; color: var(--ink-900); }
+.pk-service-price { font-size: 34px; font-weight: 500; letter-spacing: -0.04em; color: var(--ink-900); }
 .pk-service-desc { margin: 0; flex: 1; font-size: 15px; line-height: 1.5; color: var(--ink-500); }
 .pk-group { margin-top: 32px; }
 .pk-group__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(26,38,16,0.1); }
@@ -127,11 +127,11 @@
 .sp-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 0 auto; }
 .sp-tier .pk-price { font-size: 56px; }
 .sp-panel { padding: 56px; border-radius: var(--radius-4); }
-.sp-panel--sage { box-shadow: var(--bezel); }
+.sp-panel--sage {  }
 .sp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
 .sp-step { padding: 24px; border-radius: var(--radius-3); }
 .sp-step__n { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink-900); color: var(--paper-000);
-  font-family: var(--font-mono); font-size: 13px; font-weight: 700; }
+  font-family: var(--font-body); font-size: 13px; font-weight: 500; }
 .sp-step h3 { margin: 18px 0 6px; font-size: 18px; letter-spacing: -0.02em; color: var(--ink-900); }
 .sp-step p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-500); }
 .sp-needs { margin-top: 20px; padding: 28px 32px; border-radius: var(--radius-3); }
@@ -139,7 +139,7 @@
 .sp-faq { display: grid; gap: 10px; }
 .sp-faq details { border-radius: var(--radius-2); padding: 0; }
 .sp-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding: 14px 20px;
-  cursor: pointer; list-style: none; font-weight: 600; font-size: 16px; color: var(--ink-900); }
+  cursor: pointer; list-style: none; font-weight: 500; font-size: 16px; color: var(--ink-900); }
 .sp-faq summary::-webkit-details-marker { display: none; }
 .sp-faq summary svg { flex: none; transition: transform var(--dur-base, 240ms) var(--ease-standard); }
 .sp-faq details[open] summary svg { transform: rotate(45deg); }
@@ -156,7 +156,7 @@
 .pr-value__card:nth-child(3) { grid-column: span 12; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px 32px; align-items: start; }
 .pr-value__card:nth-child(3) .pr-chips { grid-row: span 2; padding-bottom: 0; }
 .pr-chips { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 20px; }
-.pr-chips span { font-size: 12.5px; font-weight: 600; padding: 5px 11px; border-radius: var(--radius-pill); background: rgba(245,242,235,0.1);
+.pr-chips span { font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: var(--radius-pill); background: rgba(245,242,235,0.1);
   color: var(--ink-200); border: 1px solid rgba(245,242,235,0.12); }
 .pr-value__card h3 { margin: 0 0 8px; font-size: 22px; line-height: 1.2; letter-spacing: -0.03em; color: var(--paper-000); }
 .pr-value__card p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-200); }
@@ -165,19 +165,19 @@
 .pr-split--head { align-items: end; gap: 32px; }
 .pr-split p.pr-body { margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-500); }
 .pr-split .pk-list { margin-top: 20px; }
-.pr-split .pk-list li { font-weight: 600; color: var(--ink-800); }
+.pr-split .pk-list li { font-weight: 500; color: var(--ink-800); }
 .pr-start { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 24px 28px; border-radius: var(--radius-3); }
 .pr-start strong { display: block; font-size: 18px; color: var(--ink-900); letter-spacing: -0.02em; }
 .pr-start span.pr-start__sub { display: flex; gap: 8px; margin-top: 6px; font-size: 15px; color: var(--ink-600); }
 
-.pr-mock { overflow: hidden; border-radius: var(--radius-3); background: var(--paper-000); border: 1px solid rgba(255,255,255,0.9);
-  box-shadow: var(--bezel), 0 40px 80px -40px rgba(26,38,16,0.35); }
+.pr-mock { overflow: hidden; border-radius: var(--radius-3); background: var(--paper-000); border: 1px solid var(--border-hair);
+   }
 .pr-mock__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: var(--paper-100); }
 .pr-mock__bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(26,38,16,0.14); }
-.pr-mock__url { margin-left: 8px; flex: 1; min-width: 0; font-family: var(--font-mono); font-size: 11px; color: var(--ink-400); background: var(--paper-000);
+.pr-mock__url { margin-left: 8px; flex: 1; min-width: 0; font-family: var(--font-body); font-size: 11px; color: var(--ink-400); background: var(--paper-000);
   border-radius: var(--radius-pill); padding: 5px 12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .pr-mock__body { padding: 24px 26px 26px; }
-.pr-mock__chip { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-600);
+.pr-mock__chip { font-family: var(--font-body); font-size: 10px; letter-spacing: 0; text-transform: none; color: var(--ink-600);
   background: var(--paper-200); border-radius: var(--radius-pill); padding: 4px 10px; }
 .pr-mock h3 { margin: 14px 0 8px; font-size: 21px; line-height: 1.25; letter-spacing: -0.02em; color: var(--ink-900); }
 .pr-mock__by { font-size: 12.5px; color: var(--ink-400); }
@@ -190,9 +190,9 @@
 .pr-report__rows { display: grid; gap: 4px; padding: 0 10px 10px; }
 .pr-row { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: var(--paper-100); }
 .pr-row__outlet { font-size: 13.5px; color: var(--ink-900); }
-.pr-row__h { display: block; font-size: 13px; font-weight: 600; color: var(--ink-800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-row__h { display: block; font-size: 13px; font-weight: 500; color: var(--ink-800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pr-row__p { display: block; font-size: 12px; color: var(--ink-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pr-row__note { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-400); }
+.pr-row__note { font-family: var(--font-body); font-size: 9.5px; letter-spacing: 0; text-transform: none; color: var(--ink-400); }
 .pr-report__foot { padding: 12px 22px 18px; font-size: 12px; line-height: 1.5; color: var(--ink-400); }
 
 .pr-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
@@ -204,7 +204,7 @@
 .pr-price .pk-tag { color: var(--ink-200); }
 .pr-price__sub { margin-top: 6px; font-size: 14px; color: var(--ink-200); }
 .pr-uses { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.pr-uses span { font-size: 15px; color: var(--ink-800); padding: 10px 18px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.8); }
+.pr-uses span { font-size: 15px; color: var(--ink-800); padding: 10px 18px; border-radius: var(--radius-pill); background: var(--paper-000); border: 1px solid var(--border-hair); }
 
 @media (max-width: 960px) {
   .pr-split { grid-template-columns: 1fr; gap: 32px; }
@@ -233,3 +233,21 @@
 }
 
 .pk-pricing { margin-top: 24px; }
+
+/* Phones: shorter hero and sections, two-up service cards, compact plan cards. */
+@media (max-width: 767px) {
+  .pk-hero { padding-top: 32px; padding-bottom: 24px; }
+  .pk-lede { font-size: 16px; margin-top: 14px; }
+  .pk-section { padding-top: 36px; padding-bottom: 24px; }
+  .pk-head { margin-bottom: 20px; }
+  .pk-grid { gap: 12px; }
+  .pk-card { padding: 20px !important; }
+  .pk-price { font-size: 36px; }
+  .pk-services-head { margin-top: 40px; }
+  .pk-grid--services { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+  .pk-service { padding: 16px; gap: 8px; }
+  .pk-service-title { font-size: 16px; }
+  .pk-service-price { font-size: 24px; }
+  .pk-service-desc { font-size: 13px; }
+  .pk-diy { margin-top: 12px; gap: 12px; }
+}

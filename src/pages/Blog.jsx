@@ -73,7 +73,7 @@ export default function Blog({ onNavigate }) {
               Industry<br /><em>LoogoBlog.</em>
             </h1>
             <p className="ln-masthead__lede">
-              {es ? 'Hablamos claro para negocios de servicios locales: seguimiento más rápido de prospectos, más reseñas, menos inasistencias, reservas más inteligentes y agentes de voz con IA, además de los mitos de marketing que conviene ignorar.' : 'Straight talk for local service businesses: faster lead follow-up, more reviews, fewer no-shows, smarter booking and AI voice agents, plus the marketing myths worth ignoring.'}
+              {es ? 'Notas de un equipo que planea el marketing y luego lo construye: posicionamiento, anuncios, email, seguimiento, automatizaciones e IA, además de los mitos de marketing que conviene ignorar.' : 'Notes from a team that plans marketing and then builds it: positioning, ads, email, tracking, automations and AI, plus the marketing myths worth ignoring.'}
             </p>
           </div>
         </div>
@@ -209,7 +209,7 @@ function EventFeaturedCard({ post, onNavigate, es }) {
       style={{ display: 'block', marginTop: 48, textDecoration: 'none', color: 'inherit' }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.gold }}>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: 0, textTransform: 'none', color: t.gold }}>
           {es ? 'Evento destacado · 14 nov. 2026' : 'Featured event · Nov 14, 2026'}
         </span>
         <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, ${t.gold}, transparent)` }} />
@@ -225,15 +225,15 @@ function EventFeaturedCard({ post, onNavigate, es }) {
         </div>
         <div style={{ padding: 'clamp(28px,4vw,52px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: t.muted, marginBottom: 14 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: 0, textTransform: 'none', color: t.muted, marginBottom: 14 }}>
               {es ? 'Lakeland, FL · Entrada gratis · 2–10 PM' : 'Lakeland, FL · Free admission · 2–10 PM'}
             </div>
-            <h2 style={{ margin: '0 0 18px', fontFamily: t.serif, fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: hover ? t.goldLight : t.cream, transition: 'color 120ms ease' }}>
+            <h2 style={{ margin: '0 0 18px', fontFamily: t.serif, fontSize: 'clamp(24px,3vw,40px)', fontWeight: 500, lineHeight: 1.1, letterSpacing: '-0.02em', color: hover ? t.goldLight : t.cream, transition: 'color 120ms ease' }}>
               {post.title}
             </h2>
             {post.excerpt && <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: t.muted }}>{post.excerpt}</p>}
           </div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: t.gold, fontWeight: 600 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: t.gold, fontWeight: 500 }}>
             {es ? 'Detalles del evento' : 'Event details'}
             <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, background: t.gold, color: t.ink, borderRadius: '50%', fontSize: 13, transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
           </div>

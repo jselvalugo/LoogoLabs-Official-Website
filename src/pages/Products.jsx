@@ -26,13 +26,13 @@ function Products({ onNavigate }) {
           <Card key={p.name} padding={26} style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
               <Badge>{p.industry}</Badge>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-300)' }}>{p.version}</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: 'var(--ink-300)' }}>{p.version}</span>
             </div>
             <h3 style={{ margin: 0, fontSize: 'var(--fs-h3)', letterSpacing: 'var(--ls-h3)', lineHeight: 'var(--lh-h3)' }}>{p.name}</h3>
             <p style={{ margin: 0, fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body-sm)', color: 'var(--ink-400)' }}>{p.line}</p>
             <div style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 14, display: 'grid', gap: 4 }}>
               <span className="ll-eyebrow">{p.metric[0]}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 20, color: 'var(--ink-900)' }}>{p.metric[1]}</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 20, color: 'var(--ink-900)' }}>{p.metric[1]}</span>
             </div>
             <Link href="#" arrow onClick={e => { e.preventDefault(); onNavigate('product:' + p.name); }}>Open {p.name}</Link>
           </Card>

@@ -39,9 +39,9 @@ export const TopBanner = ({ crumb }) => {
   const toHref = useHref();
   return (
   <div className="ll-nav cfl-nav">
-    <div className="ll-nav__bar ll-glass--dark cfl-nav__bar">
+    <div className="ll-nav__bar cfl-nav__bar">
       <a href={toHref('/')} className="cfl-nav__brand" aria-label="Loogo Labs, home">
-        <span className="cfl-nav__logo"><img src="/logo.png" alt="" /></span>
+        <span className="cfl-nav__logo"><img src="/monogram.png" alt="" /></span>
         <span className="cfl-nav__brand-text">Loogo Labs</span>
       </a>
       {crumb && <a href={toHref(crumb.href)} className="cfl-nav__crumb">{crumb.label}</a>}

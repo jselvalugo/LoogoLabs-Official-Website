@@ -1,255 +1,123 @@
-/* Consulting landing: dark hero, cream story section, one form. */
-.cs { --cs-dark: var(--ink-900); --cs-cream: var(--paper-000); --cs-accent: #EB8226; overflow-x: hidden; background: var(--cs-dark); color: var(--cs-cream); font-family: var(--font-body); min-height: 100vh; }
-.cs em { font-style: normal; color: var(--cs-accent); }
+/* Consulting landing: same sections as before, on the site's cream/forest system.
+   Hero → client row → promise → four services → reviews → example funnel → form. */
+.cs { overflow-x: hidden; background: var(--paper-100); color: var(--ink-900); font-family: var(--font-body); min-height: 100vh; }
+.cs *, .cs *::before { box-sizing: border-box; }
+.cs em { font-style: normal; color: var(--ink-500); }
 
-.cs-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(26, 38, 16, 0.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(245, 242, 235, 0.08); }
-.cs-nav__logo { height: 28px; filter: brightness(0) invert(1); }
-.cs-pill { background: var(--cs-accent); color: #fff; border: 0; border-radius: 999px; padding: 10px 22px; font: 600 16px var(--font-body); cursor: pointer; }
+.cs-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px;
+  background: rgba(243, 240, 231, 0.92);   border-bottom: 1px solid var(--border-hair); }
+.cs-nav__logo { height: 26px; filter: none; }
+.cs-pill { background: var(--ink-900); color: var(--paper-000); border: 1px solid var(--ink-900); border-radius: var(--radius-2); padding: 10px 16px; font: 500 15px var(--font-body); cursor: pointer; }
+.cs-pill:hover { background: var(--ink-700); }
 
-.cs-hero { max-width: 760px; margin: 0 auto; padding: 64px 20px 56px; text-align: center; }
-.cs-hero h1 { margin: 0; font: 600 clamp(38px, 7vw, 64px)/1.08 var(--font-display); letter-spacing: -0.02em; }
-.cs-lede { max-width: 34em; margin: 24px auto 40px; font-size: clamp(17px, 2.2vw, 19px); line-height: 1.65; color: rgba(245, 242, 235, 0.7); }
-.cs-video .bd-video { margin: 0; border-radius: 22px; overflow: hidden; border: 1px solid rgba(235, 130, 38, 0.45); box-shadow: 0 0 60px rgba(235, 130, 38, 0.18); }
-.cs-textcta { margin-top: 32px; display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; color: var(--cs-accent); font: 600 22px var(--font-body); cursor: pointer; }
+.cs-hero { max-width: 760px; margin: 0 auto; padding: 72px 24px 48px; text-align: center; position: relative; }
+.cs-hero::before { display: none; }
+.cs-hero h1 { margin: 0; font: 500 var(--fs-display-2)/var(--lh-display-2) var(--font-display); letter-spacing: var(--ls-display-2); text-shadow: none; }
+.cs-hero h1 em { background: none; color: var(--ink-500); -webkit-text-fill-color: initial; }
+.cs-lede { max-width: 34em; margin: 24px auto 40px; font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--ink-500); }
+.cs-video .bd-video { margin: 0; border-radius: var(--radius-3); overflow: hidden; border: 1px solid var(--border-hair);  }
+.cs-textcta { margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; color: var(--ink-900); font: 500 17px var(--font-body); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(27,42,18,0.35); }
+.cs-textcta:hover { text-decoration-color: currentColor; }
 
-.cs-light { background: var(--cs-cream); color: var(--ink-900); padding: 80px 20px; text-align: center; }
-.cs-light h2 { max-width: 14em; margin: 0 auto; font: 600 clamp(30px, 5.5vw, 48px)/1.12 var(--font-display); letter-spacing: -0.02em; }
+/* "Stamp" over the headline is retired; the word reads plainly. */
+.cs-stamped { position: relative; display: inline; background: none; color: inherit; -webkit-text-fill-color: initial; }
+.cs-stamp { display: none; }
+
+.cs-light { position: relative; background: var(--paper-100); color: var(--ink-900); padding: 96px 24px; text-align: center; border-radius: 0; margin: 0; border-top: 1px solid var(--border-hair); }
+.cs-light h2 { max-width: 16em; margin: 0 auto; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); }
 .cs-light em { color: var(--ink-500); }
-/* Connector between sections: a fading line with a ringed node. */
-.cs-link { position: relative; display: flex; flex-direction: column; align-items: center; margin: 40px auto; }
-.cs-link::before { content: ''; width: 2px; height: 72px; background: linear-gradient(180deg, transparent, var(--cs-accent)); opacity: 0.8; }
-.cs-link::after { content: ''; width: 2px; height: 36px; background: linear-gradient(180deg, var(--cs-accent), transparent); opacity: 0.5; }
-/* The joint sits in the line's flow, so it stays on the line at every size. */
-.cs-link span { order: 0; width: 10px; height: 10px; margin: 2px 0; border-radius: 50%; background: var(--cs-accent); box-shadow: 0 0 0 4px rgba(235, 130, 38, 0.16); }
-.cs-link::before { order: -1; }
-.cs-link::after { order: 1; }
+/* Connector between statements: one quiet rule. */
+.cs-link { position: relative; display: block; width: 1px; height: 56px; margin: 32px auto; background: var(--border-hair); }
+.cs-link::before, .cs-link::after { display: none; }
+.cs-link span { display: none; }
 
-.cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 880px; margin: 40px auto 0; }
-.cs-card { background: var(--cs-dark); color: var(--cs-cream); border-radius: 22px; padding: 28px 22px; text-align: left; }
-.cs-card svg { color: var(--cs-accent); }
-.cs-card h3 { margin: 16px 0 6px; font: 600 22px var(--font-display); }
-.cs-card p { margin: 0; font-size: 15px; line-height: 1.5; color: rgba(245, 242, 235, 0.7); }
+.cs-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; max-width: 760px; margin: 40px auto 0; text-align: left; border-top: 1px solid var(--border-hair); border-left: 1px solid var(--border-hair); }
+.cs-card { position: relative; overflow: visible; background: none; color: var(--ink-900); border-radius: 0; padding: 28px 24px; border: 0; border-right: 1px solid var(--border-hair); border-bottom: 1px solid var(--border-hair);  transition: none; }
+.cs-card:hover { transform: none;  }
+.cs-card svg { color: var(--ink-900); padding: 0; width: 24px; height: 24px; border-radius: 0; background: none; border: 0; }
+.cs-card h3 { margin: 16px 0 6px; font: 500 20px/1.25 var(--font-display); letter-spacing: -0.01em; }
+.cs-card p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-500); }
+.cs-card__num { position: absolute; top: 24px; right: 24px; font: 500 14px/1 var(--font-body); color: var(--ink-400); }
+
+.cs-roas { display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 760px; margin: 20px auto 0; padding: 0; border: 0; border-radius: 0; background: none;  font-size: 16px; color: var(--ink-500); text-align: left; }
+.cs-roas strong { color: var(--ink-900); font-weight: 500; }
+.cs-roas__tag { flex: none; padding: 5px 9px; border-radius: var(--radius-1); background: var(--paper-200); color: var(--ink-900); font: 500 13px/1 var(--font-body); }
 
 .cs-reviews { position: relative; display: flex; flex-direction: column; max-width: 520px; margin: 48px auto 0; }
-.cs-reviews > img { position: relative; z-index: 2; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 10px 30px rgba(26, 38, 16, 0.12); }
-/* Kristin's review leads; the lower part of Sally's peeks out beneath it. */
+.cs-reviews > img { position: relative; z-index: 2; width: 100%; height: auto; border-radius: var(--radius-3); border: 1px solid var(--border-hair);  }
 .cs-reviews > img:nth-of-type(1) { z-index: 3; }
 .cs-reviews > img:nth-of-type(2) { margin-top: -26%; }
-.cs-reviews__deck { position: absolute; inset: 0; z-index: 0; }
-.cs-reviews__deck span { position: absolute; inset: 0; border-radius: 18px; background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 10px 24px rgba(26, 38, 16, 0.08); }
-.cs-reviews__deck span:nth-child(1) { transform: translate(14px, 14px) rotate(2.5deg); }
-.cs-reviews__deck span:nth-child(2) { transform: translate(-12px, 24px) rotate(-2deg); }
+.cs-reviews__deck { display: none; }
 
-.cs-form { background: var(--cs-cream); color: var(--ink-900); padding: 24px 20px 72px; }
+.cs-form { background: var(--paper-100); color: var(--ink-900); padding: 24px 24px 72px; }
 .cs-form > * { max-width: 640px; margin-inline: auto; }
-.cs-footer { background: var(--cs-cream); color: var(--ink-600) !important; display: flex; justify-content: center; gap: 20px; padding: 24px 20px 40px; font-size: 13px; color: rgba(245, 242, 235, 0.5); }
+.cs .cs-form .lp-card { background: var(--paper-000); border-radius: var(--radius-3); padding: 40px 28px; border: 1px solid var(--border-hair);  }
+.cs .cs-form .bd-cta button { background: var(--ink-900) !important; color: var(--paper-000) !important; border-color: var(--ink-900);  border-radius: var(--radius-2); }
+.cs-footer { background: var(--paper-100); color: var(--ink-500) !important; display: flex; justify-content: center; gap: 20px; padding: 24px 20px 40px; font-size: 13px; }
 .cs-footer a { color: inherit; }
 
-@media (max-width: 720px) {
-  .cs-cards { grid-template-columns: 1fr; }
-  .cs-reviews { margin-top: 36px; max-width: 100%; }
-  .cs-reviews > img:nth-of-type(2) { margin-top: -26%; }
-  .cs-reviews img, .cs-reviews__deck span { border-radius: 14px; }
-  .cs-hero { padding-top: 48px; }
-}
-.cs *, .cs *::before { box-sizing: border-box; }
-
-/* Depth: static glows, texture and elevation (no animation). */
-.cs-hero { position: relative; isolation: isolate; }
-.cs-hero::before { content: ''; position: absolute; inset: -80px -40vw 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(600px 360px at 50% 8%, rgba(235, 130, 38, 0.22), transparent 70%),
-    radial-gradient(500px 400px at 85% 60%, rgba(120, 160, 80, 0.16), transparent 70%),
-    radial-gradient(500px 400px at 15% 70%, rgba(235, 130, 38, 0.08), transparent 70%),
-    linear-gradient(rgba(245, 242, 235, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
-    linear-gradient(90deg, rgba(245, 242, 235, 0.035) 1px, transparent 1px) 0 0 / 44px 44px;
-  -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
-.cs-hero h1 em { background: linear-gradient(100deg, #F4A24C, #EB8226 55%, #D9661A); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.cs-hero h1 { text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
-.cs-video .bd-video { box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 6px rgba(235, 130, 38, 0.08), 0 0 80px rgba(235, 130, 38, 0.2); }
-.cs-pill, .cs-textcta { transition: transform .2s, box-shadow .2s; }
-.cs-pill { box-shadow: 0 6px 18px rgba(235, 130, 38, 0.35); }
-.cs-pill:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(235, 130, 38, 0.45); }
-
-.cs-light { position: relative; border-radius: 36px 36px 0 0; margin-top: -8px;
-  background: radial-gradient(800px 400px at 50% 0%, #fff 0%, transparent 70%), radial-gradient(rgba(26, 38, 16, 0.07) 1px, transparent 1px) 0 0 / 22px 22px, var(--cs-cream); }
-
-.cs-card { position: relative; overflow: hidden; border: 1px solid rgba(245, 242, 235, 0.08);
-  background: radial-gradient(260px 180px at 100% 0%, rgba(235, 130, 38, 0.18), transparent 70%), linear-gradient(160deg, #2A3A1E, var(--cs-dark));
-  box-shadow: 0 20px 40px rgba(26, 38, 16, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06); transition: transform .25s, box-shadow .25s; }
-.cs-card:hover { transform: translateY(-4px); box-shadow: 0 28px 50px rgba(26, 38, 16, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
-.cs-card__num { position: absolute; top: 14px; right: 18px; font: 700 44px/1 var(--font-display); color: rgba(245, 242, 235, 0.07); }
-.cs-card svg { padding: 10px; width: 50px; height: 50px; border-radius: 14px; background: rgba(235, 130, 38, 0.12); border: 1px solid rgba(235, 130, 38, 0.25); }
-
-.cs-reviews img { border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 18px 40px rgba(26, 38, 16, 0.14); }
-
-@media (max-width: 720px) { .cs-light { border-radius: 24px 24px 0 0; } }
-.cs .cs-form .lp-card { background: #fff; border-radius: 28px; padding: 40px 28px; border: 1px solid rgba(26, 38, 16, 0.08); border-top: 4px solid var(--cs-accent); box-shadow: 0 30px 70px rgba(26, 38, 16, 0.14); }
-.cs .cs-form .bd-cta button { background: linear-gradient(180deg, #F29A45, var(--cs-accent)) !important; color: #fff !important; border-color: var(--cs-accent); box-shadow: 0 10px 24px rgba(235, 130, 38, 0.35); }
-.cs-cards { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
-@media (max-width: 720px) { .cs-cards { grid-template-columns: 1fr; } }
-
-/* Rubber stamp over "brand" in the hero headline. */
-.cs-stamped { position: relative; display: inline-block; background: linear-gradient(100deg, #EB8226, #D9661A); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.cs-stamp { position: absolute; right: -0.4em; top: 0.1em; transform: translate(30%, -20%) rotate(12deg); white-space: nowrap;
-  padding: 5px 12px; border: 3px double #F4A24C; border-radius: 8px; color: #F4A24C; -webkit-text-fill-color: #F4A24C;
-  font: 800 clamp(11px, 1.5vw, 14px)/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; text-shadow: none;
-  background: rgba(26, 38, 16, 0.75); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); opacity: 0.95; }
-
-/* Client cards under the reviews: logo cards first, then name cards in a 2-up grid. */
-.cs-clients { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; margin: 24px auto 0; }
-.cs-client { flex: 0 1 calc((100% - 10px) / 2); display: flex; align-items: center; gap: 10px; padding: 10px 12px; text-align: left;
-  background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); border-radius: 14px; box-shadow: 0 8px 20px rgba(26, 38, 16, 0.07); }
-.cs-client__mark { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
-  background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); color: var(--cs-accent); font: 700 13px var(--font-display); letter-spacing: 0.02em; }
-.cs-client__name { font: 600 14px/1.25 var(--font-display); color: var(--ink-900); }
-
-/* Logo tiles: four across on desktop, one shared height, so they read as a set. */
-.cs-client.cs-client--logo { flex-basis: calc((100% - 40px) / 5); height: 96px; justify-content: center; padding: 12px; }
-.cs-client--logo img { display: block; max-height: 60px; max-width: 100%; width: auto; height: auto; }
-.cs-client.cs-client--logo.cs-client--dark { background: #000; border-color: rgba(235, 130, 38, 0.3); }
-.cs-client--dark img { max-height: 76px; }
-.cs-client.cs-client--chip { background: #0e1d34; border-color: #0e1d34; }
-.cs-client--chip img { max-height: 60px; }
-
-/* Name cards: two across on desktop. */
-.cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 10px) / 2); }
-
-@media (max-width: 720px) {
-  .cs-clients { gap: 8px; }
-  .cs-client { flex-basis: calc((100% - 8px) / 2); padding: 8px 10px; gap: 8px; }
-  .cs-client__mark { width: 30px; height: 30px; font-size: 12px; }
-  .cs-client__name { font-size: 13px; }
-  .cs-clients .cs-client.cs-client--logo { flex-basis: 100%; height: 92px; padding: 10px 16px; }
-  .cs-client--logo img { max-height: 56px; }
-  .cs-client--dark img { max-height: 68px; }
-  .cs-client--chip img { max-height: 54px; }
-  /* On phones names are two across; a lone last one takes the full width. */
-  .cs-clients .cs-client:not(.cs-client--logo) { flex-basis: calc((100% - 8px) / 2); }
-  .cs-clients .cs-client.cs-client--wide { flex-basis: 100%; }
-}
-
-/* Gold script client name, full width under the logo tiles. */
-.cs-clients .cs-client.cs-client--script { flex-basis: 100%; flex-direction: column; justify-content: center; gap: 0; padding: 10px 16px; background: linear-gradient(160deg, #2A3A1E, var(--cs-dark)); border-color: rgba(235, 130, 38, 0.25); }
-.cs-script { font: 400 30px/1.1 'Great Vibes', cursive; background: linear-gradient(100deg, #F6D37A, #D4A537 55%, #B8861F); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.cs-script__sub { font: 600 9px/1 var(--font-body); letter-spacing: 0.2em; margin-top: 4px; text-transform: uppercase; color: rgba(246, 211, 122, 0.75); }
-@media (max-width: 720px) {
-  .cs-clients .cs-client.cs-client--script { flex-basis: 100%; padding: 8px 12px; }
-  .cs-script { font-size: 26px; }
-}
-
-/* Logo tile with a caption under the mark (Pronomy.io). */
-.cs-client--captioned { flex-direction: column; gap: 6px; }
-.cs-client--captioned img { max-height: 54px; }
-.cs-client__caption { font: 600 11px/1 var(--font-body); letter-spacing: 0.08em; color: #F5F2EB; }
-@media (max-width: 720px) {
-  .cs-clients .cs-client.cs-client--captioned { flex-basis: 100%; height: 92px; }
-}
-
-/* Looping client band under the nav: one copy then an identical copy, so the -50% loop is seamless. */
-.cs-loop { overflow: hidden; background: var(--cs-dark); padding: 14px 0; border-bottom: 1px solid rgba(245, 242, 235, 0.08);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.cs-loop__track { display: flex; width: max-content; animation: cs-loop 32s linear infinite; }
-.cs-loop:hover .cs-loop__track { animation-play-state: paused; }
-@keyframes cs-loop { to { transform: translateX(-50%); } }
-.cs-loop__item { flex: none; display: grid; place-items: center; height: 56px; min-width: 120px; padding: 8px 18px; margin-right: 14px; border-radius: 14px; background: #fff; }
-.cs-loop__item--dark { background: #000; box-shadow: inset 0 0 0 1px rgba(235, 130, 38, 0.3); }
-.cs-loop__item--chip { background: #0e1d34; }
-.cs-loop__item img { display: block; height: 38px; width: auto; }
-.cs-loop__script { font-size: 30px; line-height: 1; white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) {
-  .cs-loop { overflow-x: auto; }
-  .cs-loop__track { animation: none; }
-}
-
-/* Mobile only: a two-column collage of client tiles under the video. The right column drops
-   down so the tile heights stagger, and every logo stays fully visible. */
-.cs-proof { display: none; }
-@media (max-width: 720px) {
-  .cs-proof { display: block; margin: 28px auto 0; max-width: 360px; text-align: center; }
-  .cs-proof__eyebrow { margin: 0 0 14px; font: 600 11px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--cs-accent); }
-  .cs-proof__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
-  .cs-proof__col { display: flex; flex-direction: column; gap: 10px; }
-  .cs-proof__col--down { padding-top: 22px; }
-  .cs-proof__tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 14px; background: #fff; box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25); }
-  .cs-proof__tile img { display: block; width: auto; max-width: 100%; max-height: 110px; height: auto; }
-  .cs-proof__tile--dark { background: #000; box-shadow: inset 0 0 0 1px rgba(235, 130, 38, 0.35), 0 10px 22px rgba(0, 0, 0, 0.25); }
-  .cs-proof__tile--chip { background: #0e1d34; }
-  .cs-proof__script { font-size: 30px; line-height: 1.1; color: #F6D37A; -webkit-text-fill-color: #F6D37A; background: none; }
-  .cs-proof__caption { font: 600 10px/1 var(--font-body); letter-spacing: 0.08em; color: #F5F2EB; }
-}
-
-/* Mobile: the four service cards in a 2x2 block, and tighter space around the heading. */
-@media (max-width: 720px) {
-  .cs-light { padding-top: 56px; }
-  .cs-light h2 { font-size: 28px; }
-  .cs-link { margin: 18px auto; }
-  .cs-link::before { height: 36px; }
-  .cs-link::after { height: 18px; }
-  .cs-cards { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
-  .cs-card { padding: 16px 14px; border-radius: 16px; }
-  .cs-card svg { width: 36px; height: 36px; padding: 7px; border-radius: 10px; }
-  .cs-card h3 { margin: 10px 0 4px; font-size: 16px; }
-  .cs-card p { font-size: 12.5px; line-height: 1.4; }
-  .cs-card__num { font-size: 30px; top: 8px; right: 10px; }
-}
-/* Mobile: no review block (the screenshots and their decorative stack), and tighter space
-   after the service cards. */
-@media (max-width: 720px) {
-  .cs-reviews-block { display: none; }
-  .cs-light { padding-bottom: 40px; }
-}
-/* Mobile collage: smaller tiles, with Dalitzandra on black. */
-@media (max-width: 720px) {
-  .cs-proof { max-width: 240px; margin-top: 22px; }
-  .cs-proof__eyebrow { margin-bottom: 10px; font-size: 10px; }
-  .cs-proof__cols { gap: 6px; }
-  .cs-proof__col { gap: 6px; }
-  .cs-proof__col--down { padding-top: 14px; }
-  .cs-proof__tile { padding: 8px; gap: 6px; border-radius: 10px; }
-  .cs-proof__tile img { max-height: 64px; }
-  .cs-proof__script { font-size: 22px; }
-  .cs-proof__caption { font-size: 9px; }
-}
-
-/* Example Meta Ads funnel before the form. */
-.cs-results { background: var(--cs-dark); color: var(--cs-cream); padding: 64px 20px; text-align: center; }
-.cs-results__eyebrow { margin: 0 0 10px; font: 600 12px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--cs-accent); }
-.cs-results h2 { margin: 0 auto; max-width: 14em; font: 600 clamp(28px, 5vw, 44px)/1.12 var(--font-display); letter-spacing: -0.02em; }
-.cs-results__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 880px; margin: 32px auto 0; text-align: left; }
-.cs-result { padding: 20px; border-radius: 18px; background: linear-gradient(160deg, rgba(245, 242, 235, 0.06), rgba(245, 242, 235, 0.02)); border: 1px solid rgba(245, 242, 235, 0.1); box-shadow: inset 0 -3px 0 var(--cs-accent); }
-.cs-result__top { display: flex; justify-content: space-between; font: 600 11px/1 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245, 242, 235, 0.6); }
-.cs-result__top span:last-child { color: var(--cs-accent); }
-.cs-result__value { margin: 18px 0 6px; font: 600 clamp(28px, 4vw, 38px)/1 var(--font-display); letter-spacing: -0.02em; }
-.cs-result__note { font-size: 14px; color: rgba(245, 242, 235, 0.65); }
-.cs-results__fine { max-width: 40em; margin: 20px auto 0; font-size: 12px; line-height: 1.5; color: rgba(245, 242, 235, 0.5); }
-@media (max-width: 720px) {
-  .cs-results { padding: 44px 16px; }
-  .cs-results__grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 22px; }
-  .cs-result { padding: 14px 12px; border-radius: 14px; }
-  .cs-result__top { font-size: 9px; letter-spacing: 0.12em; }
-  .cs-result__value { margin: 12px 0 4px; font-size: 24px; }
-  .cs-result__note { font-size: 11.5px; line-height: 1.35; }
-}
-
-/* A logo that carries its own background (Geros Studio) fills its tile edge to edge. */
+/* Client logos under the nav: a static, grayscale row (no marquee). */
+.cs-loop { overflow: hidden; background: var(--paper-100); padding: 20px 24px; border-bottom: 1px solid var(--border-hair); -webkit-mask-image: none; mask-image: none; }
+.cs-loop__track { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 28px; width: auto; max-width: var(--container-max); margin: 0 auto; animation: none; }
+/* Only the first copy of the loop renders. */
+.cs-loop__track > [aria-hidden="true"] { display: none; }
+.cs-loop__item { flex: none; display: grid; place-items: center; height: 40px; min-width: 0; padding: 0 10px; margin: 0; border-radius: var(--radius-1); background: transparent; filter: grayscale(1); opacity: 0.8; }
+.cs-loop__item--dark, .cs-loop__item--chip { background: var(--ink-900); }
+.cs-loop__item img { display: block; height: 26px; width: auto; }
 .cs-loop__item--fill { padding: 0; overflow: hidden; }
-.cs-loop__item--fill img { height: 56px; width: auto; }
-@media (max-width: 720px) {
-  .cs-proof__tile--fill { padding: 0; overflow: hidden; }
-  .cs-proof__tile--fill img { width: 100%; max-height: none; }
-}
+.cs-loop__item--fill img { height: 40px; }
+.cs-loop__script, .cs-script { font: 500 15px/1 var(--font-body); background: none; color: var(--paper-000); -webkit-text-fill-color: initial; white-space: nowrap; }
+.cs-script__sub { display: none; }
 
-/* ROAS callout under the service cards. */
-.cs-roas { display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 760px; margin: 14px auto 0; padding: 14px 18px;
-  border-radius: 16px; background: #fff; border: 1px solid rgba(26, 38, 16, 0.08); box-shadow: 0 10px 24px rgba(26, 38, 16, 0.08);
-  font-size: 16px; color: var(--ink-800); text-align: left; }
-.cs-roas strong { color: var(--cs-accent); }
-.cs-roas__tag { flex: none; padding: 6px 10px; border-radius: 8px; background: var(--cs-dark); color: var(--cs-accent); font: 700 12px/1 var(--font-body); letter-spacing: 0.14em; }
-@media (max-width: 720px) {
-  .cs-roas { margin-top: 10px; padding: 12px 14px; font-size: 14px; gap: 10px; border-radius: 14px; }
-}
+/* Client tiles (older section, kept for safety) */
+.cs-clients { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 760px; margin: 24px auto 0; }
+.cs-client { flex: 0 1 calc((100% - 8px) / 2); display: flex; align-items: center; gap: 10px; padding: 10px 12px; text-align: left; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-2);  }
+.cs-client__mark { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--ink-900); color: var(--ink-900); font: 500 12px var(--font-display); }
+.cs-client__name { font: 500 14px/1.25 var(--font-display); color: var(--ink-900); }
+.cs-client.cs-client--logo { flex-basis: calc((100% - 40px) / 5); height: 72px; justify-content: center; padding: 12px; }
+.cs-client--logo img { display: block; max-height: 44px; max-width: 100%; width: auto; height: auto; filter: grayscale(1); }
+.cs-client.cs-client--logo.cs-client--dark, .cs-client.cs-client--chip { background: var(--ink-900); border-color: var(--ink-900); }
+.cs-clients .cs-client.cs-client--script { flex-basis: 100%; flex-direction: column; justify-content: center; gap: 0; padding: 10px 16px; background: var(--ink-900); border-color: var(--ink-900); }
+.cs-client--captioned { flex-direction: column; gap: 6px; }
+.cs-client__caption { font: 500 11px/1 var(--font-body); color: var(--paper-000); }
 
-/* Placeholder while the new consulting video is in production. */
-.cs-video-soon { aspect-ratio: 16 / 9; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, rgba(235, 130, 38, 0.18), transparent 65%), #0f1f17; }
-.cs-video-soon__label { padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(235, 130, 38, 0.5); font: 600 12px/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: #f5f2eb; }
+/* Mobile collage under the video */
+.cs-proof { display: none; }
+
+/* Example Meta Ads funnel before the form: forest band, flat tiles. */
+.cs-results { background: var(--ink-900); color: var(--paper-100); padding: 80px 24px; text-align: center; }
+.cs-results__eyebrow { margin: 0 0 12px; font: 500 15px/1.4 var(--font-body); color: var(--ink-200); }
+.cs-results h2 { margin: 0 auto; max-width: 16em; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); color: var(--paper-000); }
+.cs-results h2 em { color: var(--ink-200); }
+.cs-results__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 880px; margin: 40px auto 0; text-align: left; border-top: 1px solid var(--border-hair-inverse); border-left: 1px solid var(--border-hair-inverse); }
+.cs-result { padding: 24px; border-radius: 0; background: none; border: 0; border-right: 1px solid var(--border-hair-inverse); border-bottom: 1px solid var(--border-hair-inverse);  }
+.cs-result__top { display: flex; justify-content: space-between; font: 500 13px/1.4 var(--font-body); color: var(--ink-200); }
+.cs-result__top span:last-child { color: var(--ink-300); }
+.cs-result__value { margin: 16px 0 6px; font: 500 clamp(28px, 4vw, 38px)/1 var(--font-display); letter-spacing: -0.02em; color: var(--paper-000); }
+.cs-result__note { font-size: 14px; color: var(--ink-200); }
+.cs-results__fine { max-width: 40em; margin: 20px auto 0; font-size: 13px; line-height: 1.5; color: var(--ink-300); }
+
+/* Placeholder while the consulting video is in production. */
+.cs-video-soon { aspect-ratio: 16 / 9; display: grid; place-items: center; background: var(--ink-900); }
+.cs-video-soon__label { padding: 8px 14px; border-radius: var(--radius-1); border: 1px solid var(--border-hair-inverse); font: 500 13px/1 var(--font-body); color: var(--paper-100); }
+
+@media (max-width: 720px) {
+  .cs-hero { padding-top: 48px; }
+  .cs-light { padding: 64px 20px 48px; }
+  .cs-light h2 { font-size: 28px; }
+  .cs-link { height: 32px; margin: 20px auto; }
+  .cs-cards { grid-template-columns: 1fr; margin-top: 28px; }
+  .cs-card { padding: 20px 18px; }
+  .cs-card h3 { font-size: 18px; }
+  .cs-reviews { margin-top: 36px; max-width: 100%; }
+  .cs-reviews-block { display: none; }
+  .cs-results { padding: 56px 20px; }
+  .cs-results__grid { grid-template-columns: 1fr 1fr; margin-top: 28px; }
+  .cs-result { padding: 16px; }
+  .cs-result__value { font-size: 26px; }
+  .cs-loop { padding: 16px; }
+  .cs-loop__track { gap: 10px 18px; }
+  .cs-loop__item img { height: 22px; }
+  .cs-clients .cs-client.cs-client--logo { flex-basis: calc((100% - 8px) / 2); height: 64px; }
+}

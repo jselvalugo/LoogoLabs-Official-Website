@@ -37,6 +37,9 @@ function netlifyLikePreview() {
 
 export default defineConfig({
   plugins: [react(), netlifyLikePreview()],
+  // flubber ships ESM under "module" and a minified CJS bundle under "main";
+  // bundle it into the SSR build so both builds use the same ESM entry.
+  ssr: { noExternal: ['flubber'] },
   // crm.html is the separate CRM app served at crm.loogolabs.com (see netlify.toml).
   build: {
     rollupOptions: {

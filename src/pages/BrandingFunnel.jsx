@@ -292,7 +292,7 @@ export default function BrandingFunnel() {
   return (
     <main className="ll-shell lp">
       <div className="ll-nav lp-nav">
-        <div className="ll-nav__bar ll-glass--dark lp-nav__bar">
+        <div className="ll-nav__bar lp-nav__bar">
           <div className="lp-nav__side">
             {step > 0 && !isResult && (
               <button className="lp-back" aria-label="Back" onClick={() => go(step - 1)}>
@@ -300,7 +300,7 @@ export default function BrandingFunnel() {
               </button>
             )}
           </div>
-          <span className="ll-nav__logo lp-nav__logo"><img src="/logo.png" alt="" /></span>
+          <span className="ll-nav__logo lp-nav__logo"><img src="/monogram.png" alt="" /></span>
           <div className="lp-nav__side lp-nav__side--end">
             {!isResult && !isIntroStep && <span className="lp-count">{step - QUIZ_START + 1}/{quizProgressTotal}</span>}
           </div>
