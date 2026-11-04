@@ -206,10 +206,6 @@ function Accordion({ es, items }) {
               <div className="hm-acc__inner">
                 <div className="hm-acc__body">
                   <p>{s.summary}</p>
-                  <div className="hm-acc__cols">
-                    <div className="hm-acc__col hm-acc__col--plan"><h4><i />{es ? 'Planeamos' : 'We plan'}</h4><ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul></div>
-                    <div className="hm-acc__col hm-acc__col--build"><h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -269,14 +265,6 @@ function Scene({ es, items }) {
                 <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
-                <div className="hm-acc__cols">
-                  <motion.div className="hm-acc__col hm-acc__col--plan" initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15, duration: 0.5, ease: EASE }}>
-                    <h4><i />{es ? 'Planeamos' : 'We plan'}</h4><ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul>
-                  </motion.div>
-                  <motion.div className="hm-acc__col hm-acc__col--build" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5, ease: EASE }}>
-                    <h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul>
-                  </motion.div>
-                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -298,7 +286,7 @@ function Explorer({ es }) {
           <Buddy pose="explain" />
           <SectionHeading
             title={es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}
-            description={es ? 'Cuatro servicios para marcas SaaS y creadores. Toca uno para ver qué planeamos y qué construimos.' : 'Four services for SaaS brands and creators. Tap one to see what we plan and what we build.'} />
+            description={es ? 'Cuatro servicios para marcas SaaS y creadores. Toca uno para ver de qué se trata.' : 'Four services for SaaS brands and creators. Tap one to see what it covers.'} />
         </div>
         <Accordion es={es} items={items} />
       </div>
