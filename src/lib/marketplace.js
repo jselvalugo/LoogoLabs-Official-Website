@@ -16,11 +16,11 @@ import email from '../../marketplace/skills/saas-email-sequences/SKILL.md?raw';
 
 export const LAUNCHED = false;
 
-// Buy links for paid skills. netlify/functions/skill-checkout.js opens a branded
+// Buy links for paid skills. netlify/functions/skill-buy.js opens a branded
 // Stripe Checkout (price and branding live there); after payment Stripe returns to
 // /marketplace/thank-you?session_id=..., where skill-order.js verifies and delivers.
 export const BUY_URLS = {
-  'saas-launch-playbook': '/.netlify/functions/skill-checkout?sku=saas-launch-playbook',
+  'saas-launch-playbook': '/.netlify/functions/skill-buy?sku=saas-launch-playbook',
 };
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];

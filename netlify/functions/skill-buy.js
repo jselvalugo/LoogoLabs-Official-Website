@@ -1,6 +1,6 @@
 // Start a branded Stripe Checkout for a paid marketplace skill.
 //
-//   GET /.netlify/functions/skill-checkout?sku=saas-launch-playbook  -> 303 to Stripe Checkout
+//   GET /.netlify/functions/skill-buy?sku=saas-launch-playbook  -> 303 to Stripe Checkout
 //
 // Creating the session here (instead of a fixed Payment Link) lets every checkout
 // carry Loogo Labs branding, and lets the success URL follow the site the buyer
@@ -47,7 +47,7 @@ export default async (req) => {
 
   const key = Netlify.env.get('STRIPE_SECRET_KEY');
   if (!key) {
-    console.error('skill-checkout: STRIPE_SECRET_KEY missing');
+    console.error('skill-buy: STRIPE_SECRET_KEY missing');
     return fail(origin, 'unavailable', 503);
   }
 
@@ -85,12 +85,12 @@ export default async (req) => {
     });
     const session = await res.json();
     if (!res.ok || !session.url) {
-      console.error('skill-checkout: stripe error', res.status, session?.error?.message);
+      console.error('skill-buy: stripe error', res.status, session?.error?.message);
       return fail(origin, 'unavailable');
     }
     return new Response(null, { status: 303, headers: { Location: session.url, 'Cache-Control': 'no-store' } });
   } catch (err) {
-    console.error('skill-checkout: request failed', err);
+    console.error('skill-buy: request failed', err);
     return fail(origin, 'unavailable');
   }
 };
