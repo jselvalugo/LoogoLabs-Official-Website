@@ -8,7 +8,6 @@ import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
-import { SquaresFour, ArrowRight } from '@phosphor-icons/react';
 
 const Wrap = ({ children, style, className, id }) => (
   <div id={id} className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
@@ -311,24 +310,6 @@ function StickyCta({ es }) {
   );
 }
 
-// Full-width banner right under the hero so the Claude Skills marketplace is
-// obvious (the floating side tab alone was easy to miss, especially on phones).
-function SkillsBanner({ es, onNavigate }) {
-  const href = pathForPage('Marketplace');
-  return (
-    <a href={href} className="hm-skills" onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate('Marketplace'); } }}>
-      <span className="hm-skills__inner">
-        <span className="hm-skills__icon" aria-hidden="true"><SquaresFour size={22} weight="light" /></span>
-        <span className="hm-skills__text">
-          <span className="hm-skills__kicker">{es ? 'Nuevo · Claude Skills' : 'New · Claude Skills'}</span>
-          <strong className="hm-skills__title">{es ? 'Entra a nuestro Claude Skills Marketplace' : 'Enter our Claude Skills Marketplace'}</strong>
-        </span>
-        <span className="hm-skills__go" aria-hidden="true"><ArrowRight size={20} weight="light" /></span>
-      </span>
-    </a>
-  );
-}
-
 function Home({ onNavigate }) {
   const es = useLang() === 'es';
   const toHref = useHref();
@@ -368,8 +349,6 @@ function Home({ onNavigate }) {
               </figure>
             </div>
       </Hero>
-
-      <SkillsBanner es={es} onNavigate={onNavigate} />
 
       <References />
 
