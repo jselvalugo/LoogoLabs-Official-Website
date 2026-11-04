@@ -13,6 +13,7 @@ import adCopy from '../../marketplace/skills/ad-copy-workshop/SKILL.md?raw';
 import brief from '../../marketplace/skills/campaign-brief-builder/SKILL.md?raw';
 import utm from '../../marketplace/skills/utm-tracking-plan/SKILL.md?raw';
 import email from '../../marketplace/skills/saas-email-sequences/SKILL.md?raw';
+import brandBrain from '../../marketplace/skills/brand-brain/SKILL.md?raw';
 import { PAID_SKILLS } from './paidSkills.js';
 
 export const LAUNCHED = true;
@@ -47,9 +48,24 @@ export function marketplaceEnabled() {
 // Strip YAML frontmatter so the preview shows the instructions themselves.
 const body = (md) => md.replace(/^---[\s\S]*?---\s*/, '');
 
-export const CATEGORIES = ['All', 'Paid ads', 'Strategy', 'Tracking', 'Email'];
+export const CATEGORIES = ['All', 'Brand', 'Social', 'Paid ads', 'Conversion', 'Sales', 'Local', 'Agency', 'Strategy', 'Tracking', 'Email'];
 
 export const SKILLS = [
+  // Lead magnet: free, unlocked with an email (tag "brand-brain" in the CRM email list).
+  {
+    slug: 'brand-brain',
+    name: 'Brand Brain',
+    category: 'Brand',
+    tier: 'free',
+    leadMagnet: true,
+    icon: 'Brain',
+    tagline: 'Teach Claude your business once. Every output sounds like you after that.',
+    description:
+      'A five-minute guided interview (or paste your website and skip most of it). Claude captures your offer, customer, positioning, proof, voice, banned words, colors and call to action, saves it as a brand profile, and reads it before every marketing task so the first draft already sounds like your brand.',
+    outputs: ['A reusable brand profile file', 'One-page positioning statement', 'Voice & tone guide with do/don’t examples', 'Three on-brand samples to check the voice'],
+    prompt: 'Set up my Brand Brain. Here’s our website copy.',
+    source: body(brandBrain),
+  },
   {
     slug: 'ad-copy-workshop',
     name: 'Ad Copy Workshop',
@@ -130,15 +146,143 @@ export const SKILLS = [
     ],
     prompt: 'Use the SaaS Launch Playbook. We launch on March 10 and want 100 paying users by the end of April.',
   },
+  // Coming soon: listed with details and planned price; buyers can join the waitlist
+  // (CRM email tag "waitlist-<slug>"). To launch one, build it, add it to PAID_SKILLS
+  // and BUY_URLS, and remove `soon: true`.
   {
-    slug: 'paid-ads-audit',
-    name: 'Paid Ads Audit Kit',
+    slug: 'content-engine',
+    name: '30-Day Content Engine',
+    category: 'Social',
+    tier: 'paid',
+    soon: true,
+    eta: 'December 2026',
+    icon: 'CalendarBlank',
+    price: 39,
+    tagline: 'A full month of posts, planned, written and ready to shoot.',
+    description:
+      'Claude plans 30 days of Reels, TikToks, carousels and stories around your content pillars, then writes every caption, carousel slide, story frame and shot list. One idea becomes several formats, and you get a batch-filming plan so a month of content takes one afternoon to shoot.',
+    outputs: ['30-day calendar, ready for a spreadsheet', 'Captions and hashtags for every post', 'Carousel slide copy and story frames', 'Shot lists and a weekly batch-filming plan'],
+    prompt: 'Plan our December content. We post daily: Reels, carousels and stories.',
+  },
+  {
+    slug: 'hook-script-lab',
+    name: 'Hook & Script Lab',
+    category: 'Social',
+    tier: 'paid',
+    soon: true,
+    eta: 'December 2026',
+    icon: 'FilmSlate',
+    price: 24,
+    tagline: 'Scroll-stopping hooks and timed short-form scripts in minutes.',
+    description:
+      'Most videos are lost in the first two seconds. Claude writes ten or more hooks per idea across proven styles, scores them and picks three to test, then writes a timed 15, 30 or 60-second script with on-screen text, B-roll cues and a call to action. Works for talking-head, faceless and UGC videos.',
+    outputs: ['Hook bank with a score on every hook', 'Timed scripts with on-screen text', 'B-roll and shot cues', 'A three-hook A/B test plan'],
+    prompt: 'Give me hooks and a 30-second script about why most small businesses post and get no leads.',
+  },
+  {
+    slug: 'ad-copy-studio',
+    name: 'Ad Copy Studio',
     category: 'Paid ads',
     tier: 'paid',
-    icon: 'MagnifyingGlass',
-    tagline: 'Audit a Meta or Google account like a senior media buyer would.',
-    description: 'A structured audit of account structure, tracking, creative and spend, with a prioritized fix list. Coming soon.',
-    outputs: ['Account health score', 'Tracking gaps', 'Wasted-spend finder', 'Prioritized fix list'],
+    soon: true,
+    eta: 'January 2027',
+    icon: 'PenNib',
+    price: 29,
+    tagline: 'Full ad sets for every platform, matched to your landing page.',
+    description:
+      'The next step up from the free Ad Copy Workshop. Claude builds complete, upload-ready ad sets for Meta, Google, TikTok and LinkedIn: three angles with five variants each, creative briefs for your designer, a check against every character limit, and flags on claims likely to get an ad rejected.',
+    outputs: ['Upload-ready ad copy table', '3 angles × 5 variants', 'Creative briefs for images and video', 'Policy-risk flags before you launch'],
+    prompt: 'Build a full Meta and Google ad set for our spring promo. Here’s the landing page.',
+  },
+  {
+    slug: 'ads-performance-auditor',
+    name: 'Ads Performance Auditor',
+    category: 'Paid ads',
+    tier: 'paid',
+    soon: true,
+    eta: 'January 2027',
+    icon: 'ChartLineUp',
+    price: 49,
+    tagline: 'See exactly what’s wasting your ad budget, and what to fix first.',
+    description:
+      'Export a report from Meta or Google Ads and Claude compares two periods, explains the few changes that matter, finds wasted spend (bad search terms, tired creatives, weak audiences), checks whether your conversion tracking can be trusted, and hands you a ranked fix list. It only reads. It never changes your account.',
+    outputs: ['One-page account scorecard', 'Top five findings in plain English', 'Wasted-spend finder', 'Ranked, approval-ready fix list'],
+    prompt: 'Audit last month’s Google Ads export against the month before.',
+  },
+  {
+    slug: 'landing-page-audit',
+    name: 'Landing Page Conversion Audit',
+    category: 'Conversion',
+    tier: 'paid',
+    soon: true,
+    eta: 'January 2027',
+    icon: 'Browser',
+    price: 29,
+    tagline: 'Turn more visitors into leads without paying for more traffic.',
+    description:
+      'Claude scores your page against a conversion checklist (headline clarity, offer, proof, friction, call to action, mobile layout and trust), then rewrites the weak sections and ranks A/B test ideas by likely impact. Checklists are tuned for local services, e-commerce, SaaS and coaching.',
+    outputs: ['Scored page audit', 'Rewritten hero, call to action and key sections', 'Mobile and trust fixes', 'A ranked test backlog'],
+    prompt: 'Audit our booking page. Lots of visits, very few calls.',
+  },
+  {
+    slug: 'lead-follow-up',
+    name: 'Lead Follow-Up Machine',
+    category: 'Sales',
+    tier: 'paid',
+    soon: true,
+    eta: 'February 2027',
+    icon: 'ChatsCircle',
+    price: 29,
+    tagline: 'Never lose another lead to slow follow-up.',
+    description:
+      'Leads go cold within minutes. Claude writes your instant reply and full follow-up sequence (day 1, 3, 7 and 14), plus no-show recovery and re-engagement messages for email, text and DMs, personalized to where each lead came from. It also writes ready replies to the objections you hear most.',
+    outputs: ['Instant-reply and nurture sequences', 'Email, text and DM versions', 'No-show and win-back messages', 'Objection-handling replies'],
+    prompt: 'Write follow-ups for leads from our website quote form.',
+  },
+  {
+    slug: 'local-reputation',
+    name: 'Local Reputation Booster',
+    category: 'Local',
+    tier: 'paid',
+    soon: true,
+    eta: 'February 2027',
+    icon: 'Star',
+    price: 24,
+    tagline: 'More five-star reviews and a Google profile that wins the map.',
+    description:
+      'Built for restaurants, distilleries, salons, contractors and clinics. Claude writes review-request messages, on-brand replies to good and bad reviews, four weeks of Google Business Profile posts, Q&A entries and an optimized description, and flags the gaps holding back your local ranking.',
+    outputs: ['Review-reply library, including calm replies to bad reviews', 'Review-request texts, emails and QR card copy', 'Four weeks of profile posts', 'Local profile checklist'],
+    prompt: 'Help us get more Google reviews and reply to this one-star review.',
+  },
+  {
+    slug: 'prospect-outreach',
+    name: 'Prospect & Outreach Builder',
+    category: 'Sales',
+    tier: 'paid',
+    soon: true,
+    eta: 'March 2027',
+    icon: 'Crosshair',
+    price: 39,
+    tagline: 'Find the right prospects and start real conversations.',
+    description:
+      'Claude defines your ideal customer, researches and qualifies a prospect list from public business information, and writes a personal four-touch sequence for email, LinkedIn and DMs, each opening with something useful for that prospect. It finishes with a call opener script.',
+    outputs: ['Ideal customer profile sheet', 'Qualified prospect table', 'Personal four-touch sequences', 'Call opener script'],
+    prompt: 'Find 20 HVAC companies in Orlando that would fit our service and write the outreach.',
+  },
+  {
+    slug: 'report-proposal-pro',
+    name: 'Client Report & Proposal Pro',
+    category: 'Agency',
+    tier: 'paid',
+    soon: true,
+    eta: 'March 2027',
+    icon: 'FileText',
+    price: 39,
+    tagline: 'Win the deal, then prove the results, in half the time.',
+    description:
+      'For agencies, consultants and freelancers. Claude turns discovery-call notes into a polished proposal with scope, timeline and three pricing tiers, and turns each month’s numbers into a client-ready report: wins, insights and next month’s plan in plain English, plus a summary email.',
+    outputs: ['Proposal with Good / Better / Best pricing', 'Monthly client report and narrative', 'Executive summary email', 'Reusable branded templates'],
+    prompt: 'Turn these call notes into a proposal for a three-month social media retainer.',
   },
 ];
 
