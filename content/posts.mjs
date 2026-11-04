@@ -11,6 +11,60 @@
 
 export const posts = [
   {
+    slug: `window-installer-cold-day-rule-told-before-december-install`,
+    title: `Tell Window Customers Your Cold-Day Rule Before December`,
+    excerpt: `A window crew that pulls out the old frames on a day that turns too cold has made a promise to the customer's living room that it cannot keep.`,
+    tags: `Seasonal Booking, Weather Rules, Window Installers`,
+    content: `Every window installer has a signed job that was sold in September for a December date, and nobody has told the customer what happens if the forecast turns. The crew shows up on a morning that was fine at dawn, pulls the old frames out of a living room, and the afternoon drops colder than anyone planned. Now there is a hole in the wall, a family in coats, and a foreman making a decision nobody wrote down.
+
+The fix is not a better forecast. It is a rule you set now, tell every signed customer about in plain words, and use to order your own calendar.
+
+## Your cold rule is a number you choose
+
+I am not going to hand you a temperature. It depends on your sealant, your foam, your frames and your crew, and the label on what you actually use knows more than I do. Find the minimum temperature your products state, then decide how much cushion you want above it.
+
+That one number is your cold-day line. Write it on a single sheet: below this forecast low, we do not open a wall. Everyone in the company should be able to say it from memory.
+
+## Sort signed jobs by how long the house stays open
+
+A cold day does not hurt every job equally. Replacing three small bedroom windows leaves each opening exposed briefly. A big patio door or a wall of picture windows leaves a house open for much longer.
+
+Go through every signed, uninstalled job and give it one of two tags:
+
+- \`cold ok\`: small openings, quick turnaround, you would do it on a marginal day.
+- \`warm day only\`: big openings or long installs, you only start them above your line.
+
+Do not agonize over the sort. A job with eleven windows and a patio door is \`warm day only\`. A job with two bathroom windows is \`cold ok\`. The tag only has to be honest enough to schedule by.
+
+## Tell the customer before the date is firm
+
+Send a text to every signed customer, this week, in your own voice. Something like:
+
+- Hi, it's the office at (your company). Your install is on the books for December 12.
+- Our rule: we only open your walls on a day the forecast stays above our cold line. If the forecast says no, we will move you to the next good day, and we will tell you by 3 the day before.
+- Reply **OK** to keep your date with that rule, **EARLY** if you want to try to move up, or **SPRING** if you would rather wait for March.
+
+Three words are enough. People answer a text that costs them one tap.
+
+## What you do with the replies
+
+OK replies get the tag \`cold rule agreed\` on the customer record. Now the customer knew about the rule in November, and a December call to move the date lands as a thing they already agreed to.
+
+EARLY goes to a short list for the scheduler, to fill if a warm opening shows up. SPRING gets a held March slot and a note on the record. No reply after three days gets a phone call from a person, because a silent customer on a large job is exactly the one you do not want surprised.
+
+## Make the day-before call a habit
+
+On the afternoon before every \`warm day only\` job, someone looks at the forecast and sends a keep or move text by the time you promised. Make it one person's job, with a time written down. A promise of "by 3 the day before" that nobody owns is worth less than not making it.
+
+## Where this stops working
+
+A text will not make the weather behave, and some customers will be annoyed no matter what you wrote. It also does not fix a calendar that is simply too full: if every day through December is booked solid, the \`warm day only\` jobs have nowhere to land when a day gets cancelled. That is a capacity decision you have to make yourself.
+
+## Check this week
+
+Pull every signed, uninstalled job and count how many are tagged \`warm day only\` against how many open days you actually have in December. If the first number is bigger, send the text this week and start offering SPRING before the calendar offers it for you.`,
+  },
+  {
     slug: `house-cleaning-first-visit-entry-plan-text-after-booking`,
     title: `Ask How the Crew Gets In Before the First Clean`,
     excerpt: `A cleaning crew that waits on a porch for a customer who forgot the key has already lost the visit that was meant to win a weekly client.`,
