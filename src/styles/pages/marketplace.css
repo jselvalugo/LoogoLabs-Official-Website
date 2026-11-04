@@ -145,6 +145,9 @@
 
 .mk-tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; font-size: 11px; font-weight: 500; }
 .mk-tag--free { background: var(--ink-900); color: var(--paper-000); }
+.mk-tag--price { background: var(--amber-500); color: var(--paper-000); font-weight: 600; }
+.mk-card--buy { border-color: var(--ink-900); }
+.mk-drawer__fine { margin: 12px 0 0; font-size: 13px; color: var(--text-muted); }
 .mk-tag--paid { border: 1px solid var(--amber-500); color: var(--amber-600); }
 .mk-empty { color: var(--text-muted); padding-bottom: 96px; }
 
@@ -196,6 +199,27 @@
   .mk-stack { height: 440px; }
   .mk-grid { grid-template-columns: repeat(2, 1fr); }
 }
+/* Post-purchase page */
+.mk-ty__wrap { padding-top: 72px; padding-bottom: 104px; }
+.mk-ty__card { max-width: 640px; margin: 0 auto; background: var(--paper-000); border: 1px solid var(--border-hair); padding: 48px 48px 40px; }
+.mk-ty__ok { color: var(--status-ok); }
+.mk-ty__warn { color: var(--status-warn); }
+.mk-ty__title { font-family: var(--font-display); font-weight: 400; font-size: 36px; line-height: 1.12; margin: 16px 0 12px; }
+.mk-ty__lede { margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: var(--text-secondary); }
+.mk-ty__dl { text-decoration: none; }
+.mk-ty__steps { margin: 36px 0 0; padding: 24px 0 0 20px; border-top: 1px solid var(--border-hair); display: grid; gap: 14px; font-size: 15px; line-height: 1.6; color: var(--ink-600); }
+.mk-ty__steps code { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; background: var(--paper-200); padding: 1px 5px; }
+.mk-ty__help { margin: 28px 0 0; font-size: 14px; color: var(--text-muted); }
+.mk-ty__help a { color: var(--ink-900); }
+.mk-ty__spinner { display: block; width: 28px; height: 28px; border: 2px solid var(--paper-200); border-top-color: var(--ink-900); border-radius: 50%; animation: mk-spin .8s linear infinite; }
+@keyframes mk-spin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .mk-ty__wrap { padding-top: 32px; padding-bottom: 56px; }
+  .mk-ty__card { padding: 28px 20px; }
+  .mk-ty__title { font-size: 28px; }
+  .mk-ty__dl { width: 100%; justify-content: center; }
+}
+
 .mk-drawer__bar { display: none; }
 @media (max-width: 640px) {
   .mk-wrap { padding-left: 16px; padding-right: 16px; }

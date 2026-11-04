@@ -18,22 +18,31 @@ function SkillIcon({ name, size = 22 }) {
   return <Icon size={size} weight="light" aria-hidden="true" />;
 }
 
-function TierTag({ tier }) {
-  return tier === 'free'
-    ? <span className="mk-tag mk-tag--free">Free</span>
-    : <span className="mk-tag mk-tag--paid"><LockSimple size={11} weight="bold" aria-hidden="true" />Paid · Soon</span>;
+function TierTag({ skill }) {
+  if (skill.tier === 'free') return <span className="mk-tag mk-tag--free">Free</span>;
+  if (skill.buyUrl) return <span className="mk-tag mk-tag--price">${skill.price}</span>;
+  return <span className="mk-tag mk-tag--paid"><LockSimple size={11} weight="bold" aria-hidden="true" />Paid · Soon</span>;
+}
+
+function BuyLink({ skill, size = 'sm', className = '', label }) {
+  return (
+    <a className={`ll-btn ll-btn--primary ll-btn--${size} ${className}`} href={skill.buyUrl}
+      onClick={(e) => e.stopPropagation()}>
+      {label || `Buy · $${skill.price}`}<span aria-hidden="true" className="ll-btn__arrow"><ArrowRight size={14} weight="bold" /></span>
+    </a>
+  );
 }
 
 const SkillCard = React.forwardRef(function SkillCard({ skill, onOpen, index }, ref) {
   const free = skill.tier === 'free';
   return (
-    <motion.article ref={ref} layout className={`mk-card${free ? '' : ' mk-card--paid'}`}
+    <motion.article ref={ref} layout className={`mk-card${free ? '' : skill.buyUrl ? ' mk-card--buy' : ' mk-card--paid'}`}
       initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
       transition={{ duration: 0.45, ease: EASE, delay: index * 0.05 }}>
       <button type="button" className="mk-card__hit" onClick={() => onOpen(skill)} aria-label={`Preview ${skill.name}`} />
       <div className="mk-card__top">
         <span className="mk-card__icon"><SkillIcon name={skill.icon} /></span>
-        <TierTag tier={skill.tier} />
+        <TierTag skill={skill} />
       </div>
       <span className="mk-card__cat">{skill.category}</span>
       <h3 className="mk-card__name">{skill.name}</h3>
@@ -49,6 +58,8 @@ const SkillCard = React.forwardRef(function SkillCard({ skill, onOpen, index }, 
             onClick={(e) => e.stopPropagation()}>
             Download<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={14} weight="bold" /></span>
           </a>
+        ) : skill.buyUrl ? (
+          <BuyLink skill={skill} className="mk-card__dl" />
         ) : (
           <span className="mk-card__soon">Coming soon</span>
         )}
@@ -102,7 +113,7 @@ function Drawer({ skill, onClose }) {
               <span className="mk-card__icon mk-card__icon--lg"><SkillIcon name={skill.icon} size={26} /></span>
               <button type="button" className="mk-drawer__close" onClick={onClose} aria-label="Close"><X size={20} /></button>
             </div>
-            <div className="mk-drawer__meta"><span className="mk-card__cat">{skill.category}</span><TierTag tier={skill.tier} /></div>
+            <div className="mk-drawer__meta"><span className="mk-card__cat">{skill.category}</span><TierTag skill={skill} /></div>
             <h2 className="mk-drawer__title">{skill.name}</h2>
             <p className="mk-drawer__desc">{skill.description}</p>
 
@@ -110,9 +121,12 @@ function Drawer({ skill, onClose }) {
               <a className="ll-btn ll-btn--primary ll-btn--md mk-drawer__dl" href={skillDownloadHref(skill.slug)} download>
                 Download skill (.zip)<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
               </a>
+            ) : skill.buyUrl ? (
+              <BuyLink skill={skill} size="md" className="mk-drawer__dl" label={`Buy now · $${skill.price}`} />
             ) : (
               <Button variant="secondary" onClick={openBooking} iconRight={<ArrowRight size={14} weight="bold" />}>Ask about early access</Button>
             )}
+            {skill.buyUrl ? <p className="mk-drawer__fine">One-time payment · instant download · secure checkout by Stripe</p> : null}
 
             <section className="mk-drawer__sec">
               <h4 className="ll-eyebrow">What you get</h4>
@@ -125,6 +139,26 @@ function Drawer({ skill, onClose }) {
               <section className="mk-drawer__sec">
                 <h4 className="ll-eyebrow">Try asking</h4>
                 <p className="mk-drawer__prompt">“{skill.prompt}”</p>
+              </section>
+            ) : null}
+
+            {skill.inside ? (
+              <section className="mk-drawer__sec">
+                <h4 className="ll-eyebrow">What's inside</h4>
+                <ul className="mk-card__outs mk-card__outs--lg">
+                  {skill.inside.map((o) => <li key={o}><Check size={14} weight="bold" aria-hidden="true" />{o}</li>)}
+                </ul>
+              </section>
+            ) : null}
+
+            {skill.buyUrl ? (
+              <section className="mk-drawer__sec">
+                <h4 className="ll-eyebrow">How you get it</h4>
+                <ol className="mk-steps-sm">
+                  <li>Pay securely through Stripe. You'll get a receipt by email.</li>
+                  <li>You land on a download page right away. The link keeps working for 30 days.</li>
+                  <li>Upload the .zip in Claude under Settings → Capabilities → Skills, or unzip it into <code>~/.claude/skills/</code> for Claude Code.</li>
+                </ol>
               </section>
             ) : null}
 
@@ -149,6 +183,8 @@ function Drawer({ skill, onClose }) {
                 <a className="ll-btn ll-btn--primary ll-btn--md" href={skillDownloadHref(skill.slug)} download>
                   Download skill<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
                 </a>
+              ) : skill.buyUrl ? (
+                <BuyLink skill={skill} size="md" label={`Buy now · $${skill.price}`} />
               ) : (
                 <Button variant="primary" onClick={openBooking} iconRight={<ArrowRight size={14} weight="bold" />}>Ask about early access</Button>
               )}
@@ -208,7 +244,7 @@ function Marketplace() {
           </p>
           <div className="mk-hero__stats">
             <div><b>{freeCount}</b><span>Free skills</span></div>
-            <div><b>{SKILLS.length - freeCount}</b><span>Paid, coming soon</span></div>
+            <div><b>{SKILLS.length - freeCount}</b><span>Premium skills</span></div>
             <div><b>2</b><span>Claude &amp; Claude Code</span></div>
           </div>
         </div>

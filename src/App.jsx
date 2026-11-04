@@ -19,6 +19,7 @@ import MarketplaceTab from './components/navigation/MarketplaceTab';
 // Loaded with the app, not lazily: a lazy chunk left the page empty for a beat
 // and the footer jumped to the top of the screen while it loaded.
 import Marketplace from './pages/Marketplace';
+import MarketplaceThankYou from './pages/MarketplaceThankYou';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
@@ -164,6 +165,7 @@ function App({ initialPath }) {
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
   else if (page === 'Marketplace') body = <Marketplace />;
+  else if (page === 'MarketplaceThankYou') body = <MarketplaceThankYou />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
   else if (page === 'Terms') body = <Terms onNavigate={navigate} />;
   else body = <NotFound onNavigate={navigate} />;
