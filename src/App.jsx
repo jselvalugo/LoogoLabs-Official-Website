@@ -16,6 +16,9 @@ import './styles/pages/brand-design.css';
 import './styles/pages/consulting.css';
 import './styles/pages/marketplace.css';
 import MarketplaceTab from './components/navigation/MarketplaceTab';
+// Loaded with the app, not lazily: a lazy chunk left the page empty for a beat
+// and the footer jumped to the top of the screen while it loaded.
+import Marketplace from './pages/Marketplace';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
@@ -45,7 +48,6 @@ const BrandDesign = React.lazy(() => import('./pages/BrandDesign'));
 const Consulting = React.lazy(() => import('./pages/Consulting'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
-const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 
 function getInitialState(initialPath) {
   // The build pre-renders each page on the server, where there is no window;
@@ -161,7 +163,7 @@ function App({ initialPath }) {
   else if (SERVICE_PACKAGE_BY_PAGE[page]) body = <ServicePackage key={page} page={page} />;
   else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
-  else if (page === 'Marketplace') body = <React.Suspense fallback={null}><Marketplace /></React.Suspense>;
+  else if (page === 'Marketplace') body = <Marketplace />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
   else if (page === 'Terms') body = <Terms onNavigate={navigate} />;
   else body = <NotFound onNavigate={navigate} />;

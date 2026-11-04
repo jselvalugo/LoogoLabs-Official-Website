@@ -24,14 +24,15 @@
   writing-mode: vertical-rl; transform: rotate(180deg);
   font-family: var(--font-label); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
 }
-.mk-tab__short { display: none; }
 @media (max-width: 720px) {
-  .mk-tab { top: auto; bottom: 112px; margin: 0; padding: 10px 6px 10px 7px; gap: 8px; }
-  .mk-tab__icon { width: 24px; height: 24px; }
-  .mk-tab__label { font-size: 10px; }
-  .mk-tab__long { display: none; }
-  .mk-tab__short { display: inline; }
+  /* Phones: a small horizontal nudge in the bottom-right corner. */
+  .mk-tab { top: auto; bottom: 88px; margin: 0; height: auto; flex-direction: row; gap: 8px; padding: 8px 12px 8px 10px; }
+  .mk-tab:hover, .mk-tab:focus-visible { padding-right: 12px; }
+  .mk-tab::before { top: 8px; bottom: 8px; }
+  .mk-tab__icon { width: 22px; height: 22px; }
+  .mk-tab__label { writing-mode: horizontal-tb; transform: none; font-size: 10px; letter-spacing: .16em; }
 }
+
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 .mk { background: var(--surface-page); color: var(--text-primary); overflow-x: clip; }

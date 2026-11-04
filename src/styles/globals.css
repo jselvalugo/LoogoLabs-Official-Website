@@ -999,3 +999,35 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 
 /* Welcome intro overlay is retired; the class stays so the component renders nothing visible. */
 .ll-welcome { display: none; }
+
+/* ── Footer: compact mobile layout ───────────────────────────────────────────
+   Phones get a short footer: logo + social icons on one row, address on one
+   line, two tight link columns, legal links as one inline row, and plain
+   sentence-case fine print. Desktop is unchanged. */
+.ll-footer__social { display: none; }
+.ll-footer__sep { display: none; }
+@media (max-width: 640px) {
+  :root .ll-footer { padding: 32px 16px 20px; margin-top: 48px; }
+  :root .ll-footer__top { grid-template-columns: 1fr 1fr; gap: 20px 16px; padding-bottom: 20px; }
+  .ll-footer__brand { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px 12px; }
+  .ll-footer__wordmark img { height: 34px; }
+  .ll-footer__social { display: flex; gap: 6px; }
+  .ll-footer__social a { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border-hair-inverse); color: var(--ink-100); }
+  .ll-footer__social a:hover { color: var(--paper-000); border-color: var(--paper-000); }
+  .ll-footer__address { grid-column: 1 / -1; margin: 0; font-size: 12px; line-height: 1.5; }
+  .ll-footer__address br { display: none; }
+  .ll-footer__sep { display: inline; }
+  .ll-footer__country { display: none; }
+  :root .ll-footer__col { gap: 0; }
+  .ll-footer__col > .ll-eyebrow { font-size: 10px; margin-bottom: 4px; }
+  :root .ll-footer__link { font-size: 14px; min-height: 32px; }
+  .ll-footer__col--social { display: none; }
+  :root .ll-footer__col--legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; padding-top: 14px; border-top: 1px solid var(--border-hair-inverse); }
+  .ll-footer__col--legal > .ll-eyebrow { display: none; }
+  .ll-footer__col--legal .ll-footer__link { font-size: 12px; color: var(--ink-300); min-height: 32px; }
+  :root .ll-footer__bottom { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; padding-top: 14px;
+    font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 12px; }
+  .ll-footer__strap { display: none; }
+  :root .ll-footer__license { order: 3; flex-basis: 100%; font-size: 11px; line-height: 1.5; color: var(--ink-400); }
+  .ll-footer__admin { font-size: 12px; }
+}
