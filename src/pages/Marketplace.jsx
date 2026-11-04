@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight, Bell, Brain, Browser, CalendarBlank, ChartLineUp, ChatsCircle, Check, ClipboardText,
   Crosshair, DownloadSimple, EnvelopeSimple, Eye, FileText, FilmSlate, LinkSimple, LockSimple,
-  MagnifyingGlass, Megaphone, PenNib, RocketLaunch, Star, X,
+  MagnifyingGlass, Megaphone, PenNib, RocketLaunch, SlidersHorizontal, Star, X,
 } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
@@ -340,9 +340,101 @@ function HeroStack() {
   );
 }
 
+const matchesQuery = (s, q) => {
+  if (!q) return true;
+  const hay = `${s.name} ${s.tagline} ${s.category} ${s.description}`.toLowerCase();
+  return q.toLowerCase().split(/\s+/).filter(Boolean).every((w) => hay.includes(w));
+};
+// Categories that actually have skills, in catalog order.
+const USED_CATEGORIES = CATEGORIES.filter((c) => c === 'All' || SKILLS.some((s) => s.category === c));
+
+function SearchField({ value, onChange, id }) {
+  return (
+    <label className="mk-search" htmlFor={id}>
+      <MagnifyingGlass size={16} aria-hidden="true" />
+      <input id={id} type="search" placeholder="Search skills" value={value} onChange={(e) => onChange(e.target.value)}
+        autoComplete="off" enterKeyHint="search" aria-label="Search skills" />
+      {value ? <button type="button" className="mk-search__clear" onClick={() => onChange('')} aria-label="Clear search"><X size={14} /></button> : null}
+    </label>
+  );
+}
+
+// Phone filter sheet: price and category as large tap targets with live counts,
+// changes apply instantly and the footer button shows how many skills match.
+function FilterSheet({ open, onClose, tier, setTier, cat, setCat, q, total, onClear }) {
+  const reduce = useReducedMotion();
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, [open, onClose]);
+  if (typeof document === 'undefined') return null;
+  const tierCount = (k) => SKILLS.filter((s) => inTier(s, k) && (cat === 'All' || s.category === cat) && matchesQuery(s, q)).length;
+  const catCount = (c) => SKILLS.filter((s) => inTier(s, tier) && (c === 'All' || s.category === c) && matchesQuery(s, q)).length;
+  return createPortal(
+    <AnimatePresence>
+      {open ? (
+        <>
+          <motion.div key="scrim" className="mk-scrim" onClick={onClose}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} />
+          <motion.div key="sheet" className="mk-fsheet" role="dialog" aria-modal="true" aria-label="Filter skills"
+            initial={reduce ? { opacity: 0 } : { y: '100%' }} animate={reduce ? { opacity: 1 } : { y: 0 }}
+            exit={reduce ? { opacity: 0 } : { y: '100%' }} transition={{ duration: 0.4, ease: EASE }}>
+            <div className="mk-fsheet__head">
+              <h2>Filter skills</h2>
+              <button type="button" className="mk-drawer__close" onClick={onClose} aria-label="Close"><X size={20} /></button>
+            </div>
+            <div className="mk-fsheet__body">
+              <fieldset className="mk-fsheet__group">
+                <legend className="ll-eyebrow">Price</legend>
+                <div className="mk-fsheet__grid">
+                  {TIERS.map(([k, label]) => (
+                    <button key={k} type="button" aria-pressed={tier === k}
+                      className={`mk-opt${tier === k ? ' is-on' : ''}`} onClick={() => setTier(k)}>
+                      <span>{label}</span><em>{tierCount(k)}</em>
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset className="mk-fsheet__group">
+                <legend className="ll-eyebrow">Category</legend>
+                <div className="mk-fsheet__grid">
+                  {USED_CATEGORIES.map((c) => {
+                    const n = catCount(c);
+                    return (
+                      <button key={c} type="button" aria-pressed={cat === c} disabled={n === 0 && cat !== c}
+                        className={`mk-opt${cat === c ? ' is-on' : ''}`} onClick={() => setCat(c)}>
+                        <span>{c === 'All' ? 'All categories' : c}</span><em>{n}</em>
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            </div>
+            <div className="mk-fsheet__foot">
+              <button type="button" className="mk-fsheet__clear" onClick={onClear}>Clear all</button>
+              <button type="button" className="ll-btn ll-btn--primary ll-btn--md" onClick={onClose}>
+                {total === 0 ? 'No matches' : `Show ${total} ${total === 1 ? 'skill' : 'skills'}`}
+              </button>
+            </div>
+          </motion.div>
+        </>
+      ) : null}
+    </AnimatePresence>,
+    document.body,
+  );
+}
+
 function Marketplace() {
   const [tier, setTier] = React.useState('all');
   const [cat, setCat] = React.useState('All');
+  const [q, setQ] = React.useState('');
+  const [sheet, setSheet] = React.useState(false);
+  const closeSheet = React.useCallback(() => setSheet(false), []);
+  const clearAll = () => { setTier('all'); setCat('All'); setQ(''); };
   const [open, setOpen] = React.useState(null);
   const close = React.useCallback(() => setOpen(null), []);
   // If checkout couldn't start, the checkout function sends the buyer back with ?checkout_error.
@@ -352,7 +444,9 @@ function Marketplace() {
   const [preview, setPreview] = React.useState(false);
   React.useEffect(() => { setPreview(isPreviewHost()); }, []);
 
-  const list = SKILLS.filter((s) => inTier(s, tier) && (cat === 'All' || s.category === cat));
+  const list = SKILLS.filter((s) => inTier(s, tier) && (cat === 'All' || s.category === cat) && matchesQuery(s, q));
+  const activeCount = (tier !== 'all' ? 1 : 0) + (cat !== 'All' ? 1 : 0);
+  const tierLabel = TIERS.find(([k]) => k === tier)[1];
   const freeCount = SKILLS.filter((s) => s.tier === 'free').length;
   const liveCount = SKILLS.filter((s) => s.tier === 'paid' && !s.soon).length;
   const soonCount = SKILLS.filter((s) => s.soon).length;
@@ -384,6 +478,7 @@ function Marketplace() {
       </section>
 
       <section className="mk-wrap">
+        {/* Desktop / tablet filter bar */}
         <div className="mk-bar">
           <div className="mk-seg" role="tablist" aria-label="Price">
             {TIERS.map(([k, label]) => (
@@ -394,20 +489,46 @@ function Marketplace() {
               </button>
             ))}
           </div>
+          <SearchField id="mk-search-desk" value={q} onChange={setQ} />
           <div className="mk-chips">
-            {CATEGORIES.map((c) => (
+            {USED_CATEGORIES.map((c) => (
               <button key={c} type="button" className={`mk-chip${cat === c ? ' is-on' : ''}`} onClick={() => setCat(c)}>{c}</button>
             ))}
           </div>
         </div>
-        <p className="mk-count">{list.length} {list.length === 1 ? 'skill' : 'skills'}</p>
+
+        {/* Phone filter bar: search + one Filters button, sticky under the nav */}
+        <div className="mk-mbar">
+          <div className="mk-mbar__row">
+            <SearchField id="mk-search-phone" value={q} onChange={setQ} />
+            <button type="button" className={`mk-mbar__btn${activeCount ? ' is-on' : ''}`} onClick={() => setSheet(true)}
+              aria-haspopup="dialog" aria-label={`Filters${activeCount ? `, ${activeCount} active` : ''}`}>
+              <SlidersHorizontal size={18} aria-hidden="true" /><span>Filters</span>
+              {activeCount ? <b className="mk-mbar__badge">{activeCount}</b> : null}
+            </button>
+          </div>
+        </div>
+
+        <div className="mk-status">
+          <p className="mk-count">{list.length} {list.length === 1 ? 'skill' : 'skills'}</p>
+          {tier !== 'all' ? <button type="button" className="mk-pill" onClick={() => setTier('all')}>{tierLabel}<X size={12} aria-label="Remove" /></button> : null}
+          {cat !== 'All' ? <button type="button" className="mk-pill" onClick={() => setCat('All')}>{cat}<X size={12} aria-label="Remove" /></button> : null}
+          {activeCount || q ? <button type="button" className="mk-status__clear" onClick={clearAll}>Clear all</button> : null}
+        </div>
 
         <motion.div layout className="mk-grid">
           <AnimatePresence mode="popLayout">
             {list.map((s, i) => <SkillCard key={s.slug} skill={s} index={i} onOpen={setOpen} />)}
           </AnimatePresence>
         </motion.div>
-        {list.length === 0 ? <p className="mk-empty">Nothing here yet. More skills are on the way.</p> : null}
+        {list.length === 0 ? (
+          <div className="mk-empty">
+            <p>No skills match {q ? <>“{q}”</> : 'these filters'}{q && activeCount ? ' with these filters' : ''}.</p>
+            <button type="button" className="ll-btn ll-btn--secondary ll-btn--sm" onClick={clearAll}>Clear filters</button>
+          </div>
+        ) : null}
+        <FilterSheet open={sheet} onClose={closeSheet} tier={tier} setTier={setTier} cat={cat} setCat={setCat}
+          q={q} total={list.length} onClear={clearAll} />
       </section>
 
       <section className="mk-how ll-forest">
