@@ -57,17 +57,15 @@
 .cs-footer { background: var(--paper-100); color: var(--ink-500) !important; display: flex; justify-content: center; gap: 20px; padding: 24px 20px 40px; font-size: 13px; }
 .cs-footer a { color: inherit; }
 
-/* Client logos under the nav: a static, grayscale row (no marquee). */
-.cs-loop { overflow: hidden; background: var(--paper-100); padding: 20px 24px; border-bottom: 1px solid var(--border-hair); -webkit-mask-image: none; mask-image: none; }
-.cs-loop__track { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 28px; width: auto; max-width: var(--container-max); margin: 0 auto; animation: none; }
-/* Only the first copy of the loop renders. */
-.cs-loop__track > [aria-hidden="true"] { display: none; }
-.cs-loop__item { flex: none; display: grid; place-items: center; height: 40px; min-width: 0; padding: 0 10px; margin: 0; border-radius: var(--radius-1); background: transparent; filter: grayscale(1); opacity: 0.8; }
-.cs-loop__item--dark, .cs-loop__item--chip { background: var(--ink-900); }
-.cs-loop__item img { display: block; height: 26px; width: auto; }
-.cs-loop__item--fill { padding: 0; overflow: hidden; }
-.cs-loop__item--fill img { height: 40px; }
-.cs-loop__script, .cs-script { font: 500 15px/1 var(--font-body); background: none; color: var(--paper-000); -webkit-text-fill-color: initial; white-space: nowrap; }
+/* Client logos under the nav: transparent one-colour marks straight on the cream,
+   each at its own optical height (--th, from CLIENT_LOGOS[...].ticker.th). */
+.cs-loop { background: var(--paper-100); padding: 22px 24px 24px; border-bottom: 1px solid var(--border-hair); }
+.cs-loop__label { margin: 0 0 14px; text-align: center; font: 500 12px/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-400); }
+.cs-loop__track { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px 44px; max-width: var(--container-max); margin: 0 auto; }
+.cs-loop__item { flex: none; display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; margin: 0; opacity: 0.85; }
+.cs-loop__item img { display: block; height: var(--th, 28px); width: auto; max-width: 100%; object-fit: contain; }
+.cs-loop__cap { font: 500 15px/1 var(--font-body); color: var(--ink-900); letter-spacing: -0.01em; white-space: nowrap; }
+.cs-script { font: 500 15px/1 var(--font-body); background: none; color: var(--paper-000); -webkit-text-fill-color: initial; white-space: nowrap; }
 .cs-script__sub { display: none; }
 
 /* Client tiles (older section, kept for safety) */
@@ -103,21 +101,38 @@
 .cs-video-soon__label { padding: 8px 14px; border-radius: var(--radius-1); border: 1px solid var(--border-hair-inverse); font: 500 13px/1 var(--font-body); color: var(--paper-100); }
 
 @media (max-width: 720px) {
-  .cs-hero { padding-top: 48px; }
+  .cs-nav { height: 56px; padding: 0 16px; }
+  .cs-nav__logo { height: 24px; }
+  .cs-pill { padding: 8px 14px; font-size: 14px; }
+  .cs-hero { padding: 40px 20px 40px; }
+  /* Second sentence of the headline on its own line, so "Then" never dangles. */
+  .cs-hero h1 { font-size: clamp(34px, 9.5vw, 44px); line-height: 1.08; }
+  .cs-hero h1 em { display: block; }
+  .cs-lede { margin: 18px auto 28px; font-size: 17px; line-height: 1.55; }
+  .cs-textcta { margin-top: 22px; }
+  .cs-roas { flex-direction: column; gap: 10px; text-align: center; margin-top: 24px; font-size: 15px; }
+  .cs-reviews-block { display: block; }
+  .cs-reviews { gap: 12px; }
+  .cs-reviews > img:nth-of-type(2) { margin-top: 0; }
+  .cs-form { padding: 8px 16px 56px; }
+  .cs .cs-form .lp-card { padding: 32px 20px; }
   .cs-light { padding: 64px 20px 48px; }
   .cs-light h2 { font-size: 28px; }
   .cs-link { height: 32px; margin: 20px auto; }
   .cs-cards { grid-template-columns: 1fr; margin-top: 28px; }
   .cs-card { padding: 20px 18px; }
   .cs-card h3 { font-size: 18px; }
-  .cs-reviews { margin-top: 36px; max-width: 100%; }
-  .cs-reviews-block { display: none; }
+  .cs-reviews { margin-top: 28px; max-width: 100%; }
   .cs-results { padding: 56px 20px; }
   .cs-results__grid { grid-template-columns: 1fr 1fr; margin-top: 28px; }
   .cs-result { padding: 16px; }
   .cs-result__value { font-size: 26px; }
-  .cs-loop { padding: 16px; }
-  .cs-loop__track { gap: 10px 18px; }
-  .cs-loop__item img { height: 22px; }
+  /* Phones: an even 3 × 2 grid, every logo centred in the same-size cell. */
+  .cs-loop { padding: 18px 16px 20px; }
+  .cs-loop__label { margin-bottom: 12px; font-size: 11px; }
+  .cs-loop__track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 12px; }
+  .cs-loop__item { height: 36px; min-width: 0; }
+  .cs-loop__item img { height: calc(var(--th, 28px) * 0.8); }
+  .cs-loop__cap { font-size: 13px; }
   .cs-clients .cs-client.cs-client--logo { flex-basis: calc((100% - 8px) / 2); height: 64px; }
 }
