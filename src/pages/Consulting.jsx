@@ -10,8 +10,9 @@ import '../styles/pages/consulting.css';
 
 const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
 const wordmarks = [...CLIENT_WORDMARKS];
-// The looping band under the nav: logos only.
-const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name] }));
+// The client row under the nav: the same transparent, one-colour logos as the homepage
+// ticker, so every mark sits straight on the cream with no tiles or boxes behind it.
+const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name].ticker }));
 // The mobile collage under the video: logos, then the script name.
 const proofItems = [
   ...beltItems,
@@ -102,13 +103,15 @@ export default function Consulting() {
       </header>
 
       <section className="cs-loop" aria-label="Selected clients">
-        <div className="cs-loop__track">
-          {[0, 1].map((copy) => beltItems.map((item) => (
-            <div key={`${copy}-${item.name}`} className={`cs-loop__item${item.dark ? ' cs-loop__item--dark' : ''}${item.chip ? ' cs-loop__item--chip' : ''}${item.fill ? ' cs-loop__item--fill' : ''}`} aria-hidden={copy === 1 || undefined}>
-              {item.wordmark ? <span className="cs-script cs-loop__script">{item.wordmark}</span> : <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} />}
-            </div>
-          )))}
-        </div>
+        <p className="cs-loop__label">Trusted by</p>
+        <ul className="cs-loop__track">
+          {beltItems.map((item) => (
+            <li key={item.name} className="cs-loop__item" style={{ '--th': `${item.th}px` }}>
+              <img src={item.src} width={item.w} height={item.h} alt={item.caption ? '' : item.name} loading="eager" />
+              {item.caption && <span className="cs-loop__cap">{item.caption}</span>}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="cs-hero">
