@@ -1,4 +1,4 @@
-// Paid skill orders: verify a Stripe Checkout Session and deliver the skill.
+// Paid skill orders (marketplace): verify a Stripe Checkout Session and deliver the skill.
 //
 //   GET /.netlify/functions/skill-order?session_id=cs_...            -> order status (JSON)
 //   GET /.netlify/functions/skill-order?session_id=cs_...&download=1 -> the skill .zip
