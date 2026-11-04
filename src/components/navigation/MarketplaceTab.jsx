@@ -21,7 +21,6 @@ function MarketplaceTab({ active, onNavigate }) {
       transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1], delay: 0.8 }}>
       <span className="mk-tab__icon"><SquaresFour size={18} weight="light" aria-hidden="true" /></span>
       <span className="mk-tab__label"><span className="mk-tab__long">Skills Marketplace</span><span className="mk-tab__short">Skills</span></span>
-      <span className="mk-tab__free">Free</span>
     </motion.a>
   );
 }

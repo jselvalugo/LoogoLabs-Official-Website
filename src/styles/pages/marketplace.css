@@ -16,6 +16,7 @@
   background: var(--amber-500); transform: scaleY(.35); transform-origin: center;
   transition: transform .35s cubic-bezier(.32,.72,0,1);
 }
+.mk-tab, .mk-tab:hover, .mk-tab:focus-visible, .mk-tab:visited { color: var(--paper-100); }
 .mk-tab:hover, .mk-tab:focus-visible { padding-right: 18px; background: var(--ink-800); }
 .mk-tab:hover::before, .mk-tab:focus-visible::before, .mk-tab.is-active::before { transform: scaleY(1); }
 .mk-tab__icon { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--border-hair-inverse); }
@@ -24,17 +25,12 @@
   font-family: var(--font-label); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
 }
 .mk-tab__short { display: none; }
-.mk-tab__free {
-  font-family: var(--font-label); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
-  background: var(--amber-500); color: var(--paper-000); padding: 3px 5px;
-}
 @media (max-width: 720px) {
   .mk-tab { top: auto; bottom: 112px; margin: 0; padding: 10px 6px 10px 7px; gap: 8px; }
   .mk-tab__icon { width: 24px; height: 24px; }
   .mk-tab__label { font-size: 10px; }
   .mk-tab__long { display: none; }
   .mk-tab__short { display: inline; }
-  .mk-tab__free { display: none; }
 }
 
 /* ── Page ─────────────────────────────────────────────────────────────────── */
