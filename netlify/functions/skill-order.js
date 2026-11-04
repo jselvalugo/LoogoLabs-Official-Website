@@ -15,7 +15,6 @@
 //   SKILL_ENCRYPTION_KEY  64 hex chars, the key used to encrypt the files
 import { createDecipheriv } from 'node:crypto';
 import saasLaunchPlaybook from '../lib/paid-skills/saas-launch-playbook.enc.js';
-import contentEngine from '../lib/paid-skills/content-engine.enc.js';
 import { PAID_SKILLS } from '../../src/lib/paidSkills.js';
 import { db } from '../lib/crm.js';
 import { sendEmail, skillDownloadEmail } from '../lib/crm-email.js';
@@ -112,11 +111,6 @@ const CATALOG = {
     name: 'SaaS Launch Playbook',
     file: 'saas-launch-playbook.zip',
     payload: saasLaunchPlaybook,
-  },
-  'content-engine': {
-    name: '30-Day Content Engine',
-    file: 'content-engine.zip',
-    payload: contentEngine,
   },
 };
 

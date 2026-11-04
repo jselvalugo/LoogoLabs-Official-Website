@@ -23,7 +23,6 @@ export const LAUNCHED = true;
 // /marketplace/thank-you?session_id=..., where skill-order.js verifies and delivers.
 export const BUY_URLS = {
   'saas-launch-playbook': '/.netlify/functions/skill-order?buy=saas-launch-playbook',
-  'content-engine': '/.netlify/functions/skill-order?buy=content-engine',
 };
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];
@@ -156,9 +155,12 @@ export const SKILLS = [
     name: '30-Day Content Engine',
     category: 'Social',
     tier: 'paid',
+    // Built and tested; goes on sale once netlify/lib/paid-skills/content-engine.enc.js is committed.
+    // Then: add it back to PAID_SKILLS + BUY_URLS + skill-order CATALOG, use buyUrl, drop soon/eta.
+    soon: true,
+    eta: 'November 2026',
     icon: 'CalendarBlank',
-    price: PAID_SKILLS['content-engine'].priceUsd,
-    buyUrl: BUY_URLS['content-engine'],
+    price: 4.99,
     tagline: 'A full month of posts, planned, written and ready to shoot.',
     description:
       'Claude plans 30 days of Reels, TikToks, carousels and stories around your content pillars, then writes every caption, carousel slide, story frame and shot list. One idea becomes several formats, and you get a batch-filming plan so a month of content takes one afternoon to shoot. English, Spanish or both.',

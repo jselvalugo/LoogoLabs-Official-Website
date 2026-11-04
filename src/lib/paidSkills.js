@@ -15,11 +15,4 @@ export const PAID_SKILLS = {
       'Plan and run your SaaS launch with Claude: positioning, pricing, launch model, dated calendar, launch day, ads, email, scorecard and 30/60/90 review. Instant download.',
     image: '/skills/covers/saas-launch-playbook.png',
   },
-  'content-engine': {
-    priceUsd: 4.99,
-    name: '30-Day Content Engine — Claude skill',
-    checkoutDescription:
-      'A full month of social content with Claude: pillars, a dated calendar, every caption, carousel, story and shot list, plus a batch-filming plan and a spreadsheet calendar. Instant download.',
-    image: '/skills/covers/content-engine.png',
-  },
 };
