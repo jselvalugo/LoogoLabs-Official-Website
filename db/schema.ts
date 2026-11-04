@@ -396,3 +396,11 @@ export const crm_email_sends = pgTable('crm_email_sends', {
   sent_at: timestamp('sent_at'),
   created_at: timestamp('created_at').defaultNow(),
 }, (t) => [unique().on(t.campaign_id, t.subscriber_id), unique().on(t.sequence_id, t.step, t.subscriber_id)]);
+
+// Paid marketplace orders whose download link has been emailed (sent once per order).
+export const skill_order_emails = pgTable('skill_order_emails', {
+  session_id: text('session_id').primaryKey(),
+  sku: text('sku').notNull(),
+  email: text('email').notNull(),
+  sent_at: timestamp('sent_at').defaultNow(),
+});

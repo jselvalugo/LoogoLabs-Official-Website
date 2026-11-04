@@ -74,19 +74,32 @@ export default function Terms({ onNavigate }) {
           <P>If you have a billing dispute, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a> within 14 days of the charge and we will work to resolve it in good faith.</P>
         </Section>
 
-        <Section title="9. Termination">
+        <Section title="9. Digital Products and Downloads">
+          <P>Digital products sold on loogolabs.com, including the Claude skills in our <a href="/marketplace" style={linkStyle}>Skills Marketplace</a>, are delivered instantly and cannot be returned once accessed. <strong>All sales of digital products are final and non-refundable.</strong></P>
+          <P>Instead of refunds, we guarantee delivery:</P>
+          <UL items={[
+            'Right after payment you are taken to a download page for your purchase.',
+            'We also email the download link to the address you used at checkout. The link keeps working for 30 days, so you can download the file again.',
+            'If your download doesn’t arrive, won’t open, or the link has expired, email david@loogolabs.com with your receipt and we will send the file to you directly.',
+          ]} />
+          <P>If you were charged more than once for the same product by mistake, or we are unable to deliver a product you paid for, we will refund the duplicate or undelivered charge.</P>
+          <P>Free products, including skills unlocked with your email address, are provided as-is at no cost.</P>
+          <P>Each purchase includes a single-buyer license: you may use the product for your own business and your own clients, but you may not resell, share, or redistribute the files.</P>
+        </Section>
+
+        <Section title="10. Termination">
           <P>Either party may terminate a service engagement with 30 days written notice unless otherwise stated in a signed service agreement. Loogo Labs reserves the right to suspend or terminate access to our services immediately if a client violates these terms or engages in conduct that is harmful to our business or reputation.</P>
         </Section>
 
-        <Section title="10. Governing Law">
+        <Section title="11. Governing Law">
           <P>These Terms of Service are governed by the laws of the State of Florida, without regard to its conflict of law provisions. Any disputes arising from these terms shall be resolved in the courts of Miami-Dade County, Florida, and you consent to personal jurisdiction in that venue.</P>
         </Section>
 
-        <Section title="11. Changes to These Terms">
+        <Section title="12. Changes to These Terms">
           <P>We may update these Terms of Service at any time. When we do, we will update the "Last updated" date above. Material changes will be communicated where reasonably possible. Continued use of our website after changes are posted constitutes your acceptance of the updated terms.</P>
         </Section>
 
-        <Section title="12. Contact">
+        <Section title="13. Contact">
           <P>For questions about these terms, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>book a call with us</a>.</P>
           <P><strong>Loogo Labs LLC</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>
@@ -197,19 +210,32 @@ function TermsES({ onNavigate }) {
           <P>Si tienes una disputa de facturación, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a> dentro de los 14 días posteriores al cargo y trabajaremos para resolverla de buena fe.</P>
         </Section>
 
-        <Section title="9. Terminación">
+        <Section title="9. Productos digitales y descargas">
+          <P>Los productos digitales vendidos en loogolabs.com, incluidas las skills de Claude de nuestro <a href="/marketplace" style={linkStyle}>Skills Marketplace</a>, se entregan al instante y no pueden devolverse una vez descargados. <strong>Todas las ventas de productos digitales son finales y no reembolsables.</strong></P>
+          <P>En lugar de reembolsos, garantizamos la entrega:</P>
+          <UL items={[
+            'Justo después del pago llegas a una página de descarga de tu compra.',
+            'También enviamos el enlace de descarga al correo que usaste al pagar. El enlace funciona durante 30 días, así que puedes volver a descargar el archivo.',
+            'Si tu descarga no llega, no abre o el enlace venció, escribe a david@loogolabs.com con tu recibo y te enviaremos el archivo directamente.',
+          ]} />
+          <P>Si por error se te cobró más de una vez el mismo producto, o no podemos entregarte un producto que pagaste, reembolsaremos el cargo duplicado o no entregado.</P>
+          <P>Los productos gratuitos, incluidas las skills que se desbloquean con tu correo, se ofrecen tal cual y sin costo.</P>
+          <P>Cada compra incluye una licencia para un solo comprador: puedes usar el producto para tu propio negocio y tus propios clientes, pero no puedes revender, compartir ni redistribuir los archivos.</P>
+        </Section>
+
+        <Section title="10. Terminación">
           <P>Cualquiera de las partes puede terminar una relación de servicio con 30 días de aviso por escrito, salvo que se indique lo contrario en un contrato de servicio firmado. Loogo Labs se reserva el derecho de suspender o terminar el acceso a nuestros servicios de inmediato si un cliente infringe estos términos o incurre en conductas que perjudiquen nuestro negocio o reputación.</P>
         </Section>
 
-        <Section title="10. Ley aplicable">
+        <Section title="11. Ley aplicable">
           <P>Estos Términos de Servicio se rigen por las leyes del Estado de Florida, sin tener en cuenta sus disposiciones sobre conflicto de leyes. Cualquier disputa derivada de estos términos se resolverá en los tribunales del Condado de Miami-Dade, Florida, y aceptas la jurisdicción personal de dicha sede.</P>
         </Section>
 
-        <Section title="11. Cambios a estos términos">
+        <Section title="12. Cambios a estos términos">
           <P>Podemos actualizar estos Términos de Servicio en cualquier momento. Cuando lo hagamos, actualizaremos la fecha de "Última actualización" arriba. Los cambios importantes se comunicarán cuando sea razonablemente posible. El uso continuo de nuestro sitio web después de publicados los cambios constituye tu aceptación de los términos actualizados.</P>
         </Section>
 
-        <Section title="12. Contacto">
+        <Section title="13. Contacto">
           <P>Si tienes preguntas sobre estos términos, <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>agenda una llamada con nosotros</a>.</P>
           <P><strong>Loogo Labs LLC</strong><br />{SITE.address.streetAddress}<br />{SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />{SITE.address.countryName}</P>
         </Section>

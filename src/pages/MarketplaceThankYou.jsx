@@ -48,8 +48,11 @@ function MarketplaceThankYou() {
             <CheckCircle size={44} weight="light" className="mk-ty__ok" aria-hidden="true" />
             <h1 className="mk-ty__title">Thanks! Your {state.name} is ready.</h1>
             <p className="mk-ty__lede">
-              Your receipt is on its way{state.email ? ` to ${state.email}` : ''}. This download link keeps working
-              for {state.expiresInDays} more {state.expiresInDays === 1 ? 'day' : 'days'}; bookmark this page.
+              {state.emailed
+                ? <>We’ve emailed this download link{state.email ? ` to ${state.email}` : ''}, along with your receipt.</>
+                : <>Your receipt is on its way{state.email ? ` to ${state.email}` : ''}.</>}{' '}
+              This download link keeps working for {state.expiresInDays} more {state.expiresInDays === 1 ? 'day' : 'days'}.
+              Trouble with the file? Email <a href="mailto:david@loogolabs.com">david@loogolabs.com</a> and we’ll send it to you.
             </p>
             <a className="ll-btn ll-btn--primary ll-btn--lg mk-ty__dl" href={download}>
               Download the skill (.zip)<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={16} weight="bold" /></span>

@@ -228,7 +228,7 @@ function Drawer({ skill, onClose }) {
             ) : (
               <Button variant="secondary" onClick={openBooking} iconRight={<ArrowRight size={14} weight="bold" />}>Ask about early access</Button>
             )}
-            {skill.buyUrl ? <p className="mk-drawer__fine">One-time payment · instant download · secure checkout by Stripe</p> : null}
+            {skill.buyUrl ? <p className="mk-drawer__fine">One-time payment · instant download, plus the link by email · all sales final · secure checkout by Stripe</p> : null}
 
             <section className="mk-drawer__sec">
               <h4 className="ll-eyebrow">What you get</h4>
@@ -258,7 +258,8 @@ function Drawer({ skill, onClose }) {
                 <h4 className="ll-eyebrow">How you get it</h4>
                 <ol className="mk-steps-sm">
                   <li>Pay securely through Stripe. You'll get a receipt by email.</li>
-                  <li>You land on a download page right away. The link keeps working for 30 days.</li>
+                  <li>You land on a download page right away, and we email you the download link too. It keeps working for 30 days.</li>
+                  <li>All sales are final. If the file doesn’t work or never arrives, email david@loogolabs.com and we’ll send it to you.</li>
                   <li>Upload the .zip in Claude under Settings → Capabilities → Skills, or unzip it into <code>~/.claude/skills/</code> for Claude Code.</li>
                 </ol>
               </section>

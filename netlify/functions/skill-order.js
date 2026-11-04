@@ -16,6 +16,8 @@
 import { createDecipheriv } from 'node:crypto';
 import saasLaunchPlaybook from '../lib/paid-skills/saas-launch-playbook.enc.js';
 import { PAID_SKILLS } from '../../src/lib/paidSkills.js';
+import { db } from '../lib/crm.js';
+import { sendEmail, skillDownloadEmail } from '../lib/crm-email.js';
 
 
 // ── Checkout ─────────────────────────────────────────────────────────────────
@@ -38,7 +40,7 @@ const BRAND = {
   icon: '/monogram.png',
 };
 
-const LICENSE_NOTE = 'Instant download after payment. Single-buyer license: use it for your own business and your own clients; no resale or redistribution.';
+const LICENSE_NOTE = 'Instant download after payment, and we email you the download link too. All sales are final (see our Terms). Single-buyer license: use it for your own business and your own clients; no resale or redistribution.';
 
 const fail = (origin, msg, status = 502) => new Response(null, {
   status: 303,
@@ -134,6 +136,38 @@ const maskEmail = (e) => {
   return `${u.slice(0, 2)}${'•'.repeat(Math.max(1, u.length - 2))}@${d}`;
 };
 
+// Email the buyer their download link the first time their order is confirmed.
+// The row is claimed before sending and released if sending fails, so a refresh retries.
+// Never blocks the download page: any problem is logged and the page still works.
+async function emailDownloadOnce(session, item, url) {
+  const to = session.customer_details?.email;
+  if (!to) return false;
+  const origin = /(^|\.)loogolabs\.com$/.test(url.hostname) ? 'https://www.loogolabs.com' : url.origin;
+  try {
+    const sql = db().sql;
+    const claimed = await sql.unsafe(
+      'INSERT INTO skill_order_emails (session_id, sku, email) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING RETURNING session_id',
+      [session.id, session.metadata.sku, to],
+    );
+    if (!claimed.length) return true; // already emailed
+    try {
+      const msg = skillDownloadEmail({
+        name: item.name,
+        link: `${origin}/marketplace/thank-you?session_id=${encodeURIComponent(session.id)}`,
+        days: DOWNLOAD_WINDOW_DAYS,
+      });
+      await sendEmail({ to, replyTo: SUPPORT_EMAIL, ...msg });
+      return true;
+    } catch (err) {
+      await sql.unsafe('DELETE FROM skill_order_emails WHERE session_id = $1', [session.id]).catch(() => {});
+      throw err;
+    }
+  } catch (err) {
+    console.error('skill-order: download email failed', err?.message || err);
+    return false;
+  }
+}
+
 export default async (req) => {
   if (req.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
   const url = new URL(req.url);
@@ -174,7 +208,9 @@ export default async (req) => {
   }
 
   if (url.searchParams.get('download') !== '1') {
+    const emailed = await emailDownloadOnce(session, item, url);
     return json({
+      emailed,
       status: 'paid',
       sku: session.metadata.sku,
       name: item.name,
