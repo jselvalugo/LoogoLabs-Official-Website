@@ -1195,7 +1195,10 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-hero .hm-hero__mark { order: 2; position: static; width: 48px; opacity: 0.9; align-self: center; }
 }
 @media (max-width: 767px) {
-  .hm-hero .hm-hero__side { margin: 20px 20px 0; }
+  /* Phones: drop the "Explore what we do" link; its gold underline becomes the
+     divider above the founder row instead. */
+  .hm-hero__actions > .ll-btn--ghost { display: none; }
+  .hm-hero .hm-hero__side { margin: 28px 20px 0; padding-top: 20px; border-top-color: var(--amber-500); }
   .hm-hero { padding-bottom: 20px; }
 }
 
