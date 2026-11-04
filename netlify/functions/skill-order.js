@@ -1,5 +1,6 @@
-// Paid skill orders (marketplace): verify a Stripe Checkout Session and deliver the skill.
+// Paid skill orders (marketplace): start a branded checkout, verify the payment, deliver the skill.
 //
+//   GET /.netlify/functions/skill-order?buy=saas-launch-playbook            -> 303 to branded Stripe Checkout
 //   GET /.netlify/functions/skill-order?session_id=cs_...            -> order status (JSON)
 //   GET /.netlify/functions/skill-order?session_id=cs_...&download=1 -> the skill .zip
 //
@@ -15,6 +16,94 @@
 import { createDecipheriv } from 'node:crypto';
 import saasLaunchPlaybook from '../lib/paid-skills/saas-launch-playbook.enc.js';
 
+
+// ── Checkout ─────────────────────────────────────────────────────────────────
+const PRODUCTS = {
+  'saas-launch-playbook': {
+    name: 'SaaS Launch Playbook — Claude skill',
+    description: 'Plan and run your SaaS launch with Claude: positioning, pricing, launch model, dated calendar, launch day, ads, email, scorecard and 30/60/90 review. Instant download.',
+    amount: 3900, // cents
+    currency: 'usd',
+    image: '/skills/covers/saas-launch-playbook.png',
+  },
+};
+
+const BRAND = {
+  display_name: 'Loogo Labs',
+  background_color: '#F4F0E9',
+  button_color: '#1B2A12',
+  border_style: 'rectangular',
+  font_family: 'lato',
+  logo: '/email-logo.png',
+  icon: '/monogram.png',
+};
+
+const LICENSE_NOTE = 'Instant download after payment. Single-buyer license: use it for your own business and your own clients; no resale or redistribution.';
+
+const fail = (origin, msg, status = 502) => new Response(null, {
+  status: 303,
+  headers: { Location: `${origin}/marketplace?checkout_error=${encodeURIComponent(msg)}`, 'Cache-Control': 'no-store', 'X-Status': String(status) },
+});
+
+async function startCheckout(req) {
+  const url = new URL(req.url);
+  // Always send buyers back to the canonical site in production; previews keep their own host.
+  const origin = /(^|\.)loogolabs\.com$/.test(url.hostname) ? 'https://www.loogolabs.com' : url.origin;
+  const sku = url.searchParams.get('buy') || '';
+  const product = PRODUCTS[sku];
+  if (!product) return fail(origin, 'unknown_product', 404);
+
+  const key = Netlify.env.get('STRIPE_SECRET_KEY');
+  if (!key) {
+    console.error('skill-order checkout: STRIPE_SECRET_KEY missing');
+    return fail(origin, 'unavailable', 503);
+  }
+
+  const f = new URLSearchParams();
+  f.set('mode', 'payment');
+  f.set('line_items[0][quantity]', '1');
+  f.set('line_items[0][price_data][currency]', product.currency);
+  f.set('line_items[0][price_data][unit_amount]', String(product.amount));
+  f.set('line_items[0][price_data][product_data][name]', product.name);
+  f.set('line_items[0][price_data][product_data][description]', product.description);
+  f.set('line_items[0][price_data][product_data][images][0]', `${origin}${product.image}`);
+  f.set('line_items[0][price_data][product_data][metadata][sku]', sku);
+  f.set('metadata[sku]', sku);
+  f.set('payment_intent_data[metadata][sku]', sku);
+  f.set('success_url', `${origin}/marketplace/thank-you?session_id={CHECKOUT_SESSION_ID}`);
+  f.set('cancel_url', `${origin}/marketplace`);
+  f.set('allow_promotion_codes', 'true');
+  f.set('invoice_creation[enabled]', 'true');
+  f.set('custom_text[submit][message]', LICENSE_NOTE);
+  f.set('branding_settings[display_name]', BRAND.display_name);
+  f.set('branding_settings[background_color]', BRAND.background_color);
+  f.set('branding_settings[button_color]', BRAND.button_color);
+  f.set('branding_settings[border_style]', BRAND.border_style);
+  f.set('branding_settings[font_family]', BRAND.font_family);
+  f.set('branding_settings[logo][type]', 'url');
+  f.set('branding_settings[logo][url]', `${origin}${BRAND.logo}`);
+  f.set('branding_settings[icon][type]', 'url');
+  f.set('branding_settings[icon][url]', `${origin}${BRAND.icon}`);
+
+  try {
+    const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: f,
+    });
+    const session = await res.json();
+    if (!res.ok || !session.url) {
+      console.error('skill-order checkout: stripe error', res.status, session?.error?.message);
+      return fail(origin, 'unavailable');
+    }
+    return new Response(null, { status: 303, headers: { Location: session.url, 'Cache-Control': 'no-store' } });
+  } catch (err) {
+    console.error('skill-order checkout: request failed', err);
+    return fail(origin, 'unavailable');
+  }
+}
+
+// ── Order lookup & delivery ──────────────────────────────────────────────────
 const CATALOG = {
   'saas-launch-playbook': {
     name: 'SaaS Launch Playbook',
@@ -48,6 +137,7 @@ const maskEmail = (e) => {
 export default async (req) => {
   if (req.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
   const url = new URL(req.url);
+  if (url.searchParams.has('buy')) return startCheckout(req);
   const sessionId = url.searchParams.get('session_id') || '';
   if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId)) {
     return json({ status: 'invalid', message: 'This link is missing a valid order reference.' }, 400);

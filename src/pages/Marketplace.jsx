@@ -224,7 +224,7 @@ function Marketplace() {
   const [cat, setCat] = React.useState('All');
   const [open, setOpen] = React.useState(null);
   const close = React.useCallback(() => setOpen(null), []);
-  // If checkout couldn't start, skill-checkout sends the buyer back with ?checkout_error.
+  // If checkout couldn't start, the checkout function sends the buyer back with ?checkout_error.
   const [checkoutError, setCheckoutError] = React.useState(false);
   React.useEffect(() => { setCheckoutError(new URLSearchParams(window.location.search).has('checkout_error')); }, []);
   // Staff-only reminder strip: deploy previews and localhost, never production.
