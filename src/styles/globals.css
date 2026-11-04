@@ -1170,3 +1170,49 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-cta__grid > .hm-buddy { top: 0; right: 0; width: 56px; }
   .hm-cta__grid.hm-has-buddy h2, .hm-cta__grid.hm-has-buddy p { padding-right: 62px; }
 }
+
+/* ── Hero founder block on phones/tablets ─────────────────────────────────────
+   One tidy row under the buttons instead of three loose pieces: character on
+   the left, name + role beside him, the monogram anchored on the right. */
+@media (max-width: 960px) {
+  .hm-hero .hm-hero__side {
+    order: 2; height: auto; min-height: 0; overflow: visible;
+    margin: 20px 24px 0; padding: 16px 0 0; border-top: 1px solid var(--border-hair);
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 16px;
+  }
+  .hm-hero .hm-hero__founder {
+    position: static; width: auto; margin: 0;
+    display: flex; align-items: center; gap: 18px; min-width: 0;
+  }
+  .hm-hero .hm-hero__founder img { flex: none; width: 84px; }
+  .hm-hero .hm-hero__founder figcaption {
+    position: static; white-space: normal; text-align: left; display: grid; gap: 6px;
+    font-size: 11px; color: var(--amber-500);
+  }
+  .hm-hero .hm-hero__founder figcaption strong { font-size: 14px; letter-spacing: 0.14em; color: var(--ink-900); }
+  .hm-hero .hm-hero__founder figcaption::before { position: static; display: block; width: 24px; height: 1px; background: var(--amber-500); margin-bottom: 4px; }
+  .hm-hero .hm-hero__founder { order: 1; }
+  .hm-hero .hm-hero__mark { order: 2; position: static; width: 48px; opacity: 0.9; align-self: center; }
+}
+@media (max-width: 767px) {
+  .hm-hero .hm-hero__side { margin: 20px 20px 0; }
+  .hm-hero { padding-bottom: 20px; }
+}
+
+/* ── Claude Skills marketplace banner (under the hero) ────────────────────── */
+.hm-skills { display: block; background: var(--ink-900); color: var(--paper-100); text-decoration: none; border-top: 2px solid var(--amber-500); transition: background .25s; }
+.hm-skills, .hm-skills:visited, .hm-skills:hover, .hm-skills:focus-visible { color: var(--paper-100); }
+.hm-skills:hover, .hm-skills:focus-visible { background: var(--ink-800); }
+.hm-skills__inner { max-width: 1120px; margin: 0 auto; padding: 20px 40px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; }
+.hm-skills__icon { display: grid; place-items: center; width: 44px; height: 44px; background: var(--amber-500); color: var(--paper-000); }
+.hm-skills__text { display: grid; gap: 4px; min-width: 0; }
+.hm-skills__kicker { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-500); }
+.hm-skills__title { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.2; }
+.hm-skills__go { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--border-hair-inverse); transition: transform .3s cubic-bezier(.32,.72,0,1); }
+.hm-skills:hover .hm-skills__go { transform: translateX(4px); }
+@media (max-width: 767px) {
+  .hm-skills__inner { padding: 16px 20px; gap: 14px; }
+  .hm-skills__icon { width: 40px; height: 40px; }
+  .hm-skills__title { font-size: 18px; }
+  .hm-skills__go { width: 34px; height: 34px; }
+}
