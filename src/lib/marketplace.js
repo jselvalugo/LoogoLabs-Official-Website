@@ -189,14 +189,29 @@ export const SKILLS = [
     name: 'Hook & Script Lab',
     category: 'Social',
     tier: 'paid',
+    // Built; goes on sale with the next encryption batch (see paid-skills go-live checklist).
     soon: true,
-    eta: 'December 2026',
+    eta: 'November 2026',
     icon: 'FilmSlate',
     price: 4.99,
     tagline: 'Scroll-stopping hooks and timed short-form scripts in minutes.',
     description:
-      'Most videos are lost in the first two seconds. Claude writes ten or more hooks per idea across proven styles, scores them and picks three to test, then writes a timed 15, 30 or 60-second script with on-screen text, B-roll cues and a call to action. Works for talking-head, faceless and UGC videos.',
-    outputs: ['Hook bank with a score on every hook', 'Timed scripts with on-screen text', 'B-roll and shot cues', 'A three-hook A/B test plan'],
+      'Most videos are lost in the first two seconds. Claude writes ten or more hooks per idea across twelve proven styles, scores every one on a six-point scorecard and picks three from different styles to test, then writes a timed 15, 30 or 60-second script with the spoken lines, on-screen text, shots and one call to action. Works for talking-head, faceless and UGC creator briefs, in English or Spanish.',
+    outputs: [
+      'A hook bank: 10+ hooks per idea, each scored out of 30',
+      'The top three hooks to test, from three different styles',
+      'Timed scripts with spoken lines, on-screen text and shot cues',
+      'Faceless voiceover scripts or a ready-to-send UGC creator brief',
+      'A three-hook A/B test plan with the numbers to watch',
+      'A branded Excel workbook with the hook bank, scripts and test log',
+    ],
+    inside: [
+      'A 7-step workflow from one round of questions to a film-ready script',
+      '12 hook styles with formulas, examples and weak patterns to avoid',
+      'A scorecard and a builder that checks timing, speaking pace and word limits',
+      'Script, UGC brief and A/B test templates, plus a fully worked example',
+      'Reads your free Brand Brain profile so every hook sounds like you',
+    ],
     prompt: 'Give me hooks and a 30-second script about why most small businesses post and get no leads.',
   },
   {
