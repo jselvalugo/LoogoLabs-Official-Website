@@ -290,6 +290,16 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // Post-purchase download page for paid marketplace skills. Never indexed.
+    page: 'MarketplaceThankYou',
+    path: '/marketplace/thank-you',
+    title: `Your download | ${SITE.name}`,
+    description: 'Download your Claude skill.',
+    priority: '0.0',
+    changefreq: 'yearly',
+    unlisted: true,
+  },
+  {
     page: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,

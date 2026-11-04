@@ -15,6 +15,13 @@ import utm from '../../marketplace/skills/utm-tracking-plan/SKILL.md?raw';
 import email from '../../marketplace/skills/saas-email-sequences/SKILL.md?raw';
 
 export const LAUNCHED = false;
+
+// Buy links for paid skills. netlify/functions/skill-order.js (?buy=) opens a branded
+// Stripe Checkout (price and branding live there); after payment Stripe returns to
+// /marketplace/thank-you?session_id=..., where skill-order.js verifies and delivers.
+export const BUY_URLS = {
+  'saas-launch-playbook': '/.netlify/functions/skill-order?buy=saas-launch-playbook',
+};
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];
 
@@ -101,9 +108,26 @@ export const SKILLS = [
     category: 'Strategy',
     tier: 'paid',
     icon: 'RocketLaunch',
-    tagline: 'A full go-to-market plan, from positioning to the first 90 days of ads.',
-    description: 'The playbook we run with launch clients, packaged as a skill. Coming soon.',
-    outputs: ['Positioning workshop', 'Launch calendar', 'Channel budgets', '90-day growth plan'],
+    price: 39,
+    buyUrl: BUY_URLS['saas-launch-playbook'],
+    tagline: 'Plan and run your launch with Claude, from positioning to the 90-day review.',
+    description:
+      'The launch process we run with clients, packaged as a skill. Claude diagnoses your launch, tells you whether your goal is reachable with your budget and team, then builds the plan: positioning, pricing, a dated calendar, launch day, ads, email and a scorecard. Every session ends with your next actions, and your progress carries over between sessions.',
+    outputs: [
+      'A verdict: can you hit your goal with this budget and team?',
+      'Positioning, messaging and pricing decisions',
+      'Launch model with an affordable cost per customer',
+      'Dated launch calendar that skips holidays',
+      'Launch-day runbook, ads, email and outreach plans',
+      'Scorecard, weekly check-ins and a 30/60/90 review',
+    ],
+    inside: [
+      '11 step-by-step modules, each explaining why it matters and the common mistakes',
+      'Launch model and calendar calculators',
+      '8 fill-in templates, including a company profile and a progress file',
+      'Works on its own; pairs with the four free skills here',
+    ],
+    prompt: 'Use the SaaS Launch Playbook. We launch on March 10 and want 100 paying users by the end of April.',
   },
   {
     slug: 'paid-ads-audit',
