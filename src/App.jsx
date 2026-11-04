@@ -164,7 +164,7 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      <NavBar items={nav} active={page} onNavigate={navigate} overHero={page === 'Home'}
+      <NavBar items={nav} active={page} onNavigate={navigate} overHero={false}
         feature={{ page: 'LoogoNews', label: es ? 'Perspectivas' : 'Industry insights' }}
         cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}
       />

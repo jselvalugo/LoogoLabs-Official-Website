@@ -343,6 +343,8 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-lang__opt.on { color: var(--ink-900); text-decoration: none; }
 .ll-lang__opt:not(.on) { color: var(--ink-300); }
 .ll-lang__opt { height: 32px; line-height: 1; }
+.ll-nav .ll-lang__opt.on { color: var(--ink-900); }
+.ll-nav .ll-lang__opt:not(.on) { color: var(--ink-400); }
 .ll-lang-dd { display: none; position: relative; }
 .ll-lang-dd__btn {
   display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 10px; cursor: pointer;
@@ -361,9 +363,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-lang-dd__item span { flex: 1; }
 .ll-lang-dd__item:hover, .ll-lang-dd__item.on { background: var(--paper-200); }
 /* On dark bars and forest pages the switch inverts. */
-.ll-nav--dark .ll-lang__opt, .ll-nav--floating .ll-lang__opt { color: var(--ink-200); }
-.ll-nav--dark .ll-lang__opt.on, .ll-nav--floating .ll-lang__opt.on, .ll-nav--dark .ll-lang__opt:hover, .ll-nav--floating .ll-lang__opt:hover { color: var(--paper-000); }
-.ll-nav--dark .ll-lang-dd__btn, .ll-nav--floating .ll-lang-dd__btn { color: inherit; border-color: currentColor; }
+
 .ll-on-dark .ll-lang__opt { color: var(--ink-200); }
 .ll-on-dark .ll-lang__opt.on, .ll-on-dark .ll-lang__opt:hover { color: var(--paper-000); }
 .ll-on-dark .ll-lang-dd__btn { color: var(--paper-000); border-color: var(--border-hair-inverse); }
@@ -674,8 +674,8 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 /* Hero: cream, serif headline left, founder photo right, monogram as a small seal. */
 .hm-hero { position: relative; overflow: hidden; background: var(--paper-200); color: var(--ink-900); padding: 0; }
 .hm-hero__frame { max-width: 1440px; margin: 0 auto; }
-.hm-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0; align-items: stretch; min-height: calc(100vh - 76px); }
-.hm-hero__copy { padding-left: max(40px, calc((100vw - 1120px) / 2)); padding-right: 72px; }
+.hm-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0; align-items: stretch; min-height: calc(100vh - 76px); max-width: 1440px; margin: 0 auto; }
+.hm-hero__copy { padding-left: max(40px, calc((100vw - 1120px) / 2)); padding-right: 48px; }
 .hm-hero__copy { align-self: center; padding-top: 96px; padding-bottom: 96px; }
 .hm-hero__kicker { display: block; margin-bottom: 28px; color: var(--amber-500); }
 .hm-hero__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(44px, 5.4vw, 78px); line-height: 1.0; letter-spacing: -0.015em; color: var(--ink-900); max-width: 13ch; }
@@ -686,10 +686,15 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .hm-hero__meta { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 10px 28px; color: var(--ink-400); }
 .hm-hero__meta span { display: inline-flex; align-items: center; gap: 10px; }
 .hm-hero__meta span::before { display: none; }
-.hm-hero__photo { position: relative; min-height: 520px; }
-.hm-hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
-.hm-hero__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--paper-200) 0%, rgba(232,227,220,0) 14%); pointer-events: none; }
-.hm-hero__seal { position: absolute; left: 28px; bottom: 28px; width: 72px; height: 72px; padding: 10px; background: var(--paper-000); border: 1px solid var(--border-hair); }
+/* Right side: the monogram large and quiet in the upper area, the founder small
+   at the bottom edge, melting into the cream. Copy stays the subject. */
+.hm-hero__side { position: relative; min-height: 520px; overflow: hidden; }
+.hm-hero__mark { position: absolute; right: 14%; top: 14%; width: min(32%, 220px); opacity: 0.9; }
+.hm-hero__founder { position: absolute; right: 22%; bottom: 0; margin: 0; width: min(44%, 280px); }
+.hm-hero__founder img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(#000 78%, transparent 100%); mask-image: linear-gradient(#000 78%, transparent 100%); filter: saturate(0.85); }
+.hm-hero__founder figcaption { position: absolute; left: calc(100% + 16px); bottom: 32%; white-space: nowrap; font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-400); display: grid; gap: 4px; }
+.hm-hero__founder figcaption strong { font-weight: 400; color: var(--ink-900); }
+.hm-hero__founder figcaption::before { content: ''; position: absolute; left: -14px; top: 0.5em; width: 10px; height: 1px; background: var(--ink-400); }
 
 /* The monogram: four quadrants that arrive from the corners on load, then
    lean slightly toward the cursor. The one orchestrated moment on the page. */
@@ -798,10 +803,12 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-hero { padding: 0; }
   .hm-hero__grid { grid-template-columns: 1fr; min-height: 0; }
   .hm-plan, .hm-local, .hm-cta__grid, .hm-founder { grid-template-columns: 1fr; }
-  .hm-hero__copy { order: 2; padding: 40px 24px 48px; }
-  .hm-hero__photo { order: 1; min-height: 0; aspect-ratio: 4 / 3; }
-  .hm-hero__photo::after { background: linear-gradient(180deg, rgba(232,227,220,0) 70%, var(--paper-200) 100%); }
-  .hm-hero__seal { width: 56px; height: 56px; padding: 8px; left: 16px; bottom: 16px; }
+  .hm-hero__copy { order: 1; padding: 40px 24px 16px; }
+  .hm-hero__side { order: 2; min-height: 260px; }
+  .hm-hero__mark { left: 24px; right: auto; top: 10px; width: 96px; }
+  .hm-hero__founder { right: 24px; width: 200px; }
+  .hm-hero__founder figcaption { left: auto; right: calc(100% + 14px); text-align: right; }
+  .hm-hero__founder figcaption::before { left: auto; right: -14px; }
   .hm-hero__hint { display: none; }
   .hm-plan__head { position: static; }
   .hm-plan, .hm-local, .hm-founder { gap: 32px; }

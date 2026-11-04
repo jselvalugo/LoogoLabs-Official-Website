@@ -371,9 +371,12 @@ function Home({ onNavigate }) {
               </div>
               </Reveal>
             </div>
-            <div className="hm-hero__photo">
-              <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} fetchpriority="high" />
-              <div className="hm-hero__seal" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-000)" delay={1.3} /></div>
+            <div className="hm-hero__side">
+              <div className="hm-hero__mark" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-200)" delay={1.1} /></div>
+              <figure className="hm-hero__founder">
+                <img src="/founder-cutout.png" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} width="536" height="612" fetchpriority="high" />
+                <figcaption><strong>David Selva</strong><span>{es ? 'Fundador' : 'Founder'}</span></figcaption>
+              </figure>
             </div>
       </Hero>
 
