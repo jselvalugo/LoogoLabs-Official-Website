@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `mobile-notary-id-and-signers-confirmed-at-booking`,
+    title: `Settle the ID Question Before You Drive to the Signing`,
+    excerpt: `A signing that falls apart at the kitchen table because one signer's license expired costs you the drive, the hour and the next appointment.`,
+    tags: `Booking Details, Appointment Prep, Mobile Notaries`,
+    content: `A mobile notary drives forty minutes to a kitchen table, sets out the stamp and the journal, and learns that the second signer is at work and the first signer's license ran out in March. No signing happens. The customer is embarrassed, you are out an hour and a half plus the drive home, and the next appointment on your calendar is now late.
+
+Nothing about that was bad luck. Every fact that sank the visit was knowable the day it was booked.
+
+## The trip is the expensive part
+
+Say your signings run about thirty minutes at the table and forty minutes each way in the car. The stamp is the small part of the job. The drive is the big part, and you only get paid for it if the signing actually happens.
+
+So the real question at booking is not "when do you want me?" It is "will this signing be able to happen when I arrive?" That is a short list of facts, and you can collect them before you ever put the address in your phone.
+
+## Ask three things when they book
+
+When someone books, send one text the same hour. Three questions, in this order:
+
+- **Who is signing?** Every name, spelled the way it appears on the paperwork. If the document needs them together, ask whether all of them will be there at the same time.
+- **What ID will each person show?** Ask for the type and whether it is still current. Your state decides what counts as acceptable, and I am not going to list it for you. You know your own rules better than I do. Put the acceptable ones in the text so the customer can check their own wallet.
+- **Is the paperwork ready, and has anyone signed it already?** Some signers sign ahead of time out of habit. Tell them not to sign anything until you are in front of them.
+
+Keep it to three questions. If it reads like a form, they will skip it.
+
+## Make the answers easy to give
+
+A customer on their phone will answer "yes" and move on. That is not enough, so word the questions so a one-line reply is useful. For example: "Reply with each signer's name and ID type, like Pat – driver's license." It takes thirty seconds to write and gives you the thing you actually need.
+
+When the reply comes in, put it on the appointment. A note in your calendar that says "two signers, both licenses, docs printed" is worth more than a good memory on a busy day. If an answer sounds shaky, such as "I think my passport is somewhere," call that person and sort it out while the appointment is still two days off.
+
+## Confirm the day before
+
+The evening before, send one short text: the time, the address, the names that will be at the table, and the IDs you were told to expect. End with "Reply CHANGE if anything is different." People who would not volunteer a problem will usually answer a direct prompt like that.
+
+If the second signer cannot make it, you have a day to move the appointment, instead of discovering it from the driveway.
+
+## State what happens if it falls through
+
+This is the part owners skip because it feels awkward. Decide in advance what you charge when you arrive and the signing cannot go ahead because of something the customer was told to prepare. Some notaries charge the full trip fee. Some charge half. Check what your state allows you to charge for travel, pick your number, and put it in the booking text in one plain sentence.
+
+Said up front, it reads as a policy. Said for the first time at the door, it reads as a penalty. Most customers who know the rule will make sure the ID is in their hand.
+
+## Where this does not help
+
+It will not stop a signer from changing their mind at the table, and it will not catch a document that is missing a page you cannot see from a text message. It also will not replace your own judgment about whether an ID is acceptable when you are looking at it. You still make that decision in the room.
+
+What it removes is the avoidable failure, the one where everything needed was knowable two days earlier and nobody asked.
+
+## Check this week
+
+Look at your last five appointments that did not complete, or that ran long because of a missing signer or ID. Next to each one, write what you would have needed to know at booking to prevent it. Then write the one question that would have gotten you that answer, and add it to your booking text today.`,
+  },
+  {
     slug: `window-installer-cold-day-rule-told-before-december-install`,
     title: `Tell Window Customers Your Cold-Day Rule Before December`,
     excerpt: `A window crew that pulls out the old frames on a day that turns too cold has made a promise to the customer's living room that it cannot keep.`,
