@@ -2,16 +2,104 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
-  ArrowRight, Check, ClipboardText, DownloadSimple, EnvelopeSimple, Eye, LinkSimple,
-  LockSimple, MagnifyingGlass, Megaphone, RocketLaunch, X,
+  ArrowRight, Bell, Brain, Browser, CalendarBlank, ChartLineUp, ChatsCircle, Check, ClipboardText,
+  Crosshair, DownloadSimple, EnvelopeSimple, Eye, FileText, FilmSlate, LinkSimple, LockSimple,
+  MagnifyingGlass, Megaphone, PenNib, RocketLaunch, Star, X,
 } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 import { CATEGORIES, SKILLS, isPreviewHost, skillDownloadHref } from '../lib/marketplace';
 
-const ICONS = { Megaphone, ClipboardText, LinkSimple, EnvelopeSimple, RocketLaunch, MagnifyingGlass };
+const ICONS = {
+  Megaphone, ClipboardText, LinkSimple, EnvelopeSimple, RocketLaunch, MagnifyingGlass, Brain, CalendarBlank,
+  FilmSlate, PenNib, ChartLineUp, Browser, ChatsCircle, Star, Crosshair, FileText,
+};
 const EASE = [0.32, 0.72, 0, 1];
-const TIERS = [['all', 'All skills'], ['free', 'Free'], ['paid', 'Paid']];
+const TIERS = [['all', 'All skills'], ['free', 'Free'], ['paid', 'Paid'], ['soon', 'Coming soon']];
+const inTier = (s, tier) => tier === 'all' || (tier === 'soon' ? !!s.soon : tier === 'paid' ? s.tier === 'paid' && !s.soon : s.tier === tier);
+
+// Unlocked lead magnets are remembered in this browser so returning visitors skip the form.
+const unlockKey = (slug) => `ll_unlock_${slug}`;
+function isUnlocked(slug) {
+  try { return window.localStorage.getItem(unlockKey(slug)) === '1'; } catch { return false; }
+}
+function startDownload(slug) {
+  const a = document.createElement('a');
+  a.href = skillDownloadHref(slug); a.download = `${slug}.zip`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+// Email form shared by lead magnets ("unlock") and coming-soon skills ("waitlist").
+// Posts to the existing newsletter sign-up, tagged so each list can be emailed later.
+function EmailForm({ skill, mode }) {
+  const magnet = mode === 'unlock';
+  const [email, setEmail] = React.useState('');
+  const [hp, setHp] = React.useState('');
+  const [state, setState] = React.useState('idle');
+  const [unlocked, setUnlocked] = React.useState(false);
+  React.useEffect(() => { if (magnet) setUnlocked(isUnlocked(skill.slug)); }, [magnet, skill.slug]);
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setState('invalid'); return; }
+    setState('sending');
+    try {
+      const res = await fetch('/.netlify/functions/email-subscribe', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), tag: magnet ? skill.slug : `waitlist-${skill.slug}`, website: hp }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setState('done');
+      if (magnet) {
+        try { window.localStorage.setItem(unlockKey(skill.slug), '1'); } catch { /* storage blocked */ }
+        setUnlocked(true);
+        startDownload(skill.slug);
+      }
+    } catch { setState('error'); }
+  }
+
+  if (magnet && unlocked) {
+    return (
+      <div className="mk-gate mk-gate--done">
+        <p className="mk-gate__msg"><Check size={15} weight="bold" aria-hidden="true" />Unlocked. Your download should start on its own.</p>
+        <a className="ll-btn ll-btn--primary ll-btn--md" href={skillDownloadHref(skill.slug)} download>
+          Download skill (.zip)<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
+        </a>
+      </div>
+    );
+  }
+  if (!magnet && state === 'done') {
+    return (
+      <div className="mk-gate mk-gate--done">
+        <p className="mk-gate__msg"><Check size={15} weight="bold" aria-hidden="true" />You’re on the list. We’ll email you the day {skill.name} goes live, with early-bird pricing.</p>
+      </div>
+    );
+  }
+  return (
+    <form className="mk-gate" onSubmit={submit} noValidate>
+      <label className="mk-gate__label" htmlFor={`mk-email-${skill.slug}`}>
+        {magnet ? 'Enter your email to unlock the free download' : 'Get notified when it unlocks'}
+      </label>
+      <div className="mk-gate__row">
+        <input id={`mk-email-${skill.slug}`} className="mk-gate__input" type="email" autoComplete="email" inputMode="email"
+          placeholder="you@business.com" value={email} onChange={(e) => { setEmail(e.target.value); if (state !== 'sending') setState('idle'); }} />
+        <input className="mk-gate__hp" tabIndex={-1} autoComplete="off" aria-hidden="true" value={hp} onChange={(e) => setHp(e.target.value)} name="website" />
+        <button type="submit" className="ll-btn ll-btn--primary ll-btn--md" disabled={state === 'sending'}>
+          {state === 'sending' ? 'Sending…' : magnet ? 'Unlock free' : 'Notify me'}
+          <span aria-hidden="true" className="ll-btn__arrow">{magnet ? <DownloadSimple size={15} weight="bold" /> : <Bell size={15} weight="bold" />}</span>
+        </button>
+      </div>
+      {state === 'invalid' ? <p className="mk-gate__err" role="alert">Please enter a valid email address.</p> : null}
+      {state === 'error' ? <p className="mk-gate__err" role="alert">That didn’t go through. Try again, or email <a href="mailto:david@loogolabs.com">david@loogolabs.com</a>.</p> : null}
+      <p className="mk-gate__fine">{magnet ? 'Free. You’ll also get occasional marketing tips from Loogo Labs. Unsubscribe anytime.' : 'One email when it launches, plus early-bird pricing. Unsubscribe anytime.'}</p>
+    </form>
+  );
+}
+
+const focusForm = (slug) => {
+  const el = document.getElementById(`mk-email-${slug}`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+};
 
 function SkillIcon({ name, size = 22 }) {
   const Icon = ICONS[name] || Megaphone;
@@ -19,7 +107,9 @@ function SkillIcon({ name, size = 22 }) {
 }
 
 function TierTag({ skill }) {
+  if (skill.leadMagnet) return <span className="mk-tag mk-tag--free">Free · Email unlock</span>;
   if (skill.tier === 'free') return <span className="mk-tag mk-tag--free">Free</span>;
+  if (skill.soon) return <span className="mk-tag mk-tag--paid"><LockSimple size={11} weight="bold" aria-hidden="true" />${skill.price} · Soon</span>;
   if (skill.buyUrl) return <span className="mk-tag mk-tag--price">${skill.price}</span>;
   return <span className="mk-tag mk-tag--paid"><LockSimple size={11} weight="bold" aria-hidden="true" />Paid · Soon</span>;
 }
@@ -53,7 +143,12 @@ const SkillCard = React.forwardRef(function SkillCard({ skill, onOpen, index }, 
         ))}
       </ul>
       <div className="mk-card__foot">
-        {free ? (
+        {skill.leadMagnet ? (
+          <button type="button" className="ll-btn ll-btn--primary ll-btn--sm mk-card__dl"
+            onClick={(e) => { e.stopPropagation(); onOpen(skill); }}>
+            Get it free<span aria-hidden="true" className="ll-btn__arrow"><ArrowRight size={14} weight="bold" /></span>
+          </button>
+        ) : free ? (
           <a className="ll-btn ll-btn--primary ll-btn--sm mk-card__dl" href={skillDownloadHref(skill.slug)} download
             onClick={(e) => e.stopPropagation()}>
             Download<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={14} weight="bold" /></span>
@@ -61,7 +156,7 @@ const SkillCard = React.forwardRef(function SkillCard({ skill, onOpen, index }, 
         ) : skill.buyUrl ? (
           <BuyLink skill={skill} className="mk-card__dl" />
         ) : (
-          <span className="mk-card__soon">Coming soon</span>
+          <span className="mk-card__soon">{skill.eta ? `Soon · ${skill.eta.slice(0, 3)} ${skill.eta.split(' ')[1]}` : 'Coming soon'}</span>
         )}
         <span className="mk-card__peek"><Eye size={14} aria-hidden="true" />{free ? 'Preview' : 'Details'}</span>
       </div>
@@ -117,7 +212,14 @@ function Drawer({ skill, onClose }) {
             <h2 className="mk-drawer__title">{skill.name}</h2>
             <p className="mk-drawer__desc">{skill.description}</p>
 
-            {skill.tier === 'free' ? (
+            {skill.leadMagnet ? (
+              <EmailForm skill={skill} mode="unlock" />
+            ) : skill.soon ? (
+              <>
+                <p className="mk-drawer__eta"><LockSimple size={13} weight="bold" aria-hidden="true" />Unlocks {skill.eta} · planned price ${skill.price} one-time</p>
+                <EmailForm skill={skill} mode="waitlist" />
+              </>
+            ) : skill.tier === 'free' ? (
               <a className="ll-btn ll-btn--primary ll-btn--md mk-drawer__dl" href={skillDownloadHref(skill.slug)} download>
                 Download skill (.zip)<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
               </a>
@@ -173,13 +275,19 @@ function Drawer({ skill, onClose }) {
                 </section>
                 <section className="mk-drawer__sec">
                   <h4 className="ll-eyebrow">Inside SKILL.md</h4>
-                  <pre className="mk-source">{skill.source}</pre>
+                  <pre className="mk-source">{skill.leadMagnet && !isUnlocked(skill.slug)
+                    ? `${skill.source.split('\n').slice(0, 24).join('\n')}\n\n… unlock with your email to get the full skill.`
+                    : skill.source}</pre>
                 </section>
               </>
             ) : null}
 
             <div className="mk-drawer__bar">
-              {skill.tier === 'free' ? (
+              {skill.leadMagnet || skill.soon ? (
+                <button type="button" className="ll-btn ll-btn--primary ll-btn--md" onClick={() => focusForm(skill.slug)}>
+                  {skill.leadMagnet ? 'Unlock free' : 'Notify me'}<span aria-hidden="true" className="ll-btn__arrow"><ArrowRight size={15} weight="bold" /></span>
+                </button>
+              ) : skill.tier === 'free' ? (
                 <a className="ll-btn ll-btn--primary ll-btn--md" href={skillDownloadHref(skill.slug)} download>
                   Download skill<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
                 </a>
@@ -231,8 +339,10 @@ function Marketplace() {
   const [preview, setPreview] = React.useState(false);
   React.useEffect(() => { setPreview(isPreviewHost()); }, []);
 
-  const list = SKILLS.filter((s) => (tier === 'all' || s.tier === tier) && (cat === 'All' || s.category === cat));
+  const list = SKILLS.filter((s) => inTier(s, tier) && (cat === 'All' || s.category === cat));
   const freeCount = SKILLS.filter((s) => s.tier === 'free').length;
+  const liveCount = SKILLS.filter((s) => s.tier === 'paid' && !s.soon).length;
+  const soonCount = SKILLS.filter((s) => s.soon).length;
 
   return (
     <main className="mk">
@@ -248,13 +358,13 @@ function Marketplace() {
         <div className="mk-hero__copy">
           <h1 className="mk-hero__title">Claude skills that work like <em>your marketing team.</em></h1>
           <p className="mk-hero__lede">
-            Download a skill, add it to Claude, and it follows our playbook every time: ad copy, campaign briefs,
-            tracking plans and lifecycle email. Built from the work we do for SaaS brands and creators.
+            Download a skill, add it to Claude, and it follows our playbook every time: brand voice, ad copy,
+            campaign briefs, tracking plans and lifecycle email, with more unlocking every month. Start free with Brand Brain.
           </p>
           <div className="mk-hero__stats">
             <div><b>{freeCount}</b><span>Free skills</span></div>
-            <div><b>{SKILLS.length - freeCount}</b><span>Premium skills</span></div>
-            <div><b>2</b><span>Claude &amp; Claude Code</span></div>
+            <div><b>{liveCount}</b><span>Premium skills</span></div>
+            <div><b>{soonCount}</b><span>Coming soon</span></div>
           </div>
         </div>
         <HeroStack />
