@@ -3,6 +3,7 @@ import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
 import { useLang } from '../lib/i18n';
 import { EVENT_THEME, isEventPost, isPinnedAnnouncement } from '../lib/featuredEvent';
+import { partnerForPost } from '../lib/partners';
 import { ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
@@ -168,11 +169,15 @@ const go = (onNavigate, post) => e => { e.preventDefault(); onNavigate('BlogPost
 // featured grid, full width on desktop, compact on phones.
 function PinnedCard({ post, onNavigate, es }) {
   const date = fmtDate(post, 'long', es);
+  const partner = partnerForPost(post);
   return (
     <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pinned"
       aria-label={es ? `Anuncio: ${post.title}` : `Announcement: ${post.title}`}>
       <div className="lb-fcard__body">
-        <span className="lb-fcard__kicker lb-fcard__kicker--new">{es ? 'Nuevo lanzamiento' : 'New release'}</span>
+        <div className="lb-fcard__top">
+          <span className="lb-fcard__kicker lb-fcard__kicker--new">{es ? 'Nuevo lanzamiento' : 'New release'}</span>
+          {partner && <span className="lb-fcard__plogo"><img src={partner.logo} alt={partner.name} width="116" height="28" /></span>}
+        </div>
         <h2 className="lb-fcard__title">{post.title}</h2>
         {post.excerpt && <p className="lb-fcard__excerpt">{post.excerpt}</p>}
       </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
+import { partnerForPost, partnerHref } from '../lib/partners';
+import PartnerRail from '../components/blog/PartnerRail';
 import { useHref, useLang } from '../lib/i18n';
 import { hasConsent } from '../lib/cookieConsent';
 import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
@@ -88,6 +90,7 @@ export default function BlogPost({ slug, onNavigate }) {
   const date = post.published_at ? new Date(post.published_at).toLocaleDateString(es ? 'es-US' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
   const event = isEventPost(post);
+  const partner = event ? null : partnerForPost(post);
 
   const cta = (
     <div className="lb-cta ll-forest">
@@ -115,11 +118,11 @@ export default function BlogPost({ slug, onNavigate }) {
   );
 
   return (
-    <div className={event ? 'lb-page lb-page--event' : 'lb-page'} role="main">
+    <div className={event ? 'lb-page lb-page--event' : partner ? 'lb-page lb-page--partner' : 'lb-page'} role="main">
       <div className="lb-wrap">
 
       {post.featured && !event ? (
-        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} />
+        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} partner={partner} />
       ) : (
       /* ── HERO HEADER ── */
       <header className="lb-hero ll-forest">
@@ -132,6 +135,7 @@ export default function BlogPost({ slug, onNavigate }) {
 
         <div className="lb-hero__body">
           {event && <img src={EVENT_THEME.logo} alt="Lugo's Craft Distillery" className="lb-event-logo" />}
+          {partner && <PartnerBadge partner={partner} slug={post.slug} es={es} />}
           <h1 className="lb-hero__title">{post.title}</h1>
 
           <div className="lb-hero__meta">
@@ -149,7 +153,8 @@ export default function BlogPost({ slug, onNavigate }) {
       )}
 
       {/* ── BODY ── */}
-      <div className="ll-post-layout lb-post">
+      <div className={partner ? 'll-post-layout lb-post lb-post--partner' : 'll-post-layout lb-post'}>
+          {partner && <PartnerRail partner={partner} slug={post.slug} es={es} />}
 
           {/* Article content */}
           <article className="lb-article">
@@ -169,6 +174,8 @@ export default function BlogPost({ slug, onNavigate }) {
                 {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
               </div>
             )}
+
+            {partner && <PartnerRail partner={partner} slug={post.slug} es={es} variant="inline" />}
 
             {/* Author bio: the personal signature on every post, not just a byline */}
             {post.author === 'David Selva' && (
@@ -207,7 +214,7 @@ export default function BlogPost({ slug, onNavigate }) {
 // Header for the featured post: a full editorial opener on a floating forest
 // panel (featured kicker, display-size title, the excerpt as a standfirst and
 // a byline strip). A reading-progress bar rides the top of the viewport.
-function FeaturedHero({ post, tags, date, onNavigate, es }) {
+function FeaturedHero({ post, tags, date, onNavigate, es, partner }) {
   const toHref = useHref();
   const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
@@ -233,6 +240,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es }) {
         </nav>
 
         <div className="lb-hero__body">
+          {partner && <PartnerBadge partner={partner} slug={post.slug} es={es} />}
           <h1 className="lb-hero__title lb-hero__title--xl">{post.title}</h1>
           {post.excerpt && <p className="lb-hero__lede">{post.excerpt}</p>}
         </div>
@@ -260,6 +268,17 @@ function FeaturedHero({ post, tags, date, onNavigate, es }) {
         </div>
       </header>
     </>
+  );
+}
+
+// Partner logo in the post header, on a white plate so the brand colors hold.
+function PartnerBadge({ partner, slug, es }) {
+  return (
+    <a className="lb-partner-badge" href={partnerHref(partner.url, slug)} target="_blank" rel="noopener noreferrer"
+      aria-label={es ? `Visita ${partner.name}` : `Visit ${partner.name}`}>
+      <span className="lb-partner-badge__k">{es ? 'Anuncio de' : 'Announcement from'}</span>
+      <img src={partner.logo} alt={partner.name} width="132" height="32" />
+    </a>
   );
 }
 
