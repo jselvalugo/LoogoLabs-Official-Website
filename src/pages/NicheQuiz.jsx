@@ -155,8 +155,8 @@ export default function NicheQuiz({ page }) {
         <div className="ll-nav__bar nq-bar">
           <div className="nq-bar__side">
             {step > 0 && step < RESULT && (
-              <button onClick={() => go(step - 1)} className="nq-back">
-                <ArrowLeft size={14} weight="bold" aria-hidden="true" /> {es ? 'Atrás' : 'Back'}
+              <button onClick={() => go(step - 1)} className="nq-back" aria-label={es ? 'Atrás' : 'Back'}>
+                <ArrowLeft size={16} weight="bold" aria-hidden="true" /> <span className="nq-back__label">{es ? 'Atrás' : 'Back'}</span>
               </button>
             )}
           </div>
