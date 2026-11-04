@@ -224,6 +224,9 @@ function Marketplace() {
   const [cat, setCat] = React.useState('All');
   const [open, setOpen] = React.useState(null);
   const close = React.useCallback(() => setOpen(null), []);
+  // If checkout couldn't start, skill-checkout sends the buyer back with ?checkout_error.
+  const [checkoutError, setCheckoutError] = React.useState(false);
+  React.useEffect(() => { setCheckoutError(new URLSearchParams(window.location.search).has('checkout_error')); }, []);
   // Staff-only reminder strip: deploy previews and localhost, never production.
   const [preview, setPreview] = React.useState(false);
   React.useEffect(() => { setPreview(isPreviewHost()); }, []);
@@ -234,6 +237,12 @@ function Marketplace() {
   return (
     <main className="mk">
       {preview ? <div className="mk-preview"><span className="mk-preview__dot" />Private preview · this page isn’t public yet</div> : null}
+
+      {checkoutError ? (
+        <div className="mk-alert" role="alert">
+          Checkout couldn't start just now. Please try again in a minute, or email <a href="mailto:david@loogolabs.com">david@loogolabs.com</a> and we'll sort it out.
+        </div>
+      ) : null}
 
       <section className="mk-wrap mk-hero">
         <div className="mk-hero__copy">

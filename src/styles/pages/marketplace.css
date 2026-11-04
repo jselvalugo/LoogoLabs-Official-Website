@@ -199,6 +199,10 @@
   .mk-stack { height: 440px; }
   .mk-grid { grid-template-columns: repeat(2, 1fr); }
 }
+.mk-alert { max-width: var(--container-max); margin: 24px auto 0; padding: 14px 18px; border: 1px solid var(--status-warn); background: var(--paper-000); color: var(--ink-900); font-size: 14px; }
+.mk-alert a { color: inherit; }
+@media (max-width: 640px) { .mk-alert { margin: 16px 16px 0; } }
+
 /* Post-purchase page */
 .mk-ty__wrap { padding-top: 72px; padding-bottom: 104px; }
 .mk-ty__card { max-width: 640px; margin: 0 auto; background: var(--paper-000); border: 1px solid var(--border-hair); padding: 48px 48px 40px; }
