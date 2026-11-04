@@ -219,14 +219,29 @@ export const SKILLS = [
     name: 'Ad Copy Studio',
     category: 'Paid ads',
     tier: 'paid',
+    // Built; goes on sale with the next encryption batch (see paid-skills go-live checklist).
     soon: true,
-    eta: 'January 2027',
+    eta: 'November 2026',
     icon: 'PenNib',
     price: 4.99,
     tagline: 'Full ad sets for every platform, matched to your landing page.',
     description:
-      'The next step up from the free Ad Copy Workshop. Claude builds complete, upload-ready ad sets for Meta, Google, TikTok and LinkedIn: three angles with five variants each, creative briefs for your designer, a check against every character limit, and flags on claims likely to get an ad rejected.',
-    outputs: ['Upload-ready ad copy table', '3 angles × 5 variants', 'Creative briefs for images and video', 'Policy-risk flags before you launch'],
+      'The next step up from the free Ad Copy Workshop. Claude reads your landing page first and builds a claim ledger, so every ad says only what the page can back. Then it writes complete, upload-ready ad sets for Google, Meta, TikTok and LinkedIn: three angles with five real variants each, the full Google asset set, creative briefs for your designer, a check against every character limit and editorial rule, and flags on anything likely to get an ad rejected.',
+    outputs: [
+      'Google RSA: 15 headlines, 4 descriptions, paths, sitelinks, callouts and snippets',
+      'Meta, TikTok and LinkedIn ads: 3 angles × 5 variants',
+      'A claim ledger tying every fact to your landing page',
+      'Image and video creative briefs for each angle',
+      'Policy-risk flags with safer rewrites',
+      'A branded Excel workbook with live character counts, ready to upload from',
+    ],
+    inside: [
+      'A 7-step workflow from your landing page to a launch-ready ad set',
+      'Current character limits and editorial rules for Google, Meta, TikTok and LinkedIn',
+      '8 angles and 5 levers for writing variants that are actually different',
+      'A builder that checks limits, counts, duplicates, Google punctuation rules and every claim',
+      'Policy guide for common rejections and regulated industries, plus a worked example',
+    ],
     prompt: 'Build a full Meta and Google ad set for our spring promo. Here’s the landing page.',
   },
   {
