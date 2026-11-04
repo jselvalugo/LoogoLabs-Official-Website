@@ -55,8 +55,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
         <div className="ll-footer__top">
           <div className="ll-footer__brand">
             <a href={toHref('/')} className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
-              <span className="ll-footer__mark" aria-hidden="true" />
-              {wordmark}
+              <img src="/logo-horizontal-cream.svg" alt="Loogo Labs" width="172" height="44" />
             </a>
             {note ? <p className="ll-footer__note">{note}</p> : null}
             <address className="ll-footer__address">

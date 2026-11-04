@@ -145,7 +145,7 @@ function App({ initialPath }) {
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 
-  const nav = ['Mission', 'Company', 'BrandPartners'];
+  const nav = ['Mission', 'Company'];
   let body;
   if (page === 'Home') body = <Home onNavigate={navigate} />;
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
@@ -165,8 +165,8 @@ function App({ initialPath }) {
   return (
     <div className="ll-shell">
       <NavBar items={nav} active={page} onNavigate={navigate} overHero={page === 'Home'}
-        feature={{ page: 'LoogoNews', label: 'Blog' }}
-        cta={<Button size="sm" variant="primary" onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>}
+        feature={{ page: 'LoogoNews', label: es ? 'Perspectivas' : 'Industry insights' }}
+        cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}
       />
       <div onClick={handleLinkClick}>
         {!mounted || reduce ? body : (

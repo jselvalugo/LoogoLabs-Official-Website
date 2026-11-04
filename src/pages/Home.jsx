@@ -123,13 +123,9 @@ function Hero({ es, children }) {
   const props = !mounted || reduce ? {} : { style: { y, opacity, scale } };
   return (
     <section ref={ref} className="hm-hero">
-      <div className="hm-hero__bg" aria-hidden="true">
-        <AmbientShape index={2} className="hm-hero__shape hm-hero__shape--a" />
-        <AmbientShape index={1} className="hm-hero__shape hm-hero__shape--b" fill="rgba(184,105,28,0.16)" />
-      </div>
-      <Wrap>
+      <div className="hm-hero__frame">
         <Inner className="hm-hero__grid" {...props}>{children}</Inner>
-      </Wrap>
+      </div>
       {mounted && !reduce && (
         <motion.div className="hm-hero__hint" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8, duration: 0.6 }}>
           <span>{es ? 'Desliza' : 'Scroll'}</span><i />
@@ -257,7 +253,7 @@ function Scene({ es, items }) {
                 initial={{ opacity: 0, y: 40, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.98 }}
                 transition={{ duration: 0.45, ease: EASE }}>
                 <div className="hm-scene__num" aria-hidden="true">0{active + 1}</div>
-                <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} /></div>
+                <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
                 <div className="hm-acc__cols">
@@ -354,40 +350,38 @@ function Home({ onNavigate }) {
   return (
     <main>
       <Hero es={es}>
-            <div>
+            <div className="hm-hero__copy">
+              <Reveal y={10}><span className="hm-hero__kicker ll-label">{es ? 'Orlando, Florida' : 'Orlando, Florida'}</span></Reveal>
               <h1 className="hm-hero__title">
-                <Words text={es ? 'Planeamos tu marketing.' : 'We plan your marketing.'} delay={0.1} />{' '}
-                <Words as="em" text={es ? 'Luego lo construimos.' : 'Then we build it.'} delay={0.45} />
+                <Words text={es ? 'Planeamos tu marketing.' : 'We plan your marketing.'} delay={0.1} step={0.07} />{' '}
+                <Words as="em" text={es ? 'Luego lo construimos.' : 'Then we build it.'} delay={0.5} step={0.07} />
               </h1>
-              <Reveal delay={0.9} y={16}>
+              <Reveal delay={0.9} y={10}><span className="hm-hero__sub ll-label">{es ? 'IA, marketing y automatización para marcas SaaS y creadores' : 'AI, marketing & automation for SaaS brands and creators'}</span></Reveal>
+              <Reveal delay={1.0} y={16}>
               <p className="hm-hero__lede">
                 {es
-                  ? 'Loogo Labs es un socio de marketing para marcas SaaS y creadores. Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el sistema que lo hace funcionar: seguimiento, automatizaciones, IA. Nada se queda esperando un traspaso.'
-                  : 'Loogo Labs is a marketing partner for SaaS brands and creators. One team writes the strategy, runs the ads and email, and builds the system that makes it work: tracking, automations, AI. Nothing waits on a handoff.'}
+                  ? 'Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el sistema que lo hace funcionar: seguimiento, automatizaciones, IA. Nada se queda esperando un traspaso.'
+                  : 'One team writes the strategy, runs the ads and email, and builds the system that makes it work: tracking, automations, AI. Nothing waits on a handoff.'}
               </p>
               </Reveal>
-              <Reveal delay={1.05} y={16}>
+              <Reveal delay={1.15} y={16}>
               <div className="hm-hero__actions">
                 <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
-                <Magnetic strength={0.15}><Button variant="secondary" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver qué hacemos' : 'See what we do'}</Button></Magnetic>
-              </div>
-              </Reveal>
-              <Reveal delay={1.2} y={12}>
-              <div className="hm-hero__meta">
-                <span>{es ? 'Estrategia y construcción, un mismo equipo' : 'Strategy and build, one team'}</span>
-                <span>{es ? 'Medido en ingresos, no en clics' : 'Measured in revenue, not clicks'}</span>
-                <span>{es ? 'Orlando, Florida' : 'Orlando, Florida'}</span>
+                <Button variant="ghost" size="md" iconRight={<span>→</span>} onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver qué hacemos' : 'Explore what we do'}</Button>
               </div>
               </Reveal>
             </div>
-            <Monogram es={es} />
+            <div className="hm-hero__photo">
+              <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} fetchpriority="high" />
+              <div className="hm-hero__seal" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-000)" delay={1.3} /></div>
+            </div>
       </Hero>
 
       <References />
 
       <Explorer es={es} />
 
-      <section className="hm-build ll-band" style={{ marginTop: 112 }}>
+      <section className="hm-build ll-band ll-band--tan" style={{ marginTop: 112 }}>
         <Wrap>
           <Reveal>
           <SectionHeading eyebrow={es ? 'Qué construimos' : 'What we build'}

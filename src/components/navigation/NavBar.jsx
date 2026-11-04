@@ -5,8 +5,8 @@ import { LangToggle, useHref, useLang } from '../../lib/i18n';
 import { AmbientShape } from '../brand/Morph';
 
 const LABELS = {
-  en: { AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
-  es: { Home: 'Inicio', Mission: 'Misión', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
+  en: { Mission: 'What we do', Company: 'Who we serve', LoogoNews: 'Industry insights', AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
+  es: { Home: 'Inicio', Mission: 'Qué hacemos', Company: 'A quién servimos', LoogoNews: 'Perspectivas', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
 };
 
 const EASE = [0.32, 0.72, 0, 1];
@@ -65,8 +65,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
         <div className="ll-nav__bar">
           <a href={toHref(pathForPage('Home'))} aria-label="Loogo Labs, home" className="ll-nav__logo"
             onClick={e => { e.preventDefault(); handleNav('Home'); }}>
-            <span className="ll-nav__mark" aria-hidden="true" />
-            <span className="ll-nav__name">Loogo Labs</span>
+            <img src="/logo-horizontal.svg" alt="Loogo Labs" width="156" height="40" />
           </a>
 
           <nav className="ll-nav-links" aria-label="Primary" onMouseLeave={() => setHover(null)}>
