@@ -149,7 +149,7 @@ function References() {
           {[0, 1].map(copy => items.map((item) => (
             item.src ? (
               <span key={`${copy}-${item.name}`} aria-hidden={copy === 1 || undefined} className={`ll-ticker-logo${item.dark ? ' ll-ticker-logo--dark' : ''}${item.chip ? ' ll-ticker-logo--chip' : ''}${item.fill ? ' ll-ticker-logo--fill' : ''}`}>
-                <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" />
+                <img src={item.src} width={item.w} height={item.h} alt={copy === 0 ? item.name : ''} loading="lazy" style={item.th ? { height: item.th } : undefined} />
                 {item.caption && <span className="ll-ticker-logo__cap">{item.caption}</span>}
               </span>
             ) : (

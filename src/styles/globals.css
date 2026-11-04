@@ -423,20 +423,20 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-ticker-label { font-size: 15px; color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .ll-ticker-live { display: none; }
 .ll-ticker-belt { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.ll-ticker-track { display: flex; align-items: center; gap: 0 44px; width: max-content; animation: ll-marquee 36s linear infinite; }
+.ll-ticker-track { display: flex; align-items: center; gap: 0 52px; width: max-content; animation: ll-marquee 36s linear infinite; }
 .ll-ticker-belt:hover .ll-ticker-track { animation-play-state: paused; }
 @keyframes ll-marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .ll-ticker-track { animation: none; flex-wrap: wrap; width: auto; gap: 12px 36px; } .ll-ticker-track > [aria-hidden="true"] { display: none; } .ll-ticker-belt { -webkit-mask-image: none; mask-image: none; } }
 .ll-ticker-ref { font-size: 16px; font-weight: 500; color: var(--ink-700); white-space: nowrap; }
 .ll-ticker-sep { display: none; }
-.ll-ticker-logo { display: inline-flex; align-items: center; gap: 6px; height: 36px; white-space: nowrap;
-  filter: grayscale(1) contrast(1.05); opacity: 0.8; }
+.ll-ticker-logo { display: inline-flex; align-items: center; gap: 8px; height: 40px; white-space: nowrap;
+  filter: grayscale(1) contrast(1.05); opacity: 0.82; }
 .ll-ticker-logo img { display: block; height: 24px; width: auto; }
 .ll-ticker-logo--dark, .ll-ticker-logo--chip { background: var(--ink-900); padding: 0 10px; border-radius: var(--radius-1); }
 .ll-ticker-logo--dark img { height: 28px; }
 .ll-ticker-logo--fill { padding: 0; overflow: hidden; border-radius: var(--radius-1); }
 .ll-ticker-logo--fill img { height: 36px; }
-.ll-ticker-logo__cap { font: 500 12px/1 var(--font-body); color: var(--paper-000); }
+.ll-ticker-logo__cap { font: 500 14px/1 var(--font-body); color: var(--ink-900); letter-spacing: -0.01em; }
 .ll-ticker-logo--script { font: 500 15px/1 var(--font-body); color: var(--paper-000); padding: 0 12px; }
 
 /* ── Staple editorial patterns (Mission, Company, Packages …) ───────────────── */
