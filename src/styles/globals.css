@@ -1031,3 +1031,33 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   :root .ll-footer__license { order: 3; flex-basis: 100%; font-size: 11px; line-height: 1.5; color: var(--ink-400); }
   .ll-footer__admin { font-size: 12px; }
 }
+
+/* ── "What we do": room to read ──────────────────────────────────────────────
+   Wider card, fewer elements, sentence-case labels, larger list type, and a
+   tinted "We build" block so the two lists read as two things at a glance. */
+.hm-scene__grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 72px; }
+.hm-scene__card { padding: 52px 56px 56px; gap: 24px; }
+.hm-scene__card h3 { font-size: 38px; max-width: none; text-wrap: balance; }
+.hm-scene__glyph { width: 104px; height: 104px; right: 48px; top: 48px; }
+.hm-scene__glyph svg { width: 104px; height: 104px; }
+.hm-scene__card h3, .hm-scene__card > p { padding-right: 132px; }
+.hm-scene__card .hm-acc__cols { gap: 16px; padding-top: 28px; }
+.hm-acc__col h4 {
+  font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none;
+  color: var(--ink-900); margin: 0 0 12px;
+}
+.hm-acc__col ul { gap: 10px; }
+.hm-acc__col li { font-size: 16px; line-height: 1.5; padding-left: 16px; }
+.hm-acc__col li::before { top: 0.65em; width: 5px; height: 5px; background: var(--ink-300); }
+.hm-acc__col--build li::before { background: var(--amber-500); }
+.hm-acc__col--plan, .hm-acc__col--build { padding: 20px 22px; }
+.hm-acc__col--plan { border: 1px solid var(--border-hair); }
+.hm-acc__col--build { background: var(--paper-200); }
+@media (max-width: 767px) {
+  .hm-acc__btn { padding: 22px 0; }
+  .hm-acc__body { gap: 16px; padding-bottom: 28px; }
+  .hm-acc__body > p { font-size: 16px; }
+  .hm-acc__cols { gap: 10px; }
+  .hm-acc__col--plan, .hm-acc__col--build { padding: 16px 18px; }
+  .hm-acc__col li { font-size: 15.5px; }
+}

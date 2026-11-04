@@ -195,7 +195,6 @@ function Accordion({ es, items }) {
                     <div className="hm-acc__col hm-acc__col--plan"><h4><i />{es ? 'Planeamos' : 'We plan'}</h4><ul>{s.plan.map(x => <li key={x}>{x}</li>)}</ul></div>
                     <div className="hm-acc__col hm-acc__col--build"><h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul></div>
                   </div>
-                  <div className="hm-acc__tags" aria-label={es ? 'Reemplaza' : 'Replaces'}>{s.retires.map(t => <span key={t}>{t}</span>)}</div>
                 </div>
               </div>
             </div>
@@ -234,7 +233,6 @@ function Scene({ es, items }) {
       <div className="hm-scene__pin">
         <div className="hm-wrap hm-scene__grid">
           <div className="hm-scene__left">
-            <span className="ll-sh__eyebrow">{es ? 'Qué hacemos' : 'What we do'}</span>
             <h2 className="hm-scene__h2">{es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}</h2>
             <ol className="hm-scene__nav">
               {items.map((it, i) => (
@@ -252,7 +250,6 @@ function Scene({ es, items }) {
               <motion.div key={active} className="hm-scene__card"
                 initial={{ opacity: 0, y: 40, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.98 }}
                 transition={{ duration: 0.45, ease: EASE }}>
-                <div className="hm-scene__num" aria-hidden="true">0{active + 1}</div>
                 <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
@@ -264,7 +261,6 @@ function Scene({ es, items }) {
                     <h4><i />{es ? 'Construimos' : 'We build'}</h4><ul>{s.build.map(x => <li key={x}>{x}</li>)}</ul>
                   </motion.div>
                 </div>
-                <div className="hm-acc__tags" aria-label={es ? 'Reemplaza' : 'Replaces'}>{s.retires.map(t => <span key={t}>{t}</span>)}</div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -283,13 +279,9 @@ function Explorer({ es }) {
     <Wrap className="hm-section" id="services">
       <div className="hm-plan">
         <div className="hm-plan__head">
-          <SectionHeading eyebrow={es ? 'Qué hacemos' : 'What we do'}
+          <SectionHeading
             title={es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}
-            description={es ? 'Cuatro servicios para marcas SaaS y creadores. Abre cualquiera para ver qué planeamos y qué construimos para que funcione.' : 'Four services for SaaS brands and creators. Open any of them to see what we plan and what we build to make it run.'} />
-          <div className="hm-plan__legend" aria-hidden="true">
-            <span><i className="plan" />{es ? 'Planeamos' : 'We plan'}</span>
-            <span><i className="build" />{es ? 'Construimos' : 'We build'}</span>
-          </div>
+            description={es ? 'Cuatro servicios para marcas SaaS y creadores. Toca uno para ver qué planeamos y qué construimos.' : 'Four services for SaaS brands and creators. Tap one to see what we plan and what we build.'} />
         </div>
         <Accordion es={es} items={items} />
       </div>
