@@ -14,7 +14,7 @@ const firstSentence = (s = '') => `${String(s).split('. ')[0].replace(/\.$/, '')
 
 const STATIC = {
   Home: {
-    title: `Socio de marketing que planea y construye | ${BRAND}`,
+    title: `${BRAND} | Consultores de marketing`,
     description: 'Un socio de marketing para marcas SaaS y creadores. Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el seguimiento, las automatizaciones y la IA que lo hacen funcionar.',
   },
   Mission: {

@@ -84,7 +84,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `${SITE.name} | Marketing partner that plans and builds`,
+    title: `${SITE.name} | Marketing Consultants`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',

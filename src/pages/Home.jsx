@@ -297,37 +297,6 @@ function Explorer({ es }) {
   );
 }
 
-function Founder() {
-  const es = useLang() === 'es';
-  const [imgOk, setImgOk] = React.useState(true);
-  return (
-    <Wrap className="hm-section">
-      <div className="hm-founder">
-        <Parallax range={40}>
-          <div className="hm-founder__photo">
-            {imgOk
-              ? <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} loading="lazy" onError={() => setImgOk(false)} />
-              : <div className="hm-founder__fallback">DS</div>}
-          </div>
-          <p className="hm-founder__name"><strong>David Selva</strong>{es ? 'Fundador' : 'Founder'}</p>
-        </Parallax>
-        <Reveal>
-          {es
-            ? <h2>De día construyo sistemas de contratos. <em>El resto del tiempo, construyo tu marketing.</em></h2>
-            : <h2>By day I build contract systems. <em>The rest of the time, I build your marketing.</em></h2>}
-          {es ? (<>
-            <p>Soy David Selva. Mi trabajo de día es la gestión del ciclo de vida de contratos en la industria de tecnología legal: los sistemas que mantienen en movimiento los contratos de empresas sin que una sola aprobación se quede en el camino.</p>
-            <p>Loogo Labs es esa misma obsesión apuntada al marketing. Trabajas conmigo y con la gente que hace el trabajo: escribimos el plan, lo construimos y nos quedamos para operarlo.</p>
-          </>) : (<>
-            <p>I'm David Selva. My day job is contract lifecycle management inside legal tech: the systems that keep enterprise contracts moving without a single approval falling through the cracks.</p>
-            <p>Loogo Labs is that same obsession pointed at marketing. You work with me and the people doing the work: we write the plan, we build it, and we stay to run it.</p>
-          </>)}
-        </Reveal>
-      </div>
-    </Wrap>
-  );
-}
-
 function StickyCta({ es }) {
   const [on, setOn] = React.useState(false);
   React.useEffect(() => {
@@ -399,7 +368,6 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Founder />
 
       <Wrap className="hm-section">
         <div className="hm-local">
