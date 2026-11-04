@@ -18,6 +18,12 @@ export const LAUNCHED = false;
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];
 
+/** True on localhost, Netlify deploy previews and branch deploys; false on loogolabs.com. */
+export function isPreviewHost() {
+  if (typeof window === 'undefined') return false;
+  return !PROD_HOSTS.includes(window.location.hostname);
+}
+
 export function marketplaceEnabled() {
   if (LAUNCHED) return true;
   if (typeof window === 'undefined') return false;
@@ -26,7 +32,7 @@ export function marketplaceEnabled() {
     if (q === '1') window.localStorage.setItem(PREVIEW_KEY, '1');
     if (q === '0') window.localStorage.removeItem(PREVIEW_KEY);
   } catch { /* storage blocked: fall through */ }
-  if (!PROD_HOSTS.includes(window.location.hostname)) return true;
+  if (isPreviewHost()) return true;
   try { return window.localStorage.getItem(PREVIEW_KEY) === '1'; } catch { return false; }
 }
 

@@ -7,7 +7,7 @@ import {
 } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
-import { CATEGORIES, SKILLS, skillDownloadHref } from '../lib/marketplace';
+import { CATEGORIES, SKILLS, isPreviewHost, skillDownloadHref } from '../lib/marketplace';
 
 const ICONS = { Megaphone, ClipboardText, LinkSimple, EnvelopeSimple, RocketLaunch, MagnifyingGlass };
 const EASE = [0.32, 0.72, 0, 1];
@@ -163,13 +163,16 @@ function Marketplace() {
   const [cat, setCat] = React.useState('All');
   const [open, setOpen] = React.useState(null);
   const close = React.useCallback(() => setOpen(null), []);
+  // Staff-only reminder strip: deploy previews and localhost, never production.
+  const [preview, setPreview] = React.useState(false);
+  React.useEffect(() => { setPreview(isPreviewHost()); }, []);
 
   const list = SKILLS.filter((s) => (tier === 'all' || s.tier === tier) && (cat === 'All' || s.category === cat));
   const freeCount = SKILLS.filter((s) => s.tier === 'free').length;
 
   return (
     <main className="mk">
-      <div className="mk-preview"><span className="mk-preview__dot" />Private preview · this page isn’t public yet</div>
+      {preview ? <div className="mk-preview"><span className="mk-preview__dot" />Private preview · this page isn’t public yet</div> : null}
 
       <section className="mk-wrap mk-hero">
         <div className="mk-hero__copy">
