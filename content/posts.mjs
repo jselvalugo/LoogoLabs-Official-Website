@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `engentfy-new-release-ai-for-real-estate`,
+    title: `Engentfy's New Release: AI for Real Estate in WhatsApp, ChatGPT and Claude`,
+    excerpt: `Engentfy's new release puts a real estate back office in WhatsApp and puts every Florida parcel inside ChatGPT and Claude, with every answer pulled from a record.`,
+    tags: `Announcements, AI Tools, Real Estate`,
+    content: `Most AI tools ask a real estate agent to learn a new app, copy data into it and hope the answer is right. Engentfy's new release, now live at [engentfy.com](https://engentfy.com), goes the other way: it puts the AI inside the tools agents already open every day and ties every answer back to a record.
+
+It starts with real estate, and it is built in Florida. Here is what shipped and who each piece is for.
+
+## An assistant that lives in WhatsApp
+
+The [Engentfy Assistant](https://engentfy.com/assistant) is a back office you text like a colleague. Deadlines, CRM updates, property records, email and calendar all run through one WhatsApp thread instead of five tabs.
+
+An agent between showings can ask what is due this week, log a call or pull up a property without opening a laptop. Plans start at **$19.99 a month**.
+
+## Plugins that bring real records into ChatGPT and Claude
+
+If your team already works in ChatGPT or Claude, the [Engentfy plugins](https://engentfy.com/plugins) bring real data into that conversation instead of making you leave it. They are free to install, the first month is free, and plans start at **$4.99 a month**.
+
+The first one out is [Engentfy Parcels](https://engentfy.com/plugins/parcels): every Florida parcel, more than 10.8 million of them, available inside your assistant. Ask about an address and get the owner, the last sale and the just value from the parcel record itself, not from a model's best guess.
+
+Three more are on the way:
+
+- **Engentfy for Lofty**: your Lofty CRM, worked from chat.
+- **Engentfy Cadence**: an operating method for working leads, listings and contracts.
+- **Aperture Contracts**: federal contracts and grants a company can actually win.
+
+## Custom builds for teams that need their own system
+
+Some brokerages and teams need something shaped around how they already run. The [Solutions](https://engentfy.com/solutions) side designs, builds and hands over an AI system that the client owns outright. Most projects go live in under a month.
+
+## Free resources
+
+The release also opens up a curated [AI tools directory](https://engentfy.com/resources/ai-tools), a free [prompt library](https://engentfy.com/resources/ai-prompts), a supplier directory and a weekly [newsletter](https://engentfy.com/newsletter).
+
+## Why I am pointing you to it
+
+A lot of what I write here is about getting the right fact in front of the right person before it costs a job. Engentfy is built on the same idea. Its rules are plain: your data stays yours, and every answer comes from a record. For an agent who has been burned by a confident answer that turned out to be invented, that second rule is the whole point.
+
+Real estate comes first. More industries are on the way.
+
+## Try it this week
+
+If you work Florida property, install the Parcels plugin in the assistant you already use and look up three addresses you know well. Check the owner and last sale against what you already have on file. If it saves you one trip to the county site this week, it has earned its spot. Start at [engentfy.com](https://engentfy.com).`,
+  },
+  {
     slug: `mobile-notary-id-and-signers-confirmed-at-booking`,
     title: `Settle the ID Question Before You Drive to the Signing`,
     excerpt: `A signing that falls apart at the kitchen table because one signer's license expired costs you the drive, the hour and the next appointment.`,

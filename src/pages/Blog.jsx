@@ -2,7 +2,7 @@ import React from 'react';
 import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
 import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
 import { useLang } from '../lib/i18n';
-import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
+import { EVENT_THEME, isEventPost, isPinnedAnnouncement } from '../lib/featuredEvent';
 import { ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
@@ -36,7 +36,8 @@ export default function Blog({ onNavigate }) {
   // the newest post leads in the plain "Latest post" card, as before.
   // A pinned event post sits above everything, in the event's own finish.
   const eventPost = posts.find(isEventPost) || null;
-  const regular = posts.filter(p => p !== eventPost);
+  const pinned = posts.filter(isPinnedAnnouncement);
+  const regular = posts.filter(p => p !== eventPost && !pinned.includes(p));
   const spotlight = regular.find(p => p.featured) || null;
   const featured = spotlight || regular[0] || null;
   const rest = regular.filter(p => p !== featured);
@@ -93,10 +94,15 @@ export default function Blog({ onNavigate }) {
         ) : (
           <div className="ln-layout">
            <div className="ln-layout__main">
-            {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
-            {spotlight
-              ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} es={es} />
-              : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
+            <section className="lb-featured" aria-label={es ? 'Destacados' : 'Featured'}>
+              <div className="lb-featured__grid">
+                {pinned.map(p => <PinnedCard key={p.id} post={p} onNavigate={onNavigate} es={es} />)}
+                {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
+                {spotlight
+                  ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} es={es} />
+                  : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
+              </div>
+            </section>
 
             {(rest.length > 0 || filtering) && (
               <div className="lb-list">
@@ -158,114 +164,87 @@ const fmtDate = (post, month, es) => (post.published_at
   : '');
 const go = (onNavigate, post) => e => { e.preventDefault(); onNavigate('BlogPost', post.slug); };
 
-// The editor-picked featured post: a floating dark forest panel with a
-// display-size title and the excerpt set as a pull quote.
-function FeaturedSpotlight({ post, onNavigate, es }) {
-  const tags = tagList(post);
+// Pinned announcement (src/lib/featuredEvent.js): the lead card of the
+// featured grid, full width on desktop, compact on phones.
+function PinnedCard({ post, onNavigate, es }) {
   const date = fmtDate(post, 'long', es);
-
   return (
-    <a
-      href={`${BLOG_BASE}/${post.slug}`}
-      onClick={go(onNavigate, post)}
-      aria-label={es ? `Artículo destacado: ${post.title}` : `Featured post: ${post.title}`}
-      className="lb-feature"
-    >
-      <div className="ll-feature-panel ll-forest">
-        <div className="ll-feature-main">
-          <div className="lb-tags">
-            <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Selección del editor' : "Editor's pick"}</span>
-            {tags.map(tag => <span key={tag} className="lb-tag lb-tag--dark">{tag}</span>)}
-          </div>
-          <h2 className="ll-feature-title">{post.title}</h2>
-          <span className="lb-go lb-go--dark">
-            {es ? 'Leer el artículo destacado' : 'Read the featured post'}
-            <span className="lb-go__icon"><ArrowRight size={16} weight="bold" aria-hidden="true" /></span>
-          </span>
-        </div>
-
-        <aside className="ll-feature-side">
-          {post.excerpt && <p className="ll-feature-quote">{post.excerpt}</p>}
-          <dl className="ll-feature-meta">
-            <dt>{es ? 'Por' : 'By'}</dt><dd>{post.author}</dd>
-            {date && <><dt>{es ? 'Publicado' : 'Published'}</dt><dd><time dateTime={post.published_at}>{date}</time></dd></>}
-            <dt>{es ? 'Duración' : 'Length'}</dt><dd>{post.read_time} {es ? 'min de lectura' : 'min read'}</dd>
-          </dl>
-        </aside>
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pinned"
+      aria-label={es ? `Anuncio: ${post.title}` : `Announcement: ${post.title}`}>
+      <div className="lb-fcard__body">
+        <span className="lb-fcard__kicker lb-fcard__kicker--new">{es ? 'Nuevo lanzamiento' : 'New release'}</span>
+        <h2 className="lb-fcard__title">{post.title}</h2>
+        {post.excerpt && <p className="lb-fcard__excerpt">{post.excerpt}</p>}
+      </div>
+      <div className="lb-fcard__foot">
+        <span className="lb-fcard__meta">{date && <time dateTime={post.published_at}>{date}</time>}{date && ' · '}{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
+        <span className="lb-go lb-go--dark">
+          {es ? 'Leer el anuncio' : 'Read the announcement'}
+          <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
+        </span>
       </div>
     </a>
   );
 }
 
+// Pinned event: compact card in the event's own black-and-gold finish.
 function EventFeaturedCard({ post, onNavigate, es }) {
-  const [hover, setHover] = React.useState(false);
   const t = EVENT_THEME;
   return (
-    <a
-      href={`${BLOG_BASE}/${post.slug}`}
-      onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{ display: 'block', marginTop: 48, textDecoration: 'none', color: 'inherit' }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: 0, textTransform: 'none', color: t.gold }}>
-          {es ? 'Evento destacado · 14 nov. 2026' : 'Featured event · Nov 14, 2026'}
-        </span>
-        <div style={{ flex: 1, height: 1, background: `linear-gradient(to right, ${t.gold}, transparent)` }} />
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--event"
+      aria-label={es ? `Evento destacado: ${post.title}` : `Featured event: ${post.title}`}>
+      <div className="lb-fcard__body">
+        <div className="lb-fcard__top">
+          <span className="lb-fcard__kicker">{es ? 'Evento · 14 nov. 2026' : 'Event · Nov 14, 2026'}</span>
+          <img className="lb-fcard__logo" src={t.logo} alt="Lugo's Craft Distillery" width="44" height="44" />
+        </div>
+        <h2 className="lb-fcard__title">{post.title}</h2>
+        <p className="lb-fcard__excerpt">{es ? 'Lakeland, FL · Entrada gratis · 2–10 PM' : 'Lakeland, FL · Free admission · 2–10 PM'}</p>
       </div>
-      <div className="ll-2col" style={{
-        gap: 0,
-        background: `radial-gradient(ellipse 60% 60% at 15% 0%, rgba(201,149,42,.14), transparent 60%), linear-gradient(165deg, #0A0906 0%, ${t.ink} 55%, #160A06 100%)`,
-        border: `1px solid ${t.border}`, borderTop: `3px solid ${t.gold}`, borderRadius: 'var(--radius-4)', overflow: 'hidden', marginTop: 12,
-        boxShadow: hover ? '0 18px 48px rgba(201,149,42,.18)' : 'none', transition: 'box-shadow 160ms ease',
-      }}>
-        <div style={{ padding: 'clamp(28px,4vw,52px)', borderRight: `1px solid ${t.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220 }}>
-          <img src={t.logo} alt="Lugo's Craft Distillery" style={{ width: '100%', maxWidth: 180, height: 'auto' }} />
-        </div>
-        <div style={{ padding: 'clamp(28px,4vw,52px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 24 }}>
-          <div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: 0, textTransform: 'none', color: t.muted, marginBottom: 14 }}>
-              {es ? 'Lakeland, FL · Entrada gratis · 2–10 PM' : 'Lakeland, FL · Free admission · 2–10 PM'}
-            </div>
-            <h2 style={{ margin: '0 0 18px', fontFamily: t.serif, fontSize: 'clamp(24px,3vw,40px)', fontWeight: 500, lineHeight: 1.1, letterSpacing: '-0.02em', color: hover ? t.goldLight : t.cream, transition: 'color 120ms ease' }}>
-              {post.title}
-            </h2>
-            {post.excerpt && <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: t.muted }}>{post.excerpt}</p>}
-          </div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: 0, textTransform: 'none', color: t.gold, fontWeight: 500 }}>
-            {es ? 'Detalles del evento' : 'Event details'}
-            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, background: t.gold, color: t.ink, borderRadius: '50%', fontSize: 13, transition: 'transform 120ms ease', transform: hover ? 'translateX(3px)' : 'none' }}>→</span>
-          </div>
-        </div>
+      <div className="lb-fcard__foot">
+        <span className="lb-go lb-go--dark">
+          {es ? 'Detalles del evento' : 'Event details'}
+          <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
+        </span>
       </div>
     </a>
   );
 }
 
-function FeaturedCard({ post, onNavigate, es }) {
-  const tags = tagList(post);
-  const date = fmtDate(post, 'long', es);
-
+// The editor-picked featured post (daily routine): compact forest card.
+function FeaturedSpotlight({ post, onNavigate, es }) {
   return (
-    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-latest ll-glass">
-      <div className="lb-latest__side">
-        <div className="lb-tags">
-          <span className="lb-tag lb-tag--accent-light">{es ? 'Último artículo' : 'Latest post'}</span>
-          {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
-        </div>
-        <div className="lb-meta">
-          <time dateTime={post.published_at || undefined}>{date}</time>
-          <span>{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
-        </div>
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pick"
+      aria-label={es ? `Artículo destacado: ${post.title}` : `Featured post: ${post.title}`}>
+      <div className="lb-fcard__body">
+        <span className="lb-fcard__kicker"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Selección del editor' : "Editor's pick"}</span>
+        <h2 className="lb-fcard__title">{post.title}</h2>
+        {post.excerpt && <p className="lb-fcard__excerpt">{post.excerpt}</p>}
       </div>
-      <div className="lb-latest__main">
-        <div>
-          <h2 className="lb-latest__title">{post.title}</h2>
-          {post.excerpt && <p className="lb-latest__excerpt">{post.excerpt}</p>}
-        </div>
+      <div className="lb-fcard__foot">
+        <span className="lb-fcard__meta">{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
+        <span className="lb-go lb-go--dark">
+          {es ? 'Leer' : 'Read'}
+          <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
+        </span>
+      </div>
+    </a>
+  );
+}
+
+// No editor pick: the newest post, same compact card on paper.
+function FeaturedCard({ post, onNavigate, es }) {
+  return (
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--latest ll-glass">
+      <div className="lb-fcard__body">
+        <span className="lb-fcard__kicker">{es ? 'Último artículo' : 'Latest post'}</span>
+        <h2 className="lb-fcard__title">{post.title}</h2>
+        {post.excerpt && <p className="lb-fcard__excerpt">{post.excerpt}</p>}
+      </div>
+      <div className="lb-fcard__foot">
+        <span className="lb-fcard__meta">{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
         <span className="lb-go">
-          {es ? 'Leer el artículo' : 'Read the post'}
+          {es ? 'Leer' : 'Read'}
           <span className="lb-go__icon"><ArrowRight size={14} weight="bold" aria-hidden="true" /></span>
         </span>
       </div>
