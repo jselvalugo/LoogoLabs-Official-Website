@@ -63,13 +63,27 @@ function MarketplaceThankYou() {
                 <b>Install it.</b> In Claude (web or desktop): Settings → Capabilities → turn on code execution and file
                 creation → Skills → <i>Upload skill</i> → choose the .zip. In Claude Code: unzip it into <code>~/.claude/skills/</code>.
               </li>
-              <li>
-                <b>Fill your company profile.</b> Open <code>templates/company-profile.md</code> inside the zip, fill in what you
-                know, and keep it handy (a Claude project file is ideal).
-              </li>
-              <li>
-                <b>Start.</b> In a new chat, say: <i>"Use the SaaS Launch Playbook. Here's my company profile."</i> and attach it.
-              </li>
+              {state.sku === 'content-engine' ? (
+                <>
+                  <li>
+                    <b>Load your brand (optional, free).</b> If you have a <code>brand-profile.md</code> from our free Brand Brain
+                    skill, keep it in your Claude project. No profile? Just share your website when Claude asks.
+                  </li>
+                  <li>
+                    <b>Start.</b> In a new chat, say: <i>"Use the 30-Day Content Engine. Plan next month: Instagram and TikTok, daily."</i>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <b>Fill your company profile.</b> Open <code>templates/company-profile.md</code> inside the zip, fill in what you
+                    know, and keep it handy (a Claude project file is ideal).
+                  </li>
+                  <li>
+                    <b>Start.</b> In a new chat, say: <i>"Use the SaaS Launch Playbook. Here's my company profile."</i> and attach it.
+                  </li>
+                </>
+              )}
             </ol>
             <p className="mk-ty__help">Questions or trouble installing? Email <a href={`mailto:${SUPPORT}`}>{SUPPORT}</a>.</p>
           </div>

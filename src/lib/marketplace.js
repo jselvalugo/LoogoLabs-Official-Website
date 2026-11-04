@@ -23,6 +23,7 @@ export const LAUNCHED = true;
 // /marketplace/thank-you?session_id=..., where skill-order.js verifies and delivers.
 export const BUY_URLS = {
   'saas-launch-playbook': '/.netlify/functions/skill-order?buy=saas-launch-playbook',
+  'content-engine': '/.netlify/functions/skill-order?buy=content-engine',
 };
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];
@@ -150,24 +151,37 @@ export const SKILLS = [
     ],
     prompt: 'Use the SaaS Launch Playbook. We launch on March 10 and want 100 paying users by the end of April.',
   },
-  // Coming soon: listed with details and planned price; buyers can join the waitlist
-  // (CRM email tag "waitlist-<slug>"). To launch one, build it, add it to PAID_SKILLS
-  // and BUY_URLS, and remove `soon: true`.
   {
     slug: 'content-engine',
     name: '30-Day Content Engine',
     category: 'Social',
     tier: 'paid',
-    soon: true,
-    eta: 'December 2026',
     icon: 'CalendarBlank',
-    price: 39,
+    price: PAID_SKILLS['content-engine'].priceUsd,
+    buyUrl: BUY_URLS['content-engine'],
     tagline: 'A full month of posts, planned, written and ready to shoot.',
     description:
-      'Claude plans 30 days of Reels, TikToks, carousels and stories around your content pillars, then writes every caption, carousel slide, story frame and shot list. One idea becomes several formats, and you get a batch-filming plan so a month of content takes one afternoon to shoot.',
-    outputs: ['30-day calendar, ready for a spreadsheet', 'Captions and hashtags for every post', 'Carousel slide copy and story frames', 'Shot lists and a weekly batch-filming plan'],
+      'Claude plans 30 days of Reels, TikToks, carousels and stories around your content pillars, then writes every caption, carousel slide, story frame and shot list. One idea becomes several formats, and you get a batch-filming plan so a month of content takes one afternoon to shoot. English, Spanish or both.',
+    outputs: [
+      'A one-page strategy: monthly goal, pillars, weekly themes and key dates',
+      'A dated calendar as a spreadsheet (Google Sheets, Excel, Notion)',
+      'Every caption, hook and hashtag set, written in your brand voice',
+      'Timed Reel/TikTok scripts with on-screen text and shot lists',
+      'Carousel slide copy and story frames with stickers',
+      'A batch-filming plan grouped by location and outfit',
+    ],
+    inside: [
+      'A 7-step workflow from one round of questions to a finished month',
+      'Pillar, format-mix and hook-style guides for any posting schedule',
+      'A calendar builder that checks pillar ratio, promo spacing, hooks and caption limits',
+      'Post card, intake and filming-plan templates, plus a fully written example week',
+      'Reads your free Brand Brain profile so every post sounds like you',
+    ],
     prompt: 'Plan our December content. We post daily: Reels, carousels and stories.',
   },
+  // Coming soon: listed with details and planned price; buyers can join the waitlist
+  // (CRM email tag "waitlist-<slug>"). To launch one, build it, add it to PAID_SKILLS
+  // and BUY_URLS, and remove `soon: true`.
   {
     slug: 'hook-script-lab',
     name: 'Hook & Script Lab',
@@ -176,7 +190,7 @@ export const SKILLS = [
     soon: true,
     eta: 'December 2026',
     icon: 'FilmSlate',
-    price: 24,
+    price: 4.99,
     tagline: 'Scroll-stopping hooks and timed short-form scripts in minutes.',
     description:
       'Most videos are lost in the first two seconds. Claude writes ten or more hooks per idea across proven styles, scores them and picks three to test, then writes a timed 15, 30 or 60-second script with on-screen text, B-roll cues and a call to action. Works for talking-head, faceless and UGC videos.',
@@ -191,7 +205,7 @@ export const SKILLS = [
     soon: true,
     eta: 'January 2027',
     icon: 'PenNib',
-    price: 29,
+    price: 4.99,
     tagline: 'Full ad sets for every platform, matched to your landing page.',
     description:
       'The next step up from the free Ad Copy Workshop. Claude builds complete, upload-ready ad sets for Meta, Google, TikTok and LinkedIn: three angles with five variants each, creative briefs for your designer, a check against every character limit, and flags on claims likely to get an ad rejected.',
@@ -206,7 +220,7 @@ export const SKILLS = [
     soon: true,
     eta: 'January 2027',
     icon: 'ChartLineUp',
-    price: 49,
+    price: 4.99,
     tagline: 'See exactly what’s wasting your ad budget, and what to fix first.',
     description:
       'Export a report from Meta or Google Ads and Claude compares two periods, explains the few changes that matter, finds wasted spend (bad search terms, tired creatives, weak audiences), checks whether your conversion tracking can be trusted, and hands you a ranked fix list. It only reads. It never changes your account.',
@@ -221,7 +235,7 @@ export const SKILLS = [
     soon: true,
     eta: 'January 2027',
     icon: 'Browser',
-    price: 29,
+    price: 4.99,
     tagline: 'Turn more visitors into leads without paying for more traffic.',
     description:
       'Claude scores your page against a conversion checklist (headline clarity, offer, proof, friction, call to action, mobile layout and trust), then rewrites the weak sections and ranks A/B test ideas by likely impact. Checklists are tuned for local services, e-commerce, SaaS and coaching.',
@@ -236,7 +250,7 @@ export const SKILLS = [
     soon: true,
     eta: 'February 2027',
     icon: 'ChatsCircle',
-    price: 29,
+    price: 4.99,
     tagline: 'Never lose another lead to slow follow-up.',
     description:
       'Leads go cold within minutes. Claude writes your instant reply and full follow-up sequence (day 1, 3, 7 and 14), plus no-show recovery and re-engagement messages for email, text and DMs, personalized to where each lead came from. It also writes ready replies to the objections you hear most.',
@@ -251,7 +265,7 @@ export const SKILLS = [
     soon: true,
     eta: 'February 2027',
     icon: 'Star',
-    price: 24,
+    price: 4.99,
     tagline: 'More five-star reviews and a Google profile that wins the map.',
     description:
       'Built for restaurants, distilleries, salons, contractors and clinics. Claude writes review-request messages, on-brand replies to good and bad reviews, four weeks of Google Business Profile posts, Q&A entries and an optimized description, and flags the gaps holding back your local ranking.',
@@ -266,7 +280,7 @@ export const SKILLS = [
     soon: true,
     eta: 'March 2027',
     icon: 'Crosshair',
-    price: 39,
+    price: 4.99,
     tagline: 'Find the right prospects and start real conversations.',
     description:
       'Claude defines your ideal customer, researches and qualifies a prospect list from public business information, and writes a personal four-touch sequence for email, LinkedIn and DMs, each opening with something useful for that prospect. It finishes with a call opener script.',
@@ -281,7 +295,7 @@ export const SKILLS = [
     soon: true,
     eta: 'March 2027',
     icon: 'FileText',
-    price: 39,
+    price: 4.99,
     tagline: 'Win the deal, then prove the results, in half the time.',
     description:
       'For agencies, consultants and freelancers. Claude turns discovery-call notes into a polished proposal with scope, timeline and three pricing tiers, and turns each month’s numbers into a client-ready report: wins, insights and next month’s plan in plain English, plus a summary email.',
