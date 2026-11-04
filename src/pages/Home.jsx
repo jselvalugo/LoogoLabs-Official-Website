@@ -102,6 +102,21 @@ const LOCAL = [
   { page: 'GrowCFL', en: ['Central Florida', 'Local SEO and follow-up systems for Orlando, Lakeland and Tampa businesses.'], es: ['Florida Central', 'SEO local y sistemas de seguimiento para negocios en Orlando, Lakeland y Tampa.'] },
 ];
 
+// Cartoon David: the friendly face of the home page. Each section gets a pose
+// that matches what it says. Decorative, so hidden from screen readers.
+const POSES = {
+  wave: { w: 391, h: 742 }, explain: { w: 418, h: 741 }, cool: { w: 290, h: 741 },
+  point: { w: 368, h: 743 }, happy: { w: 290, h: 741 },
+};
+function Buddy({ pose, className }) {
+  const { w, h } = POSES[pose];
+  return (
+    <Reveal y={18} className={['hm-buddy', `hm-buddy--${pose}`, className].filter(Boolean).join(' ')} aria-hidden="true">
+      <img src={`/character/${pose}.webp`} alt="" width={w} height={h} loading="lazy" decoding="async" />
+    </Reveal>
+  );
+}
+
 function Monogram({ es }) {
   return (
     <figure className="hm-mark" aria-label={es ? 'El monograma de Loogo Labs' : 'The Loogo Labs monogram'}>
@@ -244,6 +259,7 @@ function Scene({ es, items }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
+            <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
             <AnimatePresence mode="wait">
@@ -278,7 +294,8 @@ function Explorer({ es }) {
   return (
     <Wrap className="hm-section" id="services">
       <div className="hm-plan">
-        <div className="hm-plan__head">
+        <div className="hm-plan__head hm-has-buddy">
+          <Buddy pose="explain" />
           <SectionHeading
             title={es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}
             description={es ? 'Cuatro servicios para marcas SaaS y creadores. Toca uno para ver qué planeamos y qué construimos.' : 'Four services for SaaS brands and creators. Tap one to see what we plan and what we build.'} />
@@ -338,8 +355,8 @@ function Home({ onNavigate }) {
             </div>
             <div className="hm-hero__side">
               <div className="hm-hero__mark" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-200)" delay={1.1} /></div>
-              <figure className="hm-hero__founder">
-                <img src="/founder-cutout.png" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} width="536" height="612" fetchpriority="high" />
+              <figure className="hm-hero__founder hm-hero__founder--toon">
+                <img src="/character/wave.webp" alt={es ? 'Ilustración de David Selva, fundador de Loogo Labs, saludando' : 'Illustration of David Selva, founder of Loogo Labs, waving hello'} width="391" height="742" fetchpriority="high" />
                 <figcaption><strong>David Selva</strong><span>{es ? 'Fundador' : 'Founder'}</span></figcaption>
               </figure>
             </div>
@@ -350,7 +367,8 @@ function Home({ onNavigate }) {
       <Explorer es={es} />
 
       <section className="hm-build ll-band ll-band--tan">
-        <Wrap>
+        <Wrap className="hm-has-buddy">
+          <Buddy pose="cool" />
           <Reveal>
           <SectionHeading eyebrow={es ? 'Qué construimos' : 'What we build'}
             title={es ? 'Consultores que de verdad lo construyen.' : 'Consultants who can actually build it.'}
@@ -367,11 +385,14 @@ function Home({ onNavigate }) {
 
       <Wrap className="hm-section">
         <div className="hm-local">
+          <div className="hm-has-buddy">
           <Reveal>
           <SectionHeading eyebrow={es ? 'Para negocios locales' : 'For local businesses'}
             title={es ? 'Los mismos sistemas, listos para la tienda de la esquina.' : 'The same systems, ready-made for the shop down the street.'}
             description={es ? 'Lo que construimos a la medida para marcas SaaS también existe como sistemas listos que operamos para negocios de servicio en Florida Central.' : 'What we build custom for SaaS brands also exists as ready-made systems we run for service businesses in Central Florida.'} />
           </Reveal>
+          <Buddy pose="point" />
+          </div>
           <Stagger as="ul" className="hm-local__links" gap={0.1}>
             {LOCAL.map(l => {
               const [t, d] = es ? l.es : l.en;
@@ -390,7 +411,8 @@ function Home({ onNavigate }) {
       <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
         <AmbientShape index={3} className="hm-cta__shape" />
         <Wrap style={{ position: 'relative' }}>
-          <div className="hm-cta__grid">
+          <div className="hm-cta__grid hm-has-buddy">
+            <Buddy pose="happy" />
             <Reveal>
               <h2>{es ? 'Cuéntanos qué quieres que crezca.' : 'Tell us what you want to grow.'}</h2>
               <p>{es ? 'Una llamada de 30 minutos. Revisamos dónde estás, qué está frenando el crecimiento y qué construiríamos primero. Sin presentación, sin compromiso.' : 'A 30-minute call. We look at where you are, what is holding growth back, and what we would build first. No deck, no commitment.'}</p>

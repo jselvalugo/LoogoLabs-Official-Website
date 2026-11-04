@@ -1133,3 +1133,40 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-cta p { font-size: 15px; margin-top: 14px; }
   .hm-cta__grid { gap: 24px; }
 }
+
+/* ── Cartoon David on the home page ───────────────────────────────────────────
+   Hero: the waving character replaces the founder photo (the real photo stays on
+   the Company page and blog bylines). Elsewhere a small pose sits beside the
+   section heading. A slow bob keeps him alive; off for reduced motion. */
+.hm-hero__founder--toon { width: min(30%, 220px); right: 24%; bottom: 24px; }
+.hm-hero__founder--toon img { -webkit-mask-image: none; mask-image: none; filter: drop-shadow(0 18px 24px rgba(27,42,18,0.18)); }
+.hm-buddy img { display: block; width: 100%; height: auto; filter: drop-shadow(0 12px 16px rgba(27,42,18,0.16)); animation: hm-bob 3.6s ease-in-out infinite; }
+.hm-hero__founder--toon img { animation: hm-bob 3.6s ease-in-out infinite; }
+@keyframes hm-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@media (prefers-reduced-motion: reduce) { .hm-buddy img, .hm-hero__founder--toon img { animation: none; } }
+
+.hm-has-buddy { position: relative; }
+.hm-plan__head.hm-has-buddy { position: sticky; }   /* keep the desktop sticky heading */
+.hm-has-buddy > .hm-buddy { position: absolute; z-index: 1; pointer-events: none; }
+/* Desktop / tablet placements */
+.hm-plan__head > .hm-buddy { display: none; }                 /* desktop uses the pinned scene */
+.hm-buddy--scene { position: static; width: 96px; margin-top: 32px; }
+.hm-build .hm-has-buddy > .hm-buddy { right: 32px; top: -28px; width: 76px; }
+.hm-local .hm-has-buddy > .hm-buddy { position: static; width: 104px; margin-top: 28px; }
+.hm-cta__grid > .hm-buddy { right: 0; top: -24px; width: 92px; }
+
+@media (max-width: 960px) {
+  .hm-plan__head.hm-has-buddy { position: relative; top: 0; }
+  .hm-plan__head > .hm-buddy { display: block; right: 0; top: 0; width: 54px; }
+  .hm-plan__head.hm-has-buddy .ll-sh { padding-right: 62px; }
+  .hm-local .hm-has-buddy > .hm-buddy { position: absolute; right: 0; top: 0; width: 54px; margin: 0; }
+  .hm-local .hm-has-buddy .ll-sh { padding-right: 62px; }
+}
+@media (max-width: 767px) {
+  .hm-hero__founder--toon { right: 72px; width: 72px; bottom: 10px; }
+  .hm-hero__side { height: 150px; }
+  .hm-build .hm-has-buddy > .hm-buddy { right: 24px; top: -6px; width: 54px; }
+  .hm-build .hm-has-buddy .ll-sh { padding-right: 62px; }
+  .hm-cta__grid > .hm-buddy { top: 0; right: 0; width: 56px; }
+  .hm-cta__grid.hm-has-buddy h2, .hm-cta__grid.hm-has-buddy p { padding-right: 62px; }
+}
