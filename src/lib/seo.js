@@ -278,6 +278,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // Skills Marketplace: private preview. Unlisted (noindex, out of nav,
+    // sitemap and llms.txt) until launch — see src/lib/marketplace.js.
+    page: 'Marketplace',
+    path: '/marketplace',
+    title: `Claude Skills Marketplace | ${SITE.name}`,
+    description:
+      'Free and paid Claude skills for marketers: ad copy, campaign briefs, UTM tracking plans and SaaS email sequences. Download, add to Claude, and ask.',
+    priority: '0.1',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     page: 'Privacy',
     path: '/privacy',
     title: `Privacy Policy | ${SITE.name}`,
