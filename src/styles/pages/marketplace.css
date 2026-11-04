@@ -196,17 +196,79 @@
   .mk-stack { height: 440px; }
   .mk-grid { grid-template-columns: repeat(2, 1fr); }
 }
+.mk-drawer__bar { display: none; }
 @media (max-width: 640px) {
   .mk-wrap { padding-left: 16px; padding-right: 16px; }
-  .mk-hero { padding-top: 40px; }
   .mk-preview { font-size: 10px; letter-spacing: .12em; }
-  .mk-grid { grid-template-columns: 1fr; }
+
+  /* Hero */
+  .mk-hero { padding-top: 32px; padding-bottom: 32px; gap: 0; }
   .mk-stack { display: none; }
-  .mk-hero__stats b { font-size: 30px; }
+  .mk-hero__title { font-size: 40px; margin-bottom: 16px; }
+  .mk-hero__lede { font-size: 16px; line-height: 1.6; }
+  .mk-hero__stats { margin-top: 28px; }
+  .mk-hero__stats > div { padding: 14px 10px 0 0; }
+  .mk-hero__stats > div + div { padding-left: 12px; }
+  .mk-hero__stats b { font-size: 28px; }
+  .mk-hero__stats span { font-size: 12px; line-height: 1.35; margin-top: 6px; }
+
+  /* Filters: full-width toggle, then one swipeable row of categories */
+  .mk-bar { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px 0; }
+  .mk-seg { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .mk-seg__btn { padding: 12px 6px; }
+  .mk-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px 2px; }
+  .mk-chips::-webkit-scrollbar { display: none; }
+  .mk-chip { flex: none; padding: 8px 14px; }
+  .mk-count { margin: 14px 0 12px; }
+
+  /* Cards: compact rows. Outputs live in the detail sheet. */
+  .mk-grid { grid-template-columns: 1fr; gap: 12px; padding-bottom: 56px; }
+  .mk-card { display: grid; grid-template-columns: 40px 1fr; column-gap: 14px; padding: 18px 16px 14px; }
+  .mk-card:hover { transform: none; box-shadow: none; }
+  .mk-card__top { display: contents; }
+  .mk-card__icon { grid-column: 1; grid-row: 1 / span 3; width: 40px; height: 40px; }
+  /* No grid placement on the tag: an absolute grid child would anchor to its grid area. */
+  .mk-card__top .mk-tag { position: absolute; top: 16px; right: 16px; font-size: 10px; padding: 3px 7px; }
+  .mk-card .mk-card__cat { grid-column: 2; grid-row: 1; font-size: 10px; padding-right: 92px; line-height: 1.9; }
+  .mk-card__name { grid-column: 2; grid-row: 2; font-size: 21px; margin: 4px 0 6px; }
+  .mk-card__tag { grid-column: 2; grid-row: 3; font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
+  .mk-card .mk-card__outs { display: none; }
+  .mk-card__foot { grid-column: 1 / -1; padding-top: 12px; border-top: 1px solid var(--border-hair); }
+  .mk-card__dl { padding: 10px 16px; }
+
+  /* How it works: tighter numbered list */
+  .mk-how { padding: 56px 0; }
+  .mk-how__title { font-size: 30px; margin-bottom: 20px; }
   .mk-how__steps { grid-template-columns: 1fr; }
-  .mk-how__steps li, .mk-how__steps li + li { padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--border-hair-inverse); }
-  .mk-cta { flex-direction: column; align-items: flex-start; }
-  .mk-drawer { padding: 24px 20px 48px; }
-  .mk-drawer__title { font-size: 32px; }
-  .mk-bar { flex-direction: column; align-items: flex-start; }
+  .mk-how__steps li, .mk-how__steps li + li {
+    display: grid; grid-template-columns: 34px 1fr; column-gap: 8px;
+    padding: 16px 0; border-left: 0; border-bottom: 1px solid var(--border-hair-inverse);
+  }
+  .mk-how__steps span { grid-row: 1 / span 2; padding-top: 5px; }
+  .mk-how__steps h3 { font-size: 20px; margin: 0 0 4px; }
+  .mk-how__steps p { font-size: 14px; line-height: 1.55; }
+
+  /* CTA */
+  .mk-cta { flex-direction: column; align-items: stretch; gap: 20px; padding-top: 48px; padding-bottom: 56px; }
+  .mk-cta__title { font-size: 28px; }
+  .mk-cta .ll-btn { justify-content: center; }
+
+  /* Detail: bottom sheet with a pinned download bar */
+  .mk-drawer { top: auto; height: 92vh; height: 92dvh; width: 100%; padding: 0 20px; border-left: 0; border-top: 1px solid var(--border-hair); }
+  .mk-drawer::before { content: ""; display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--ink-300); margin: 10px auto 0; }
+  .mk-drawer__head { position: sticky; top: 0; z-index: 2; background: var(--paper-100); padding: 14px 0 12px; margin: 0 0 8px; align-items: center; }
+  .mk-card__icon--lg { width: 44px; height: 44px; }
+  .mk-drawer__close { width: 44px; height: 44px; }
+  .mk-drawer__title { font-size: 30px; margin: 10px 0 12px; }
+  .mk-drawer__desc { font-size: 15px; margin-bottom: 0; }
+  .mk-drawer > .mk-drawer__dl, .mk-drawer > .ll-btn--secondary { display: none; }
+  .mk-drawer__sec { margin-top: 24px; padding-top: 18px; }
+  .mk-drawer__prompt { font-size: 18px; }
+  .mk-source { max-height: 260px; font-size: 11.5px; }
+  .mk-drawer__bar {
+    display: block; position: sticky; bottom: 0; z-index: 2; margin: 24px -20px 0;
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: var(--paper-100); border-top: 1px solid var(--border-hair);
+  }
+  .mk-drawer__bar .ll-btn { width: 100%; justify-content: center; text-decoration: none; }
 }
