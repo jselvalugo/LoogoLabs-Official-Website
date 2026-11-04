@@ -22,3 +22,10 @@ export const EVENT_THEME = {
 export function pinEventPosts(posts) {
   return [...posts.filter(isEventPost), ...posts.filter((p) => !isEventPost(p))];
 }
+
+// Announcement posts pinned to the top of LoogoNews regardless of date or the
+// daily editor's pick (so the featured-post routine never displaces them).
+// Remove a slug here to drop it back into the regular feed.
+export const PINNED_ANNOUNCEMENT_SLUGS = ['engentfy-new-release-ai-for-real-estate'];
+
+export const isPinnedAnnouncement = (post) => !!post && PINNED_ANNOUNCEMENT_SLUGS.includes(post.slug);
