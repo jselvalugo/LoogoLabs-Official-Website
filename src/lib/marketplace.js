@@ -164,7 +164,7 @@ export const SKILLS = [
       'Claude plans 30 days of Reels, TikToks, carousels and stories around your content pillars, then writes every caption, carousel slide, story frame and shot list. One idea becomes several formats, and you get a batch-filming plan so a month of content takes one afternoon to shoot. English, Spanish or both.',
     outputs: [
       'A one-page strategy: monthly goal, pillars, weekly themes and key dates',
-      'A dated calendar as a spreadsheet (Google Sheets, Excel, Notion)',
+      'A branded Excel calendar with every post (opens in Google Sheets too)',
       'Every caption, hook and hashtag set, written in your brand voice',
       'Timed Reel/TikTok scripts with on-screen text and shot lists',
       'Carousel slide copy and story frames with stickers',
@@ -173,7 +173,7 @@ export const SKILLS = [
     inside: [
       'A 7-step workflow from one round of questions to a finished month',
       'Pillar, format-mix and hook-style guides for any posting schedule',
-      'A calendar builder that checks pillar ratio, promo spacing, hooks and caption limits',
+      'An Excel calendar builder that checks pillar ratio, promo spacing, hooks and caption limits',
       'Post card, intake and filming-plan templates, plus a fully written example week',
       'Reads your free Brand Brain profile so every post sounds like you',
     ],
