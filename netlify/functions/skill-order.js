@@ -15,18 +15,18 @@
 //   SKILL_ENCRYPTION_KEY  64 hex chars, the key used to encrypt the files
 import { createDecipheriv } from 'node:crypto';
 import saasLaunchPlaybook from '../lib/paid-skills/saas-launch-playbook.enc.js';
+import { PAID_SKILLS } from '../../src/lib/paidSkills.js';
 
 
 // ── Checkout ─────────────────────────────────────────────────────────────────
-const PRODUCTS = {
-  'saas-launch-playbook': {
-    name: 'SaaS Launch Playbook — Claude skill',
-    description: 'Plan and run your SaaS launch with Claude: positioning, pricing, launch model, dated calendar, launch day, ads, email, scorecard and 30/60/90 review. Instant download.',
-    amount: 3900, // cents
-    currency: 'usd',
-    image: '/skills/covers/saas-launch-playbook.png',
-  },
-};
+// Prices and checkout text come from src/lib/paidSkills.js (one source for site + checkout).
+const PRODUCTS = Object.fromEntries(Object.entries(PAID_SKILLS).map(([sku, p]) => [sku, {
+  name: p.name,
+  description: p.checkoutDescription,
+  amount: Math.round(p.priceUsd * 100), // cents
+  currency: 'usd',
+  image: p.image,
+}]));
 
 const BRAND = {
   display_name: 'Loogo Labs',

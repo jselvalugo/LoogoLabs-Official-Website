@@ -278,16 +278,15 @@ export const ROUTES = [
     unlisted: true,
   },
   {
-    // Skills Marketplace: private preview. Unlisted (noindex, out of nav,
-    // sitemap and llms.txt) until launch — see src/lib/marketplace.js.
+    // Skills Marketplace. English only: no /es twin, no hreflang pair.
     page: 'Marketplace',
     path: '/marketplace',
     title: `Claude Skills Marketplace | ${SITE.name}`,
     description:
-      'Free and paid Claude skills for marketers: ad copy, campaign briefs, UTM tracking plans and SaaS email sequences. Download, add to Claude, and ask.',
-    priority: '0.1',
-    changefreq: 'monthly',
-    unlisted: true,
+      'Free and paid Claude skills for marketers: ad copy, campaign briefs, UTM tracking plans, SaaS email sequences and a full SaaS launch playbook.',
+    priority: '0.6',
+    changefreq: 'weekly',
+    englishOnly: true,
   },
   {
     // Post-purchase download page for paid marketplace skills. Never indexed.
@@ -360,7 +359,7 @@ export function pathForPage(page, slug) {
 export const routeMeta = (page) => BY_PAGE.get(page) ?? null;
 
 // Pages that have a Spanish twin under /es: every listed route.
-const ES_PATHS = new Set(ROUTES.filter((r) => !r.unlisted).map((r) => r.path));
+const ES_PATHS = new Set(ROUTES.filter((r) => !r.unlisted && !r.englishOnly).map((r) => r.path));
 
 /**
  * An internal href in the given language: in Spanish, a link to a page with a
@@ -407,13 +406,13 @@ export function headForPage(page, lang = 'en') {
       jsonLd: [],
     };
   }
-  const es = lang === 'es' && !route.unlisted ? metaEs(page) : null;
+  const es = lang === 'es' && !route.unlisted && !route.englishOnly ? metaEs(page) : null;
   return {
     lang: es ? 'es' : 'en',
     title: fitTitle(es ? es.title : route.title),
     description: clamp(es ? es.description : route.description),
     canonical: url(es ? localizePath(route.path, 'es') : route.path),
-    alternates: route.unlisted ? [] : alternatesFor(route.path),
+    alternates: route.unlisted || route.englishOnly ? [] : alternatesFor(route.path),
     robots: route.unlisted ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     ogType: 'website',
     image: url(route.image || SITE.ogImage),

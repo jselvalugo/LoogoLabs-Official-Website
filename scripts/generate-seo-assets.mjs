@@ -257,7 +257,7 @@ for (const route of ROUTES) {
   written += 1;
 
   // Spanish twin at /es/... with its own head, hreflang pair, and Spanish copy.
-  if (route.unlisted) continue;
+  if (route.unlisted || route.englishOnly) continue;
   const esHead = headForPage(route.page, 'es');
   const esPath = localizePath(route.path, 'es');
   if (route.page === 'LoogoNews') {
@@ -368,7 +368,7 @@ const urlEntry = ({ loc, lastmod, changefreq, priority, alternates = [] }) => ` 
 const newestPost = allPosts[0]?.published_at ?? buildDate;
 
 const sitemapEntries = [
-  ...ROUTES.filter((r) => !r.unlisted).flatMap((r) => ['en', 'es'].map((lang) => urlEntry({
+  ...ROUTES.filter((r) => !r.unlisted).flatMap((r) => (r.englishOnly ? ['en'] : ['en', 'es']).map((lang) => urlEntry({
     loc: url(localizePath(r.path, lang)),
     lastmod: r.page === 'LoogoNews' ? newestPost : buildDate,
     changefreq: r.changefreq,

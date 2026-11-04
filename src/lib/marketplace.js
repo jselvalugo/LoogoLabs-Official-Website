@@ -13,8 +13,9 @@ import adCopy from '../../marketplace/skills/ad-copy-workshop/SKILL.md?raw';
 import brief from '../../marketplace/skills/campaign-brief-builder/SKILL.md?raw';
 import utm from '../../marketplace/skills/utm-tracking-plan/SKILL.md?raw';
 import email from '../../marketplace/skills/saas-email-sequences/SKILL.md?raw';
+import { PAID_SKILLS } from './paidSkills.js';
 
-export const LAUNCHED = false;
+export const LAUNCHED = true;
 
 // Buy links for paid skills. netlify/functions/skill-order.js (?buy=) opens a branded
 // Stripe Checkout (price and branding live there); after payment Stripe returns to
@@ -108,7 +109,7 @@ export const SKILLS = [
     category: 'Strategy',
     tier: 'paid',
     icon: 'RocketLaunch',
-    price: 39,
+    price: PAID_SKILLS['saas-launch-playbook'].priceUsd,
     buyUrl: BUY_URLS['saas-launch-playbook'],
     tagline: 'Plan and run your launch with Claude, from positioning to the 90-day review.',
     description:
