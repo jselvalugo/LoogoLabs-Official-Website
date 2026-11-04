@@ -19,7 +19,7 @@ import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityP
 export const SITE = {
   origin: 'https://loogolabs.com',
   name: 'Loogo Labs',
-  legalName: 'David Selva', // sole proprietor d/b/a Loogo Labs
+  legalName: 'Loogo Labs LLC',
   locale: 'en_US',
   lang: 'en',
   author: 'David Selva',
@@ -27,7 +27,7 @@ export const SITE = {
   email: 'david@loogolabs.com',
   // Public business mailing address, shown in the footer and the schema.
   address: {
-    recipient: 'David Selva',
+    recipient: 'Loogo Labs LLC',
     streetAddress: '2875 S Orange Ave STE 500 #6412',
     addressLocality: 'Orlando',
     addressRegion: 'FL',
