@@ -58,8 +58,23 @@ const SkillCard = React.forwardRef(function SkillCard({ skill, onOpen, index }, 
   );
 });
 
+function useIsPhone() {
+  const [phone, setPhone] = React.useState(false);
+  React.useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)');
+    const on = () => setPhone(mq.matches);
+    on(); mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return phone;
+}
+
 function Drawer({ skill, onClose }) {
   const reduce = useReducedMotion();
+  const phone = useIsPhone();
+  // Side panel on desktop; a bottom sheet that slides up on phones.
+  const off = reduce ? { opacity: 0 } : phone ? { y: '100%' } : { x: '100%' };
+  const on = reduce ? { opacity: 1 } : phone ? { y: 0 } : { x: 0 };
   React.useEffect(() => {
     if (!skill) return undefined;
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
@@ -81,8 +96,8 @@ function Drawer({ skill, onClose }) {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
           <motion.aside className="mk-drawer" role="dialog" aria-modal="true" aria-label={skill.name}
             onClick={(e) => e.stopPropagation()}
-            initial={reduce ? { opacity: 0 } : { x: '100%' }} animate={reduce ? { opacity: 1 } : { x: 0 }}
-            exit={reduce ? { opacity: 0 } : { x: '100%' }} transition={{ duration: 0.45, ease: EASE }}>
+            initial={off} animate={on}
+            exit={off} transition={{ duration: 0.45, ease: EASE }}>
             <div className="mk-drawer__head">
               <span className="mk-card__icon mk-card__icon--lg"><SkillIcon name={skill.icon} size={26} /></span>
               <button type="button" className="mk-drawer__close" onClick={onClose} aria-label="Close"><X size={20} /></button>
@@ -128,6 +143,16 @@ function Drawer({ skill, onClose }) {
                 </section>
               </>
             ) : null}
+
+            <div className="mk-drawer__bar">
+              {skill.tier === 'free' ? (
+                <a className="ll-btn ll-btn--primary ll-btn--md" href={skillDownloadHref(skill.slug)} download>
+                  Download skill<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
+                </a>
+              ) : (
+                <Button variant="primary" onClick={openBooking} iconRight={<ArrowRight size={14} weight="bold" />}>Ask about early access</Button>
+              )}
+            </div>
           </motion.aside>
         </motion.div>
       ) : null}
