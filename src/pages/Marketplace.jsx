@@ -23,6 +23,11 @@ const unlockKey = (slug) => `ll_unlock_${slug}`;
 function isUnlocked(slug) {
   try { return window.localStorage.getItem(unlockKey(slug)) === '1'; } catch { return false; }
 }
+// The email used for an earlier unlock, so the next free skill is one click.
+const EMAIL_KEY = 'll_unlock_email';
+function rememberedEmail() {
+  try { return window.localStorage.getItem(EMAIL_KEY) || ''; } catch { return ''; }
+}
 function startDownload(slug) {
   const a = document.createElement('a');
   a.href = skillDownloadHref(slug); a.download = `${slug}.zip`;
@@ -37,7 +42,11 @@ function EmailForm({ skill, mode }) {
   const [hp, setHp] = React.useState('');
   const [state, setState] = React.useState('idle');
   const [unlocked, setUnlocked] = React.useState(false);
-  React.useEffect(() => { if (magnet) setUnlocked(isUnlocked(skill.slug)); }, [magnet, skill.slug]);
+  React.useEffect(() => {
+    if (magnet) setUnlocked(isUnlocked(skill.slug));
+    const saved = rememberedEmail();
+    if (saved) setEmail(saved);
+  }, [magnet, skill.slug]);
 
   async function submit(e) {
     e.preventDefault();
@@ -51,7 +60,10 @@ function EmailForm({ skill, mode }) {
       if (!res.ok) throw new Error(String(res.status));
       setState('done');
       if (magnet) {
-        try { window.localStorage.setItem(unlockKey(skill.slug), '1'); } catch { /* storage blocked */ }
+        try {
+          window.localStorage.setItem(unlockKey(skill.slug), '1');
+          window.localStorage.setItem(EMAIL_KEY, email.trim());
+        } catch { /* storage blocked */ }
         setUnlocked(true);
         startDownload(skill.slug);
       }
@@ -360,7 +372,7 @@ function Marketplace() {
           <h1 className="mk-hero__title">Claude skills that work like <em>your marketing team.</em></h1>
           <p className="mk-hero__lede">
             Download a skill, add it to Claude, and it follows our playbook every time: brand voice, ad copy,
-            campaign briefs, tracking plans and lifecycle email, with more unlocking every month. Start free with Brand Brain.
+            campaign briefs, tracking plans and lifecycle email, with more unlocking every month. Every free skill unlocks with your email.
           </p>
           <div className="mk-hero__stats">
             <div><b>{freeCount}</b><span>Free skills</span></div>
