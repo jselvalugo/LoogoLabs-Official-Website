@@ -36,7 +36,7 @@ export const SITE = {
     countryName: 'United States',
   },
   logo: '/logo.png',
-  ogImage: '/og-image.jpg',
+  ogImage: '/og-image-2026.jpg',
   ogImageWidth: 1200,
   ogImageHeight: 628,
   themeColor: '#1a1f14',
