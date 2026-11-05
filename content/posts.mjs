@@ -11,6 +11,63 @@
 
 export const posts = [
   {
+    slug: `party-bus-holiday-group-run-sheet-text-ten-days-out`,
+    title: `Send the Party Bus Run Sheet Ten Days Before`,
+    excerpt: `A group booked for seven o'clock has not told you where the clock starts, and the argument over billed hours begins at the third pickup.`,
+    tags: `Booking, Holiday Parties, Limo & Party Bus`,
+    content: `The booking says Friday, seven o'clock, twenty people, six hours. By 7:40 the driver is still on his second pickup, the organizer is texting that a coworker is running late, and nobody can say whether the meter started at seven, at the first address, or when the last person climbed aboard.
+
+Holiday group bookings are where this lands on a party bus or limo company, and December is when you have the most of them. The vehicle is fine and the driver is fine. What was never settled is the plan, and an unsettled plan gets billed as a surprise.
+
+## The booking is not the plan
+
+When someone books a bus for a holiday party, you capture a date, a headcount, a start time and a deposit. That is a reservation. It is not a route.
+
+The route lives in the organizer's head, and it changes between the day they book and the night of the party. A pickup moves because somebody lives across town. A restaurant stop gets added. The end time drifts because the reservation at the venue slid.
+
+None of that is dishonest. But every change after the booking is a change to billed time, and you are the one holding the invoice.
+
+## One text, ten days out
+
+Ten days before the date, send the organizer a run sheet by text. It is short and it has to say four things:
+
+- Every stop in order, with the address and the time you expect to be there.
+- The hour the clock starts, stated in words.
+- The hour the clock ends, and the rate for each extra half hour.
+- The name and number of the one person who can change the plan that night.
+
+Here is how I would write it:
+
+> Hi Dana, it's Marcus at Lantern Row Coach. Your party bus is Friday the 13th. Here is the plan we have: 6:45 Oak Street, 7:15 Delmar Ave, 7:35 the venue. The clock starts at the first pickup, 6:45, and runs six hours to 12:45. After that it is $150 per half hour. Reply OK if this is right, or CHANGE and tell me what to fix. Who is your one contact that night?
+
+Lantern Row, Marcus and Dana are invented, and so are the rates. Use your own rule and say it plainly.
+
+## Decide where the clock starts before anyone asks
+
+The single most argued sentence in this business is the one about when billing begins. Some companies start at the first pickup, some at the garage, some at the time printed on the contract.
+
+I do not care which you choose. I care that the customer reads it before the night and not on the invoice. If your rule is the first pickup, put the word pickup in the text. If a late rider can hold the bus, say how long you wait before moving on.
+
+## Make the answer a tag
+
+When the reply comes in, tag the booking. \`run sheet ok\` means the plan is confirmed. \`run sheet changed\` means someone has to update the stops and send the corrected sheet. If nothing has come back after three days, the booking keeps the first tag, \`run sheet sent\`, and that is your list to work from.
+
+For anything still on \`run sheet sent\` five days out, call the organizer. A phone call to a person who has not read a text is cheaper than a driver sitting at an empty curb.
+
+## Where this breaks down
+
+This does not help with a host who changes the whole route in the parking lot. It also will not fix a group that treats six hours as a floor and demands a discount when they stop at five.
+
+What it does is make those moments rarer, and it gives you something to point to when they happen. A driver can say "your sheet said the clock starts at 6:45" without sounding like he is making it up.
+
+I will not hand you a percentage for how many disputes disappear. It depends on how many you have now.
+
+## Check one booking this week
+
+Open your next December group booking and read the confirmation as the organizer would. Find the sentence that says when the clock starts. If it is not there, write the run sheet text for that one booking and send it today.
+`,
+  },
+  {
     slug: `engentfy-new-release-ai-for-real-estate`,
     title: `Engentfy's New Release: AI for Real Estate in WhatsApp, ChatGPT and Claude`,
     excerpt: `Engentfy's new release puts a real estate back office in WhatsApp and puts every Florida parcel inside ChatGPT and Claude, with every answer pulled from a record.`,
