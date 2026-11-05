@@ -39,6 +39,7 @@ export const SITE = {
   ogImage: '/og-image-2026.jpg',
   ogImageWidth: 1200,
   ogImageHeight: 628,
+  blogImage: '/og-image-blog.jpg',
   themeColor: '#1a1f14',
   description:
     'A marketing partner for SaaS brands and creators. One team writes the strategy, runs the ads and email, and builds the tracking, automations and AI that make it work.',
@@ -115,6 +116,7 @@ export const ROUTES = [
       'Guides on lead follow-up, missed-call text-back, reviews, and automation — written for owners of HVAC, dental, salon, gym, and other service businesses.',
     priority: '0.9',
     changefreq: 'daily',
+    image: '/og-image-blog.jpg',
   },
   {
     page: 'GrowCFL',
@@ -143,7 +145,6 @@ export const ROUTES = [
       'An AI voice agent that answers every call, books the job, and never puts a customer on hold — set up and managed for local service businesses.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
   },
   ...VOICE_CITIES.map((c) => ({
     page: voiceCityPageKey(c.slug),
@@ -153,7 +154,6 @@ export const ROUTES = [
     description: `A 24/7 AI voice agent that answers, qualifies, and books calls for ${c.name} businesses in English and Spanish. ${c.intro.split('. ')[0]}.`,
     priority: '0.7',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
   })),
   {
     page: 'AIReceptionist',
@@ -163,7 +163,6 @@ export const ROUTES = [
       'A full-time AI receptionist that answers every call, books the appointment, and never calls out sick — for a fraction of what one payroll costs. Take the free 60-second fit check.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
   },
   {
     page: 'ReputationAutopilot',
@@ -173,7 +172,6 @@ export const ROUTES = [
       'Every completed job automatically becomes a review request — no spreadsheet, no sticky note, no forgetting. Take the free 60-second fit check.',
     priority: '0.8',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
   },
   {
     // Unlisted ad landing page: direct link only, kept out of nav, sitemap,
@@ -185,7 +183,6 @@ export const ROUTES = [
       'Custom logo, visual identity and brand guidelines for local businesses, ready to use everywhere. Take the free 60-second brand check.',
     priority: '0.1',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
     unlisted: true,
   },
   {
@@ -197,7 +194,6 @@ export const ROUTES = [
       'Custom logo, visual identity and brand guidelines for local businesses. Watch the intro, download pricing, and book a free brand call.',
     priority: '0.1',
     changefreq: 'monthly',
-    image: '/og-image-ai-voice.jpg',
     unlisted: true,
   },
   {
@@ -209,7 +205,6 @@ export const ROUTES = [
       'Marketing and ads strategy for SaaS brands and creators: positioning, go-to-market, paid ads and a 90-day growth plan. Book a free strategy call.',
     priority: '0.1',
     changefreq: 'monthly',
-    image: '/og-image-consulting.jpg',
     unlisted: true,
   },
   {
@@ -287,6 +282,7 @@ export const ROUTES = [
     priority: '0.6',
     changefreq: 'weekly',
     englishOnly: true,
+    image: '/og-image-marketplace.jpg',
   },
   {
     // Post-purchase download page for paid marketplace skills. Never indexed.
@@ -436,7 +432,7 @@ export function headForPost(post) {
       canonical: url(BLOG_INDEX),
       robots: 'noindex, follow',
       ogType: 'website',
-      image: url(SITE.ogImage),
+      image: url(SITE.blogImage),
       jsonLd: [],
     };
   }
@@ -446,7 +442,7 @@ export function headForPost(post) {
     canonical: url(`${BLOG_BASE}/${post.slug}`),
     robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     ogType: 'article',
-    image: url(SITE.ogImage),
+    image: url(SITE.blogImage),
     article: {
       published: isoDate(post.published_at || post.publishedAt),
       modified: isoDate(post.updated_at || post.published_at || post.publishedAt),
