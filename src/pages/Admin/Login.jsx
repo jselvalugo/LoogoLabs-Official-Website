@@ -23,10 +23,8 @@ export default function Login({ onLogin }) {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--ink-900)' }}>
       <div style={{ width: 360 }}>
         <div style={{ marginBottom: 32 }}>
-          <div style={{ fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: 'var(--paper-100)' }}>
-            Loogo Labs<span style={{ color: 'var(--cyan-500)' }}>.</span>
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 4 }}>
+          <img src="/logo-horizontal-cream.svg" alt="Loogo Labs" width="172" height="44" style={{ display: 'block' }} />
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-400)', marginTop: 12 }}>
             Admin
           </div>
         </div>
