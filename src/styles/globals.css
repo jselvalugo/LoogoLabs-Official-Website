@@ -581,9 +581,20 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ln-masthead__title em { font-style: italic; font-weight: 500; color: var(--ink-500); }
 .ln-masthead__lede { margin: 0; max-width: 44ch; font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--ink-500); }
 .ln-masthead__art { display: none; }
+/* Featured cards share the masthead: intro left, cards right. */
+.ln-masthead__inner:has(.ln-masthead__featured) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; padding: 56px 0 48px; }
+.ln-masthead__inner:has(.ln-masthead__featured) .ln-masthead__copy { max-width: none; }
+.ln-masthead__featured { min-width: 0; margin: 0; }
 @media (max-width: 860px) {
   .ln-masthead__copy { max-width: none; }
   .ln-masthead__inner { padding: 40px 0 32px; }
+}
+/* Below desktop the cards drop under the intro instead of squeezing beside it. */
+@media (max-width: 1100px) {
+  .ln-masthead__inner:has(.ln-masthead__featured) { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+}
+@media (max-width: 860px) {
+  .ln-masthead__inner:has(.ln-masthead__featured) { gap: 24px; padding: 40px 0 32px; }
 }
 
 /* Blog sidebar */

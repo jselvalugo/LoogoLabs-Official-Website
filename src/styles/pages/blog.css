@@ -268,6 +268,16 @@
 /* ── Featured grid: pinned announcement, pinned event and the editor's pick.
    Compact cards, so the "Find a post" list starts within the first screen. ── */
 .lb-featured { margin-top: 40px; }
+.lb-featured.ln-masthead__featured { margin-top: 0; }
+/* The find-a-post list now opens the main column, level with the sidebar. */
+.ln-layout__main > .lb-list:first-child { margin-top: 40px; }
+.lb-skel--masthead { display: block; height: 340px; border-radius: var(--radius-4); }
+/* In the masthead's narrower column: tighter cards, two-line excerpts. */
+.ln-masthead__featured .lb-fcard { padding: 20px; gap: 16px; }
+.ln-masthead__featured .lb-fcard--pinned { padding: 24px; }
+.ln-masthead__featured .lb-fcard__title { font-size: clamp(18px, 1.6vw, 21px); }
+.ln-masthead__featured .lb-fcard--pinned .lb-fcard__title { font-size: clamp(20px, 2vw, 26px); }
+.ln-masthead__featured .lb-fcard__excerpt { -webkit-line-clamp: 2; font-size: 14px; }
 .lb-featured__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .lb-featured__grid > :only-child { grid-column: 1 / -1; }
 .lb-fcard {
@@ -324,6 +334,12 @@
 
 @media (max-width: 640px) {
   .lb-featured { margin-top: 24px; }
+  .lb-featured.ln-masthead__featured { margin-top: 0; }
+  .lb-skel--masthead { height: 200px; }
+  .ln-layout__main > .lb-list:first-child { margin-top: 28px; }
+  .ln-masthead__featured .lb-fcard, .ln-masthead__featured .lb-fcard--pinned { padding: 16px 16px 16px 18px; gap: 14px; }
+  .ln-masthead__featured .lb-fcard__title, .ln-masthead__featured .lb-fcard--pinned .lb-fcard__title { font-size: 17px; }
+  .ln-masthead__featured .lb-fcard--pinned .lb-fcard__excerpt { font-size: 14px; }
   .lb-featured__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   /* Thin rows: kicker + title + one meta line, CTA collapses to its arrow. */
   .lb-fcard { flex-direction: row; align-items: flex-end; gap: 14px; padding: 16px 16px 16px 18px; border-radius: var(--radius-3); }
