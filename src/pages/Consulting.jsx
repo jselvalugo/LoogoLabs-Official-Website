@@ -23,8 +23,8 @@ const content = {
   source: 'consulting',
   // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
   // Empty shows a "Video coming soon" placeholder until the new video is ready.
-  videoUrl: '',
-  videoPoster: '/brand-intro-poster.jpg',
+  videoUrl: '/consulting/consulting-video.mp4',
+  videoPoster: '/consulting/consulting-video-poster.jpg',
   h1: <>We plan your marketing. <em>Then we build it.</em></>,
   lede: 'A marketing partner for SaaS brands and creators. We find where your next users, subscribers and buyers come from, write the plan, then build the campaigns, tracking and automations that get them.',
   // Ad-matched headlines: tag the ad's utm_content with one of these keys.
