@@ -78,24 +78,11 @@ export default function Blog({ onNavigate }) {
               {es ? 'Notas de un equipo que planea el marketing y luego lo construye: posicionamiento, anuncios, email, seguimiento, automatizaciones e IA, además de los mitos de marketing que conviene ignorar.' : 'Notes from a team that plans marketing and then builds it: positioning, ads, email, tracking, automations and AI, plus the marketing myths worth ignoring.'}
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* ── CONTENT ── */}
-      <div className="lb-content">
-
-        {loading ? (
-          <div className="lb-loading" role="status" aria-live="polite">
-            <span className="lb-skel lb-skel--feature" />
-            <div className="lb-skel-row"><span className="lb-skel" /><span className="lb-skel" /></div>
-            <span className="lb-visually-hidden">{es ? 'Cargando artículos' : 'Loading posts'}</span>
-          </div>
-        ) : posts.length === 0 ? (
-          <EmptyState es={es} />
-        ) : (
-          <div className="ln-layout">
-           <div className="ln-layout__main">
-            <section className="lb-featured" aria-label={es ? 'Destacados' : 'Featured'}>
+          {/* Featured cards sit beside the intro on desktop and under it on phones. */}
+          {loading ? (
+            <div className="ln-masthead__featured" aria-hidden="true"><span className="lb-skel lb-skel--masthead" /></div>
+          ) : (pinned.length > 0 || eventPost || featured) && (
+            <section className="lb-featured ln-masthead__featured" aria-label={es ? 'Destacados' : 'Featured'}>
               <div className="lb-featured__grid">
                 {pinned.map(p => <PinnedCard key={p.id} post={p} onNavigate={onNavigate} es={es} />)}
                 {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
@@ -104,7 +91,23 @@ export default function Blog({ onNavigate }) {
                   : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
               </div>
             </section>
+          )}
+        </div>
+      </div>
 
+      {/* ── CONTENT ── */}
+      <div className="lb-content">
+
+        {loading ? (
+          <div className="lb-loading" role="status" aria-live="polite">
+            <div className="lb-skel-row"><span className="lb-skel" /><span className="lb-skel" /></div>
+            <span className="lb-visually-hidden">{es ? 'Cargando artículos' : 'Loading posts'}</span>
+          </div>
+        ) : posts.length === 0 ? (
+          <EmptyState es={es} />
+        ) : (
+          <div className="ln-layout">
+           <div className="ln-layout__main">
             {(rest.length > 0 || filtering) && (
               <div className="lb-list">
                 <div className="lb-list__head">
