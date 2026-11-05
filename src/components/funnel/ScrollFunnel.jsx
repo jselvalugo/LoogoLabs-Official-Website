@@ -5,6 +5,7 @@ import Button from '../core/Button';
 import { openBooking } from '../../lib/booking';
 import Input from '../forms/Input';
 import { getSessionId } from '../../lib/sessionTracker';
+import { trackLead, leadMeta, trackSchedule } from '../../lib/metaEvents';
 import { useHref } from '../../lib/i18n';
 import '../../styles/pages/landing.css';
 import '../../styles/pages/brand-design.css';
@@ -93,17 +94,18 @@ export function SignupForm({ c, onBook }) {
       return;
     }
     setError('');
+    const metaId = trackLead({ content_name: c.source });
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         full_name: form.fullName.trim(), email: form.email.trim(), phone: form.phone.trim(),
         company: form.company.trim(), source: c.source, session_id: getSessionId(), notes: utmNotes(),
+        ...leadMeta(metaId),
       }),
     }).catch(() => {
       // Non-blocking: the visitor still reaches the booking step if the write fails.
     });
-    fire('Lead', { content_name: c.source });
     setDone(true);
   };
 
@@ -141,7 +143,7 @@ export function SignupForm({ c, onBook }) {
 
 export default function ScrollFunnel({ c }) {
   const toHref = useHref();
-  const onBook = () => { fire('Schedule', { content_name: c.source }); openBooking(); };
+  const onBook = () => openBooking({ content_name: c.source });
   const toSignup = () => { fireCustom('FunnelScrollToForm', { funnel: c.source }); scrollToSignup(); };
   // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
   const [variant, setVariant] = React.useState(null);

@@ -4,6 +4,7 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getSessionId } from '../lib/sessionTracker';
 import { useHref, useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
@@ -15,9 +16,8 @@ const nextOnEnter = (e) => {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
-const trackBook = () => { fire('Schedule'); openBooking(); };
+const trackBook = () => openBooking();
 
 /* Range strings keep their stored value; only the displayed dash changes. */
 const show = (s) => s.replace(/\u2013/g, '-');
@@ -139,6 +139,7 @@ export default function AIReceptionist() {
   };
 
   const submitLead = (finalAnswers) => {
+    const metaId = finalAnswers.decisionMaker === "Yes, that's me" ? trackLead() : null;
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -151,11 +152,11 @@ export default function AIReceptionist() {
         missed_calls: finalAnswers.missedCalls,
         pain_point: finalAnswers.painPoint,
         decision_maker: finalAnswers.decisionMaker,
+        ...leadMeta(metaId),
       }),
     }).catch(() => {
       // Non-blocking: the visitor still sees their result even if the write fails.
     });
-    if (finalAnswers.decisionMaker === "Yes, that's me") fire('Lead');
   };
 
   const confirmContact = () => {
@@ -166,7 +167,7 @@ export default function AIReceptionist() {
       return;
     }
     setContactError('');
-    fireCustom('FunnelContact', { email });
+    fireCustom('FunnelContact');
     submitLead(answers);
     go(TOTAL_STEPS);
   };

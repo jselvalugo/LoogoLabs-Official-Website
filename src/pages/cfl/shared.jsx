@@ -3,6 +3,7 @@
 import React from 'react';
 import { ArrowRight, Plus } from '@phosphor-icons/react';
 import { BOOKING_URL } from '../../lib/booking';
+import { trackSchedule } from '../../lib/metaEvents';
 import { CITIES, CFL_BASE, cityPath } from '../../lib/cfl';
 import { LangToggle, useHref, useLang } from '../../lib/i18n';
 
@@ -20,12 +21,11 @@ export const H2 = ({ children, small, style }) => (
     the data stays as written and only the rendered body text loses its dashes. */
 export const tidy = (s) => s.replace(/(\d)\s*[–—]\s*(\d)/g, '$1-$2').replace(/\s*[—–]\s*/g, ', ');
 
-const trackSchedule = () => { if (window.fbq) window.fbq('track', 'Schedule'); };
 
 export const BookBtn = ({ size = 'md', label, variant = 'light' }) => {
   const es = useLang() === 'es';
   return (
-  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}
+  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackSchedule()}
     className={`cfl-btn cfl-btn--${variant === 'light' ? 'light' : 'dark'}${size === 'lg' ? ' cfl-btn--lg' : ''}`}>
     <span>{label || (es ? 'Agenda una llamada de estrategia gratis' : 'Book a free strategy call')}</span>
     <span className="cfl-btn__icon" aria-hidden="true"><ArrowRight size={size === 'lg' ? 18 : 16} weight="bold" /></span>
@@ -47,7 +47,7 @@ export const TopBanner = ({ crumb }) => {
       {crumb && <a href={toHref(crumb.href)} className="cfl-nav__crumb">{crumb.label}</a>}
       <span className="cfl-nav__spacer" />
       <LangToggle />
-      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule} className="cfl-btn cfl-btn--light">
+      <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackSchedule()} className="cfl-btn cfl-btn--light">
         {es
           ? <span>Agenda <span className="cfl-nav__long">una llamada </span>gratis</span>
           : <span>Book a free <span className="cfl-nav__long">strategy </span>call</span>}
@@ -79,7 +79,7 @@ export const CityRail = ({ active }) => {
         </li>
       ))}
     </ul>
-    <a className="cfl-rail__cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={trackSchedule}>
+    <a className="cfl-rail__cta" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackSchedule()}>
       {es ? 'Llamada de estrategia gratis' : 'Free strategy call'}
     </a>
   </nav>

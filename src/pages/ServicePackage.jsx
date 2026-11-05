@@ -17,7 +17,7 @@ function ServicePackage({ page }) {
   const t = es ? { ...pkg, ...SERVICE_PACKAGES_ES[page] } : pkg;
   const order = (where) => {
     if (window.fbq) window.fbq('track', 'InitiateCheckout', { content_name: `${pkg.page}-${where}` });
-    openBooking();
+    openBooking({ schedule: false });
   };
 
   return (

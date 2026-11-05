@@ -4,15 +4,15 @@ import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
+import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getSessionId } from '../lib/sessionTracker';
 import { useHref } from '../lib/i18n';
 import '../styles/pages/landing.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const fire = (event, params) => { if (window.fbq) window.fbq('track', event, params); };
 const fireCustom = (event, params) => { if (window.fbq) window.fbq('trackCustom', event, params); };
-const trackBook = () => { fire('Schedule'); openBooking(); };
+const trackBook = () => openBooking();
 
 // Ad traffic lands here with utm_* tags; keep them with the lead so the admin
 // can see which ad a lead came from, not just which page.
@@ -107,6 +107,7 @@ export default function BrandingFunnel() {
 
   const submitLead = (a) => {
     const notes = [`Need: ${a.need || '-'}`, `Timeline: ${a.timeline || '-'}`, utmNotes()].filter(Boolean).join('\n');
+    const metaId = a.decisionMaker === "Yes, that's me" ? trackLead({ content_name: 'branding' }) : null;
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -120,11 +121,11 @@ export default function BrandingFunnel() {
         pain_point: a.need,
         decision_maker: a.decisionMaker,
         notes,
+        ...leadMeta(metaId),
       }),
     }).catch(() => {
       // Non-blocking: the visitor still sees their result even if the write fails.
     });
-    if (a.decisionMaker === "Yes, that's me") fire('Lead', { content_name: 'branding' });
   };
 
   const confirmContact = () => {

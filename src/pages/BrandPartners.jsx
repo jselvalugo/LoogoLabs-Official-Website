@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { getSessionId } from '../lib/sessionTracker';
+import { leadEventId, leadMeta, pixelTrack } from '../lib/metaEvents';
 import { useLang } from '../lib/i18n';
 import { ArrowRight, Check } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
@@ -153,6 +154,7 @@ function BrandPartners() {
       form.budget && `Budget: ${form.budget}`,
       form.goals.trim() && `Goals:\n${form.goals.trim()}`,
     ].filter(Boolean).join('\n');
+    const metaId = leadEventId();
     try {
       const res = await fetch('/.netlify/functions/create-lead', {
         method: 'POST',
@@ -167,10 +169,11 @@ function BrandPartners() {
           phone: form.phone.trim(),
           notes,
           session_id: getSessionId(),
+          ...leadMeta(metaId),
         }),
       });
       if (!res.ok) throw new Error();
-      if (window.fbq) window.fbq('track', 'Lead', { content_name: 'brand_partnership' });
+      if (metaId) pixelTrack('Lead', { content_name: 'brand_partnership' }, metaId);
       setStatus('done');
     } catch {
       setStatus('error');

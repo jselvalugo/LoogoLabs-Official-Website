@@ -1,6 +1,7 @@
 import { getDatabase } from '@netlify/database';
 import { copyWebsiteLead } from '../lib/website-leads.js';
 import { publicSubscribe } from '../lib/crm-marketing.js';
+import { sendMetaEvent } from '../lib/meta-capi.js';
 
 // Forms whose sign-ups also join the email marketing list, tagged with the
 // source. The form itself tells people they will get the newsletter.
@@ -44,6 +45,21 @@ export default async (req, context) => {
     // Like the CRM copy, this must never fail the form.
     await publicSubscribe({ email: lead.email, name: lead.full_name, tag: lead.source, source: lead.source })
       .catch((err) => console.error('Could not add the lead to the newsletter', err));
+  }
+
+  // Server copy of the browser's Lead pixel event. The browser only sends
+  // meta_event_id when it fired Lead itself, which already means the visitor
+  // accepted marketing cookies and is on the live site; same ID → one lead in Meta.
+  if (typeof body.meta_event_id === 'string' && body.meta_event_id) {
+    await sendMetaEvent({
+      event_name: 'Lead',
+      event_id: body.meta_event_id,
+      event_source_url: typeof body.meta_source_url === 'string' ? body.meta_source_url : req.headers.get('referer'),
+      user: { email: lead.email, phone: lead.phone, full_name: lead.full_name },
+      custom_data: { content_name: lead.source },
+      req,
+      context,
+    });
   }
 
   return new Response(JSON.stringify(lead), { status: 201, headers: { 'Content-Type': 'application/json' } });
