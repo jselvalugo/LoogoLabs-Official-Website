@@ -11,6 +11,58 @@
 
 export const posts = [
   {
+    slug: `driveway-sealcoating-keep-off-time-texted-same-evening`,
+    title: `Text the Keep-Off Time the Evening You Seal a Driveway`,
+    excerpt: `A driveway sealed at noon gets driven on at four because "give it a day" was only said once, at the door, and nobody wrote down when the day ends.`,
+    tags: `Customer Updates, Job Handoff, Paving & Sealcoating`,
+    content: `Two tire tracks and a set of small footprints run straight across a driveway you sealed at noon. The customer's teenager came home at four, saw no cones, and parked where he always parks. Now you are looking at a ruined finish, a customer who feels fine blaming you, and a free redo that eats the margin on the next three jobs.
+
+The crew did the work right. What failed was the handoff, because the most important instruction in the whole job, stay off it, was said once at the door and never again.
+
+## The instruction gets lost, not ignored
+
+When your foreman says "give it a day or two" at the end of a long job, the customer hears a loose suggestion. They are carrying groceries, the dog is barking, and nobody writes it down.
+
+Two days later a visitor pulls in, a delivery truck backs up, or a kid rides a bike down the middle. The customer genuinely forgot, and you cannot say they were never told.
+
+## Put a clock time in writing
+
+The vague part is the word "day." A day from when? Does it end at sunrise, at dinner, or when the surface looks dry?
+
+Pick the rule for your own product and your own weather. I will not give you hours, because the label on what you actually use knows more than I do, and a damp, cool afternoon changes the answer. Once you have it, turn it into a specific moment: not "24 hours," but "Thursday at 5 p.m."
+
+Say it in a text the same evening, while the cones are still in the driveway:
+
+> Hi Karen, it's Joel at Redline Seal. Your driveway is done. Please keep cars, bikes and feet off it until Thursday at 5 p.m. Park on the street tonight. Reply OK so I know you saw this, or CALL if someone needs to get in before then.
+
+Redline, Joel and Karen are made up, and so is the time. Use your own.
+
+## Make the reply do something
+
+An OK is only useful if it changes something on your side. When it comes back, tag the job \`keep-off confirmed\`. If the customer sends CALL, tag it \`needs access\` and phone them that evening. There is often a real reason: a van that has to leave early, a car trapped in the garage. It is far cheaper to solve that while the job is wet than after it is damaged.
+
+If nothing has come back by the next morning, the job keeps its first tag, \`keep-off sent\`. That morning list is the one you call from. Someone who has not answered a text may not have read it, and a call takes two minutes.
+
+## Send the second text at the right moment
+
+The text people forget to send is the release. At the stated time, send a short one: "You can drive on it now." It sounds minor, but it closes the job on a clean note, it saves you the call from a customer who is afraid to park, and it is the natural place to ask for a review.
+
+If weather moved the time, say the new time in the same message and own the change. A customer who gets "Friday at 9 a.m. instead, it stayed damp" will trust the second number more than one that quietly passed.
+
+## Where a text will not help
+
+A text will not stop a neighbor from walking across, and it does not replace putting out cones or tape where the customer can see them. Do both.
+
+It also will not help a customer who ignores you on purpose. It will, though, let you say "the text said Thursday at 5" and mean it. That makes the redo conversation shorter and a lot more civil.
+
+I would not hand you a figure for how many redos this prevents. Your number depends on how many you have now, which is easy to count.
+
+## One thing to check this week
+
+Pull up your last three sealed or paved driveways and find the keep-off instruction you gave each customer. If it exists only as a spoken sentence, write the text above for your next job, with a real clock time in it, and send it before the crew's truck leaves the street.
+`,
+  },
+  {
     slug: `party-bus-holiday-group-run-sheet-text-ten-days-out`,
     title: `Send the Party Bus Run Sheet Ten Days Before`,
     excerpt: `A group booked for seven o'clock has not told you where the clock starts, and the argument over billed hours begins at the third pickup.`,
