@@ -1,5 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../lib/booking';
+import { trackSchedule } from '../lib/metaEvents';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
 import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
 import { partnerForPost, partnerHref } from '../lib/partners';
@@ -107,7 +108,7 @@ export default function BlogPost({ slug, onNavigate }) {
         target="_blank"
         rel="noopener noreferrer"
         className="lb-cta__btn"
-        onClick={() => { if (!event && window.fbq) window.fbq('track', 'Schedule'); }}
+        onClick={() => { if (!event) trackSchedule(); }}
       >
         {event
           ? <><span className="lb-cta__long">{es ? 'Consigue tus boletos en Eventbrite' : 'Get tickets on Eventbrite'}</span><span className="lb-cta__short">{es ? 'Boletos' : 'Get tickets'}</span></>

@@ -9,7 +9,7 @@ import {
 import { useHref, useLang } from '../lib/i18n';
 import '../styles/pages/aivoice.css';
 
-const trackBook = () => { if (window.fbq) window.fbq('track', 'Schedule'); openBooking(); };
+const trackBook = () => openBooking();
 
 /* ─────────────────────── primitives ─────────────────────── */
 const Wrap = ({ children, className, style }) => (

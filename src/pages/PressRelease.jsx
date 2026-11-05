@@ -8,7 +8,7 @@ import '../styles/pages/packages.css';
 
 const order = (pkg) => {
   if (window.fbq) window.fbq('track', 'InitiateCheckout', { content_name: pkg });
-  openBooking();
+  openBooking({ schedule: false });
 };
 
 // The value story: what a published release actually does for a business.

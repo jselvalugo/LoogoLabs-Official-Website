@@ -38,9 +38,13 @@
     <!-- Meta Pixel — deferred until cookie consent grants "marketing". The
          CookieConsent component calls window.__loadMetaPixel() on Accept All
          or a saved preference that includes marketing; a returning visitor
-         who already granted it gets it loaded immediately below. -->
+         who already granted it gets it loaded immediately below. Only loads
+         on www.loogolabs.com / loogolabs.com. -->
     <script>
       window.__loadMetaPixel = function () {
+        // Live domain only: localhost and Netlify deploy previews must never
+        // send events into the Loogo Labs dataset.
+        if (['www.loogolabs.com', 'loogolabs.com'].indexOf(window.location.hostname) === -1) return;
         if (window.fbq) { window.fbq('track', 'PageView'); return; }
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Compass, Megaphone, ChartLineUp, Target, ArrowDown } from '@phosphor-icons/react';
-import { FounderVideo, SignupForm, fire, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
+import { FounderVideo, SignupForm, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
 import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
@@ -93,7 +93,7 @@ export default function Consulting() {
     fireCustom('FunnelScrollToForm', { funnel: c.source });
     document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  const onBook = () => { fire('Schedule', { content_name: c.source }); openBooking(); };
+  const onBook = () => openBooking({ content_name: c.source });
 
   return (
     <main className="cs">
