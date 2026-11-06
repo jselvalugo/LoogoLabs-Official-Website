@@ -11,6 +11,58 @@
 
 export const posts = [
   {
+    slug: `christmas-tree-delivery-ceiling-height-before-the-tree-is-cut`,
+    title: `Ask the Ceiling Height Before the Tree Is Tied Down`,
+    excerpt: `A nine-foot tree delivered to an eight-foot living room is not a delivery problem, it is a question nobody asked at the moment of the order.`,
+    tags: `Seasonal Orders, Order Intake, Christmas Tree Sellers`,
+    content: `Your driver carries a nine-foot fir up three porch steps, and the customer opens the door, looks at the ceiling, then at the tree, and says the word you dread: "Oh." The tree goes back on the truck. You have burned a stop, a trimmed trunk or a restock, and an hour of the one week when every hour is already sold.
+
+Nobody lied and nobody was careless. The customer chose "the tall one" from a photo, and you wrote down a price and a street address. The number that decides whether the tree fits was never asked for.
+
+## The order form knows the price, not the room
+
+Think about what you capture when someone orders a delivered tree: species, a height or a price tier, a stand, an address, a day. Every field is about the tree. None is about the place it is going.
+
+Customers guess wrong about their own rooms all the time. They remember the ceiling as "pretty high," they forget the stand adds height, they forget the turn in the hallway on the way in. People are not wrong because they are careless; they have never needed that number before.
+
+## Three questions, sent right after the order
+
+Ask in a text, within a few minutes of the order, while the customer is still holding the phone. Keep it to three:
+
+- How tall is the ceiling where the tree will stand, in feet?
+- Does the tree go through a narrow door, a tight stairway or a gate to get there?
+- Do you want it set up in a stand, or left at the door?
+
+Here is the shape I would use:
+
+> Hi Priya, it's Owen at Pinecrest Tree Lot. Your 8-foot Fraser is booked for Saturday morning. Two quick things so it fits: what is the ceiling height where it will stand, and is there anything narrow on the way in? Reply with the ceiling number, or reply NOT SURE and I will call you.
+
+Pinecrest, Owen and Priya are invented, and so is the tree. Use your own stock and your own words.
+
+## Do the arithmetic once, in writing
+
+A tree needs room above it for the stand and the topper. Whatever allowance you want, decide it yourself and state it in your own terms, because it depends on your stands and your trees. Then when the ceiling number comes back, you compare it to the height ordered and speak up the same day.
+
+If they ordered nine feet and wrote back eight, you can swap the tree before it is cut or tagged, offer a fuller seven-and-a-half, and keep the sale. After the truck leaves, the same conversation costs you a refund.
+
+## Let the tags do the sorting
+
+When a number arrives, tag the order \`ceiling ok\`. When it does not match, tag it \`ceiling mismatch\` and call that customer the same day. Orders with no answer keep the original tag, \`ceiling unknown\`, and that is the list you work through the evening before the route is built.
+
+NOT SURE is an honest answer, and you should treat it as a call, not a failure. Someone who does not know their ceiling height usually does know whether it is a normal room or a cathedral one, and thirty seconds on the phone sorts it.
+
+## What this will not do
+
+It will not stop a customer who buys the biggest tree because they want a statement. It will not tell you who has a stand that is wrong for the trunk. And it adds a text to a week when your phone is already loud.
+
+I would not give you a figure for returns avoided, because I have not counted yours. You can.
+
+## Count last season's returns
+
+Before your first delivery of the year, find how many trees came back or got swapped on the porch last season, and note what each customer's ceiling turned out to be. If the list has even a few names, put the three questions into your order confirmation text this week.
+`,
+  },
+  {
     slug: `driveway-sealcoating-keep-off-time-texted-same-evening`,
     title: `Text the Keep-Off Time the Evening You Seal a Driveway`,
     excerpt: `A driveway sealed at noon gets driven on at four because "give it a day" was only said once, at the door, and nobody wrote down when the day ends.`,
