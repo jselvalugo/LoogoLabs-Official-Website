@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `hot-tub-service-promise-note-on-the-record-after-every-call`,
+    title: `Write Down Every "I'll" Before You Start the Truck`,
+    excerpt: `A hot tub customer waiting on a Friday price remembers the day you said, not the supplier delay, and a fifteen-second note is the fix.`,
+    tags: `Follow-Up, Promises, Hot Tub Service`,
+    content: `Every hot tub service call you take has at least one sentence in it that starts with "I'll." I'll bring a new pump seal Thursday. I'll check if the supplier has that cover latch. I'll call you once I know what the cabinet fan costs. Each one is a small promise, and almost none of them are written down anywhere except in your head, on a day when you are standing in someone's backyard with your arm in a cabinet.
+
+Most of them get kept. The ones that don't are what customers remember.
+
+## Where the promise actually goes missing
+
+It rarely gets forgotten on purpose. It gets buried. You say "I'll call you Friday with the price" at 8:40 on Tuesday. By lunch you have driven to three yards, taken two more calls and promised something else to someone new. On Friday the price is sitting in your supplier's email, the customer is waiting, and you have no idea anyone is.
+
+The customer does not blame the supplier or your schedule. They remember that you said Friday and it is now Monday, and a hot tub that is not heating in November is not a small thing to them. Their next message is short and a little cold.
+
+The fix is not a better memory. It is moving the promise out of your head within a minute of making it.
+
+## The one-line note
+
+After any call where you said "I'll," type a single line on the customer's record before you start the truck. It has three parts: what you promised, the day you promised it, and whether the customer is waiting on you or you are waiting on someone else.
+
+Here is what one looks like:
+
+> Promised: price on cabinet fan, by Fri. Waiting on supplier.
+
+That is the whole note. It takes about fifteen seconds and it does not need to be neat. What matters is that the day is on it, because a promise without a day cannot be late, and one that cannot be late cannot be caught.
+
+If your system lets you set a tag, add \`promised\` at the same moment. The note says what, the tag makes it findable.
+
+## The list you read once a day
+
+A note nobody reads is just a nicer way to forget. So pick one time each day, early, before the first stop, and look at every record tagged \`promised\` whose day is today or already past.
+
+This list should be short. If it is long, you are making more promises than you can keep, and that is worth knowing too. Each line on it gets one of three outcomes: you did it and remove the tag, you send a one-line update with a new day, or you call.
+
+The update is the part owners skip, and it is the part that saves the customer. A text that says "Still waiting on the fan, supplier says Monday, I'll confirm by noon" is far better than silence, even though it contains no good news. People forgive a delay they were told about. They do not forgive finding out about it themselves.
+
+## Keep the promises small enough to track
+
+Writing promises down shows you quickly which ones you should not make. "I'll try to get out sometime this week" is not trackable, because it has no day. Either name a day or say you will name one by a certain hour. The vague version feels friendly on the phone and costs you later.
+
+I would also stop saying "I'll call you back" without a time. Give a window, "before two," and write that on the note. Then the daily list tells you what to do first.
+
+One honest limit: this does not help if you skip the note on the busy days. Those are exactly the days the promises pile up, so the habit has to survive the worst Tuesday, not the easy one.
+
+## Test it on this week's calls
+
+Today, count the promises you make by phone. Put a tally on a scrap of paper in your truck, one mark for each "I'll." At the end of the day, check how many are written on a customer record with a day attached. Whatever the gap is, that is the number of customers relying on your memory. Tomorrow morning, write the missing notes from the tally before you take a single new call, and see how many are already due.
+`,
+  },
+  {
     slug: `christmas-tree-delivery-ceiling-height-before-the-tree-is-cut`,
     title: `Ask the Ceiling Height Before the Tree Is Tied Down`,
     excerpt: `A nine-foot tree delivered to an eight-foot living room is not a delivery problem, it is a question nobody asked at the moment of the order.`,
