@@ -6,6 +6,7 @@ import { leadEventId, leadMeta, pixelTrack } from '../lib/metaEvents';
 import { useLang } from '../lib/i18n';
 import { ArrowRight, Check } from '@phosphor-icons/react';
 import '../styles/pages/packages.css';
+import { getAttribution, gaLead } from '../lib/attribution';
 
 // Brand partnerships: Marketing Strategy and AI Consulting, scoped per brand.
 // Sign-ups land in the admin Leads table with source 'brand_partnership'.
@@ -156,6 +157,7 @@ function BrandPartners() {
     ].filter(Boolean).join('\n');
     const metaId = leadEventId();
     try {
+      gaLead('brand_partnership');
       const res = await fetch('/.netlify/functions/create-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -169,6 +171,7 @@ function BrandPartners() {
           phone: form.phone.trim(),
           notes,
           session_id: getSessionId(),
+          attribution: getAttribution(),
           ...leadMeta(metaId),
         }),
       });

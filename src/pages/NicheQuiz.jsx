@@ -14,6 +14,7 @@ import { NICHE_BY_PAGE, DECISION_NO, DECISION_YES } from '../lib/nicheQuizzes';
 import { NICHE_QUIZZES_ES } from '../lib/nicheQuizzes.es';
 import { NICHE_FUNNELS } from '../lib/nicheFunnels';
 import { useHref, useLang, LangToggle } from '../lib/i18n';
+import { getAttribution, gaLead } from '../lib/attribution';
 
 // One component for every niche fit check in lib/nicheQuizzes.js. Same structure
 // as the AI Receptionist and Reputation Autopilot funnels:
@@ -91,10 +92,11 @@ export default function NicheQuiz({ page }) {
     setError('');
     const metaId = answers.decision_maker === DECISION_YES ? trackLead() : null;
     const notes = questions.map((q) => `${q.question}\n→ ${answers[q.key] || '—'}`).join('\n\n');
+    gaLead(quiz.source, answers.decision_maker);
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ full_name, email, source: quiz.source, session_id: getSessionId(), notes, ...answers, ...leadMeta(metaId) }),
+      body: JSON.stringify({ full_name, email, source: quiz.source, session_id: getSessionId(), attribution: getAttribution(), notes, ...answers, ...leadMeta(metaId) }),
     }).catch(() => {
       // Non-blocking: the visitor still sees their result even if the write fails.
     });

@@ -9,6 +9,7 @@ import { trackLead, leadMeta, trackSchedule } from '../../lib/metaEvents';
 import { useHref } from '../../lib/i18n';
 import '../../styles/pages/landing.css';
 import '../../styles/pages/brand-design.css';
+import { getAttribution, gaLead } from '../../lib/attribution';
 
 // Long-form scrolling ad funnel: hero + founder video, problem, deliverables,
 // process, optional pricing, reviews, FAQ, and a closing lead form that unlocks
@@ -95,12 +96,13 @@ export function SignupForm({ c, onBook }) {
     }
     setError('');
     const metaId = trackLead({ content_name: c.source });
+    gaLead(c.source);
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         full_name: form.fullName.trim(), email: form.email.trim(), phone: form.phone.trim(),
-        company: form.company.trim(), source: c.source, session_id: getSessionId(), notes: utmNotes(),
+        company: form.company.trim(), source: c.source, session_id: getSessionId(), notes: utmNotes(), attribution: getAttribution(),
         ...leadMeta(metaId),
       }),
     }).catch(() => {

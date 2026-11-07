@@ -7,6 +7,22 @@ import { sendMetaEvent } from '../lib/meta-capi.js';
 // source. The form itself tells people they will get the newsletter.
 const NEWSLETTER_SOURCES = ['consulting'];
 
+// Where the visitor came from (ad tags, click IDs, landing page, referrer),
+// sent by the browser from src/lib/attribution.js. Saved in the lead's notes
+// so it shows in the CRM. Only known keys, each value capped.
+const ATTRIBUTION_KEYS = [
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+  'fbclid', 'gclid', 'gbraid', 'wbraid', 'msclkid', 'ttclid', 'li_fat_id',
+  'landing_page', 'referrer',
+];
+function attributionNotes(a) {
+  if (!a || typeof a !== 'object') return '';
+  const lines = ATTRIBUTION_KEYS
+    .filter((k) => typeof a[k] === 'string' && a[k].trim())
+    .map((k) => `${k}: ${a[k].trim().slice(0, 300)}`);
+  return lines.length ? `Attribution\n${lines.join('\n')}` : '';
+}
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -25,7 +41,8 @@ export default async (req, context) => {
   const { source, business_type, missed_calls, pain_point, decision_maker, job_volume, review_pain_point } = body;
   // Park Supply quote requests carry their line items here; cap it so the
   // public endpoint cannot be used to stuff arbitrarily large rows.
-  const notes = typeof body.notes === 'string' ? body.notes.slice(0, 8000) : '';
+  const formNotes = typeof body.notes === 'string' ? body.notes.slice(0, 8000) : '';
+  const notes = [formNotes, attributionNotes(body.attribution)].filter(Boolean).join('\n\n');
   const company = typeof body.company === 'string' ? body.company.trim().slice(0, 200) || null : null;
   const phone = typeof body.phone === 'string' ? body.phone.trim().slice(0, 50) || null : null;
   const session_id = UUID_RE.test(body.session_id || '') ? body.session_id : null;

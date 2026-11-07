@@ -8,6 +8,7 @@ import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getSessionId } from '../lib/sessionTracker';
 import { useHref, useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
+import { getAttribution, gaLead } from '../lib/attribution';
 
 // Phone keyboards: Enter in the name field moves to email instead of submitting.
 const nextOnEnter = (e) => {
@@ -140,6 +141,7 @@ export default function AIReceptionist() {
 
   const submitLead = (finalAnswers) => {
     const metaId = finalAnswers.decisionMaker === "Yes, that's me" ? trackLead() : null;
+    gaLead('ai_receptionist', finalAnswers.decisionMaker);
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -148,6 +150,7 @@ export default function AIReceptionist() {
         email: contact.email.trim(),
         source: 'ai_receptionist',
         session_id: getSessionId(),
+        attribution: getAttribution(),
         business_type: finalAnswers.businessType,
         missed_calls: finalAnswers.missedCalls,
         pain_point: finalAnswers.painPoint,

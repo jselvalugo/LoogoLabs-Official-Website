@@ -1,4 +1,5 @@
 import { trackSchedule } from './metaEvents';
+import { gaBookCall } from './attribution';
 
 export const BOOKING_URL = 'https://calendar.app.google/5hRpcMfH2xUPNmvv9';
 
@@ -11,5 +12,6 @@ export const BOOKING_URL = 'https://calendar.app.google/5hRpcMfH2xUPNmvv9';
 export function openBooking(opts) {
   const o = opts && typeof opts === 'object' && !('nativeEvent' in opts) && !('target' in opts) ? opts : {};
   if (o.schedule !== false) trackSchedule(o.content_name ? { content_name: o.content_name } : undefined);
+  else gaBookCall();
   window.open(BOOKING_URL, '_blank', 'noopener,noreferrer');
 }

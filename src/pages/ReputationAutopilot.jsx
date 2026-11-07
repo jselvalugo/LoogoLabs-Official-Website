@@ -8,6 +8,7 @@ import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getSessionId } from '../lib/sessionTracker';
 import { useHref, useLang, LangToggle } from '../lib/i18n';
 import '../styles/pages/landing.css';
+import { getAttribution, gaLead } from '../lib/attribution';
 
 // Phone keyboards: Enter in the name field moves to email instead of submitting.
 const nextOnEnter = (e) => {
@@ -138,6 +139,7 @@ export default function ReputationAutopilot() {
 
   const submitLead = (finalAnswers) => {
     const metaId = finalAnswers.decisionMaker === "Yes, that's me" ? trackLead() : null;
+    gaLead('reputation_autopilot', finalAnswers.decisionMaker);
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -146,6 +148,7 @@ export default function ReputationAutopilot() {
         email: contact.email.trim(),
         source: 'reputation_autopilot',
         session_id: getSessionId(),
+        attribution: getAttribution(),
         business_type: finalAnswers.businessType,
         job_volume: finalAnswers.jobVolume,
         review_pain_point: finalAnswers.reviewPainPoint,

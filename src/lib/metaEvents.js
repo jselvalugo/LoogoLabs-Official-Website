@@ -9,6 +9,7 @@
 // runs off the live domain, so localhost and deploy previews never reach the
 // dataset.
 import { hasConsent } from './cookieConsent';
+import { gaBookCall } from './attribution';
 
 export const LIVE_HOSTS = ['www.loogolabs.com', 'loogolabs.com'];
 
@@ -81,4 +82,6 @@ export function trackEvent(event, params) {
   } catch { /* never break the click */ }
 }
 
-export const trackSchedule = (params) => trackEvent('Schedule', params);
+// A booking click is also a GA4 book_call_click (sent even without marketing
+// consent; Tag Manager applies the analytics consent setting).
+export const trackSchedule = (params) => { gaBookCall(); trackEvent('Schedule', params); };

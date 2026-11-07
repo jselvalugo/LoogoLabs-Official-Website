@@ -6,6 +6,7 @@ import './styles/mobile-compact.css';
 import App from './App';
 import WelcomeIntro from './components/feedback/WelcomeIntro';
 import { startSessionTracking } from './lib/sessionTracker';
+import { captureAttribution } from './lib/attribution';
 
 const root = document.getElementById('root');
 const app = (
@@ -26,4 +27,5 @@ const introRoot = document.createElement('div');
 document.body.appendChild(introRoot);
 ReactDOM.createRoot(introRoot).render(<WelcomeIntro />);
 
+captureAttribution();
 startSessionTracking();

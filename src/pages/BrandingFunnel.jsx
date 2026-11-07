@@ -8,6 +8,7 @@ import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getSessionId } from '../lib/sessionTracker';
 import { useHref } from '../lib/i18n';
 import '../styles/pages/landing.css';
+import { getAttribution, gaLead } from '../lib/attribution';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -108,6 +109,7 @@ export default function BrandingFunnel() {
   const submitLead = (a) => {
     const notes = [`Need: ${a.need || '-'}`, `Timeline: ${a.timeline || '-'}`, utmNotes()].filter(Boolean).join('\n');
     const metaId = a.decisionMaker === "Yes, that's me" ? trackLead({ content_name: 'branding' }) : null;
+    gaLead('branding', a.decisionMaker);
     fetch('/.netlify/functions/create-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -117,6 +119,7 @@ export default function BrandingFunnel() {
         phone: contact.phone.trim(),
         source: 'branding',
         session_id: getSessionId(),
+        attribution: getAttribution(),
         business_type: a.businessType,
         pain_point: a.need,
         decision_maker: a.decisionMaker,
