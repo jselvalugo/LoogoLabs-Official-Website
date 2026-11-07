@@ -1,5 +1,6 @@
 import React from 'react';
 import { BOOKING_URL } from '../../lib/booking';
+import { trackSchedule } from '../../lib/metaEvents';
 import { SITE, pathForPage, routeMeta } from '../../lib/seo';
 import { useHref, useLang } from '../../lib/i18n';
 import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
@@ -70,7 +71,8 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
               {SITE.address.recipient}<span className="ll-footer__sep">, </span><br />
               {SITE.address.streetAddress}<span className="ll-footer__sep">, </span><br />
               {SITE.address.addressLocality}, {SITE.address.addressRegion} {SITE.address.postalCode}<br />
-              <span className="ll-footer__country">{SITE.address.countryName}</span>
+              <span className="ll-footer__country">{SITE.address.countryName}</span><br />
+              <a href={`tel:${SITE.tel}`} className="ll-footer__phone">{SITE.phone}</a>
             </address>
           </div>
           {columns.map(col => (
@@ -85,6 +87,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
                     onClick={() => window.openCookiePreferences && window.openCookiePreferences()}>{label(l)}</button>;
                 if (external)
                   return <a key={l} href={external} target="_blank" className="ll-footer__link"
+                    onClick={l === 'Book a Call' ? () => trackSchedule() : undefined}
                     rel={PROFILE_LINKS.has(l) ? 'noopener noreferrer me' : 'noopener noreferrer'}>
                     {label(l)}<span aria-hidden="true" className="ll-footer__ext">↗</span>
                   </a>;

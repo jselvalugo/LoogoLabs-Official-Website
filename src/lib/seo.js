@@ -25,6 +25,11 @@ export const SITE = {
   author: 'David Selva',
   founder: 'David Selva',
   email: 'david@loogolabs.com',
+  // Public business phone. `phone` is how it's shown; `tel` is the dial string
+  // used in tel: links (which Tag Manager matches for the phone-click
+  // conversion) and in the schema.
+  phone: '(407) 748-9150',
+  tel: '+14077489150',
   // Public business mailing address, shown in the footer and the schema.
   address: {
     recipient: 'Loogo Labs LLC',
@@ -483,12 +488,14 @@ export const organizationLd = () => ({
   image: url(SITE.ogImage),
   description: SITE.description,
   email: SITE.email,
+  telephone: SITE.tel,
   address: postalAddressLd(),
   founder: { '@type': 'Person', name: SITE.founder },
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
     email: SITE.email,
+    telephone: SITE.tel,
     areaServed: 'US',
     availableLanguage: 'English',
   },
@@ -580,6 +587,7 @@ export const localBusinessLd = () => ({
   description:
     'Central Florida marketing agency based in Orlando: local SEO, marketing automation, AI voice agents, and reputation management for service businesses.',
   email: SITE.email,
+  telephone: SITE.tel,
   knowsAbout: KNOWS_ABOUT,
   parentOrganization: { '@id': url('/#organization') },
   ...(SITE.sameAs.length ? { sameAs: SITE.sameAs } : {}),

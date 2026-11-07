@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { pathForPage } from '../../lib/seo';
+import { SITE, pathForPage } from '../../lib/seo';
 import { LangToggle, useHref, useLang } from '../../lib/i18n';
 import { AmbientShape } from '../brand/Morph';
 
@@ -88,6 +88,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
 
           <div className="ll-nav__right">
             <LangToggle className="ll-lang--bar" />
+            <a href={`tel:${SITE.tel}`} className="ll-nav__phone">{SITE.phone}</a>
             <div className="ll-cta-desktop">{cta}</div>
             <button className={`ll-nav-burger${open ? ' is-open' : ''}`} onClick={() => setOpen(o => !o)}
               aria-label={open ? (lang === 'es' ? 'Cerrar menú' : 'Close menu') : (lang === 'es' ? 'Abrir menú' : 'Open menu')}
@@ -123,6 +124,9 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
               </nav>
               <motion.div className="ll-menu__foot" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: reduce ? 0 : 0.55 }}>
                 <div className="ll-menu__cta">{cta}</div>
+                <a href={`tel:${SITE.tel}`} className="ll-menu__phone">
+                  {lang === 'es' ? 'Llámanos' : 'Call us'} · {SITE.phone}
+                </a>
                 <div className="ll-menu__meta">
                   <span>Orlando, Florida</span>
                   <LangToggle className="ll-lang--menu" />
