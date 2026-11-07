@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `generator-service-nameplate-photo-text-before-the-first-outage`,
+    title: `Get the Nameplate Photo Before the Power Goes Out`,
+    excerpt: `When forty generator owners call in the first hour of an outage, the shop that already has each nameplate on file is the one that answers in minutes.`,
+    tags: `Outage Prep, Customer Records, Generator Service`,
+    content: `The first hour of a real outage is the worst hour of your year. The phone does not stop, half the calls are the same four words, "my generator won't start," and you know nothing about any of the machines. You do not know the brand, the size, which fuel it runs on or when you last touched it. So every call starts with questions the customer has to go outside, in the dark, to answer.
+
+That hour is decided in November, not during the storm.
+
+## What you lose without the nameplate
+
+Every generator has a plate on it with the model and serial number. If you installed the unit, that information is probably in a folder or a past invoice somewhere. If you only service it, or inherited the customer from another shop, it may not exist anywhere you can reach from a truck.
+
+Without it, each outage call turns into a small investigation. Is it the big one on the pad or the portable in the garage? Natural gas or propane? Did it ever run for them? You spend six minutes finding out what you could have known in six seconds, and with forty calls that is four hours of questions before anyone gets help.
+
+It also hides the easy calls. Some of those "won't start" calls are a switch left in the wrong position or a tripped breaker, and you can fix them by phone in two minutes. That only works if you already know what they own.
+
+## The text to send in the first week of November
+
+Pick every customer you have ever installed or serviced and send one text, from your own number or the shop's, signed with your name. Something like:
+
+> Hi, this is David at the shop. Before winter storms start, I'm updating the file on your generator. Can you text me a photo of the plate on the side of the unit, and answer one thing: the last time the power went out, did it run? Reply YES, NO or NOT SURE.
+
+Two asks, both easy from a phone. The photo gives you the model. The answer gives you a risk flag you did not have before.
+
+If someone writes back "I don't know where the plate is," do not argue. Tell them you will look at it on your next visit and put them on the list for that.
+
+## Tag the answers as they arrive
+
+When a reply comes in, do two things on the customer's record: save the photo, and add one tag. I would use three:
+
+- \`ran last outage\` for a YES
+- \`did not run\` for a NO
+- \`run unknown\` for NOT SURE, or for silence after one nudge
+
+The NO tag is the one worth money. A customer whose generator did not run the last time it mattered is the one most likely to call you at 2 a.m. in December. Call that person this month and offer a service visit. Do not wait for the storm to sell it to them.
+
+Send one nudge to people who have not replied, about a week later. Shorter than the first text, same two asks. After that, stop. A customer who ignores two texts is telling you something, and you can ask again in person at the next visit.
+
+## Build the storm list before the storm
+
+Once the replies are in, sort the records. Put \`did not run\` customers at the top, then \`run unknown\`, then \`ran last outage\`. That is your calling order for the first morning after a big outage. You will reach the people most likely to be in trouble before you reach the ones who probably just need a reset.
+
+Keep one honest limit in mind. A photo of a nameplate does not tell you what is wrong with the machine. It tells you what to bring and what to ask. You still have to go look, and on a bad night you will not reach everyone. A list with the right names near the top is better than a list in the order the calls came in.
+
+## Do this before the weekend
+
+Open your customer records and count how many generator customers have a nameplate photo or model number saved. Do not estimate. Count. If it is fewer than half, send the text to the rest of them on Monday morning and write the three tags on a card by your computer so everyone who answers the phone uses the same words.
+`,
+  },
+  {
     slug: `hot-tub-service-promise-note-on-the-record-after-every-call`,
     title: `Write Down Every "I'll" Before You Start the Truck`,
     excerpt: `A hot tub customer waiting on a Friday price remembers the day you said, not the supplier delay, and a fifteen-second note is the fix.`,
