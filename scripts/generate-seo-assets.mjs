@@ -411,7 +411,7 @@ writeFileSync(join(DIST, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>
     <title>Industry LoogoBlog — ${esc(SITE.name)}</title>
     <link>${esc(url(BLOG_INDEX))}</link>
     <atom:link href="${esc(url('/rss.xml'))}" rel="self" type="application/rss+xml" />
-    <description>Operational guides on lead follow-up, automation, and reputation for local service businesses.</description>
+    <description>Practical guides to using AI in your marketing: content, ads, AI search, follow-up, AI assistants and tracking, for small business owners and marketers.</description>
     <language>en-us</language>
     <copyright>CC BY 4.0 — ${esc(SITE.name)}</copyright>
     <lastBuildDate>${rfc822(newestPost)}</lastBuildDate>
