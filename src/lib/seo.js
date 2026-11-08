@@ -17,7 +17,7 @@ import { GROW_FAQ_ES } from './cfl.es.js';
 import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityPageKey, voiceCitySlugFromPage } from './voiceCities.js';
 
 export const SITE = {
-  origin: 'https://loogolabs.com',
+  origin: 'https://www.loogolabs.com',
   name: 'Loogo Labs',
   legalName: 'Loogo Labs LLC',
   locale: 'en_US',
