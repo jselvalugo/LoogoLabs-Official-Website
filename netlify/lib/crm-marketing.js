@@ -382,7 +382,10 @@ export async function testCampaign(inst, id, to, { step } = {}) {
   } else {
     message = await draftCampaign(inst, id);
   }
-  const email = renderMarketingEmail(message, { email: address, name: '', unsubscribe_token: 'test-preview-link-not-active' }, await getSettings(inst));
+  // Greet the tester by the name on file (subscriber list, else CRM user), like a real send.
+  const [known] = await q(`SELECT name FROM crm_email_subscribers WHERE instance_id = $1 AND email = $2 AND coalesce(name, '') <> ''
+    UNION ALL SELECT name FROM crm_users WHERE instance_id = $1 AND lower(email) = $2 AND name <> '' LIMIT 1`, [inst, address]);
+  const email = renderMarketingEmail(message, { email: address, name: known?.name || '', unsubscribe_token: 'test-preview-link-not-active' }, await getSettings(inst));
   await deliver([{ to: address, ...email, subject: `[Test] ${email.subject}` }]);
   return { ok: true };
 }
