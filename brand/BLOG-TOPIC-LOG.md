@@ -27,7 +27,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 
 - 2026-09-01 | missed-call-text-back-hvac | HVAC | Missed-call text-back — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-09-01 | dental-practice-lead-response-time | Dental practices | Speed-to-lead / form follow-up — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
-- 2026-09-01 | salon-google-review-system | Salons & spas | Google review automation
+- 2026-09-01 | salon-google-review-system | Salons & spas | Google review automation — merged into pressure-washing-review-request-automation (2026-11-08)
 - 2026-09-01 | real-estate-lead-response-time | Real estate | Speed-to-lead / form follow-up — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-09-01 | reduce-no-shows-appointment-reminders | Home services (electrician) | Appointment reminders / no-show reduction
 - 2026-09-01 | remodeling-crm-pipeline-follow-up | General contractors | CRM & pipeline visibility
@@ -41,7 +41,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-09-02 | ai-voice-handoff-veterinary-clinic | Veterinary clinics | AI voice agent — handoff rules & automation limits — merged into ai-voice-after-hours-plumbing (2026-11-08)
 - 2026-09-02 | ai-follow-up-messaging-gym | Gyms & fitness studios | AI content tools — follow-up messaging — merged into ai-voice-after-hours-plumbing (2026-11-08)
 - 2026-09-02 | pest-control-list-segmentation | Pest control | Segmentation, tags & smart lists
-- 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting
+- 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting — merged into pressure-washing-review-request-automation (2026-11-08)
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
 - 2026-09-02 | roofing-unified-inbox-conversation-history | Roofing | Unified inbox — conversation history & handover
 - 2026-09-02 | chiropractic-lead-assignment-ownership | Chiropractic | Round-robin lead assignment & ownership — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
@@ -137,3 +137,4 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-11-07 | generator-service-nameplate-photo-text-before-the-first-outage | Generator service | Outage prep — November text asking for a nameplate photo and a YES/NO/NOT SURE answer on whether the unit ran last outage, `ran last outage`/`did not run`/`run unknown` tags, one nudge, storm call list sorted did-not-run first
 - 2026-11-08 | 5-minute-rule-local-service-business-leads | Follow-Up, Email & SMS / local service businesses | Hub: speed to lead — measuring the response gap, cost of delay, lead ownership, first-reply rules, where AI should and should not reply (absorbs 10 posts)
 - 2026-11-08 | ai-voice-after-hours-plumbing | AI Agents & Assistants / local service businesses, clinics, law firms | Hub: AI voice agents — measuring missed calls, structured intake, booking on the call, the always-a-human list, route don't triage, what it must never promise, AI text follow-up as a separate job (absorbs 5 posts)
+- 2026-11-08 | pressure-washing-review-request-automation | Found in AI Answers / local service businesses, salons, restaurants | Hub: Google reviews — asking within the hour, asking everyone (no gating), high-volume businesses and the frozen average, reply rules, copy-paste replies, AI for alerts and drafts but not posting or writing reviews (absorbs 4 posts)

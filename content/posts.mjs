@@ -11,6 +11,84 @@
 
 export const posts = [
   {
+    slug: `pressure-washing-review-request-automation`,
+    title: `Google Reviews: When to Ask, How to Answer, Where AI Fits`,
+    excerpt: `Most businesses don't have a review problem, they have a timing problem, and the reply under the worst review matters more than the star average.`,
+    tags: `Reputation, Google Reviews, AI Drafting`,
+    content: `Fifteen jobs a week, with a third turning into reviews, is about twenty new Google reviews a month. Six months of that builds a profile most competitors take years to match by asking whenever they remember.
+
+Almost no business I look at gets a third. Most get two or three a month while doing work that deserves twenty, and the owner has decided people just don't leave reviews anymore. They do. Most businesses ask at the wrong moment, or don't ask at all, and then answer the reviews they do get in a way that tells the next reader nobody is paying attention.
+
+Reviews are two jobs: getting them, and answering them. AI helps with a small piece of each, and it can do real damage if you hand it the wrong piece.
+
+## Ask while the result is in front of them
+
+Satisfaction peaks when the work is new and visible. The driveway still wet from the pressure washer, the color still being checked in the car mirror, the meal just finished. Ask then and you get a review with some feeling in it. Ask a week later and you are competing with everything else in their day.
+
+Most businesses ask at checkout, out loud. That makes the whole system depend on whether the person at the counter remembers, and whether the customer has two spare minutes while paying. On a busy Saturday, neither is true. That is why review counts stall at businesses doing excellent work. It is a timing problem that looks like a motivation problem.
+
+What replaces the ask at the counter:
+
+- **A text that goes out on its own** shortly after the job is marked complete or the appointment ends. Within the hour is a good target.
+- **A link that opens the review box directly.** One tap, not a search for your business name.
+- **One plain sentence.** "Thanks for having us out today. Would you mind leaving a quick review?" is enough.
+
+Owners always want to rewrite the message: warmer, funnier, longer. In my experience the wording barely changes the result. Timing does. The same plain sentence sent forty minutes after the job beats a beautifully written one sent the next morning.
+
+## Ask everyone, not just the happy ones
+
+This is where a lot of review systems quietly break the rules.
+
+The common setup sends a "How did we do?" survey first. Four or five stars goes to the Google review link. One to three stars goes to a private form that never reaches Google. That is called review gating. Google's own review policy says businesses must not selectively ask for positive reviews or discourage negative ones, and the FTC's guidance for businesses says the same thing in plain words: don't only ask the customers you expect to be happy. A profile caught doing it can have reviews removed or new reviews frozen.
+
+You can still give unhappy customers a private way to reach you. The rule is that everyone gets the public review link, whatever they answer. A separate message that says "If anything wasn't right, reply here and I'll fix it" is fine and often useful. A customer who feels heard on Tuesday usually doesn't need to be heard publicly on Saturday, and you get a chance to actually fix the problem. What you can't do is decide who gets to see the review link based on how you think they'll rate you.
+
+If you use a tool for review requests, check this setting before anything else. Many still offer gating as a feature.
+
+## Some businesses don't need more reviews
+
+A restaurant serving two hundred covers on a Saturday gets reviewed whether it asks or not. So does a busy hotel or a popular gym. For them, a get-more-reviews campaign aims at a problem they don't have.
+
+Their average is effectively frozen. At four hundred reviews averaging 4.6, ten new five-star reviews move the average to about 4.61. Ten one-star reviews barely move it the other way. The number is a historical record, not a lever.
+
+What a new customer actually does is sort by most recent, read four or five, and look at how the business answered the worst one. The reputation you can control is about six reviews wide and thirty days deep. For high-volume businesses, the work is all in the reply.
+
+## The reply is what the next customer reads
+
+An unanswered one-star review reads like the business agrees with it. To the next reader, silence says either "we didn't notice" or "we don't care," and both land worse than the complaint itself. A reply doesn't need to win the argument. It needs to show that a person runs the place and is paying attention.
+
+A good reply to a complaint:
+
+- **Arrives within a day or two,** while the review is still near the top
+- **Names the specific thing:** the forty-minute wait, the missed spot on the window, the stylist running late, not "sorry you didn't enjoy your experience"
+- **Says what changed,** if anything did
+- **Stops.** No paragraph of defense, no invitation to keep arguing in public
+
+Answer some of the good reviews too. A page where only the complaints get a response tells its own story about what gets your attention.
+
+## The copy-paste problem
+
+I once found the exact same forty-word reply under eleven different reviews on a client's profile, punctuation and all. Five-star reviews got it. One-star reviews got it. Anyone scrolling could see the pattern in seconds, and what it told them was that nobody read what customers wrote.
+
+A template optimizes for looking responsive without being responsive. A consistent first line is fine ("Thanks for taking the time to write this"). The problem is a reply that stays identical from the greeting to the last word, with nothing in the middle that couldn't sit under a review for a different business.
+
+Naming one detail from the review (the tech's name, the service, the day) takes about fifteen extra seconds. It reads like a different business.
+
+## Where AI fits, and where it doesn't
+
+**Use AI for alerts.** Every new review, on every platform you're listed on, should reach a real person the same day. That is the part that fails silently, and it is easy to automate.
+
+**Use AI for a first draft.** Paste the review in, ask for a short reply that names the specific complaint and doesn't argue. It removes the blank page, which is often why replies don't get written at all.
+
+**Don't let AI post on its own.** An AI reply that hasn't been checked will apologize for things that didn't happen, promise refunds you haven't approved, or produce the same polite paragraph under every review, which is the copy-paste problem again, just better written. The specific detail has to come from someone who knows what happened that day.
+
+**Don't use AI to write reviews.** Not for yourself, not "on behalf of" happy customers, not as a sample for customers to copy. Fake reviews are against every platform's rules and against federal rules too, and they are easy for readers to spot.
+
+## A quick check for this week
+
+Pull your last thirty completed jobs or appointments. Count how many got a review request at all, and how many of those went out the same day. Then sort your review page by most recent, read the last ten as a stranger would, and count how many have a reply and how long each took. Fix whichever number is worse first.`,
+  },
+  {
     slug: `ai-voice-after-hours-plumbing`,
     title: `AI Voice Agents: What to Hand Over and What to Keep Human`,
     excerpt: `A voice agent works when it is built from the list of calls it must hand to a person, not from the feature list in the demo.`,
@@ -3673,29 +3751,6 @@ The number worth building is people in your service area who see your posts and 
 If you've ever paid for a follower package, or your marketing vendor has ever suggested one, that's worth revisiting now — both because it never worked and because the legal ground under it just shifted.`,
   },
   {
-    slug: `copy-paste-review-responses-worse`,
-    title: `Copy-Paste Review Responses Are Worse Than Not Replying at All`,
-    excerpt: `"We're sorry to hear about your experience, please contact us" under every single review — good and bad — doesn't read as responsive. It reads like nobody is actually reading these.`,
-    tags: `Review Management, Customer Experience, Reputation`,
-    content: `I pulled up a client's Google profile last year and found the exact same forty-word response under eleven different reviews, word for word, punctuation and all. Five-star reviews got it. One-star reviews got it. A future customer scrolling through can see the pattern in about four seconds, and what it tells them is that nobody on the other end actually read what they wrote.
-
-## What a template actually signals
-
-A templated reply optimizes for the appearance of responsiveness without the substance of it. The intent is usually good — reply to everything, don't leave anyone hanging — but the execution tells a stranger reading it later that this business treats feedback as a box to check, not as information. That impression lands on every reader after the one who wrote the original review, not just the one it was meant for.
-
-## The response that costs about the same effort
-
-Naming one specific detail from the review — the technician's name, the exact service, the day of the week — turns a forty-second copy-paste into a fifteen-second read that actually sounds like a person wrote it. It costs almost the same time. It reads like an entirely different business.
-
-## Where templates are genuinely fine
-
-A consistent opening line is fine — "Thank you for taking the time to leave this" works for almost anything. The problem isn't structure. It's the response staying identical from the greeting through the very last word, with nothing in the middle that couldn't have been copied onto a review for a different business entirely.
-
-## Read your last five responses as a stranger would
-
-Pull up the last five reviews you replied to and read only your responses, back to back, ignoring what the customer wrote. If you can't tell which response belongs to which review without scrolling back up, a stranger reading your profile won't be able to either.`,
-  },
-  {
     slug: `unsolicited-text-marketing-tcpa-risk`,
     title: `Unsolicited Text Marketing Isn't a Growth Hack. It's a TCPA Lawsuit.`,
     excerpt: `Texting a purchased list without consent isn't an aggressive growth tactic — it's a federal violation with statutory damages of up to $1,500 per text, and a single bad list can turn into hundreds of them.`,
@@ -3773,49 +3828,6 @@ Five moving parts, every time. The workflows that get complicated aren't the one
 ## Check this tonight
 
 Open your busiest workflow and look at two things: is re-entry on when it shouldn't be, and is there a Goal set on anything that ends in a booking or a sale. Those two settings, left at default, are behind almost every "the automation is acting weird" ticket I've ever gotten.`,
-  },
-  {
-    slug: `salon-google-review-system`,
-    title: `The Google Review System Most Salon Owners Never Build`,
-    excerpt: `Asking for reviews by hand stops working around the fifth client of the day. Here is what replaces it.`,
-    tags: `Reputation Management, Salons & Spas, Google Reviews`,
-    content: `Fifteen color services a week, a third of them converting to reviews, is about twenty new Google reviews a month. Six months of that is a review count most competitors spend years accumulating by asking whenever they remember.
-
-Almost no salon I walk into is getting a third. Most are getting two or three reviews a month while doing work that deserves twenty, and the owner has concluded that clients just don't leave reviews anymore.
-
-They do. You are asking at the wrong time.
-
-## The window is about an hour wide
-
-The moment to ask is right after the appointment, while the result is still new and she is still checking it in the car mirror. Ask the next morning and you're competing with her job, her kids, and everything else that happened since.
-
-Most salons ask at checkout, out loud, which makes the whole system depend on whether the front desk remembers and whether the client has two spare minutes while pulling out a card. On a full Saturday, neither of those is true.
-
-That is why review counts stall at salons doing genuinely great work. It isn't a quality problem or a client problem. It is a timing problem wearing a motivation problem's clothes.
-
-## What replaces the ask at the desk
-
-- A text that goes out automatically a short while after the appointment ends, not at checkout
-- A direct link straight to the review page — a tap, not a search
-- One clear sentence, no paragraph of context
-
-### The thing owners try to fix that isn't broken
-
-Every owner who has tried this wants to rewrite the message. Warmer, funnier, more personal. It rarely moves the number.
-
-Timing moves the number. The same plain sentence sent forty minutes after the appointment outperforms a beautifully written one sent the following morning, every time I have compared them.
-
-## Catching the unhappy client first
-
-The same system that collects praise should be finding the client who is quietly unhappy. A short internal check-in — how did everything go? — before the public ask gives an upset client somewhere private to say so.
-
-That isn't about hiding bad reviews. It is that a client who feels heard on Tuesday afternoon usually doesn't need to be heard publicly on Saturday, and you get the chance to actually fix the color.
-
-## If this sounds like your salon
-
-Time your next ten review requests against the appointment end time rather than checkout. If most are going out same-day but hours later, tighten that window before you touch the wording.
-
-And if the honest answer is that nobody is sending them at all because the desk is slammed — that is the version of this problem we set up for salons most often. It is worth a conversation.`,
   },
   {
     slug: `reduce-no-shows-appointment-reminders`,
@@ -4125,60 +4137,6 @@ Start with three. Run them for a quarter. The fourth segment earns its place onl
 Open your system this afternoon and try to produce three lists: recurring customers, one-time customers, and anyone lapsed more than a year.
 
 If they come out in a couple of minutes, you're most of the way there and the campaigns are the easy part. If they don't, that is the actual work — and it's worth doing before you write another word of marketing.`,
-  },
-  {
-    slug: `restaurant-review-response-reputation`,
-    title: `You Can't Out-Review Your History. You Can Only Answer It.`,
-    excerpt: `A restaurant with four hundred reviews can't move its average. What it can control is what the recent ones say, and whether anybody replied.`,
-    tags: `Reputation Management, Restaurants, Google Reviews`,
-    content: `Four hundred reviews. A 4.6 average. Nothing you do this month will move that number, and most owners don't work that out until they have spent a season trying.
-
-Here's the arithmetic. At four hundred reviews averaging 4.6, ten new five-star reviews take you to roughly 4.61. Ten one-stars barely dent it in the other direction either. Your average is frozen. It is a historical record, not a lever.
-
-That is the bad news and the good news in the same sentence.
-
-## Restaurants don't have a review volume problem
-
-This is where restaurant reputation splits from nearly every other local business I work with. A salon has to generate reviews, because a delighted client walks out and never thinks about it again.
-
-A restaurant gets reviewed unprompted, constantly, by people nobody asked. Two hundred covers on a Saturday produces reviews whether you want them or not.
-
-So the entire get-more-reviews playbook is aimed at a problem you do not have. Yours is downstream of it.
-
-## What a diner actually reads
-
-Nobody reads four hundred reviews. She sorts by most recent, reads four or five, and looks at how the restaurant answered the worst one.
-
-That is the whole decision. Your rating gets her to open the page. The last month of reviews, and your replies underneath them, decide whether she books.
-
-Which means the reputation you can actually control is about six reviews wide and thirty days deep.
-
-## The reply is the product
-
-An unanswered one-star review is the restaurant agreeing with it.
-
-I don't think that's an exaggeration. To the next diner, silence reads as either we didn't notice or we don't care, and both land worse than the original complaint. A reply doesn't need to win the argument. It needs to show that a person runs this place and is paying attention.
-
-### What a good reply does
-
-- Arrives within a day or two, while the review is still near the top
-- Names the specific thing — the forty-minute wait, the cold pasta, the server who vanished — instead of sorry you didn't enjoy your experience
-- Says what changed, if anything did
-- Stops. No paragraph of defense, no invitation to continue the argument in public
-
-Answer some of the good ones too. A page where only complaints get a response tells its own story about what gets your attention.
-
-## What to automate here, and what to leave alone
-
-Automate the alerting. A new review on any platform should reach a real person the same day, not whenever somebody thinks to look. That is the part that fails silently and the part we set up most often for restaurants.
-
-Do not automate the reply itself. The same three sentences pasted under six different complaints is visible from orbit, and it is worse than staying silent, because now the indifference is documented in writing. Start from a draft if it helps you get moving. The specific detail has to come from somebody who knows what happened that night.
-
-## Read your last ten reviews
-
-Sort your page by most recent and read the last ten the way a stranger choosing dinner would.
-
-Count how many have a reply, and how long each one took to get there. If half of them are sitting unanswered, that is your reputation work this week — not your average, and not another round of ads.`,
   },
   {
     slug: `gym-membership-retention-management`,
