@@ -439,3 +439,23 @@ a.btn { color: inherit; text-decoration: none; display: inline-block; }
   .bstat:nth-child(2) { border-right: none; }
   .bstat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
+
+/* ── PDF report dialog & key numbers ── */
+.checklist { list-style: none; margin: 0; padding: 0; }
+.checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.checklist .tick { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; border: 1px solid var(--line); }
+.checklist li.ok .tick { background: #1F6B35; border-color: #1F6B35; color: #fff; }
+.checklist li.miss .tick { background: #FDF0DD; border-color: #F1D3A3; color: #8A5A0B; }
+.checklist li.opt .tick { color: var(--muted); }
+.checklist .muted { font-size: 13px; }
+.warn-notice { background: #FDF0DD; border-color: #F1D3A3; }
+.metrics-editor { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--card); margin-top: 14px; }
+.me-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; font-size: 14px; }
+.me-head .muted { font-size: 13px; }
+.me-row { display: grid; grid-template-columns: 20px 1fr 120px 64px 32px; gap: 6px; align-items: center; margin-bottom: 6px; }
+.me-row .field { padding: 6px 8px; font-size: 14px; }
+.me-row .field.num { text-align: right; font-variant-numeric: tabular-nums; }
+.metric-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+.mchip { font-size: 12px; background: var(--field); border-radius: 999px; padding: 3px 10px; }
+.mchip b { font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .me-row { grid-template-columns: 20px 1fr 90px 56px 32px; } }

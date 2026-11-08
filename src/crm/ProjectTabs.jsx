@@ -2,6 +2,7 @@ import React from 'react';
 import { data } from './api';
 import { CHARGE_KINDS, CHARGE_STATUSES, SOURCE_KINDS } from './entities';
 import { ACCEPT, fileToText, guessKind } from './fileText';
+import { detectPeriod, extractMetrics, formatMetric } from './metrics';
 import { today } from './records';
 import { day, when } from './report';
 
@@ -146,6 +147,7 @@ export function SourcesTab({ project, onChanged }) {
   const [drag, setDrag] = React.useState(false);
   const [error, setError] = React.useState('');
   const [open, setOpen] = React.useState(null);
+  const [editing, setEditing] = React.useState(null);
   const inputRef = React.useRef(null);
 
   async function take(file) {
@@ -153,7 +155,10 @@ export function SourcesTab({ project, onChanged }) {
     setError(''); setReading(true);
     try {
       const content = await fileToText(file);
-      setDraft({ title: file.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' '), kind: guessKind(file.name), filename: file.name, content, period_start: '', period_end: '', notes: '' });
+      const { metrics, breakdown } = extractMetrics(content);
+      const period = detectPeriod(content);
+      setDraft({ title: file.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' '), kind: guessKind(file.name), filename: file.name, content,
+        period_start: period.period_start, period_end: period.period_end, notes: '', metrics, breakdown, useBreakdown: !!breakdown });
     } catch (err) { setError(err.message || 'Could not read that file.'); }
     setReading(false);
   }
@@ -161,7 +166,10 @@ export function SourcesTab({ project, onChanged }) {
   async function save(e) {
     e.preventDefault();
     setError('');
-    try { await data('add_source', { values: { ...draft, project_id: project.id } }); setDraft(null); onChanged(); } catch (err) { setError(err.message); }
+    const { useBreakdown, metrics = [], breakdown, ...rest } = draft;
+    const values = { ...rest, project_id: project.id, metrics: metrics.filter((m) => m.include && String(m.label).trim()).map(({ include: _i, ...m }) => m), breakdown: useBreakdown ? breakdown : null };
+    if (!values.period_start && !values.period_end) { setError('Set the period the report covers, so it lands in the right month.'); return; }
+    try { await data('add_source', { values }); setDraft(null); onChanged(); } catch (err) { setError(err.message); }
   }
 
   async function remove(src) {
@@ -175,8 +183,8 @@ export function SourcesTab({ project, onChanged }) {
   return (
     <>
       <p className="muted" style={{ marginTop: 0, fontSize: 14 }}>
-        Upload Google Analytics, Meta and other platform reports. Each file is converted to text and kept here as research for this
-        client&rsquo;s status reports. Claude reads these, plus the client&rsquo;s social profiles, when it drafts the monthly report.
+        Upload this month&rsquo;s Google Analytics and Meta exports (CSV or Excel work best). The key numbers are pulled out for you to
+        confirm, and they feed the branded PDF report, with month-over-month change once last month is uploaded too.
       </p>
 
       {!draft && (
@@ -187,7 +195,7 @@ export function SourcesTab({ project, onChanged }) {
           <span className="muted">CSV, Excel (.xlsx), PDF or text · Google Analytics, Meta Business Suite, Ads Manager, Search Console…</span>
           <div className="actions" style={{ justifyContent: 'center', marginTop: 10 }}>
             <button type="button" className="btn btn-primary" disabled={reading} onClick={() => inputRef.current?.click()}>Choose file</button>
-            <button type="button" className="btn" onClick={() => setDraft({ title: '', kind: 'other', filename: '', content: '', period_start: '', period_end: '', notes: '' })}>Paste text instead</button>
+            <button type="button" className="btn" onClick={() => setDraft({ title: '', kind: 'other', filename: '', content: '', period_start: '', period_end: '', notes: '', metrics: [], breakdown: null, useBreakdown: false })}>Paste text instead</button>
           </div>
           <input ref={inputRef} type="file" accept={ACCEPT} hidden onChange={(e) => { take(e.target.files?.[0]); e.target.value = ''; }} />
         </div>
@@ -203,6 +211,16 @@ export function SourcesTab({ project, onChanged }) {
             <div><label className="label" htmlFor="s-to">Period to</label><input id="s-to" className="field" type="date" value={draft.period_end} onChange={set('period_end')} /></div>
             <div className="span2"><label className="label" htmlFor="s-notes">Notes for the report</label>
               <input id="s-notes" className="field" placeholder="e.g. Campaign paused Oct 20–24" value={draft.notes} onChange={set('notes')} /></div>
+            <div className="span2">
+              <MetricsEditor metrics={draft.metrics || []} onChange={(metrics) => setDraft((p) => ({ ...p, metrics }))}
+                found={!!draft.filename} />
+              {draft.breakdown && (
+                <label className="check" style={{ marginTop: 10 }}>
+                  <input type="checkbox" checked={draft.useBreakdown} onChange={(e) => setDraft((p) => ({ ...p, useBreakdown: e.target.checked }))} />
+                  Include the &ldquo;{draft.breakdown.title}&rdquo; table ({draft.breakdown.rows.length} rows) in the PDF
+                </label>
+              )}
+            </div>
             <div className="span2">
               <label className="label" htmlFor="s-content">{draft.filename ? `Extracted text from ${draft.filename} (${fmtSize(draft.content.length)} characters)` : 'Report text *'}</label>
               <textarea id="s-content" className="field mono" rows={draft.filename ? 8 : 10} value={draft.content} onChange={set('content')} required />
@@ -231,9 +249,66 @@ export function SourcesTab({ project, onChanged }) {
             {fmtSize(src.content_chars)} characters{src.filename ? ` · ${src.filename}` : ''} · {src.author || 'Removed user'} · {when(src.created_at)}
           </small>
           {src.notes && <div className="pre" style={{ fontSize: 14, marginTop: 4 }}>{src.notes}</div>}
+          {editing === src.id
+            ? <SourceNumbers src={src} onDone={() => { setEditing(null); onChanged(); }} />
+            : (
+              <div className="metric-chips">
+                {(src.metrics || []).length === 0
+                  ? <span className="pill due">No key numbers yet, so it won&rsquo;t show in the PDF</span>
+                  : src.metrics.map((m) => <span key={m.label} className="mchip"><b>{formatMetric(m.value, m.unit)}</b> {m.label}</span>)}
+                <button className="link" style={{ fontSize: 13 }} onClick={() => setEditing(src.id)}>Edit numbers</button>
+              </div>
+            )}
           {open === src.id && <pre className="source-preview">{src.preview}{src.content_chars > 600 ? '\n…' : ''}</pre>}
         </div>
       ))}
     </>
+  );
+}
+
+// Key numbers for the PDF: tick the ones to show, rename or correct values,
+// add your own (e.g. from a PDF export, where nothing is pulled out).
+export function MetricsEditor({ metrics, onChange, found }) {
+  const set = (i, patch) => onChange(metrics.map((m, j) => (j === i ? { ...m, ...patch } : m)));
+  const add = () => onChange([...metrics, { label: '', value: '', unit: '', include: true }]);
+  const shown = metrics.filter((m) => m.include).length;
+  return (
+    <div className="metrics-editor">
+      <div className="me-head">
+        <strong>Key numbers for the PDF</strong>
+        <span className="muted">{metrics.length ? `${shown} of ${metrics.length} selected` : found ? 'None found in this file. Add them below.' : 'Add the numbers to show.'}</span>
+      </div>
+      {metrics.map((m, i) => (
+        <div key={i} className="me-row">
+          <input type="checkbox" checked={!!m.include} onChange={(e) => set(i, { include: e.target.checked })} aria-label="Show in PDF" />
+          <input className="field" value={m.label} placeholder="Metric" aria-label="Metric name" onChange={(e) => set(i, { label: e.target.value })} />
+          <input className="field num" value={m.value} inputMode="decimal" aria-label="Value" onChange={(e) => set(i, { value: e.target.value })} />
+          <select className="field" value={m.unit} aria-label="Unit" onChange={(e) => set(i, { unit: e.target.value })}>
+            <option value="">#</option><option value="%">%</option><option value="$">$</option>
+          </select>
+          <button type="button" className="ie-btn" aria-label="Remove" onClick={() => onChange(metrics.filter((_, j) => j !== i))}>✕</button>
+        </div>
+      ))}
+      <button type="button" className="link" style={{ fontSize: 13, marginTop: 6 }} onClick={add}>+ Add a number</button>
+    </div>
+  );
+}
+
+function SourceNumbers({ src, onDone }) {
+  const [metrics, setMetrics] = React.useState(() => (src.metrics || []).map((m) => ({ ...m, include: true })));
+  const [error, setError] = React.useState('');
+  async function save() {
+    setError('');
+    try {
+      await data('update_source', { id: src.id, values: { metrics: metrics.filter((m) => m.include && String(m.label).trim()).map(({ include: _i, ...m }) => m) } });
+      onDone();
+    } catch (err) { setError(err.message); }
+  }
+  return (
+    <div className="card report-form" style={{ marginTop: 10 }}>
+      <MetricsEditor metrics={metrics} onChange={setMetrics} />
+      {error && <div className="error">{error}</div>}
+      <div className="actions"><button className="btn btn-primary btn-small" onClick={save}>Save numbers</button><button className="btn btn-small" onClick={onDone}>Cancel</button></div>
+    </div>
   );
 }

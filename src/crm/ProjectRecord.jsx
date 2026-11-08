@@ -6,6 +6,7 @@ import { Activities, FieldInput, fieldsFor, today, withLifecycle } from './recor
 import { day, money, when } from './report';
 import { HealthPill, LifecyclePill, StatusReports, reportDue } from './Projects';
 import { BillingTab, SourcesTab } from './ProjectTabs';
+import { ReportPdfDialog } from './ReportPdf';
 
 // Full-page project record, laid out like an enterprise CRM record page:
 // header with highlights, a stage path with guidance, tabs, and a sidebar of
@@ -71,6 +72,7 @@ function ProjectPage({ id }) {
   const [error, setError] = React.useState('');
   const [tab, setTab] = React.useState('overview');
   const [compose, setCompose] = React.useState(0);
+  const [pdf, setPdf] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
 
   const load = React.useCallback(() => data('get', { entity: 'projects', id }).then(setRecord).catch((err) => setError(err.message)), [id]);
@@ -113,7 +115,8 @@ function ProjectPage({ id }) {
             <h1>{record.name}</h1>
           </div>
           <div className="rec-actions">
-            <button className="btn btn-primary" onClick={() => { setTab('reports'); setCompose((n) => n + 1); }}>New status report</button>
+            <button className="btn btn-primary" onClick={() => setPdf(true)}>Download PDF report</button>
+            <button className="btn" onClick={() => { setTab('reports'); setCompose((n) => n + 1); }}>New status report</button>
             <button className="btn btn-danger" onClick={remove}>Delete</button>
           </div>
         </div>
@@ -127,6 +130,8 @@ function ProjectPage({ id }) {
         </dl>
       </section>
 
+      {pdf && <ReportPdfDialog project={record} onClose={() => setPdf(false)}
+        onGo={(t) => { setPdf(false); setTab(t); if (t === 'reports') setCompose((n) => n + 1); }} />}
       <StagePath project={record} busy={busy} onMove={moveStage} />
       {error && <div className="error" style={{ marginBottom: 12 }}>{error}</div>}
 

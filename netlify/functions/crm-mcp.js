@@ -210,6 +210,7 @@ const TOOLS = [
       properties: {
         project_id: idArg, kind: { type: 'string', enum: SOURCE_KINDS.map((k) => k.id) }, title: { type: 'string' }, content: { type: 'string' },
         period_start: { type: 'string', description: 'YYYY-MM-DD' }, period_end: { type: 'string', description: 'YYYY-MM-DD' }, notes: { type: 'string' },
+        metrics: { type: 'array', description: 'Key numbers for the PDF report: [{ label, value, unit: "" | "%" | "$" }]', items: { type: 'object' } },
       },
       required: ['project_id', 'title', 'content'],
     },

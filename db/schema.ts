@@ -317,6 +317,9 @@ export const crm_project_sources = pgTable('crm_project_sources', {
   notes: text('notes'),
   content: text('content').notNull(),
   content_chars: integer('content_chars').notNull().default(0),
+  // [{ label, value, unit }] confirmed key numbers; breakdown: { title, columns, rows } — see crm_source_metrics
+  metrics: jsonb('metrics').notNull().default([]),
+  breakdown: jsonb('breakdown'),
   user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
   author_label: text('author_label'),
   created_at: timestamp('created_at').defaultNow(),

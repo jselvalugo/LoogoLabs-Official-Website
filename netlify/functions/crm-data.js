@@ -43,6 +43,7 @@ export default async (req) => {
       case 'add_next_monthly': return json(await records.addNextMonthlyCharge(inst, body.project_id), 201);
       case 'add_source': return json(await records.addSource(inst, body.values || {}, audit), 201);
       case 'get_source': return json(await records.getSource(inst, body.id, body));
+      case 'update_source': return json(await records.updateSource(inst, body.id, body.values || {}));
       case 'delete_source': return json(await records.deleteSource(inst, body.id));
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
       case 'clients': return json(await clients.listClients(inst));

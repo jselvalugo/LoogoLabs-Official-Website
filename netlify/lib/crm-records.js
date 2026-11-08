@@ -585,7 +585,8 @@ export async function billingSummary(inst, projectId) {
 // ── Research sources (uploaded reports, kept as text) ─────────────────────
 
 const MAX_SOURCE_CHARS = 1500000;
-const SOURCE_META = `id, project_id, kind, title, filename, period_start::text AS period_start, period_end::text AS period_end, notes, content_chars, created_at,
+const SOURCE_META = `id, project_id, kind, title, filename, period_start::text AS period_start, period_end::text AS period_end, notes, content_chars,
+  metrics, breakdown, created_at,
   COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = s.user_id), s.author_label) AS author`;
 const shapeSource = (r) => ({ ...r, period_start: ymd(r.period_start), period_end: ymd(r.period_end) });
 
@@ -607,16 +608,56 @@ export async function getSource(inst, id, { offset = 0, limit = 60000 } = {}) {
   return { ...shapeSource(row), offset: off, next_offset: next };
 }
 
+// Confirmed key numbers and an optional top-rows table, validated and capped.
+function cleanMetrics(input) {
+  if (input === undefined) return undefined;
+  if (!Array.isArray(input)) throw new CrmError('metrics must be a list');
+  return input.slice(0, 24).map((m) => {
+    const label = String(m?.label ?? '').trim().slice(0, 60);
+    const value = Number(m?.value);
+    if (!label) throw new CrmError('Each metric needs a label');
+    if (!Number.isFinite(value)) throw new CrmError(`${label}: value must be a number`);
+    return { label, value, unit: ['%', '$'].includes(m?.unit) ? m.unit : '' };
+  });
+}
+function cleanBreakdown(input) {
+  if (input === undefined) return undefined;
+  if (!input) return null;
+  const columns = (input.columns || []).slice(0, 5).map((c) => String(c).slice(0, 40));
+  const rows = (input.rows || []).slice(0, 10).map((r) => (r || []).slice(0, 5).map((c) => String(c ?? '').slice(0, 60)));
+  if (!columns.length || !rows.length) return null;
+  return { title: String(input.title || '').slice(0, 80), columns, rows };
+}
+
+export async function updateSource(inst, id, input) {
+  const [before] = await q('SELECT project_id FROM crm_project_sources WHERE id = $1 AND instance_id = $2', [needId(id), inst]);
+  if (!before) throw new CrmError('Source not found', 404);
+  const v = await clean(inst, SOURCE_FIELDS, input, { partial: true });
+  const metrics = cleanMetrics(input.metrics);
+  const breakdown = cleanBreakdown(input.breakdown);
+  if (metrics !== undefined) v.metrics = JSON.stringify(metrics);
+  if (breakdown !== undefined) v.breakdown = breakdown === null ? null : JSON.stringify(breakdown);
+  const cols = Object.keys(v);
+  if (cols.length) {
+    await q(`UPDATE crm_project_sources SET ${cols.map((c, i) => `${c} = $${i + 3}${['metrics', 'breakdown'].includes(c) ? '::jsonb' : ''}`).join(', ')} WHERE id = $1 AND instance_id = $2`,
+      [id, inst, ...cols.map((c) => v[c])]);
+    await touchProject(before.project_id);
+  }
+  return (await listSources(inst, before.project_id)).find((x) => x.id === id);
+}
+
 export async function addSource(inst, input, audit = {}) {
   const project = await getRecord(inst, 'projects', needId(input.project_id, 'project_id'), { related: false });
   const v = await clean(inst, SOURCE_FIELDS, input, { partial: false });
   const content = typeof input.content === 'string' ? input.content.replace(/\u0000/g, '') : '';
   if (!content.trim()) throw new CrmError('The file had no readable text');
   if (content.length > MAX_SOURCE_CHARS) throw new CrmError(`That file is too large (${content.length.toLocaleString('en-US')} characters; limit ${MAX_SOURCE_CHARS.toLocaleString('en-US')}). Export a shorter date range or fewer columns.`);
-  const [row] = await q(`INSERT INTO crm_project_sources (instance_id, project_id, kind, title, filename, period_start, period_end, notes, content, content_chars, user_id, author_label)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+  const metrics = cleanMetrics(input.metrics) || [];
+  const breakdown = cleanBreakdown(input.breakdown) ?? null;
+  const [row] = await q(`INSERT INTO crm_project_sources (instance_id, project_id, kind, title, filename, period_start, period_end, notes, content, content_chars, user_id, author_label, metrics, breakdown)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::jsonb, $14::jsonb) RETURNING id`,
   [inst, project.id, v.kind, v.title, v.filename ?? null, v.period_start ?? null, v.period_end ?? null, v.notes ?? null,
-    content, content.length, audit.userId ?? null, audit.label ?? null]);
+    content, content.length, audit.userId ?? null, audit.label ?? null, JSON.stringify(metrics), breakdown ? JSON.stringify(breakdown) : null]);
   await touchProject(project.id);
   return (await listSources(inst, project.id)).find((x) => x.id === row.id);
 }
