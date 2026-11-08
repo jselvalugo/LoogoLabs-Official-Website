@@ -698,7 +698,7 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
       <form onSubmit={save}>
         <fieldset disabled={!editable} style={{ border: 0, padding: 0, margin: 0 }}>
           <label className="label" htmlFor="b-name">Internal name *</label>
-          <input id="b-name" className="field" required placeholder="Cards & Cocktails invite · Nov 14" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
+          <input id="b-name" className="field" required placeholder="Cards & Cocktails · registered guests" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
           <label className="label" htmlFor="b-tpl">Email template *</label>
           <select id="b-tpl" className="field" value={template} onChange={(e) => setForm((p) => ({ ...p, template: e.target.value }))}>
             {templates.length === 0 && <option value="">No templates yet: ask Loogo Labs</option>}

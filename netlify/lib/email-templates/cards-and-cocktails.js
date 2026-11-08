@@ -1,5 +1,6 @@
 // Cards & Cocktails — Pokémon trading card event at Lugo's Craft Distillery,
-// Saturday, November 14, 2026. Branded to match cards-and-cocktails.netlify.app:
+// Saturday, November 14, 2026. Sent to people who already registered: a
+// "you're on the list, see you Saturday" reminder, not an invitation. Branded to match cards-and-cocktails.netlify.app:
 // ink #0F0D0A / #1C1A16 / #2A2720, gold #C9952A / #E3B554 / #F5E6C8,
 // cream #F0EBE0, muted #8A8070 / #B5A99A, mint CTA gradient #6EE7B7 → #34D399,
 // Playfair Display headings and Inter body (Georgia / Helvetica fallbacks).
@@ -7,6 +8,12 @@
 const SITE = 'https://cards-and-cocktails.netlify.app';
 const LOGO = `${SITE}/assets/lugos-logo.png`;
 const REGISTER = `${SITE}/#register`;
+// 2:00–10:00 PM Eastern (EST, UTC−5) on Nov 14, 2026.
+const CALENDAR = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+  + '&text=' + encodeURIComponent('Cards & Cocktails · Pokémon Trading Card Event')
+  + '&dates=20261114T190000Z/20261115T030000Z'
+  + '&details=' + encodeURIComponent(`Buy, sell and trade Pokémon cards at Lugo's Craft Distillery. Free to attend; 21+ for bar service. ${SITE}`)
+  + '&location=' + encodeURIComponent("Lugo's Craft Distillery, 2500 Drane Field Rd, Lakeland, FL 33811");
 const VENDORS = `${SITE}/#vendors`;
 const VIP = 'https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202';
 const MAP = 'https://maps.google.com/?q=Lugo%27s+Craft+Distillery+2500+Drane+Field+Rd+Lakeland+FL+33811';
@@ -53,13 +60,13 @@ const anchor = `<div style="font:20px/1 ${SERIF};color:${GOLD};padding:14px 0;">
 
 export default {
   id: 'cards-and-cocktails-2026',
-  name: 'Cards & Cocktails · Nov 14, 2026 invite',
-  description: "Pokémon trading card event at Lugo's Craft Distillery, Lakeland. Free registration, VIP access and vendor tables.",
+  name: 'Cards & Cocktails · Nov 14, 2026 · registered guests',
+  description: "For people who already registered: you're on the list, event details, add to calendar, directions, VIP upgrade and bring-a-friend.",
   from_name: 'Cards & Cocktails',
   // The sender's physical address for the CAN-SPAM footer (else EMAIL_POSTAL_ADDRESS).
   postal_address: "Lugo's Craft Distillery, 2500 Drane Field Rd, Lakeland, FL 33811",
-  subject: "{{first_name|Trainer}}, cards on the table, cocktail in hand: Nov 14 in Lakeland",
-  preheader: "Buy, sell and trade Pokémon cards at Lugo's Craft Distillery. Saturday, Nov 14 · 2–10 PM · free to attend.",
+  subject: "{{first_name|Trainer}}, you're on the list: see you Saturday at Cards & Cocktails",
+  preheader: "Saturday, Nov 14 · doors at 2 PM · Lugo's Craft Distillery, Lakeland. Here's everything you need for the day.",
 
   render({ firstName, preheader, unsubscribeUrl, postalAddress, esc }) {
     const hi = esc(firstName || 'Trainer');
@@ -92,12 +99,14 @@ export default {
 
         <!-- Hook + main CTA -->
         <tr><td bgcolor="${INK}" class="px" style="background:${INK};border-left:1px solid ${BORDER};border-right:1px solid ${BORDER};padding:34px 40px 8px;">
-          <p style="margin:0;font:600 22px/1.35 ${SERIF};color:${CREAM};">Hey ${hi}, your next pull is waiting at the bar.</p>
-          <p style="margin:14px 0 0;font:16px/1.65 ${SANS};color:${MUTED_LIGHT};">Buy, sell and trade Pokémon cards in one of Lakeland's most unique venues: <span style="color:${CREAM};">Lugo's Craft Distillery</span>. Cards on the table, a craft cocktail in hand, and a room full of collectors who care about the binder as much as you do.</p>
-          <p style="margin:14px 0 0;font:16px/1.65 ${SANS};color:${MUTED_LIGHT};">Admission is <strong style="color:${CREAM};">free</strong>. Register so we can send your confirmation and day-of updates.</p>
+          <div style="display:inline-block;padding:7px 14px;border:1px solid ${MINT};border-radius:999px;font:800 11px/1 ${SANS};letter-spacing:.16em;text-transform:uppercase;color:${MINT};">✓ You're registered</div>
+          <p style="margin:16px 0 0;font:600 22px/1.35 ${SERIF};color:${CREAM};">Hey ${hi}, you're on the list. Saturday, the binders come out.</p>
+          <p style="margin:14px 0 0;font:16px/1.65 ${SANS};color:${MUTED_LIGHT};">Thanks for registering for Cards &amp; Cocktails. This Saturday, <span style="color:${CREAM};">Lugo's Craft Distillery</span> turns into a trading card market: vendor tables, a room full of collectors, and craft cocktails at the bar.</p>
+          <p style="margin:14px 0 0;font:16px/1.65 ${SANS};color:${MUTED_LIGHT};">Doors open at <strong style="color:${CREAM};">2:00 PM</strong>. Admission is free and there's nothing to print. Just show up with your cards. Planning to order at the bar? Bring a valid ID, since bar service is 21+.</p>
         </td></tr>
         <tr><td bgcolor="${INK}" align="center" style="background:${INK};border-left:1px solid ${BORDER};border-right:1px solid ${BORDER};padding:26px 24px 34px;">
-          ${button(REGISTER, 'Register free →')}
+          ${button(CALENDAR, 'Add to my calendar')}
+          <div style="margin-top:12px;">${button(MAP, 'Get directions', { primary: false })}</div>
         </td></tr>
 
         <!-- Details -->
@@ -125,8 +134,8 @@ export default {
             <td class="col" width="50%" valign="top" style="padding:6px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${INK_MID}" style="background:${INK_MID};border:1px solid ${GOLD};border-radius:14px;">
                 <tr><td style="padding:22px 20px;">
-                  ${kicker('VIP access · $25')}
-                  <div style="margin:8px 0 0;font:700 20px/1.25 ${SERIF};color:${CREAM};">First in, first pick</div>
+                  ${kicker('Upgrade to VIP · $25')}
+                  <div style="margin:8px 0 0;font:700 20px/1.25 ${SERIF};color:${CREAM};">Get in an hour early</div>
                   <p style="margin:10px 0 16px;font:14px/1.6 ${SANS};color:${MUTED_LIGHT};">One full hour of early entry from 1 PM, a cocktail from the PokeMenu, and first pick of every vendor table. Limited spots.</p>
                   <a href="${VIP}" style="font:800 12px/1 ${SANS};letter-spacing:.1em;text-transform:uppercase;color:${MINT};text-decoration:none;">Reserve my VIP spot →</a>
                 </td></tr>
@@ -135,8 +144,8 @@ export default {
             <td class="col" width="50%" valign="top" style="padding:6px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${INK_MID}" style="background:${INK_MID};border:1px solid ${BORDER};border-radius:14px;">
                 <tr><td style="padding:22px 20px;">
-                  ${kicker('Vendor table · $80')}
-                  <div style="margin:8px 0 0;font:700 20px/1.25 ${SERIF};color:${CREAM};">Bring your collection</div>
+                  ${kicker('Want to sell? · $80')}
+                  <div style="margin:8px 0 0;font:700 20px/1.25 ${SERIF};color:${CREAM};">Grab a vendor table</div>
                   <p style="margin:10px 0 16px;font:14px/1.6 ${SANS};color:${MUTED_LIGHT};">All in: tent, table and two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM sharp.</p>
                   <a href="${VENDORS}" style="font:800 12px/1 ${SANS};letter-spacing:.1em;text-transform:uppercase;color:${GOLD_LIGHT};text-decoration:none;">Reserve a table →</a>
                 </td></tr>
@@ -159,15 +168,14 @@ export default {
         <!-- Closing CTA -->
         <tr><td bgcolor="${INK}" align="center" class="px" style="background:${INK};border:1px solid ${BORDER};border-top:0;border-radius:0 0 18px 18px;padding:34px 40px 36px;">
           <div style="font:italic 600 24px/1.3 ${SERIF};color:${CREAM};">See you at the tables, ${hi}.</div>
-          <p style="margin:10px 0 24px;font:15px/1.6 ${SANS};color:${MUTED_LIGHT};">Free to attend. Cocktails at the bar for guests 21+.</p>
-          ${button(REGISTER, "Register — it's free")}
-          <div style="margin-top:14px;">${button(MAP, 'Get directions', { primary: false })}</div>
+          <p style="margin:10px 0 24px;font:15px/1.6 ${SANS};color:${MUTED_LIGHT};">Know a collector who'd love this? Admission is free. Send them the link so they can register too.</p>
+          ${button(REGISTER, 'Share the event', { primary: false })}
         </td></tr>
 
         <!-- Footer -->
         <tr><td align="center" style="padding:26px 20px 8px;">
           <p style="margin:0;font:600 11px/1.6 ${SANS};letter-spacing:.2em;text-transform:uppercase;color:${MUTED};">An event organized by Lugo's Craft Distillery</p>
-          <p style="margin:10px 0 0;font:12px/1.6 ${SANS};color:${MUTED};">You're receiving this because you're on the Lugo's Craft Distillery events list.${postalAddress ? `<br>${esc(postalAddress)}` : ''}</p>
+          <p style="margin:10px 0 0;font:12px/1.6 ${SANS};color:${MUTED};">You're receiving this because you registered for Cards &amp; Cocktails at Lugo's Craft Distillery.${postalAddress ? `<br>${esc(postalAddress)}` : ''}</p>
           <p style="margin:12px 0 0;font:12px/1.6 ${SANS};"><a href="${esc(unsubscribeUrl)}" style="color:${MUTED_LIGHT};text-decoration:underline;">Unsubscribe</a></p>
         </td></tr>
 
@@ -181,11 +189,16 @@ export default {
       'CARDS & COCKTAILS: Pokémon Trading Card Event',
       'Saturday, November 14, 2026 · 2:00–10:00 PM · Lakeland, FL',
       '',
-      `Hey ${firstName || 'Trainer'}, your next pull is waiting at the bar.`,
+      "✓ YOU'RE REGISTERED",
       '',
-      "Buy, sell and trade Pokémon cards in one of Lakeland's most unique venues: Lugo's Craft Distillery. Cards on the table, a craft cocktail in hand.",
+      `Hey ${firstName || 'Trainer'}, you're on the list. Saturday, the binders come out.`,
       '',
-      `Admission is free. Register for your confirmation and day-of updates: ${REGISTER}`,
+      "Thanks for registering for Cards & Cocktails. This Saturday, Lugo's Craft Distillery turns into a trading card market: vendor tables, a room full of collectors, and craft cocktails at the bar.",
+      '',
+      "Doors open at 2:00 PM. Admission is free and there's nothing to print. Just show up with your cards. Planning to order at the bar? Bring a valid ID, since bar service is 21+.",
+      '',
+      `Add to your calendar: ${CALENDAR}`,
+      `Get directions: ${MAP}`,
       '',
       'EVENT DETAILS',
       'Date: Saturday, November 14, 2026',
@@ -195,17 +208,19 @@ export default {
       '',
       `AT THE TABLES: ${GAMES.join(' · ')}`,
       '',
-      `VIP ACCESS ($25): one hour early entry from 1 PM, a PokeMenu cocktail, first pick of vendor tables. ${VIP}`,
-      `VENDOR TABLE ($80 all in): tent, table, two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM. ${VENDORS}`,
+      `UPGRADE TO VIP ($25): one hour early entry from 1 PM, a PokeMenu cocktail, first pick of vendor tables. ${VIP}`,
+      `WANT TO SELL? VENDOR TABLE ($80 all in): tent, table, two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM. ${VENDORS}`,
       '',
       'SCHEDULE',
       ...SCHEDULE.map(([t, what]) => `${t}  ${what}`),
       '',
       'See you at the tables.',
       '',
+      `Know a collector who'd love this? Admission is free. Send them the link so they can register: ${REGISTER}`,
+      '',
       '—',
       "An event organized by Lugo's Craft Distillery.",
-      "You're receiving this because you're on the Lugo's Craft Distillery events list.",
+      "You're receiving this because you registered for Cards & Cocktails at Lugo's Craft Distillery.",
       postalAddress,
       `Unsubscribe: ${unsubscribeUrl}`,
     ].filter((l) => l !== undefined && l !== null).join('\n');
