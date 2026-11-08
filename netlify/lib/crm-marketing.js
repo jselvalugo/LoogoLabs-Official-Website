@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { db } from './crm.js';
 import { CrmError, needId } from './crm-records.js';
+import { getTemplate, listTemplates } from './email-templates/index.js';
 
 // Email marketing through Resend: a subscriber list kept apart from business
 // contacts, one-off campaigns, and automations (drip sequences). Nothing here
@@ -231,15 +232,18 @@ export async function deleteSequence(inst, id) {
 
 // ── Campaigns ───────────────────────────────────────────────────────────────
 
-export async function listCampaigns(inst) {
+// kind 'blast' = campaigns built from a coded template; 'campaign' = written ones.
+export async function listCampaigns(inst, { kind } = {}) {
+  const only = kind === 'blast' ? 'AND c.template IS NOT NULL' : kind === 'campaign' ? 'AND c.template IS NULL' : '';
   return q(`SELECT c.*,
       (SELECT count(*)::int FROM crm_email_sends x WHERE x.campaign_id = c.id AND x.status = 'sent') AS sent,
       (SELECT count(*)::int FROM crm_email_sends x WHERE x.campaign_id = c.id AND x.status = 'failed') AS failed,
       (SELECT count(*)::int FROM crm_email_sends x WHERE x.campaign_id = c.id AND x.status IN ('queued', 'sending')) AS waiting
-    FROM crm_email_campaigns c WHERE c.instance_id = $1 ORDER BY c.updated_at DESC`, [inst]);
+    FROM crm_email_campaigns c WHERE c.instance_id = $1 ${only} ORDER BY c.updated_at DESC`, [inst]);
 }
 
 export async function saveCampaign(inst, values, { userId } = {}) {
+  if (values.template) return saveBlast(inst, values, { userId });
   const name = str(values.name, 200);
   if (!name) throw new CrmError('Give the campaign a name');
   const params = [inst, name, str(values.subject, 200), orNull(values.preheader, 200), str(values.body, 100000), tag(values.audience_tag),
@@ -252,7 +256,7 @@ export async function saveCampaign(inst, values, { userId } = {}) {
   needId(values.id);
   const [row] = await q(`UPDATE crm_email_campaigns SET name = $2, subject = $3, preheader = $4, body = $5, audience_tag = $6,
       body_format = $7, signature = $8, updated_at = now()
-    WHERE id = $9 AND instance_id = $1 AND status = 'draft' RETURNING *`, [...params, values.id]);
+    WHERE id = $9 AND instance_id = $1 AND status = 'draft' AND template IS NULL RETURNING *`, [...params, values.id]);
   if (!row) throw new CrmError('Only draft campaigns can be edited', 409);
   return row;
 }
@@ -267,8 +271,78 @@ async function draftCampaign(inst, id) {
   needId(id);
   const [c] = await q('SELECT * FROM crm_email_campaigns WHERE id = $1 AND instance_id = $2', [id, inst]);
   if (!c) throw new CrmError('Campaign not found', 404);
-  if (!c.subject || !c.body) throw new CrmError('Add a subject and a message first');
+  if (c.template) {
+    if (!getTemplate(c.template)) throw new CrmError('That email template no longer exists. Pick another one.');
+  } else if (!c.subject || !c.body) throw new CrmError('Add a subject and a message first');
   return c;
+}
+
+// ── Email blasts (coded templates) ──────────────────────────────────────────
+//
+// A blast is a campaign whose content comes from a template in
+// netlify/lib/email-templates/. The CRM user only names it, picks the template
+// and uploads who gets it. Each blast has its own audience tag, so its uploaded
+// list stays separate from everything else on the subscriber list.
+
+export const templates = () => listTemplates();
+
+const blastTag = (name) => `blast-${(tag(name) || 'list').replace(/[^a-z0-9-]/g, '').slice(0, 40)}-${randomBytes(3).toString('hex')}`;
+
+async function saveBlast(inst, values, { userId } = {}) {
+  const name = str(values.name, 200);
+  if (!name) throw new CrmError('Give the blast a name');
+  const t = getTemplate(values.template);
+  if (!t) throw new CrmError('Pick an email template');
+  if (!values.id) {
+    const [row] = await q(`INSERT INTO crm_email_campaigns (instance_id, name, subject, preheader, body, audience_tag, body_format, signature, template, created_by)
+      VALUES ($1, $2, $3, $4, '', $5, 'html', false, $6, $7) RETURNING *`, [inst, name, t.subject, t.preheader, blastTag(name), t.id, userId || null]);
+    return row;
+  }
+  needId(values.id);
+  const [row] = await q(`UPDATE crm_email_campaigns SET name = $2, subject = $3, preheader = $4, template = $5, updated_at = now()
+    WHERE id = $6 AND instance_id = $1 AND status = 'draft' AND template IS NOT NULL RETURNING *`, [inst, name, t.subject, t.preheader, t.id, values.id]);
+  if (!row) throw new CrmError('Only draft blasts can be edited', 409);
+  return row;
+}
+
+// Adds uploaded rows ({ email, name }) to a draft blast's list, in one query.
+// People who unsubscribed earlier stay unsubscribed and are not emailed.
+// Blast uploads do not start automations.
+export async function uploadBlastList(inst, id, rows) {
+  needId(id);
+  const [c] = await q(`SELECT id, audience_tag FROM crm_email_campaigns WHERE id = $1 AND instance_id = $2 AND template IS NOT NULL AND status = 'draft'`, [id, inst]);
+  if (!c) throw new CrmError('Upload a list to a draft blast', 409);
+  if (!Array.isArray(rows)) throw new CrmError('No rows to upload');
+  if (rows.length > 1000) throw new CrmError('Up to 1,000 rows per upload request');
+  const seen = new Map();
+  const skipped = [];
+  for (const r of rows) {
+    const e = str(r?.email, 320).toLowerCase();
+    if (!EMAIL.test(e)) { if (e) skipped.push(e); continue; }
+    seen.set(e, orNull(r?.name, 200) || seen.get(e) || null);
+  }
+  const emails = [...seen.keys()];
+  if (emails.length) {
+    await q(`INSERT INTO crm_email_subscribers (instance_id, email, name, tags, source, unsubscribe_token)
+      SELECT $1, e, n, ARRAY[$4::text], 'blast', t FROM unnest($2::text[], $3::text[], $5::text[]) AS x(e, n, t)
+      ON CONFLICT (instance_id, email) DO UPDATE SET
+        name = coalesce(crm_email_subscribers.name, EXCLUDED.name),
+        tags = ARRAY(SELECT DISTINCT unnest(crm_email_subscribers.tags || EXCLUDED.tags)),
+        updated_at = now()`,
+    [inst, emails, emails.map((e) => seen.get(e)), c.audience_tag, emails.map(() => token())]);
+  }
+  await q('UPDATE crm_email_campaigns SET updated_at = now() WHERE id = $1', [c.id]);
+  const reach = await campaignAudience(inst, c.audience_tag);
+  return { added: emails.length, skipped: skipped.slice(0, 50), skipped_count: skipped.length, ...reach };
+}
+
+// Empties a draft blast's list (takes its tag off everyone) to start over.
+export async function clearBlastList(inst, id) {
+  needId(id);
+  const [c] = await q(`SELECT audience_tag FROM crm_email_campaigns WHERE id = $1 AND instance_id = $2 AND template IS NOT NULL AND status = 'draft'`, [id, inst]);
+  if (!c) throw new CrmError('Only a draft blast can be cleared', 409);
+  await q(`UPDATE crm_email_subscribers SET tags = array_remove(tags, $2), updated_at = now() WHERE instance_id = $1 AND $2 = ANY(tags)`, [inst, c.audience_tag]);
+  return { recipients: 0 };
 }
 
 // How many people a send would reach right now.
@@ -346,6 +420,11 @@ export async function saveSettings(inst, values) {
 
 // The finished email for an unsaved draft, for the editor's live preview.
 export async function previewEmail(inst, message) {
+  if (message?.template) {
+    const sample = { email: 'subscriber@example.com', name: str(message.sample_name, 200), unsubscribe_token: 'preview' };
+    const { html, subject } = renderMarketingEmail({ template: message.template }, sample, {});
+    return { html, subject };
+  }
   const m = { subject: str(message?.subject, 200), preheader: str(message?.preheader, 200), body: str(message?.body, 100000),
     body_format: format(message?.body_format), signature: message?.signature !== false };
   const { html } = renderMarketingEmail(m, { email: 'subscriber@example.com', name: '', unsubscribe_token: 'preview' }, await getSettings(inst));
@@ -403,7 +482,36 @@ export const unsubscribeUrl = (t) => `${SITE}/.netlify/functions/email-unsubscri
 // `settings` holds the instance signature, added under the message unless the
 // message turns it off. HTML messages go in as written, inside the same
 // branded frame, so the unsubscribe footer is always there.
-export function renderMarketingEmail({ subject, preheader, body, body_format, signature }, sub, settings = {}) {
+// The finished email from a coded template. Its own branding, no signature;
+// the template must carry the unsubscribe link and postal address.
+function renderTemplate(id, sub) {
+  const t = getTemplate(id);
+  if (!t) throw new CrmError(`Email template not found: ${id}`);
+  const unsub = unsubscribeUrl(sub.unsubscribe_token);
+  const address = t.postal_address || process.env.EMAIL_POSTAL_ADDRESS || '';
+  const { html, text } = t.render({
+    firstName: firstName(sub), name: sub.name || '', email: sub.email, preheader: merge(t.preheader, sub),
+    unsubscribeUrl: unsub, postalAddress: address, esc,
+  });
+  if (!html.includes(esc(unsub)) || !text.includes(unsub) || (address && !(html.includes(esc(address)) && text.includes(address)))) {
+    throw new CrmError(`Template ${id} must include the unsubscribe link and postal address`);
+  }
+  return {
+    subject: merge(t.subject, sub), html, text,
+    ...(t.from_name && fromAddress() ? { from: withName(t.from_name) } : {}),
+    headers: { 'List-Unsubscribe': `<${unsub}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+  };
+}
+
+// Same verified sending address, the template's display name.
+function withName(name) {
+  const base = fromAddress();
+  const addr = (base.match(/<([^>]+)>/) || [])[1] || base.trim();
+  return `"${String(name).replace(/["\\<>]/g, '')}" <${addr}>`;
+}
+
+export function renderMarketingEmail({ subject, preheader, body, body_format, signature, template }, sub, settings = {}) {
+  if (template) return renderTemplate(template, sub);
   const subj = merge(subject, sub);
   const isHtml = body_format === 'html';
   const text = isHtml ? mergeHtml(body, sub) : merge(body, sub);
@@ -496,7 +604,7 @@ export async function runQueue() {
   if (!claimed.length) { await finishCampaigns(); return { queued_steps: due.length, sent: 0 }; }
 
   const rows = await q(`SELECT x.id, x.step, sub.email, sub.name, sub.status AS sub_status, sub.unsubscribe_token,
-      c.subject AS c_subject, c.preheader AS c_preheader, c.body AS c_body, c.body_format AS c_format, c.signature AS c_signature, seq.steps,
+      c.subject AS c_subject, c.preheader AS c_preheader, c.body AS c_body, c.body_format AS c_format, c.signature AS c_signature, c.template AS c_template, seq.steps,
       st.signature AS sig, st.signature_format AS sig_format
     FROM crm_email_sends x
     LEFT JOIN crm_email_settings st ON st.instance_id = x.instance_id
@@ -507,13 +615,17 @@ export async function runQueue() {
 
   const ready = [];
   for (const r of rows) {
-    const message = r.c_body !== null ? { subject: r.c_subject, preheader: r.c_preheader, body: r.c_body, body_format: r.c_format, signature: r.c_signature } : r.steps?.[r.step];
+    const message = r.c_body !== null ? { subject: r.c_subject, preheader: r.c_preheader, body: r.c_body, body_format: r.c_format, signature: r.c_signature, template: r.c_template } : r.steps?.[r.step];
     if (r.sub_status !== 'subscribed' || !message) {
       await q(`UPDATE crm_email_sends SET status = 'skipped', error = $2 WHERE id = $1`, [r.id, r.sub_status !== 'subscribed' ? 'Unsubscribed' : 'Email no longer exists']);
       continue;
     }
-    ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r, r.sig === null
-      ? { signature: DEFAULT_SIGNATURE, signature_format: 'html' } : { signature: r.sig, signature_format: r.sig_format }) } });
+    try {
+      ready.push({ id: r.id, message: { to: r.email, ...renderMarketingEmail(message, r, r.sig === null
+        ? { signature: DEFAULT_SIGNATURE, signature_format: 'html' } : { signature: r.sig, signature_format: r.sig_format }) } });
+    } catch (err) {
+      await q(`UPDATE crm_email_sends SET status = 'failed', error = $2 WHERE id = $1`, [r.id, String(err.message).slice(0, 500)]);
+    }
   }
 
   let sent = 0;
