@@ -84,8 +84,8 @@ Add one object at the **top** of the `posts` array in `content/posts.mjs`:
 
 Requirements:
 
-- **Excerpt**: shown as the pull quote on /news and as the standfirst on the
-  post page. One sentence, under ~200 characters, no surrounding quote marks,
+- **Excerpt**: shown as the pull quote on /news, as the standfirst on the
+  post page, and in the RSS feed. One sentence, under ~200 characters, no surrounding quote marks,
   and not a copy of a sentence from the body.
 - **Title**: shown up to 84px tall; under ~70 characters, concrete, no clickbait.
 - **First paragraph**: plain prose (it gets the drop cap). Open on the problem,
