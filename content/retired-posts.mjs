@@ -33,4 +33,9 @@ export const retiredPosts = {
   'ai-voice-intake-law-firm': 'ai-voice-after-hours-plumbing',
   'ai-voice-handoff-veterinary-clinic': 'ai-voice-after-hours-plumbing',
   'ai-follow-up-messaging-gym': 'ai-voice-after-hours-plumbing',
+
+  // H3 Reviews and reputation → pressure-washing-review-request-automation (2026-11-08)
+  'salon-google-review-system': 'pressure-washing-review-request-automation',
+  'restaurant-review-response-reputation': 'pressure-washing-review-request-automation',
+  'copy-paste-review-responses-worse': 'pressure-washing-review-request-automation',
 };
