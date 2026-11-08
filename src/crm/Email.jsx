@@ -227,9 +227,16 @@ function ImportDrawer({ onClose, onDone }) {
     try { setResult(await data('import_subscribers', { values: { text, tags } })); onDone(); } catch (err) { setError(err.message); }
     setBusy(false);
   }
+  // Exports with headers (e.g. "#, First Name, Last Name, Email, …") are read by
+  // column name and turned into "email, name" rows; plain lists load as they are.
   async function file(e) {
     const f = e.target.files?.[0];
-    if (f) setText(await f.text());
+    if (!f) return;
+    const raw = await f.text();
+    const { people, columns } = parseDataset(raw);
+    setText(people.length && columns?.email && columns.email !== 'column 1'
+      ? people.map((p) => (p.name ? `${p.email}, ${p.name.replace(/,/g, ' ')}` : p.email)).join('\n')
+      : raw);
   }
 
   return (
