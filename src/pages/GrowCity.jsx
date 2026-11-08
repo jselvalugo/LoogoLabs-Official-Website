@@ -9,20 +9,17 @@ import '../styles/pages/cfl.css';
 const TONES = ['cfl-tile ll-sage', 'cfl-tile', 'cfl-tile cfl-tile--glass'];
 const ICONS = [ChartLineUp, Storefront, ChatsCircle];
 
-// A short city-specific FAQ. It is not marked up as FAQPage schema (only the hub
+// City FAQ: the questions written for this city in lib/cfl.js (and cfl.es.js),
+// plus one general question. It is not marked up as FAQPage schema (only the hub
 // carries that), so it can vary freely per city.
 const cityFaq = (c) => [
-  [`Do you work with businesses in ${c.name}?`, `Yes. ${c.name} is part of our core ${c.county} service area. We build your Google Business Profile, service pages, and follow-up around the ${c.name} neighborhoods you actually serve.`],
-  [`How long does local SEO take in ${c.name}?`, 'Profile and review improvements usually show within the first 30-60 days. Ranking for competitive searches takes longer and depends on how established your competitors are. We show you where you stand on the first call.'],
+  ...c.faq,
   ['Do I need to be physically located in the city?', `No. Google ranks service-area businesses by where they serve, not only where they sit. If you serve ${c.name}, we can build visibility there.`],
-  ['Is there a contract?', 'We recommend a 3-month minimum: local SEO and review growth take time to compound, and three months is when results become clear. For smaller businesses that want to test things first, we also offer month-to-month.'],
 ];
 
 const cityFaqEs = (c) => [
-  [`¿Trabajan con negocios en ${c.name}?`, `Sí. ${c.name} es parte de nuestra área de servicio principal en el condado de ${c.county.replace(' County', '')}. Construimos tu Perfil de Empresa en Google, tus páginas de servicio y tu seguimiento alrededor de los vecindarios de ${c.name} que realmente atiendes.`],
-  [`¿Cuánto tarda el SEO local en ${c.name}?`, 'Las mejoras en el perfil y las reseñas suelen verse en los primeros 30-60 días. Posicionarse en búsquedas competitivas toma más tiempo y depende de qué tan establecida esté tu competencia. En la primera llamada te mostramos dónde estás.'],
+  ...c.faq,
   ['¿Necesito estar ubicado físicamente en la ciudad?', `No. Google posiciona a los negocios de área de servicio según dónde atienden, no solo dónde están. Si atiendes ${c.name}, podemos construir visibilidad allí.`],
-  ['¿Hay contrato?', 'Recomendamos un mínimo de 3 meses: el SEO local y el crecimiento de reseñas toman tiempo en acumularse, y a los tres meses los resultados son claros. Para negocios pequeños que quieren probar primero, también ofrecemos mes a mes.'],
 ];
 
 function GrowCity({ slug }) {
@@ -117,6 +114,24 @@ function GrowCity({ slug }) {
         </div>
       </section>
 
+      {/* ── 90-DAY PLAN ── */}
+      <section className="cfl-wrap">
+        <div className="cfl-panel cfl-panel--bare">
+          <Eyebrow>{es ? `Plan de 90 días en ${c.name}` : `A 90-day plan for ${c.name}`}</Eyebrow>
+          <H2>{es ? `Cómo haríamos crecer un negocio de ${c.name}.` : `How we would grow a ${c.name} business.`}</H2>
+          <div className="cfl-bento3">
+            {c.playbook.map(([t, d], i) => (
+              <div key={t} className={TONES[(i + 1) % 3]}>
+                <div>
+                  <div className="cfl-tile__title">{t}</div>
+                  <p className="cfl-tile__text">{tidy(d)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Services cityName={c.name} />
 
       {/* ── PROCESS + NEARBY ── */}
@@ -126,6 +141,7 @@ function GrowCity({ slug }) {
           {nearby.map((n) => (
             <a key={n.slug} href={toHref(cityPath(n.slug))} className="cfl-nearby__link">{n.name} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
           ))}
+          <a href={toHref(CFL_BASE)} className="cfl-nearby__link">{es ? 'Toda la Florida Central' : 'All of Central Florida'} <ArrowRight size={14} weight="bold" aria-hidden="true" /></a>
         </div>
       </Process>
 

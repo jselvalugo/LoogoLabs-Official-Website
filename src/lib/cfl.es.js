@@ -13,6 +13,34 @@ export const CITIES_ES = {
       ['Altas expectativas, respuestas rápidas', 'Aquí los propietarios esperan una respuesta pulida y rápida. El mensaje automático por llamada perdida y las respuestas instantáneas aseguran que nadie espere.'],
     ],
     industries: ['Servicios para el hogar y piscinas', 'Med spas y bienestar', 'Bienes raíces y administración de propiedades', 'Restaurantes en Market Street', 'Dentistas y consultorios familiares'],
+    playbook: [
+      [
+        "Semanas 1-2: un perfil para dos públicos",
+        "Reconstruimos tu Perfil de Empresa en Google para que le hable a la vez a residentes de todo el año y a visitantes de estadía corta: área de servicio en Celebration y el corredor de la US-192, las categorías correctas, fotos de trabajos locales reales y un horario que muestre cuándo atiendes llamadas fuera de horario."
+      ],
+      [
+        "Semanas 3-6: una reseña después de cada trabajo",
+        "Una solicitud de reseña automática sale por texto después de cada trabajo terminado, en inglés o español, con plantillas de respuesta para que cada reseña reciba contestación en menos de un día. En un pueblo donde los vecinos comparan, tus reseñas y tus respuestas hacen casi toda la venta."
+      ],
+      [
+        "Semanas 7-12: prueba por vecindario",
+        "Páginas de servicio y publicaciones en tu perfil que nombran los vecindarios donde realmente trabajas, como West Village, Artisan Park e Island Village, más mensaje automático por llamada perdida para que un visitante que llama a las 8 p. m. reciba respuesta antes de probar el siguiente negocio."
+      ]
+    ],
+    faq: [
+      [
+        "¿Un negocio de Celebration debe enfocarse en residentes o en visitantes?",
+        "Por lo general en ambos, pero no con el mismo mensaje. Los residentes eligen por confianza: reseñas y cuánto tiempo llevas. Los visitantes eligen por rapidez: quién puede venir hoy. Configuramos tu perfil y tu seguimiento para que cada uno vea lo que necesita."
+      ],
+      [
+        "¿Celebration es demasiado pequeño para que importe el SEO local?",
+        "Todo lo contrario. Con menos competidores en el mapa, un perfil completo y un flujo constante de reseñas pueden subirte más rápido que en Orlando. El detalle es que la reputación corre rápido aquí, para bien o para mal, así que el seguimiento tiene que ser constante."
+      ],
+      [
+        "¿Solo trabajan con negocios de Market Street?",
+        "No. Muchos negocios atienden Celebration desde cerca, como Kissimmee o el corredor de la US-192. Google posiciona a los negocios de área de servicio según dónde trabajan, no solo dónde está su oficina, y construimos para eso."
+      ]
+    ],
   },
   kissimmee: {
     headline: 'Aparece primero en Kissimmee y responde antes que tu competencia.',
@@ -24,17 +52,34 @@ export const CITIES_ES = {
       ['Un mapa de Google lleno', 'Docenas de competidores buscan las mismas búsquedas "cerca de mí". Un Perfil de Empresa completo y un flujo constante de reseñas es como subes.'],
     ],
     industries: ['Aire acondicionado, plomería y techos', 'Limpieza y mantenimiento de alquileres vacacionales', 'Mecánica y detallado de autos', 'Restaurantes y food trucks', 'Seguros y servicios de impuestos'],
-  },
-  orlando: {
-    headline: 'Orlando está saturado. Domina tu vecindario en vez de perseguir toda la ciudad.',
-    intro:
-      'Posicionarse solo para "Orlando" es una pelea contra marcas nacionales y agencias con grandes presupuestos. Los negocios locales ganan dominando su parte de la ciudad (Lake Nona, Dr. Phillips, Baldwin Park, College Park) y dando seguimiento a cada cliente más rápido que nadie.',
-    market: [
-      ['SEO a nivel de vecindario', 'Los clientes buscan por zona. Creamos páginas por área de servicio y señales en tu perfil alrededor de los vecindarios que realmente atiendes, para que aparezcas donde puedes ganar.'],
-      ['La publicidad se encarece rápido', 'Los clics en Orlando cuestan más que en los suburbios. Cada cliente pagado necesita una respuesta instantánea y una secuencia de seguimiento, o estás pagando por clientes con los que nunca hablas.'],
-      ['El sur y el este crecen rápido', 'Lake Nona y el lado este siguen sumando hogares. Hacerte visible temprano, antes de que el mercado se llene, es lo más barato que jamás será.'],
+    playbook: [
+      [
+        "Semanas 1-2: una puerta de entrada bilingüe",
+        "Tu Perfil de Empresa en Google, los formularios de tu sitio y el mensaje automático por llamada perdida configurados en inglés y español, para que cada persona reciba respuesta en el idioma en que escribió o llamó."
+      ],
+      [
+        "Semanas 3-6: gana el mapa en los trabajos que pagan",
+        "Categorías, servicios y fotos del perfil enfocados en el trabajo que más quieres, como reparación de aire acondicionado, limpieza de rentas o techos, con una solicitud de reseña después de cada trabajo para subir en un mapa lleno de competidores."
+      ],
+      [
+        "Semanas 7-12: un flujo para administradores de rentas",
+        "Un seguimiento aparte para dueños de rentas vacacionales y administradores de propiedades, que envían trabajo repetido, con respuestas rápidas fuera de horario y un contacto mensual sencillo."
+      ]
     ],
-    industries: ['Bufetes de abogados y servicios profesionales', 'Dentistas, quiroprácticos y clínicas', 'Servicios para el hogar', 'Estudios de fitness y gimnasios', 'Salones y barberías'],
+    faq: [
+      [
+        "¿Necesito marketing en español en Kissimmee?",
+        "Para la mayoría de los negocios de servicios, sí. Una gran parte de las búsquedas y llamadas locales son en español. Escribimos tu seguimiento, tus solicitudes de reseñas y tus páginas clave en ambos idiomas para que nunca pierdas un cliente por el idioma."
+      ],
+      [
+        "¿Cómo compito con docenas de negocios en la US-192?",
+        "Siendo el perfil más completo, con más reseñas y que responde más rápido en tu categoría. La mayoría de los competidores dejan su perfil a medias y contestan horas después. Esos son los huecos que cerramos primero."
+      ],
+      [
+        "¿Me pueden ayudar a conseguir trabajo de administradores de rentas?",
+        "Sí. Creamos un seguimiento aparte para administradores y dueños de rentas, ya que un solo administrador puede enviarte trabajo de muchas casas. Para ellos lo que más importa es una respuesta rápida de noche."
+      ]
+    ],
   },
   'st-cloud': {
     headline: 'St. Cloud crece rápido. Sé el negocio que los nuevos vecinos encuentran primero.',
@@ -46,17 +91,34 @@ export const CITIES_ES = {
       ['Quienes viajan buscan de noche', 'Muchos residentes trabajan en Orlando y buscan en la noche. Las respuestas automáticas hacen que su consulta reciba respuesta en minutos, no mañana.'],
     ],
     industries: ['Jardinería y paisajismo', 'Control de plagas', 'Constructores y remodeladores', 'Dentistas familiares y pediatría', 'Restaurantes locales'],
-  },
-  'winter-garden': {
-    headline: 'Negocios de Winter Garden: conviertan el crecimiento de West Orange en trabajos agendados.',
-    intro:
-      'Entre la histórica Plant Street y las nuevas comunidades de Horizon West, Winter Garden se ha vuelto uno de los lugares más deseados para vivir en la región. Las familias aquí investigan con cuidado, leen reseñas y esperan una respuesta rápida y profesional.',
-    market: [
-      ['Horizon West sigue llenándose', 'Miles de casas nuevas significan un flujo constante de primeras búsquedas de servicios. La visibilidad en el mapa de Google en estas comunidades rinde por años.'],
-      ['El centro atrae a la gente el fin de semana', 'Los restaurantes y tiendas de Plant Street compiten por visitantes de todo West Orange. Las campañas por email y SMS traen de vuelta a clientes anteriores entre visitas.'],
-      ['Clientes exigentes que se guían por reseñas', 'Los propietarios aquí pagan por calidad y eligen según las reseñas. Un sistema constante de reseñas es el mejor marketing que puedes comprar.'],
+    playbook: [
+      [
+        "Semanas 1-2: que los nuevos vecinos te encuentren",
+        "Un Perfil de Empresa en Google con un área de servicio que cubre Narcoossee Road, Harmony y el lado este, con servicios y fotos que coinciden con lo primero que buscan los nuevos propietarios."
+      ],
+      [
+        "Semanas 3-6: reseñas que mencionan lugares reales",
+        "Una solicitud de reseña después de cada trabajo que invita al cliente a mencionar su vecindario y el trabajo que hiciste, y una respuesta a cada reseña. Las reseñas específicas crean confianza de pueblo más rápido que las genéricas."
+      ],
+      [
+        "Semanas 7-12: contesta en la noche",
+        "Mensaje automático por llamada perdida y respuestas instantáneas a formularios ajustados para la noche, cuando quienes trabajan fuera llegan a casa y buscan, más un mensaje de bienvenida para las urbanizaciones nuevas."
+      ]
     ],
-    industries: ['Constructores de piscinas y espacios exteriores', 'Salud pediátrica y familiar', 'Restaurantes y cervecerías', 'Servicios para el hogar', 'Fitness boutique'],
+    faq: [
+      [
+        "¿Vale la pena enfocarse en St. Cloud aparte de Kissimmee?",
+        "Sí. La gente aquí busca negocios de St. Cloud por nombre, y los vecindarios nuevos del lado este todavía están eligiendo a sus proveedores. Un perfil hecho solo para Kissimmee no va a aparecer automáticamente en los resultados de St. Cloud."
+      ],
+      [
+        "¿Cuándo buscan los clientes de St. Cloud?",
+        "Muchos residentes trabajan hacia Orlando, así que muchas consultas llegan en la noche. Si tu respuesta espera hasta la mañana, normalmente un competidor llega primero. Las respuestas automáticas cierran ese hueco."
+      ],
+      [
+        "¿Cómo llego a las familias que se mudan a urbanizaciones nuevas?",
+        "Apareciendo en los resultados locales la semana que llegan: un perfil completo, reseñas y publicaciones con nombres de vecindarios y respuestas rápidas. Los nuevos residentes suelen quedarse con el primer buen proveedor que encuentran."
+      ]
+    ],
   },
   clermont: {
     headline: 'Negocios de Clermont: sean el nombre local de confianza en South Lake.',
@@ -68,50 +130,34 @@ export const CITIES_ES = {
       ['Menos competencia que Orlando', 'La búsqueda local todavía está menos saturada que en el centro del área metropolitana. Un perfil bien construido y un sistema de reseñas pueden ponerte arriba más rápido.'],
     ],
     industries: ['Fitness, medicina deportiva y terapia física', 'Servicios para el hogar', 'Paisajismo y riego', 'Bienes raíces', 'Restaurantes frente al lago'],
-  },
-  'winter-park': {
-    headline: 'Los clientes de Winter Park esperan elegancia. Tu marketing debe estar a la altura.',
-    intro:
-      'Winter Park es un mercado establecido y próspero, anclado en Park Avenue y Rollins College. Los clientes aquí comparan con cuidado, valoran la reputación por encima del precio y notan cuando un negocio responde rápido y con profesionalismo.',
-    market: [
-      ['Reputación por encima del precio', 'Los clientes de Winter Park pagan por el proveedor en quien confían. Un perfil de reseñas sólido y actualizado es lo que justifica un precio premium.'],
-      ['Competencia boutique', 'Park Avenue y Hannibal Square están llenos de boutiques, salones y estudios independientes. El email y los SMS mantienen a tus clientes habituales volviendo en vez de probar a alguien nuevo.'],
-      ['Casas antiguas, trabajo especializado', 'Las casas históricas y frente al lago necesitan especialistas. Apuntamos a las búsquedas específicas que usan los propietarios para ese tipo de trabajo.'],
+    playbook: [
+      [
+        "Semanas 1-2: domina South Lake",
+        "Un Perfil de Empresa en Google y un área de servicio hechos para Clermont, Minneola y el corredor de la US-27, para aparecer en las búsquedas de South Lake en vez de competir en los resultados de Orlando."
+      ],
+      [
+        "Semanas 3-6: reseñas y publicaciones locales",
+        "Solicitudes de reseña después de cada trabajo, más publicaciones y fotos en tu perfil ligadas a lugares que la gente de aquí conoce, como el frente del lago en el centro y el lago Minneola, para que tu perfil se vea local y no genérico."
+      ],
+      [
+        "Semanas 7-12: seguimiento en las zonas que crecen",
+        "Respuestas instantáneas y seguimiento de cotizaciones para los vecindarios nuevos a lo largo de la US-27 hacia Four Corners, donde los nuevos propietarios todavía están eligiendo proveedores."
+      ]
     ],
-    industries: ['Boutiques y comercio', 'Salones, spas y estética', 'Servicios financieros y legales', 'Diseño de interiores y remodelación', 'Alta cocina'],
-  },
-  'lake-mary': {
-    headline: 'Negocios de Lake Mary: lleguen a profesionales ocupados en el momento en que buscan.',
-    intro:
-      'Lake Mary es el suburbio corporativo de la Florida Central: oficinas regionales a lo largo de la I-4, vecindarios establecidos como Heathrow y hogares con altos ingresos y muy poco tiempo libre. Reservan en línea, y reservan con quien responde primero.',
-    market: [
-      ['Clientes valiosos sin tiempo', 'Los profesionales aquí quieren reservar sin hacer una llamada. Las reservas en línea, las respuestas instantáneas y los recordatorios te convierten en la opción fácil.'],
-      ['El B2B también es local', 'Los parques de oficinas de la I-4 necesitan TI, limpieza, catering y servicios profesionales. Creamos seguimiento que funciona para compradores empresariales, no solo para propietarios.'],
-      ['Demanda de salud y bienestar', 'Med spas, dentistas y clínicas especializadas compiten fuerte aquí. Las reseñas y el seguimiento rápido deciden quién llena su agenda.'],
+    faq: [
+      [
+        "¿Es más fácil el SEO local en Clermont que en Orlando?",
+        "Por lo general sí. Menos negocios compiten por las búsquedas de Clermont que por las de Orlando, así que un perfil bien hecho y reseñas constantes pueden subirte más rápido. Igual hay que mantener las reseñas llegando, porque el mercado está creciendo."
+      ],
+      [
+        "¿Trabajan con negocios de fitness, bienestar y deportes?",
+        "Sí. Las colinas y la cadena de lagos de Clermont atraen a ciclistas, corredores y triatletas, lo que lo convierte en un mercado real para gimnasios, terapia física y medicina deportiva. Creamos reseñas y seguimiento que le hablan a ese público."
+      ],
+      [
+        "¿También cubren Minneola y el corredor de la US-27?",
+        "Sí. Configuramos tu área de servicio en los lugares donde realmente trabajas, incluyendo Minneola y los vecindarios nuevos a lo largo de la US-27, para que aparezcas allí y no solo cerca del centro de Clermont."
+      ]
     ],
-    industries: ['Med spas y estética', 'Dentistas y clínicas especializadas', 'TI y servicios B2B', 'Asesores financieros y contadores', 'Servicios para el hogar'],
-  },
-  sanford: {
-    headline: 'Sanford va en ascenso. Asegúrate de que los clientes te encuentren en el camino.',
-    intro:
-      'Sanford combina un centro histórico revitalizado junto al lago Monroe con un crecimiento residencial constante y un aeropuerto que trae visitantes todos los días. Es un mercado donde los negocios locales todavía pueden ocupar el primer lugar en las búsquedas.',
-    market: [
-      ['El renacer del centro', 'First Street y la ribera atraen cada vez más gente a restaurantes, cervecerías y tiendas. Las campañas que traen de vuelta a los locales valen más que el tráfico de una sola vez.'],
-      ['Espacio para posicionarse', 'Comparado con Orlando, menos negocios locales aquí tienen un perfil de Google completo. Esa es una oportunidad.'],
-      ['Demanda constante de servicios para el hogar', 'Las casas más antiguas cerca del centro y las urbanizaciones nuevas al oeste necesitan reparaciones y mejoras constantes.'],
-    ],
-    industries: ['Restaurantes y cervecerías', 'Servicios para el hogar y restauración', 'Mecánica automotriz', 'Contratistas y oficios', 'Salones de eventos'],
-  },
-  'altamonte-springs': {
-    headline: 'Altamonte Springs: gana las búsquedas que ocurren a lo largo de la SR-436.',
-    intro:
-      'Altamonte Springs es un centro comercial y médico denso, donde compradores y pacientes llegan de todo el norte del área metropolitana. Muchos negocios compiten por los mismos clientes, y ganan los que tienen un sistema.',
-    market: [
-      ['Centro médico', 'Aquí se concentran hospitales y consultorios, y los pacientes eligen proveedor por reseñas y disponibilidad. Las reservas en línea y los recordatorios reducen las ausencias.'],
-      ['Tráfico comercial, no lealtad', 'La gente pasa para comprar y comer. Capturar su contacto y darle seguimiento convierte una visita única en un cliente habitual.'],
-      ['Competencia densa', 'Muchos negocios similares están a una milla de distancia unos de otros. El mapa de Google, no el letrero en la puerta, decide quién recibe la llamada.'],
-    ],
-    industries: ['Consultorios médicos y dentales', 'Comercio y restaurantes', 'Salones y barberías', 'Servicios automotrices', 'Servicios profesionales'],
   },
   oviedo: {
     headline: 'Las familias de Oviedo investigan antes de decidir. Asegúrate de que te encuentren.',
@@ -123,17 +169,34 @@ export const CITIES_ES = {
       ['Recomendaciones de vecinos, en línea', 'Los vecinos recomiendan negocios en grupos comunitarios. Un perfil de Google sólido respalda cada recomendación.'],
     ],
     industries: ['Pediatría y odontología familiar', 'Tutorías y actividades educativas', 'Servicios para el hogar', 'Fitness y deportes juveniles', 'Administración de propiedades'],
-  },
-  apopka: {
-    headline: 'Apopka está en auge. Atrae a los nuevos propietarios antes que nadie.',
-    intro:
-      'Conocida como la Capital Mundial del Follaje de Interior, Apopka es hoy una de las ciudades de mayor crecimiento del condado de Orange. Los nuevos vecindarios a lo largo de la Wekiva Parkway significan nuevos propietarios buscando todo tipo de servicios.',
-    market: [
-      ['Casas nuevas, búsquedas nuevas', 'Las familias que se mudan a nuevas urbanizaciones necesitan jardineros, control de plagas y servicios para el hogar de inmediato, y los buscan por ciudad.'],
-      ['Raíces en viveros y oficios', 'Apopka tiene raíces profundas en viveros y oficios. Los negocios B2B y contratistas locales se benefician de una presencia en línea profesional que refleje su experiencia.'],
-      ['Búsqueda local desatendida', 'Muchos negocios establecidos de Apopka todavía dependen solo del boca a boca. Un sistema moderno te pone adelante rápidamente.'],
+    playbook: [
+      [
+        "Semanas 1-2: un perfil en el que confían las familias",
+        "Un Perfil de Empresa en Google completo, con fotos reales, servicios claros y horario correcto. Las familias de Oviedo investigan antes de llamar, así que los huecos y las fotos viejas te sacan de su lista."
+      ],
+      [
+        "Semanas 3-6: reseñas recientes de forma constante",
+        "Solicitudes de reseña automáticas después de cada trabajo y una respuesta a cada una. Los padres comparan reseñas recientes con cuidado al elegir dentistas, tutores y contratistas, y un flujo constante te mantiene en la lista."
+      ],
+      [
+        "Semanas 7-12: planifica según el calendario de UCF",
+        "Campañas y recordatorios alineados con las mudanzas de entrada y salida y el inicio de cada semestre, para negocios de administración de propiedades, limpieza, reparaciones, mudanzas y tutorías cerca del corredor de Alafaya."
+      ]
     ],
-    industries: ['Paisajismo y viveros', 'Control de plagas y césped', 'Contratistas y oficios', 'Mecánica automotriz', 'Salud familiar'],
+    faq: [
+      [
+        "¿Cómo afecta UCF al marketing en Oviedo?",
+        "Le añade un segundo ritmo al año. Las mudanzas de entrada y salida traen demanda de limpieza, reparaciones, mudanzas y administración de propiedades, y el inicio del semestre trae demanda de tutorías. Alineamos campañas y recordatorios con ese calendario."
+      ],
+      [
+        "¿Por qué importan tanto las reseñas en Oviedo?",
+        "Las familias aquí investigan antes de contratar y comparan reseñas con cuidado. Un negocio con reseñas recientes y respuestas atentas se queda en la lista; uno con pocas reseñas viejas se queda fuera."
+      ],
+      [
+        "¿Siguen importando los grupos de Facebook del vecindario si invierto en SEO?",
+        "Sí, funcionan juntos. Los vecinos recomiendan negocios en grupos de la comunidad, y lo siguiente que hace la gente es buscarte en Google. Un perfil fuerte respalda cada recomendación."
+      ]
+    ],
   },
 };
 
@@ -144,7 +207,7 @@ export const GROW_FAQ_ES = [
   ['¿Hay contrato?', 'Recomendamos un mínimo de 3 meses: el SEO local y el crecimiento de reseñas toman tiempo en acumularse, y a los tres meses los resultados son claros. Para negocios pequeños que quieren probar primero, también ofrecemos mes a mes.'],
   ['¿Qué los hace diferentes de contratar una agencia de marketing?', 'La mayoría de las agencias te cobran por estrategia, reuniones y entregables que no puedes medir. Nosotros construimos sistemas que funcionan sin esfuerzo manual y reportamos métricas reales (clientes, citas, ingresos), no impresiones ni alcance.'],
   ['¿También manejan anuncios?', 'Sí. Administramos anuncios en Facebook y Google como parte de un sistema conectado: cada clic se rastrea hasta un cliente potencial y, finalmente, una venta.'],
-  ['¿Qué ciudades de la Florida Central atienden?', 'Todo el Gran Orlando, incluyendo Celebration, Kissimmee, St. Cloud, Orlando, Winter Garden, Clermont, Winter Park, Lake Mary, Sanford, Altamonte Springs, Oviedo y Apopka. Cada ciudad tiene su propia página con las búsquedas y vecindarios que trabajamos allí.'],
+  ['¿Qué ciudades de la Florida Central atienden?', 'Todo el Gran Orlando, incluyendo Celebration, Kissimmee, St. Cloud, Orlando, Winter Garden, Clermont, Winter Park, Lake Mary, Sanford, Altamonte Springs, Oviedo y Apopka. Celebration, Kissimmee, St. Cloud, Clermont y Oviedo tienen cada una su propia página con las búsquedas y vecindarios que trabajamos allí.'],
   ['¿Y si ya tengo un sitio web o un CRM?', 'Trabajamos junto a tus herramientas actuales o las reemplazamos, según lo que tengas. En la llamada de estrategia gratuita revisamos lo que ya usas y te decimos honestamente qué conservar y qué reemplazar.'],
 ];
 
