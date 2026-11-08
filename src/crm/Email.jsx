@@ -261,7 +261,9 @@ function ImportDrawer({ onClose, onDone }) {
 
 // ── Campaigns ───────────────────────────────────────────────────────────────
 
-const CAMPAIGN_STATUS = { draft: 'Draft', sending: 'Sending', sent: 'Sent' };
+const CAMPAIGN_STATUS = { draft: 'Draft', scheduled: 'Scheduled', sending: 'Sending', sent: 'Sent' };
+// Local date-time for a <input type="datetime-local"> (no seconds, no zone).
+const localInput = (d) => { const x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0, 16); };
 
 export function Campaigns({ version }) {
   const [tick, setTick] = React.useState(0);
@@ -597,8 +599,11 @@ export function Blasts({ version }) {
                 <tr key={r.id} onClick={() => setOpen(r)}>
                   <td><strong>{r.name}</strong><div className="muted" style={{ fontSize: 13 }}>{stamp(r.updated_at)}</div></td>
                   <td className="hide-sm">{tName(r.template)}</td>
-                  <td><span className={`pill ${r.status === 'sent' ? 'won' : ''}`}>{CAMPAIGN_STATUS[r.status] || r.status}</span></td>
-                  <td className="num">{r.status === 'draft' ? '—' : `${count(r.sent)} / ${count(r.recipients)}`}</td>
+                  <td>
+                    <span className={`pill ${r.status === 'sent' ? 'won' : ''}`}>{CAMPAIGN_STATUS[r.status] || r.status}</span>
+                    {r.status === 'scheduled' && <div className="muted" style={{ fontSize: 13 }}>{stamp(r.scheduled_at)}</div>}
+                  </td>
+                  <td className="num">{r.status === 'draft' || r.status === 'scheduled' ? '—' : `${count(r.sent)} / ${count(r.recipients)}`}</td>
                 </tr>
               ))}
             </tbody>
@@ -623,12 +628,15 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
   const [file, setFile] = React.useState(null); // { name, people, columns }
   // Whose name the preview shows: the first named person in the chosen or uploaded file.
   const [sample, setSample] = React.useState('');
+  const [when, setWhen] = React.useState('now'); // 'now' | 'later'
+  const [at, setAt] = React.useState(() => localInput(Date.now() + 24 * 3600 * 1000));
   const [progress, setProgress] = React.useState('');
   const [preview, setPreview] = React.useState(null);
   const [error, setError] = React.useState('');
   const [msg, setMsg] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const editable = !blast || blast.status === 'draft';
+  const scheduled = blast?.status === 'scheduled';
   const template = form.template || templates[0]?.id || '';
   const tpl = templates.find((t) => t.id === template);
   // A new blast is named after its template until you rename it.
@@ -693,6 +701,13 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
     const row = await persist();
     onSaved(await data('send_campaign', { id: row.id }));
   });
+  const schedule = () => run(async () => {
+    const t = new Date(at);
+    if (!window.confirm(`Schedule "${tpl?.name}" for ${stamp(t)} (your time) to everyone on the list then (${count(reach)} now)?`)) return;
+    const row = await persist();
+    onSaved(await data('schedule_campaign', { id: row.id, at: t.toISOString() }));
+  });
+  const unschedule = () => run(async () => onSaved(await data('unschedule_campaign', { id: blast.id })));
   async function remove() {
     if (!window.confirm(`Delete "${blast.name}"?`)) return;
     await data('delete_campaign', { id: blast.id });
@@ -702,7 +717,15 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
 
   return (
     <Drawer title={blast ? blast.name : 'New blast'} kicker="Email blast" onClose={onClose}>
-      {blast && !editable && (
+      {scheduled && (
+        <p className="notice">
+          Scheduled for <strong>{stamp(blast.scheduled_at)}</strong> (your time). It goes out within 10 minutes of then, to everyone on its list at that moment.
+          {' '}To change anything, cancel the schedule first.
+          <br /><button type="button" className="btn btn-small" style={{ marginTop: 8 }} disabled={busy} onClick={unschedule}>Cancel schedule</button>
+        </p>
+      )}
+      {blast?.schedule_error && editable && <div className="error">The scheduled send did not go out: {blast.schedule_error}</div>}
+      {blast && !editable && !scheduled && (
         <p className="notice">
           {blast.status === 'sent' ? 'Sent' : 'Sending'} to {count(blast.recipients)}{blast.sent_at ? ` · started ${stamp(blast.sent_at)}` : ''}.
           {' '}{count(blast.sent)} delivered to Resend{blast.failed ? `, ${count(blast.failed)} failed` : ''}{blast.waiting ? `, ${count(blast.waiting)} waiting for the daily limit` : ''}.
@@ -714,7 +737,7 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
           <input id="b-name" className="field" value={name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
           <label className="label" htmlFor="b-tpl">Email template *</label>
           <select id="b-tpl" className="field" value={template} onChange={(e) => setForm((p) => ({ ...p, template: e.target.value }))}>
-            {templates.length === 0 && <option value="">No templates yet: ask Loogo Labs</option>}
+            {templates.length === 0 && <option value="">No templates for this workspace yet: ask Loogo Labs</option>}
             {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
           {tpl && (
@@ -746,13 +769,29 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
           )}
         </fieldset>
 
+        {editable && (
+          <>
+            <div className="section">When</div>
+            <label className="check"><input type="radio" name="b-when" checked={when === 'now'} onChange={() => setWhen('now')} /> Send now</label>
+            <label className="check" style={{ marginTop: 6 }}><input type="radio" name="b-when" checked={when === 'later'} onChange={() => setWhen('later')} /> Schedule for later</label>
+            {when === 'later' && (
+              <>
+                <input type="datetime-local" className="field" style={{ maxWidth: 260, marginTop: 8 }} aria-label="Send at" value={at}
+                  min={localInput(Date.now() + 5 * 60 * 1000)} onChange={(e) => setAt(e.target.value)} />
+                <p className="muted" style={{ fontSize: 13 }}>Your time ({Intl.DateTimeFormat().resolvedOptions().timeZone}). Goes out within 10 minutes of the time you pick.</p>
+              </>
+            )}
+          </>
+        )}
+
         {progress && <p className="muted">{progress}</p>}
         {error && <div className="error">{error}</div>}
         {msg && <p className="notice">{msg}</p>}
         <div className="actions">
           {editable && <button className="btn" disabled={busy || !template}>Save draft</button>}
           {editable && <button type="button" className="btn" disabled={busy || !template} onClick={test}>Send me a test</button>}
-          {editable && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template} title={reach ? undefined : 'Upload a list first'} onClick={send}>Send blast</button>}
+          {editable && when === 'now' && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template} title={reach ? undefined : 'Upload a list first'} onClick={send}>Send blast</button>}
+          {editable && when === 'later' && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template || !at} title={reach ? undefined : 'Upload a list first'} onClick={schedule}>Schedule blast</button>}
           {blast && blast.status !== 'sending' && <button type="button" className="btn btn-danger" onClick={remove}>Delete</button>}
         </div>
 

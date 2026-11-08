@@ -66,6 +66,9 @@ export default {
   id: 'cards-and-cocktails-2026',
   name: 'Cards & Cocktails · Nov 14, 2026 · registered guests',
   description: "For people who already registered: you're on the list, event details, add to calendar, directions, VIP upgrade and bring-a-friend.",
+  // Loogo Labs' own instance has this template because it already sent it
+  // (see index.js). Add slugs here to give it to other instances.
+  instances: [],
   from_name: 'Cards & Cocktails',
   // The sender's physical address for the CAN-SPAM footer (else EMAIL_POSTAL_ADDRESS).
   postal_address: "Lugo's Craft Distillery, 2500 Drane Field Rd, Lakeland, FL 33811",
