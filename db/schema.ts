@@ -240,6 +240,47 @@ export const crm_activities = pgTable('crm_activities', {
   updated_at: timestamp('updated_at').defaultNow(),
 });
 
+// Delivery projects — see the crm_projects migration. lifecycle is 'agency'
+// (start to finish) or 'evergreen' (ongoing); stages per lifecycle are in
+// src/crm/entities.js.
+export const crm_projects = pgTable('crm_projects', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  name: text('name').notNull(),
+  company_id: uuid('company_id').references(() => crm_companies.id, { onDelete: 'set null' }),
+  contact_id: uuid('contact_id').references(() => crm_contacts.id, { onDelete: 'set null' }),
+  opportunity_id: uuid('opportunity_id').references(() => crm_opportunities.id, { onDelete: 'set null' }),
+  lifecycle: text('lifecycle').notNull().default('agency'),
+  stage: text('stage').notNull().default('intake'),
+  // on_track | at_risk | off_track
+  health: text('health').notNull().default('on_track'),
+  start_date: date('start_date'), target_end_date: date('target_end_date'),
+  report_cadence: text('report_cadence'), next_report_date: date('next_report_date'),
+  billing: text('billing'), budget: numeric('budget'),
+  owner_id: crmOwner(),
+  description: text('description'),
+  stage_changed_at: timestamp('stage_changed_at').defaultNow(),
+  closed_at: timestamp('closed_at'),
+  last_report_at: date('last_report_at'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const crm_project_reports = pgTable('crm_project_reports', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  project_id: uuid('project_id').notNull().references(() => crm_projects.id, { onDelete: 'cascade' }),
+  report_date: date('report_date').notNull(),
+  health: text('health').notNull().default('on_track'),
+  stage: text('stage'),
+  summary: text('summary').notNull(),
+  accomplishments: text('accomplishments'), next_steps: text('next_steps'), blockers: text('blockers'),
+  user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
+  author_label: text('author_label'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
 // Tokens for the Loogo Labs CRM MCP server, one instance each — see create_crm_api_tokens.
 export const crm_api_tokens = pgTable('crm_api_tokens', {
   id: uuid('id').defaultRandom().primaryKey(),

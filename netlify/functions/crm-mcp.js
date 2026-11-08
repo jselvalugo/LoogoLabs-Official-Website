@@ -1,9 +1,11 @@
 import { db, tokenHash } from '../lib/crm.js';
 import {
-  CrmError, addActivity, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
-  listRecords, overview, updateActivity, updateRecord,
+  CrmError, addActivity, addReport, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
+  listRecords, listReports, overview, updateActivity, updateRecord,
 } from '../lib/crm-records.js';
-import { ACTIVITY_FIELDS, ACTIVITY_TYPES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES } from '../../src/crm/entities.js';
+import {
+  ACTIVITY_FIELDS, ACTIVITY_TYPES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_HEALTH, PROJECT_LIFECYCLES, PROJECT_STAGES,
+} from '../../src/crm/entities.js';
 
 // "Loogo Labs CRM" — an MCP server (Streamable HTTP, stateless JSON responses)
 // at https://crm.loogolabs.com/mcp/<token>. The token can also be sent as
@@ -16,7 +18,7 @@ import { ACTIVITY_FIELDS, ACTIVITY_TYPES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STA
 // CRM instances/users themselves, which stay in /admin.
 export const config = { path: ['/mcp', '/mcp/*'] };
 
-const SERVER = { name: 'Loogo Labs CRM', version: '2.0.0' };
+const SERVER = { name: 'Loogo Labs CRM', version: '2.1.0' };
 const PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
 const typeArg = { type: 'string', enum: ENTITY_KEYS, description: 'Record type' };
@@ -33,14 +35,14 @@ const TOOLS = [
   {
     name: 'describe_crm',
     title: 'CRM: Describe data model',
-    description: 'Lists the CRM record types (companies, contacts, leads, opportunities), every field with its type and allowed values, and activity types. Call this first if unsure which fields exist.',
+    description: 'Lists the CRM record types (companies, contacts, leads, opportunities, projects), every field with its type and allowed values, and activity types. Call this first if unsure which fields exist.',
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'search_records',
     title: 'CRM: Search records',
-    description: 'Search companies, contacts, leads or opportunities. query matches names, emails, phones and similar text; filters match exact field values (e.g. {"stage":"proposal"}, {"company_id":"..."}, {"status":["new","contacted"]}). Results include display names for linked records (company_id_name, owner_id_name).',
+    description: 'Search companies, contacts, leads, opportunities or projects. query matches names, emails, phones and similar text; filters match exact field values (e.g. {"stage":"proposal"}, {"company_id":"..."}, {"status":["new","contacted"]}). Results include display names for linked records (company_id_name, owner_id_name).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -58,20 +60,20 @@ const TOOLS = [
   {
     name: 'get_record',
     title: 'CRM: Get record',
-    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts and opportunities; a contact\'s opportunities).',
+    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts, opportunities and projects; a contact\'s opportunities). Projects also include their status reports.',
     inputSchema: { type: 'object', properties: { type: typeArg, id: idArg }, required: ['type', 'id'] },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'create_record',
     title: 'CRM: Create record',
-    description: 'Create a company, contact, lead or opportunity. Link records with company_id / contact_id. Opportunity probability follows its stage unless given.',
+    description: 'Create a company, contact, lead, opportunity or project. Link records with company_id / contact_id / opportunity_id. Opportunity probability follows its stage unless given. A project\'s lifecycle is agency (start to finish, the default) or evergreen (ongoing, no set end); its stage must belong to that lifecycle (see describe_crm).',
     inputSchema: { type: 'object', properties: { type: typeArg, values: valuesArg }, required: ['type', 'values'] },
   },
   {
     name: 'update_record',
     title: 'CRM: Update record',
-    description: 'Change fields on a record. Only the fields passed change. Use this to move an opportunity between stages or change a lead status.',
+    description: 'Change fields on a record. Only the fields passed change. Use this to move an opportunity or project between stages or change a lead status. Project stage moves are logged on its timeline.',
     inputSchema: { type: 'object', properties: { type: typeArg, id: idArg, values: valuesArg }, required: ['type', 'id', 'values'] },
     annotations: { idempotentHint: true },
   },
@@ -154,9 +156,34 @@ const TOOLS = [
     annotations: { destructiveHint: true },
   },
   {
+    name: 'add_status_report',
+    title: 'CRM: Add project status report',
+    description: 'Add a dated status report to a project: health (on_track, at_risk, off_track), summary, what was done, what is next, and blockers. The project\'s health and next report due date follow its newest report.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        project_id: idArg,
+        report_date: { type: 'string', description: 'YYYY-MM-DD, default today' },
+        health: { type: 'string', enum: PROJECT_HEALTH.map((h) => h.id), default: 'on_track' },
+        summary: { type: 'string' },
+        accomplishments: { type: 'string' },
+        next_steps: { type: 'string' },
+        blockers: { type: 'string' },
+      },
+      required: ['project_id', 'summary'],
+    },
+  },
+  {
+    name: 'list_status_reports',
+    title: 'CRM: List project status reports',
+    description: 'A project\'s status reports, newest first.',
+    inputSchema: { type: 'object', properties: { project_id: idArg, limit: { type: 'integer', minimum: 1, maximum: 200, default: 20 } }, required: ['project_id'] },
+    annotations: { readOnlyHint: true },
+  },
+  {
     name: 'pipeline_overview',
     title: 'CRM: Pipeline overview',
-    description: 'Record counts, opportunities by stage (count, amount, probability-weighted amount), leads by status, open tasks and recent activity.',
+    description: 'Record counts, opportunities by stage (count, amount, probability-weighted amount), leads by status, open projects (active, at risk, status reports due), open tasks and recent activity.',
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
@@ -177,6 +204,8 @@ function describe() {
         ...(f.options && { options: f.options.map((o) => o.id) }), ...(f.to && { links_to: f.to }) })),
     }])),
     opportunity_stages: OPPORTUNITY_STAGES,
+    project_lifecycles: PROJECT_LIFECYCLES.map((l) => ({ ...l, stages: PROJECT_STAGES[l.id] })),
+    project_health: PROJECT_HEALTH.map((h) => h.id),
     activity_types: ACTIVITY_TYPES.map((t) => t.id),
   };
 }
@@ -189,7 +218,7 @@ async function runTool(name, a, auth) {
     case 'search_records': return listRecords(inst, a.type, { ...a, limit: a.limit ?? 25 });
     case 'get_record': return getRecord(inst, a.type, a.id);
     case 'create_record': return createRecord(inst, a.type, a.values || {}, audit);
-    case 'update_record': return updateRecord(inst, a.type, a.id, a.values || {});
+    case 'update_record': return updateRecord(inst, a.type, a.id, a.values || {}, audit);
     case 'delete_record': return { deleted: await deleteRecord(inst, a.type, a.id) };
     case 'convert_lead': return convertLead(inst, a.lead_id, a, audit);
     case 'log_activity':
@@ -199,6 +228,8 @@ async function runTool(name, a, auth) {
     case 'update_activity':
       return updateActivity(inst, a.id, { ...(a.values || {}), ...('completed' in a && { completed: a.completed }) });
     case 'delete_activity': return { deleted: await deleteActivity(inst, a.id) };
+    case 'add_status_report': return addReport(inst, a, audit);
+    case 'list_status_reports': return listReports(inst, a.project_id, { limit: a.limit ?? 20 });
     case 'pipeline_overview': return overview(inst);
     case 'list_team': {
       const { sql } = db();
@@ -238,7 +269,7 @@ async function handle(msg, auth) {
         protocolVersion: PROTOCOL_VERSIONS.includes(asked) ? asked : PROTOCOL_VERSIONS[0],
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER,
-        instructions: `Loogo Labs CRM manages only the CRM data of the "${auth.instance_name}" workspace: companies, contacts, leads, opportunities, their activities, and the team list. It cannot change the Loogo Labs website, blog, the website's own lead forms and proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Record types: companies, contacts, leads, opportunities, each with an activity timeline (notes, calls, emails, meetings, tasks). Use search_records to find an id before reading or changing a record; call describe_crm for the full field list. This is data only: nothing here sends emails or runs automations.`,
+        instructions: `Loogo Labs CRM manages only the CRM data of the "${auth.instance_name}" workspace: companies, contacts, leads, opportunities, projects (with status reports), their activities, and the team list. It cannot change the Loogo Labs website, blog, the website's own lead forms and proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Record types: companies, contacts, leads, opportunities, projects, each with an activity timeline (notes, calls, emails, meetings, tasks). Use search_records to find an id before reading or changing a record; call describe_crm for the full field list. This is data only: nothing here sends emails or runs automations.`,
       });
     }
     case 'ping':

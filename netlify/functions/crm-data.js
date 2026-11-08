@@ -1,7 +1,7 @@
 import { currentUser, db, json } from '../lib/crm.js';
 import {
-  CrmError, addActivity, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
-  listRecords, overview, updateActivity, updateRecord,
+  CrmError, addActivity, addReport, convertLead, createRecord, deleteActivity, deleteRecord, deleteReport, getRecord, listActivities,
+  listRecords, listReports, overview, updateActivity, updateRecord, updateReport,
 } from '../lib/crm-records.js';
 import * as clients from '../lib/crm-clients.js';
 import * as mail from '../lib/crm-marketing.js';
@@ -23,13 +23,18 @@ export default async (req) => {
       case 'list': return json(await listRecords(inst, body.entity, body));
       case 'get': return json(await getRecord(inst, body.entity, body.id));
       case 'create': return json(await createRecord(inst, body.entity, body.values || {}, audit), 201);
-      case 'update': return json(await updateRecord(inst, body.entity, body.id, body.values || {}));
+      case 'update': return json(await updateRecord(inst, body.entity, body.id, body.values || {}, audit));
       case 'delete': return json(await deleteRecord(inst, body.entity, body.id));
       case 'convert_lead': return json(await convertLead(inst, body.id, body.options || {}, audit));
       case 'list_activities': return json(await listActivities(inst, body));
       case 'add_activity': return json(await addActivity(inst, body.values || {}, audit), 201);
       case 'update_activity': return json(await updateActivity(inst, body.id, body.values || {}));
       case 'delete_activity': return json(await deleteActivity(inst, body.id));
+      // Project status reports.
+      case 'list_reports': return json(await listReports(inst, body.project_id, body));
+      case 'add_report': return json(await addReport(inst, body.values || {}, audit), 201);
+      case 'update_report': return json(await updateReport(inst, body.id, body.values || {}));
+      case 'delete_report': return json(await deleteReport(inst, body.id));
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
       case 'clients': return json(await clients.listClients(inst));
       case 'dashboard': return json(await clients.getDashboard(inst, body.company_id));
