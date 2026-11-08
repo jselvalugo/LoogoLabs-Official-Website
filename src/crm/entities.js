@@ -70,6 +70,45 @@ export const REPORT_CADENCES = [
   { id: 'none', label: 'No set schedule', days: null },
 ];
 // A status report on a project: the health call plus what happened and what's next.
+export const SOCIAL_FIELDS = ['instagram_url', 'facebook_url', 'tiktok_url', 'linkedin_url', 'youtube_url', 'x_url'];
+export const CHARGE_KINDS = [
+  { id: 'setup', label: 'Initiation / setup' },
+  { id: 'monthly', label: 'Monthly fee' },
+  { id: 'one_time', label: 'One-time' },
+  { id: 'credit', label: 'Credit' },
+];
+export const CHARGE_STATUSES = [
+  { id: 'due', label: 'Due' },
+  { id: 'paid', label: 'Paid' },
+  { id: 'void', label: 'Void' },
+];
+export const CHARGE_FIELDS = [
+  { key: 'kind', label: 'Type', type: 'select', options: CHARGE_KINDS, default: 'monthly' },
+  { key: 'description', label: 'Description', type: 'text' },
+  { key: 'amount', label: 'Amount', type: 'money', required: true },
+  { key: 'due_date', label: 'Due date', type: 'date' },
+  { key: 'period_start', label: 'Period (month starting)', type: 'date' },
+  { key: 'status', label: 'Status', type: 'select', options: CHARGE_STATUSES, default: 'due' },
+  { key: 'paid_at', label: 'Paid on', type: 'date' },
+  { key: 'method', label: 'Paid by', type: 'text' },
+];
+export const SOURCE_KINDS = [
+  { id: 'google_analytics', label: 'Google Analytics' },
+  { id: 'meta', label: 'Meta (Facebook / Instagram)' },
+  { id: 'social', label: 'Other social platform' },
+  { id: 'search_console', label: 'Search Console / SEO' },
+  { id: 'ads', label: 'Google Ads' },
+  { id: 'other', label: 'Other' },
+];
+export const SOURCE_FIELDS = [
+  { key: 'kind', label: 'Source', type: 'select', options: SOURCE_KINDS, default: 'other' },
+  { key: 'title', label: 'Title', type: 'text', required: true },
+  { key: 'filename', label: 'File name', type: 'text' },
+  { key: 'period_start', label: 'Period from', type: 'date' },
+  { key: 'period_end', label: 'Period to', type: 'date' },
+  { key: 'notes', label: 'Notes', type: 'textarea' },
+];
+export const REPORT_STATUSES = [{ id: 'draft', label: 'Draft' }, { id: 'final', label: 'Final' }];
 export const REPORT_FIELDS = [
   { key: 'report_date', label: 'Report date', type: 'date', required: true },
   { key: 'health', label: 'Health', type: 'select', options: PROJECT_HEALTH, default: 'on_track' },
@@ -77,6 +116,7 @@ export const REPORT_FIELDS = [
   { key: 'accomplishments', label: 'Done since last report', type: 'textarea' },
   { key: 'next_steps', label: 'Next up', type: 'textarea' },
   { key: 'blockers', label: 'Blockers / needs from client', type: 'textarea' },
+  { key: 'status', label: 'Status', type: 'select', options: REPORT_STATUSES, default: 'final' },
 ];
 
 export const ENTITIES = {
@@ -100,6 +140,13 @@ export const ENTITIES = {
       { key: 'state', label: 'State / region', type: 'text' },
       { key: 'postal_code', label: 'Postal code', type: 'text' },
       { key: 'country', label: 'Country', type: 'text' },
+      { key: 'logo_url', label: 'Logo', type: 'image' },
+      { key: 'instagram_url', label: 'Instagram', type: 'url' },
+      { key: 'facebook_url', label: 'Facebook', type: 'url' },
+      { key: 'tiktok_url', label: 'TikTok', type: 'url' },
+      { key: 'linkedin_url', label: 'LinkedIn page', type: 'url' },
+      { key: 'youtube_url', label: 'YouTube', type: 'url' },
+      { key: 'x_url', label: 'X (Twitter)', type: 'url' },
       { key: 'owner_id', label: 'Owner', type: 'user' },
       { key: 'description', label: 'Description', type: 'textarea' },
     ],
@@ -197,7 +244,10 @@ export const ENTITIES = {
       { key: 'report_cadence', label: 'Status report cadence', type: 'select', options: REPORT_CADENCES },
       { key: 'next_report_date', label: 'Next status report due', type: 'date' },
       { key: 'billing', label: 'Billing', type: 'select', options: opts('fixed_fee', 'monthly_retainer', 'hourly', 'other') },
-      { key: 'budget', label: 'Budget / fee', type: 'money' },
+      { key: 'setup_fee', label: 'Initiation / setup fee', type: 'money' },
+      { key: 'monthly_fee', label: 'Monthly fee', type: 'money' },
+      { key: 'billing_day', label: 'Billing day of month', type: 'number' },
+      { key: 'budget', label: 'Total budget', type: 'money' },
       { key: 'owner_id', label: 'Project lead', type: 'user' },
       { key: 'description', label: 'Scope & goals', type: 'textarea' },
     ],

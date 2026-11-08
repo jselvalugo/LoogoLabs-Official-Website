@@ -3,8 +3,10 @@ import {
   CrmError, addActivity, addReport, convertLead, createRecord, deleteActivity, deleteRecord, getRecord, listActivities,
   listRecords, listReports, overview, updateActivity, updateRecord,
 } from '../lib/crm-records.js';
+import * as records from '../lib/crm-records.js';
 import {
-  ACTIVITY_FIELDS, ACTIVITY_TYPES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_HEALTH, PROJECT_LIFECYCLES, PROJECT_STAGES,
+  ACTIVITY_FIELDS, ACTIVITY_TYPES, CHARGE_KINDS, CHARGE_STATUSES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_HEALTH,
+  PROJECT_LIFECYCLES, PROJECT_STAGES, SOURCE_KINDS,
 } from '../../src/crm/entities.js';
 
 // "Loogo Labs CRM" — an MCP server (Streamable HTTP, stateless JSON responses)
@@ -18,7 +20,7 @@ import {
 // CRM instances/users themselves, which stay in /admin.
 export const config = { path: ['/mcp', '/mcp/*'] };
 
-const SERVER = { name: 'Loogo Labs CRM', version: '2.1.0' };
+const SERVER = { name: 'Loogo Labs CRM', version: '2.2.0' };
 const PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
 const typeArg = { type: 'string', enum: ENTITY_KEYS, description: 'Record type' };
@@ -60,7 +62,7 @@ const TOOLS = [
   {
     name: 'get_record',
     title: 'CRM: Get record',
-    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts, opportunities and projects; a contact\'s opportunities). Projects also include their status reports.',
+    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts, opportunities and projects; a contact\'s opportunities). Projects also include status reports, the billing ledger and summary, uploaded research sources (metadata; read text with read_research_source) and the client card (logo, website, social profile links).',
     inputSchema: { type: 'object', properties: { type: typeArg, id: idArg }, required: ['type', 'id'] },
     annotations: { readOnlyHint: true },
   },
@@ -158,7 +160,7 @@ const TOOLS = [
   {
     name: 'add_status_report',
     title: 'CRM: Add project status report',
-    description: 'Add a dated status report to a project: health (on_track, at_risk, off_track), summary, what was done, what is next, and blockers. The project\'s health and next report due date follow its newest report.',
+    description: 'Add a dated status report to a project: health (on_track, at_risk, off_track), summary, what was done, what is next, and blockers. Use status "draft" when you wrote it for the user to review (always draft unless the user says to publish); only final reports set the project\'s health and next report due date.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -169,6 +171,7 @@ const TOOLS = [
         accomplishments: { type: 'string' },
         next_steps: { type: 'string' },
         blockers: { type: 'string' },
+        status: { type: 'string', enum: ['draft', 'final'], default: 'draft' },
       },
       required: ['project_id', 'summary'],
     },
@@ -179,6 +182,52 @@ const TOOLS = [
     description: 'A project\'s status reports, newest first.',
     inputSchema: { type: 'object', properties: { project_id: idArg, limit: { type: 'integer', minimum: 1, maximum: 200, default: 20 } }, required: ['project_id'] },
     annotations: { readOnlyHint: true },
+  },
+  {
+    name: 'list_research_sources',
+    title: 'CRM: List project research sources',
+    description: 'Reports the user uploaded to a project for research (Google Analytics, Meta, social, Search Console, Google Ads, other): title, period, size and a short preview. Read the full text with read_research_source.',
+    inputSchema: { type: 'object', properties: { project_id: idArg }, required: ['project_id'] },
+    annotations: { readOnlyHint: true },
+  },
+  {
+    name: 'read_research_source',
+    title: 'CRM: Read a research source',
+    description: 'The text of one uploaded report (CSV exports stay CSV; spreadsheets become CSV per sheet; PDFs become text), in pages. Pass next_offset back as offset to keep reading.',
+    inputSchema: {
+      type: 'object',
+      properties: { id: { type: 'string' }, offset: { type: 'integer', minimum: 0, default: 0 }, limit: { type: 'integer', minimum: 1000, maximum: 200000, default: 60000 } },
+      required: ['id'],
+    },
+    annotations: { readOnlyHint: true },
+  },
+  {
+    name: 'add_research_source',
+    title: 'CRM: Add a research source',
+    description: `Save text (e.g. a metrics export or notes from reviewing the client\'s social accounts) as a research source on a project. kind: ${SOURCE_KINDS.map((k) => k.id).join(', ')}.`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        project_id: idArg, kind: { type: 'string', enum: SOURCE_KINDS.map((k) => k.id) }, title: { type: 'string' }, content: { type: 'string' },
+        period_start: { type: 'string', description: 'YYYY-MM-DD' }, period_end: { type: 'string', description: 'YYYY-MM-DD' }, notes: { type: 'string' },
+        metrics: { type: 'array', description: 'Key numbers for the PDF report: [{ label, value, unit: "" | "%" | "$" }]', items: { type: 'object' } },
+      },
+      required: ['project_id', 'title', 'content'],
+    },
+  },
+  {
+    name: 'add_project_charge',
+    title: 'CRM: Add a billing charge',
+    description: `Add a line to a project's billing ledger. kind: ${CHARGE_KINDS.map((k) => k.id).join(', ')}; status: ${CHARGE_STATUSES.map((k) => k.id).join(', ')}. Confirm amounts with the user before writing.`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        project_id: idArg, kind: { type: 'string', enum: CHARGE_KINDS.map((k) => k.id) }, description: { type: 'string' }, amount: { type: 'number' },
+        due_date: { type: 'string' }, period_start: { type: 'string' }, status: { type: 'string', enum: CHARGE_STATUSES.map((k) => k.id) },
+        paid_at: { type: 'string' }, method: { type: 'string' },
+      },
+      required: ['project_id', 'amount'],
+    },
   },
   {
     name: 'pipeline_overview',
@@ -228,7 +277,11 @@ async function runTool(name, a, auth) {
     case 'update_activity':
       return updateActivity(inst, a.id, { ...(a.values || {}), ...('completed' in a && { completed: a.completed }) });
     case 'delete_activity': return { deleted: await deleteActivity(inst, a.id) };
-    case 'add_status_report': return addReport(inst, a, audit);
+    case 'add_status_report': return addReport(inst, { ...a, status: a.status || 'draft' }, audit);
+    case 'list_research_sources': return records.listSources(inst, a.project_id);
+    case 'read_research_source': return records.getSource(inst, a.id, a);
+    case 'add_research_source': return records.addSource(inst, a, audit);
+    case 'add_project_charge': return records.addCharge(inst, a);
     case 'list_status_reports': return listReports(inst, a.project_id, { limit: a.limit ?? 20 });
     case 'pipeline_overview': return overview(inst);
     case 'list_team': {

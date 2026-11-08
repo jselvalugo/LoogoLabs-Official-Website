@@ -163,6 +163,9 @@ export const crm_companies = pgTable('crm_companies', {
   address: text('address'), city: text('city'), state: text('state'), postal_code: text('postal_code'), country: text('country'),
   owner_id: crmOwner(),
   description: text('description'),
+  logo_url: text('logo_url'),
+  instagram_url: text('instagram_url'), facebook_url: text('facebook_url'), tiktok_url: text('tiktok_url'),
+  linkedin_url: text('linkedin_url'), youtube_url: text('youtube_url'), x_url: text('x_url'),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });
@@ -257,6 +260,7 @@ export const crm_projects = pgTable('crm_projects', {
   start_date: date('start_date'), target_end_date: date('target_end_date'),
   report_cadence: text('report_cadence'), next_report_date: date('next_report_date'),
   billing: text('billing'), budget: numeric('budget'),
+  setup_fee: numeric('setup_fee'), monthly_fee: numeric('monthly_fee'), billing_day: numeric('billing_day'),
   owner_id: crmOwner(),
   description: text('description'),
   stage_changed_at: timestamp('stage_changed_at').defaultNow(),
@@ -273,12 +277,52 @@ export const crm_project_reports = pgTable('crm_project_reports', {
   report_date: date('report_date').notNull(),
   health: text('health').notNull().default('on_track'),
   stage: text('stage'),
+  // draft (e.g. written by Claude, awaiting review) | final
+  status: text('status').notNull().default('final'),
   summary: text('summary').notNull(),
   accomplishments: text('accomplishments'), next_steps: text('next_steps'), blockers: text('blockers'),
   user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
   author_label: text('author_label'),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// Billing ledger per project — see the crm_project_billing_sources migration.
+export const crm_project_charges = pgTable('crm_project_charges', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  project_id: uuid('project_id').notNull().references(() => crm_projects.id, { onDelete: 'cascade' }),
+  // setup | monthly | one_time | credit
+  kind: text('kind').notNull().default('monthly'),
+  description: text('description'),
+  amount: numeric('amount').notNull(),
+  due_date: date('due_date'), period_start: date('period_start'),
+  // due | paid | void
+  status: text('status').notNull().default('due'),
+  paid_at: date('paid_at'), method: text('method'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+// Research sources: uploaded reports kept as text for status-report research.
+export const crm_project_sources = pgTable('crm_project_sources', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  instance_id: crmInstance(),
+  project_id: uuid('project_id').notNull().references(() => crm_projects.id, { onDelete: 'cascade' }),
+  // google_analytics | meta | social | search_console | other
+  kind: text('kind').notNull().default('other'),
+  title: text('title').notNull(),
+  filename: text('filename'),
+  period_start: date('period_start'), period_end: date('period_end'),
+  notes: text('notes'),
+  content: text('content').notNull(),
+  content_chars: integer('content_chars').notNull().default(0),
+  // [{ label, value, unit }] confirmed key numbers; breakdown: { title, columns, rows } — see crm_source_metrics
+  metrics: jsonb('metrics').notNull().default([]),
+  breakdown: jsonb('breakdown'),
+  user_id: uuid('user_id').references(() => crm_users.id, { onDelete: 'set null' }),
+  author_label: text('author_label'),
+  created_at: timestamp('created_at').defaultNow(),
 });
 
 // Tokens for the Loogo Labs CRM MCP server, one instance each — see create_crm_api_tokens.
