@@ -17,13 +17,18 @@ request. If it is ever switched back on, its prompt needs repointing at
 `content/posts.mjs` and `scripts/generate-post-migration.mjs` first; the
 version stored on the Routine hand-writes SQL and predates both.
 
+**Consolidation, from 2026-11-08:** posts that repeated each other across
+verticals are being folded into hub guides (see `content/retired-posts.mjs`).
+A folded row is marked "merged into <hub>". Its topic is still taken: extend
+the hub instead of writing a new single-vertical post on it.
+
 Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 (before 2026-11-08: `- YYYY-MM-DD | slug | vertical | topic`)
 
-- 2026-09-01 | missed-call-text-back-hvac | HVAC | Missed-call text-back
-- 2026-09-01 | dental-practice-lead-response-time | Dental practices | Speed-to-lead / form follow-up
+- 2026-09-01 | missed-call-text-back-hvac | HVAC | Missed-call text-back — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
+- 2026-09-01 | dental-practice-lead-response-time | Dental practices | Speed-to-lead / form follow-up — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-09-01 | salon-google-review-system | Salons & spas | Google review automation
-- 2026-09-01 | real-estate-lead-response-time | Real estate | Speed-to-lead / form follow-up
+- 2026-09-01 | real-estate-lead-response-time | Real estate | Speed-to-lead / form follow-up — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-09-01 | reduce-no-shows-appointment-reminders | Home services (electrician) | Appointment reminders / no-show reduction
 - 2026-09-01 | remodeling-crm-pipeline-follow-up | General contractors | CRM & pipeline visibility
 - 2026-09-01 | restaurant-email-sms-reengagement | Restaurants | Email/SMS re-engagement
@@ -39,7 +44,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
 - 2026-09-02 | roofing-unified-inbox-conversation-history | Roofing | Unified inbox — conversation history & handover
-- 2026-09-02 | chiropractic-lead-assignment-ownership | Chiropractic | Round-robin lead assignment & ownership
+- 2026-09-02 | chiropractic-lead-assignment-ownership | Chiropractic | Round-robin lead assignment & ownership — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-09-02 | barbershop-online-booking-interruptions | Barbershops | Online booking & self-scheduling
 - 2026-09-02 | physical-therapy-home-program-discharge | Physical therapy | Courses & content — post-discharge programs
 - 2026-09-02 | self-storage-message-testing | Self-storage | A/B testing & message optimization
@@ -70,7 +75,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-10-04 | lawn-care-fall-transition-after-last-mow | Lawn care | Seasonal transition — naming the gap after the last mow, leaf cleanup offer & spring hold
 - 2026-10-04 | pressure-washing-photo-quote-before-site-visit | Pressure washing | Lead intake — photo-based quoting before a site visit
 - 2026-10-05 | window-cleaning-daylight-saving-last-start-time | Window cleaning | Scheduling — per-service latest start time before the clocks go back (daylight-dependent exterior work)
-- 2026-10-05 | locksmith-lockout-price-range-text-before-dispatch | Locksmiths | Lead response — price range & arrival window text before dispatch
+- 2026-10-05 | locksmith-lockout-price-range-text-before-dispatch | Locksmiths | Lead response — price range & arrival window text before dispatch — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-10-06 | appliance-repair-thanksgiving-fixed-by-cutoff-date | Appliance repair | Seasonal booking — a fixed-by-Thanksgiving cutoff date driven by parts lead time
 - 2026-10-06 | tutoring-center-block-renewal-note-at-session-six | Tutoring centers | Renewals — session-six progress note & held time slot before a prepaid block ends
 - 2026-10-07 | massage-therapy-gift-certificate-recipient-booking-nudge | Massage therapy | Holiday gift certificates — capturing the recipient at purchase & booking nudges
@@ -88,8 +93,8 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-10-14 | pest-control-rodent-job-what-to-expect-text | Pest control | Post-service expectations — same-afternoon "what to expect" text, day-seven reply-1/2 check-in & booked recheck for rodent jobs
 - 2026-10-14 | home-inspector-report-delivered-deadline-text | Home inspectors | Buyer follow-up — recording the buyer's response deadline at booking, report-delivered text, midpoint call-slot offer & day-before text
 - 2026-10-15 | tax-preparer-extension-clients-one-missing-document | Tax preparers | Document collection — naming the single blocking document per extension client, dated slot & queue consequence, phone call after the second ask
-- 2026-10-15 | florist-sympathy-order-service-time-before-the-card | Florists | Order intake — four facts (service start time, place, family name, second contact) required before a sympathy ticket counts as taken, with a missing-details text
-- 2026-10-16 | hvac-first-heat-smell-text-triage | HVAC | Inbound triage — urgent-word list routes gas/CO/alarm texts to an instant safety text and a ringing human call, ordinary burn-off smells get a calm "what's normal" reply with a reply-to-escalate
+- 2026-10-15 | florist-sympathy-order-service-time-before-the-card | Florists | Order intake — four facts (service start time, place, family name, second contact) required before a sympathy ticket counts as taken, with a missing-details text — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
+- 2026-10-16 | hvac-first-heat-smell-text-triage | HVAC | Inbound triage — urgent-word list routes gas/CO/alarm texts to an instant safety text and a ringing human call, ordinary burn-off smells get a calm "what's normal" reply with a reply-to-escalate — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
 - 2026-10-16 | preschool-tour-follow-up-same-afternoon | Preschools & child care | Enrollment — same-afternoon tour follow-up text with a child-specific detail, dated spot hold, day-three director call
 - 2026-10-17 | auto-repair-declined-repairs-revisit-date | Auto repair | Declined work — bucket and dated revisit per declined line, free re-check text two weeks before a named event, one revisit per item
 - 2026-10-18 | catering-holiday-party-headcount-lock-date | Catering | Holiday booking — headcount lock date agreed at booking, three dated number requests, stated after-lock add/no-reduce rule
@@ -130,3 +135,4 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-11-06 | christmas-tree-delivery-ceiling-height-before-the-tree-is-cut | Christmas tree sellers | Delivered-order intake — ceiling-height, tight-access and stand questions texted right after the order, NOT SURE gets a call, `ceiling ok`/`ceiling mismatch`/`ceiling unknown` tags, same-day swap before the tree is cut, evening-before unknown list
 - 2026-11-06 | hot-tub-service-promise-note-on-the-record-after-every-call | Hot tub service | Follow-up discipline — one-line promise note (what, day, who is waiting) typed on the record after each call, `promised` tag, daily early list of due promises, update text with a new day instead of silence, tally of "I'll" for one day
 - 2026-11-07 | generator-service-nameplate-photo-text-before-the-first-outage | Generator service | Outage prep — November text asking for a nameplate photo and a YES/NO/NOT SURE answer on whether the unit ran last outage, `ran last outage`/`did not run`/`run unknown` tags, one nudge, storm call list sorted did-not-run first
+- 2026-11-08 | 5-minute-rule-local-service-business-leads | Follow-Up, Email & SMS / local service businesses | Hub: speed to lead — measuring the response gap, cost of delay, lead ownership, first-reply rules, where AI should and should not reply (absorbs 10 posts)
