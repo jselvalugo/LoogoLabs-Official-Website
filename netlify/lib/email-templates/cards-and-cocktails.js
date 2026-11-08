@@ -6,7 +6,9 @@
 // Playfair Display headings and Inter body (Georgia / Helvetica fallbacks).
 
 const SITE = 'https://cards-and-cocktails.netlify.app';
-const LOGO = `${SITE}/assets/lugos-logo.png`;
+// Copy of the event site's logo, hosted on loogolabs.com so the email never
+// depends on the event site staying up (public/email/, 280px for retina).
+const LOGO = 'https://www.loogolabs.com/email/cards-and-cocktails-logo.png';
 const REGISTER = `${SITE}/#register`;
 // 2:00–10:00 PM Eastern (EST, UTC−5) on Nov 14, 2026.
 const CALENDAR = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
@@ -88,7 +90,7 @@ export default {
 
         <!-- Hero -->
         <tr><td align="center" bgcolor="${INK_LIGHT}" class="px" style="background:${INK_LIGHT};border:1px solid ${BORDER};border-bottom:0;border-radius:18px 18px 0 0;padding:36px 40px 30px;">
-          <img src="${LOGO}" width="96" height="94" alt="Lugo's Craft Distillery" style="display:block;margin:0 auto 18px;width:96px;height:auto;border:0;">
+          <img src="${LOGO}" width="140" height="137" alt="Lugo's Craft Distillery" style="display:block;margin:0 auto 20px;width:140px;height:auto;border:0;">
           ${kicker("Lugo's Craft Distillery presents")}
           <h1 class="h1" style="margin:14px 0 0;font:700 50px/1.05 ${SERIF};color:${GOLD_LIGHT};">Cards &amp; Cocktails</h1>
           <div style="margin:12px 0 0;font:600 12px/1.4 ${SANS};letter-spacing:.3em;text-transform:uppercase;color:${CREAM};">Pokémon Trading Card Event</div>
