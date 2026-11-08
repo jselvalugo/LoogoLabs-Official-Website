@@ -153,7 +153,7 @@ export default {
                 <tr><td style="padding:22px 20px;">
                   ${kicker('Want to sell? · $80')}
                   <div style="margin:8px 0 0;font:700 20px/1.25 ${SERIF};color:${CREAM};">Grab a vendor table</div>
-                  <p style="margin:10px 0 16px;font:14px/1.6 ${SANS};color:${MUTED_LIGHT};">All in: tent, table and two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM sharp.</p>
+                  <p style="margin:10px 0 16px;font:14px/1.6 ${SANS};color:${MUTED_LIGHT};">All in: your table and two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM sharp.</p>
                   <a href="${VENDORS}" style="font:800 12px/1 ${SANS};letter-spacing:.1em;text-transform:uppercase;color:${GOLD_LIGHT};text-decoration:none;">Reserve a table →</a>
                 </td></tr>
               </table>
@@ -216,7 +216,7 @@ export default {
       `AT THE TABLES: ${GAMES.join(' · ')}`,
       '',
       `UPGRADE TO VIP ($25): one hour early entry from 1 PM, a PokeMenu cocktail, first pick of vendor tables. ${VIP}`,
-      `WANT TO SELL? VENDOR TABLE ($80 all in): tent, table, two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM. ${VENDORS}`,
+      `WANT TO SELL? VENDOR TABLE ($80 all in): your table and two cocktail tickets. Arrive 12–1 PM; load-in closes at 1:00 PM. ${VENDORS}`,
       '',
       'SCHEDULE',
       ...SCHEDULE.map(([t, what]) => `${t}  ${what}`),
