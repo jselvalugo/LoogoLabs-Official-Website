@@ -5,7 +5,9 @@ import { Approvals, Dashboards, Recaps } from './Clients';
 import { Audience, Automations, Blasts, Campaigns } from './Email';
 import { Drawer, Stat } from './report';
 import { Crm, useCrm } from './ctx';
-import { HealthPill, LifecycleTrack, LifecyclePill, ProjectsOverview, ProjectsPage, StatusReports } from './Projects';
+import { Activities, FieldInput, HALF, fieldsFor, withLifecycle } from './records';
+import { HealthPill, LifecyclePill, ProjectsOverview, ProjectsPage } from './Projects';
+import { ProjectRecord } from './ProjectRecord';
 
 const PAGES = [
   { id: 'overview', label: 'Overview', path: '' },
@@ -44,16 +46,22 @@ const today = () => new Date().toISOString().slice(0, 10);
 // Served at the root of crm.loogolabs.com, and under /crm on the main domain
 // (for local dev and before DNS is set up).
 const BASE = window.location.pathname.startsWith('/crm') ? '/crm' : '';
-const pageFromPath = () => {
+// Record pages: /projects/<id> and /projects/new open a full page, not the drawer.
+const RECORD_PATH = /^\/projects\/(new|[0-9a-f-]{36})$/i;
+const routeFromPath = () => {
   const rest = window.location.pathname.slice(BASE.length).replace(/\/$/, '');
-  return (PAGES.find((p) => p.path === rest) || PAGES[0]).id;
+  const rec = rest.match(RECORD_PATH);
+  if (rec) return { page: 'project', id: rec[1] === 'new' ? null : rec[1] };
+  return { page: (PAGES.find((p) => p.path === rest) || PAGES[0]).id, id: null };
 };
 
 
 export default function App() {
   const [me, setMe] = React.useState(null);
   const [checking, setChecking] = React.useState(!!getToken());
-  const [page, setPage] = React.useState(pageFromPath);
+  const [route, setRoute] = React.useState(routeFromPath);
+  const { page } = route;
+  const preset = React.useRef(null); // values for a new project page (e.g. from a won deal)
   const [team, setTeam] = React.useState([]);
   const [drawer, setDrawer] = React.useState(null); // { entity, id? , values? }
   const [version, setVersion] = React.useState(0); // bumps when a record changes so lists reload
@@ -61,7 +69,7 @@ export default function App() {
   React.useEffect(() => {
     if (getToken()) call('crm-auth', 'me').then(setMe).catch(() => {}).finally(() => setChecking(false));
     const out = () => setMe(null);
-    const pop = () => setPage(pageFromPath());
+    const pop = () => { setRoute(routeFromPath()); setDrawer(null); };
     window.addEventListener('crm:signed-out', out);
     window.addEventListener('popstate', pop);
     return () => { window.removeEventListener('crm:signed-out', out); window.removeEventListener('popstate', pop); };
@@ -71,7 +79,18 @@ export default function App() {
   function go(id) {
     const p = PAGES.find((x) => x.id === id);
     window.history.pushState(null, '', BASE + p.path || '/');
-    setPage(id);
+    setRoute({ page: id, id: null });
+    window.scrollTo(0, 0);
+  }
+
+  // Projects open as full record pages; every other record opens in the drawer.
+  function openRecord(entity, id, values) {
+    if (entity !== 'projects') { setDrawer({ entity, id, values }); return; }
+    setDrawer(null);
+    preset.current = id ? null : values || null;
+    window.history.pushState(null, '', `${BASE}/projects/${id || 'new'}`);
+    setRoute({ page: 'project', id: id || null });
+    window.scrollTo(0, 0);
   }
 
   async function signOut() {
@@ -82,13 +101,15 @@ export default function App() {
 
   const ctx = React.useMemo(() => ({
     me, team, version,
-    open: (entity, id, values) => setDrawer({ entity, id, values }),
+    open: openRecord,
+    go,
     changed: () => setVersion((v) => v + 1),
   }), [me, team, version]);
 
   if (checking) return null;
   if (!me) return <SignIn onSignedIn={setMe} />;
-  const current = PAGES.find((p) => p.id === page);
+  const current = PAGES.find((p) => p.id === page) || {};
+  const navPage = page === 'project' ? 'projects' : page;
 
   return (
     <Crm.Provider value={ctx}>
@@ -96,16 +117,17 @@ export default function App() {
         <div className="brand"><img src="/admin-logo.png" alt="" />CRM</div>
         <nav className="nav">
           {NAV.map((n) => (typeof n === 'string'
-            ? <button key={n} className={page === n ? 'on' : ''} onClick={() => go(n)}>{pageLabel(n)}</button>
-            : <NavMenu key={n.id} group={n} page={page} go={go} />))}
+            ? <button key={n} className={navPage === n ? 'on' : ''} onClick={() => go(n)}>{pageLabel(n)}</button>
+            : <NavMenu key={n.id} group={n} page={navPage} go={go} />))}
         </nav>
         <div className="who hide-sm">{me.instance_name}<br />{me.name || me.email}</div>
         <button className="btn" onClick={signOut}>Sign out</button>
       </header>
-      <main className="page">
+      <main className={`page ${page === 'project' ? 'page-wide' : ''}`}>
         {page === 'overview' && <Overview />}
         {current.entity && <RecordList key={current.entity} entityKey={current.entity} />}
         {page === 'projects' && <ProjectsPage />}
+        {page === 'project' && <ProjectRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
         {page === 'tasks' && <Tasks />}
         {page === 'dashboards' && <Dashboards version={version} />}
         {page === 'approvals' && <Approvals version={version} />}
@@ -118,7 +140,7 @@ export default function App() {
       </main>
       {drawer && (
         <RecordDrawer key={`${drawer.entity}:${drawer.id || 'new'}`} {...drawer} onClose={() => setDrawer(null)}
-          onOpen={(entity, id, values) => setDrawer({ entity, id, values })} />
+          onOpen={openRecord} />
       )}
     </Crm.Provider>
   );
@@ -364,83 +386,6 @@ function Board({ rows }) {
 
 // ── Record drawer ───────────────────────────────────────────────────────────
 
-const refCache = {};
-function useOptions(entityKey) {
-  const { version } = useCrm();
-  const [opts, setOpts] = React.useState(refCache[entityKey] || []);
-  React.useEffect(() => {
-    data('list', { entity: entityKey, limit: 500, sort: 'name:asc' })
-      .then((r) => { refCache[entityKey] = r.records.map((x) => ({ id: x.id, name: x.name })); setOpts(refCache[entityKey]); })
-      .catch(() => {});
-  }, [entityKey, version]);
-  return opts;
-}
-
-function RefSelect({ field, value, onChange, id }) {
-  const options = useOptions(field.to);
-  return (
-    <select id={id} className="field" value={value || ''} onChange={(e) => onChange(e.target.value)}>
-      <option value="">—</option>
-      {options.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
-    </select>
-  );
-}
-
-function FieldInput({ field, value, onChange, id }) {
-  const { team } = useCrm();
-  const set = (e) => onChange(e.target.value);
-  const v = value ?? '';
-  switch (field.type) {
-    case 'textarea': return <textarea id={id} className="field" rows={3} value={v} onChange={set} />;
-    case 'select':
-      return (
-        <select id={id} className="field" value={v} onChange={set}>
-          {!field.default && <option value="">—</option>}
-          {field.options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
-        </select>
-      );
-    case 'ref': return <RefSelect id={id} field={field} value={v} onChange={onChange} />;
-    case 'user':
-      return (
-        <select id={id} className="field" value={v} onChange={set}>
-          <option value="">—</option>
-          {team.map((u) => <option key={u.id} value={u.id}>{u.name || u.email}</option>)}
-        </select>
-      );
-    case 'number': case 'money': case 'percent': return <input id={id} className="field" inputMode="decimal" value={v} onChange={set} />;
-    case 'date': return <input id={id} className="field" type="date" value={v ? String(v).slice(0, 10) : ''} onChange={set} />;
-    case 'email': return <input id={id} className="field" type="email" value={v} onChange={set} />;
-    case 'url': return <input id={id} className="field" type="url" placeholder="https://" value={v} onChange={set} />;
-    default: return <input id={id} className="field" value={v} onChange={set} required={field.required} />;
-  }
-}
-
-const HALF = new Set(['text', 'email', 'phone', 'url', 'number', 'money', 'percent', 'date', 'select', 'ref', 'user']);
-
-// Projects: the Stage options follow the Lifecycle, and evergreen work has no
-// target end date.
-function fieldsFor(entityKey, form) {
-  const e = ENTITIES[entityKey];
-  if (entityKey !== 'projects') return e.fields;
-  const life = PROJECT_LIFECYCLES.find((l) => l.id === form.lifecycle) || PROJECT_LIFECYCLES[0];
-  return e.fields
-    .filter((f) => !(f.key === 'target_end_date' && form.lifecycle === 'evergreen'))
-    .map((f) => (f.key === 'stage' ? { ...f, options: stagesFor(form.lifecycle) }
-      : f.key === 'lifecycle' ? { ...f, hint: life.hint } : f));
-}
-
-// When the lifecycle changes, keep the stage if it still fits, else start at the
-// new lifecycle's first stage, and switch the report cadence to its default.
-function withLifecycle(form, lifecycle, previous) {
-  const next = { ...form };
-  if (!stageInfo(lifecycle, next.stage)) next.stage = stagesFor(lifecycle)[0].id;
-  const was = PROJECT_LIFECYCLES.find((l) => l.id === previous);
-  const now = PROJECT_LIFECYCLES.find((l) => l.id === lifecycle);
-  if (now && (!next.report_cadence || (was && next.report_cadence === was.cadence))) next.report_cadence = now.cadence;
-  if (lifecycle === 'evergreen') next.target_end_date = '';
-  return next;
-}
-
 function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }) {
   const e = ENTITIES[entityKey];
   const { me, changed } = useCrm();
@@ -474,17 +419,6 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
     setBusy(false);
   }
 
-  async function moveStage(stage) {
-    setBusy(true);
-    setError('');
-    try {
-      await data('update', { entity: 'projects', id, values: { stage } });
-      changed();
-      await load();
-    } catch (err) { setError(err.message); }
-    setBusy(false);
-  }
-
   async function remove() {
     if (!window.confirm(`Delete ${record.name}? Its activities are deleted too. This cannot be undone.`)) return;
     try {
@@ -510,7 +444,6 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
           {record.converted_opportunity_id && <> · <button className="link" onClick={() => onOpen('opportunities', record.converted_opportunity_id)}>opportunity</button></>}
         </div>
       )}
-      {entityKey === 'projects' && !isNew && <LifecycleTrack project={record} busy={busy} onMove={moveStage} />}
       {entityKey === 'opportunities' && !isNew && record.stage === 'won' && !(record.related?.projects || []).length && (
         <div className="notice row-notice">
           <span style={{ flex: 1 }}>Deal won. Start the delivery project?</span>
@@ -521,7 +454,6 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
         </div>
       )}
       <form onSubmit={save}>
-        {entityKey === 'projects' && !isNew && <div className="section" style={{ marginTop: 24 }}>Details</div>}
         <div className="grid2">
           {fieldsFor(entityKey, form).map((f) => (
             <div key={f.key} className={HALF.has(f.type) ? '' : 'span2'}>
@@ -545,7 +477,6 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
 
       {!isNew && (
         <>
-          {entityKey === 'projects' && <StatusReports key={record.id} project={record} initial={record.reports} onChanged={() => { load(); changed(); }} />}
           <Related record={record} entityKey={entityKey} onOpen={onOpen} />
           <Activities entityKey={entityKey} id={id} initial={record.activities} />
           <p className="muted meta">Created {when(record.created_at)} · Updated {when(record.updated_at)}</p>
@@ -617,75 +548,6 @@ function ConvertLead({ lead, onCancel, onDone }) {
         <button type="button" className="btn" onClick={onCancel}>Cancel</button>
       </div>
     </form>
-  );
-}
-
-// ── Activities ──────────────────────────────────────────────────────────────
-
-function Activities({ entityKey, id, initial }) {
-  const { changed } = useCrm();
-  const [items, setItems] = React.useState(initial || []);
-  const [type, setType] = React.useState('note');
-  const [subject, setSubject] = React.useState('');
-  const [body, setBody] = React.useState('');
-  const [due, setDue] = React.useState('');
-  const [error, setError] = React.useState('');
-
-  async function add(e) {
-    e.preventDefault();
-    setError('');
-    try {
-      const row = await data('add_activity', { values: { entity_type: entityKey, entity_id: id, type, subject, body, due_date: due } });
-      setItems((p) => [row, ...p]);
-      setSubject(''); setBody(''); setDue('');
-      changed();
-    } catch (err) { setError(err.message); }
-  }
-
-  async function toggle(a) {
-    const row = await data('update_activity', { id: a.id, values: { completed: !a.completed_at } });
-    setItems((p) => p.map((x) => (x.id === a.id ? row : x)));
-    changed();
-  }
-
-  async function remove(a) {
-    if (!window.confirm('Delete this activity?')) return;
-    await data('delete_activity', { id: a.id });
-    setItems((p) => p.filter((x) => x.id !== a.id));
-    changed();
-  }
-
-  const scheduled = type === 'task' || type === 'meeting';
-  return (
-    <>
-      <div className="section">Activity</div>
-      <form onSubmit={add} className="composer">
-        <div className="tabs">
-          {ACTIVITY_TYPES.map((t) => <button type="button" key={t.id} className={type === t.id ? 'on' : ''} onClick={() => setType(t.id)}>{t.label}</button>)}
-        </div>
-        {type !== 'note' && <input className="field" placeholder={type === 'task' ? 'What needs doing?' : 'Subject'} aria-label="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} />}
-        <textarea className="field" rows={3} placeholder={type === 'note' ? 'Add a note…' : 'Details'} aria-label="Details" value={body} onChange={(e) => setBody(e.target.value)} />
-        {scheduled && <input className="field" type="date" aria-label="Due date" value={due} onChange={(e) => setDue(e.target.value)} />}
-        {error && <div className="error">{error}</div>}
-        <div className="actions" style={{ marginTop: 8 }}><button className="btn">{type === 'task' ? 'Add task' : `Log ${type}`}</button></div>
-      </form>
-      {items.map((a) => (
-        <div key={a.id} className="note">
-          <div className="note-head">
-            {a.type === 'task' && <input type="checkbox" checked={!!a.completed_at} onChange={() => toggle(a)} aria-label="Done" />}
-            <span className="pill">{optionLabel({ options: ACTIVITY_TYPES }, a.type)}</span>
-            <strong className={a.type === 'task' && a.completed_at ? 'done' : ''}>{a.subject}</strong>
-            <button className="link danger" onClick={() => remove(a)} aria-label="Delete activity">Delete</button>
-          </div>
-          {a.body && <div className="pre">{a.body}</div>}
-          <small>
-            {a.author || 'Removed user'} · {when(a.created_at)}
-            {a.due_date && <> · <span className={!a.completed_at && a.due_date < today() ? 'overdue' : ''}>due {day(a.due_date)}</span></>}
-            {a.owner_id_name && a.type === 'task' && <> · assigned to {a.owner_id_name}</>}
-          </small>
-        </div>
-      ))}
-    </>
   );
 }
 
