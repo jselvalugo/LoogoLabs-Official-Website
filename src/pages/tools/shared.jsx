@@ -154,6 +154,9 @@ export function TipsSignup({ tool }) {
             {error && <p className="tl-hint" role="alert" style={{ width: '100%' }}>{error}</p>}
           </form>
         )}
+        <p className="tl-hint" style={{ gridColumn: '1 / -1' }}>{es
+          ? 'Usar estas herramientas no nos envía nada de lo que escribes: todo se queda en tu navegador. Solo el email que pongas aquí se suma a la carta de Loogo Labs, y puedes darte de baja cuando quieras.'
+          : 'Using these tools never sends what you type to us: it all stays in your browser. Only the email you enter here joins the Loogo Labs Letter, and you can unsubscribe anytime.'}</p>
       </div>
     </section>
   );
