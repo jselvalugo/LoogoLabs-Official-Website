@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { BOOKING_URL } from '../lib/booking';
 import { trackSchedule } from '../lib/metaEvents';
 import { BLOG_INDEX, applyHead, headForPost } from '../lib/seo';
@@ -451,8 +452,12 @@ function NextBar({ post, onNavigate, es }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-  if (closed) return null;
-  return (
+  // Rendered into <body>: the page-transition wrapper is transformed, which
+  // would pin a position:fixed bar to the article instead of the screen.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => { setMounted(true); }, []);
+  if (closed || !mounted) return null;
+  return createPortal(
     <div className={`lb-next${show ? ' is-on' : ''}`} aria-hidden={!show}>
       <a href={`${BLOG_BASE_PATH}/${post.slug}`} tabIndex={show ? 0 : -1} onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }} className="lb-next__link">
         <span className="lb-next__k">{es ? 'Siguiente' : 'Next'}</span>
@@ -460,6 +465,7 @@ function NextBar({ post, onNavigate, es }) {
         <ArrowRight size={16} weight="bold" aria-hidden="true" />
       </a>
       <button type="button" className="lb-next__x" tabIndex={show ? 0 : -1} aria-label={es ? 'Cerrar' : 'Close'} onClick={() => setClosed(true)}><X size={14} weight="bold" aria-hidden="true" /></button>
-    </div>
+    </div>,
+    document.body,
   );
 }

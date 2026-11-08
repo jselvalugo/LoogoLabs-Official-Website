@@ -476,7 +476,7 @@
 .ln-start__title { font-size: 18px; font-weight: 500; line-height: 1.3; letter-spacing: -0.015em; flex: 1; }
 .ln-start__meta { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; color: var(--ink-500); }
 @media (max-width: 960px) {
-  .ln-start__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 0 16px 4px; }
+  .ln-start__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 0 4px; }
   .ln-start__grid::-webkit-scrollbar { display: none; }
   .ln-start__card { flex: 0 0 min(78%, 300px); scroll-snap-align: start; }
 }
