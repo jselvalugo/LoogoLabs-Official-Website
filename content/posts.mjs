@@ -11,6 +11,100 @@
 
 export const posts = [
   {
+    slug: `5-minute-rule-local-service-business-leads`,
+    title: `Speed to Lead: When AI Should Write the First Reply`,
+    excerpt: `The first business to give a new lead a clear next step usually ends the search, and AI can send that reply at any hour, as long as a person still closes.`,
+    tags: `Lead Follow-Up, AI Assistants, Speed to Lead`,
+    content: `Three businesses get the same inquiry at 8:40 on a weeknight. Two send an automatic note promising a reply during business hours. The third sends a text inside two minutes that names the problem and offers two times tomorrow. The person picks one of those times and stops looking. The other two never find out they were in the running.
+
+That is what speed to lead looks like from the customer's side. They are not comparing your reviews or your prices at that hour. They are comparing who answered, and the first business to give them a clear next step usually ends the search.
+
+I have spent a lot of time on this problem, across dental practices, home services, real estate teams and clinics, and the fix is never only "be faster." It is a short chain of decisions: who owns the lead, what the first message says, what AI is allowed to write, and when a person has to take over. Get those right and the five-minute reply becomes ordinary, not heroic.
+
+## Start by measuring the gap you actually have
+
+Most owners can tell me their close rate on calls they took. Almost none can tell me what happened to the leads they never got the chance to close.
+
+Before you change anything, pull the last twenty leads from every source: web form, missed calls, social messages, paid listings. For each one, write down two times: when they reached out, and when they first heard back from a person or a message that asked them something specific. An automatic "we got it" does not count as first contact unless it moves them to a next step.
+
+Then do the cheapest audit there is. Fill out your own contact form tonight from your personal phone and call your main line after hours. Note what you get back, and how long it takes.
+
+Two numbers come out of this. The first is your median response time. The second is the share of leads that never got a real reply at all. In my experience the second number is the one that changes minds.
+
+## Put a price on the delay
+
+Here is the math I put in front of owners who tell me they need more leads.
+
+Take last month's ad spend, listing fees and any paid lead sources. Divide by the leads they produced. That is your real cost per lead. Now count how many of those leads got a specific reply inside five minutes.
+
+Every lead outside that group is one you paid for and then let go cold. Not lost to a better competitor. Lost to a gap you control. If your cost per lead is $60 and forty leads a month wait three hours for a reply, that is $2,400 a month spent on people who had already booked someone else by the time you called.
+
+This is also why the conversation rarely comes up in an agency review. The report covers clicks and cost per lead, because that is the part the agency runs. What happens to a lead after it arrives lives inside your business, so nobody is paid to look at it. Nobody is hiding anything. It is simply outside the contract. When results slow down, the suggested fix is usually more budget, because that is the lever the agency holds. Check your response gap before you approve that.
+
+## Give every lead one owner
+
+Speed assumes somebody is trying. The failure I see most in teams of three or more is different: everyone saw the lead and assumed someone else had it.
+
+A lead that belongs to everyone belongs to nobody. It sits in a shared inbox, three people read it, each one reasons that a colleague is closer to it, and two days later it is buried under newer messages.
+
+Assignment fixes this, but only if it does four things:
+
+- It happens automatically, inside a minute, before anyone has to decide
+- It goes to a named person, never to a team or a role
+- It notifies that person on the device they actually check
+- It surfaces visibly if nothing has happened within a set window
+
+Round-robin is a fine default. Add an override for a customer who asks for someone by name, and one fallback owner for anything that arrives after hours.
+
+Fair warning: once every lead carries a name, you will see that some people book far more of what they are handed than others. I have watched owners switch assignment off rather than face that. That gap was always there. Now you can coach it.
+
+## What the first reply has to do
+
+The first message is not a receipt. It has one job: get a yes to a next step.
+
+- **Send it as a text.** A voicemail from an unknown number does not get played, and email lands in a folder nobody checks at night.
+- **Name what they asked about.** The tooth, the listing, the furnace, the locked car. "Thanks for your interest" tells them nobody read it.
+- **Offer a specific next step.** Two appointment times, a call window, a question they can answer in one word.
+- **Put a human name on it.** "This is Maria at the front desk" reads differently from "the team."
+- **Promise only what you will keep.** "Someone will call you within fifteen minutes" is a commitment. If nobody calls, the text made things worse.
+
+A missed call deserves the same treatment. The moment a call rings out, a text goes back asking what they need. Someone standing in a hot house or outside a locked car is already dialing the next number, and a text is easier to answer than a voicemail.
+
+Some trades should put a number in that first text. A locksmith who replies with a price range and an arrival window ("usually $X to $Y, tech there between 9:40 and 10:10") beats the shop that says "it depends." People will accept a range. They will not accept not knowing.
+
+## Where AI helps, and where it costs you the sale
+
+This is where most of the questions come from now, so I will be plain about it.
+
+**AI is good at the first reply.** It can read a form or a text, pull out what the person asked for, and draft a short reply that names it and offers your next open times. It works at 8:40 on a weeknight and on Sunday afternoon. For most businesses, that alone closes the gap between "they reached out" and "they heard from us."
+
+**AI is good at sorting.** It can tag a message as urgent, routine or price-shopping before a person reads it. One rule I like for this is a short list of urgent words you choose yourself. An HVAC shop's first cold night brings a pile of "it smells like something is burning" texts. Almost all of them are dust burning off. A message with "gas," "carbon monoxide" or "alarm" in it should skip the queue, get a safety instruction you wrote and checked, and ring a person's phone. Sorting by words is crude, but it beats answering in the order messages arrived.
+
+**AI is good at follow-up drafts.** The day-one and day-three nudges for someone who did not reply can be written fresh for each lead, using what they told you, rather than the same canned message every time.
+
+**AI should not make promises you have not approved.** Prices, availability, diagnoses, anything that sounds like a guarantee. If the assistant says "we can definitely fix that tomorrow" and you cannot, you have traded a slow reply for a broken promise, which is worse.
+
+**AI should not handle the moment of fear or grief.** A frightened customer, a family ordering funeral flowers, a patient in pain. Let AI acknowledge the message instantly, then get a person on the phone. For high-stakes orders, the AI's job is to collect the facts that cannot be fixed later. For a sympathy arrangement that means the service start time, the exact place and the family name, before anyone worries about the card message.
+
+**AI should not close.** The reply buys you the first few minutes. A person still has to confirm the appointment, answer the real objection and lock in the job. The most common failure I see is a business that turns on instant replies, sees the first responses come in, and then lets those responses sit until morning. That is just a faster way to ignore people.
+
+## A simple standard to hold yourself to
+
+Write this down and put it where the team can see it:
+
+- Every lead has a named owner within one minute
+- First reply within five minutes, at any hour, asking for a specific next step
+- A person follows up the same day during business hours
+- A second touch within 24 hours if the first gets no reply, a third on day three, then a slower nurture
+- Anything with an urgent word reaches a person's phone immediately
+
+None of this needs a bigger team. It needs the order decided in advance, so nobody has to think about it at 8:40 at night.
+
+## What to check this week
+
+Run the twenty-lead audit above and write your median response time on a sticky note. Then submit your own form tonight and time what comes back. If the first thing you receive does not name your request and offer a specific next step, rewrite that one message before you spend another dollar on getting more leads.`,
+  },
+  {
     slug: `generator-service-nameplate-photo-text-before-the-first-outage`,
     title: `Get the Nameplate Photo Before the Power Goes Out`,
     excerpt: `When forty generator owners call in the first hour of an outage, the shop that already has each nameplate on file is the one that answers in minutes.`,
@@ -1961,114 +2055,6 @@ If you have no opening at all, say so on the tour, not in the follow-up. A famil
 Tomorrow, after the last tour of the day and before you do anything else, send that family the note. One detail about their child, one hold date, one reply word. Then count how many of your last five touring families heard from you the same day. I expect that number is closer to zero than you would like, and it is the part of enrollment you can change this week.`,
   },
   {
-    slug: `hvac-first-heat-smell-text-triage`,
-    title: `The First-Heat Smell Text Needs a Triage Rule, Not a Queue`,
-    excerpt: `Most "my furnace smells" texts in October are harmless dust, but one in the pile is not, and a queue cannot tell which is which.`,
-    tags: `Lead Response, Safety Triage, HVAC`,
-    content: `Every year the first cold night turns on a few thousand furnaces that have sat idle since spring, and the next morning your phone fills with the same message in different words: it smells like something is burning. Almost all of them are nothing. One of them, someday, will not be, and if all of them sit in the same inbox in the order they arrived, you will treat them the same.
-
-I want to describe the rule I would put in place before the first cold snap, because it is a small piece of setup and it changes what happens to the one message that matters.
-
-## Why a queue is the wrong tool
-
-A queue answers messages in the order they came in. That is fair, and it is exactly wrong here. A customer asking whether the burnt-dust smell is normal and a customer who says the house smells like gas are not the same priority, and the message sitting at the top of your list does not know the difference.
-
-On a busy morning the person working the inbox is also booking tune-ups, answering price questions and chasing parts. The danger message looks like the others. It is short, it is frightened, and it is typed with one thumb.
-
-## Sort by words, before anyone reads
-
-The fix is to let the system sort the inbound text before a person looks at it. You are not diagnosing anything. You are matching a short list of words you choose, and sending that message down a different path.
-
-Make two lists.
-
-**The urgent list.** Words like gas, rotten egg, carbon monoxide, alarm going off, headache, dizzy, sparks, smoke. Any message containing one of these skips the queue.
-
-**The ordinary list.** Words like burning smell, dusty, first time on, smells like hot dust. These get the calm reply.
-
-Anything that matches neither goes to your normal inbox. The lists will be imperfect, and that is fine, because they only have to be better than reading in arrival order.
-
-## What the urgent path does
-
-When a message matches the urgent list, two things happen at once, and neither waits for business hours.
-
-- The customer gets an immediate text with your safety instruction, written by you, in plain words. For example: *If you smell gas or your carbon monoxide alarm is sounding, leave the house now, take everyone with you, and call your gas company or emergency services from outside. Then call us.*
-- A person on your team gets an alert that rings through to a phone, not a line in a list, with the customer's name and number.
-
-Check the exact wording of that safety text against your local gas utility's guidance and whatever your state requires of a licensed contractor. It is your policy, so it has to be right for where you work. I am not going to tell you the one correct sentence, because it varies.
-
-The human call matters more than the text. A text can say leave. Only a voice can find out whether they did.
-
-## What the ordinary path does
-
-The common message is harmless, and the customer still wants an answer. Send a short reply the same hour:
-
-- Name the thing they are probably smelling, a seasonal dust burn-off after months idle, as something that often fades after the furnace has run for a while.
-- Tell them what would change your answer: a smell that is still there after a day of running, a smell that is not dust, any alarm, anyone feeling unwell.
-- Give them the word to reply if any of that is true, so the message moves to the urgent path by their own choice.
-
-I would write "often," not "always." You are describing what usually happens, not promising what is in their house.
-
-## Where this goes wrong
-
-Keyword sorting misses people who describe a problem in words you did not list. Someone writes "the house smells weird and my kid is sleepy" and no keyword fires. This is why the ordinary reply invites them to escalate, and why a person should still skim the inbox every few hours during the first cold week.
-
-It also over-triggers. Someone will text "no gas smell, just dust" and get the urgent response. I accept that. A needless safety text costs a few seconds. A missed one costs far more.
-
-Do not let the system close an urgent message by itself. A person marks it handled after speaking to the customer, and until then it stays red.
-
-## Check this week
-
-Open your inbox from last October, or the first cold week of any year you have. Search it for the words "smell" and "burning." Read the replies you sent, and look at how long each one waited. If you cannot tell a harmless one from a dangerous one at a glance, your customers' messages are being sorted by luck, and the two word lists above are the afternoon of work that fixes it.`,
-  },
-  {
-    slug: `florist-sympathy-order-service-time-before-the-card`,
-    title: `Get the Funeral Service Time Before You Get the Card Message`,
-    excerpt: `A sympathy order phoned in while your hands are full of stems is the one most likely to land at the wrong place or the wrong hour, and four facts on the ticket prevent it.`,
-    tags: `Order Intake, Lead Response, Florists`,
-    content: `The sympathy arrangement that arrives after the service has started is not a late delivery. It is a mistake the family remembers, and it almost always traces back to the phone call that took the order.
-
-You know the call. Someone is crying, or trying not to. They want something white, they know the name of the person who died, and they are not sure what to write on the card. You are holding a bucket of stems with the phone against your shoulder. So you take the card message, you take the payment, and you promise it will be there. The one fact that decides whether you kept the promise, when the service actually starts, never made it onto the ticket.
-
-## Why this order is different from the others
-
-A birthday bouquet has a forgiving window. If it arrives at two instead of noon, the recipient is still happy. A sympathy order has a hard edge. The flowers have to be in the room before people arrive, at the right address, with the right family name on the right stand.
-
-That is also why the sender is the worst person to ask. They are not thinking about your delivery route. They are thinking about the person they lost, and they will answer whatever you ask last.
-
-## The four facts that make a ticket complete
-
-Before I care about the card wording, I want four things written on the ticket:
-
-- **The service start time**, not "Thursday" and not "the afternoon."
-- **The exact place**: the name of the chapel, church or home, and the street, since many places share a name or run two rooms.
-- **Whose name goes on the delivery**: the family the flowers are addressed to, spelled the way the family spells it.
-- **A second way to reach the sender**, in case your driver finds a locked side door.
-
-Everything else can be fixed on Wednesday. These four cannot be fixed at the door.
-
-## Make the order unfinished until they exist
-
-The change is a rule, not a tool: a sympathy ticket is not "taken" until all four boxes are filled. If you are on the phone, ask in that order, and read the time back out loud. If you cannot ask, because you are with another customer or the shop is closed, the ticket sits in a visible "missing details" pile instead of a finished one.
-
-This is where a short text helps. When a call goes unanswered or a web order comes in with half the form empty, send the person one message that asks only for what is missing:
-
-> Thank you for ordering flowers for the family. So I deliver on time, please reply with the service start time and the full name and address of the place. We will take care of the rest.
-
-It sounds ordinary, and it is. What it does is turn a gap you would discover on delivery morning into a gap you discover the afternoon before, while there is still someone to ask.
-
-## When the family does not know yet
-
-Some families do not know the time yet. The funeral home may still be arranging it, and you will get an order with "details to follow." Do not guess. Mark it open, tell the sender you will check back the next morning, and then actually do it. A sender who hears from you twice is not annoyed. A sender who hears nothing and then finds out the arrangement missed the service never forgets it.
-
-This will also not save a delivery that is simply too tight. If the service is at ten and you can only deliver at eleven, the useful thing is to say so on the phone, offer to send it to the family home instead, and let them choose. Taking money for something you cannot deliver in time is worse than refusing the sale.
-
-A small invented example: a shop takes five sympathy orders in a week. Two come in by phone with all four facts. Two arrive from the website with the time missing. One is "details to follow." Without the rule, all five look finished on the ticket rail. With it, three are clearly done and two are clearly waiting, and you know which two to text before closing.
-
-## Do this before the next order comes in
-
-Pull the last five sympathy tickets from your rail and check each one for the four facts. Count how many are missing the service time. If any are, print a card with the four lines, tape it next to the phone, and use it on the very next call.`,
-  },
-  {
     slug: `tax-preparer-extension-clients-one-missing-document`,
     title: `Name the One Missing Document in Every Extension File`,
     excerpt: `A client who owes you "a few things" will send nothing, but a client who owes you one named document usually sends it the same night.`,
@@ -2880,54 +2866,6 @@ The date also does nothing if nobody reads it. A cutoff that lives in your head 
 Open your last five repair jobs that needed a part and write down how many days each took from the first call to the finished visit. Take the longest, add a day of cushion, and count back from November 26. Put that date at the top of your reply to new calls, and set a reminder on your own calendar to switch it to "earliest available" the morning after it passes.`,
   },
   {
-    slug: `locksmith-lockout-price-range-text-before-dispatch`,
-    title: `Locksmiths: Text the Price Range Before You Leave the Shop`,
-    excerpt: `A locked-out customer calls three shops and hires whoever sounds sure, so the shop that sends a price range and an arrival window in the first minutes wins the job and skips the argument at the door.`,
-    tags: `Lead Response, Pricing, Locksmiths`,
-    content: `A woman is standing outside her car at 9 PM with her keys on the driver's seat. She calls the first shop and gets voicemail. She calls the second and hears "it depends, we'll see when we get there." The third picks up, gives her a range and a time, and gets the job. The first two never learn they were in the race.
-
-If you run a locksmith shop, you have lost jobs this way, and the cruel part is that it had nothing to do with your skill.
-
-## Why vague loses
-
-A lockout is a bad moment, and the customer is already nervous about being overcharged by a stranger. When you say "it depends," you are telling a worried person that the number will be decided after they can't say no. Even if you are completely fair, that answer sounds like the setup for a bad surprise.
-
-I'd rather see you give a range you can defend than a mystery you can't. People will tolerate a number. They will not tolerate not knowing.
-
-The second problem comes later, at the car door. The customer heard one number on the phone, or thought they did, and the invoice says another. Now your tech is arguing about a conversation they weren't part of, and the customer is angry in a way that follows you into a review.
-
-## The two things to put in writing
-
-You don't need a long message. You need two facts, sent as a text while the customer is still deciding.
-
-**A price range, with what moves it.** Something like: "Car lockout is usually $X to $Y. After-hours and farther addresses sit toward the top." Pick the figures from your own jobs. If you can't state a range, look at the last twenty tickets and see where most of them landed.
-
-**An arrival window, not a promise.** "Tech can be there between 9:40 and 10:10" is more believable than "20 minutes." If you say twenty and it takes forty-five, you have turned a fair job into a complaint.
-
-Add one line asking for the make and year of the car, or the type of lock on the door. That helps your tech arrive with the right tools, and it makes the customer feel something is already in motion.
-
-## Make it automatic, because you're under a car
-
-The reason this doesn't happen today is that nobody is free to send it. The owner is on a job, and the phone rings out.
-
-On the platform, a missed call can trigger a text back within moments, and that text can carry your range and window. A call that you do answer can end with the same message sent right after, so the customer has the numbers in writing. Same words, same range, every time. It also means the person answering the phone on a bad night cannot accidentally quote something different.
-
-Keep the language plain. No jargon about "service call fees" without saying what the fee is.
-
-## Where it breaks
-
-Ranges are only honest when your jobs are fairly predictable. A standard car or house lockout fits. A broken-off key in an unusual lock, or a high-security cylinder, does not, and pretending otherwise will hurt you.
-
-So write a second version of the text for the strange jobs: "This one needs a look first. I'll confirm the price by phone before the tech leaves." That is still better than silence, because the customer knows when they'll hear from you.
-
-I should also say I don't know your market. Whether customers will accept a range, or whether competitors are quoting flat numbers that make yours look high, is something only your own call history will tell you.
-
-## What to check this week
-
-Pull your last ten lockout jobs and write down two things for each: what the customer was told before dispatch, and what they paid. Count how many had a gap between the two. If more than one or two did, write your range-and-window text this week, and use it on the very next call.
-`,
-  },
-  {
     slug: `window-cleaning-daylight-saving-last-start-time`,
     title: `The Clocks Go Back Nov. 1. Your 4 PM Slots Don't Survive It`,
     excerpt: `Exterior work needs daylight, and the booking calendar doesn't know that, so the last slot of the day quietly turns into a job your tech can't finish.`,
@@ -3554,29 +3492,6 @@ Meta makes money whichever way you spend the $500. It has no reason to make the 
 It's whether you know what result you're actually paying for the next time you're tempted to tap that button. If the answer is "more likes," that's a fair trade for the money. If the answer was supposed to be "more calls," it's worth building the campaign that's actually built to do that instead.`,
   },
   {
-    slug: `agency-incentive-follow-up-speed`,
-    title: `Why Most Marketing Agencies Never Mention Your Follow-Up Speed`,
-    excerpt: `An agency gets paid to spend your ad budget, not to fix how fast your front desk calls a lead back — so the cheapest fix in your entire funnel is the one almost nobody gets hired to bring up.`,
-    tags: `Lead Follow-Up, Marketing Agencies, Local Service Business`,
-    content: `I've sat in enough of these quarterly reviews to notice the pattern. The slide deck covers cost per click, cost per lead, click-through rate. It never covers how many minutes passed between a lead coming in and someone actually calling them back. That number usually matters more than every metric on the slide combined, and it costs nothing to fix.
-
-## The fix nobody gets hired to bill for
-
-An agency's contract is built around ad spend and campaign management — that's the service being sold, and that's what gets reported on. Follow-up speed lives inside your business, not inside the ad account, so it falls outside the scope of what anyone was hired to touch. Nobody's lying to you. It's just genuinely not their job, and reviewing a metric that isn't their job doesn't happen by default.
-
-## This isn't malice, it's structure
-
-The incentive points toward spending more, not toward fixing what's free. A slower month of leads reads, on the surface, like a targeting problem — so the proposed fix is almost always more budget or a new campaign, because that's the lever the agency actually has. Nobody in that room is rooting against you. The structure of the relationship just never routes attention toward the lever that isn't theirs to pull.
-
-## The number that moves first
-
-Pull your own call log and time the gap between a lead coming in and the first outbound call. I've seen this stretch past two hours during busy weeks, at businesses spending thousands a month on ads to generate those same leads. A missed-call text-back or an automated first response closes that gap to minutes, for less than a tenth of what most owners are already spending on the ads bringing those leads in.
-
-## Run this audit without hiring anyone
-
-Before your next conversation about increasing ad spend, pull last week's leads and time your own response gap. If it's over fifteen minutes on average, that's the cheaper fix, and it's one no campaign proposal is going to bring up for you.`,
-  },
-  {
     slug: `twelve-month-contract-red-flag`,
     title: `The 12-Month Contract Is a Red Flag, Not a Commitment Device`,
     excerpt: `A marketing company that needs a year-long contract to keep you is telling you, upfront, that the work alone won't be enough to keep you.`,
@@ -3771,94 +3686,6 @@ Five moving parts, every time. The workflows that get complicated aren't the one
 Open your busiest workflow and look at two things: is re-entry on when it shouldn't be, and is there a Goal set on anything that ends in a booking or a sale. Those two settings, left at default, are behind almost every "the automation is acting weird" ticket I've ever gotten.`,
   },
   {
-    slug: `missed-call-text-back-hvac`,
-    title: `The Missed Call That Cost an HVAC Company $4,200`,
-    excerpt: `Every unanswered call is a lead calling your competitor next — and the fix costs nothing to run.`,
-    tags: `Missed Call Text-Back, HVAC, Lead Follow-Up`,
-    content: `Last July a homeowner's AC quit on a 97-degree Tuesday. She called three HVAC companies in eleven minutes. Two rang out to voicemail. The third didn't pick up either — but she got a text back before she had finished dialing the next number: sorry we missed you, what's going on with your system?
-
-She sent her address. The other two called her back that afternoon, long after the appointment was booked.
-
-That was a $4,200 job, and it went to the company that answered a text.
-
-## The number nobody in the shop is tracking
-
-Every owner I talk to can tell me their close rate on calls they actually took. Almost none can tell me what happened to the calls they never got the chance to close — the ones that came in while the tech was under a house, on the other line, or after five.
-
-Here is the audit I run in the first week of working with a shop. Pull the call log, count every call under two minutes that didn't come from a repeat customer, then check how many of those numbers ever called back.
-
-Owners expect that second number to be reassuring. It is almost always close to zero. A missed call isn't a maybe — it is somebody who is already dialing the next name on the list.
-
-## What actually closes the gap
-
-A missed-call text-back does one thing. The second a call goes unanswered, the caller gets a text asking what they need. No hold music, no invitation to leave a message nobody will play. A real response, seconds after the ring stops.
-
-For a homeowner standing in a hot house, that text is the difference between someone's on it and nobody's picking up, next call. It doesn't need to be clever. It needs to be fast.
-
-### What it should say
-
-- Acknowledge the missed call, by name if the system knows it
-- Ask one direct question about what they need
-- Set an expectation you can actually keep — someone will call you back within fifteen minutes
-
-That last line matters more than owners think. A text with no callback behind it is worse than no text at all. It tells the customer you're automated, not attentive.
-
-## The failure I see most
-
-I have set this up for shops that turned it on, watched the first few replies come in, and then stopped paying attention. The automation sends, a lead answers, and the reply sits in an inbox until the next morning. By then the job is gone.
-
-The text buys you the first response. A person still has to close it. If dispatch isn't checking replies within a few minutes during business hours, what you have built is a faster way to ignore people.
-
-## What to do tonight
-
-Pull last week's call log. Count the calls that went unreturned within five minutes, and multiply by your average ticket. That isn't a hypothetical — that is revenue that rang your phone and then hung up on somebody else.
-
-Fix the response time before you touch anything else in your marketing. A better ad feeding a slow callback is just a more expensive way to lose the same leads.`,
-  },
-  {
-    slug: `dental-practice-lead-response-time`,
-    title: `Why Your Dental Practice Is Losing New Patients Before the Front Desk Even Calls Back`,
-    excerpt: `Treat lead response like a clinical protocol and it stops depending on who happens to be at the desk.`,
-    tags: `Lead Follow-Up, Dental Practices, Speed to Lead`,
-    content: `How long does it take your practice to respond to a new-patient form submitted at 8:40 on a Tuesday night?
-
-Not how long it should take. How long it actually took, the last ten times. Most practice owners I ask don't know, and the number is almost always worse than their guess.
-
-Here is what happens in the gap. Somebody with a bad tooth fills out three practice websites at once, because she has no idea which one will call her back. Two send an automated note saying they will be in touch during business hours. One texts her inside two minutes with a specific offer: we got your message about the tooth pain, can you come in tomorrow at 9 or at 2?
-
-She isn't calling the other two back. She already has an appointment.
-
-## Speed is a protocol, not a personality trait
-
-Practices spend real money on search, ads, and a good-looking site to get that form filled out, and then the lead waits in an inbox for whoever gets to it first in the morning.
-
-I'm careful about how I describe the effect, because I don't have a study to hand you and I'm not going to borrow somebody else's. What I can tell you is what I see in the practices we run this for: when first contact moves from the next morning to inside five minutes, the share of form fills that turn into booked chairs goes up, and it goes up immediately, with no change to the ads that produced them.
-
-The mechanism isn't mysterious. She is choosing between three practices that all look fine on a phone screen at night. The one that answers is the one she can stop thinking about.
-
-## What a two-minute reply actually contains
-
-- A text, not an email that lands in a promotions folder
-- A specific ask — a named time she can say yes to, not we will reach out soon
-- A human name attached, not the practice team
-
-New patients aren't comparing your reviews at nine at night. They are comparing who replied.
-
-## The part practices skip
-
-Automated follow-up doesn't replace the front desk. It buys the front desk time. The text confirms the message landed and sets an expectation; a person still has to call and lock in the visit, same day if you can.
-
-I have watched practices turn this on, get excited about the instant reply, and then let the actual phone call slide to whenever somebody has a minute. The lead cools off inside the exact window you just paid to shrink.
-
-## Where I would start
-
-Take your form submissions from the last two weeks. For each one, find the timestamp of the first contact the patient actually received — not when it was assigned, not when it was read. When she heard from you.
-
-If most of those gaps are measured in hours, you don't have a marketing problem. You have a protocol problem, and it is the cheapest one on this list to fix.
-
-Practices treat sterilization as a fixed standard that doesn't bend for a busy Tuesday. Response time is worth the same treatment.`,
-  },
-  {
     slug: `salon-google-review-system`,
     title: `The Google Review System Most Salon Owners Never Build`,
     excerpt: `Asking for reviews by hand stops working around the fifth client of the day. Here is what replaces it.`,
@@ -3900,53 +3727,6 @@ That isn't about hiding bad reviews. It is that a client who feels heard on Tues
 Time your next ten review requests against the appointment end time rather than checkout. If most are going out same-day but hours later, tighten that window before you touch the wording.
 
 And if the honest answer is that nobody is sending them at all because the desk is slammed — that is the version of this problem we set up for salons most often. It is worth a conversation.`,
-  },
-  {
-    slug: `real-estate-lead-response-time`,
-    title: `You Already Paid for That Lead. Then You Let It Sit for Three Hours.`,
-    excerpt: `Slow follow-up on a purchased lead is the most expensive mistake in real estate, because the money is already spent.`,
-    tags: `Lead Follow-Up, Real Estate, Paid Lead ROI`,
-    content: `The most expensive lead an agent handles isn't the one that never came in. It is the one that came in, got paid for, and then sat in an inbox until the showing was already booked with somebody else.
-
-That distinction matters because it changes what you should fix. Generating more leads is a marketing project with a budget attached. Answering the ones you bought is a process change that costs nothing and can happen this week.
-
-## Portal leads don't arrive during business hours
-
-Buyers browse at nine at night, on Sunday afternoons, on their lunch break — which is precisely when an agent is least likely to be watching an inbox. By the time you see a lead from last night, she has usually contacted two or three other agents.
-
-You don't need to be more available than everyone else. You need to be fast exactly once: on the first contact.
-
-## What the first message has to do
-
-- Name the specific property, not thanks for your interest
-- Ask a question that requires an answer — a showing time she can accept, not let me know if you have questions
-- Arrive as a text, because a voicemail from an unknown number isn't getting played
-
-An automatic reply buys you the first few minutes. It doesn't replace the call. It keeps the lead warm until you can make it.
-
-## Run the math on what you already spent
-
-This is the part I put in front of agents who tell me they need more leads.
-
-Take what you spent on portal subscriptions and paid ads last month. Divide by the number of leads it produced — that is your real cost per lead. Now count how many of those you contacted inside five minutes.
-
-Every lead outside that group is one you bought and didn't work. Not lost to a better agent or a better listing. Lost to a three-hour delay on something you had already paid for. Agents who run this calculation honestly usually stop asking me about lead generation.
-
-### The standard worth holding
-
-- First response inside five minutes, whatever the hour
-- A specific next step in that first message, not an acknowledgment
-- A second touch inside 24 hours if the first gets no reply
-
-## Slow markets punish this hardest
-
-When inventory is tight, everybody is motivated and speed matters less — she will wait, because she has to. When the market slows and buyers are browsing rather than hunting, the agent who answers first is frequently the only one who gets any reply at all.
-
-## Before you buy another lead
-
-Pull your last twenty and time the gap between submission and first real contact. Contact, not assignment.
-
-If that gap is measured in hours, buying more leads won't fix your pipeline. It will just increase the number of paid leads going cold in the same inbox.`,
   },
   {
     slug: `reduce-no-shows-appointment-reminders`,
@@ -4667,56 +4447,6 @@ That is a policy decision, not a configuration one, and it only holds if the com
 Take your most complicated open job. If the person running it gave notice this afternoon, could somebody else pick it up tomorrow from what is in the system?
 
 If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.`,
-  },
-  {
-    slug: `chiropractic-lead-assignment-ownership`,
-    title: `A Lead That Belongs to Everyone Belongs to Nobody`,
-    excerpt: `In a three-provider clinic the new patient inquiry doesn't get lost because you were slow. It gets lost because nobody's name was on it.`,
-    tags: `Lead Assignment, Chiropractic, Multi-Provider Clinics`,
-    content: `Who owns the inquiry that came in at 4:50 yesterday?
-
-Not who saw it. Not who could handle it. Whose name is on it, so that if nobody has called her back by tomorrow, one specific person has to explain why.
-
-In a single-provider clinic that question is trivial. In a clinic with three chiropractors and a front desk, it is usually unanswerable — and that is where new patients quietly go missing.
-
-## Slow isn't the only way to lose a lead
-
-Most of what gets written about lead response is about speed, and I have written some of it myself. But speed assumes somebody is trying. The failure I see in multi-provider clinics is a different one: everybody assumed somebody else had it.
-
-The inquiry lands in a shared inbox. Three people see it. Each one reasons, perfectly sensibly, that a colleague is closer to it — she mentioned Dr. Ellis, or it's a sports injury and that's the other guy's thing, or the front desk normally picks these up.
-
-Nobody is being lazy. The lead simply has no owner, so it has no next action. Two days later it is twelve messages down the inbox and everyone has forgotten it existed.
-
-## What assignment has to actually do
-
-Putting a name on a lead is not the same as routing it. Four things have to happen:
-
-- Assign inside a minute, automatically, before anybody has to exercise judgment
-- Assign to a person, never to a role or a team
-- Notify that person on the device they actually look at
-- Escalate visibly if nothing has happened inside a defined window
-
-That last one is what makes the other three real. An assignment nobody checks is a label. If an unworked lead doesn't surface to somebody by end of day, your system is decoration.
-
-### The rules worth setting first
-
-- Round-robin by default, so the load spreads without anybody negotiating over it
-- An override for a named request — if she asked for Dr. Ellis, she goes to Dr. Ellis
-- One fallback owner for anything arriving after hours, so nothing sits ownerless overnight
-
-## The part nobody wants to discuss
-
-Assignment exposes something clinics generally avoid looking at: providers convert at different rates.
-
-Once every lead carries a name, you can see that one practitioner books seventy percent of what she's handed and another books thirty. That is uncomfortable, and I have watched owners quietly switch assignment off rather than deal with what it showed them.
-
-I'd argue the opposite. That gap was always there. You just couldn't see it, and you were paying for the leads either way. It is a coaching conversation, not an indictment, and the answer is worth more than the leads that surfaced it.
-
-## Name an owner for every lead this week
-
-Take the inquiries from the last seven days and write down, for each one, the person responsible for it.
-
-If you find yourself writing "the front desk" or "whoever was on," you have found the leak. It isn't a speed problem, which means a faster auto-reply won't touch it.`,
   },
   {
     slug: `barbershop-online-booking-interruptions`,
