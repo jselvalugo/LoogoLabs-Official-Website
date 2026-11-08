@@ -38,6 +38,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { citySlugFromPage } from './lib/cfl';
 import { voiceCitySlugFromPage } from './lib/voiceCities';
+import { categorySlugFromPage } from './lib/blogCategories';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
 const GrowCFL = React.lazy(() => import('./pages/GrowCFL'));
@@ -174,7 +175,7 @@ function App({ initialPath }) {
   else if (page === 'PressRelease') body = <PressRelease />;
   else if (page === 'BrandPartners') body = <BrandPartners />;
   else if (SERVICE_PACKAGE_BY_PAGE[page]) body = <ServicePackage key={page} page={page} />;
-  else if (page === 'LoogoNews') body = <Blog onNavigate={navigate} />;
+  else if (page === 'LoogoNews' || categorySlugFromPage(page)) body = <Blog onNavigate={navigate} category={categorySlugFromPage(page)} />;
   else if (page === 'BlogPost') body = <BlogPost slug={postSlug} onNavigate={navigate} />;
   else if (page === 'Marketplace') body = <Marketplace />;
   else if (page === 'MarketplaceThankYou') body = <MarketplaceThankYou />;
@@ -186,14 +187,14 @@ function App({ initialPath }) {
   return (
     <div className="ll-shell">
       {page !== 'Marketplace' && page !== 'MarketplaceThankYou' && <SkillsTopBar es={es} onNavigate={navigate} />}
-      <NavBar items={nav} active={page} onNavigate={navigate} overHero={false} home={page === 'Home'}
-        feature={{ page: 'LoogoNews', label: es ? 'IA y marketing' : 'AI & marketing' }}
+      <NavBar items={nav} active={categorySlugFromPage(page) ? 'LoogoNews' : page} onNavigate={navigate} overHero={false} home={page === 'Home'}
+        feature={{ page: 'LoogoNews', label: es ? 'Últimas noticias' : 'Latest News' }}
         cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}
       />
       <div onClick={handleLinkClick}>
         {!mounted || reduce ? body : (
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={page + (postSlug || '')} className="ll-page"
+            <motion.div key={(categorySlugFromPage(page) ? 'LoogoNews' : page) + (postSlug || '')} className="ll-page"
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}>
               {body}

@@ -26,6 +26,7 @@ import {
   KNOWS_ABOUT, jsonLdForPage, ldGraph, localHref, splitTags, url,
 } from '../src/lib/seo.js';
 import { SERVICE_AREA } from '../src/lib/content.js';
+import { BLOG_CATEGORY_BY_SLUG, categoryOf, categoryPath, categorySlugFromPage, relatedPosts } from '../src/lib/blogCategories.js';
 import { CITIES, CFL_BASE, RETIRED_CITY_SLUGS } from '../src/lib/cfl.js';
 import { VOICE_BASE } from '../src/lib/voiceCities.js';
 import { localizePath } from '../src/lib/lang.js';
@@ -252,7 +253,19 @@ for (const route of ROUTES) {
   // runtime, so it keeps the hand-built fallback above. Park Supply is a noindexed
   // quoting tool whose first render depends on localStorage and today's date, so
   // it cannot hydrate from build-time markup and gains nothing from it.
-  if (route.page !== 'LoogoNews' && route.page !== 'ParkSupply') {
+  // Category pages list their posts the same way: fetched at runtime, so the
+  // shell carries the list for crawlers.
+  const catSlug = categorySlugFromPage(route.page);
+  if (catSlug) {
+    const cat = BLOG_CATEGORY_BY_SLUG.get(catSlug);
+    const inCat = allPosts.filter((p) => categoryOf(p) === catSlug);
+    head.jsonLd = [...jsonLdForPage(route.page), blogLd(inCat)];
+    extra = `<p><a href="${BLOG_INDEX}">Industry LoogoBlog</a></p><ul>${inCat.map((p) => `<li><a href="${BLOG_BASE}/${p.slug}">${esc(p.title)}</a> — ${esc(p.excerpt)}</li>`).join('')}</ul>`;
+    HEADINGS[route.page] = cat.name;
+  }
+  const listPage = route.page === 'LoogoNews' || Boolean(catSlug);
+
+  if (!listPage && route.page !== 'ParkSupply') {
     write(route.path, renderPage({ head, body: await render(route.path), ssr: true }));
   } else {
     write(route.path, renderPage({ head, body: shell(HEADINGS[route.page] ?? route.page, route.description, extra) }));
@@ -263,7 +276,11 @@ for (const route of ROUTES) {
   if (route.unlisted || route.englishOnly) continue;
   const esHead = headForPage(route.page, 'es');
   const esPath = localizePath(route.path, 'es');
-  if (route.page === 'LoogoNews') {
+  if (catSlug) {
+    const cat = BLOG_CATEGORY_BY_SLUG.get(catSlug);
+    esHead.jsonLd = [...jsonLdForPage(route.page, 'es'), blogLd(allPosts.filter((p) => categoryOf(p) === catSlug))];
+    write(esPath, renderPage({ head: esHead, body: localizeLinks(shell(cat.nameEs, esHead.description, extra)) }));
+  } else if (route.page === 'LoogoNews') {
     esHead.jsonLd = [...jsonLdForPage('LoogoNews', 'es'), blogLd(allPosts)];
     write(esPath, renderPage({ head: esHead, body: localizeLinks(shell('LoogoBlog de la industria', esHead.description, extra)) }));
   } else {
@@ -301,7 +318,8 @@ for (const post of allPosts) {
           <p>${esc(post.excerpt)}</p>
           ${markdownToHtml(post.content)}
         </article>
-        <p><a href="${BLOG_INDEX}">Back to Industry LoogoBlog</a></p>
+        <section><h2>Keep reading</h2><ul>${relatedPosts(post, allPosts).map((r) => `<li><a href="${BLOG_BASE}/${r.slug}">${esc(r.title)}</a></li>`).join('')}</ul></section>
+        <p><a href="${categoryPath(categoryOf(post))}">More in ${esc(BLOG_CATEGORY_BY_SLUG.get(categoryOf(post)).name)}</a> · <a href="${BLOG_INDEX}">Back to Industry LoogoBlog</a></p>
         <nav aria-label="Site"><ul>${NAV_LINKS}</ul></nav>
       </main>`;
   write(`${BLOG_BASE}/${post.slug}`, renderPage({ head, body }));

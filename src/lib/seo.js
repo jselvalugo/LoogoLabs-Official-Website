@@ -14,6 +14,7 @@ import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from '.
 import { localizePath, stripLang } from './lang.js';
 import { metaEs } from './seo.es.js';
 import { GROW_FAQ_ES } from './cfl.es.js';
+import { BLOG_CATEGORIES, BLOG_CATEGORY_BY_SLUG, categoryPageKey, categoryPath, categorySlugFromPage } from './blogCategories.js';
 import { TOOLS, TOOLS_BASE, TOOL_BY_PAGE, toolPath } from './tools.js';
 import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityPageKey, voiceCitySlugFromPage } from './voiceCities.js';
 
@@ -124,6 +125,16 @@ export const ROUTES = [
     changefreq: 'daily',
     image: '/og-image-blog.jpg',
   },
+  ...BLOG_CATEGORIES.map((c) => ({
+    page: categoryPageKey(c.slug),
+    path: categoryPath(c.slug),
+    label: c.name,
+    title: `${c.name}: Guides for Small Businesses | ${SITE.name}`,
+    description: `${c.blurb} Practical guides from Industry LoogoBlog by ${SITE.legalName}.`,
+    priority: '0.6',
+    changefreq: 'weekly',
+    image: '/og-image-blog.jpg',
+  })),
   {
     page: 'GrowCFL',
     path: '/grow',
@@ -380,6 +391,9 @@ export function routeForPath(pathname) {
   // /es/... is the Spanish twin of the same page: same key, different language.
   const p = normalizePath(stripLang(normalizePath(pathname)));
   if (p === '/admin') return { page: 'Admin', slug: null };
+  // Category pages live under /news/category/… and are real routes, so they are
+  // matched before the /news/<slug> post fallthrough.
+  if (p.startsWith(`${BLOG_BASE}/category/`) && BY_PATH.has(p)) return { page: BY_PATH.get(p).page, slug: null };
   if (p.startsWith(`${BLOG_BASE}/`)) {
     const slug = p.slice(BLOG_BASE.length + 1);
     return slug ? { page: 'BlogPost', slug } : { page: 'LoogoNews', slug: null };
@@ -716,6 +730,8 @@ export function jsonLdForPage(page, lang = 'en') {
       ? [crumbBase, { name: es ? 'Florida Central' : 'Central Florida', path: loc('/grow') }, { name: CITY_BY_SLUG.get(citySlug).name, path: loc(route.path) }]
       : voiceSlug
         ? [crumbBase, { name: es ? 'Agentes de voz con IA' : 'AI Voice Agents', path: loc(VOICE_BASE) }, { name: VOICE_CITY_BY_SLUG.get(voiceSlug).name, path: loc(route.path) }]
+        : categorySlugFromPage(page)
+          ? [crumbBase, { name: 'Industry LoogoBlog', path: loc(BLOG_INDEX) }, { name: es ? BLOG_CATEGORY_BY_SLUG.get(categorySlugFromPage(page)).nameEs : BLOG_CATEGORY_BY_SLUG.get(categorySlugFromPage(page)).name, path: loc(route.path) }]
         : TOOL_BY_PAGE.has(page)
           ? [crumbBase, { name: es ? 'Herramientas gratis' : 'Free tools', path: loc(TOOLS_BASE) }, { name: es ? TOOL_BY_PAGE.get(page).es.short : TOOL_BY_PAGE.get(page).short, path: loc(route.path) }]
           : [crumbBase, { name: (es && metaEs(page)?.title.split(/ [|:] /)[0]) || route.label || route.page, path: loc(route.path) }]));

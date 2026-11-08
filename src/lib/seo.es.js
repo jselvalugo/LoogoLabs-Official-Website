@@ -9,6 +9,7 @@ import { SERVICE_PACKAGES_ES } from './servicePackages.es.js';
 import { CITY_BY_SLUG, citySlugFromPage } from './cfl.js';
 import { voiceCitySlugFromPage } from './voiceCities.js';
 import { TOOL_BY_PAGE } from './tools.js';
+import { BLOG_CATEGORY_BY_SLUG, categorySlugFromPage } from './blogCategories.js';
 
 const BRAND = 'Loogo Labs';
 const firstSentence = (s = '') => `${String(s).split('. ')[0].replace(/\.$/, '')}.`;
@@ -102,6 +103,9 @@ export function metaEs(page) {
       description: `Un agente de voz con IA 24/7 que contesta, califica y agenda llamadas para negocios de ${name}, en inglés y español.${intro ? ` ${firstSentence(intro)}` : ''}`,
     };
   }
+
+  const cat = BLOG_CATEGORY_BY_SLUG.get(categorySlugFromPage(page));
+  if (cat) return { title: `${cat.nameEs}: guías para pequeños negocios | ${BRAND}`, description: `${cat.blurbEs} Guías prácticas de LoogoBlog de la industria. Artículos en inglés.` };
 
   const tool = TOOL_BY_PAGE.get(page);
   if (tool) return { title: `${tool.es.title}: gratis, sin registro | ${BRAND}`, description: tool.es.description };

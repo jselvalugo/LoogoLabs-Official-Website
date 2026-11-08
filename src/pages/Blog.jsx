@@ -1,36 +1,66 @@
 import React from 'react';
-import BlogSidebar, { CFL_RE, tagsOf, rankScore } from './BlogSidebar';
-import { BLOG_BASE, applyHead, headForPage, blogLd } from '../lib/seo';
-import { useLang } from '../lib/i18n';
+import BlogSidebar, { rankScore } from './BlogSidebar';
+import { BLOG_BASE, BLOG_INDEX, applyHead, headForPage, blogLd } from '../lib/seo';
+import { BLOG_CATEGORIES, BLOG_CATEGORY_BY_SLUG, START_HERE, categoryOf, categoryPageKey, categoryPath, categorySlugFromPath } from '../lib/blogCategories';
+import { TOOLS, toolPath } from '../lib/tools';
+import { cachedPosts, loadPosts } from '../lib/postsCache';
+import { localizePath, useHref, useLang } from '../lib/i18n';
 import { EVENT_THEME, isEventPost, isPinnedAnnouncement } from '../lib/featuredEvent';
 import { partnerForPost } from '../lib/partners';
-import { ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, MagnifyingGlass, PencilSimpleLine, Star, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
-// Pseudo-topic for the Central Florida small business collection.
-const CFL = '__cfl';
-
-export default function Blog({ onNavigate }) {
+export default function Blog({ onNavigate, category: categoryProp = null }) {
   const es = useLang() === 'es';
-  const [posts, setPosts] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [topic, setTopic] = React.useState(null);
+  const toHref = useHref();
+  // Fetched once per visit (lib/postsCache), so moving between the index and
+  // category pages never refetches or flashes the loading state.
+  const [posts, setPosts] = React.useState(cachedPosts() || []);
+  const [loading, setLoading] = React.useState(!cachedPosts());
+  const [category, setCategory] = React.useState(categoryProp);
   const [query, setQuery] = React.useState('');
   const [sort, setSort] = React.useState('newest');
+  const listRef = React.useRef(null);
 
   React.useEffect(() => {
-    fetch('/.netlify/functions/get-posts')
-      .then(r => r.json())
-      .then(data => { if (Array.isArray(data)) setPosts(data); })
-      .finally(() => setLoading(false));
+    if (cachedPosts()) return;
+    loadPosts().then(setPosts).finally(() => setLoading(false));
   }, []);
 
-  // Re-publish the index's structured data once the real post list is in, so the
-  // Blog node lists the posts a visitor actually sees.
+  // Follow the URL: a category link from a post, or the back/forward buttons.
+  React.useEffect(() => { setCategory(categoryProp); }, [categoryProp]);
+  React.useEffect(() => {
+    const onPop = () => setCategory(categorySlugFromPath(window.location.pathname));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  const cat = category ? BLOG_CATEGORY_BY_SLUG.get(category) : null;
+  const pageKey = cat ? categoryPageKey(cat.slug) : 'LoogoNews';
+  const inCategory = React.useMemo(() => (cat ? posts.filter(p => categoryOf(p) === cat.slug) : posts), [posts, cat]);
+
+  // Head (title, canonical, Blog schema) follows the selected category.
   React.useEffect(() => {
     if (!posts.length) return;
-    const head = headForPage('LoogoNews');
-    applyHead({ ...head, jsonLd: [...head.jsonLd, blogLd(posts)] });
+    const head = headForPage(pageKey, es ? 'es' : 'en');
+    applyHead({ ...head, jsonLd: [...head.jsonLd, blogLd(inCategory)] });
+  }, [posts, pageKey, inCategory, es]);
+
+  // Picking a category filters in place and updates the address, so the view
+  // can be shared and the back button undoes it. No reload, no jump to the top.
+  const pickCategory = (slug) => {
+    const next = slug === category ? null : slug;
+    setCategory(next);
+    const path = localizePath(next ? categoryPath(next) : BLOG_INDEX, es ? 'es' : 'en');
+    if (path !== window.location.pathname) window.history.pushState({}, '', path);
+    const top = listRef.current?.getBoundingClientRect().top;
+    if (top != null && top < 0) listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const counts = React.useMemo(() => {
+    const c = {};
+    posts.forEach(p => { const k = categoryOf(p); c[k] = (c[k] || 0) + 1; });
+    return c;
   }, [posts]);
 
   // An editor-picked featured post gets the spotlight layout. With none picked,
@@ -42,25 +72,18 @@ export default function Blog({ onNavigate }) {
   const spotlight = regular.find(p => p.featured) || null;
   const featured = spotlight || regular[0] || null;
   const rest = regular.filter(p => p !== featured);
-  // Quick-pick chips: the Central Florida collection plus the most-used tags.
-  // A topic picked from the sidebar that isn't among them gets its own chip.
-  const chips = React.useMemo(() => {
-    const counts = {};
-    posts.forEach(p => tagsOf(p).forEach(t => { counts[t] = (counts[t] || 0) + 1; }));
-    return Object.entries(counts).sort((x, y) => y[1] - x[1]).map(([t]) => t).filter(t => t.toLowerCase() !== 'central florida').slice(0, 6);
-  }, [posts]);
-  const chipList = topic && topic !== CFL && !chips.includes(topic) ? [...chips, topic] : chips;
-  const filtering = Boolean(topic || query.trim() || sort !== 'newest');
+  const startHere = START_HERE.map(slug => posts.find(p => p.slug === slug)).filter(Boolean);
+
+  const filtering = Boolean(cat || query.trim() || sort !== 'newest');
   const shown = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = (filtering ? posts : rest).filter(p =>
-      (!topic || (topic === CFL ? CFL_RE.test(`${p.tags || ''} ${p.title}`) : tagsOf(p).includes(topic)))
-      && (!q || `${p.title} ${p.excerpt || ''} ${p.tags || ''}`.toLowerCase().includes(q)));
+    const list = (filtering ? inCategory : rest).filter(p =>
+      !q || `${p.title} ${p.excerpt || ''} ${p.tags || ''}`.toLowerCase().includes(q));
     if (sort === 'views') return [...list].sort((a, b) => (b.views || 0) - (a.views || 0));
     if (sort === 'ranked') return [...list].sort((a, b) => rankScore(b) - rankScore(a));
     return list;
-  }, [posts, rest, filtering, topic, query, sort]);
-  const clearFilters = () => { setTopic(null); setQuery(''); setSort('newest'); };
+  }, [inCategory, rest, filtering, query, sort]);
+  const clearFilters = () => { setQuery(''); setSort('newest'); if (category) pickCategory(null); };
 
   return (
     <div className="lb-page" role="main">
@@ -71,15 +94,27 @@ export default function Blog({ onNavigate }) {
         <img className="ln-masthead__art" src="/loogonews-masthead.webp" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
         <div className="ln-masthead__inner">
           <div className="ln-masthead__copy">
-            <h1 className="ln-masthead__title">
-              Industry<br /><em>LoogoBlog.</em>
-            </h1>
-            <p className="ln-masthead__lede">
-              {es ? 'Guías prácticas para usar la IA en tu marketing. Qué automatizar, qué dejar en manos de una persona y qué de verdad te trae clientes.' : 'Practical guides to using AI in your marketing. What to automate, what to keep human, and what actually brings in customers.'}
-            </p>
+            {cat ? (
+              <>
+                <a className="ln-masthead__kicker" href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); pickCategory(null); }}>
+                  <ArrowLeft size={13} weight="bold" aria-hidden="true" /> Industry LoogoBlog
+                </a>
+                <h1 className="ln-masthead__title ln-masthead__title--cat">{es ? cat.nameEs : cat.name}</h1>
+                <p className="ln-masthead__lede">{es ? cat.blurbEs : cat.blurb}</p>
+              </>
+            ) : (
+              <>
+                <h1 className="ln-masthead__title">
+                  Industry<br /><em>LoogoBlog.</em>
+                </h1>
+                <p className="ln-masthead__lede">
+                  {es ? 'Guías prácticas para usar la IA en tu marketing. Qué automatizar, qué dejar en manos de una persona y qué de verdad te trae clientes.' : 'Practical guides to using AI in your marketing. What to automate, what to keep human, and what actually brings in customers.'}
+                </p>
+              </>
+            )}
           </div>
           {/* Featured cards sit beside the intro on desktop and under it on phones. */}
-          {loading ? (
+          {!cat && (loading ? (
             <div className="ln-masthead__featured" aria-hidden="true"><span className="lb-skel lb-skel--masthead" /></div>
           ) : (pinned.length > 0 || eventPost || featured) && (
             <section className="lb-featured ln-masthead__featured" aria-label={es ? 'Destacados' : 'Featured'}>
@@ -91,9 +126,25 @@ export default function Blog({ onNavigate }) {
                   : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
               </div>
             </section>
-          )}
+          ))}
         </div>
       </div>
+
+      {/* ── CATEGORY BAR: sticky under the nav, swipeable on phones ── */}
+      <nav className="ln-cats" aria-label={es ? 'Categorías del blog' : 'Blog categories'}>
+        <div className="ln-cats__track">
+          <a href={toHref(BLOG_INDEX)} className="ln-cats__pill" aria-current={!cat ? 'page' : undefined}
+            onClick={e => { e.preventDefault(); if (cat) pickCategory(null); }}>
+            {es ? 'Todos' : 'All'} {posts.length > 0 && <span>{posts.length}</span>}
+          </a>
+          {BLOG_CATEGORIES.filter(c => loading || counts[c.slug]).map(c => (
+            <a key={c.slug} href={toHref(categoryPath(c.slug))} className="ln-cats__pill" aria-current={category === c.slug ? 'page' : undefined}
+              onClick={e => { e.preventDefault(); pickCategory(c.slug); }}>
+              {es ? c.nameEs : c.name} {counts[c.slug] > 0 && <span>{counts[c.slug]}</span>}
+            </a>
+          ))}
+        </div>
+      </nav>
 
       {/* ── CONTENT ── */}
       <div className="lb-content">
@@ -108,29 +159,40 @@ export default function Blog({ onNavigate }) {
         ) : (
           <div className="ln-layout">
            <div className="ln-layout__main">
+            {!filtering && startHere.length > 0 && (
+              <section className="ln-start" aria-labelledby="ln-start-t">
+                <h2 className="lb-list__title" id="ln-start-t">{es ? 'Empieza aquí' : 'Start here'}</h2>
+                <p className="ln-start__lede">{es ? 'Las tres guías que más le sirven a un negocio de servicios.' : 'The three guides that help a service business most.'}</p>
+                <div className="ln-start__grid">
+                  {startHere.map((p, i) => (
+                    <a key={p.slug} href={`${BLOG_BASE}/${p.slug}`} onClick={go(onNavigate, p)} className="ln-start__card ll-glass">
+                      <span className="ln-start__num">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="ln-card-cat">{catName(p, es)}</span>
+                      <span className="ln-start__title">{p.title}</span>
+                      <span className="ln-start__meta">{p.read_time} {es ? 'min de lectura' : 'min read'} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
             {(rest.length > 0 || filtering) && (
-              <div className="lb-list">
+              <div className="lb-list" ref={listRef}>
                 <div className="lb-list__head">
                   <h2 className="lb-list__title">
-                    {filtering ? (es ? `Mostrando ${shown.length} de ${posts.length} artículos` : `Showing ${shown.length} of ${posts.length} posts`) : (es ? 'Encuentra un artículo' : 'Find a post')}
+                    {filtering
+                      ? (es ? `${shown.length} ${shown.length === 1 ? 'artículo' : 'artículos'}${cat ? ` en ${cat.nameEs}` : ''}` : `${shown.length} ${shown.length === 1 ? 'post' : 'posts'}${cat ? ` in ${cat.name}` : ''}`)
+                      : (es ? 'Todos los artículos' : 'All posts')}
                   </h2>
                   {filtering && (
                     <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar' : 'Clear'} <X size={12} weight="bold" aria-hidden="true" /></button>
                   )}
                 </div>
                 <div className="ln-find" role="search">
-                  <label className="ln-find__search">
-                    <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
-                    <input type="search" aria-label={es ? 'Buscar artículos' : 'Search posts'} placeholder={es ? 'Busca artículos, p. ej. reseñas o HVAC' : 'Search posts, e.g. reviews or HVAC'} value={query} onChange={e => setQuery(e.target.value)} />
-                  </label>
                   <div className="ln-find__row">
-                    <div className="ln-find__chips" aria-label={es ? 'Filtrar por tema' : 'Filter by topic'}>
-                      {[[null, es ? 'Todos' : 'All'], [CFL, es ? 'Centro de Florida' : 'Central Florida'], ...chipList.map(t => [t, t])].map(([value, text]) => (
-                        <button key={text} type="button" className="ln-find__chip" aria-pressed={topic === value} onClick={() => setTopic(value)}>
-                          {text}
-                        </button>
-                      ))}
-                    </div>
+                    <label className="ln-find__search">
+                      <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
+                      <input type="search" aria-label={es ? 'Buscar artículos' : 'Search posts'} placeholder={es ? 'Busca artículos, p. ej. reseñas o HVAC' : 'Search posts, e.g. reviews or HVAC'} value={query} onChange={e => setQuery(e.target.value)} />
+                    </label>
                     <label className="ln-find__sort">
                       {es ? 'Ordenar' : 'Sort'}
                       <select value={sort} onChange={e => setSort(e.target.value)}>
@@ -152,8 +214,9 @@ export default function Blog({ onNavigate }) {
                 </div>
               </div>
             )}
+            <ToolsStrip es={es} toHref={toHref} />
            </div>
-            <BlogSidebar posts={posts} topic={topic} onTopic={setTopic} onNavigate={onNavigate} />
+            <BlogSidebar posts={posts} category={category} onCategory={pickCategory} onNavigate={onNavigate} />
           </div>
         )}
       </div>
@@ -162,7 +225,27 @@ export default function Blog({ onNavigate }) {
   );
 }
 
-const tagList = post => (post.tags ? post.tags.split(',').map(t => t.trim()).filter(Boolean) : []);
+const catName = (post, es) => { const c = BLOG_CATEGORY_BY_SLUG.get(categoryOf(post)); return es ? c.nameEs : c.name; };
+
+// Small strip under the post list pointing at the free tools.
+function ToolsStrip({ es, toHref }) {
+  return (
+    <section className="ln-tools" aria-labelledby="ln-tools-t">
+      <div>
+        <h2 className="ln-tools__title" id="ln-tools-t">{es ? 'Herramientas gratis' : 'Free tools'}</h2>
+        <p className="ln-tools__lede">{es ? 'Sin registro. Funcionan en tu navegador.' : 'No sign-up. They run in your browser.'}</p>
+      </div>
+      <div className="ln-tools__links">
+        {TOOLS.map(t => (
+          <a key={t.page} href={toHref(toolPath(t))} className="ln-tools__link">
+            {es ? t.es.short : t.short} <ArrowRight size={13} weight="bold" aria-hidden="true" />
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 const fmtDate = (post, month, es) => (post.published_at
   ? new Date(post.published_at).toLocaleDateString(es ? 'es-US' : 'en-US', { year: 'numeric', month, day: 'numeric' })
   : '');
@@ -261,16 +344,11 @@ function FeaturedCard({ post, onNavigate, es }) {
 }
 
 function PostCard({ post, onNavigate, wide, es }) {
-  const tags = tagList(post);
   const date = fmtDate(post, 'short', es);
 
   return (
     <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className={`lb-card ll-glass${wide ? ' lb-card--wide' : ''}`}>
-      {tags.length > 0 && (
-        <div className="lb-tags">
-          {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
-        </div>
-      )}
+      <span className="ln-card-cat">{catName(post, es)}</span>
       <h3 className="lb-card__title">{post.title}</h3>
       {post.excerpt && <p className="lb-card__excerpt">{post.excerpt}</p>}
       <div className="lb-card__foot">
