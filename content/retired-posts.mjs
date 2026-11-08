@@ -47,4 +47,12 @@ export const retiredPosts = {
   'auto-glass-chip-repair-quote-follow-up-before-first-frost': 'painting-contractor-estimate-follow-up',
   'real-estate-after-the-holidays-seller-call-booked': 'painting-contractor-estimate-follow-up',
   'auto-repair-declined-repairs-revisit-date': 'painting-contractor-estimate-follow-up',
+
+  // H5 Booking and no-shows → reduce-no-shows-appointment-reminders (2026-11-08)
+  'barbershop-online-booking-interruptions': 'reduce-no-shows-appointment-reminders',
+  'dog-grooming-cancellation-waitlist': 'reduce-no-shows-appointment-reminders',
+  'photography-studio-booking-automation': 'reduce-no-shows-appointment-reminders',
+  'photographer-deposit-holds-the-date': 'reduce-no-shows-appointment-reminders',
+  'tattoo-studio-design-approval-date-before-the-session': 'reduce-no-shows-appointment-reminders',
+  'mobile-detailing-booking-form-slot-length': 'reduce-no-shows-appointment-reminders',
 };

@@ -45,7 +45,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
 - 2026-09-02 | roofing-unified-inbox-conversation-history | Roofing | Unified inbox — conversation history & handover
 - 2026-09-02 | chiropractic-lead-assignment-ownership | Chiropractic | Round-robin lead assignment & ownership — merged into 5-minute-rule-local-service-business-leads (2026-11-08)
-- 2026-09-02 | barbershop-online-booking-interruptions | Barbershops | Online booking & self-scheduling
+- 2026-09-02 | barbershop-online-booking-interruptions | Barbershops | Online booking & self-scheduling — merged into reduce-no-shows-appointment-reminders (2026-11-08)
 - 2026-09-02 | physical-therapy-home-program-discharge | Physical therapy | Courses & content — post-discharge programs
 - 2026-09-02 | self-storage-message-testing | Self-storage | A/B testing & message optimization
 - 2026-09-02 | pool-service-seasonal-content-calendar | Pool service | Social scheduling & seasonal content calendar
@@ -59,13 +59,13 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-09-03 | appliance-repair-quiet-hours-send-timing | Appliance repair | Send-time rules & quiet hours
 - 2026-09-03 | solar-installer-pipeline-stale-deals | Solar installers | Pipeline hygiene & close-lost reason codes — merged into painting-contractor-estimate-follow-up (2026-11-08)
 - 2026-09-03 | catering-company-booking-analytics-capacity | Catering | Booking analytics & capacity planning
-- 2026-09-30 | dog-grooming-cancellation-waitlist | Pet grooming | Waitlists & same-day cancellation fill
+- 2026-09-30 | dog-grooming-cancellation-waitlist | Pet grooming | Waitlists & same-day cancellation fill — merged into reduce-no-shows-appointment-reminders (2026-11-08)
 - 2026-09-30 | optometry-annual-recall-sequence | Optometry | Patient recall sequences
 - 2026-09-30 | hvac-maintenance-agreement-recurring-billing | HVAC | Recurring billing — maintenance agreements
 - 2026-09-30 | music-school-self-reported-lead-source | Music schools | Lead source tracking — tracked vs. self-reported
 - 2026-09-30 | painting-contractor-estimate-follow-up | Painting contractors | Estimate follow-up sequences
 - 2026-10-01 | dental-year-end-benefits-treatment-plans | Dental practices | Year-end benefit deadlines & unscheduled treatment plans
-- 2026-10-01 | photographer-deposit-holds-the-date | Photographers | Booking & payments — tentative date holds & deposits
+- 2026-10-01 | photographer-deposit-holds-the-date | Photographers | Booking & payments — tentative date holds & deposits — merged into reduce-no-shows-appointment-reminders (2026-11-08)
 - 2026-10-02 | cleaning-company-seasonal-residents-return | Cleaning companies | Seasonal client reactivation — returning part-year residents (Central Florida)
 - 2026-10-03 | handyman-celebration-own-one-town | Handyman services | Hyper-local growth — route density & neighbor referrals in one community (Celebration, FL)
 - 2026-10-02 | holiday-lighting-book-install-and-takedown | Holiday lighting installers | Seasonal booking — selling install and takedown as one paired booking
@@ -79,7 +79,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-10-06 | appliance-repair-thanksgiving-fixed-by-cutoff-date | Appliance repair | Seasonal booking — a fixed-by-Thanksgiving cutoff date driven by parts lead time
 - 2026-10-06 | tutoring-center-block-renewal-note-at-session-six | Tutoring centers | Renewals — session-six progress note & held time slot before a prepaid block ends
 - 2026-10-07 | massage-therapy-gift-certificate-recipient-booking-nudge | Massage therapy | Holiday gift certificates — capturing the recipient at purchase & booking nudges
-- 2026-10-07 | mobile-detailing-booking-form-slot-length | Mobile auto detailing | Booking — intake questions that set slot length & price tier
+- 2026-10-07 | mobile-detailing-booking-form-slot-length | Mobile auto detailing | Booking — intake questions that set slot length & price tier — merged into reduce-no-shows-appointment-reminders (2026-11-08)
 - 2026-10-08 | dog-boarding-vaccine-records-before-thanksgiving | Dog boarding kennels | Holiday boarding — vaccine-record check & release deadline ten days before arrival
 - 2026-10-08 | driving-school-stalled-students-between-lessons | Driving schools | Retention — days-since-last-lesson check, rebooking sequence & human call for stalled mid-course students
 - 2026-10-09 | salon-december-chair-hours-regulars-first | Salons & spas | Seasonal booking — holiday-week chair hours opened to regulars first, with a dated release to new clients
@@ -105,7 +105,7 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-10-21 | remodeler-holiday-pause-dates-for-open-jobs | Remodeling contractors | Project communication — dated last-crew-day and restart-day note to every open job in October, four facts, restart text two days before
 - 2026-10-21 | yoga-studio-intro-offer-second-class-booked | Yoga studios | Intro-offer retention — teacher-sent same-hour text with two named class choices, one nudge three days later, stated offer end date, Friday list of one-class students
 - 2026-10-22 | real-estate-after-the-holidays-seller-call-booked | Real estate | Seller follow-up — "after the holidays" leads get a January call booked on the spot, one small prep task, three dated texts, and a 90-day list check for leads with no date — merged into painting-contractor-estimate-follow-up (2026-11-08)
-- 2026-10-22 | tattoo-studio-design-approval-date-before-the-session | Tattoo studios | Session booking — dated design-approval steps (drawing sent five days out, nudge at three, check at two), stated released-slot rule, standby list for short-notice openings
+- 2026-10-22 | tattoo-studio-design-approval-date-before-the-session | Tattoo studios | Session booking — dated design-approval steps (drawing sent five days out, nudge at three, check at two), stated released-slot rule, standby list for short-notice openings — merged into reduce-no-shows-appointment-reminders (2026-11-08)
 - 2026-10-23 | plumber-shutoff-valve-photo-before-first-freeze | Plumbing | Pre-freeze prep — November text asking recent customers for a photo of their main shutoff, filed to the record with a tag, FIND reply for a tech-visit photo
 - 2026-10-23 | dance-studio-costume-fee-stated-at-signup | Dance studios | Fees — per-class costume charge and billing month stated in the signup confirmation, second text with the family's own amount two weeks before it posts, tagged concern replies get a call
 
@@ -139,3 +139,4 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-11-08 | ai-voice-after-hours-plumbing | AI Agents & Assistants / local service businesses, clinics, law firms | Hub: AI voice agents — measuring missed calls, structured intake, booking on the call, the always-a-human list, route don't triage, what it must never promise, AI text follow-up as a separate job (absorbs 5 posts)
 - 2026-11-08 | pressure-washing-review-request-automation | Found in AI Answers / local service businesses, salons, restaurants | Hub: Google reviews — asking within the hour, asking everyone (no gating), high-volume businesses and the frozen average, reply rules, copy-paste replies, AI for alerts and drafts but not posting or writing reviews (absorbs 4 posts)
 - 2026-11-08 | painting-contractor-estimate-follow-up | Follow-Up, Email & SMS / contractors, home services, long-cycle sales | Hub: estimate follow-up — why quotes go quiet, a 30-day sequence, turning 'later' into a date, declined-repair revisit dates, long sales cycles, honest pipeline (next-step dates, close-lost reasons), where AI helps (watching the list, tailored drafts) and doesn't (negotiating) (absorbs 8 posts)
+- 2026-11-08 | reduce-no-shows-appointment-reminders | AI Agents & Assistants / appointment-based businesses | Hub: no-shows and booking — after-hours online booking, honest durations, intake questions that set slot length, confirm + two reminders, deposits and dated approvals, waitlist refill, one-tap rescheduling, where AI helps (reschedules, slot mapping, reminder drafts) (absorbs 7 posts)

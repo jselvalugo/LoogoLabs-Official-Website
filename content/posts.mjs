@@ -11,6 +11,93 @@
 
 export const posts = [
   {
+    slug: `reduce-no-shows-appointment-reminders`,
+    title: `No-Shows and Empty Slots: Fix the Booking, Not the Customer`,
+    excerpt: `Most no-shows come from how the appointment was booked, confirmed and moved, not from careless customers, and a cancellation fee fixes none of that.`,
+    tags: `Online Booking, No-Shows, AI Assistants`,
+    content: `A no-show is the most expensive appointment you have all week. You paid to win that customer: the ad, the listing, the time on the phone. Then the slot sits empty, the truck burns fuel to an empty driveway, or the chair waits for someone who isn't coming.
+
+Most owners respond with a cancellation fee. That treats forgetting as a character flaw you can bill for. In almost every business I look at, the problem is not the customer. It is the booking: how it was made, what it asked, what it confirmed, and what happens when plans change.
+
+This guide covers the whole stretch from "I'd like to book" to the customer actually showing up, and where AI earns a place in it.
+
+## Let people book when they decide
+
+Someone deciding at nine at night whether to get a haircut tomorrow can't call you. You're closed. A couple reading photographer websites on a Sunday in December can't get you on the phone either. If booking only happens during business hours, you only capture decisions made during business hours.
+
+Phone-only booking also costs you twice during the day. A barber eleven minutes into a fade can let the phone ring out and lose the booking, or put the clippers down and give a worse cut to the regular in the chair. Either way someone gets less than they should.
+
+Online booking fixes both, but only if it is set up for how your work actually runs:
+
+- **Honest durations.** A skin fade and a beard trim are different slots. Loading one generic thirty-minute service and wondering why you're forty minutes behind by noon is the most common setup mistake I see.
+- **Per-person calendars** where customers book a specific person, not just the shop.
+- **A way to move an appointment, not only cancel it.** More on this below.
+
+What it won't do: fill a quiet Tuesday. Online booking captures demand that was leaking away. It doesn't create demand that wasn't there. If midweek is empty, that's a marketing question, and a booking link isn't the answer.
+
+## Ask the questions that set the slot
+
+A slot length is a guess you wrote once. Every booking after that inherits it, whether the job is easy or brutal.
+
+A mobile detailer with a three-hour "full detail" slot finishes a clean sedan on time. A three-row minivan with a dog and a month of crushed cereal runs two hours over and takes the next customer's appointment down with it. The fix is two or three multiple-choice questions on the booking form that decide how long the job really takes:
+
+- What size is it? (Vehicle, room count, coat size, number of people.)
+- Anything that adds time? (Pets, heavy stains, a full color change, a cover-up tattoo.)
+- When was it last done?
+
+Then let the answers choose the slot. Small and recent gets the standard block. Large with pet hair gets the long one, at the price that goes with it. Anything outside both gets "send me a photo first." Two or three tiers is enough. The customer sees the right time and price before they pay, not at the curb.
+
+## Confirm in writing, then remind twice
+
+An appointment booked weeks out in one conversation is never mentioned again until someone knocks on the door. Life happens in between. Forgetting fully explains most no-shows.
+
+Three messages handle it:
+
+- **A confirmation the moment it's booked,** so the appointment exists somewhere other than your calendar
+- **A reminder about 24 hours out,** with confirm or reschedule in one tap
+- **A short reminder about an hour out,** for the person who remembered this morning and then got pulled into something else
+
+The day-before message does the heavy lifting. It is early enough that a reschedule doesn't waste a trip, and close enough that the appointment is on their mind. The one-hour text catches a different failure, and skipping it solves half the problem.
+
+## Make the commitment real before the day
+
+For long or high-value appointments, a reminder isn't enough. The customer has to have committed to something before the day, and you have to know whether they have.
+
+**A deposit holds the date.** A wedding photographer who says "October 12 is open" and waits for a reply is lending out her only inventory for free. Give every tentative hold an end date, said out loud: "I can hold October 12 for you through Thursday. After that it goes back on the calendar unless the retainer is in." Then make paying easy, with the agreement and the invoice behind one link that works from a phone at eleven at night, when couples actually sit down to decide.
+
+**A dated approval holds the chair.** A tattoo client who paid a deposit three weeks ago but never approved the drawing hasn't really committed to Saturday, and they know it before you do. Tie the approval to the session date: drawing goes out five days before, one nudge at three days, and if there's no yes by two days out, a person decides what happens. Tell them the rule at booking. If the deadline passes with no answer, the day goes to someone on the waitlist and the deposit moves to a rebooking within a set window.
+
+The same idea works anywhere the real commitment comes after the booking: a menu choice for an event, a headcount, a photo of the job site.
+
+## Refill cancellations deliberately
+
+A cancelled 11 a.m. slot at a grooming shop is worth nothing unless someone fills it in the next hour or so. Most shops have a waitlist that's really a list of names in a notebook, with no note of who can come on short notice. So the desk calls two people, gets voicemail twice, and gives up.
+
+A waitlist that works asks four things when someone joins: the size of the job, which days they can do, how much notice they need, and the best number to text. When a slot opens, a text goes to the people who fit it. First yes gets it. Everyone else gets a quick "it's been taken" so nobody drives over for nothing.
+
+Keep one judgment human. If the first yes has a note on file (a nervous dog, a difficult job, an unpaid balance), someone checks before confirming. The system can hold the slot for fifteen minutes while they do.
+
+## Make rescheduling as easy as booking
+
+This is the part most businesses get wrong. A reschedule handled badly is a no-show with extra steps: the customer needs a new time, can't get one easily, and drifts. If moving an appointment means calling during business hours and waiting on hold, many people simply don't come and don't call.
+
+Every reminder should carry a one-tap way to move the appointment, showing real open times. Rebooking should take the same effort as the original booking, and in most businesses it takes far more.
+
+## Where AI helps
+
+**Answering "can I move it?" at any hour.** An assistant that can read your calendar and offer two real times handles most reschedule requests by text without anyone at the desk. That alone recovers appointments that would have quietly disappeared.
+
+**Turning a vague request into the right slot.** "Can I get the full thing done on my Tahoe, the dog's been in it" is easy for AI to map to your heavy-detail tier. Have it ask one follow-up question when it isn't sure instead of guessing.
+
+**Drafting reminders that sound like you.** Fifteen versions of a day-before reminder, keep the one that sounds like your shop, and add the detail that matters (the address, parking, what to bring).
+
+**What to keep human:** waiving fees, bending deposit rules, and anything involving a customer who is upset about a missed appointment. Those are judgment calls about a relationship, and an automated "per our policy" reply makes them worse.
+
+## Count before you change anything
+
+Pull last month's schedule. Count the no-shows and same-day cancellations, and multiply by your average ticket. Then check two things for each one: did a reminder go out, and could they have moved the appointment in one tap? If the answer to either is no for most of them, that's where to start, before any fee policy.`,
+  },
+  {
     slug: `painting-contractor-estimate-follow-up`,
     title: `Estimate Follow-Up: Win the Bids You Already Priced`,
     excerpt: `The cheapest new customer you'll get this month is someone you already quoted, and most of them never get a second conversation.`,
@@ -1725,59 +1812,6 @@ Open your customer list and pick five households you served last year. For each 
 `,
   },
   {
-    slug: `tattoo-studio-design-approval-date-before-the-session`,
-    title: `The Deposit Holds the Chair. The Design Date Fills It`,
-    excerpt: `A tattoo studio can collect a deposit and still lose the session, because the drawing was never approved and the client quietly stopped answering.`,
-    tags: `Booking, No-Shows, Tattoo Studios`,
-    content: `A tattoo artist blocks a four-hour Saturday afternoon for a half sleeve. The client paid the deposit three weeks ago. On Thursday the artist still has not heard what the client thinks of the sketch, and on Saturday at two the chair sits empty. The deposit covers some of the loss. It does not cover the afternoon.
-
-I see this pattern in studios that think they have a no-show problem. Most of them have a different problem: the booking was complete on paper, but the design was never settled. A client who has not approved the drawing has not really committed to the day, and they know it before you do.
-
-## The deposit only proves one thing
-
-A deposit says the client was serious at the moment they paid. It says nothing about the next three weeks, when they are second-guessing the placement, waiting on a friend's opinion, or just busy.
-
-The step that actually predicts whether someone shows up is smaller and cheaper: have they looked at the final drawing and said yes? Until that happens, you have a held chair and an open question.
-
-So give the open question a date. When you take the deposit, tell the client in the same breath: "I'll send you the drawing five days before your session. I need a yes from you two days before to keep the day."
-
-## Put the approval on the calendar, not in the artist's head
-
-Artists are drawing, not chasing. If the approval depends on whoever remembers to check, it will be done for the clients who reply fast and skipped for the ones who go quiet, which is exactly backwards.
-
-Treat it as three dated steps tied to the session date:
-
-- **Five days before:** the artist's drawing goes out in a text or email, with one question: "Do you want this as drawn, or do you want one change?"
-- **Three days before:** if there is no reply, one short nudge saying you need a yes or a change by tomorrow night to keep the slot.
-- **Two days before:** the system checks for a reply and flags anyone who has not answered, so a person decides what happens next.
-
-Notice that the client can say yes with one word. If you make approval feel like homework, the people who most need to answer will be the ones who avoid it.
-
-## Decide what happens at the deadline
-
-This is the part owners skip, and it is why the nudges feel hollow. Decide in advance what a missed deadline means, and tell the client at booking.
-
-My suggestion: no answer by the deadline means the slot is released and the deposit moves to a rebooking within a window you name, say sixty days. Phrase it as a courtesy, not a penalty: "If I don't hear back, I'll give your day to someone on my list and we'll find you a new one."
-
-You may prefer a different rule, and that is fine. What matters is that the client heard it in advance and that you apply it the same way every time. A rule you enforce for some people and not others teaches everyone to ignore it.
-
-## Keep a standby list so a released slot is not a lost one
-
-Releasing a slot only helps if someone can take it. Keep a short list of people who said they could come in on short notice: a name, what they want done, and roughly how long it takes. When a day opens up, text three of them at once and give the first yes the slot.
-
-A big piece will not fit a short-notice day, and that is the limit of this. But small and mid-size work often does, and a four-hour hole filled with a two-hour job is still better than an empty afternoon.
-
-## Where this falls short
-
-It does not fix the person who approves the drawing and then does not show. For them the deposit and your rebooking rule are the protection. It also will not replace the conversation you have with a nervous first-timer. A text is fine for a clean yes. If someone replies "I'm not sure about the lettering," that should turn into a phone call from the artist, not another automated message.
-
-## Try this before your next consult
-
-Look at next week's calendar and, for each booked session, ask one question: has this client seen the final drawing and said yes? Count the ones who have not. Those are your real empty-chair risks, and none of them will look risky in the booking list.
-
-For the first one or two, send the drawing today with a deadline. Then write your released-slot rule down on one line, so you can add it to your next deposit conversation.`,
-  },
-  {
     slug: `yoga-studio-intro-offer-second-class-booked`,
     title: `Intro Students Take One Class and Vanish. Book Class Two`,
     excerpt: `A new student who walks out of a first class with nothing on the calendar has quietly decided already, and a teacher's text that same afternoon is the cheapest way to change that.`,
@@ -2770,53 +2804,6 @@ It also can't fix owners who skip your texts entirely. Expect a few. Call those 
 Pull every reservation you have for the week of Nov. 26 and sort by pickup date. Next to each dog, write the earliest vaccine expiry on file. Any that fall before pickup, send the owner the text today, not ten days out. You'll learn how many surprises were waiting for you, and you'll still have time to fix every one of them.`,
   },
   {
-    slug: `mobile-detailing-booking-form-slot-length`,
-    title: `Your Detail Slot Is Three Hours. The Minivan Needs Five.`,
-    excerpt: `A mobile detailer who books every full detail into the same slot loses the afternoon to the one dirty vehicle, and three questions at booking fix it.`,
-    tags: `Booking, Scheduling, Mobile Auto Detailing`,
-    content: `Three hours is a fair slot for a full detail on a clean sedan. It is a bad slot for a family minivan with a dog, a booster seat and a month of crushed cereal. The sedan finishes on time. The minivan runs two hours over and takes the next customer's appointment down with it.
-
-I see this in mobile detailers all the time. The calendar says "Full Detail, 3 hours," because that is what the service is called on the booking page. The vehicle that actually shows up decides the real number, and nobody asked about it.
-
-## The slot is a guess you wrote once
-
-When you set up a service on your calendar, you picked a duration. Probably the one that felt right on an average Tuesday. Every booking after that inherits your guess, whether the car is a coupe or a work truck.
-
-The trouble is that the average job hides a wide spread. If your clean-car jobs take three hours and your worst ones take five, a calendar built on three means roughly one bad day in every few weeks where you are finishing in the dark and texting an apology to someone waiting at 5 PM.
-
-## Ask three things before you confirm the slot
-
-The booking form already collects a name and an address. Add three questions, and make each one a multiple choice so nobody types an essay:
-
-- **What are we working on?** Sedan, SUV or truck, three-row or minivan. Size changes the time more than anything else.
-- **Any pets, kids or heavy stains?** Pet hair alone can add an hour. A yes here is the strongest signal on the form.
-- **When was it last detailed?** Within a year, a few years ago, or never.
-
-Notice what is missing: no question about the paint, no question about what products you use. Those are your decisions. These three tell you how long the car will take, and nothing else.
-
-## Let the answers pick the slot
-
-This is the part that matters. If the answers only land in a note, you will read them at 7 AM and be annoyed. They should set the slot length when the customer books.
-
-A small SUV with no pets and a recent detail gets the three-hour slot. A three-row vehicle with pet hair gets five, priced to match. In the system I set up for clients, the form answers decide which service the booking becomes, so the calendar blocks the right time and the confirmation text shows the right price. The customer sees the number before they pay the deposit, not at the curb.
-
-You do not need ten tiers. Two or three is enough: standard, heavy, and "send me a photo first" for anything that falls outside both.
-
-## Say why, in one line
-
-Some customers will see a higher price and wonder what happened. Put one sentence under the question: "Pet hair and heavy stains take longer, so we set aside more time and price it to fit." Most people read that and nod. They have seen their own back seat.
-
-## What the form can't tell you
-
-People under-report. A customer who answers "no pets" may have a dog who rides in the cargo area, and a car "detailed last year" may have been done at a gas station car wash. Expect to be wrong about one job in ten.
-
-So keep a margin. I would leave thirty minutes between jobs on heavy days rather than packing the calendar edge to edge, and I would give yourself permission to raise the price at the door when the car is clearly worse than described, as long as the confirmation text said you might.
-
-## Look at last Friday's calendar
-
-Pull up your last week of full details and write the actual finish time next to each one. Mark the jobs that ran more than thirty minutes over, then look at what those vehicles had in common. If it is the same two things every time, those are the two questions you add to your booking form this week.`,
-  },
-  {
     slug: `massage-therapy-gift-certificate-recipient-booking-nudge`,
     title: `The Gift Certificate You Sold Is Sitting in a Drawer`,
     excerpt: `A massage gift certificate gets paid for in December and used, if ever, in a rush in March, and the fix is to put the recipient on your list the day it's sold.`,
@@ -3437,53 +3424,6 @@ It also depends on your notes. If you do not know which client has the gate code
 Pull the list of every client with no visit since May and mark the seasonal ones with your crew leads. If that list has more than a handful of names, you have a second season sitting in your own records, and the first text should go out next week.`,
   },
   {
-    slug: `photographer-deposit-holds-the-date`,
-    title: `A Quote Doesn't Hold Your Date. A Deposit Does.`,
-    excerpt: `Most photographers keep a Saturday open in their head for a client who hasn't committed to anything, and the fix is a short window and a deposit that closes it.`,
-    tags: `Booking, Payments, Photographers`,
-    content: `You told an engaged couple that October 12 was open. They said they loved your work and would get back to you. Three weeks later a second couple asks for the same Saturday, and now you are deciding whether to hold a date for someone who has not paid, promised or replied.
-
-That is the real cost of a loose quote. Your calendar is the only thing a photographer has to sell, and you are lending it out for free.
-
-## Where the date actually goes
-
-When I look at how a typical solo photographer handles an inquiry, the date is held in three places, and none of them is binding. It is in your head, in the email thread, and sometimes as a tentative block on the calendar that nobody ever goes back and clears.
-
-The client holds it nowhere. For them, nothing has happened yet. They are comparing you to two other people and a cousin with a good camera, and a price sheet in their inbox does not feel like a decision waiting on them.
-
-So the date drifts. You decline a second inquiry out of politeness. The first couple books someone else without telling you. You find out when you chase them, or you never find out at all.
-
-## Give the hold a lifespan
-
-I am not suggesting you demand money the moment someone writes in. Plenty of good clients need a few days, and a hard sell on the first message loses them.
-
-What I do suggest is that every hold has an end date, stated out loud. In your first reply, say something like: *I can pencil in October 12 for you through Thursday. After that it goes back on the calendar unless the retainer is in.*
-
-That one sentence changes what the silence means. Before, no answer was neutral. Now no answer is an answer, and you are allowed to act on it.
-
-## Make the deposit the easiest next step
-
-A hold with an expiry only works if paying is easy. If the next step is "download the contract, print it, sign it, then ask me how to send the retainer," you have built a wall and put your own date behind it.
-
-Put the invoice and the agreement behind a single link, in the same message that offers the hold. Sign, pay, done, from a phone, at eleven at night when the couple finally sits down together to talk about it. That late evening is when most of these decisions get made, and you are asleep.
-
-Keep the retainer a flat amount that is clearly separate from the final balance. Say what it covers and what happens if their plans change. Owners who stay vague here tend to have the awkward conversation later, with the client already annoyed.
-
-## Let the system keep the clock
-
-This is the part I set up for clients, because it is the part people forget. The tentative block goes on the calendar when the quote goes out. A reminder text goes out the day before the hold ends, short and plain, with the same link. If nothing has been paid when the window closes, the block is released and the contact moves to a "date released" stage.
-
-Then one more message goes out, saying the date is back open but you would be glad to look at another one. Some people reply to that. Some come back months later with a different date and a deposit. Neither happens if your tentative blocks pile up unchecked until the calendar looks full and is not.
-
-A note on the limits: this does not rescue a quote that was priced out of range or a portfolio that did not fit. It only stops good-fit couples from dissolving into silence because nothing asked them to decide.
-
-## Check this week
-
-Open your calendar and count the tentative or penciled-in dates for the next six months. For each one, find the last message you sent and ask whether the client was ever told when the hold ends.
-
-If the answer is no on any of them, send that sentence today, with the link and a real deadline. Then you will know by Friday which of those dates are yours and which have been free all along.`,
-  },
-  {
     slug: `dental-year-end-benefits-treatment-plans`,
     title: `December Is Full by November: Book Unfinished Treatment Now`,
     excerpt: `The patient who said "let me think about it" in March has a benefit year that ends December 31, and your December schedule will be gone before they remember.`,
@@ -3763,49 +3703,6 @@ Five moving parts, every time. The workflows that get complicated aren't the one
 ## Check this tonight
 
 Open your busiest workflow and look at two things: is re-entry on when it shouldn't be, and is there a Goal set on anything that ends in a booking or a sale. Those two settings, left at default, are behind almost every "the automation is acting weird" ticket I've ever gotten.`,
-  },
-  {
-    slug: `reduce-no-shows-appointment-reminders`,
-    title: `No-Shows Aren't a People Problem — They're a Systems Problem`,
-    excerpt: `One reminder text the night before does more for your schedule than any cancellation-fee policy ever will.`,
-    tags: `Booking & Scheduling, No-Show Reduction, Automation`,
-    content: `Two no-shows on a six-job Thursday is a third of the day's revenue, gone, with the truck already burning fuel to get there.
-
-That was a real week for an electrician I work with. Neither customer was acting in bad faith. One forgot. The other had double-booked himself weeks earlier and didn't notice until the van was in the driveway.
-
-His first instinct was a cancellation fee. That is where most owners go, and it is aimed at the wrong target — it treats forgetting as a character flaw you can charge for.
-
-## People forget. That is the entire explanation.
-
-An appointment gets booked days or weeks out, in a single conversation that is never mentioned again until somebody knocks on a door. Life happens in between. There is no villain in this story.
-
-One reminder the day before, with a way to confirm or move the slot in a single tap, catches most of what would otherwise become a no-show.
-
-## Two reminders, doing two different jobs
-
-- A confirmation the moment it is booked, so the appointment exists somewhere in writing
-- A reminder 24 hours out, with confirm or reschedule in one tap
-- A short reminder an hour out, for the day-of forgetters
-
-The 24-hour message does the heavy lifting. It is far enough ahead that a reschedule doesn't waste a truck roll, and close enough that the job is still on the customer's radar.
-
-### Why the one-hour text isn't redundant
-
-The day-before reminder catches the person who forgot the appointment existed. The hour-before catches the person who remembered this morning and then got pulled into something. Those are two different failures, and skipping either one means solving half the problem.
-
-## The cheapest thing on the list
-
-Count your no-shows last month and multiply by your average ticket. For most of the crews I set this up for, the two-text sequence pays for the entire system several times over in the first month, and it is the single cheapest thing on the list.
-
-## The part I haven't solved
-
-Reminders reduce no-shows. They don't do much about reschedules, and a reschedule handled badly is just a no-show with extra steps — the customer needs a new time, can't get one easily, and drifts.
-
-I don't think the answer is more automation there. Rebooking has to be as easy as the original booking was, and in most of the businesses I see, it isn't even close. That gap is still an open problem, and if you have solved it well in your shop, I would genuinely like to hear how.
-
-## Where to start
-
-Look at last month's schedule, count the no-shows, and check whether any reminder went out at all for those specific jobs. If the answer is no for most of them, you haven't got a customer problem to solve.`,
   },
   {
     slug: `restaurant-email-sms-reengagement`,
@@ -4133,58 +4030,6 @@ That is a policy decision, not a configuration one, and it only holds if the com
 Take your most complicated open job. If the person running it gave notice this afternoon, could somebody else pick it up tomorrow from what is in the system?
 
 If the honest answer is that he would have to walk them through it first, you don't have a record of that job. You have an employee who remembers it.`,
-  },
-  {
-    slug: `barbershop-online-booking-interruptions`,
-    title: `Every Call You Take Mid-Cut Costs You Twice`,
-    excerpt: `Phone-only booking doesn't just cap your bookings. It taxes the haircut you're already being paid for.`,
-    tags: `Booking & Scheduling, Barbershops, Online Booking`,
-    content: `You're eleven minutes into a skin fade. The phone rings.
-
-Let it go and you lose the booking, because the man calling on a Saturday afternoon isn't leaving a voicemail — he's calling the next shop on the list. Take it, and you put your clippers down while the client in your chair watches you arrange somebody else's appointment.
-
-Both cost money. That's what phone-only booking hides. You aren't choosing between a booking and no booking. You're choosing which customer to underserve.
-
-## The tax you pay twice
-
-The first cost is the obvious one: missed calls are missed cuts.
-
-The second is quieter and probably larger. The client who sat through you juggling the phone had a worse appointment than the man before him, and he is the one whose rebooking you actually needed. Regulars are the business. Interrupting them to chase a walk-in is a bad trade you make several times a day without noticing.
-
-Multiply across a Saturday — six or seven interruptions, each taxing whoever is in the chair, plus however many rang out while your hands were busy.
-
-## Nobody calls to book any more
-
-I want to put this carefully, because barbers hear it as a complaint about the younger generation and it isn't that.
-
-It's arithmetic. Somebody deciding at nine at night whether to get cut tomorrow cannot call you — you're shut. That is not a preference for apps. It is a mismatch between when the decision gets made and when your phone is answered.
-
-Booking that only exists during opening hours can only ever capture decisions made during opening hours.
-
-## What self-booking has to get right in a barbershop
-
-Generic scheduling tools break on the specifics of this trade. The parts that matter:
-
-- Honest service durations — a skin fade and a beard tidy are not the same slot, and pretending otherwise wrecks the afternoon
-- Per-barber calendars, because clients book a person, not a shop
-- A card on file or deposit for the slots you cannot afford to lose
-- Reminders that let somebody move an appointment instead of only cancelling it
-
-### Where this usually gets configured wrong
-
-Shops load in one generic thirty-minute haircut and then wonder why they're running forty minutes behind by noon. Your slot lengths are the entire configuration. Get those honest and the rest is cosmetic.
-
-## What it will not fix
-
-Online booking does not fill an empty Tuesday. It captures demand that already exists and was leaking away. It does not create demand that wasn't there.
-
-If your chair is genuinely quiet midweek, this is not the first thing to fix — that's a marketing question, and a booking link is not an answer to it.
-
-## Count the calls you take mid-cut
-
-This Saturday, keep a tally on the mirror. Every time the phone rings while somebody is in your chair, make a mark.
-
-At close, multiply that number by your average ticket and decide which cost you would rather stop paying — the calls you missed, or the cuts you interrupted. For most shops the answer is both, and it is the same fix.`,
   },
   {
     slug: `physical-therapy-home-program-discharge`,
@@ -4751,39 +4596,6 @@ Automate the alert — tell the coordinator by Tuesday that Saturday is committe
 Pull last year's inquiries, tag each one with the requested event date rather than the date it arrived, and put your crew capacity next to it. It is an afternoon in a spreadsheet before it is ever a system.
 
 If the shoulder weeks come back looking as soft as they do for most operations, you have found next year's revenue without adding a single lead. If they come back full, then you genuinely do have a lead problem, and at least now you know which one you are solving.`,
-  },
-  {
-    slug: `dog-grooming-cancellation-waitlist`,
-    title: `The Cancelled Tuesday Slot Is Not Lost Until Noon`,
-    excerpt: `A same-day cancellation only becomes an empty table if nobody on the waitlist hears about it before the window closes.`,
-    tags: `Online Booking, Waitlists, Pet Grooming`,
-    content: `Nine o'clock on a Tuesday, a groomer gets a text that the doodle booked for eleven has a stomach bug. That ninety-minute slot is now worth zero dollars, and it will stay worth zero unless somebody fills it in the next hour or so.
-
-Most shops handle that moment the same way. The front desk scrolls through a notebook or a sticky-note list of people who asked to be squeezed in, calls two of them, gets voicemail twice, and goes back to checking in the dogs who actually showed up. By ten-thirty the slot is gone for good.
-
-## A waitlist that lives in someone's head is not a waitlist
-
-Almost every grooming shop I talk to has one. It is usually a list of names without dates, without the size of the dog, and without any note of when each person could actually come in on short notice.
-
-That last piece is what matters. A same-day opening is only useful to the handful of clients who can drop a dog off within two hours. A list that cannot sort for those people forces the desk to call everyone, which means in practice they call nobody.
-
-## Short notice changes who the right client is
-
-Here is the part owners underrate. The client who books three weeks out and the client who grabs a same-day slot are often different people. Retirees, people who work from home, the regular whose dog is overdue and a little matted. Once you start filling cancellations deliberately, you learn who those people are, and the list gets better every month.
-
-It also changes what you ask when someone joins the waitlist. Not just a name and a phone number, but the breed or coat size, which days they can do, and how much notice they need. Four fields. That is enough to match a ninety-minute doodle slot to a ninety-minute dog.
-
-## What the system should do, and what it shouldn't
-
-The part worth automating is the broadcast. When a slot opens, a text goes out to the waitlist clients who fit it: same size of job, available that day, short notice is fine. First reply that says yes gets it. Everyone else gets a quick follow-up that it has been taken, so nobody drives over for a slot that no longer exists.
-
-The part I would keep human is the judgment call. If the opening is at eleven and the first yes is a dog with a behavior note on file, a groomer needs to look at that before it is confirmed. The system can hold the slot for fifteen minutes while someone checks. It should not make that call alone.
-
-## Count the empty slots before you fix anything
-
-For two weeks, write down every same-day cancellation and whether it got refilled. No software required, just a tally by the register.
-
-If you are refilling most of them already, your waitlist works and you can leave it alone. If the tally shows six or eight empty slots a week, multiply that by your average ticket. That number is what a fifteen-minute setup is competing against, and in my experience it is rarely a small one.`,
   },
   {
     slug: `optometry-annual-recall-sequence`,
