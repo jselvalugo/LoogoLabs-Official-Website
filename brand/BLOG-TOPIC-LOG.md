@@ -1,7 +1,12 @@
 # Industry LoogoBlog — Published Topic Log
 
-Tracks every topic + vertical pairing already published, so we never run
-the same argument twice in a new vertical.
+Tracks every topic + audience pairing already published, so we never run
+the same argument twice for a new audience.
+
+**Focus change, 2026-11-08:** the blog now covers AI and marketing only (see
+the topic territories in `BLOG-VOICE.md`). Rows before that date used a
+`vertical` column and were mostly operations topics; they stay here so new
+posts don't repeat them. New rows name the territory and the audience.
 
 Read this before writing anything. Pick a pairing that is not listed,
 then append a row for it in the same commit that publishes the post.
@@ -12,7 +17,8 @@ request. If it is ever switched back on, its prompt needs repointing at
 `content/posts.mjs` and `scripts/generate-post-migration.mjs` first; the
 version stored on the Routine hand-writes SQL and predates both.
 
-Format: `- YYYY-MM-DD | slug | vertical | topic`
+Format: `- YYYY-MM-DD | slug | territory / audience | topic`
+(before 2026-11-08: `- YYYY-MM-DD | slug | vertical | topic`)
 
 - 2026-09-01 | missed-call-text-back-hvac | HVAC | Missed-call text-back
 - 2026-09-01 | dental-practice-lead-response-time | Dental practices | Speed-to-lead / form follow-up
