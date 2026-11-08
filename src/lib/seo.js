@@ -14,6 +14,7 @@ import { CITIES, CITY_BY_SLUG, cityPath, cityPageKey, citySlugFromPage } from '.
 import { localizePath, stripLang } from './lang.js';
 import { metaEs } from './seo.es.js';
 import { GROW_FAQ_ES } from './cfl.es.js';
+import { TOOLS, TOOLS_BASE, TOOL_BY_PAGE, toolPath } from './tools.js';
 import { VOICE_BASE, VOICE_CITIES, VOICE_CITY_BY_SLUG, voiceCityPath, voiceCityPageKey, voiceCitySlugFromPage } from './voiceCities.js';
 
 export const SITE = {
@@ -244,6 +245,25 @@ export const ROUTES = [
     priority: '0.6',
     changefreq: 'monthly',
   },
+  {
+    page: 'Tools',
+    path: TOOLS_BASE,
+    label: 'Free tools',
+    title: `Free Marketing Tools for Local Businesses | ${SITE.name}`,
+    description:
+      'Free tools for business owners: a Google review link and QR code generator, a missed call cost calculator and a UTM link builder. No sign-up, runs in your browser.',
+    priority: '0.7',
+    changefreq: 'monthly',
+  },
+  ...TOOLS.map((t) => ({
+    page: t.page,
+    path: toolPath(t),
+    label: t.title,
+    title: `${t.title}: Free, No Sign-Up | ${SITE.name}`,
+    description: t.description,
+    priority: '0.7',
+    changefreq: 'monthly',
+  })),
   ...NICHE_QUIZZES.map((q) => ({
     page: q.page,
     path: q.path,
@@ -656,6 +676,21 @@ export const voiceCityServiceLd = (city) => ({
   },
 });
 
+// A free tool page: a browser-based web app that costs nothing to use.
+export const toolLd = (t, es = false) => ({
+  '@type': 'WebApplication',
+  '@id': url(`${es ? localizePath(toolPath(t), 'es') : toolPath(t)}#app`),
+  name: es ? t.es.title : t.title,
+  url: url(es ? localizePath(toolPath(t), 'es') : toolPath(t)),
+  description: es ? t.es.description : t.description,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Any (runs in the browser)',
+  inLanguage: es ? 'es-US' : 'en-US',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@id': url('/#organization') },
+});
+
 /** The JSON-LD graph nodes a given static page should carry. */
 export function jsonLdForPage(page, lang = 'en') {
   const es = lang === 'es';
@@ -681,7 +716,13 @@ export function jsonLdForPage(page, lang = 'en') {
       ? [crumbBase, { name: es ? 'Florida Central' : 'Central Florida', path: loc('/grow') }, { name: CITY_BY_SLUG.get(citySlug).name, path: loc(route.path) }]
       : voiceSlug
         ? [crumbBase, { name: es ? 'Agentes de voz con IA' : 'AI Voice Agents', path: loc(VOICE_BASE) }, { name: VOICE_CITY_BY_SLUG.get(voiceSlug).name, path: loc(route.path) }]
-        : [crumbBase, { name: (es && metaEs(page)?.title.split(/ [|:] /)[0]) || route.label || route.page, path: loc(route.path) }]));
+        : TOOL_BY_PAGE.has(page)
+          ? [crumbBase, { name: es ? 'Herramientas gratis' : 'Free tools', path: loc(TOOLS_BASE) }, { name: es ? TOOL_BY_PAGE.get(page).es.short : TOOL_BY_PAGE.get(page).short, path: loc(route.path) }]
+          : [crumbBase, { name: (es && metaEs(page)?.title.split(/ [|:] /)[0]) || route.label || route.page, path: loc(route.path) }]));
+    if (TOOL_BY_PAGE.has(page)) {
+      const t = TOOL_BY_PAGE.get(page);
+      nodes.push(toolLd(t, es), faqLd(es ? t.faqEs : t.faq, loc(route.path)));
+    }
     if (citySlug) nodes.push(cityServiceLd(CITY_BY_SLUG.get(citySlug)));
     if (voiceSlug) nodes.push(voiceCityServiceLd(VOICE_CITY_BY_SLUG.get(voiceSlug)));
   }
