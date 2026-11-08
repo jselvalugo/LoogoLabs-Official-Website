@@ -1,0 +1,70 @@
+/* /game-plan: the free 90-day Marketing Game Plan. Builds on the consulting
+   landing (.cs) — cream page, forest ink, hairlines, sentence-case labels. */
+.gp-kicker { margin: 0 0 12px; font: 500 15px/1.4 var(--font-body); color: var(--ink-400); }
+.gp-hero { padding-bottom: 72px; }
+.gp-hero__ctas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 28px; }
+.gp-hero__ctas .cs-textcta { margin-top: 0; }
+
+.gp-section { max-width: 880px; margin: 0 auto; padding: 88px 24px; border-top: 1px solid var(--border-hair); text-align: center; }
+.gp-section h2 { max-width: 18em; margin: 0 auto; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); color: var(--ink-900); }
+.gp-section h2 em, .gp-news h2 em { font-style: normal; color: var(--ink-500); }
+
+.gp-found { list-style: none; padding: 0; margin: 40px auto 0; max-width: 680px; text-align: left; border-top: 1px solid var(--border-hair); }
+.gp-found li { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border-hair); }
+.gp-num { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--ink-900); display: grid; place-items: center; font: 500 14px/1 var(--font-body); color: var(--ink-900); }
+.gp-found strong { display: block; font: 500 18px/1.35 var(--font-display); color: var(--ink-900); }
+.gp-found p { margin: 4px 0 0; font-size: 15px; line-height: 1.55; color: var(--ink-500); }
+
+.gp-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 40px 0 0; text-align: left; border-top: 1px solid var(--border-hair); border-left: 1px solid var(--border-hair); }
+.gp-phase { display: flex; flex-direction: column; padding: 28px 24px; border-right: 1px solid var(--border-hair); border-bottom: 1px solid var(--border-hair); background: var(--paper-000); }
+.gp-phase__days { margin: 0; font: 500 13px/1.4 var(--font-body); color: var(--amber-500); }
+.gp-phase h3 { margin: 6px 0 0; font: 500 24px/1.2 var(--font-display); letter-spacing: -0.01em; color: var(--ink-900); }
+.gp-phase__goal { margin: 6px 0 0; font-size: 15px; color: var(--ink-500); }
+.gp-phase ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; flex: 1; }
+.gp-phase li { display: flex; gap: 10px; font-size: 15px; line-height: 1.5; color: var(--ink-900); }
+.gp-phase li svg { flex: none; margin-top: 3px; color: var(--ink-900); }
+.gp-phase__done { margin: 20px 0 0; padding-top: 14px; border-top: 1px solid var(--border-hair); font-size: 14px; line-height: 1.5; color: var(--ink-500); }
+.gp-phase__done strong { color: var(--ink-900); font-weight: 500; }
+
+.gp-week { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 760px; margin: 40px auto 0; text-align: left; border-top: 1px solid var(--border-hair); border-left: 1px solid var(--border-hair); }
+.gp-week div { padding: 20px; border-right: 1px solid var(--border-hair); border-bottom: 1px solid var(--border-hair); }
+.gp-week dt { font: 500 16px/1.3 var(--font-display); color: var(--ink-900); }
+.gp-week dd { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--ink-500); }
+.gp-print { margin-top: 32px; }
+
+.gp-form { border-top: 1px solid var(--border-hair); padding-top: 72px; }
+.gp-known { margin: 0 0 18px; padding: 12px 14px; border-radius: var(--radius-2); background: var(--paper-200); font-size: 15px; line-height: 1.5; color: var(--ink-900); }
+.gp-check { display: flex; gap: 10px; align-items: flex-start; margin: 18px 0 0; font-size: 15px; line-height: 1.5; color: var(--ink-900); cursor: pointer; }
+.gp-check input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--ink-900); }
+.gp-error { margin: 12px 0 0; font-size: 14px; color: var(--status-danger); }
+.gp-done { text-align: left; }
+.gp-done__icon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink-900); color: var(--paper-000); margin-bottom: 12px; }
+
+.gp-news { max-width: 760px; margin: 0 auto 32px; padding: 64px 24px 72px; text-align: center; border-top: 1px solid var(--border-hair); }
+.gp-news h2 { max-width: 16em; margin: 0 auto; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); color: var(--ink-900); }
+.gp-news__lede { max-width: 32em; margin: 16px auto 28px; font-size: 17px; line-height: 1.55; color: var(--ink-500); }
+.gp-news__form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto; }
+.gp-news__form input[type='email'] { flex: 1; min-width: 0; font: 400 16px/1.4 var(--font-body); color: var(--ink-900); background: var(--paper-000); padding: 12px 14px; border-radius: var(--radius-2); border: 1px solid var(--border-hair); }
+.gp-news__form button { flex: none; background: var(--ink-900); color: var(--paper-000); border: 1px solid var(--ink-900); border-radius: var(--radius-2); padding: 12px 20px; font: 500 16px var(--font-body); cursor: pointer; }
+.gp-news__form button:hover { background: var(--ink-700); }
+.gp-news__done { display: inline-flex; align-items: center; gap: 8px; margin: 0; font: 500 16px/1.4 var(--font-body); color: var(--ink-900); }
+.gp-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+@media (max-width: 720px) {
+  .gp-hero { padding-bottom: 48px; }
+  .gp-section { padding: 56px 20px; }
+  .gp-section h2, .gp-news h2 { font-size: 28px; }
+  .gp-phases, .gp-week { grid-template-columns: 1fr; }
+  .gp-phase { padding: 22px 18px; }
+  .gp-news { padding: 48px 20px 56px; }
+  .gp-news__form { flex-direction: column; }
+}
+
+/* Printing the plan: just the plan, no nav, forms or footer. */
+@media print {
+  .gp .cs-nav, .gp .gp-hero__ctas, .gp .gp-form, .gp .gp-news, .gp .cs-footer, .gp .gp-print,
+  .ll-shell > :not(main), #cookie-consent { display: none !important; }
+  .gp-section { padding: 24px 0; border: 0; break-inside: avoid; }
+  .gp-phases { grid-template-columns: 1fr; }
+  .gp-phase { break-inside: avoid; }
+}

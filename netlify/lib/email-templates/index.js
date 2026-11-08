@@ -1,4 +1,5 @@
 import cardsAndCocktails from './cards-and-cocktails.js';
+import loogoLabsLetter from './loogo-labs-newsletter.js';
 
 // Coded email templates for email blasts. Templates live here, in code, and
 // nowhere else: CRM users pick one from a dropdown and upload who gets it, but
@@ -6,7 +7,9 @@ import cardsAndCocktails from './cards-and-cocktails.js';
 //
 // Templates belong to CRM instances. An instance sees a template only when
 //   - the template lists the instance's slug in `instances`, or
-//   - the instance has already used it (a blast exists with this template).
+//   - the instance has already used it (a blast exists with this template), or
+//   - the template lists another template id in `sameWorkspacesAs` and the
+//     instance can see that one.
 // A new instance therefore starts with no templates until one is made for it.
 // Each instance's slug is shown in its CRM under Settings. Order in this list
 // is dropdown order.
@@ -19,9 +22,12 @@ import cardsAndCocktails from './cards-and-cocktails.js';
 // refuses to send an email that leaves them out. subject and preheader may use
 // {{first_name|fallback}}, {{name}} and {{email}}.
 //
-// ctx = { firstName, name, email, preheader (merged), unsubscribeUrl, postalAddress, esc }
+// Optional: reply_to (where replies go; the sending address may not be read).
+//
+// ctx = { firstName, name, email, preheader (merged), unsubscribeUrl, postalAddress,
+//         subscriberToken (for ?s= on loogolabs.com landing pages), esc }
 // Merge values in ctx are raw; wrap them in ctx.esc() inside HTML.
-export const TEMPLATES = [cardsAndCocktails];
+export const TEMPLATES = [...loogoLabsLetter, cardsAndCocktails];
 
 // What the CRM's dropdown needs to know about a template.
 export const summary = ({ id, name, description, from_name, subject, preheader }) => ({ id, name, description, from_name, subject, preheader });
