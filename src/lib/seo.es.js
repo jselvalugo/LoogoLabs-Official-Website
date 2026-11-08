@@ -61,6 +61,10 @@ const STATIC = {
     title: `Alianzas con marcas: estrategia de marketing y consultoría de IA | ${BRAND}`,
     description: `Asóciate con ${BRAND} en estrategia de marketing y consultoría de IA. Proyectos a la medida de tu marca: postúlate en un minuto.`,
   },
+  Newsletter: {
+    title: `La carta de Loogo Labs: newsletter mensual de marketing | ${BRAND}`,
+    description: 'Un email al mes para dueños de negocio: lo que funciona en marketing, una herramienta de IA que ahorra horas y una cosa para mejorar esta semana. Gratis.',
+  },
   Privacy: {
     title: `Política de privacidad | ${BRAND}`,
     description: `Cómo ${BRAND} recopila, usa y protege la información que compartes con nosotros.`,

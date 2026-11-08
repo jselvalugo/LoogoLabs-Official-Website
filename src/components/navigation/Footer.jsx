@@ -3,6 +3,7 @@ import { BOOKING_URL } from '../../lib/booking';
 import { trackSchedule } from '../../lib/metaEvents';
 import { SITE, pathForPage, routeMeta } from '../../lib/seo';
 import { useHref, useLang } from '../../lib/i18n';
+import NewsletterSignup from '../funnel/NewsletterSignup';
 import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 
 // Spanish display labels. The English label stays the lookup key.
@@ -55,6 +56,7 @@ function Footer({ columns = [], note, wordmark = 'Loogo Labs', strap, copyright 
   return (
     <footer className="ll-footer" style={style}>
       <div className="ll-footer__inner">
+        <NewsletterSignup variant="footer" source="footer" />
         <div className="ll-footer__top">
           <div className="ll-footer__brand">
             <a href={toHref('/')} className="ll-footer__wordmark" onClick={e => go(e, 'Home')}>
