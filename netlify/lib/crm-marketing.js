@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { db } from './crm.js';
 import { CrmError, needId } from './crm-records.js';
-import { getTemplate, listTemplates } from './email-templates/index.js';
+import { TEMPLATES, getTemplate, summary } from './email-templates/index.js';
 
 // Email marketing through Resend: a subscriber list kept apart from business
 // contacts, one-off campaigns, and automations (drip sequences). Nothing here
@@ -272,9 +272,8 @@ async function draftCampaign(inst, id) {
   needId(id);
   const [c] = await q('SELECT * FROM crm_email_campaigns WHERE id = $1 AND instance_id = $2', [id, inst]);
   if (!c) throw new CrmError('Campaign not found', 404);
-  if (c.template) {
-    if (!getTemplate(c.template)) throw new CrmError('That email template no longer exists. Pick another one.');
-  } else if (!c.subject || !c.body) throw new CrmError('Add a subject and a message first');
+  if (c.template) await templateFor(inst, c.template);
+  else if (!c.subject || !c.body) throw new CrmError('Add a subject and a message first');
   return c;
 }
 
@@ -285,13 +284,25 @@ async function draftCampaign(inst, id) {
 // and uploads who gets it. Each blast has its own audience tag, so its uploaded
 // list stays separate from everything else on the subscriber list.
 
-export const templates = () => listTemplates();
+// The templates this instance may use (see email-templates/index.js).
+async function allowedTemplates(inst) {
+  const [i] = await q('SELECT slug FROM crm_instances WHERE id = $1', [inst]);
+  const used = new Set((await q(`SELECT DISTINCT template FROM crm_email_campaigns
+    WHERE instance_id = $1 AND template IS NOT NULL`, [inst])).map((r) => r.template));
+  return TEMPLATES.filter((t) => (t.instances || []).includes(i?.slug) || used.has(t.id));
+}
+async function templateFor(inst, id) {
+  const t = (await allowedTemplates(inst)).find((x) => x.id === id);
+  if (!t) throw new CrmError('That email template is not available in this workspace. Ask Loogo Labs for a template.');
+  return t;
+}
+export const templates = async (inst) => (await allowedTemplates(inst)).map(summary);
 
 const blastTag = (name) => `blast-${(tag(name) || 'list').replace(/[^a-z0-9-]/g, '').slice(0, 40)}-${randomBytes(3).toString('hex')}`;
 
 async function saveBlast(inst, values, { userId } = {}) {
-  const t = getTemplate(values.template);
-  if (!t) throw new CrmError('Pick an email template');
+  if (!values.template) throw new CrmError('Pick an email template');
+  const t = await templateFor(inst, values.template);
   const name = str(values.name, 200) || t.name;
   if (!values.id) {
     const [row] = await q(`INSERT INTO crm_email_campaigns (instance_id, name, subject, preheader, body, audience_tag, body_format, signature, template, created_by)
@@ -357,6 +368,11 @@ export async function sendCampaign(inst, id) {
   const c = await draftCampaign(inst, id);
   needSetup({ blast: !!c.template });
   if (c.status !== 'draft') throw new CrmError('This campaign was already sent', 409);
+  return queueCampaign(inst, c);
+}
+
+// Moves a campaign's audience into the outbox and marks it sending.
+async function queueCampaign(inst, c) {
   const [{ n }] = await q(`WITH queued AS (
       INSERT INTO crm_email_sends (instance_id, subscriber_id, campaign_id)
       SELECT $1, id, $2 FROM crm_email_subscribers
@@ -364,9 +380,54 @@ export async function sendCampaign(inst, id) {
       ON CONFLICT DO NOTHING RETURNING 1)
     SELECT count(*)::int AS n FROM queued`, [inst, c.id, c.audience_tag]);
   if (!n) throw new CrmError('Nobody on the list matches this audience');
-  const [row] = await q(`UPDATE crm_email_campaigns SET status = 'sending', recipients = $2, sent_at = now(), updated_at = now()
-    WHERE id = $1 RETURNING *`, [c.id, n]);
+  const [row] = await q(`UPDATE crm_email_campaigns SET status = 'sending', recipients = $2, sent_at = now(), updated_at = now(),
+      schedule_error = NULL WHERE id = $1 RETURNING *`, [c.id, n]);
   return row;
+}
+
+// ── Scheduling (blasts) ─────────────────────────────────────────────────────
+//
+// A scheduled blast is locked until its time; the email-worker (every 10
+// minutes) queues it once scheduled_at has passed. Who gets it is decided at
+// that moment, so later opt-outs are respected.
+
+export async function scheduleCampaign(inst, id, at) {
+  const c = await draftCampaign(inst, id);
+  if (!c.template) throw new CrmError('Only blasts can be scheduled');
+  if (c.status !== 'draft') throw new CrmError('This blast was already sent or scheduled', 409);
+  needSetup({ blast: true });
+  const when = new Date(at);
+  if (Number.isNaN(when.getTime())) throw new CrmError('Pick a date and time');
+  if (when.getTime() < Date.now() + 60 * 1000) throw new CrmError('Pick a time in the future');
+  if (when.getTime() > Date.now() + 90 * 86400 * 1000) throw new CrmError('Schedule up to 90 days ahead');
+  if (!(await campaignAudience(inst, c.audience_tag)).recipients) throw new CrmError('Upload a list before scheduling');
+  const [row] = await q(`UPDATE crm_email_campaigns SET status = 'scheduled', scheduled_at = $3, schedule_error = NULL, updated_at = now()
+    WHERE id = $1 AND instance_id = $2 AND status = 'draft' RETURNING *`, [c.id, inst, when.toISOString()]);
+  return row;
+}
+
+export async function unscheduleCampaign(inst, id) {
+  needId(id);
+  const [row] = await q(`UPDATE crm_email_campaigns SET status = 'draft', scheduled_at = NULL, updated_at = now()
+    WHERE id = $1 AND instance_id = $2 AND status = 'scheduled' RETURNING *`, [id, inst]);
+  if (!row) throw new CrmError('This blast is not scheduled (it may have just gone out)', 409);
+  return row;
+}
+
+// Due scheduled blasts → outbox. Claimed by flipping them back to draft first,
+// so overlapping worker runs cannot queue one twice. One that cannot go out
+// (e.g. its list is empty by then) stays a draft with the reason noted.
+async function releaseScheduled() {
+  const due = await q(`UPDATE crm_email_campaigns SET status = 'draft', updated_at = now()
+    WHERE status = 'scheduled' AND scheduled_at <= now() RETURNING *`);
+  for (const c of due) {
+    try {
+      await queueCampaign(c.instance_id, c);
+    } catch (err) {
+      await q(`UPDATE crm_email_campaigns SET scheduled_at = NULL, schedule_error = $2 WHERE id = $1`, [c.id, String(err.message).slice(0, 300)]);
+    }
+  }
+  return due.length;
 }
 
 // Sends one copy straight away (counts toward the daily cap like any send).
@@ -425,6 +486,7 @@ export async function saveSettings(inst, values) {
 // The finished email for an unsaved draft, for the editor's live preview.
 export async function previewEmail(inst, message) {
   if (message?.template) {
+    await templateFor(inst, message.template);
     const sample = { email: 'subscriber@example.com', name: str(message.sample_name, 200), unsubscribe_token: 'preview' };
     const { html, subject } = renderMarketingEmail({ template: message.template }, sample, {});
     return { html, subject };
@@ -581,6 +643,7 @@ export async function runQueue() {
   // Without EMAIL_POSTAL_ADDRESS only blasts (which carry their own) may go out;
   // written campaigns and automation emails wait in the queue until it is set.
   const blastsOnly = setupProblems().length > 0;
+  const released = await releaseScheduled();
 
   // Due sequence steps → outbox; then advance each enrollment.
   const due = blastsOnly ? [] : await q(`SELECT e.id, e.step, e.subscriber_id, s.id AS sequence_id, s.instance_id, s.steps
@@ -602,7 +665,7 @@ export async function runQueue() {
 
   const [{ n: sentToday }] = await q(`SELECT count(*)::int AS n FROM crm_email_sends WHERE status = 'sent' AND sent_at > now() - interval '24 hours'`);
   const budget = Math.min(PER_RUN, dailyLimit() - sentToday);
-  if (budget <= 0) return { queued_steps: due.length, sent: 0, capped: true };
+  if (budget <= 0) return { released, queued_steps: due.length, sent: 0, capped: true };
 
   // Claim a slice of the outbox so an overlapping run cannot send it twice.
   const claimed = await q(`UPDATE crm_email_sends SET status = 'sending' WHERE id IN (
@@ -654,7 +717,7 @@ export async function runQueue() {
     }
   }
   await finishCampaigns();
-  return { queued_steps: due.length, sent };
+  return { released, queued_steps: due.length, sent };
 }
 
 async function finishCampaigns() {

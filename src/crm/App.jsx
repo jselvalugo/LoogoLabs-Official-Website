@@ -693,6 +693,7 @@ function Settings({ me }) {
       <div className="head"><h1>Settings</h1></div>
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <strong>{me.instance_name}</strong>
+        <div className="muted">Workspace ID: <code>{me.instance_slug}</code> (Loogo Labs uses this to set up your email templates)</div>
         <div className="muted">Signed in as {me.name ? `${me.name} · ` : ''}{me.email} ({me.role})</div>
       </div>
       <div className="card" style={{ padding: 20, marginBottom: 16, maxWidth: 420 }}>

@@ -59,7 +59,9 @@ export default async (req) => {
       case 'delete_subscriber': return json(await mail.deleteSubscriber(inst, body.id));
       case 'import_subscribers': return json(await mail.importSubscribers(inst, body.values || {}));
       case 'email_campaigns': return json(await mail.listCampaigns(inst, body));
-      case 'email_templates': return json(mail.templates());
+      case 'email_templates': return json(await mail.templates(inst));
+      case 'schedule_campaign': return json(await mail.scheduleCampaign(inst, body.id, body.at));
+      case 'unschedule_campaign': return json(await mail.unscheduleCampaign(inst, body.id));
       case 'blast_upload': return json(await mail.uploadBlastList(inst, body.id, body.rows));
       case 'blast_clear': return json(await mail.clearBlastList(inst, body.id));
       case 'save_campaign': return json(await mail.saveCampaign(inst, body.values || {}, audit));
