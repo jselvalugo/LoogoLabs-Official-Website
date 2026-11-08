@@ -11,6 +11,95 @@
 
 export const posts = [
   {
+    slug: `ai-voice-after-hours-plumbing`,
+    title: `AI Voice Agents: What to Hand Over and What to Keep Human`,
+    excerpt: `A voice agent works when it is built from the list of calls it must hand to a person, not from the feature list in the demo.`,
+    tags: `AI Assistants, Voice Agents, Lead Intake`,
+    content: `Which calls would you be embarrassed to learn a machine had answered?
+
+Start there, not with a demo. Every AI voice agent sounds impressive on a sales call, and most of them really can hold a normal phone conversation now. Whether one works for your business depends on something the demo never shows: the list of calls it must hand to a person, and how fast it does it.
+
+I have set these up for plumbers, auto shops, law firms and veterinary clinics. The ones that worked were built from that list outward. The ones that went badly were built from a feature list inward.
+
+## The calls you are already losing
+
+Before deciding anything about AI, find out what your phone does today when nobody picks up.
+
+Pull last month's call report and group the unanswered calls by hour. Most businesses find two spikes. One is outside business hours, when nobody is carrying the phone. The other is inside them, at the busiest times: the first two hours of the morning at a repair shop, lunch at a clinic, the minutes before close anywhere. Three customers at the counter and a ringing phone means one of those jobs gets done badly, and it is usually the phone.
+
+Then call your own number after hours from your personal phone and listen. If you hear a beep, that is what every caller heard.
+
+Put a rough number on it. If twenty calls a month hit voicemail after hours, a third of them are real jobs, and your average emergency ticket is $650, that is over $4,000 a month in work you already paid to attract. A shop missing fifty weekday calls at a $480 average repair order has $24,000 a month ringing out. If only a third of those would have booked, that is still $8,000. Your numbers will differ. The point is to know them before anyone sells you a fix.
+
+## What a voice agent is good at
+
+A voice agent is good at structured intake: the same questions in the same order, every time, at any hour, with no one waiting on hold.
+
+Most first calls are more structured than owners think. A plumbing emergency is: is water still running, where is the shutoff, what is the address, what number can we call back. A repair booking is: year, make, model, what is the car doing, when can you bring it in. A legal intake is: when did it happen, were you hurt, were you treated, are you already represented, what state. That is a script with a decision tree behind it, and your best person already runs it from memory. They just run it a little differently at 4:30 on a Friday than at 9 on a Tuesday.
+
+What the agent should do on those calls:
+
+- **Ask the intake questions and read the answers back.** Name, address and callback number confirmed out loud prevent half of all dispatch mistakes.
+- **Book on the call, against your real calendar.** People who phone want to finish on the phone. "We'll call you back to schedule" loses a share of them. The agent needs to know slot lengths too, because a diagnostic and an oil change are not the same booking.
+- **Give the one instruction you would give.** "Shut off the main valve, it's usually near the water heater or where the line enters the house" is exactly what your dispatcher would say.
+- **Send the summary to a person before the caller hangs up.** The on-call tech or the attorney should get the details as a text, not as a voicemail to dig through in the morning.
+- **Log the source of every call.** Most small firms can't say which marketing produced the cases they signed, because that information lives in someone's memory of a phone call. The agent can write it down every time.
+
+## The always-a-human list comes first
+
+Write this list before you configure anything. Do it with the people who carry the risk: your lead technician, your attorney, your veterinarian.
+
+Some entries are the same for every business:
+
+- The caller says it is an emergency, in whatever words they use
+- The caller is crying, repeating themselves, or clearly not being understood
+- Anything about a job, case or patient already in progress
+- Complaints, comebacks and warranty disputes
+- Any request for a price on work nobody has seen
+
+Then add the ones specific to your field. For a plumber: gas, sewage coming up into the house, commercial properties. For a vet clinic: bloat, seizures, trouble breathing, a pet that swallowed something toxic, uncontrolled bleeding, euthanasia, medication questions. For a law firm: any version of "do you think I can sue." That gets a scheduled consultation, never an answer.
+
+The rule for everything on the list is the same. The call rings through to a person immediately, and the agent tells the caller that is what is happening. "I'm getting someone on the line for you now" is better than a silent transfer.
+
+## Why it should route, not triage
+
+This is the mistake I see most often. An owner wants the agent to decide whether a symptom is urgent. That turns a booking tool into a judgment tool, and judgment about a sick animal, an injured person or a gas smell is not something to delegate.
+
+The agent should route on words and on uncertainty. It hears a word from the list, it transfers. It is unsure, it transfers. An agent that transfers too often costs you some efficiency. One that transfers too rarely books a Thursday wellness slot for a fourteen-year-old dog that hasn't stood up since morning. That is not an automation failure. It is a missing line on the list.
+
+People in real distress need extra thought. Someone calling days after a serious accident is not in a state to be efficiently qualified, and I don't think any script handles that perfectly, ours included. My working rule is to over-transfer: when in doubt, a human. I would rather a business choose that trade on purpose than inherit it from a default setting.
+
+## What it must never say
+
+Separate from what it routes is what it promises. Write these down too:
+
+- No quotes or price estimates for work not yet seen
+- No arrival times your team can't keep
+- No diagnosis of a car, a pipe or a pet
+- No legal, medical or safety advice beyond the single instruction you approved word for word
+- No discounts, guarantees or exceptions to your policies
+
+When a caller pushes, the agent's answer is a booking or a transfer, not an improvisation.
+
+## Text follow-up is a different job
+
+Owners often lump the phone agent together with AI-written follow-up texts and emails. They solve different problems.
+
+If leads come in and nothing goes out, that is a system problem: nobody is assigned, nothing is automatic. AI writing does nothing for it. If messages go out and get ignored, that is a writing problem, and AI is useful there as a first-draft tool. Ask for fifteen versions of a day-three check-in, keep the two that sound like you, and add the detail only you know: the class she asked about, the coach's name, the time slot she wanted.
+
+Fix the order first. A plain text four minutes after the inquiry beats a polished email on Thursday. Once the sequence runs, use AI to keep each message from reading like a template. And send it from a number someone actually watches. A reply that lands in an unmonitored line is worse than no message at all.
+
+## Read the transcripts for a month
+
+For the first month, read every transcript. All of them, weekly, not a sample. You are looking for one thing: a call the agent handled that a person should have taken. Each one is a missing rule. Add it, and the list settles faster than you would expect.
+
+After that, a weekly skim of anything that transferred, anything that ended without a booking, and anything over five minutes long is usually enough.
+
+## Before you talk to any vendor
+
+Sit down with the person who carries the most risk in your business and write the always-a-human list on paper. Then pull last month's missed calls by hour. If you have both, you are ready to judge whether a voice agent fits. If you don't, the technology question is premature, whoever is selling it, including us.`,
+  },
+  {
     slug: `5-minute-rule-local-service-business-leads`,
     title: `Speed to Lead: When AI Should Write the First Reply`,
     excerpt: `The first business to give a new lead a clear next step usually ends the search, and AI can send that reply at any hour, as long as a person still closes.`,
@@ -3983,259 +4072,6 @@ It gets you the money you already earned, sooner, and it stops you from financin
 Pull last month's completed jobs and average the days between job done and invoice sent.
 
 If that number is more than a day or two, that gap is where to fix cash flow first — before pricing, before lead flow, before anything else you were considering.`,
-  },
-  {
-    slug: `ai-voice-after-hours-plumbing`,
-    title: `The 2 A.M. Burst Pipe Call Your Plumbing Company Never Hears`,
-    excerpt: `After-hours calls don't go to your competitor because they're cheaper. They go there because somebody picked up.`,
-    tags: `AI Voice Agents, Plumbing, After-Hours Calls`,
-    content: `A supply line lets go at 11:40 on a Sunday night and water is coming through the kitchen ceiling.
-
-The homeowner isn't opening a browser to compare plumbers. She's tapping the first three numbers on the search results and hiring whoever answers.
-
-Two of them ring out to a voicemail greeting recorded in 2019. The third picks up on the second ring, asks whether the water is shut off yet, confirms the address, and puts the job on the on-call tech's schedule for 12:15. That plumber didn't out-market anybody. He answered.
-
-## Voicemail is a decision
-
-Every owner I've had this conversation with frames after-hours coverage as a staffing question — either somebody carries the phone or nobody does. Framed that way the answer is usually nobody, because paying a person to sit through eleven quiet nights for the four calls that come on the twelfth doesn't pencil out.
-
-But the calls arrive regardless. What happens to them isn't neutral. It's a standing decision to hand your highest-margin work to whoever happens to be awake.
-
-## What an AI voice agent does on that call
-
-It isn't a phone tree. It answers, holds an ordinary conversation, and works the same intake your best dispatcher would:
-
-- Establishes whether this is an active leak, a no-hot-water call, or something that can wait until Tuesday
-- Tells her to shut off the main and where to look for it, which is what you'd say
-- Takes name, address, and callback number, and reads them back
-- Books the emergency slot on the on-call calendar, or the first morning slot if it can wait
-- Texts you and the tech the details before she's hung up
-
-She gets an answer in eight seconds instead of a beep, and you get a booked job instead of a voicemail nobody plays until seven.
-
-## Where it stops, and should
-
-An AI voice agent is good at intake. It's poor at judgment calls carrying money or risk, and it shouldn't be asked to make them.
-
-It shouldn't quote a repair sight unseen. It shouldn't promise an arrival window your on-call tech can't hit. It shouldn't talk anybody through anything involving gas.
-
-Write those rules before you switch it on, not on the Saturday you find out. Anything mentioning gas, sewage backup, or a commercial property rings a human immediately. The rest it can carry end to end.
-
-## Do this arithmetic with your own numbers
-
-Count the calls that hit voicemail outside business hours last month. Take the share that were genuine emergencies and multiply by your average emergency ticket.
-
-Twenty after-hours calls a month at a $650 emergency ticket, recovering a third of them, is over $4,000 a month. That isn't new lead generation. It's leads you already paid to acquire, finally being picked up.
-
-## Call your own number tonight
-
-After hours, from your own phone. Listen to exactly what a homeowner standing in two inches of water hears.
-
-If it's a beep, you have your answer, and it's a configuration problem rather than a hiring one.`,
-  },
-  {
-    slug: `ai-voice-booking-auto-repair`,
-    title: `Your Service Advisor Is on the Phone While Three Cars Sit in the Lot`,
-    excerpt: `The bottleneck in most repair shops isn't the bays. It's the one person answering the phone and checking in customers at the same time.`,
-    tags: `AI Voice Agents, Auto Repair, Booking Automation`,
-    content: `Sixty to eighty unanswered calls a month, nearly all of them between 7:30 and 9:30 in the morning and again right at close.
-
-That's the pattern I find in almost every independent shop that tells me it needs more cars. It's Monday at 8:10, three customers are at the counter, the phone has rung six times, and your service advisor can do one of those jobs well — so the phone loses.
-
-Everybody on the other end of those rings is already sitting in a driveway deciding where to take the car.
-
-## The shop isn't short on bays
-
-The owner's instinct is that growth means another lift or another tech. Then we pull the call log and the capacity turns out to be sitting right there.
-
-A bay running at 70% because the phone is busy is a scheduling problem dressed up as a staffing problem. You don't need more room. You need the two hours of coverage you're missing.
-
-## Booking has to happen on the call
-
-Plenty of shops have a booking link. Almost nobody calling about a check engine light is going to use it — she called because she wanted to talk to somebody. So either the appointment gets made on that call or it doesn't get made.
-
-An AI voice agent can do that when it's wired to the same calendar your advisor uses:
-
-- Takes year, make, model, and what the car is doing
-- Sorts it into the right service type, because a diagnostic and an oil change aren't the same slot length
-- Reads back real availability from the live schedule, not we open at eight
-- Books it, texts a confirmation, and puts the complaint on the ticket
-- Sends the reminder the day before and again an hour out
-
-By the time your advisor looks at the schedule, the appointment is on it with notes attached.
-
-## The honest limits
-
-It won't diagnose the car, and you don't want it trying. No quotes, no parts availability dates, no negotiating on price. Those need eyes on the vehicle and somebody who owns the number.
-
-It also has to know when to get out of the way. A caller asking about a repair already in progress, a comeback, or a warranty dispute needs a person — those calls are about trust, and an automated intake makes them worse.
-
-Draw the line deliberately: new appointments and routine questions to the agent, anything touching an open ticket to a human.
-
-## Ten thousand dollars of Monday
-
-Fifty missed calls a month at a $480 average repair order is around $10,000 in work walking past a shop that already has the bays to do it.
-
-You don't need a marketing budget for that. You need the phone answered between 7:30 and 9:30.
-
-## Sort your missed calls by hour
-
-Pull last month's call report and group the unanswered ones by hour of day.
-
-The spike will be obvious, and it'll tell you precisely which two hours of coverage are costing you the most — which is a much cheaper problem than the one you thought you had.`,
-  },
-  {
-    slug: `ai-voice-intake-law-firm`,
-    title: `Most Law Firm Intake Calls Are Not Cases. That's the Problem.`,
-    excerpt: `A paralegal spending her morning on calls the firm will never take is the most expensive filter a firm can own.`,
-    tags: `AI Voice Agents, Law Firms, Lead Qualification`,
-    content: `Forty inbound calls in a week. Six of them are cases the firm would actually sign.
-
-The other thirty-four are wrong practice area, outside the statute, no injury, already represented, or somebody who wants free advice about a neighbor's fence. Somebody has to sit through all forty to find the six, and at most small firms that somebody bills at a rate making it a genuinely bad use of the hour.
-
-Worse: the six real cases are on hold behind the thirty-four.
-
-## Qualification is a script, not judgment
-
-Here's the part firms underrate. The first ninety seconds of an intake call isn't legal work. It's a fixed set of questions with a decision tree behind it.
-
-When did it happen. Were you injured. Were you treated. Was a report filed. Are you represented. What state.
-
-That's a script. Your intake person runs it from memory already, and runs it slightly differently at 4:30 on a Friday than at 9 on a Tuesday. An AI voice agent runs it identically at six on a Sunday morning, and never puts call two on hold to finish call one.
-
-## What happens in the thirty seconds after
-
-The value isn't that a machine asked the questions. It's what the answers trigger:
-
-- Qualified callers get booked into an attorney consult while still on the phone
-- Clear non-cases get a courteous, accurate close and a referral note, without burning staff time
-- Anything ambiguous routes to a person with the answers already captured, so nobody restarts from zero
-- Every call lands in the system with its answers and a source attached, signed or not
-
-That last one quietly matters. Most firms can't tell you which marketing spend produced the cases they signed, because the evidence lives in a paralegal's recollection of a phone call.
-
-## The line you don't cross
-
-It doesn't give legal advice. It doesn't evaluate the merits of a claim. It doesn't tell anybody whether they have a case. It gathers facts and it schedules.
-
-That isn't a limitation to engineer around — it's the entire design constraint. Any question starting with do you think I can sue gets a scheduled consult, not an answer. And read the transcripts weekly, because the calls it handled badly are the ones telling you where your script is wrong.
-
-## Where I'm genuinely unsure
-
-I don't know where the line sits for a caller in real distress.
-
-A person calling three days after a serious accident isn't in a state to be efficiently qualified, and I'm not convinced any script handles that well — ours included. You can route on tone and keywords, and we do, but tone detection is crude and the cost of getting it wrong is a person in a bad moment feeling processed by a machine.
-
-My working rule is to over-transfer: when in doubt, a human. That costs the firm efficiency in exchange for not being the firm that did that to somebody. I think that's the right trade, but I'd hold it loosely, and I'd rather a firm decide it deliberately than inherit it from a default setting.
-
-Before you automate any of this, pull last month's intake calls and mark each one signed, not signed, or never a fit. If more than two thirds are in that third bucket, your intake isn't a staffing problem. It's a filtering problem, and filters can be built.`,
-  },
-  {
-    slug: `ai-voice-handoff-veterinary-clinic`,
-    title: `The Calls Your AI Voice Agent Should Never Handle Alone`,
-    excerpt: `Automation that answers a call it should have transferred does more damage than the voicemail it replaced.`,
-    tags: `AI Voice Agents, Veterinary Clinics, Automation Tradeoffs`,
-    content: `Every conversation about AI on the phone starts in the wrong place. Everyone wants to know what the agent can handle. The question that decides whether this works is what it must never handle alone.
-
-Here's what that looks like when it goes wrong. A clinic puts a voice agent on the main line to stop losing appointment calls during surgery blocks, and it works — bookings that used to hit voicemail at eleven now land on the schedule.
-
-Then a client calls because her fourteen-year-old lab stopped eating three days ago and won't get up this morning. The agent, doing exactly what it was configured to do, offers her a wellness slot on Thursday.
-
-That isn't an automation failure. It's a configuration failure, and it's entirely foreseeable.
-
-## The handoff list comes first
-
-So I've stopped opening these conversations with what the software does. I ask the practice manager to tell me which calls would horrify her if a machine took them, and we build outward from that answer.
-
-In a clinic the list is short, obvious, and non-negotiable:
-
-- Anything the caller calls an emergency, in whatever words she uses
-- Bloat, seizures, hit by car, labored breathing, ingested toxin, uncontrolled bleeding
-- Euthanasia, quality-of-life conversations, and any call about a patient currently hospitalized
-- Medication questions, dosages, and reactions
-- A caller who's crying, or repeating herself, or plainly not getting through
-
-Write that with your DVMs before anybody configures a prompt. Then set the rule: when any of it surfaces, the call rings a human immediately and the agent says so plainly.
-
-## What's left is still most of the volume
-
-Carve out the hard list and what remains is exactly what's been eating your front desk. Routine booking, vaccine due dates, boarding availability, hours, whether you carry a diet, refill requests into the tech queue, and confirmations for the clients who never confirm.
-
-In a general practice that's the majority of ring volume, and none of it needs a licensed person. Handing it over is what makes your two front-desk people available for the calls that actually need them.
-
-## Where automation quietly makes things worse
-
-A system that can't recognize distress isn't neutral. It converts a client who needed help into a client who felt dismissed by a machine, and she will tell that story to everyone at the dog park.
-
-Overreach is the same failure wearing a different hat. An agent guessing whether a symptom is urgent has taken on triage, and triage is a clinical judgment. It shouldn't be estimating urgency — it should be routing on keywords and tone and defaulting to a human whenever it's unsure.
-
-An agent that transfers too often is a minor inefficiency. One that transfers too rarely is a liability.
-
-## Read every transcript for a month
-
-Not a sample. All of them, weekly, looking for one thing: a call it handled that a person should have taken.
-
-Every one you find is a missing rule, and the list stabilizes faster than you'd expect.
-
-## If you're weighing this for your clinic
-
-Sit down with your lead DVM and write the always-a-human list before you evaluate a single vendor, ours included. If that list doesn't exist on paper, the technology decision is premature.
-
-And if you'd rather have somebody build it around your list instead of the other way round, that's the conversation worth having — bring the list.`,
-  },
-  {
-    slug: `ai-follow-up-messaging-gym`,
-    title: `Your Gym Follow-Up Sounds Like a Robot Wrote It. AI Isn't the Reason.`,
-    excerpt: `Nobody joins a gym because of a well-written text. They leave the funnel because nobody sent one at all.`,
-    tags: `AI Content Tools, Gyms & Fitness, Lead Follow-Up`,
-    content: `When you tell me your follow-up isn't working, which do you mean — that nothing goes out, or that what goes out gets ignored?
-
-Owners use the same sentence for both, and they need opposite fixes.
-
-The first is a volume problem: leads arrive and nothing leaves, because the person who was going to text them was on the floor coaching. The second is a quality problem: something goes out, it reads like a form letter, and it dies.
-
-AI helps with the second one. It does nothing whatsoever for the first, and the first is the one most gyms actually have.
-
-## What the failure looks like
-
-A prospect fills out the free-trial form on a Tuesday night. She gets an email opening with thank you for your interest in our facility and closing with we look forward to welcoming you to our community.
-
-She doesn't reply. Nobody follows up. Saturday she joins somewhere else.
-
-The template wasn't the problem. Nothing after the template was the problem.
-
-## What AI is genuinely good for here
-
-Used properly it's a first-draft machine that kills the blank page. You're not asking it to be clever — you're asking for fifteen versions of a day-three check-in so you can keep two that sound like you and bin the rest.
-
-Where it earns its place in a gym:
-
-- Rewriting the trial follow-up in five registers, so the 6 a.m. bootcamp crowd and your personal training clients don't get the same voice
-- Turning one testimonial into a week of captions without starting over each time
-- Drafting the message to members who haven't badged in for three weeks, which is the one nobody ever gets around to writing
-- First pass at review responses, so replies actually happen inside a day
-
-That's the typing. It isn't the strategy.
-
-## What it can't do for you
-
-It has never met the woman who's in at 5:15 every morning. It doesn't know your Saturday class is the one that sells memberships, or why the twelve-week challenge converts better than the free trial.
-
-So every draft needs a pass from somebody who does know. Cut the exclamation points and put in the specific detail — the class, the coach's name, the time slot she told you she wanted. That detail is the whole difference between a reply and silence.
-
-Send it from a number somebody watches, too. A perfect text from an unmonitored line is worse than none, because now she's replied and been ignored twice.
-
-## Timing beats wording, and it isn't close
-
-Fix the sequence before the copy. A plain, slightly clumsy text arriving four minutes after the form beats a polished email arriving Thursday. Then run an actual sequence — day one, three, seven, fourteen — instead of one message and silence.
-
-Once that runs, use AI to stop each of those four sounding like a template. In that order. Reversing it is why so many gyms have great copy and an empty pipeline.
-
-## Two numbers to pull this week
-
-Take your last twenty trial signups. How many got a first response inside five minutes, and how many got a fourth touch at all?
-
-Those two numbers tell you whether you have a writing problem or a system problem, and I'd bet on the second.`,
   },
   {
     slug: `pest-control-list-segmentation`,

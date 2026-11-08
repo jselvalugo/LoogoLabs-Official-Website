@@ -27,4 +27,10 @@ export const retiredPosts = {
   'locksmith-lockout-price-range-text-before-dispatch': '5-minute-rule-local-service-business-leads',
   'florist-sympathy-order-service-time-before-the-card': '5-minute-rule-local-service-business-leads',
   'hvac-first-heat-smell-text-triage': '5-minute-rule-local-service-business-leads',
+
+  // H2 AI voice agents → ai-voice-after-hours-plumbing (2026-11-08)
+  'ai-voice-booking-auto-repair': 'ai-voice-after-hours-plumbing',
+  'ai-voice-intake-law-firm': 'ai-voice-after-hours-plumbing',
+  'ai-voice-handoff-veterinary-clinic': 'ai-voice-after-hours-plumbing',
+  'ai-follow-up-messaging-gym': 'ai-voice-after-hours-plumbing',
 };

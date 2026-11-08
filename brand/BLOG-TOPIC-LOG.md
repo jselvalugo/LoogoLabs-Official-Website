@@ -36,10 +36,10 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-09-01 | med-spa-marketing-channel-roi | Med spas | Marketing channel ROI / reporting
 - 2026-09-01 | landscaping-payments-invoicing | Landscaping | Payments & invoicing
 - 2026-09-02 | ai-voice-after-hours-plumbing | Plumbing | AI voice agent — after-hours call coverage
-- 2026-09-02 | ai-voice-booking-auto-repair | Auto repair | AI voice agent — booking to the live calendar
-- 2026-09-02 | ai-voice-intake-law-firm | Law firms | AI voice agent — intake qualification & routing
-- 2026-09-02 | ai-voice-handoff-veterinary-clinic | Veterinary clinics | AI voice agent — handoff rules & automation limits
-- 2026-09-02 | ai-follow-up-messaging-gym | Gyms & fitness studios | AI content tools — follow-up messaging
+- 2026-09-02 | ai-voice-booking-auto-repair | Auto repair | AI voice agent — booking to the live calendar — merged into ai-voice-after-hours-plumbing (2026-11-08)
+- 2026-09-02 | ai-voice-intake-law-firm | Law firms | AI voice agent — intake qualification & routing — merged into ai-voice-after-hours-plumbing (2026-11-08)
+- 2026-09-02 | ai-voice-handoff-veterinary-clinic | Veterinary clinics | AI voice agent — handoff rules & automation limits — merged into ai-voice-after-hours-plumbing (2026-11-08)
+- 2026-09-02 | ai-follow-up-messaging-gym | Gyms & fitness studios | AI content tools — follow-up messaging — merged into ai-voice-after-hours-plumbing (2026-11-08)
 - 2026-09-02 | pest-control-list-segmentation | Pest control | Segmentation, tags & smart lists
 - 2026-09-02 | restaurant-review-response-reputation | Restaurants | Reputation management — review response & alerting
 - 2026-09-02 | gym-membership-retention-management | Gyms & fitness studios | Membership management — retention & involuntary churn
@@ -136,3 +136,4 @@ Format: `- YYYY-MM-DD | slug | territory / audience | topic`
 - 2026-11-06 | hot-tub-service-promise-note-on-the-record-after-every-call | Hot tub service | Follow-up discipline — one-line promise note (what, day, who is waiting) typed on the record after each call, `promised` tag, daily early list of due promises, update text with a new day instead of silence, tally of "I'll" for one day
 - 2026-11-07 | generator-service-nameplate-photo-text-before-the-first-outage | Generator service | Outage prep — November text asking for a nameplate photo and a YES/NO/NOT SURE answer on whether the unit ran last outage, `ran last outage`/`did not run`/`run unknown` tags, one nudge, storm call list sorted did-not-run first
 - 2026-11-08 | 5-minute-rule-local-service-business-leads | Follow-Up, Email & SMS / local service businesses | Hub: speed to lead — measuring the response gap, cost of delay, lead ownership, first-reply rules, where AI should and should not reply (absorbs 10 posts)
+- 2026-11-08 | ai-voice-after-hours-plumbing | AI Agents & Assistants / local service businesses, clinics, law firms | Hub: AI voice agents — measuring missed calls, structured intake, booking on the call, the always-a-human list, route don't triage, what it must never promise, AI text follow-up as a separate job (absorbs 5 posts)
