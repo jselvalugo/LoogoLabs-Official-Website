@@ -40,6 +40,7 @@ export function FieldInput({ field, value, onChange, id }) {
   const v = value ?? '';
   switch (field.type) {
     case 'textarea': return <textarea id={id} className="field" rows={3} value={v} onChange={set} />;
+    case 'image': return <ImageInput id={id} value={v} onChange={onChange} />;
     case 'select':
       return (
         <select id={id} className="field" value={v} onChange={set}>
@@ -158,3 +159,33 @@ export function Activities({ entityKey, id, initial }) {
   );
 }
 
+
+// Logo picker: upload a small image (kept inline) or paste an https link.
+export function ImageInput({ id, value, onChange }) {
+  const [error, setError] = React.useState('');
+  function pick(e) {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    if (!/^image\/(png|jpeg|webp|gif|svg\+xml)$/.test(file.type)) { setError('Use a PNG, JPG, WebP or SVG.'); return; }
+    if (file.size > 290000) { setError('Keep the image under 300 KB.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => { setError(''); onChange(String(reader.result)); };
+    reader.readAsDataURL(file);
+  }
+  const isData = String(value || '').startsWith('data:');
+  return (
+    <div className="image-input">
+      <span className="logo-preview">{value ? <img src={value} alt="" /> : <span className="muted">No logo</span>}</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <input id={id} className="field" type="url" placeholder="https://… or upload" value={isData ? '' : value || ''}
+          onChange={(e) => onChange(e.target.value)} disabled={isData} />
+        <div className="image-actions">
+          <label className="btn btn-small">Upload<input type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden onChange={pick} /></label>
+          {value && <button type="button" className="btn btn-small" onClick={() => onChange('')}>Remove</button>}
+        </div>
+        {error && <div className="error" style={{ marginTop: 6 }}>{error}</div>}
+      </div>
+    </div>
+  );
+}

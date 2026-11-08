@@ -1,6 +1,7 @@
 import { db } from './crm.js';
 import {
-  ACTIVITY_FIELDS, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_LIFECYCLES, REPORT_CADENCES, REPORT_FIELDS, stageInfo, stagesFor,
+  ACTIVITY_FIELDS, CHARGE_FIELDS, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_LIFECYCLES, REPORT_CADENCES, REPORT_FIELDS,
+  SOCIAL_FIELDS, SOURCE_FIELDS, stageInfo, stagesFor,
 } from '../../src/crm/entities.js';
 
 // Generic, instance-scoped CRUD over the entities in src/crm/entities.js, used by
@@ -99,6 +100,14 @@ async function clean(inst, fields, input, { partial }) {
       case 'user': {
         const [u] = await q('SELECT 1 FROM crm_users WHERE id = $1 AND instance_id = $2', [needId(v, f.label), inst]);
         if (!u) throw new CrmError(`${f.label}: no such user in this workspace`);
+        break;
+      }
+      case 'image': {
+        // An https URL, or a small uploaded image kept inline as a data URL.
+        v = String(v);
+        const ok = /^https:\/\/\S+$/i.test(v) ? v.length <= 2000
+          : /^data:image\/(png|jpeg|webp|gif|svg\+xml);base64,[A-Za-z0-9+/=]+$/.test(v) && v.length <= 400000;
+        if (!ok) throw new CrmError(`${f.label} must be an https image link or a PNG, JPG, WebP or SVG under 300 KB`);
         break;
       }
       case 'email':
@@ -204,7 +213,13 @@ export async function getRecord(inst, key, id, { related = true } = {}) {
   }
   if (key === 'contacts') rel.opportunities = await list('opportunities', 'contact_id');
   if (key === 'opportunities') rel.projects = await list('projects', 'opportunity_id');
-  const extra = key === 'projects' ? { reports: await listReports(inst, id) } : {};
+  const extra = key === 'projects' ? {
+    reports: await listReports(inst, id),
+    charges: await listCharges(inst, id),
+    billing_summary: await billingSummary(inst, id),
+    sources: await listSources(inst, id),
+    client: record.company_id ? await clientCard(inst, record.company_id) : null,
+  } : {};
   return { ...record, related: rel, ...extra, activities: await listActivities(inst, { entity_type: key, entity_id: id }) };
 }
 
@@ -384,7 +399,7 @@ export async function overview(inst) {
 
 // ── Project status reports ──────────────────────────────────────────────────
 
-const REPORT_SELECT = `r.id, r.project_id, r.report_date, r.health, r.stage, r.summary, r.accomplishments, r.next_steps, r.blockers,
+const REPORT_SELECT = `r.id, r.project_id, r.report_date::text AS report_date, r.health, r.stage, r.status, r.summary, r.accomplishments, r.next_steps, r.blockers,
   r.created_at, r.updated_at,
   COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = r.user_id), r.author_label) AS author`;
 const shapeReport = (r) => ({ ...r, report_date: ymd(r.report_date) });
@@ -403,8 +418,8 @@ async function getReport(inst, id) {
 
 // After any report change, the project's health and due date follow its newest report.
 async function syncProjectFromReports(inst, projectId) {
-  const [latest] = await q(`SELECT report_date::text AS report_date, health FROM crm_project_reports WHERE instance_id = $1 AND project_id = $2
-    ORDER BY report_date DESC, created_at DESC LIMIT 1`, [inst, projectId]);
+  const [latest] = await q(`SELECT report_date::text AS report_date, health FROM crm_project_reports
+    WHERE instance_id = $1 AND project_id = $2 AND status = 'final' ORDER BY report_date DESC, created_at DESC LIMIT 1`, [inst, projectId]);
   if (!latest) { await q('UPDATE crm_projects SET last_report_at = NULL, updated_at = now() WHERE id = $1', [projectId]); return; }
   const [p] = await q('SELECT report_cadence FROM crm_projects WHERE id = $1', [projectId]);
   const next = addDays(latest.report_date, cadenceDays(p.report_cadence));
@@ -416,10 +431,10 @@ export async function addReport(inst, input, audit = {}) {
   const project = await getRecord(inst, 'projects', needId(input.project_id, 'project_id'), { related: false });
   const values = await clean(inst, REPORT_FIELDS, { report_date: todayYmd(), ...input }, { partial: false });
   const [row] = await q(
-    `INSERT INTO crm_project_reports (instance_id, project_id, report_date, health, stage, summary, accomplishments, next_steps, blockers, user_id, author_label)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`,
+    `INSERT INTO crm_project_reports (instance_id, project_id, report_date, health, stage, summary, accomplishments, next_steps, blockers, user_id, author_label, status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
     [inst, project.id, values.report_date, values.health, project.stage, values.summary, values.accomplishments ?? null,
-      values.next_steps ?? null, values.blockers ?? null, audit.userId ?? null, audit.label ?? null],
+      values.next_steps ?? null, values.blockers ?? null, audit.userId ?? null, audit.label ?? null, values.status || 'final'],
   );
   await syncProjectFromReports(inst, project.id);
   return getReport(inst, row.id);
@@ -460,4 +475,155 @@ async function projectSummary(inst) {
     at_risk: rows.filter((r) => r.health !== 'on_track' && !parked(r)),
     reports_due: rows.filter((r) => !parked(r) && r.next_report_date && r.next_report_date <= today),
   };
+}
+
+// ── Client card (logo + socials, for the project page and Claude) ─────────
+
+async function clientCard(inst, companyId) {
+  const [c] = await q(`SELECT id, name, website, domain, logo_url, ${SOCIAL_FIELDS.join(', ')}
+    FROM crm_companies WHERE id = $1 AND instance_id = $2`, [companyId, inst]);
+  return c || null;
+}
+
+// ── Billing ledger ──────────────────────────────────────────────────────────
+
+const CHARGE_SELECT = `id, project_id, kind, description, amount, due_date::text AS due_date, period_start::text AS period_start, status,
+  paid_at::text AS paid_at, method, created_at, updated_at`;
+const shapeCharge = (c) => ({ ...c, amount: Number(c.amount), due_date: ymd(c.due_date), period_start: ymd(c.period_start), paid_at: ymd(c.paid_at) });
+
+export async function listCharges(inst, projectId) {
+  return (await q(`SELECT ${CHARGE_SELECT} FROM crm_project_charges WHERE instance_id = $1 AND project_id = $2
+    ORDER BY COALESCE(due_date, period_start, created_at::date) DESC, created_at DESC`, [inst, needId(projectId, 'project_id')])).map(shapeCharge);
+}
+
+async function getCharge(inst, id) {
+  const [row] = await q(`SELECT ${CHARGE_SELECT} FROM crm_project_charges WHERE id = $1 AND instance_id = $2`, [needId(id), inst]);
+  if (!row) throw new CrmError('Charge not found', 404);
+  return shapeCharge(row);
+}
+
+async function touchProject(id) { await q('UPDATE crm_projects SET updated_at = now() WHERE id = $1', [id]); }
+
+export async function addCharge(inst, input) {
+  const project = await getRecord(inst, 'projects', needId(input.project_id, 'project_id'), { related: false });
+  const v = await clean(inst, CHARGE_FIELDS, input, { partial: false });
+  if (v.status === 'paid' && !v.paid_at) v.paid_at = todayYmd();
+  if (v.kind === 'credit' && v.amount > 0) v.amount = -v.amount;
+  const cols = Object.keys(v);
+  const [row] = await q(`INSERT INTO crm_project_charges (instance_id, project_id, ${cols.join(', ')})
+    VALUES ($1, $2, ${cols.map((_, i) => `$${i + 3}`).join(', ')}) RETURNING id`, [inst, project.id, ...cols.map((c) => v[c])]);
+  await touchProject(project.id);
+  return getCharge(inst, row.id);
+}
+
+export async function updateCharge(inst, id, input) {
+  const before = await getCharge(inst, id);
+  const v = await clean(inst, CHARGE_FIELDS, input, { partial: true });
+  if (v.status === 'paid' && !v.paid_at && !before.paid_at) v.paid_at = todayYmd();
+  if (v.status && v.status !== 'paid' && !('paid_at' in input)) v.paid_at = null;
+  const cols = Object.keys(v);
+  if (cols.length) {
+    await q(`UPDATE crm_project_charges SET ${cols.map((c, i) => `${c} = $${i + 3}`).join(', ')}, updated_at = now() WHERE id = $1 AND instance_id = $2`,
+      [id, inst, ...cols.map((c) => v[c])]);
+    await touchProject(before.project_id);
+  }
+  return getCharge(inst, id);
+}
+
+export async function deleteCharge(inst, id) {
+  const [row] = await q('DELETE FROM crm_project_charges WHERE id = $1 AND instance_id = $2 RETURNING id, project_id', [needId(id), inst]);
+  if (!row) throw new CrmError('Charge not found', 404);
+  await touchProject(row.project_id);
+  return { id: row.id };
+}
+
+const monthStart = (ymdStr) => `${ymdStr.slice(0, 7)}-01`;
+function addMonths(ymdStr, n) {
+  const [y, m] = ymdStr.split('-').map(Number);
+  const d = new Date(Date.UTC(y, m - 1 + n, 1));
+  return d.toISOString().slice(0, 10);
+}
+
+// Adds the next monthly fee: the month after the latest one billed, else the
+// project's start month. Due on the billing day (default the 1st, max 28).
+export async function addNextMonthlyCharge(inst, projectId) {
+  const p = await getRecord(inst, 'projects', needId(projectId, 'project_id'), { related: false });
+  if (!p.monthly_fee) throw new CrmError('Set the project’s monthly fee first');
+  const [last] = await q(`SELECT period_start::text AS period_start FROM crm_project_charges
+    WHERE instance_id = $1 AND project_id = $2 AND kind = 'monthly' AND status <> 'void' AND period_start IS NOT NULL
+    ORDER BY period_start DESC LIMIT 1`, [inst, p.id]);
+  const period = last ? addMonths(last.period_start, 1) : monthStart(p.start_date || todayYmd());
+  const dayN = Math.min(Math.max(parseInt(p.billing_day, 10) || 1, 1), 28);
+  const due = `${period.slice(0, 8)}${String(dayN).padStart(2, '0')}`;
+  const label = new Date(`${period}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  return addCharge(inst, { project_id: p.id, kind: 'monthly', description: `Monthly fee, ${label}`, amount: p.monthly_fee, period_start: period, due_date: due });
+}
+
+export async function billingSummary(inst, projectId) {
+  const p = await getRecord(inst, 'projects', projectId, { related: false });
+  const rows = (await listCharges(inst, projectId)).filter((c) => c.status !== 'void');
+  const today = todayYmd();
+  const sum = (xs) => Math.round(xs.reduce((n, c) => n + c.amount, 0) * 100) / 100;
+  const due = rows.filter((c) => c.status === 'due');
+  const setup = rows.find((c) => c.kind === 'setup');
+  const upcoming = due.filter((c) => c.due_date).sort((a, b) => (a.due_date < b.due_date ? -1 : 1));
+  const lastMonthly = rows.filter((c) => c.kind === 'monthly' && c.period_start).sort((a, b) => (a.period_start < b.period_start ? 1 : -1))[0];
+  return {
+    setup_fee: p.setup_fee ?? setup?.amount ?? null,
+    setup_status: setup ? setup.status : p.setup_fee ? 'not_billed' : null,
+    setup_paid_at: setup?.paid_at ?? null,
+    monthly_fee: p.monthly_fee ?? null,
+    paid_total: sum(rows.filter((c) => c.status === 'paid')),
+    outstanding: sum(due),
+    overdue: sum(due.filter((c) => c.due_date && c.due_date < today)),
+    overdue_count: due.filter((c) => c.due_date && c.due_date < today).length,
+    next_due: upcoming[0] || null,
+    next_monthly_period: p.monthly_fee ? (lastMonthly ? addMonths(lastMonthly.period_start, 1) : monthStart(p.start_date || today)) : null,
+  };
+}
+
+// ── Research sources (uploaded reports, kept as text) ─────────────────────
+
+const MAX_SOURCE_CHARS = 1500000;
+const SOURCE_META = `id, project_id, kind, title, filename, period_start::text AS period_start, period_end::text AS period_end, notes, content_chars, created_at,
+  COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = s.user_id), s.author_label) AS author`;
+const shapeSource = (r) => ({ ...r, period_start: ymd(r.period_start), period_end: ymd(r.period_end) });
+
+export async function listSources(inst, projectId) {
+  return (await q(`SELECT ${SOURCE_META}, left(s.content, 600) AS preview FROM crm_project_sources s
+    WHERE s.instance_id = $1 AND s.project_id = $2 ORDER BY COALESCE(s.period_end, s.created_at::date) DESC, s.created_at DESC`,
+  [inst, needId(projectId, 'project_id')])).map(shapeSource);
+}
+
+// One source's text, in pages (offset/limit in characters) so large exports
+// can be read through the MCP without blowing a context window.
+export async function getSource(inst, id, { offset = 0, limit = 60000 } = {}) {
+  const off = Math.max(parseInt(offset, 10) || 0, 0);
+  const lim = Math.min(Math.max(parseInt(limit, 10) || 60000, 1000), 200000);
+  const [row] = await q(`SELECT ${SOURCE_META}, substr(s.content, $3, $4) AS content FROM crm_project_sources s
+    WHERE s.id = $1 AND s.instance_id = $2`, [needId(id), inst, off + 1, lim]);
+  if (!row) throw new CrmError('Source not found', 404);
+  const next = off + lim < row.content_chars ? off + lim : null;
+  return { ...shapeSource(row), offset: off, next_offset: next };
+}
+
+export async function addSource(inst, input, audit = {}) {
+  const project = await getRecord(inst, 'projects', needId(input.project_id, 'project_id'), { related: false });
+  const v = await clean(inst, SOURCE_FIELDS, input, { partial: false });
+  const content = typeof input.content === 'string' ? input.content.replace(/\u0000/g, '') : '';
+  if (!content.trim()) throw new CrmError('The file had no readable text');
+  if (content.length > MAX_SOURCE_CHARS) throw new CrmError(`That file is too large (${content.length.toLocaleString('en-US')} characters; limit ${MAX_SOURCE_CHARS.toLocaleString('en-US')}). Export a shorter date range or fewer columns.`);
+  const [row] = await q(`INSERT INTO crm_project_sources (instance_id, project_id, kind, title, filename, period_start, period_end, notes, content, content_chars, user_id, author_label)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`,
+  [inst, project.id, v.kind, v.title, v.filename ?? null, v.period_start ?? null, v.period_end ?? null, v.notes ?? null,
+    content, content.length, audit.userId ?? null, audit.label ?? null]);
+  await touchProject(project.id);
+  return (await listSources(inst, project.id)).find((x) => x.id === row.id);
+}
+
+export async function deleteSource(inst, id) {
+  const [row] = await q('DELETE FROM crm_project_sources WHERE id = $1 AND instance_id = $2 RETURNING id, project_id', [needId(id), inst]);
+  if (!row) throw new CrmError('Source not found', 404);
+  await touchProject(row.project_id);
+  return { id: row.id };
 }

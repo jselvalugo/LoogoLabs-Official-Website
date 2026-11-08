@@ -1,10 +1,11 @@
 import React from 'react';
 import { data } from './api';
 import { useCrm } from './ctx';
-import { ENTITIES, PROJECT_LIFECYCLES, optionLabel, stageInfo, stagesFor } from './entities';
+import { ENTITIES, PROJECT_LIFECYCLES, SOCIAL_FIELDS, optionLabel, stageInfo, stagesFor } from './entities';
 import { Activities, FieldInput, fieldsFor, today, withLifecycle } from './records';
 import { day, money, when } from './report';
 import { HealthPill, LifecyclePill, StatusReports, reportDue } from './Projects';
+import { BillingTab, SourcesTab } from './ProjectTabs';
 
 // Full-page project record, laid out like an enterprise CRM record page:
 // header with highlights, a stage path with guidance, tabs, and a sidebar of
@@ -17,7 +18,7 @@ const longDate = (ts) => (ts ? new Date(ts).toLocaleDateString('en-US', { month:
 const SECTIONS = [
   { title: 'Project information', keys: ['name', 'company_id', 'contact_id', 'opportunity_id', 'owner_id', 'lifecycle', 'stage', 'health'] },
   { title: 'Schedule & reporting', keys: ['start_date', 'target_end_date', 'report_cadence', 'next_report_date'] },
-  { title: 'Commercials', keys: ['billing', 'budget'] },
+  { title: 'Billing', keys: ['billing', 'setup_fee', 'monthly_fee', 'billing_day', 'budget'] },
   { title: 'Scope & goals', keys: ['description'] },
 ];
 
@@ -69,7 +70,6 @@ function ProjectPage({ id }) {
   const [record, setRecord] = React.useState(null);
   const [error, setError] = React.useState('');
   const [tab, setTab] = React.useState('overview');
-  const [editing, setEditing] = React.useState(false);
   const [compose, setCompose] = React.useState(0);
   const [busy, setBusy] = React.useState(false);
 
@@ -107,22 +107,21 @@ function ProjectPage({ id }) {
 
       <section className="card rec-head">
         <div className="rec-title">
-          <div className="rec-icon" aria-hidden="true">{record.lifecycle === 'evergreen' ? '∞' : 'P'}</div>
+          <ClientLogo client={record.client} lifecycle={record.lifecycle} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="kicker">Project</div>
+            <div className="kicker">Project · <LifecyclePill lifecycle={record.lifecycle} /></div>
             <h1>{record.name}</h1>
           </div>
           <div className="rec-actions">
             <button className="btn btn-primary" onClick={() => { setTab('reports'); setCompose((n) => n + 1); }}>New status report</button>
-            <button className="btn" onClick={() => { setTab('details'); setEditing(true); }}>Edit</button>
             <button className="btn btn-danger" onClick={remove}>Delete</button>
           </div>
         </div>
         <dl className="highlights">
           <div><dt>Client</dt><dd>{valueOf(record, 'company_id', open)}</dd></div>
-          <div><dt>Lifecycle</dt><dd>{valueOf(record, 'lifecycle', open)}</dd></div>
           <div><dt>Stage</dt><dd>{valueOf(record, 'stage', open)}</dd></div>
           <div><dt>Health</dt><dd>{valueOf(record, 'health', open)}</dd></div>
+          <div><dt>Monthly fee</dt><dd>{valueOf(record, 'monthly_fee', open)}</dd></div>
           <div><dt>Project lead</dt><dd>{valueOf(record, 'owner_id', open)}</dd></div>
           <div><dt>Next report</dt><dd className={reportDue(record) ? 'overdue' : ''}>{record.next_report_date ? day(record.next_report_date) : <span className="muted">—</span>}</dd></div>
         </dl>
@@ -135,16 +134,17 @@ function ProjectPage({ id }) {
         <div className="rec-main">
           <div className="card">
             <div className="rec-tabs" role="tablist">
-              {[['overview', 'Overview'], ['reports', `Status reports (${reports.length})`], ['details', 'Details'], ['activity', `Activity (${(record.activities || []).length})`]].map(([k, label]) => (
-                <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => { setTab(k); if (k !== 'details') setEditing(false); }}>{label}</button>
+              {[['overview', 'Overview'], ['reports', `Status reports (${reports.length})`], ['sources', `Data sources (${(record.sources || []).length})`],
+                ['billing', 'Billing'], ['details', 'Details'], ['activity', `Activity (${(record.activities || []).length})`]].map(([k, label]) => (
+                <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{label}</button>
               ))}
             </div>
             <div className="rec-body">
-              {tab === 'overview' && <OverviewTab record={record} reports={reports} onReport={() => { setTab('reports'); setCompose((n) => n + 1); }} onAll={() => setTab('reports')} />}
+              {tab === 'overview' && <OverviewTab record={record} reports={reports} onReview={() => setTab('reports')} onReport={() => { setTab('reports'); setCompose((n) => n + 1); }} onAll={() => setTab('reports')} />}
               {tab === 'reports' && <StatusReports key={record.id} project={record} initial={reports} onChanged={refresh} composeSignal={compose} />}
-              {tab === 'details' && (editing
-                ? <DetailsForm record={record} onCancel={() => setEditing(false)} onSaved={() => { setEditing(false); refresh(); }} />
-                : <DetailsView record={record} onEdit={() => setEditing(true)} />)}
+              {tab === 'sources' && <SourcesTab project={record} onChanged={refresh} />}
+              {tab === 'billing' && <BillingTab project={record} onChanged={refresh} />}
+              {tab === 'details' && <DetailsView record={record} onSaved={refresh} />}
               {tab === 'activity' && <Activities key={record.updated_at} entityKey="projects" id={record.id} initial={record.activities} />}
             </div>
           </div>
@@ -157,6 +157,8 @@ function ProjectPage({ id }) {
             <RelatedRow label="Client contact" value={record.contact_id_name} onClick={() => open('contacts', record.contact_id)} empty="No contact linked" />
             <RelatedRow label="Won deal" value={record.opportunity_id_name} onClick={() => open('opportunities', record.opportunity_id)} empty="No deal linked" />
           </div>
+
+          <Socials client={record.client} onEdit={() => open('companies', record.company_id)} />
 
           <OpenTasks project={record} tasks={openTasks} onChanged={refresh} />
 
@@ -265,13 +267,21 @@ function StagePath({ project, busy, onMove }) {
   );
 }
 
-function OverviewTab({ record, reports, onReport, onAll }) {
-  const latest = reports[0];
+function OverviewTab({ record, reports, onReport, onAll, onReview }) {
+  const drafts = reports.filter((r) => r.status === 'draft');
+  const finals = reports.filter((r) => r.status !== 'draft');
+  const latest = finals[0];
   return (
     <>
+      {drafts.length > 0 && (
+        <div className="notice row-notice" style={{ margin: '0 0 18px' }}>
+          <span style={{ flex: 1 }}>{drafts.length === 1 ? 'A draft status report is' : `${drafts.length} draft status reports are`} waiting for your review.</span>
+          <button className="btn btn-small" onClick={onReview}>Review</button>
+        </div>
+      )}
       <div className="ov-head">
         <h3>Latest status report</h3>
-        {reports.length > 1 && <button className="link" onClick={onAll}>View all {reports.length}</button>}
+        {finals.length > 1 && <button className="link" onClick={onAll}>View all {reports.length}</button>}
       </div>
       {!latest ? (
         <div className="empty-inline">
@@ -295,11 +305,11 @@ function OverviewTab({ record, reports, onReport, onAll }) {
         </div>
       )}
 
-      {reports.length > 1 && (
+      {finals.length > 1 && (
         <>
           <h3 className="ov-h">Health history</h3>
           <div className="trend">
-            {reports.slice(0, 12).reverse().map((r) => (
+            {finals.slice(0, 12).reverse().map((r) => (
               <div key={r.id} className={`trend-dot ${r.health}`} title={`${day(r.report_date)}: ${r.summary}`}>
                 <i /><span>{new Date(`${r.report_date}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
               </div>
@@ -314,27 +324,86 @@ function OverviewTab({ record, reports, onReport, onAll }) {
   );
 }
 
-function DetailsView({ record, onEdit }) {
+// Details: every field is edited on its own. Click the pencil (or double-click
+// the value), change it, then Enter or ✓ saves; Esc or ✕ cancels.
+function DetailsView({ record, onSaved }) {
   const { open } = useCrm();
+  const [editing, setEditing] = React.useState(null);
+  const visible = Object.fromEntries(fieldsFor('projects', record).map((f) => [f.key, f]));
   return (
     <>
       {SECTIONS.map((sec) => {
-        const keys = sec.keys.filter((k) => !(k === 'target_end_date' && record.lifecycle === 'evergreen'));
+        const keys = sec.keys.filter((k) => visible[k]);
         return (
           <div key={sec.title} className="det-sec">
             <div className="det-title">{sec.title}</div>
             <dl className={`det-grid ${keys.length === 1 ? 'one' : ''}`}>
-              {keys.map((k) => (
-                <div key={k} className="det-item" onDoubleClick={onEdit} title="Double-click to edit">
-                  <dt>{F[k].label}</dt>
-                  <dd><span className="dv">{valueOf(record, k, open)}</span><button className="pencil" onClick={onEdit} aria-label={`Edit ${F[k].label}`}>✎</button></dd>
-                </div>
-              ))}
+              {keys.map((k) => (editing === k
+                ? <InlineEdit key={k} record={record} field={visible[k]} onCancel={() => setEditing(null)} onSaved={() => { setEditing(null); onSaved(); }} />
+                : (
+                  <div key={k} className="det-item" onDoubleClick={() => setEditing(k)} title="Double-click to edit">
+                    <dt>{visible[k].label}</dt>
+                    <dd><span className="dv">{valueOf(record, k, open)}</span><button className="pencil" onClick={() => setEditing(k)} aria-label={`Edit ${visible[k].label}`}>✎</button></dd>
+                  </div>
+                )))}
             </dl>
           </div>
         );
       })}
     </>
+  );
+}
+
+function InlineEdit({ record, field, onCancel, onSaved }) {
+  const [value, setValue] = React.useState(record[field.key] ?? '');
+  const [error, setError] = React.useState('');
+  const [busy, setBusy] = React.useState(false);
+  const ref = React.useRef(null);
+  React.useEffect(() => { ref.current?.querySelector('input, select, textarea')?.focus(); }, []);
+  // Stage options follow the lifecycle being shown.
+  const f = field.key === 'stage' ? { ...field, options: stagesFor(record.lifecycle) } : field;
+
+  async function save(e) {
+    e?.preventDefault();
+    setBusy(true); setError('');
+    try { await data('update', { entity: 'projects', id: record.id, values: { [field.key]: value } }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
+  }
+  function keys(e) {
+    if (e.key === 'Escape') { e.preventDefault(); onCancel(); }
+    if (e.key === 'Enter' && field.type !== 'textarea') { e.preventDefault(); save(); }
+    if (e.key === 'Enter' && field.type === 'textarea' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(); }
+  }
+  return (
+    <form className={`det-item editing ${field.type === 'textarea' ? 'wide' : ''}`} onSubmit={save} onKeyDown={keys} ref={ref}>
+      <dt><label htmlFor={`ie-${field.key}`}>{field.label}</label></dt>
+      <dd className="ie">
+        <div style={{ flex: 1, minWidth: 0 }}><FieldInput id={`ie-${field.key}`} field={f} value={value} onChange={setValue} /></div>
+        <button className="ie-btn ok" disabled={busy} aria-label="Save">✓</button>
+        <button type="button" className="ie-btn" onClick={onCancel} aria-label="Cancel">✕</button>
+      </dd>
+      {field.key === 'lifecycle' && <div className="hint">Switching lifecycle moves the project to the new lifecycle&rsquo;s first stage if its current stage doesn&rsquo;t exist there.</div>}
+      {error && <div className="error" style={{ marginTop: 6 }}>{error}</div>}
+    </form>
+  );
+}
+
+function ClientLogo({ client, lifecycle }) {
+  if (client?.logo_url) return <div className="rec-icon logo"><img src={client.logo_url} alt={`${client.name} logo`} /></div>;
+  return <div className="rec-icon" aria-hidden="true">{lifecycle === 'evergreen' ? '∞' : 'P'}</div>;
+}
+
+const SOCIAL_LABELS = { instagram_url: 'Instagram', facebook_url: 'Facebook', tiktok_url: 'TikTok', linkedin_url: 'LinkedIn', youtube_url: 'YouTube', x_url: 'X' };
+function Socials({ client, onEdit }) {
+  if (!client) return null;
+  const links = [['website', 'Website'], ...SOCIAL_FIELDS.map((k) => [k, SOCIAL_LABELS[k]])]
+    .filter(([k]) => client[k]).map(([k, l]) => ({ l, href: /^https?:/.test(client[k]) ? client[k] : `https://${client[k]}` }));
+  return (
+    <div className="card side-card">
+      <div className="side-head row">Website & socials <button className="link" onClick={onEdit}>Edit</button></div>
+      {links.length === 0
+        ? <div className="muted" style={{ fontSize: 14 }}>No profiles yet. Add them on the client record so Claude can review them for status reports.</div>
+        : <div className="social-links">{links.map((x) => <a key={x.l} href={x.href} target="_blank" rel="noopener noreferrer">{x.l} ↗</a>)}</div>}
+    </div>
   );
 }
 
@@ -358,27 +427,6 @@ function SectionedFields({ form, setForm, hide = [] }) {
       </div>
     );
   });
-}
-
-function DetailsForm({ record, onCancel, onSaved }) {
-  const [form, setForm] = React.useState(() => Object.fromEntries(E.fields.map((f) => [f.key, record[f.key] ?? ''])));
-  const [error, setError] = React.useState('');
-  const [busy, setBusy] = React.useState(false);
-  async function save(e) {
-    e.preventDefault();
-    setBusy(true); setError('');
-    try { await data('update', { entity: 'projects', id: record.id, values: form }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
-  }
-  return (
-    <form onSubmit={save}>
-      <SectionedFields form={form} setForm={setForm} />
-      {error && <div className="error">{error}</div>}
-      <div className="savebar">
-        <button type="button" className="btn" onClick={onCancel}>Cancel</button>
-        <button className="btn btn-primary" disabled={busy}>{busy ? 'Saving…' : 'Save'}</button>
-      </div>
-    </form>
-  );
 }
 
 function OpenTasks({ project, tasks, onChanged }) {

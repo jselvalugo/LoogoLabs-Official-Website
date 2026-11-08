@@ -281,6 +281,12 @@ export function StatusReports({ project, initial, onChanged, composeSignal = 0 }
     setBusy(false);
   }
 
+  async function publish(r) {
+    const row = await data('update_report', { id: r.id, values: { status: 'final' } });
+    setItems((p) => p.map((x) => (x.id === r.id ? row : x)));
+    onChanged();
+  }
+
   async function remove(r) {
     if (!window.confirm(`Delete the ${day(r.report_date)} status report?`)) return;
     await data('delete_report', { id: r.id });
@@ -333,7 +339,7 @@ export function StatusReports({ project, initial, onChanged, composeSignal = 0 }
         </form>
       )}
       {items.length === 0 && !composing && <div className="muted">No status reports yet. Each one records the health call and moves the next due date.</div>}
-      {items.map((r) => <ReportCard key={r.id} project={project} report={r} onDelete={() => remove(r)} />)}
+      {items.map((r) => <ReportCard key={r.id} project={project} report={r} onDelete={() => remove(r)} onPublish={() => publish(r)} />)}
     </>
   );
 }
@@ -349,10 +355,17 @@ function copyReport(project, r) {
   navigator.clipboard?.writeText(reportText(project, r)).catch(() => {});
 }
 
-function ReportCard({ project, report: r, onDelete }) {
+function ReportCard({ project, report: r, onDelete, onPublish }) {
   const [copied, setCopied] = React.useState(false);
+  const draft = r.status === 'draft';
   return (
-    <div className={`report-card ${r.health}`}>
+    <div className={`report-card ${r.health} ${draft ? 'draft' : ''}`}>
+      {draft && (
+        <div className="draft-bar">
+          <span><strong>Draft</strong>{r.author ? ` by ${r.author}` : ''}. Review it, then publish to update the project&rsquo;s health and next report date.</span>
+          <button className="btn btn-small btn-primary" onClick={onPublish}>Publish</button>
+        </div>
+      )}
       <div className="note-head">
         <strong>{day(r.report_date)}</strong>
         <HealthPill health={r.health} />

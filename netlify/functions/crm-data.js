@@ -4,6 +4,7 @@ import {
   listRecords, listReports, overview, updateActivity, updateRecord, updateReport,
 } from '../lib/crm-records.js';
 import * as clients from '../lib/crm-clients.js';
+import * as records from '../lib/crm-records.js';
 import * as mail from '../lib/crm-marketing.js';
 
 // Everything a signed-in CRM user reads or writes, as POST { action, ... }.
@@ -35,6 +36,14 @@ export default async (req) => {
       case 'add_report': return json(await addReport(inst, body.values || {}, audit), 201);
       case 'update_report': return json(await updateReport(inst, body.id, body.values || {}));
       case 'delete_report': return json(await deleteReport(inst, body.id));
+      // Project billing ledger and research sources.
+      case 'add_charge': return json(await records.addCharge(inst, body.values || {}), 201);
+      case 'update_charge': return json(await records.updateCharge(inst, body.id, body.values || {}));
+      case 'delete_charge': return json(await records.deleteCharge(inst, body.id));
+      case 'add_next_monthly': return json(await records.addNextMonthlyCharge(inst, body.project_id), 201);
+      case 'add_source': return json(await records.addSource(inst, body.values || {}, audit), 201);
+      case 'get_source': return json(await records.getSource(inst, body.id, body));
+      case 'delete_source': return json(await records.deleteSource(inst, body.id));
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
       case 'clients': return json(await clients.listClients(inst));
       case 'dashboard': return json(await clients.getDashboard(inst, body.company_id));
