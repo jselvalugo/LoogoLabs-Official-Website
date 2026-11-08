@@ -81,9 +81,10 @@ function useOverview(tick) {
   return o;
 }
 
-function SetupNotice({ o }) {
-  if (!o?.setup?.length) return null;
-  return <p className="notice">Sending is off until these are set in Netlify → Site configuration → Environment variables: <strong>{o.setup.join(', ')}</strong>.</p>;
+function SetupNotice({ o, blast = false }) {
+  const missing = blast ? o?.setup_blast : o?.setup;
+  if (!missing?.length) return null;
+  return <p className="notice">Sending is off until these are set in Netlify → Site configuration → Environment variables: <strong>{missing.join(', ')}</strong>.</p>;
 }
 
 function Usage({ o }) {
@@ -586,7 +587,7 @@ export function Blasts({ version }) {
         <button className="btn btn-primary" onClick={() => setOpen('new')}>New blast</button>
       </div>
       <p className="muted count">One designed email to an uploaded list. Pick a template built for you by Loogo Labs, upload who gets it, preview and send. Need a new template? Ask Loogo Labs.</p>
-      <SetupNotice o={o} />
+      <SetupNotice o={o} blast />
       <div className="card" style={{ overflowX: 'auto' }}>
         {!rows ? <p className="muted" style={{ padding: 16 }}>Loading…</p> : rows.length === 0 ? <p className="muted" style={{ padding: 16 }}>No blasts yet.</p> : (
           <table>
@@ -620,6 +621,8 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
   const [form, setForm] = React.useState(() => blast || { name: '', template: '' });
   const [reach, setReach] = React.useState(null);
   const [file, setFile] = React.useState(null); // { name, people, columns }
+  // Whose name the preview shows: the first named person in the chosen or uploaded file.
+  const [sample, setSample] = React.useState('');
   const [progress, setProgress] = React.useState('');
   const [preview, setPreview] = React.useState(null);
   const [error, setError] = React.useState('');
@@ -628,6 +631,8 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
   const editable = !blast || blast.status === 'draft';
   const template = form.template || templates[0]?.id || '';
   const tpl = templates.find((t) => t.id === template);
+  // A new blast is named after its template until you rename it.
+  const name = form.name || tpl?.name || '';
 
   React.useEffect(() => {
     if (blast?.audience_tag && editable) data('campaign_audience', { audience_tag: blast.audience_tag }).then((r) => setReach(r.recipients)).catch(() => {});
@@ -635,9 +640,9 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
   React.useEffect(() => {
     if (!template) return;
     setPreview(null);
-    data('email_preview', { values: { template, sample_name: file?.people.find((p) => p.name)?.name || 'Ana Ruiz' } })
+    data('email_preview', { values: { template, sample_name: sample } })
       .then((r) => setPreview(r)).catch((e) => setPreview({ html: `<p style="font-family:sans-serif;padding:16px">${String(e.message)}</p>` }));
-  }, [template, file]);
+  }, [template, sample]);
 
   async function run(fn) {
     setBusy(true); setError(''); setMsg('');
@@ -645,7 +650,7 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
     setBusy(false); setProgress('');
   }
   const persist = async () => {
-    const row = await data('save_campaign', { values: { ...form, id, template } });
+    const row = await data('save_campaign', { values: { ...form, name, id, template } });
     setId(row.id);
     return row;
   };
@@ -658,6 +663,7 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
     const parsed = parseDataset(await f.text());
     if (!parsed.people.length) { setError('No email addresses found in that file. It needs a column with email addresses.'); setFile(null); return; }
     setFile({ name: f.name, ...parsed });
+    setSample(parsed.people.find((p) => p.name)?.name || '');
   }
   const upload = () => run(async () => {
     const row = await persist();
@@ -704,8 +710,8 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
       )}
       <form onSubmit={save}>
         <fieldset disabled={!editable} style={{ border: 0, padding: 0, margin: 0 }}>
-          <label className="label" htmlFor="b-name">Internal name *</label>
-          <input id="b-name" className="field" required placeholder="Cards & Cocktails · registered guests" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
+          <label className="label" htmlFor="b-name">Internal name</label>
+          <input id="b-name" className="field" value={name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
           <label className="label" htmlFor="b-tpl">Email template *</label>
           <select id="b-tpl" className="field" value={template} onChange={(e) => setForm((p) => ({ ...p, template: e.target.value }))}>
             {templates.length === 0 && <option value="">No templates yet: ask Loogo Labs</option>}
@@ -726,7 +732,7 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
               {file && (
                 <p className="notice" style={{ marginTop: 10 }}>
                   {file.name}: {count(file.people.length)} rows. Email from “{file.columns.email}”{file.columns.name ? `, name from “${file.columns.name}”` : ', no name column (greets them as “Trainer”)'}.
-                  <br /><button type="button" className="btn btn-small btn-primary" style={{ marginTop: 8 }} disabled={busy || !form.name} onClick={upload}>{form.name ? 'Upload to this blast' : 'Name the blast first'}</button>
+                  <br /><button type="button" className="btn btn-small btn-primary" style={{ marginTop: 8 }} disabled={busy || !template} onClick={upload}>{busy ? 'Uploading…' : 'Upload to this blast'}</button>
                 </p>
               )}
             </>
@@ -745,13 +751,16 @@ function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDelet
         {msg && <p className="notice">{msg}</p>}
         <div className="actions">
           {editable && <button className="btn" disabled={busy || !template}>Save draft</button>}
-          {editable && <button type="button" className="btn" disabled={busy || !template || !form.name} onClick={test}>Send me a test</button>}
-          {editable && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template} onClick={send}>Send blast</button>}
+          {editable && <button type="button" className="btn" disabled={busy || !template} onClick={test}>Send me a test</button>}
+          {editable && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template} title={reach ? undefined : 'Upload a list first'} onClick={send}>Send blast</button>}
           {blast && blast.status !== 'sending' && <button type="button" className="btn btn-danger" onClick={remove}>Delete</button>}
         </div>
 
         <div className="section">Preview</div>
-        {preview?.subject && <p className="muted" style={{ fontSize: 13 }}><strong>Subject:</strong> {preview.subject}</p>}
+        <p className="muted" style={{ fontSize: 13 }}>
+          {sample ? <>As <strong>{sample}</strong> will see it. Everyone gets their own first name.</> : 'Upload a list to preview it with a real name. People without a name are greeted as the template’s fallback (“Trainer”).'}
+          {preview?.subject && <><br /><strong>Subject:</strong> {preview.subject}</>}
+        </p>
         <iframe title="Email preview" sandbox="" srcDoc={preview?.html || '<p style="font-family:sans-serif;color:#888;padding:16px">Loading preview…</p>'}
           style={{ width: '100%', height: 640, border: '1px solid var(--line, #E3DDCD)', borderRadius: 12, background: '#fff' }} />
       </form>
