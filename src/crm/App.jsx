@@ -1,9 +1,11 @@
 import React from 'react';
 import { call, data, getToken, setToken } from './api';
-import { ACTIVITY_TYPES, ENTITIES, LEAD_STATUSES, OPPORTUNITY_STAGES, optionLabel } from './entities';
+import { ACTIVITY_TYPES, ENTITIES, LEAD_STATUSES, OPPORTUNITY_STAGES, PROJECT_LIFECYCLES, optionLabel, stageInfo, stagesFor } from './entities';
 import { Approvals, Dashboards, Recaps } from './Clients';
 import { Audience, Automations, Blasts, Campaigns } from './Email';
 import { Drawer, Stat } from './report';
+import { Crm, useCrm } from './ctx';
+import { HealthPill, LifecycleTrack, LifecyclePill, ProjectsOverview, ProjectsPage, StatusReports } from './Projects';
 
 const PAGES = [
   { id: 'overview', label: 'Overview', path: '' },
@@ -11,6 +13,7 @@ const PAGES = [
   { id: 'contacts', label: 'Contacts', path: '/contacts', entity: 'contacts' },
   { id: 'companies', label: 'Companies', path: '/companies', entity: 'companies' },
   { id: 'opportunities', label: 'Opportunities', path: '/opportunities', entity: 'opportunities' },
+  { id: 'projects', label: 'Projects', path: '/projects' },
   { id: 'tasks', label: 'Tasks', path: '/tasks' },
   { id: 'dashboards', label: 'Dashboards', path: '/dashboards' },
   { id: 'approvals', label: 'Approvals', path: '/approvals' },
@@ -25,6 +28,7 @@ const PAGES = [
 // Top bar: record pages sit under one CRM menu; the rest are tabs.
 const NAV = [
   'overview',
+  'projects',
   { id: 'crm', label: 'CRM', items: ['leads', 'contacts', 'companies', 'opportunities', 'tasks'] },
   'dashboards', 'approvals', 'recaps',
   { id: 'email', label: 'Email', items: ['blasts', 'campaigns', 'automations', 'audience'] },
@@ -45,9 +49,6 @@ const pageFromPath = () => {
   return (PAGES.find((p) => p.path === rest) || PAGES[0]).id;
 };
 
-// Shared app state: the team (for owner pickers) and the open record drawer.
-const Crm = React.createContext(null);
-const useCrm = () => React.useContext(Crm);
 
 export default function App() {
   const [me, setMe] = React.useState(null);
@@ -104,6 +105,7 @@ export default function App() {
       <main className="page">
         {page === 'overview' && <Overview />}
         {current.entity && <RecordList key={current.entity} entityKey={current.entity} />}
+        {page === 'projects' && <ProjectsPage />}
         {page === 'tasks' && <Tasks />}
         {page === 'dashboards' && <Dashboards version={version} />}
         {page === 'approvals' && <Approvals version={version} />}
@@ -212,6 +214,8 @@ function Overview() {
         <Stat k="Contacts" n={state.counts.contacts} v={`${state.counts.companies} companies`} />
         <Stat k="Open tasks" n={state.open_tasks.length} v={`${state.open_tasks.filter((t) => t.due_date && t.due_date < today()).length} overdue`} />
       </div>
+
+      <ProjectsOverview summary={state.projects} />
 
       <div className="section">Pipeline by stage</div>
       <div className="stats stats-6">
@@ -413,6 +417,30 @@ function FieldInput({ field, value, onChange, id }) {
 
 const HALF = new Set(['text', 'email', 'phone', 'url', 'number', 'money', 'percent', 'date', 'select', 'ref', 'user']);
 
+// Projects: the Stage options follow the Lifecycle, and evergreen work has no
+// target end date.
+function fieldsFor(entityKey, form) {
+  const e = ENTITIES[entityKey];
+  if (entityKey !== 'projects') return e.fields;
+  const life = PROJECT_LIFECYCLES.find((l) => l.id === form.lifecycle) || PROJECT_LIFECYCLES[0];
+  return e.fields
+    .filter((f) => !(f.key === 'target_end_date' && form.lifecycle === 'evergreen'))
+    .map((f) => (f.key === 'stage' ? { ...f, options: stagesFor(form.lifecycle) }
+      : f.key === 'lifecycle' ? { ...f, hint: life.hint } : f));
+}
+
+// When the lifecycle changes, keep the stage if it still fits, else start at the
+// new lifecycle's first stage, and switch the report cadence to its default.
+function withLifecycle(form, lifecycle, previous) {
+  const next = { ...form };
+  if (!stageInfo(lifecycle, next.stage)) next.stage = stagesFor(lifecycle)[0].id;
+  const was = PROJECT_LIFECYCLES.find((l) => l.id === previous);
+  const now = PROJECT_LIFECYCLES.find((l) => l.id === lifecycle);
+  if (now && (!next.report_cadence || (was && next.report_cadence === was.cadence))) next.report_cadence = now.cadence;
+  if (lifecycle === 'evergreen') next.target_end_date = '';
+  return next;
+}
+
 function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }) {
   const e = ENTITIES[entityKey];
   const { me, changed } = useCrm();
@@ -420,7 +448,9 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
   const [record, setRecord] = React.useState(null);
   const [form, setForm] = React.useState(() => {
     const base = Object.fromEntries(e.fields.map((f) => [f.key, f.default ?? '']));
-    return { ...base, ...(isNew ? { owner_id: me.id } : {}), ...(preset || {}) };
+    const projectStart = entityKey === 'projects' && isNew ? { start_date: today(), report_cadence: 'weekly' } : {};
+    const merged = { ...base, ...projectStart, ...(isNew ? { owner_id: me.id } : {}), ...(preset || {}) };
+    return entityKey === 'projects' && isNew ? withLifecycle(merged, merged.lifecycle) : merged;
   });
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
@@ -440,6 +470,17 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
       const row = await data(isNew ? 'create' : 'update', { entity: entityKey, id, values: form });
       changed();
       if (isNew) onOpen(entityKey, row.id); else await load();
+    } catch (err) { setError(err.message); }
+    setBusy(false);
+  }
+
+  async function moveStage(stage) {
+    setBusy(true);
+    setError('');
+    try {
+      await data('update', { entity: 'projects', id, values: { stage } });
+      changed();
+      await load();
     } catch (err) { setError(err.message); }
     setBusy(false);
   }
@@ -469,12 +510,25 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
           {record.converted_opportunity_id && <> · <button className="link" onClick={() => onOpen('opportunities', record.converted_opportunity_id)}>opportunity</button></>}
         </div>
       )}
+      {entityKey === 'projects' && !isNew && <LifecycleTrack project={record} busy={busy} onMove={moveStage} />}
+      {entityKey === 'opportunities' && !isNew && record.stage === 'won' && !(record.related?.projects || []).length && (
+        <div className="notice row-notice">
+          <span style={{ flex: 1 }}>Deal won. Start the delivery project?</span>
+          <button type="button" className="btn btn-small" onClick={() => onOpen('projects', null, {
+            name: record.name, company_id: record.company_id || '', contact_id: record.contact_id || '', opportunity_id: record.id,
+            budget: record.amount ?? '',
+          })}>Start project</button>
+        </div>
+      )}
       <form onSubmit={save}>
+        {entityKey === 'projects' && !isNew && <div className="section" style={{ marginTop: 24 }}>Details</div>}
         <div className="grid2">
-          {e.fields.map((f) => (
+          {fieldsFor(entityKey, form).map((f) => (
             <div key={f.key} className={HALF.has(f.type) ? '' : 'span2'}>
               <label className="label" htmlFor={`f-${f.key}`}>{f.label}{f.required ? ' *' : ''}</label>
-              <FieldInput id={`f-${f.key}`} field={f} value={form[f.key]} onChange={(v) => setForm((p) => ({ ...p, [f.key]: v }))} />
+              <FieldInput id={`f-${f.key}`} field={f} value={form[f.key]}
+                onChange={(v) => setForm((p) => (entityKey === 'projects' && f.key === 'lifecycle' ? withLifecycle({ ...p, lifecycle: v }, v, p.lifecycle) : { ...p, [f.key]: v }))} />
+              {f.hint && <div className="hint">{f.hint}</div>}
             </div>
           ))}
         </div>
@@ -491,6 +545,7 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
 
       {!isNew && (
         <>
+          {entityKey === 'projects' && <StatusReports key={record.id} project={record} initial={record.reports} onChanged={() => { load(); changed(); }} />}
           <Related record={record} entityKey={entityKey} onOpen={onOpen} />
           <Activities entityKey={entityKey} id={id} initial={record.activities} />
           <p className="muted meta">Created {when(record.created_at)} · Updated {when(record.updated_at)}</p>
@@ -502,7 +557,11 @@ function RecordDrawer({ entity: entityKey, id, values: preset, onClose, onOpen }
 
 function Related({ record, entityKey, onOpen }) {
   const groups = Object.entries(record.related || {});
-  const presets = { companies: { company_id: record.id }, contacts: { contact_id: record.id, company_id: record.company_id || '' } };
+  const presets = {
+    companies: { company_id: record.id },
+    contacts: { contact_id: record.id, company_id: record.company_id || '' },
+    opportunities: { opportunity_id: record.id, company_id: record.company_id || '', contact_id: record.contact_id || '', name: record.name },
+  };
   if (!groups.length) return null;
   return groups.map(([key, rows]) => (
     <div key={key}>
@@ -514,7 +573,9 @@ function Related({ record, entityKey, onOpen }) {
         <button key={r.id} className="related" onClick={() => onOpen(key, r.id)}>
           <strong>{r.name}</strong>
           <span className="muted">
-            {key === 'contacts' ? [r.title, r.email].filter(Boolean).join(' · ') : `${optionLabel(ENTITIES.opportunities.fields.find((f) => f.key === 'stage'), r.stage)} · ${money(r.amount) || 'no amount'}`}
+            {key === 'contacts' ? [r.title, r.email].filter(Boolean).join(' · ')
+              : key === 'projects' ? <>{stageInfo(r.lifecycle, r.stage)?.label || r.stage} · <LifecyclePill lifecycle={r.lifecycle} /> <HealthPill health={r.health} /></>
+                : `${optionLabel(ENTITIES.opportunities.fields.find((f) => f.key === 'stage'), r.stage)} · ${money(r.amount) || 'no amount'}`}
           </span>
         </button>
       ))}
@@ -648,7 +709,7 @@ function Tasks() {
         <h1>Tasks</h1>
         <label className="check"><input type="checkbox" checked={showDone} onChange={(e) => setShowDone(e.target.checked)} /> Include completed</label>
       </div>
-      <p className="muted count">Add tasks from any lead, contact, company or opportunity.</p>
+      <p className="muted count">Add tasks from any lead, contact, company, opportunity or project.</p>
       <div className="card" style={{ overflowX: 'auto' }}>
         {!tasks ? <p className="muted" style={{ padding: 16 }}>Loading…</p> : tasks.length === 0 ? <p className="muted" style={{ padding: 16 }}>No tasks.</p> : (
           <table>

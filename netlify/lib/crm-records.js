@@ -1,5 +1,7 @@
 import { db } from './crm.js';
-import { ACTIVITY_FIELDS, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES } from '../../src/crm/entities.js';
+import {
+  ACTIVITY_FIELDS, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_LIFECYCLES, REPORT_CADENCES, REPORT_FIELDS, stageInfo, stagesFor,
+} from '../../src/crm/entities.js';
 
 // Generic, instance-scoped CRUD over the entities in src/crm/entities.js, used by
 // both the CRM app API and the MCP server. Table and column names only ever come
@@ -46,6 +48,7 @@ function shape(e, row) {
     if (['number', 'money', 'percent'].includes(f.type) && out[f.key] !== null && out[f.key] !== undefined) out[f.key] = Number(out[f.key]);
     if (f.type === 'date') out[f.key] = ymd(out[f.key]);
   }
+  if (out.last_report_at) out.last_report_at = ymd(out.last_report_at);
   return out;
 }
 
@@ -121,6 +124,42 @@ function opportunityDefaults(values, before) {
   }
 }
 
+// Project bookkeeping: the stage must belong to the project's lifecycle (a new
+// lifecycle with no valid stage starts at its first one), stage changes stamp
+// stage_changed_at and closed_at, and a cadence sets the first report due date.
+// Returns { from, to } when the stage moved, for the timeline.
+function projectDefaults(values, before) {
+  const lifecycle = values.lifecycle ?? before?.lifecycle ?? 'agency';
+  let stage = values.stage ?? before?.stage;
+  if (!stageInfo(lifecycle, stage)) {
+    if (values.stage && (!values.lifecycle || values.lifecycle === before?.lifecycle)) {
+      throw new CrmError(`Stage must be one of: ${stagesFor(lifecycle).map((x) => x.id).join(', ')} on the ${lifecycle} lifecycle`);
+    }
+    stage = stagesFor(lifecycle)[0].id;
+  }
+  values.lifecycle = lifecycle;
+  values.stage = stage;
+  if (!before) {
+    if (values.report_cadence == null) values.report_cadence = PROJECT_LIFECYCLES.find((l) => l.id === lifecycle).cadence;
+    // First report is one cadence after the start, or after today if it started earlier.
+    const from = values.start_date && values.start_date > todayYmd() ? values.start_date : todayYmd();
+    if (!values.next_report_date) values.next_report_date = addDays(from, cadenceDays(values.report_cadence));
+  }
+  if (stage === before?.stage) return null;
+  values.stage_changed_at = new Date().toISOString();
+  values.closed_at = stageInfo(lifecycle, stage).closed ? new Date().toISOString() : null;
+  return before ? { from: stageInfo(before.lifecycle, before.stage)?.label || before.stage, to: stageInfo(lifecycle, stage).label } : null;
+}
+
+const todayYmd = () => new Date().toISOString().slice(0, 10);
+const cadenceDays = (c) => REPORT_CADENCES.find((x) => x.id === c)?.days ?? null;
+function addDays(ymdStr, days) {
+  if (!days) return null;
+  const d = new Date(`${String(ymdStr).slice(0, 10)}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
 export async function listRecords(inst, key, { query, filters = {}, sort, limit = 50, offset = 0 } = {}) {
   const e = entity(key);
   const where = ['t.instance_id = $1'];
@@ -161,15 +200,19 @@ export async function getRecord(inst, key, id, { related = true } = {}) {
   if (key === 'companies') {
     rel.contacts = await list('contacts', 'company_id');
     rel.opportunities = await list('opportunities', 'company_id');
+    rel.projects = await list('projects', 'company_id');
   }
   if (key === 'contacts') rel.opportunities = await list('opportunities', 'contact_id');
-  return { ...record, related: rel, activities: await listActivities(inst, { entity_type: key, entity_id: id }) };
+  if (key === 'opportunities') rel.projects = await list('projects', 'opportunity_id');
+  const extra = key === 'projects' ? { reports: await listReports(inst, id) } : {};
+  return { ...record, related: rel, ...extra, activities: await listActivities(inst, { entity_type: key, entity_id: id }) };
 }
 
 export async function createRecord(inst, key, input, audit = {}) {
   const e = entity(key);
   const values = await clean(inst, e.fields, input, { partial: false });
   if (key === 'opportunities') opportunityDefaults(values, null);
+  if (key === 'projects') projectDefaults(values, null);
   if (values.owner_id === undefined && audit.userId) values.owner_id = audit.userId;
   const cols = Object.keys(values);
   const params = [inst, ...cols.map((c) => values[c])];
@@ -180,17 +223,20 @@ export async function createRecord(inst, key, input, audit = {}) {
   return getRecord(inst, key, row.id, { related: false });
 }
 
-export async function updateRecord(inst, key, id, input) {
+export async function updateRecord(inst, key, id, input, audit = {}) {
   const e = entity(key);
   const before = await getRecord(inst, key, id, { related: false });
   const values = await clean(inst, e.fields, input, { partial: true });
   if (key === 'opportunities') opportunityDefaults(values, before);
+  const moved = key === 'projects' && Object.keys(values).length ? projectDefaults(values, before) : null;
   const cols = Object.keys(values);
   if (!cols.length) return before;
   await q(
     `UPDATE ${e.table} SET ${cols.map((c, i) => `${c} = $${i + 3}`).join(', ')}, updated_at = now() WHERE id = $1 AND instance_id = $2`,
     [id, inst, ...cols.map((c) => values[c])],
   );
+  // Stage moves go on the project's timeline, so the lifecycle has a history.
+  if (moved) await addActivity(inst, { entity_type: key, entity_id: id, type: 'note', subject: `Stage: ${moved.from} → ${moved.to}` }, audit);
   return getRecord(inst, key, id, { related: false });
 }
 
@@ -209,7 +255,8 @@ const ACTIVITY_SELECT = `a.id, a.entity_type, a.entity_id, a.type, a.subject, a.
   (SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = a.owner_id) AS owner_id_name,
   COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = a.user_id), a.author_label) AS author,
   COALESCE((SELECT name FROM crm_companies WHERE id = a.entity_id), (SELECT name FROM crm_contacts WHERE id = a.entity_id),
-    (SELECT name FROM crm_leads WHERE id = a.entity_id), (SELECT name FROM crm_opportunities WHERE id = a.entity_id)) AS entity_name`;
+    (SELECT name FROM crm_leads WHERE id = a.entity_id), (SELECT name FROM crm_opportunities WHERE id = a.entity_id),
+    (SELECT name FROM crm_projects WHERE id = a.entity_id)) AS entity_name`;
 
 const shapeActivity = (a) => ({ ...a, due_date: ymd(a.due_date) });
 
@@ -323,12 +370,94 @@ export async function overview(inst) {
       (SELECT count(*)::int FROM crm_companies WHERE instance_id = $1) AS companies,
       (SELECT count(*)::int FROM crm_contacts WHERE instance_id = $1) AS contacts,
       (SELECT count(*)::int FROM crm_leads WHERE instance_id = $1) AS leads,
-      (SELECT count(*)::int FROM crm_opportunities WHERE instance_id = $1) AS opportunities`, [inst]);
+      (SELECT count(*)::int FROM crm_opportunities WHERE instance_id = $1) AS opportunities,
+      (SELECT count(*)::int FROM crm_projects WHERE instance_id = $1) AS projects`, [inst]);
   return {
     counts,
+    projects: await projectSummary(inst),
     pipeline: OPPORTUNITY_STAGES.map((s) => ({ stage: s.id, label: s.label, count: 0, amount: 0, weighted: 0, ...pipeline.find((p) => p.stage === s.id) })),
     leads,
     open_tasks: await listActivities(inst, { open_tasks: true, limit: 20 }),
     recent_activity: await listActivities(inst, { limit: 20 }),
+  };
+}
+
+// ── Project status reports ──────────────────────────────────────────────────
+
+const REPORT_SELECT = `r.id, r.project_id, r.report_date, r.health, r.stage, r.summary, r.accomplishments, r.next_steps, r.blockers,
+  r.created_at, r.updated_at,
+  COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = r.user_id), r.author_label) AS author`;
+const shapeReport = (r) => ({ ...r, report_date: ymd(r.report_date) });
+
+export async function listReports(inst, projectId, { limit = 100 } = {}) {
+  const lim = Math.min(Math.max(parseInt(limit, 10) || 100, 1), 500);
+  return (await q(`SELECT ${REPORT_SELECT} FROM crm_project_reports r WHERE r.instance_id = $1 AND r.project_id = $2
+    ORDER BY r.report_date DESC, r.created_at DESC LIMIT ${lim}`, [inst, needId(projectId, 'project_id')])).map(shapeReport);
+}
+
+async function getReport(inst, id) {
+  const [row] = await q(`SELECT ${REPORT_SELECT} FROM crm_project_reports r WHERE r.id = $1 AND r.instance_id = $2`, [needId(id), inst]);
+  if (!row) throw new CrmError('Status report not found', 404);
+  return shapeReport(row);
+}
+
+// After any report change, the project's health and due date follow its newest report.
+async function syncProjectFromReports(inst, projectId) {
+  const [latest] = await q(`SELECT report_date::text AS report_date, health FROM crm_project_reports WHERE instance_id = $1 AND project_id = $2
+    ORDER BY report_date DESC, created_at DESC LIMIT 1`, [inst, projectId]);
+  if (!latest) { await q('UPDATE crm_projects SET last_report_at = NULL, updated_at = now() WHERE id = $1', [projectId]); return; }
+  const [p] = await q('SELECT report_cadence FROM crm_projects WHERE id = $1', [projectId]);
+  const next = addDays(latest.report_date, cadenceDays(p.report_cadence));
+  await q(`UPDATE crm_projects SET health = $2, last_report_at = $3, next_report_date = COALESCE($4, next_report_date), updated_at = now()
+    WHERE id = $1`, [projectId, latest.health, latest.report_date, next]);
+}
+
+export async function addReport(inst, input, audit = {}) {
+  const project = await getRecord(inst, 'projects', needId(input.project_id, 'project_id'), { related: false });
+  const values = await clean(inst, REPORT_FIELDS, { report_date: todayYmd(), ...input }, { partial: false });
+  const [row] = await q(
+    `INSERT INTO crm_project_reports (instance_id, project_id, report_date, health, stage, summary, accomplishments, next_steps, blockers, user_id, author_label)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`,
+    [inst, project.id, values.report_date, values.health, project.stage, values.summary, values.accomplishments ?? null,
+      values.next_steps ?? null, values.blockers ?? null, audit.userId ?? null, audit.label ?? null],
+  );
+  await syncProjectFromReports(inst, project.id);
+  return getReport(inst, row.id);
+}
+
+export async function updateReport(inst, id, input) {
+  const before = await getReport(inst, id);
+  const values = await clean(inst, REPORT_FIELDS, input, { partial: true });
+  const cols = Object.keys(values);
+  if (cols.length) {
+    await q(`UPDATE crm_project_reports SET ${cols.map((c, i) => `${c} = $${i + 3}`).join(', ')}, updated_at = now() WHERE id = $1 AND instance_id = $2`,
+      [id, inst, ...cols.map((c) => values[c])]);
+    await syncProjectFromReports(inst, before.project_id);
+  }
+  return getReport(inst, id);
+}
+
+export async function deleteReport(inst, id) {
+  const [row] = await q('DELETE FROM crm_project_reports WHERE id = $1 AND instance_id = $2 RETURNING id, project_id', [needId(id), inst]);
+  if (!row) throw new CrmError('Status report not found', 404);
+  await syncProjectFromReports(inst, row.project_id);
+  return { id: row.id };
+}
+
+// Open projects grouped for the overview: counts per lifecycle and health, and
+// the projects whose status report is due (today or earlier).
+async function projectSummary(inst) {
+  const open = await q(`SELECT t.id, t.name, t.lifecycle, t.stage, t.health, t.next_report_date,
+      (SELECT c.name FROM crm_companies c WHERE c.id = t.company_id) AS company_id_name
+    FROM crm_projects t WHERE t.instance_id = $1 AND t.closed_at IS NULL ORDER BY t.next_report_date ASC NULLS LAST`, [inst]);
+  const rows = open.map((r) => ({ ...r, next_report_date: ymd(r.next_report_date) }));
+  const today = todayYmd();
+  const parked = (r) => stageInfo(r.lifecycle, r.stage)?.side;
+  return {
+    agency_active: rows.filter((r) => r.lifecycle === 'agency' && !parked(r)).length,
+    evergreen_active: rows.filter((r) => r.lifecycle === 'evergreen' && !parked(r)).length,
+    parked: rows.filter(parked).length,
+    at_risk: rows.filter((r) => r.health !== 'on_track' && !parked(r)),
+    reports_due: rows.filter((r) => !parked(r) && r.next_report_date && r.next_report_date <= today),
   };
 }

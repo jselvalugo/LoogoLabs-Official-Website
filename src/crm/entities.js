@@ -21,6 +21,64 @@ export const OPPORTUNITY_STAGES = [
 export const LEAD_STATUSES = opts('new', 'contacted', 'qualified', 'unqualified', 'converted');
 export const ACTIVITY_TYPES = opts('note', 'call', 'email', 'meeting', 'task');
 
+// ── Projects ────────────────────────────────────────────────────────────────
+// Every project follows one of two lifecycles, picked in its Lifecycle field.
+// "agency" is the default: a campaign or build with a start and a finish.
+// "evergreen" is ongoing work with no set end (it can still end one day).
+// main: the forward path shown as steps. side: a parking state off the path.
+// closed: the project is finished (stamps closed_at).
+export const PROJECT_LIFECYCLES = [
+  { id: 'agency', label: 'Agency lifecycle', hint: 'Has a start and a finish: brief, build, launch, report, close.', cadence: 'weekly' },
+  { id: 'evergreen', label: 'Evergreen', hint: 'Ongoing work with no set end date. It may end, but nobody knows when.', cadence: 'monthly' },
+];
+export const PROJECT_STAGES = {
+  agency: [
+    { id: 'intake', label: 'Intake & brief' },
+    { id: 'discovery', label: 'Discovery & onboarding' },
+    { id: 'strategy', label: 'Strategy & planning' },
+    { id: 'production', label: 'Creative production' },
+    { id: 'client_review', label: 'Client review' },
+    { id: 'launch', label: 'Launch' },
+    { id: 'optimize', label: 'Optimize & report' },
+    { id: 'wrap_up', label: 'Wrap-up & handoff' },
+    { id: 'completed', label: 'Completed', closed: true },
+    { id: 'on_hold', label: 'On hold', side: true },
+    { id: 'cancelled', label: 'Cancelled', side: true, closed: true },
+  ],
+  evergreen: [
+    { id: 'onboarding', label: 'Onboarding' },
+    { id: 'active', label: 'Active' },
+    { id: 'optimizing', label: 'Optimizing' },
+    { id: 'periodic_review', label: 'Periodic review' },
+    { id: 'paused', label: 'Paused', side: true },
+    { id: 'ended', label: 'Ended', side: true, closed: true },
+  ],
+};
+export const stagesFor = (lifecycle) => PROJECT_STAGES[lifecycle] || PROJECT_STAGES.agency;
+export const stageInfo = (lifecycle, stage) => stagesFor(lifecycle).find((s) => s.id === stage);
+export const ALL_PROJECT_STAGES = [...PROJECT_STAGES.agency, ...PROJECT_STAGES.evergreen];
+export const PROJECT_HEALTH = [
+  { id: 'on_track', label: 'On track' },
+  { id: 'at_risk', label: 'At risk' },
+  { id: 'off_track', label: 'Off track' },
+];
+export const REPORT_CADENCES = [
+  { id: 'weekly', label: 'Weekly', days: 7 },
+  { id: 'biweekly', label: 'Every 2 weeks', days: 14 },
+  { id: 'monthly', label: 'Monthly', days: 30 },
+  { id: 'quarterly', label: 'Quarterly', days: 91 },
+  { id: 'none', label: 'No set schedule', days: null },
+];
+// A status report on a project: the health call plus what happened and what's next.
+export const REPORT_FIELDS = [
+  { key: 'report_date', label: 'Report date', type: 'date', required: true },
+  { key: 'health', label: 'Health', type: 'select', options: PROJECT_HEALTH, default: 'on_track' },
+  { key: 'summary', label: 'Summary', type: 'textarea', required: true },
+  { key: 'accomplishments', label: 'Done since last report', type: 'textarea' },
+  { key: 'next_steps', label: 'Next up', type: 'textarea' },
+  { key: 'blockers', label: 'Blockers / needs from client', type: 'textarea' },
+];
+
 export const ENTITIES = {
   companies: {
     table: 'crm_companies',
@@ -118,6 +176,32 @@ export const ENTITIES = {
       { key: 'owner_id', label: 'Owner', type: 'user' },
       { key: 'description', label: 'Description', type: 'textarea' },
     ],
+  },
+  projects: {
+    table: 'crm_projects',
+    label: 'Project', plural: 'Projects',
+    title: (r) => r.name,
+    search: ['name', 'description'],
+    columns: ['name', 'company_id', 'lifecycle', 'stage', 'health', 'next_report_date'],
+    fields: [
+      { key: 'name', label: 'Project name', type: 'text', required: true },
+      { key: 'company_id', label: 'Client', type: 'ref', to: 'companies' },
+      { key: 'lifecycle', label: 'Lifecycle', type: 'select', options: PROJECT_LIFECYCLES, default: 'agency' },
+      // Options depend on the lifecycle; the server checks the pair (crm-records.js).
+      { key: 'stage', label: 'Stage', type: 'select', options: ALL_PROJECT_STAGES, default: 'intake' },
+      { key: 'health', label: 'Health', type: 'select', options: PROJECT_HEALTH, default: 'on_track' },
+      { key: 'contact_id', label: 'Client contact', type: 'ref', to: 'contacts' },
+      { key: 'opportunity_id', label: 'Won deal', type: 'ref', to: 'opportunities' },
+      { key: 'start_date', label: 'Start date', type: 'date' },
+      { key: 'target_end_date', label: 'Target end date', type: 'date' },
+      { key: 'report_cadence', label: 'Status report cadence', type: 'select', options: REPORT_CADENCES },
+      { key: 'next_report_date', label: 'Next status report due', type: 'date' },
+      { key: 'billing', label: 'Billing', type: 'select', options: opts('fixed_fee', 'monthly_retainer', 'hourly', 'other') },
+      { key: 'budget', label: 'Budget / fee', type: 'money' },
+      { key: 'owner_id', label: 'Project lead', type: 'user' },
+      { key: 'description', label: 'Scope & goals', type: 'textarea' },
+    ],
+    readonly: ['stage_changed_at', 'closed_at', 'last_report_at'],
   },
 };
 
