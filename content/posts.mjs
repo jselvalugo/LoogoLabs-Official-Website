@@ -11,6 +11,90 @@
 
 export const posts = [
   {
+    slug: `painting-contractor-estimate-follow-up`,
+    title: `Estimate Follow-Up: Win the Bids You Already Priced`,
+    excerpt: `The cheapest new customer you'll get this month is someone you already quoted, and most of them never get a second conversation.`,
+    tags: `Lead Follow-Up, Sales Pipeline, AI Drafting`,
+    content: `The cheapest new customer you will get this month is someone you already quoted.
+
+They called, you drove out, measured, priced it and sent the number. Then nothing. Ask most contractors which of last month's estimates are still live and you get a pause, a scroll through the phone, and some version of "honestly, I'm not sure." Every one of those jobs was walked and priced. Most never got a second conversation.
+
+This guide is about that second conversation: when to have it, what to say, how to keep the list honest, and what AI can take off your plate without making you sound like a robot.
+
+## Silence is rarely a no
+
+Owners tend to read a quiet homeowner as a lost bid on price. Sometimes it is. More often, one of three things is going on.
+
+**They are comparing, not deciding.** Big jobs get two or three quotes. The numbers sit on the kitchen counter for a week while they talk it over, look at colors, or wait for a paycheck. Somewhere in that week they pick, and if you haven't been in touch since you emailed the PDF, your number and your handwriting are carrying the whole decision.
+
+**They have a question they didn't ask.** Can you start before the graduation party? Does the price include the garage trim? Will the crew move the patio furniture? Small questions, and whoever answers them first usually wins.
+
+**The timing isn't right yet.** "Let's talk after the holidays." "We need to re-roof before solar makes sense." "We're getting married in fourteen months." Those are real customers on a real timeline, and they get lost because nobody wrote the timeline down.
+
+I worked with an electrician who quoted a $6,800 panel upgrade in March and never heard back, so he stopped thinking about it. In June he found out the homeowner had gone with someone else. Not on price. She assumed he wasn't interested, because he never called again.
+
+## A sequence for a quote that went quiet
+
+For most residential jobs in the $2,000 to $20,000 range, this is the follow-up I set up:
+
+- **Same day:** a short text confirming the estimate was sent, with the owner's name and a line saying questions are welcome
+- **Day three or four:** a message that answers a common question before they ask it, such as how weather delays work, what prep is included, or when you could realistically start
+- **Day seven:** a direct, low-pressure text asking whether they are still planning the project this season
+- **Day fourteen:** a call task for a person, not another automated message
+- **Day thirty:** a final note that the price is good until a stated date, and then the sequence stops
+
+Two rules make this work. The moment the customer replies, the automation pauses and a person takes over. Nothing kills trust faster than a scheduled "still interested?" arriving an hour after they called to book. And someone has to read the replies the same day. I have watched shops turn this on and then leave "yes, still interested" unread for four days.
+
+A follow-up that invites the unasked question does more than one that asks "any decision yet?" The first sounds like help. The second sounds like someone checking a box.
+
+## When they say later, get a date
+
+"After the holidays" is a seller lead. "Next spring" is a roofing lead. "Not today" at a repair counter is a lead with a weak battery attached. None of them should go into a folder labeled later.
+
+Before you hang up, turn the delay into a date. "Would the first Thursday in January work for a twenty-minute call? I'll text you the invite now." If they won't commit to a day, ask for a week. If not a week, a month, and make the month the date. A lead with "January" on it is something you can list, count and search. A lead with "later" on it is a note you will never read again.
+
+Then give them one small job for the waiting period, something that takes under an hour and makes the next conversation easier: find the paperwork from the last roof job, measure the room, decide on the guest count range. It gives you a reason to check in once that has nothing to do with selling, and the next call opens with "did you find it?" not "so, are you still thinking about it?"
+
+Shops can do the same thing with declined repairs. When a customer says not today, sort each item into one of three groups: safe until the next service, fine until a specific event (cold weather, a road trip, an inspection), or don't wait. Give each one a revisit date, two or three weeks before that event. The revisit text names the car and the item, offers a free re-check and two times, and makes it easy to say no. Most people book the re-check, not the repair. The re-check is where the sale happens.
+
+## Some sales cycles are a year long
+
+A wedding venue books couples about fourteen months out. A solar install can wait on a new roof, a permit and a utility. Long cycles need something different: not more follow-up, but a few useful messages timed to where the customer is in their own process.
+
+For a venue, that might be four messages in a year, none asking for anything. The best photo spots on the property when they're picking a photographer. What the room really holds at different table layouts when the guest list fight starts. What other couples did with the space when they're choosing a florist. A heads-up a month before you need decisions. You're the one vendor in their inbox who has done this two hundred times and isn't selling them anything else.
+
+Long cycles also need an easy off switch. A sequence can't know that the date moved or that the bride's mother is now making the decisions. Staff need to be able to pause it in one click.
+
+## Keep the pipeline honest
+
+A pipeline is supposed to tell you what is going to happen. Once it has a hundred open bids and you privately believe in twelve, it has stopped doing that, and your team spends Tuesday calling people who decided in April.
+
+Two rules keep it honest:
+
+- **Every open bid has a next step with a date.** "Waiting on re-roof, revisit September 15" stays. "Following up" with no date does not. If you can't name what happens next and roughly when, close it.
+- **Every closed-lost bid gets a reason from a short list.** Six to eight options: price, went with a competitor, timing (not this year), financing, no contact, job changed. Make it required.
+
+Do that for one quarter and you'll learn something you can't learn any other way: why you actually lose. Most owners assume price, because price is what they hear. When the reasons come back, the biggest group is often "no contact," which is a follow-up problem, not a pricing problem, and much cheaper to fix.
+
+Once a week, sort open bids by days since last contact. Whatever is at the top is today's first call. Not because it is urgent, but because it is the one most likely to be gone already, and you would rather know.
+
+## What to hand to AI, and what to keep
+
+**AI is good at watching the list.** Flag any bid with no activity in ten days. Surface every "later" lead whose date is two weeks out. A nudge that says "the Miller kitchen has been quiet for ten days" is worth more to a busy remodeler than fifty new leads.
+
+**AI is good at a first draft that fits the job.** Give it the estimate and the customer's notes, and ask for a day-four message that answers the question this particular homeowner is most likely to have. That beats sending the same text to every customer. Read it before it goes out.
+
+**AI can read your closed-lost reasons.** Ask it to group last quarter's notes and tell you what keeps coming up. Check its summary against the raw list, because it will happily invent a pattern from three examples.
+
+**AI should not negotiate.** No discounts, no revised prices, no promised start dates. If a customer pushes on price in a reply, a person answers.
+
+**AI can't fix a confusing estimate.** If your quote is one total with no explanation of prep, materials or timeline, follow-up won't save it. The customer is comparing documents, and yours has to be the one they understand. If your crew can't start for eight weeks, say so on the estimate. Winning the job and then missing the start date just loses the customer later.
+
+## Sort the stack this week
+
+Take every estimate from the last sixty days and sort it into three piles: won, lost with a known reason, and never heard back. If the third pile is the tallest, you don't need more leads this month. You need the follow-up above, starting with the oldest quote in that pile.`,
+  },
+  {
     slug: `pressure-washing-review-request-automation`,
     title: `Google Reviews: When to Ask, How to Answer, Where AI Fits`,
     excerpt: `Most businesses don't have a review problem, they have a timing problem, and the reply under the worst review matters more than the star average.`,
@@ -1307,53 +1391,6 @@ That last group is the quiet win. Look back through quotes you gave in daylight 
 Open your booking form and look at how it offers times for an estimate. If a lighting visit can be booked at any hour of the day, change it before Sunday so only the sunset-based times show. Then pull out your open daytime quotes and send the dusk offer to the oldest ten.`,
   },
   {
-    slug: `auto-glass-chip-repair-quote-follow-up-before-first-frost`,
-    title: `Text Last Month's Chip Quotes Before the First Frost`,
-    excerpt: `A windshield chip quoted in September and never booked is a full replacement waiting for the first cold morning, and one honest text can bring that driver in while the repair is still cheap.`,
-    tags: `Quote Follow-Up, Seasonal Prep, Auto Glass Shops`,
-    content: `Somewhere in your quote book there are drivers who asked about a small chip in September, heard the price, said "I'll think about it," and drove away. Most of those chips are still small. The first hard frost is when some of them stop being small.
-
-I see this in shops every autumn. A chip repair is a thirty-minute job. A crack that has run across the glass is a replacement, with a different price, a different parts order and a longer appointment. The driver who hesitated over the cheaper job ends up buying the bigger one, and often blames the shop for the difference.
-
-## Why the quote goes quiet
-
-Nobody turned you down. The quote was fine, the driver was busy, and there was no date attached to anything. A chip does not hurt, so the decision slides. Your side has no better system: the quote lives on a pad, in a text thread, or in your head.
-
-The cost is not only the lost repair. It is the replacement you could have been spared from explaining. If you quoted a repair and the driver comes back in January with a crack, you are now the person delivering bad news about a problem you flagged months ago.
-
-## Mark every unbooked chip quote the day you give it
-
-The first change is small. When you quote a chip repair and it does not book on the spot, tag the contact with something plain, like "chip quote open," and note the date and where the chip is. Where it sits matters, because a chip in the driver's line of sight is handled differently from one near the edge.
-
-That tag is the whole list. Without it, you are trying to remember which of forty conversations were chips.
-
-## Send three messages, no more
-
-I would keep the follow-up to three texts, each with a reason to exist.
-
-- **Day three.** A short check-in from the person who gave the quote: "Still happy to fit in that chip repair whenever suits you. Here are two openings this week." Name the openings.
-- **Day twenty or so.** One line about why timing matters: temperature swings are what turn a small chip into a long crack, so the repair is cheaper now than it will be later. Say nothing you cannot stand behind, and leave out promises about what any particular chip will do.
-- **First frost week.** The one that does the work. Send it to everyone still tagged, with the price of the repair and the honest sentence that if the chip has spread, it may need a replacement instead, and you will tell them which when you see it.
-
-Each text offers a reply, such as "Reply 1 for Tuesday morning, 2 for Thursday afternoon." The reply books the slot and removes the tag. A driver who books is out of the sequence, so nobody gets a nudge about a job already on your calendar.
-
-## Keep a few slots empty on purpose
-
-If your whole week is already full of replacements, the frost-week text will bring in more repair jobs than you can fit. Hold two or three short slots for it. A chip repair is quick, so a gap between two longer jobs often does the trick.
-
-Also decide who answers when someone replies with a photo or a question instead of a number. One person, same day. A text that sits until Monday defeats the point of sending it before the weather.
-
-## Where this does not work
-
-Some of those drivers have already gone elsewhere, and some will tell you so. That is fine; say thanks and remove them from the list. A few chips will have spread before you ever write. The frost-week text should say plainly that you will look and tell them the truth, because a driver who hears the truth about a spread crack from you is more likely to come back for the next one.
-
-It also will not fix a quote you gave carelessly. If the price you named was vague, the follow-up only repeats the vagueness.
-
-## Count the open chips
-
-Open your quotes from the last six weeks and find every chip repair that never booked. Write down how many there are and which ones are in the driver's line of sight. Pick the first cold week on your calendar, and text the first name on that list today with two real openings.`,
-  },
-  {
     slug: `bakery-thanksgiving-pie-orders-close-date-pickup-windows`,
     title: `Close Thanksgiving Pie Orders Before the Oven Does`,
     excerpt: `A bakery that takes pie orders by phone, message and sticky note has three order books and no idea what Wednesday will look like, until a close date and pickup windows put it on one page.`,
@@ -1741,55 +1778,6 @@ Look at next week's calendar and, for each booked session, ask one question: has
 For the first one or two, send the drawing today with a deadline. Then write your released-slot rule down on one line, so you can add it to your next deposit conversation.`,
   },
   {
-    slug: `real-estate-after-the-holidays-seller-call-booked`,
-    title: `"After the Holidays" Is a Seller Lead. Put a Date on It`,
-    excerpt: `A seller who says "after the holidays" has not said no, but unless a January call is booked before the conversation ends, you are one of three agents they half remember.`,
-    tags: `Seller Leads, Follow-Up, Real Estate`,
-    content: `Every agent hears it in October and November: "We're thinking about selling, but let's talk after the holidays." It sounds like a polite delay. In practice it is where most of those sellers get lost, because nothing in your calendar says what happens next, and the agent who calls them on January 3rd is usually the one who got a date on the calendar first.
-
-## What they actually mean
-
-When a seller says "after the holidays," they are rarely lying about the timing. They are telling you two things at once. The house is not going on the market in the next six weeks, and they do not want to be sold to in the meantime.
-
-Both are reasonable. The mistake is treating them as a reason to go quiet. Silence for ten weeks does not feel like respect to the seller. It feels like you stopped caring, and by the time you resurface, their memory of you is a single phone call from the fall.
-
-Say you talk to a couple on a Tuesday in late October who have owned their split-level for fifteen years. They want to look at pricing, but they are hosting family in November and do not want strangers walking through in December. That is a clear, specific plan. Your follow-up should be just as specific.
-
-## Book the January call before you hang up
-
-Do not say "I'll check back in the new year." That puts the whole job on your memory, and your memory is already full in January.
-
-Instead, offer a date right then: "Would the first Thursday in January work for a twenty-minute call? I'll put it on my calendar and send you a text now." If they say yes, send the calendar invitation before they have finished their coffee. A booked call, with a reminder that goes out the week before, is a different animal from a lead you promised to follow up with.
-
-If they will not commit to a day, ask for a week. If they will not commit to a week, ask for a month and make the month the date. A lead with "January" written on it is something you can list, count and search. A lead with "later" on it is a note to self that you will never read again.
-
-## Give them one job in the meantime
-
-The ten quiet weeks are not dead time. They are the part of the process where you can be useful without asking for anything.
-
-Pick one small task the seller can do before January that makes the first conversation faster. For that split-level couple it might be: "Find the paperwork from any work you've had done on the house, like the roof or the furnace, and put it in one folder." No pressure, no pitch. It also gives you a reason to text once in mid-November that has nothing to do with sales.
-
-The job should take them under an hour and should come up again in the January call. Then the call opens with "Did you find the roof paperwork?" and not with "So, are you still thinking about selling?"
-
-## Three messages, and no more
-
-Here is the whole sequence, and it can run itself on the platform once the lead is tagged:
-
-- **The day of the conversation:** a text confirming the January call date and time, with the one task described in a single sentence.
-- **Mid-November, or the week before Thanksgiving:** one short check-in on the task. No market update, no new listings, nothing that asks for a decision.
-- **The week before the call:** the reminder, with a line saying you will have a rough price range to talk through.
-
-Notice what is missing. There is no monthly newsletter and no "just checking in." A seller who is planning around the holidays does not want ten touches. They want three that each do something.
-
-It is worth being honest about the limit here. This will not rescue a seller who was never serious, and some of the January calls will end with "we've decided to stay." That is still a better answer than silence, and you learn it in week one of the year, not week eight.
-
-## Look for them this week
-
-Open your lead list and filter for anything from the last ninety days with a note or tag that says "after the holidays," "next spring," "next year" or "not yet." Count how many of them have a booked call or a dated next step. The leads without a date are the ones that go to whoever calls first in January.
-
-Pick the three warmest, send each one a short text this week, and offer a specific day for a January call. Then tag the rest with the month you expect to hear from them, so the next time you open that list, it tells you who to call and when.`,
-  },
-  {
     slug: `yoga-studio-intro-offer-second-class-booked`,
     title: `Intro Students Take One Class and Vanish. Book Class Two`,
     excerpt: `A new student who walks out of a first class with nothing on the calendar has quietly decided already, and a teacher's text that same afternoon is the cheapest way to change that.`,
@@ -2116,59 +2104,6 @@ Also, text only does the reminding. Someone on your side still has to look at th
 ## Do this before the weekend
 
 Open your December bookings and write down, for each one, the date its headcount locks. If you can't find one, you have a booking with no lock, and that is the one to message today. Send the sentence from above, with the date filled in, and ask them to reply to confirm.`,
-  },
-  {
-    slug: `auto-repair-declined-repairs-revisit-date`,
-    title: `Every "Not Today" at Your Counter Needs a Revisit Date`,
-    excerpt: `A declined repair is three different situations under one label, and only you know which one is a cold snap away from a tow truck.`,
-    tags: `Declined Work, Seasonal Follow-Up, Auto Repair`,
-    content: `The most valuable list in your shop is one you have never written down: every repair a customer declined at the counter this fall. Right now those items sit on closed invoices, in a lane nobody owns, and the only follow-up they will ever get is the customer's own car deciding the question for them on a cold morning in a parking lot.
-
-I see this in shop after shop. The advisor writes up worn rear brakes, a weak battery and tires near the wear bars. The customer says "not today," pays for the oil change, and drives off. Everyone meant well. Nobody wrote down when "not today" should become "now."
-
-## "Not today" has an expiry date
-
-A declined repair is not one decision. It is three different situations wearing the same label. Some items are fine to ignore for a year. Some are fine until a specific event. A few are one cold snap away from a tow truck.
-
-October is when the difference starts to matter. Batteries that started the car all summer get tested by the first near-freezing night. Tires that gripped dry pavement get tested by the first wet cold one. And in six weeks half your customers will load the trunk and drive a long way to a relative's house.
-
-If your system only knows "declined," it cannot tell the customer, or you, which of those they are in.
-
-## Give every declined item a bucket and a date
-
-At the counter, when the customer says no, you mark the line with one of three buckets and a revisit date. Two minutes, no new software required, though the platform can hold it as a tagged field on the contact so the date triggers the text for you.
-
-- **Safe to wait.** Revisit at the next regular service. Date: that service interval.
-- **Wait until a named event.** Cold weather, a road trip, an inspection due date. Date: two to three weeks before that event.
-- **Don't wait.** You tell them once, plainly, why, and note that you told them. Date: this week.
-
-The point is that the date is written by you, at the moment you know the car best, not reconstructed in March from a pile of invoices.
-
-## The revisit text
-
-Two weeks before the date, the customer gets one text from the advisor who wrote up the car. It names the car and the item, and says what changed, not what is wrong.
-
-> Hi Marcus, this is Ellen at the shop. When you had the Accord in last month, we noted the battery was weak and you decided to wait. With the first cold mornings coming and the holiday drive, I would rather test it again for free than have it quit on you. I have Tuesday at 4 or Thursday at 8 open. Reply 1 or 2, or tell me to leave it.
-
-Notice what the text does not do. It does not quote a price, it does not threaten, and it does not offer a coupon. It offers a free re-check, two slots, and an easy way to say no. A customer who says "leave it" has now declined with fresh information, and that is a better position for both of you.
-
-## The re-check is the sale
-
-Most of these customers do not book the repair from the text. They book the re-check. Then the battery tests weak again, or the brake pad is thinner than last time, and the advisor shows the reading on the screen. You are not persuading. You are measuring, and the measurement does the talking.
-
-Be honest when the re-check comes back fine. Tell them it can wait, and move the revisit date. That one conversation is worth more to a skeptical customer than a dozen reminders, and it is the reason they believe you the next time you say "don't wait."
-
-## Where this goes wrong
-
-Texting every declined item from the last year at once is a blast, not a follow-up, and customers can tell. Start with the "wait until an event" bucket and the "don't wait" bucket only.
-
-Also, never revisit a repair you did not actually recommend with a reason. If the original write-up said "brakes need attention" and nothing else, you have nothing true to say two weeks before the date. The follow-up is only as good as the note taken at the counter.
-
-And keep one limit: one revisit per item, one call if it was a safety item and nobody answered. After that, the customer knows, and the choice is theirs.
-
-## Check this week
-
-Pull the last thirty days of invoices and count the lines customers declined. For each one, ask whether you could tell a customer today why it can wait and until when. If you cannot, start tomorrow: write the bucket and the date on every "not today" at the counter, and send the first revisit text before Thanksgiving traffic starts.`,
   },
   {
     slug: `preschool-tour-follow-up-same-afternoon`,
@@ -3873,49 +3808,6 @@ I don't think the answer is more automation there. Rebooking has to be as easy a
 Look at last month's schedule, count the no-shows, and check whether any reminder went out at all for those specific jobs. If the answer is no for most of them, you haven't got a customer problem to solve.`,
   },
   {
-    slug: `remodeling-crm-pipeline-follow-up`,
-    title: `Your Remodeling Business Doesn't Have a CRM Problem. It Has a Follow-Up Problem.`,
-    excerpt: `A spreadsheet with fifteen tabs isn't a pipeline — it's a place bids go to die.`,
-    tags: `CRM & Pipelines, General Contractors, Lead Follow-Up`,
-    content: `Which of your open bids has gone the longest without anyone touching it?
-
-If you can't answer that in under ten seconds, you don't have a pipeline. You have a memory, and it is competing with two kitchens, a bathroom, a deck, and whatever went wrong on today's job site.
-
-I ask contractors this question early because the answer is diagnostic. The guys who can name the bid immediately are usually the ones already following up. The guys who have to go looking are the ones losing work they already estimated.
-
-## The spreadsheet isn't the problem
-
-Plenty of contractors track jobs in a spreadsheet, a notebook, or a stack of sticky notes on the dash. The tool is rarely the issue.
-
-The issue is that nothing prompts a follow-up. A bid sits at sent for two weeks because nobody is watching it, and the homeowner reads silence as not interested and hires whoever called back.
-
-A real pipeline does exactly one job: it tells you, today, which deals need something from you and which ones are genuinely just waiting. Stage on the left — estimate sent, awaiting signature, scheduled, in progress — and the date of the last thing that happened, visible without opening anything.
-
-## What a stale bid costs
-
-Pull every bid from the last 60 days and sort by how long since you touched it. Anything past two weeks with no contact is probably cold, or already someone else's job.
-
-At an $18,000 average project, three stale bids a month is real money, and none of it was lost on price. It was lost because nobody circled back.
-
-### Three things worth fixing first
-
-- Every bid carries a stage and a next-action date, not just a status
-- A standing weekly pass through anything untouched for ten days
-- Change orders and follow-up calls logged against the original bid, not scattered across text threads
-
-## Where automation earns its keep here
-
-Not by replacing the phone call. Contractors who are already busy don't need another lead-generation campaign; they need to be told when something has gone quiet.
-
-A nudge that says the Miller kitchen has had no activity in ten days is worth more to a booked-out remodeler than another fifty leads he doesn't have time to estimate. The automation watches. You still call.
-
-## Do this before you leave the truck
-
-Open your list of open bids right now and sort by last contact.
-
-Whatever is sitting at the top is today's phone call. Not because it is urgent — because it is the one most likely to be gone already, and you would rather know.`,
-  },
-  {
     slug: `restaurant-email-sms-reengagement`,
     title: `The Email List Sitting in Your POS, Doing Nothing`,
     excerpt: `Every restaurant is sitting on a list of people who already liked the food. Almost none of them ever hear from the restaurant again.`,
@@ -4759,58 +4651,6 @@ Before you buy or build anything, open your system and try to pull one list: eve
 If that list comes out in a few seconds, your data is in better shape than most and you are ready to automate against it. If it takes you an afternoon, you have just found the actual project — and it is not the sequence you thought you were going to build.`,
   },
   {
-    slug: `wedding-venue-long-cycle-nurture`,
-    title: `Your Couples Book Fourteen Months Out. What Happens in Month Seven?`,
-    excerpt: `The first hour after a tour request is solved everywhere; the year of silence after the deposit is solved almost nowhere.`,
-    tags: `Long-Cycle Nurture, Wedding Venues, Follow-Up Sequences`,
-    content: `Fourteen months. That is roughly how far ahead of the date a couple tours a venue and puts down a deposit.
-
-Every venue I work with has the first hour of that relationship figured out. The tour request comes in, somebody replies fast, the tour gets booked. That part is solved.
-
-Month seven is not solved anywhere.
-
-## The gap nobody staffs for
-
-A couple signs in March for a May wedding the following year. Between the deposit and the final headcount there are about sixty weeks in which the venue has nothing it strictly needs from them.
-
-So it says nothing. Then in February it sends an email asking for the floor plan and the catering selections, and the reply comes back a week late and slightly cold, because the last time these people heard from the venue was eleven months ago and it was a contract.
-
-Nothing went wrong, exactly. But the couple spent a year not thinking about you, and the vendors they added in that year — planner, photographer, florist — became the people they actually talk to. By the time you need decisions, you are third in line for their attention.
-
-## Silence is not neutral
-
-This is the part venue owners tend to push back on, and I understand why. Nobody wants to be the vendor pestering a couple for a year.
-
-But the choice is not between silence and nagging. It is between silence and being mildly, usefully present. A couple planning a wedding is making about forty decisions they have never made before. Almost none of them are about you, and almost all of them are things you have watched two hundred couples get wrong.
-
-That is the material. You are not marketing to them — they already bought. You are the one vendor in their inbox who has done this before and is not selling them anything else.
-
-## What actually goes in a sixty-week sequence
-
-Not much per message, and not often. What matters is that each one is tied to where they are in their own planning, not to where you are in your calendar.
-
-- Around month two, when they are picking a photographer: the three spots on the property that photograph best, and the time of day for each
-- Around month five, when the guest list is causing family arguments: what the room actually holds at different table configurations
-- Around month nine, when they are choosing a florist: what other couples have done with the specific architecture they are walking into
-- Around month twelve, before you need anything: a note that the planning conversation is about to start, and what you will be asking for
-
-Four messages in a year. None of them ask for anything. All of them are things you know and they do not.
-
-## The seam: this cannot be entirely automatic
-
-A sequence can carry the timing and the general content. It cannot know that this couple's venue date got moved, or that the bride's mother is now the person making decisions, or that they had a bad experience with a vendor you recommended.
-
-So the sequence needs an off switch that is easy for staff to hit, and somebody has to actually be reading the replies. A helpful note that arrives the week after a couple postponed is worse than no note at all — it tells them the friendly voice was never a person.
-
-If you cannot commit to somebody watching the replies, send fewer messages, not more.
-
-## An open question I have not settled
-
-I do not know the right cadence for venues that book much shorter — corporate events, or the last-minute reception business some venues run alongside weddings. The sixty-week shape does not transfer, and compressing the same four messages into eight weeks reads as pushy.
-
-My working guess is that short-cycle events need one message, not four, and it should be logistical rather than advisory. But I have not run that long enough anywhere to tell you it works. If you run both books out of one venue, that is the harder half of the problem, and I would rather say so than hand you a sequence I have not seen hold up.`,
-  },
-  {
     slug: `appliance-repair-quiet-hours-send-timing`,
     title: `The Automation That Texts Your Customer at 3 A.M.`,
     excerpt: `A trigger fires on an event, and events do not observe business hours — which is how a review request lands while the customer is asleep.`,
@@ -4854,62 +4694,6 @@ I have switched more sequences back on than I have built from scratch, and the r
 A system will do exactly what you configured at exactly the moment the condition is met. It has no sense of whether now is a reasonable time to speak to a person. That judgment does not emerge from a better tool; somebody has to encode it once, deliberately.
 
 Go into whatever you are running now and look at every message that is not an immediate response to an inbound. Check whether each one has a time window on it. The ones that do not are not broken yet — they are waiting for a tech to close a job late.`,
-  },
-  {
-    slug: `solar-installer-pipeline-stale-deals`,
-    title: `How Many Deals in Your Pipeline Would You Bet Your Own Money On?`,
-    excerpt: `An unpruned pipeline is not optimistic, it is uninformative — and the loss reasons you are not collecting are the report worth having.`,
-    tags: `Pipeline Hygiene, Solar Installers, Sales Reporting`,
-    content: `How many of the deals in your pipeline right now would you put your own money on?
-
-Ask a solar sales manager that and you get a pause, then a number that is a lot smaller than the one on the dashboard. Everybody knows the pipeline is inflated. Almost nobody prunes it, because removing a deal feels like giving up on revenue.
-
-## An unpruned pipeline is not optimistic, it is uninformative
-
-The point of a pipeline is to tell you what is going to happen. Once it contains a hundred deals and you privately believe in twelve, it has stopped doing that. You are running the business off the twelve you carry in your head, and the dashboard is decoration.
-
-That has a real cost beyond the bad forecast. Every stale deal sits in somebody's follow-up queue. Reps spend Tuesday morning calling people who decided against solar in April and never said so out loud. The activity looks like selling. It is filing.
-
-## Solar pipelines rot in specific, identifiable ways
-
-This is not general sales hygiene. Solar deals stall for a small number of reasons, and each one has a different half-life:
-
-- **Roof condition.** The homeowner needs a re-roof first. That is a real deal with a real timeline, and it is not this quarter.
-- **Financing declined.** Sometimes recoverable with a different structure, usually not, and it goes quiet rather than getting a no.
-- **Permitting or utility interconnection.** Genuinely out of your hands and genuinely still alive.
-- **The spouse.** One person is sold and one is not, and the one who is not does not take your calls.
-
-These look identical in a pipeline that only tracks stage and age. They need completely different handling, and lumping them into "follow up" guarantees you treat the re-roof lead like the declined-financing lead.
-
-## Stalled and dead are different, and the difference is a date
-
-A stalled deal has a specific thing you are waiting on and a date when that thing resolves. Re-roof scheduled for September? That is stalled. Move it out, set the date, stop calling weekly.
-
-A dead deal has no such thing. Nobody is waiting on anything; the homeowner just stopped answering. If you cannot name what has to happen next and roughly when, it is not stalled.
-
-The rule I give teams: if a deal has no next step with a date on it, it does not stay in the pipeline. It gets closed with a reason, or it gets a date. Those are the two options.
-
-## Close-lost is not an admission, it is data collection
-
-This is the part that changes the business, and it only works if you make the reason mandatory and keep the list short.
-
-Six reason codes, maybe eight. Roof condition. Financing. Went with a competitor. Timing — not this year. No contact. Price.
-
-Do that for one quarter and you get something you cannot get any other way: the actual distribution of why you lose. Most solar operations I have worked with assume they are losing on price, because price is what reps hear. Then the codes come back and the biggest bucket is no contact, which is not a pricing problem at all — it is a follow-up problem, and it is fixable this month.
-
-You cannot get that number out of a pipeline where losing deals quietly disappear or sit forever at 40 percent.
-
-## The reason this is hard has nothing to do with software
-
-Nobody wants to close-lost a deal they spent six hours on. Reps especially, if any part of comp or standing is tied to pipeline volume.
-
-So if you turn on mandatory reason codes and change nothing else, reps will park deals in "timing" forever rather than mark them lost. You have to say out loud that the pipeline number is not the score, and then not react to it dropping by half the first month — because it will, and that first drop is the most honest the number has been all year.
-
-## What I would want to see after ninety days
-
-Not a cleaner pipeline. A loss-reason report you believe, and one change made because of it.
-
-If the report says no contact is your largest bucket and you have not changed anything about follow-up, the cleanup was administrative and you should not have bothered. The pruning is only worth the argument it causes if the reasons end up pointing at something you go and fix.`,
   },
   {
     slug: `catering-company-booking-analytics-capacity`,
@@ -5121,48 +4905,6 @@ Give it a full term before you move money around, and look for patterns that hol
 ## Before you cut the ad budget
 
 Pull the last term's enrollments and put both columns next to each other, the tracked source and the reported one. Count how many families show an ad click anywhere in their history, even if they wrote "a friend" on the form. If that count surprises you, the ad was working. The form just did not know how to say so.`,
-  },
-  {
-    slug: `painting-contractor-estimate-follow-up`,
-    title: `Four Days After the Estimate Is When Painting Jobs Are Decided`,
-    excerpt: `Most homeowners collect three painting quotes and pick within a week, so the contractor who follows up on day four is often the only one still in the conversation.`,
-    tags: `Estimate Follow-Up, Painting Contractors, Automated Sequences`,
-    content: `Ask a residential painting contractor which of last month's estimates are still live, and watch what happens. There is usually a pause, then a scroll through the phone or a flip through a folder in the truck, and then some version of "honestly, I don't know." Every one of those houses got walked, measured, and priced. Most of them never got a second conversation.
-
-That stack is where a lot of painting businesses keep their lost revenue.
-
-## The homeowner is comparing, not deciding
-
-A homeowner who wants their exterior painted almost always gets more than one quote. They schedule the walkthroughs, collect the numbers, and then set them on the kitchen counter. For a few days, nothing happens. They are talking it over, looking at colors, maybe waiting for a paycheck.
-
-Then, at some point in that first week or so, they pick. If you have not been in touch since you emailed the PDF, you are relying on your number and your handwriting to carry the whole decision.
-
-## Price is rarely the only question left
-
-The owners I work with tend to assume a silent homeowner is a lost bid on price. Sometimes it is. More often, the homeowner has a question they did not bother to ask: can you start before their daughter's graduation party, does the price include the trim on the garage, will the crew move the patio furniture.
-
-A follow-up that invites those questions does more than a follow-up that asks "any decision yet?" The first one sounds like help. The second one sounds like a salesperson checking a box.
-
-## A sequence that fits a painting job
-
-This is what I would set up for an estimate that has gone out and gotten no response:
-
-- **Same day:** a short text confirming the estimate was sent, with the owner's name and a line saying questions are welcome
-- **Day three or four:** a message that answers a common question before they ask it, such as how weather delays are handled or what prep work is included
-- **Day seven:** a direct, low-pressure text asking whether they are still planning the project this season
-- **Day fourteen:** a final note that the estimate stays good for thirty days, then the sequence stops
-
-The moment the homeowner replies, the automation pauses and a person takes over. Nothing kills trust faster than a scheduled "still interested?" arriving an hour after they called to book.
-
-## What the system cannot fix
-
-If the estimate itself is confusing, a line-item total with no explanation of prep, coats, or product, follow-up will not save it. The homeowner is comparing documents. Yours has to be the one they understand.
-
-And if the crew cannot actually start for eight weeks, say so in the estimate. A follow-up sequence that wins the job and then misses the start date just moves the lost customer further down the road.
-
-## Sort the stack
-
-Take every estimate you sent in the last sixty days and sort it into three piles: won, lost with a known reason, and never heard back. If the third pile is the tallest, you do not need more leads this month. You need a way to stay in the conversation for one more week. If you want to talk through what that looks like for your crew, book a call and bring the stack.`,
   },
   {
     slug: `cards-and-cocktails-pokemon-event-lakeland`,

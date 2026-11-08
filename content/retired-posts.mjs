@@ -38,4 +38,13 @@ export const retiredPosts = {
   'salon-google-review-system': 'pressure-washing-review-request-automation',
   'restaurant-review-response-reputation': 'pressure-washing-review-request-automation',
   'copy-paste-review-responses-worse': 'pressure-washing-review-request-automation',
+
+  // H4 Estimate follow-up and pipeline → painting-contractor-estimate-follow-up (2026-11-08)
+  'electrician-quote-follow-up-sequence': 'painting-contractor-estimate-follow-up',
+  'remodeling-crm-pipeline-follow-up': 'painting-contractor-estimate-follow-up',
+  'solar-installer-pipeline-stale-deals': 'painting-contractor-estimate-follow-up',
+  'wedding-venue-long-cycle-nurture': 'painting-contractor-estimate-follow-up',
+  'auto-glass-chip-repair-quote-follow-up-before-first-frost': 'painting-contractor-estimate-follow-up',
+  'real-estate-after-the-holidays-seller-call-booked': 'painting-contractor-estimate-follow-up',
+  'auto-repair-declined-repairs-revisit-date': 'painting-contractor-estimate-follow-up',
 };
