@@ -9,6 +9,8 @@ const SITE = 'https://cards-and-cocktails.netlify.app';
 // Copy of the event site's logo, hosted on loogolabs.com so the email never
 // depends on the event site staying up (public/email/, 280px for retina).
 const LOGO = 'https://www.loogolabs.com/email/cards-and-cocktails-logo.png';
+// Loogo Labs (AI, Marketing & Automation) in white for the dark header, 2x.
+const LOOGO_LOGO = 'https://www.loogolabs.com/email/loogo-labs-logo-white.png';
 const REGISTER = `${SITE}/#register`;
 // 2:00–10:00 PM Eastern (EST, UTC−5) on Nov 14, 2026.
 const CALENDAR = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
@@ -89,7 +91,10 @@ export default {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
 
         <!-- Hero -->
-        <tr><td align="center" bgcolor="${INK_LIGHT}" class="px" style="background:${INK_LIGHT};border:1px solid ${BORDER};border-bottom:0;border-radius:18px 18px 0 0;padding:36px 40px 30px;">
+        <tr><td align="left" bgcolor="${INK_LIGHT}" style="background:${INK_LIGHT};border:1px solid ${BORDER};border-bottom:0;border-radius:18px 18px 0 0;padding:20px 24px 0;">
+          <a href="https://www.loogolabs.com" style="text-decoration:none;"><img src="${LOOGO_LOGO}" width="170" height="37" alt="Loogo Labs · AI, Marketing &amp; Automation" style="display:block;width:170px;height:auto;border:0;"></a>
+        </td></tr>
+        <tr><td align="center" bgcolor="${INK_LIGHT}" class="px" style="background:${INK_LIGHT};border-left:1px solid ${BORDER};border-right:1px solid ${BORDER};padding:14px 40px 30px;">
           <img src="${LOGO}" width="140" height="137" alt="Lugo's Craft Distillery" style="display:block;margin:0 auto 20px;width:140px;height:auto;border:0;">
           ${kicker("Lugo's Craft Distillery presents")}
           <h1 class="h1" style="margin:14px 0 0;font:700 50px/1.05 ${SERIF};color:${GOLD_LIGHT};">Cards &amp; Cocktails</h1>
