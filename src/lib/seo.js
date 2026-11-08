@@ -116,9 +116,9 @@ export const ROUTES = [
   {
     page: 'LoogoNews',
     path: '/loogonews',
-    title: `Industry LoogoBlog — Automation Guides for Local Business | ${SITE.name}`,
+    title: `Industry LoogoBlog — AI & Marketing Guides | ${SITE.name}`,
     description:
-      'Guides on lead follow-up, missed-call text-back, reviews, and automation — written for owners of HVAC, dental, salon, gym, and other service businesses.',
+      'Practical guides to using AI in your marketing: content, ads, AI search, follow-up, AI assistants and tracking, for small business owners and marketers.',
     priority: '0.9',
     changefreq: 'daily',
     image: '/og-image-blog.jpg',

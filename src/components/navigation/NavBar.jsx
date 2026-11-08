@@ -5,8 +5,8 @@ import { LangToggle, useHref, useLang } from '../../lib/i18n';
 import { AmbientShape } from '../brand/Morph';
 
 const LABELS = {
-  en: { Mission: 'What we do', Company: 'Who we serve', LoogoNews: 'Industry insights', AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
-  es: { Home: 'Inicio', Mission: 'Qué hacemos', Company: 'A quién servimos', LoogoNews: 'Perspectivas', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
+  en: { Mission: 'What we do', Company: 'Who we serve', LoogoNews: 'AI & marketing', AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
+  es: { Home: 'Inicio', Mission: 'Qué hacemos', Company: 'A quién servimos', LoogoNews: 'IA y marketing', AIVoice: 'Voz con IA', Packages: 'Paquetes de servicios', BrandPartners: 'Asóciate con nosotros' },
 };
 
 const EASE = [0.32, 0.72, 0, 1];

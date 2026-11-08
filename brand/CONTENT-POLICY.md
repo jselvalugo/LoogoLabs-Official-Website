@@ -57,9 +57,11 @@ Posts do not need to be long, either. A tight 400-word piece that solves one rea
 
 ## Topics
 
-All posts connect back to running a local service business better. Automation, follow-up, reputation, booking, marketing, tools — everything through the lens of practical operations.
+Every post sits where AI and marketing meet: using AI to plan, create, run and measure marketing that wins and keeps customers. Content, paid ads, being found in AI answers, follow-up, AI assistants, positioning, tracking, choosing tools, and the myths worth ignoring, always through the lens of what a small business can act on this week. `BLOG-VOICE.md` lists the topic territories.
 
-Reference `GHL-CONTEXT.md` for the full list of platform features and approved post topics. Never mention GHL, GoHighLevel, or any underlying vendor by name.
+Operations topics with no marketing angle (scheduling, billing, job prep) are no longer in scope.
+
+Reference `GHL-CONTEXT.md` for what the platform can do. Never mention GHL, GoHighLevel, or any underlying vendor by name.
 
 ## Author
 

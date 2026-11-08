@@ -75,7 +75,7 @@ export default function Blog({ onNavigate }) {
               Industry<br /><em>LoogoBlog.</em>
             </h1>
             <p className="ln-masthead__lede">
-              {es ? 'Notas de un equipo que planea el marketing y luego lo construye: posicionamiento, anuncios, email, seguimiento, automatizaciones e IA, además de los mitos de marketing que conviene ignorar.' : 'Notes from a team that plans marketing and then builds it: positioning, ads, email, tracking, automations and AI, plus the marketing myths worth ignoring.'}
+              {es ? 'IA y marketing, desde un equipo que planea el marketing y luego lo construye: contenido, anuncios, cómo aparecer en las respuestas de la IA, seguimiento, asistentes de IA y medición, además de los mitos que conviene ignorar.' : 'AI and marketing, from a team that plans marketing and then builds it: content, ads, showing up in AI answers, follow-up, AI assistants and tracking, plus the myths worth ignoring.'}
             </p>
           </div>
           {/* Featured cards sit beside the intro on desktop and under it on phones. */}

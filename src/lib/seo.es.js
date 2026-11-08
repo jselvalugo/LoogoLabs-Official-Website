@@ -26,8 +26,8 @@ const STATIC = {
     description: `${BRAND} fue fundada por David Selva, profesional de Coamo, Puerto Rico, con experiencia en CLM, contratos gubernamentales, consultoría, gestión de proyectos y marketing, hoy en Celebration, Florida.`,
   },
   LoogoNews: {
-    title: `LoogoBlog de la industria: guías de automatización | ${BRAND}`,
-    description: 'Guías sobre seguimiento de clientes, mensajes por llamada perdida, reseñas y automatización para dueños de negocios de servicios. Artículos en inglés.',
+    title: `LoogoBlog de la industria: guías de IA y marketing | ${BRAND}`,
+    description: 'Guías prácticas para usar la IA en tu marketing: contenido, anuncios, búsqueda con IA, seguimiento y medición, para pequeños negocios. Artículos en inglés.',
   },
   GrowCFL: {
     title: `SEO local y automatización de marketing en la Florida Central | ${BRAND}`,

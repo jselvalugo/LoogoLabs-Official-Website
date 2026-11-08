@@ -28,7 +28,7 @@ exactly what failed.
 - `brand/CONTENT-POLICY.md`: originality is absolute.
 - `brand/BLOG-VOICE.md`: voice, reader and byline (first person, as David Selva).
 - `brand/GHL-CONTEXT.md`: what the platform does. Never name the platform or any vendor.
-- `brand/BLOG-TOPIC-LOG.md`: every topic + vertical pairing already used.
+- `brand/BLOG-TOPIC-LOG.md`: every topic + audience pairing already used.
 
 Also skim the **titles, excerpts and first paragraphs** of the 10 newest posts in
 `content/posts.mjs`, only to avoid repeating their angle, opening or closing.
@@ -36,10 +36,17 @@ Do not reuse their wording.
 
 ### 3. Pick the topic
 
-- Choose a topic + vertical pairing that is **not** in `brand/BLOG-TOPIC-LOG.md`
-  and doesn't make the same argument as an existing post in a different vertical.
-- One specific, practical problem a local service business owner has, with a fix
-  they can act on themselves.
+- Choose a topic + audience pairing that is **not** in `brand/BLOG-TOPIC-LOG.md`
+  and doesn't make the same argument as an existing post for a different audience.
+- The topic must sit where AI and marketing meet: pick it from one of the topic
+  territories in `brand/BLOG-VOICE.md` (AI in the content workflow, AI for paid
+  ads, being found in AI answers, follow-up/email/SMS, AI agents and
+  assistants, positioning and offers, measurement and tracking, evaluating AI
+  marketing tools, marketing myths). Operations topics with no marketing angle
+  (scheduling, billing, job prep) are out of scope.
+- One specific, practical marketing problem a small business owner or solo
+  marketer has, with a fix they can act on themselves, and an honest line on
+  where AI helps and where it doesn't.
 - Before writing, state in one line each: the reader, the problem, the fix. If
   you can't fill all three crisply, pick another topic.
 
@@ -60,7 +67,7 @@ Add one object at the **top** of the `posts` array in `content/posts.mjs`:
   slug: `short-keyword-slug`,        // lowercase, hyphens, unique in the file
   title: `Title Under ~70 Characters`,
   excerpt: `One sentence that makes someone want to read it.`,
-  tags: `Topic, Subtopic, Vertical`, // 2–3, comma-separated
+  tags: `Territory, Subtopic, Audience`, // 2–3, comma-separated
   content: `Markdown body…`,
 },
 ```
@@ -99,7 +106,7 @@ Do **not** run `npm run db:feature-post`. The current featured post stays featur
 ### 7. Log the topic
 
 Append a row to `brand/BLOG-TOPIC-LOG.md`:
-`- YYYY-MM-DD | <slug> | <vertical> | <topic>`
+`- YYYY-MM-DD | <slug> | <territory> / <audience> | <topic>`
 
 ### 8. Check it — build, then two full review passes
 
@@ -141,7 +148,9 @@ first time. Check it against `brand/CONTENT-POLICY.md` and `brand/BLOG-VOICE.md`
 
 - Repeat every originality and copyright check from pass 1. A second look
   catches what the first one missed.
-- Is every claim practical and true for a typical local service business? Cut
+- Is every claim practical and true for a typical small business doing its own
+  marketing? Is every statement about what AI can do something you would stand
+  behind, with no claims about specific products, launches or versions? Cut
   anything you can't stand behind.
 - Does it sound like David Selva talking to one owner, in first person? Rewrite
   anything generic or machine-made: filler openers, "in today's world",

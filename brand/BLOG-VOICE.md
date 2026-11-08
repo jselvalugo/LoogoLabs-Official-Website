@@ -8,17 +8,22 @@
 
 ## The Blog: Industry LoogoBlog
 
-**Purpose:** Position Loogo Labs as the practitioner's guide to running a local
-service business better. Not a tech blog. Not a think piece factory. A reference
-point for owners making real operational decisions this quarter.
+**Purpose:** Position Loogo Labs as the practitioner's guide to using AI in
+marketing: finding customers, winning them, and keeping them. Not an AI news
+site. Not a think piece factory. A reference point for owners and marketers
+deciding what to plan, build, automate and stop doing this quarter.
+
+**Focus:** every post sits where AI and marketing meet. A post about pure
+operations (scheduling, billing, job prep) with no marketing angle belongs
+somewhere else. So does a post about AI with no marketing job attached.
 
 ---
 
 ## The Reader
 
-Our reader runs a local service business — an HVAC shop, a dental practice, a salon, a landscaping crew. They are not academic about software. They do not have time for wonder. They are asking one question every time they open a post:
+Our reader is the person responsible for marketing at a small business, either the owner or the one person who does it all: a med spa owner, an HVAC owner, a solo marketer at a SaaS startup, a freelancer running ads for four clients, a craft brand selling online. They already use an AI tool for something, they are not sure it is helping, and they do not have time for wonder. They are asking one question every time they open a post:
 
-> "What does this mean for how I actually work?"
+> "What should I change in my marketing this week, and where does AI actually help?"
 
 Write for that person. They are sharp, skeptical, and busy. They will close the tab in 8 seconds if you waste their time.
 
@@ -42,9 +47,9 @@ First person is also what keeps us honest about sourcing. If a claim cannot be t
 
 ## The Loogo Labs Perspective
 
-We are not journalists. We are not researchers. We are builders who have seen the inside of enough broken operations to know what AI actually helps with — and what it doesn't.
+We are not journalists. We are not researchers. We are marketers who plan campaigns and then build the systems that run them, and we have seen enough AI-written ads, emails and content calendars to know what AI actually helps with — and what it doesn't.
 
-**Our point of view:** AI earns its place at the table by making decisions faster, cleaner, and more defensible. It does not earn its place by being impressive.
+**Our point of view:** AI earns its place in marketing by getting a clear offer in front of the right person faster, and by freeing time for the parts that need judgment. It does not earn its place by producing more content. More generic posts, ads and emails is the problem, not the fix.
 
 This perspective shapes every sentence we write.
 
@@ -55,28 +60,28 @@ This perspective shapes every sentence we write.
 ### 1. Problem-first, always
 Never open with the technology. Open with the problem the reader already knows they have.
 
-> **Wrong:** "Large language models are transforming how businesses process information."
-> **Right:** "Most analysts spend 60% of their week turning raw data into a format someone else can read. That's not analysis — that's formatting."
+> **Wrong:** "Large language models are transforming how businesses do marketing."
+> **Right:** "You asked the AI for thirty captions, got thirty captions, and posted none of them, because none sounded like you."
 
 ### 2. Confident, not loud
 We do not need exclamation marks, superlatives, or trend language to land a point. Confidence is quiet.
 
-> **Wrong:** "AI is revolutionizing the way companies operate!"
-> **Right:** "Operators who have deployed AI in their reporting workflows have cut cycle time by half. The others are watching."
+> **Wrong:** "AI is revolutionizing marketing!"
+> **Right:** "AI writes a decent first draft of an ad. It does not know which of your customers is worth paying for."
 
 ### 3. Specific beats vague — every time
 Vague claims are dismissed. Specific claims are believed and shared.
 
-> **Wrong:** "AI can significantly improve your data workflows."
-> **Right:** "A three-person ops team running a weekly reporting cycle can cut prep time from 12 hours to under 90 minutes."
+> **Wrong:** "AI can significantly improve your ad performance."
+> **Right:** "Give the tool your best-performing ad and the page it points to, ask for five headlines that make the same promise, and test two of them against the winner."
 
 ### 4. Respect the reader's intelligence
-We do not explain what a spreadsheet is. We do not define "workflow." We write to an operator, not to a first-year intern.
+We do not explain what a spreadsheet is. We do not define "landing page" or "CTA." We write to someone who already does the work, not to a first-year intern.
 
 ### 5. Show the seam
 Be explicit about where AI helps and where it doesn't. Credibility comes from honesty about limits.
 
-> "This works well for structured data with repeatable patterns. It breaks down when the inputs are inconsistent — which is most real-world data. That's why the workflow matters more than the model."
+> "This works well for rewriting an ad you already know converts. It breaks down when you ask it to invent the offer, which is the part that decides whether the ad works. That's why the brief matters more than the model."
 
 ---
 
@@ -143,22 +148,54 @@ faster than a human writer would.
 
 ## Topic Territories
 
-These are the areas where Loogo Labs has earned the right to speak:
+Every post lives in one of these. Each pairs a marketing job with what AI
+can and cannot do for it.
 
-### Operations & Reporting
-How AI changes the mechanics of producing, formatting, and distributing internal reports. Cycle times, analyst workflows, decision support.
+### AI in the Content Workflow
+Planning, writing, filming and repurposing content with AI help, without it
+sounding like everyone else's. Briefs, brand voice, editing passes, batch days,
+short-form video and hooks.
 
-### Industry-Specific Deployment
-AI in verticals that enterprise software ignored: independent property management, food and beverage distribution, specialty retail. What works there vs. what doesn't.
+### AI for Paid Ads
+Using AI on ad copy, creative variations, audience ideas, search terms and
+budget reviews, and knowing where the ad platform's own automation needs a
+human hand on it.
 
-### AI Evaluation Frameworks
-How operators should assess an AI tool before committing. Not benchmark scores — process questions. What does it touch? What does it decide? Who checks its work?
+### Found in AI Answers
+How customers now ask AI assistants for recommendations, and what a business
+can do about it: clear service pages, consistent business details, reviews,
+plain answers to the questions people actually ask.
 
-### Data Quality & Readiness
-The problem before the AI problem. Most AI deployments fail not because the model is bad but because the data is inconsistent. Write about that.
+### Follow-Up, Email & SMS
+AI drafting and personalization in follow-up, nurture and win-back messages;
+speed to lead; where an AI reply helps and where it costs the sale.
 
-### Automation Tradeoffs
-When automation creates more overhead than it saves. The hidden cost of handoffs between AI and human steps. How to spot this before you've built it.
+### AI Agents & Assistants for Marketing
+Chat and voice assistants on websites and phones, AI that qualifies leads,
+books calls and answers questions; handoff rules, what to let it decide and
+what to keep human.
+
+### Positioning, Offers & Messaging
+The thinking AI cannot do for you: who you are for, what you promise, why
+someone should believe it. Using AI as a sparring partner for this work,
+not as the author.
+
+### Measurement & Tracking
+Knowing which marketing worked: tracking setup, lead source, conversion
+signals sent back to ad platforms, simple reports, and using AI to read
+the numbers without letting it invent the story.
+
+### Evaluating AI Marketing Tools
+How to judge a tool before paying for it. Not feature lists — process
+questions. What does it touch? What does it publish without asking? Who
+checks its work? What does it cost when it's wrong?
+
+### Marketing Myths
+Advice that sounds smart and costs money, especially the newer myths about
+what AI will do for a business on its own.
+
+Industries still matter as context. A post can be written for a med spa or a
+roofer, but the topic is the marketing job, not the trade.
 
 ---
 
@@ -167,7 +204,9 @@ When automation creates more overhead than it saves. The hidden cost of handoffs
 - **General AI news** — We are not a news blog. We do not recap what OpenAI or Google announced.
 - **Model comparisons** — We are model-agnostic. We build on what works. We do not have a brand allegiance.
 - **"Is AI dangerous?" discourse** — This is not our lane.
-- **Productivity hacks** — "Use ChatGPT to write your emails faster" is not Signal content.
+- **Productivity hacks** — "Use AI to write your emails faster" is not Industry LoogoBlog content. How to make AI-drafted emails worth replying to is.
+- **Tool tutorials and prompt lists** — A post is about a marketing decision, not a click path that changes next month or a list of prompts.
+- **Ops with no marketing angle** — Scheduling, billing, job prep and field logistics are out unless the post is about winning or keeping customers.
 - **Thought leadership fluff** — Opinions need to be grounded in operational reality, not vibes.
 
 ---
@@ -176,7 +215,7 @@ When automation creates more overhead than it saves. The hidden cost of handoffs
 
 - **Publication name:** Industry LoogoBlog
 - **Author byline:** David Selva (always — see The Byline above)
-- **Tags:** 2–4 per post, title case, specific (e.g., "Reporting Automation", "Property Management", "Data Quality")
+- **Tags:** 2–4 per post, title case, specific. The first tag names the territory (e.g., "AI Content Workflow", "Paid Ads", "AI Search Visibility", "Lead Follow-Up"); a vertical tag such as "Med Spas" is optional.
 - **Read time:** Honest. If it takes 7 minutes, say 7.
 - **Excerpts:** One sentence. The sharpest sentence from the first two paragraphs.
 
@@ -198,10 +237,10 @@ Posts that pass all three go live. Posts that don't go back for a rewrite.
 
 These are examples of the right register — not templates to reuse:
 
-> "Most AI deployments in operations fail in the same place: the first handoff from the model back to a human."
+> "Most AI-written ads fail in the same place: the offer. The words are fine. Nobody told the tool what the customer gets."
 
-> "There are two kinds of reporting workflows. Ones that AI can improve by Wednesday, and ones that require six months of data cleanup first. Knowing which you have before you start is the job."
+> "There are two kinds of content calendars. Ones AI can fill by Friday, and ones that need a month of figuring out what you stand for first. Knowing which you have before you start is the job."
 
-> "The question isn't whether to use AI in your operations. That decision was made when your competitors made it. The question is whether your data is in good enough shape to get anything out of it."
+> "The question isn't whether customers will ask an AI assistant who to hire. Some already do. The question is whether your website gives that assistant anything clear to repeat."
 
-> "Automation that requires more oversight than the process it replaced isn't automation. It's a new kind of manual."
+> "An AI follow-up that needs more checking than the email it replaced isn't automation. It's a new kind of manual."
