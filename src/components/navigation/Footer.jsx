@@ -16,6 +16,7 @@ const LABELS_ES = {
   'Central Florida': 'Centro de Florida',
   'Quizzes': 'Cuestionarios',
   'Packaged Services': 'Paquetes de servicios',
+  'Free Tools': 'Herramientas gratis',
   'Privacy Policy': 'Política de privacidad',
   'Terms of Service': 'Términos del servicio',
   'Cookie Preferences': 'Preferencias de cookies',
@@ -29,6 +30,7 @@ const pageMap = {
   'Central Florida': 'GrowCFL',
   'Quizzes': 'Quizzes',
   'Packaged Services': 'Packages',
+  'Free Tools': 'Tools',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
 };

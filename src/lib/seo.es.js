@@ -8,6 +8,7 @@ import { NICHE_QUIZZES_ES } from './nicheQuizzes.es.js';
 import { SERVICE_PACKAGES_ES } from './servicePackages.es.js';
 import { CITY_BY_SLUG, citySlugFromPage } from './cfl.js';
 import { voiceCitySlugFromPage } from './voiceCities.js';
+import { TOOL_BY_PAGE } from './tools.js';
 
 const BRAND = 'Loogo Labs';
 const firstSentence = (s = '') => `${String(s).split('. ')[0].replace(/\.$/, '')}.`;
@@ -48,6 +49,10 @@ const STATIC = {
   Quizzes: {
     title: `Evaluaciones gratis para tu negocio | ${BRAND}`,
     description: `Evaluaciones rápidas y gratuitas que te dicen si un sistema de ${BRAND} es adecuado para tu negocio, sin necesidad de una llamada.`,
+  },
+  Tools: {
+    title: `Herramientas de marketing gratis para negocios locales | ${BRAND}`,
+    description: 'Herramientas gratis para dueños de negocio: generador de enlace y QR para reseñas de Google, calculadora de llamadas perdidas y generador de enlaces UTM. Sin registro.',
   },
   Packages: {
     title: `Paquetes de crecimiento y arranques rápidos | ${BRAND}`,
@@ -97,6 +102,9 @@ export function metaEs(page) {
       description: `Un agente de voz con IA 24/7 que contesta, califica y agenda llamadas para negocios de ${name}, en inglés y español.${intro ? ` ${firstSentence(intro)}` : ''}`,
     };
   }
+
+  const tool = TOOL_BY_PAGE.get(page);
+  if (tool) return { title: `${tool.es.title}: gratis, sin registro | ${BRAND}`, description: tool.es.description };
 
   const quiz = NICHE_QUIZZES_ES[page];
   if (quiz) return { title: `${quiz.label}: evaluación gratis de 60 segundos | ${BRAND}`, description: quiz.description };

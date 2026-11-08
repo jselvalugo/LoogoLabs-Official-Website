@@ -52,6 +52,12 @@ const Consulting = React.lazy(() => import('./pages/Consulting'));
 const GamePlan = React.lazy(() => import('./pages/GamePlan'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
+const ToolsHub = React.lazy(() => import('./pages/tools/ToolsHub'));
+const TOOL_PAGES = {
+  ToolReviewLink: React.lazy(() => import('./pages/tools/ReviewLinkTool')),
+  ToolMissedCall: React.lazy(() => import('./pages/tools/MissedCallTool')),
+  ToolUtm: React.lazy(() => import('./pages/tools/UtmTool')),
+};
 
 function getInitialState(initialPath) {
   // The build pre-renders each page on the server, where there is no window;
@@ -162,6 +168,8 @@ function App({ initialPath }) {
   else if (page === 'AIVoice') body = <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
   else if (page === 'Company') body = <Company onNavigate={navigate} />;
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
+  else if (page === 'Tools') body = <React.Suspense fallback={null}><ToolsHub /></React.Suspense>;
+  else if (TOOL_PAGES[page]) { const Tool = TOOL_PAGES[page]; body = <React.Suspense fallback={null}><Tool /></React.Suspense>; }
   else if (page === 'Packages') body = <Packages onNavigate={navigate} />;
   else if (page === 'PressRelease') body = <PressRelease />;
   else if (page === 'BrandPartners') body = <BrandPartners />;
@@ -196,7 +204,7 @@ function App({ initialPath }) {
       <Footer
         columns={[
           { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Industry LoogoBlog', 'Book a Call'] },
-          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services'] },
+          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services', 'Free Tools'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
