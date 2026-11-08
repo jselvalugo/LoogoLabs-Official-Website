@@ -8,6 +8,7 @@ import {
 } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
+import '../styles/components/newsletter.css';
 import { CATEGORIES, SKILLS, isPreviewHost, skillDownloadHref } from '../lib/marketplace';
 
 const ICONS = {
@@ -32,6 +33,38 @@ function startDownload(slug) {
   const a = document.createElement('a');
   a.href = skillDownloadHref(slug); a.download = `${slug}.zip`;
   document.body.appendChild(a); a.click(); a.remove();
+}
+
+// After a free unlock: one click to also join the monthly Letter with the email
+// already given. Opt-in only; the unlock itself does not add anyone to the Letter.
+const LETTER_KEY = 'll_letter_joined';
+function LetterOptIn() {
+  const [state, setState] = React.useState('idle');
+  React.useEffect(() => {
+    try { if (window.localStorage.getItem(LETTER_KEY) === '1') setState('done'); } catch { /* storage blocked */ }
+  }, []);
+  const email = rememberedEmail();
+  if (!email) return null;
+  async function join() {
+    setState('sending');
+    try {
+      const res = await fetch('/.netlify/functions/email-subscribe', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, tag: 'newsletter' }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      try { window.localStorage.setItem(LETTER_KEY, '1'); } catch { /* storage blocked */ }
+      setState('done');
+    } catch { setState('error'); }
+  }
+  if (state === 'done') return <p className="mk-letter"><Check size={14} weight="bold" aria-hidden="true" />You’re on the monthly Loogo Labs Letter.</p>;
+  return (
+    <p className="mk-letter">
+      Want one email a month on what’s working in marketing?
+      <button type="button" onClick={join} disabled={state === 'sending'}>{state === 'sending' ? 'Adding…' : 'Send me the Letter'}</button>
+      {state === 'error' ? <span role="alert">That didn’t go through. Try again.</span> : null}
+    </p>
+  );
 }
 
 // Email form shared by lead magnets ("unlock") and coming-soon skills ("waitlist").
@@ -77,6 +110,7 @@ function EmailForm({ skill, mode }) {
         <a className="ll-btn ll-btn--primary ll-btn--md" href={skillDownloadHref(skill.slug)} download>
           Download skill (.zip)<span aria-hidden="true" className="ll-btn__arrow"><DownloadSimple size={15} weight="bold" /></span>
         </a>
+        <LetterOptIn />
       </div>
     );
   }

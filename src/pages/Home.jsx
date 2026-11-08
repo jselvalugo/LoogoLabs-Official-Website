@@ -7,6 +7,7 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
+import NewsletterSignup from '../components/funnel/NewsletterSignup';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
@@ -395,6 +396,8 @@ function Home({ onNavigate }) {
           </Stagger>
         </div>
       </Wrap>
+
+      <NewsletterSignup variant="band" source="home" />
 
       <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
         <AmbientShape index={3} className="hm-cta__shape" />

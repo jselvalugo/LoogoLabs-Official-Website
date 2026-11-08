@@ -1,0 +1,61 @@
+/* The Loogo Labs Letter sign-up (components/funnel/NewsletterSignup.jsx). */
+.nl { font-family: var(--font-body); }
+.nl__kicker { margin: 0; font-family: var(--font-label); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-500); }
+.nl__title { margin: 12px 0 0; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); color: var(--ink-900); }
+.nl__title em { font-style: normal; color: var(--ink-500); }
+.nl__lede { margin: 16px 0 0; max-width: 34em; font-size: 17px; line-height: 1.55; color: var(--ink-500); }
+.nl__form { display: flex; flex-wrap: wrap; gap: 8px; }
+.nl__input {
+  flex: 1 1 200px; min-width: 0; font: 400 16px/1.4 var(--font-body); color: var(--ink-900);
+  background: var(--paper-000); padding: 12px 14px; border-radius: var(--radius-2); border: 1px solid var(--border-hair);
+}
+.nl__input--name { flex: 1 1 140px; }
+.nl__input:focus-visible, .nl__btn:focus-visible { outline: 2px solid var(--amber-500); outline-offset: 2px; }
+.nl__btn {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  background: var(--ink-900); color: var(--paper-000); border: 1px solid var(--ink-900);
+  border-radius: var(--radius-2); padding: 12px 20px; font: 500 16px var(--font-body);
+}
+.nl__btn:hover { background: var(--ink-700); }
+.nl__btn:disabled { opacity: 0.7; cursor: wait; }
+.nl__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.nl__fine { margin: 10px 0 0; font-size: 13px; color: var(--ink-400); }
+.nl__err { margin: 10px 0 0; font-size: 14px; color: #A3402B; }
+.nl__done { display: inline-flex; align-items: center; gap: 8px; margin: 0; font: 500 16px/1.4 var(--font-body); color: var(--ink-900); }
+
+/* Band: two columns on desktop, stacked on phones. */
+.nl--band {
+  max-width: var(--container-max); margin: 0 auto; padding: 96px 24px;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center;
+}
+@media (max-width: 860px) { .nl--band { grid-template-columns: 1fr; gap: 28px; padding: 64px 20px; } }
+
+/* Footer: compact row on the dark footer. */
+.nl--footer {
+  display: grid; grid-template-columns: 1fr minmax(0, 1.2fr); gap: 24px 40px; align-items: center;
+  padding-bottom: 40px; margin-bottom: 40px; border-bottom: 1px solid var(--border-hair-inverse);
+}
+.nl--footer .nl__kicker { color: var(--tan-300); }
+.nl--footer .nl__lede { margin-top: 8px; font-size: 16px; color: var(--ink-200); }
+.nl--footer .nl__input { background: transparent; color: var(--paper-000); border-color: var(--border-hair-inverse); }
+.nl--footer .nl__input::placeholder { color: var(--ink-300); }
+.nl--footer .nl__btn { background: var(--paper-000); color: var(--ink-900); border-color: var(--paper-000); }
+.nl--footer .nl__btn:hover { background: var(--tan-300); border-color: var(--tan-300); }
+.nl--footer .nl__fine { color: var(--ink-300); }
+.nl--footer .nl__err { color: #F0B7A6; }
+.nl--footer .nl__done { color: var(--paper-000); }
+@media (max-width: 760px) { .nl--footer { grid-template-columns: 1fr; padding-bottom: 28px; margin-bottom: 28px; } }
+
+/* /newsletter page */
+.nl-page { padding-top: 24px; }
+.nl-page .nl--band { padding-top: 72px; }
+.nl-page__list { max-width: var(--container-max); margin: 0 auto; padding: 0 24px 96px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; list-style: none; }
+.nl-page__list li { border-top: 1px solid var(--border-hair); padding-top: 20px; }
+.nl-page__list strong { display: block; font: 500 20px/1.3 var(--font-display); color: var(--ink-900); }
+.nl-page__list span { display: block; margin-top: 8px; font-size: 16px; line-height: 1.55; color: var(--ink-500); }
+@media (max-width: 760px) { .nl-page__list { grid-template-columns: 1fr; padding-bottom: 64px; } }
+
+/* Marketplace: one-click add after a free unlock. */
+.mk-letter { margin: 12px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 14px; color: var(--ink-500); }
+.mk-letter button { font: 500 14px var(--font-body); color: var(--ink-900); background: none; border: 1px solid var(--border-hair); border-radius: var(--radius-2); padding: 6px 12px; cursor: pointer; }
+.mk-letter button:hover { border-color: var(--ink-900); }

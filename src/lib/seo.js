@@ -225,6 +225,17 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // The Loogo Labs Letter: monthly newsletter sign-up. Linked from social
+    // bios, the email signature and outreach emails.
+    page: 'Newsletter',
+    path: '/newsletter',
+    title: `The Loogo Labs Letter: Monthly Marketing Newsletter | ${SITE.name}`,
+    description:
+      'One email a month for small-business owners: what is working in marketing right now, an AI tool that saves hours, and one thing to fix this week. Free.',
+    priority: '0.5',
+    changefreq: 'monthly',
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,
