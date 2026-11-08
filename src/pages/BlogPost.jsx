@@ -6,8 +6,11 @@ import { EVENT_THEME, isEventPost } from '../lib/featuredEvent';
 import { partnerForPost, partnerHref } from '../lib/partners';
 import PartnerRail from '../components/blog/PartnerRail';
 import { useHref, useLang } from '../lib/i18n';
+import { BLOG_CATEGORY_BY_SLUG, categoryOf, categoryPageKey, categoryPath, relatedPosts } from '../lib/blogCategories';
+import { TOOL_BY_PAGE, toolPath } from '../lib/tools';
+import { loadPosts } from '../lib/postsCache';
 import { hasConsent } from '../lib/cookieConsent';
-import { ArrowLeft, ArrowRight, Star } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, Star, Wrench, X } from '@phosphor-icons/react';
 import '../styles/pages/blog.css';
 
 export default function BlogPost({ slug, onNavigate }) {
@@ -16,6 +19,8 @@ export default function BlogPost({ slug, onNavigate }) {
   const [post, setPost] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [notFound, setNotFound] = React.useState(false);
+  const [allPosts, setAllPosts] = React.useState([]);
+  React.useEffect(() => { loadPosts().then(setAllPosts); }, []);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +97,15 @@ export default function BlogPost({ slug, onNavigate }) {
 
   const event = isEventPost(post);
   const partner = event ? null : partnerForPost(post);
+  const cat = BLOG_CATEGORY_BY_SLUG.get(categoryOf(post));
+  const catLabel = es ? cat.nameEs : cat.name;
+  const goCategory = e => { e.preventDefault(); onNavigate(categoryPageKey(cat.slug)); };
+  const related = relatedPosts(post, allPosts, 3);
+  const tool = cat.tool ? TOOL_BY_PAGE.get(cat.tool) : null;
+  const headings = headingsOf(post.content);
+  // The reading rail (table of contents + related) sits beside ordinary posts on
+  // wide screens; partner and event posts already use that column.
+  const rail = !event && !partner && (headings.length > 1 || related.length > 0);
 
   const cta = (
     <div className="lb-cta ll-forest">
@@ -123,7 +137,7 @@ export default function BlogPost({ slug, onNavigate }) {
       <div className="lb-wrap">
 
       {post.featured && !event ? (
-        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} partner={partner} />
+        <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} partner={partner} cat={cat} />
       ) : (
       /* ── HERO HEADER ── */
       <header className="lb-hero ll-forest">
@@ -132,6 +146,7 @@ export default function BlogPost({ slug, onNavigate }) {
           <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
+          <a href={toHref(categoryPath(cat.slug))} onClick={goCategory} className="lb-catchip">{catLabel}</a>
         </nav>
 
         <div className="lb-hero__body">
@@ -154,7 +169,7 @@ export default function BlogPost({ slug, onNavigate }) {
       )}
 
       {/* ── BODY ── */}
-      <div className={partner ? 'll-post-layout lb-post lb-post--partner' : 'll-post-layout lb-post'}>
+      <div className={partner ? 'll-post-layout lb-post lb-post--partner' : rail ? 'll-post-layout lb-post lb-post--rail' : 'll-post-layout lb-post'}>
           {partner && <PartnerRail partner={partner} slug={post.slug} es={es} />}
 
           {/* Article content */}
@@ -170,10 +185,21 @@ export default function BlogPost({ slug, onNavigate }) {
               {renderMarkdown(post.content, { dropCap: !!post.featured })}
             </div>
 
-            {tags.length > 0 && (
-              <div className="lb-tags lb-post__tags">
-                {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
-              </div>
+            <div className="lb-tags lb-post__tags">
+              <a href={toHref(categoryPath(cat.slug))} onClick={goCategory} className="lb-catchip lb-catchip--light">{es ? `Más en ${catLabel}` : `More in ${catLabel}`} <ArrowRight size={12} weight="bold" aria-hidden="true" /></a>
+              {tags.map(tag => <span key={tag} className="lb-tag">{tag}</span>)}
+            </div>
+
+            {tool && (
+              <a href={toHref(toolPath(tool))} onClick={e => { e.preventDefault(); onNavigate(tool.page); }} className="lb-toolcall ll-glass">
+                <span className="lb-toolcall__icon" aria-hidden="true"><Wrench size={18} /></span>
+                <span>
+                  <span className="lb-toolcall__k">{es ? 'Herramienta gratis' : 'Free tool'}</span>
+                  <span className="lb-toolcall__t">{es ? tool.es.title : tool.title}</span>
+                  <span className="lb-toolcall__d">{es ? tool.es.blurb : tool.blurb}</span>
+                </span>
+                <ArrowRight size={16} weight="bold" aria-hidden="true" />
+              </a>
             )}
 
             {partner && <PartnerRail partner={partner} slug={post.slug} es={es} variant="inline" />}
@@ -198,6 +224,21 @@ export default function BlogPost({ slug, onNavigate }) {
             {/* CTA box: event posts float it in a side rail instead */}
             {!event && cta}
 
+            {related.length > 0 && (
+              <section className="lb-more" aria-labelledby="lb-more-t">
+                <h2 className="lb-more__title" id="lb-more-t">{es ? 'Sigue leyendo' : 'Keep reading'}</h2>
+                <div className="lb-more__grid">
+                  {related.map(r => (
+                    <a key={r.slug} href={`${BLOG_BASE_PATH}/${r.slug}`} onClick={e => { e.preventDefault(); onNavigate('BlogPost', r.slug); }} className="lb-more__card ll-glass">
+                      <span className="ln-card-cat">{es ? BLOG_CATEGORY_BY_SLUG.get(categoryOf(r)).nameEs : BLOG_CATEGORY_BY_SLUG.get(categoryOf(r)).name}</span>
+                      <span className="lb-more__t">{r.title}</span>
+                      <span className="lb-more__m">{r.read_time} {es ? 'min de lectura' : 'min read'} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
+
             {/* Back link */}
             <div className="lb-post__back">
               <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--pill">
@@ -206,7 +247,9 @@ export default function BlogPost({ slug, onNavigate }) {
             </div>
           </article>
           {event && <aside className="lb-event-rail" aria-label={es ? 'Boletos del evento' : 'Event tickets'}>{cta}</aside>}
+          {rail && <ReadingRail headings={headings} related={related} cat={cat} onNavigate={onNavigate} es={es} />}
       </div>
+      {!event && related[0] && <NextBar post={related[0]} onNavigate={onNavigate} es={es} />}
       </div>
     </div>
   );
@@ -215,7 +258,7 @@ export default function BlogPost({ slug, onNavigate }) {
 // Header for the featured post: a full editorial opener on a floating forest
 // panel (featured kicker, display-size title, the excerpt as a standfirst and
 // a byline strip). A reading-progress bar rides the top of the viewport.
-function FeaturedHero({ post, tags, date, onNavigate, es, partner }) {
+function FeaturedHero({ post, tags, date, onNavigate, es, partner, cat }) {
   const toHref = useHref();
   const [progress, setProgress] = React.useState(0);
   React.useEffect(() => {
@@ -237,6 +280,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es, partner }) {
           <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
           </a>
+          <a href={toHref(categoryPath(cat.slug))} onClick={e => { e.preventDefault(); onNavigate(categoryPageKey(cat.slug)); }} className="lb-catchip">{es ? cat.nameEs : cat.name}</a>
           <span className="lb-tag lb-tag--accent"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Artículo destacado' : 'Featured post'}</span>
         </nav>
 
@@ -293,7 +337,7 @@ function renderMarkdown(text, { dropCap = false } = {}) {
   return blocks.map((block, i) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
-    if (trimmed.startsWith('## ')) return <h2 key={i}>{inlineRender(trimmed.slice(3))}</h2>;
+    if (trimmed.startsWith('## ')) return <h2 key={i} id={headingId(trimmed.slice(3))}>{inlineRender(trimmed.slice(3))}</h2>;
     if (trimmed.startsWith('### ')) return <h3 key={i}>{inlineRender(trimmed.slice(4))}</h3>;
     const img = trimmed.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
     if (img) return <figure key={i} className="lb-figure"><img src={img[2]} alt={img[1]} loading="lazy" /></figure>;
@@ -337,3 +381,85 @@ function inlineRender(text) {
 }
 
 const EVENT_URL = 'https://www.eventbrite.com/e/cards-and-cocktails-tcg-event-at-lugos-craft-distillery-tickets-1998693881202';
+
+const BLOG_BASE_PATH = '/news';
+
+// Section anchors for the table of contents: "## Why it matters" -> #why-it-matters.
+const headingId = (text) => text.replace(/[*`[\]()]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+function headingsOf(content = '') {
+  return content.split(/\n\n+/).map(b => b.trim()).filter(b => b.startsWith('## '))
+    .map(b => { const t = b.slice(3).split('\n')[0]; return { id: headingId(t), text: t.replace(/[*`]/g, '') }; });
+}
+
+// Desktop only: a sticky column beside the article with the post's sections
+// (current one highlighted) and what to read next.
+function ReadingRail({ headings, related, cat, onNavigate, es }) {
+  const toHref = useHref();
+  const [active, setActive] = React.useState(null);
+  React.useEffect(() => {
+    if (headings.length < 2 || typeof IntersectionObserver === 'undefined') return undefined;
+    const els = headings.map(h => document.getElementById(h.id)).filter(Boolean);
+    const io = new IntersectionObserver(entries => {
+      const vis = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (vis[0]) setActive(vis[0].target.id);
+    }, { rootMargin: '-80px 0px -65% 0px' });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, [headings]);
+  return (
+    <aside className="lb-rail" aria-label={es ? 'En esta página' : 'On this page'}>
+      {headings.length > 1 && (
+        <nav className="lb-rail__sec">
+          <p className="lb-rail__label">{es ? 'En esta página' : 'On this page'}</p>
+          <ol className="lb-rail__toc">
+            {headings.map(h => (
+              <li key={h.id}><a href={`#${h.id}`} aria-current={active === h.id ? 'true' : undefined}
+                onClick={e => { e.preventDefault(); document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>{h.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      {related.length > 0 && (
+        <div className="lb-rail__sec">
+          <p className="lb-rail__label">{es ? `Más en ${cat.nameEs}` : `More in ${cat.name}`}</p>
+          <ul className="lb-rail__list">
+            {related.map(r => (
+              <li key={r.slug}><a href={`${BLOG_BASE_PATH}/${r.slug}`} onClick={e => { e.preventDefault(); onNavigate('BlogPost', r.slug); }}>{r.title}</a></li>
+            ))}
+          </ul>
+          <a className="lb-rail__all" href={toHref(categoryPath(cat.slug))} onClick={e => { e.preventDefault(); onNavigate(categoryPageKey(cat.slug)); }}>
+            {es ? 'Ver la categoría' : 'See the category'} <ArrowRight size={12} weight="bold" aria-hidden="true" />
+          </a>
+        </div>
+      )}
+    </aside>
+  );
+}
+
+// Phones and tablets: a slim "Next" bar that slides up once the reader is
+// halfway through, so the next post is one tap away. Dismissible.
+function NextBar({ post, onNavigate, es }) {
+  const [show, setShow] = React.useState(false);
+  const [closed, setClosed] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const at = max > 0 ? window.scrollY / max : 0;
+      setShow(at > 0.45 && at < 0.97);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  if (closed) return null;
+  return (
+    <div className={`lb-next${show ? ' is-on' : ''}`} aria-hidden={!show}>
+      <a href={`${BLOG_BASE_PATH}/${post.slug}`} tabIndex={show ? 0 : -1} onClick={e => { e.preventDefault(); onNavigate('BlogPost', post.slug); }} className="lb-next__link">
+        <span className="lb-next__k">{es ? 'Siguiente' : 'Next'}</span>
+        <span className="lb-next__t">{post.title}</span>
+        <ArrowRight size={16} weight="bold" aria-hidden="true" />
+      </a>
+      <button type="button" className="lb-next__x" tabIndex={show ? 0 : -1} aria-label={es ? 'Cerrar' : 'Close'} onClick={() => setClosed(true)}><X size={14} weight="bold" aria-hidden="true" /></button>
+    </div>
+  );
+}

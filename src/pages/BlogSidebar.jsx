@@ -1,6 +1,7 @@
 import React from 'react';
 import { BLOG_BASE } from '../lib/seo';
 import { useLang } from '../lib/i18n';
+import { BLOG_CATEGORIES, categoryOf } from '../lib/blogCategories';
 import { ArrowRight, Sparkle, X } from '@phosphor-icons/react';
 
 // Tags/titles that mark a post as written for Central Florida small businesses.
@@ -52,7 +53,7 @@ function Section({ label, children }) {
   );
 }
 
-function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
+function SidebarBody({ posts, category, onCategory, onNavigate, onPick }) {
   const es = useLang() === 'es';
   const s = React.useMemo(() => buildSidebar(posts), [posts]);
   const views = p => (es ? `${(p.views || 0).toLocaleString('es-US')} vistas` : `${(p.views || 0).toLocaleString('en-US')} views`);
@@ -72,26 +73,23 @@ function SidebarBody({ posts, topic, onTopic, onNavigate, onPick }) {
       {s.quickReads.length > 0 && (
         <Section label={es ? 'Lecturas rápidas · 5 min o menos' : 'Quick reads · 5 min or less'}>{list(s.quickReads, p => `${p.read_time} min`)}</Section>
       )}
-      {s.topics.length > 0 && (
-        <Section label={es ? 'Explorar por tema' : 'Browse by topic'}>
-          <div className="ln-side__tags">
-            {s.topics.map(([t, n]) => (
-              <button
-                key={t}
-                type="button"
-                className="ln-side__tag"
-                aria-pressed={topic === t}
-                onClick={() => { onTopic(topic === t ? null : t); onPick?.(); }}
-              >
-                {t} <span>{n}</span>
+      <Section label={es ? 'Categorías' : 'Categories'}>
+        <div className="ln-side__tags">
+          {BLOG_CATEGORIES.map((c) => {
+            const n = posts.filter((p) => categoryOf(p) === c.slug).length;
+            if (!n) return null;
+            return (
+              <button key={c.slug} type="button" className="ln-side__tag" aria-pressed={category === c.slug}
+                onClick={() => { onCategory(category === c.slug ? null : c.slug); onPick?.(); }}>
+                {es ? c.nameEs : c.name} <span>{n}</span>
               </button>
-            ))}
-          </div>
-        </Section>
-      )}
+            );
+          })}
+        </div>
+      </Section>
       <Section label={es ? 'Explorar' : 'Explore'}>
         <ul className="ln-side__list">
-          {(es ? [['GrowCFL', 'Crece en el centro de Florida'], ['Quizzes', 'Quizzes de marketing gratis'], ['Packages', 'Servicios en paquete']] : [['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']]).map(([page, text]) => (
+          {(es ? [['Tools', 'Herramientas gratis'], ['GrowCFL', 'Crece en el centro de Florida'], ['Quizzes', 'Quizzes de marketing gratis'], ['Packages', 'Servicios en paquete']] : [['Tools', 'Free marketing tools'], ['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']]).map(([page, text]) => (
             <li key={page}>
               <button type="button" className="ln-side__link" onClick={() => { onPick?.(); onNavigate(page); }}>
                 <span className="ln-side__title ln-side__title--go">{text} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
