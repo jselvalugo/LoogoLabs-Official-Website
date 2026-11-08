@@ -22,7 +22,10 @@ import loogoLabsLetter from './loogo-labs-newsletter.js';
 // refuses to send an email that leaves them out. subject and preheader may use
 // {{first_name|fallback}}, {{name}} and {{email}}.
 //
-// ctx = { firstName, name, email, preheader (merged), unsubscribeUrl, postalAddress, esc }
+// Optional: reply_to (where replies go; the sending address may not be read).
+//
+// ctx = { firstName, name, email, preheader (merged), unsubscribeUrl, postalAddress,
+//         subscriberToken (for ?s= on loogolabs.com landing pages), esc }
 // Merge values in ctx are raw; wrap them in ctx.esc() inside HTML.
 export const TEMPLATES = [...loogoLabsLetter, cardsAndCocktails];
 

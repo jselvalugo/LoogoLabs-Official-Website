@@ -145,6 +145,14 @@ export async function publicSubscribe({ email, name, tag: t, source }) {
   return { ok: true };
 }
 
+// Who a link in a marketing email belongs to (the per-subscriber token the
+// email carries), so a landing page can skip asking for their email again.
+export async function subscriberByToken(t) {
+  if (typeof t !== 'string' || t.length < 20 || t.length > 100) return null;
+  const [row] = await q('SELECT email, name, status FROM crm_email_subscribers WHERE unsubscribe_token = $1', [t]);
+  return row || null;
+}
+
 export async function unsubscribe(unsubToken) {
   if (typeof unsubToken !== 'string' || unsubToken.length < 20) return null;
   const [row] = await q(`UPDATE crm_email_subscribers SET status = 'unsubscribed', unsubscribed_at = coalesce(unsubscribed_at, now()), updated_at = now()
@@ -560,6 +568,9 @@ function renderTemplate(id, sub) {
   const { html, text } = t.render({
     firstName: firstName(sub), name: sub.name || '', email: sub.email, preheader: merge(t.preheader, sub),
     unsubscribeUrl: unsub, postalAddress: address, esc,
+    // Identifies this reader on Loogo Labs landing pages (?s=...), so forms
+    // there need not ask for their email. Not an email address.
+    subscriberToken: sub.unsubscribe_token,
   });
   if (!html.includes(esc(unsub)) || !text.includes(unsub) || (address && !(html.includes(esc(address)) && text.includes(address)))) {
     throw new CrmError(`Template ${id} must include the unsubscribe link and postal address`);
@@ -567,6 +578,7 @@ function renderTemplate(id, sub) {
   return {
     subject: merge(t.subject, sub), html, text,
     ...(t.from_name && fromAddress() ? { from: withName(t.from_name) } : {}),
+    ...(t.reply_to ? { reply_to: t.reply_to } : {}),
     headers: { 'List-Unsubscribe': `<${unsub}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
   };
 }

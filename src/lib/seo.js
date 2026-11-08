@@ -213,6 +213,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // Free 90-day Marketing Game Plan: the Letter and ads link here. Unlisted
+    // like /consulting (no nav), but indexable.
+    page: 'GamePlan',
+    path: '/game-plan',
+    title: `Free 90-Day Marketing Game Plan for Small Businesses | ${SITE.name}`,
+    description:
+      'A free 90-day marketing game plan: five foundation questions, three 30-day phases and a weekly rhythm. Get it tailored to your business on a free strategy call.',
+    priority: '0.5',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     page: 'Quizzes',
     path: '/quizzes',
     title: `Free Fit-Check Quizzes | ${SITE.name}`,

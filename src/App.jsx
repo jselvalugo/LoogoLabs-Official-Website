@@ -15,6 +15,7 @@ import './styles/pages/landing.css';
 import './styles/pages/brand-design.css';
 import './styles/pages/consulting.css';
 import './styles/pages/marketplace.css';
+import './styles/pages/game-plan.css';
 import SkillsTopBar from './components/navigation/SkillsTopBar';
 // Loaded with the app, not lazily: a lazy chunk left the page empty for a beat
 // and the footer jumped to the top of the screen while it loaded.
@@ -47,6 +48,7 @@ const ReputationAutopilot = React.lazy(() => import('./pages/ReputationAutopilot
 const BrandingFunnel = React.lazy(() => import('./pages/BrandingFunnel'));
 const BrandDesign = React.lazy(() => import('./pages/BrandDesign'));
 const Consulting = React.lazy(() => import('./pages/Consulting'));
+const GamePlan = React.lazy(() => import('./pages/GamePlan'));
 const NicheQuiz = React.lazy(() => import('./pages/NicheQuiz'));
 const ParkSupply = React.lazy(() => import('./pages/ParkSupply'));
 
@@ -148,6 +150,7 @@ function App({ initialPath }) {
   if (page === 'BrandingFunnel') return <><CookieConsent /><React.Suspense fallback={null}><BrandingFunnel /></React.Suspense></>;
   if (page === 'BrandDesign') return <><CookieConsent /><React.Suspense fallback={null}><BrandDesign /></React.Suspense></>;
   if (page === 'Consulting') return <><CookieConsent /><React.Suspense fallback={null}><Consulting /></React.Suspense></>;
+  if (page === 'GamePlan') return <><CookieConsent /><React.Suspense fallback={null}><GamePlan /></React.Suspense></>;
   if (NICHE_BY_PAGE[page]) return <><CookieConsent /><React.Suspense fallback={null}><NicheQuiz key={page} page={page} /></React.Suspense></>;
   if (page === 'ParkSupply') return <><CookieConsent /><React.Suspense fallback={null}><ParkSupply /></React.Suspense></>;
 

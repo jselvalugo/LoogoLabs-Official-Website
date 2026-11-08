@@ -1,6 +1,6 @@
 import { getDatabase } from '@netlify/database';
 import { copyWebsiteLead } from '../lib/website-leads.js';
-import { publicSubscribe } from '../lib/crm-marketing.js';
+import { publicSubscribe, subscriberByToken } from '../lib/crm-marketing.js';
 import { sendMetaEvent } from '../lib/meta-capi.js';
 
 // Forms whose sign-ups also join the email marketing list, tagged with the
@@ -32,8 +32,18 @@ export default async (req, context) => {
   let body;
   try { body = await req.json(); } catch { return new Response(null, { status: 400 }); }
 
-  const full_name = (body.full_name || '').trim();
-  const email = (body.email || '').trim();
+  let full_name = (body.full_name || '').trim();
+  let email = (body.email || '').trim();
+  // A reader arriving from one of our emails (?s=<token>) is already known:
+  // take their email and name from the list instead of asking again.
+  let known = null;
+  if (!email && body.subscriber_token) {
+    known = await subscriberByToken(body.subscriber_token).catch(() => null);
+    if (known) {
+      email = known.email;
+      full_name = full_name || known.name || known.email.split('@')[0];
+    }
+  }
   if (!full_name || !EMAIL_RE.test(email)) {
     return new Response(JSON.stringify({ error: 'full_name and a valid email are required' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
   }
@@ -58,9 +68,11 @@ export default async (req, context) => {
     RETURNING *
   `;
   await copyWebsiteLead(lead);
-  if (NEWSLETTER_SOURCES.includes(lead.source)) {
+  // Newsletter: forms that always include it, or a visitor who ticked the box.
+  // Readers who came from one of our emails are already on the list.
+  if (!known && (NEWSLETTER_SOURCES.includes(lead.source) || body.newsletter === true)) {
     // Like the CRM copy, this must never fail the form.
-    await publicSubscribe({ email: lead.email, name: lead.full_name, tag: lead.source, source: lead.source })
+    await publicSubscribe({ email: lead.email, name: lead.full_name, tag: body.newsletter === true ? 'newsletter' : lead.source, source: lead.source })
       .catch((err) => console.error('Could not add the lead to the newsletter', err));
   }
 
