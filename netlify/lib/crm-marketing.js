@@ -26,16 +26,17 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const dailyLimit = () => Math.max(0, Number(process.env.EMAIL_DAILY_LIMIT) || 100);
 const fromAddress = () => process.env.RESEND_MARKETING_FROM || process.env.RESEND_FROM;
 
-// What still has to be set in Netlify before anything can go out.
-export function setupProblems() {
+// What still has to be set in Netlify before anything can go out. Blasts
+// (coded templates) carry their own postal address, so they only need Resend.
+export function setupProblems({ blast = false } = {}) {
   const missing = [];
   if (!process.env.RESEND_API_KEY) missing.push('RESEND_API_KEY');
   if (!fromAddress()) missing.push('RESEND_MARKETING_FROM (or RESEND_FROM)');
-  if (!process.env.EMAIL_POSTAL_ADDRESS) missing.push('EMAIL_POSTAL_ADDRESS');
+  if (!blast && !process.env.EMAIL_POSTAL_ADDRESS) missing.push('EMAIL_POSTAL_ADDRESS');
   return missing;
 }
-function needSetup() {
-  const missing = setupProblems();
+function needSetup({ blast = false } = {}) {
+  const missing = setupProblems({ blast });
   if (missing.length) throw new CrmError(`Email marketing is not set up yet: add ${missing.join(', ')} in Netlify`, 503);
 }
 
@@ -64,7 +65,7 @@ export async function overview(inst) {
   const [queued] = await q(`SELECT count(*)::int AS n FROM crm_email_sends WHERE instance_id = $1 AND status IN ('queued', 'sending')`, [inst]);
   const tags = await q(`SELECT t AS tag, count(*)::int AS n FROM crm_email_subscribers, unnest(tags) t
     WHERE instance_id = $1 AND status = 'subscribed' GROUP BY t ORDER BY t`, [inst]);
-  return { ...counts, sent_24h: sent.n, queued: queued.n, daily_limit: dailyLimit(), tags, setup: setupProblems() };
+  return { ...counts, sent_24h: sent.n, queued: queued.n, daily_limit: dailyLimit(), tags, setup: setupProblems(), setup_blast: setupProblems({ blast: true }) };
 }
 
 export async function listSubscribers(inst, { search, tag: t, status } = {}) {
@@ -289,10 +290,9 @@ export const templates = () => listTemplates();
 const blastTag = (name) => `blast-${(tag(name) || 'list').replace(/[^a-z0-9-]/g, '').slice(0, 40)}-${randomBytes(3).toString('hex')}`;
 
 async function saveBlast(inst, values, { userId } = {}) {
-  const name = str(values.name, 200);
-  if (!name) throw new CrmError('Give the blast a name');
   const t = getTemplate(values.template);
   if (!t) throw new CrmError('Pick an email template');
+  const name = str(values.name, 200) || t.name;
   if (!values.id) {
     const [row] = await q(`INSERT INTO crm_email_campaigns (instance_id, name, subject, preheader, body, audience_tag, body_format, signature, template, created_by)
       VALUES ($1, $2, $3, $4, '', $5, 'html', false, $6, $7) RETURNING *`, [inst, name, t.subject, t.preheader, blastTag(name), t.id, userId || null]);
@@ -354,8 +354,8 @@ export async function campaignAudience(inst, audienceTag) {
 
 // Queues the campaign for every matching subscriber; email-worker sends it.
 export async function sendCampaign(inst, id) {
-  needSetup();
   const c = await draftCampaign(inst, id);
+  needSetup({ blast: !!c.template });
   if (c.status !== 'draft') throw new CrmError('This campaign was already sent', 409);
   const [{ n }] = await q(`WITH queued AS (
       INSERT INTO crm_email_sends (instance_id, subscriber_id, campaign_id)
@@ -371,16 +371,17 @@ export async function sendCampaign(inst, id) {
 
 // Sends one copy straight away (counts toward the daily cap like any send).
 export async function testCampaign(inst, id, to, { step } = {}) {
-  needSetup();
   const address = emailAddress(to);
   let message;
-  if (step !== undefined) {
+  if (step === undefined) {
+    message = await draftCampaign(inst, id);
+    needSetup({ blast: !!message.template });
+  } else {
+    needSetup();
     needId(id);
     const [s] = await q('SELECT steps FROM crm_email_sequences WHERE id = $1 AND instance_id = $2', [id, inst]);
     message = cleanSteps(s?.steps || [])[Number(step)];
     if (!message) throw new CrmError('Save the automation first, then send a test');
-  } else {
-    message = await draftCampaign(inst, id);
   }
   // Greet the tester by the name on file (subscriber list, else CRM user), like a real send.
   const [known] = await q(`SELECT name FROM crm_email_subscribers WHERE instance_id = $1 AND email = $2 AND coalesce(name, '') <> ''
@@ -576,10 +577,13 @@ const PER_RUN = 50;
 // Called by the scheduled email-worker function. Moves due automation steps
 // into the outbox, then sends what the daily cap allows, oldest first.
 export async function runQueue() {
-  if (setupProblems().length) return { skipped: 'not set up' };
+  if (setupProblems({ blast: true }).length) return { skipped: 'not set up' };
+  // Without EMAIL_POSTAL_ADDRESS only blasts (which carry their own) may go out;
+  // written campaigns and automation emails wait in the queue until it is set.
+  const blastsOnly = setupProblems().length > 0;
 
   // Due sequence steps → outbox; then advance each enrollment.
-  const due = await q(`SELECT e.id, e.step, e.subscriber_id, s.id AS sequence_id, s.instance_id, s.steps
+  const due = blastsOnly ? [] : await q(`SELECT e.id, e.step, e.subscriber_id, s.id AS sequence_id, s.instance_id, s.steps
     FROM crm_email_enrollments e
     JOIN crm_email_sequences s ON s.id = e.sequence_id AND s.active
     JOIN crm_email_subscribers sub ON sub.id = e.subscriber_id AND sub.status = 'subscribed'
@@ -602,8 +606,10 @@ export async function runQueue() {
 
   // Claim a slice of the outbox so an overlapping run cannot send it twice.
   const claimed = await q(`UPDATE crm_email_sends SET status = 'sending' WHERE id IN (
-      SELECT id FROM crm_email_sends WHERE status = 'queued' ORDER BY created_at LIMIT $1 FOR UPDATE SKIP LOCKED)
-    RETURNING id`, [budget]);
+      SELECT x.id FROM crm_email_sends x WHERE x.status = 'queued'
+        AND (NOT $2::boolean OR EXISTS (SELECT 1 FROM crm_email_campaigns c WHERE c.id = x.campaign_id AND c.template IS NOT NULL))
+      ORDER BY x.created_at LIMIT $1 FOR UPDATE SKIP LOCKED)
+    RETURNING id`, [budget, blastsOnly]);
   if (!claimed.length) { await finishCampaigns(); return { queued_steps: due.length, sent: 0 }; }
 
   const rows = await q(`SELECT x.id, x.step, sub.email, sub.name, sub.status AS sub_status, sub.unsubscribe_token,
