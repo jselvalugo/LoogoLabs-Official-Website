@@ -560,3 +560,5 @@
 .lb-next__x { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; border: 0; background: rgba(255, 255, 255, 0.08); color: inherit; cursor: pointer; }
 @media (min-width: 1200px) { .lb-next { display: none; } }
 @media (prefers-reduced-motion: reduce) { .lb-next { transition: none; } }
+/* Wide screens have room for every category: wrap instead of scrolling. */
+@media (min-width: 1024px) { .ln-cats__track { flex-wrap: wrap; overflow: visible; } }
