@@ -15,7 +15,7 @@ const today = () => {
 const lifecycleLabel = (id) => PROJECT_LIFECYCLES.find((l) => l.id === id)?.label || id;
 const healthLabel = (id) => PROJECT_HEALTH.find((h) => h.id === id)?.label || id;
 const stageLabel = (p) => stageInfo(p.lifecycle, p.stage)?.label || p.stage;
-const reportDue = (p) => !stageInfo(p.lifecycle, p.stage)?.side && !p.closed_at && p.next_report_date && p.next_report_date <= today();
+export const reportDue = (p) => !stageInfo(p.lifecycle, p.stage)?.side && !p.closed_at && p.next_report_date && p.next_report_date <= today();
 
 export function HealthPill({ health }) {
   return <span className={`pill health ${health}`}><i aria-hidden="true" />{healthLabel(health)}</span>;
@@ -251,7 +251,7 @@ export function LifecycleTrack({ project, onMove, busy }) {
 
 const blankReport = () => ({ report_date: today(), health: 'on_track', summary: '', accomplishments: '', next_steps: '', blockers: '' });
 
-export function StatusReports({ project, initial, onChanged }) {
+export function StatusReports({ project, initial, onChanged, composeSignal = 0 }) {
   const [items, setItems] = React.useState(initial || []);
   const [form, setForm] = React.useState(blankReport);
   const [composing, setComposing] = React.useState(false);
@@ -266,6 +266,8 @@ export function StatusReports({ project, initial, onChanged }) {
     setForm({ ...blankReport(), health: project.health || 'on_track', accomplishments: last?.next_steps || '' });
     setComposing(true);
   }
+
+  React.useEffect(() => { if (composeSignal) start(); }, [composeSignal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function submit(e) {
     e.preventDefault();
