@@ -260,7 +260,7 @@ export function Campaigns({ version }) {
   const o = useOverview(tick + version);
   const [rows, setRows] = React.useState(null);
   const [open, setOpen] = React.useState(null);
-  React.useEffect(() => { data('email_campaigns').then(setRows).catch(() => setRows([])); }, [tick, version]);
+  React.useEffect(() => { data('email_campaigns', { kind: 'campaign' }).then(setRows).catch(() => setRows([])); }, [tick, version]);
 
   return (
     <>
@@ -502,6 +502,251 @@ function SequenceDrawer({ seq, o, onClose, onSaved, onDeleted }) {
           <button className="btn btn-primary" disabled={busy}>{seq ? 'Save automation' : 'Create automation'}</button>
           {seq && <button type="button" className="btn btn-danger" onClick={remove}>Delete</button>}
         </div>
+      </form>
+    </Drawer>
+  );
+}
+
+// ── Blasts (coded templates) ────────────────────────────────────────────────
+//
+// A blast is one email built in code (netlify/lib/email-templates/) sent to a
+// list uploaded for it. Nothing about the email is typed here: pick the
+// template, upload the data set, preview, test, send. New templates are added
+// by Loogo Labs.
+
+// Reads a CSV/TSV data set into [{ email, name }]. Finds the email column by
+// its header (or the first column holding an address), and the name from a
+// "name"/"full name" column or "first name" + "last name".
+export function parseDataset(raw) {
+  const text = String(raw || '').replace(/^﻿/, '');
+  const delim = (text.split(/\r?\n/)[0].match(/\t/g) || []).length > (text.split(/\r?\n/)[0].match(/,/g) || []).length ? '\t'
+    : (text.split(/\r?\n/)[0].match(/;/g) || []).length > (text.split(/\r?\n/)[0].match(/,/g) || []).length ? ';' : ',';
+  const rows = [];
+  let row = []; let cell = ''; let quoted = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    if (quoted) {
+      if (ch === '"' && text[i + 1] === '"') { cell += '"'; i += 1; } else if (ch === '"') quoted = false; else cell += ch;
+    } else if (ch === '"') quoted = true;
+    else if (ch === delim) { row.push(cell.trim()); cell = ''; }
+    else if (ch === '\n' || ch === '\r') {
+      if (ch === '\r' && text[i + 1] === '\n') i += 1;
+      row.push(cell.trim()); cell = '';
+      if (row.some(Boolean)) rows.push(row);
+      row = [];
+    } else cell += ch;
+  }
+  row.push(cell.trim());
+  if (row.some(Boolean)) rows.push(row);
+  if (!rows.length) return { people: [], columns: null };
+
+  const norm = (h) => h.toLowerCase().replace(/[^a-z]/g, '');
+  const head = rows[0].map(norm);
+  const hasHeader = !rows[0].some((c) => c.includes('@'));
+  const find = (...names) => head.findIndex((h) => names.includes(h));
+  let emailCol = hasHeader ? find('email', 'emailaddress', 'mail', 'correo', 'correoelectronico') : -1;
+  if (emailCol < 0) emailCol = (rows[hasHeader ? 1 : 0] || []).findIndex((c) => c.includes('@'));
+  const nameCol = hasHeader ? find('name', 'fullname', 'nombre', 'contact', 'contactname') : (emailCol === 0 ? 1 : -1);
+  const firstCol = hasHeader ? find('firstname', 'first', 'givenname', 'nombre') : -1;
+  const lastCol = hasHeader ? find('lastname', 'last', 'surname', 'familyname', 'apellido') : -1;
+  const people = rows.slice(hasHeader ? 1 : 0).map((r) => ({
+    email: (r[emailCol] || '').toLowerCase(),
+    name: (nameCol >= 0 ? r[nameCol] : [r[firstCol], r[lastCol]].filter(Boolean).join(' ')) || '',
+  })).filter((p) => p.email);
+  const label = (i) => (i >= 0 ? (hasHeader ? rows[0][i] : `column ${i + 1}`) : null);
+  return { people, columns: { email: label(emailCol), name: nameCol >= 0 ? label(nameCol) : [label(firstCol), label(lastCol)].filter(Boolean).join(' + ') || null } };
+}
+
+function useTemplates() {
+  const [t, setT] = React.useState(null);
+  React.useEffect(() => { data('email_templates').then(setT).catch(() => setT([])); }, []);
+  return t;
+}
+
+export function Blasts({ version }) {
+  const [tick, setTick] = React.useState(0);
+  const o = useOverview(tick + version);
+  const templates = useTemplates();
+  const [rows, setRows] = React.useState(null);
+  const [open, setOpen] = React.useState(null);
+  React.useEffect(() => { data('email_campaigns', { kind: 'blast' }).then(setRows).catch(() => setRows([])); }, [tick, version]);
+  const tName = (id) => templates?.find((t) => t.id === id)?.name || id;
+
+  return (
+    <>
+      <div className="head">
+        <h1>Email blasts</h1>
+        <button className="btn btn-primary" onClick={() => setOpen('new')}>New blast</button>
+      </div>
+      <p className="muted count">One designed email to an uploaded list. Pick a template built for you by Loogo Labs, upload who gets it, preview and send. Need a new template? Ask Loogo Labs.</p>
+      <SetupNotice o={o} />
+      <div className="card" style={{ overflowX: 'auto' }}>
+        {!rows ? <p className="muted" style={{ padding: 16 }}>Loading…</p> : rows.length === 0 ? <p className="muted" style={{ padding: 16 }}>No blasts yet.</p> : (
+          <table>
+            <thead><tr><th>Blast</th><th className="hide-sm">Template</th><th>Status</th><th className="num">Sent</th></tr></thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id} onClick={() => setOpen(r)}>
+                  <td><strong>{r.name}</strong><div className="muted" style={{ fontSize: 13 }}>{stamp(r.updated_at)}</div></td>
+                  <td className="hide-sm">{tName(r.template)}</td>
+                  <td><span className={`pill ${r.status === 'sent' ? 'won' : ''}`}>{CAMPAIGN_STATUS[r.status] || r.status}</span></td>
+                  <td className="num">{r.status === 'draft' ? '—' : `${count(r.sent)} / ${count(r.recipients)}`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+      {open && (
+        <BlastDrawer key={open === 'new' ? 'new' : open.id} blast={open === 'new' ? null : open} o={o} templates={templates || []}
+          onClose={() => setOpen(null)} onSaved={(row) => { setTick((t) => t + 1); setOpen(row); }} onChanged={() => setTick((t) => t + 1)}
+          onDeleted={() => { setTick((t) => t + 1); setOpen(null); }} />
+      )}
+    </>
+  );
+}
+
+const CHUNK = 500;
+
+function BlastDrawer({ blast, o, templates, onClose, onSaved, onChanged, onDeleted }) {
+  const [id, setId] = React.useState(blast?.id || null);
+  const [form, setForm] = React.useState(() => blast || { name: '', template: '' });
+  const [reach, setReach] = React.useState(null);
+  const [file, setFile] = React.useState(null); // { name, people, columns }
+  const [progress, setProgress] = React.useState('');
+  const [preview, setPreview] = React.useState(null);
+  const [error, setError] = React.useState('');
+  const [msg, setMsg] = React.useState('');
+  const [busy, setBusy] = React.useState(false);
+  const editable = !blast || blast.status === 'draft';
+  const template = form.template || templates[0]?.id || '';
+  const tpl = templates.find((t) => t.id === template);
+
+  React.useEffect(() => {
+    if (blast?.audience_tag && editable) data('campaign_audience', { audience_tag: blast.audience_tag }).then((r) => setReach(r.recipients)).catch(() => {});
+  }, [blast?.id]);
+  React.useEffect(() => {
+    if (!template) return;
+    setPreview(null);
+    data('email_preview', { values: { template, sample_name: file?.people.find((p) => p.name)?.name || 'Ana Ruiz' } })
+      .then((r) => setPreview(r)).catch((e) => setPreview({ html: `<p style="font-family:sans-serif;padding:16px">${String(e.message)}</p>` }));
+  }, [template, file]);
+
+  async function run(fn) {
+    setBusy(true); setError(''); setMsg('');
+    try { await fn(); } catch (err) { setError(err.message); }
+    setBusy(false); setProgress('');
+  }
+  const persist = async () => {
+    const row = await data('save_campaign', { values: { ...form, id, template } });
+    setId(row.id);
+    return row;
+  };
+  const save = (e) => { e.preventDefault(); run(async () => onSaved(await persist())); };
+
+  async function pick(e) {
+    const f = e.target.files?.[0];
+    setError('');
+    if (!f) { setFile(null); return; }
+    const parsed = parseDataset(await f.text());
+    if (!parsed.people.length) { setError('No email addresses found in that file. It needs a column with email addresses.'); setFile(null); return; }
+    setFile({ name: f.name, ...parsed });
+  }
+  const upload = () => run(async () => {
+    const row = await persist();
+    let added = 0; let skipped = 0; let last = null;
+    for (let i = 0; i < file.people.length; i += CHUNK) {
+      setProgress(`Uploading ${count(Math.min(i + CHUNK, file.people.length))} of ${count(file.people.length)}…`);
+      last = await data('blast_upload', { id: row.id, rows: file.people.slice(i, i + CHUNK) });
+      added += last.added; skipped += last.skipped_count;
+    }
+    setReach(last.recipients);
+    setFile(null);
+    setMsg(`Uploaded ${count(added)} address${added === 1 ? '' : 'es'}${skipped ? `, skipped ${count(skipped)} invalid` : ''}. ${count(last.recipients)} will get this blast (people who unsubscribed before are left out).`);
+    onChanged();
+  });
+  const clear = () => run(async () => {
+    if (!window.confirm('Remove everyone from this blast’s list? You can upload a new data set after.')) return;
+    await data('blast_clear', { id });
+    setReach(0);
+  });
+  const test = () => run(async () => {
+    const row = await persist();
+    await data('test_email', { id: row.id });
+    setMsg('Test sent to your email.');
+  });
+  const send = () => run(async () => {
+    if (!window.confirm(`Send "${tpl?.name}" to ${count(reach)} ${reach === 1 ? 'person' : 'people'}? This cannot be undone.`)) return;
+    const row = await persist();
+    onSaved(await data('send_campaign', { id: row.id }));
+  });
+  async function remove() {
+    if (!window.confirm(`Delete "${blast.name}"?`)) return;
+    await data('delete_campaign', { id: blast.id });
+    onDeleted();
+  }
+  const room = o ? Math.max(0, o.daily_limit - o.sent_24h - o.queued) : null;
+
+  return (
+    <Drawer title={blast ? blast.name : 'New blast'} kicker="Email blast" onClose={onClose}>
+      {blast && !editable && (
+        <p className="notice">
+          {blast.status === 'sent' ? 'Sent' : 'Sending'} to {count(blast.recipients)}{blast.sent_at ? ` · started ${stamp(blast.sent_at)}` : ''}.
+          {' '}{count(blast.sent)} delivered to Resend{blast.failed ? `, ${count(blast.failed)} failed` : ''}{blast.waiting ? `, ${count(blast.waiting)} waiting for the daily limit` : ''}.
+        </p>
+      )}
+      <form onSubmit={save}>
+        <fieldset disabled={!editable} style={{ border: 0, padding: 0, margin: 0 }}>
+          <label className="label" htmlFor="b-name">Internal name *</label>
+          <input id="b-name" className="field" required placeholder="Cards & Cocktails invite · Nov 14" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
+          <label className="label" htmlFor="b-tpl">Email template *</label>
+          <select id="b-tpl" className="field" value={template} onChange={(e) => setForm((p) => ({ ...p, template: e.target.value }))}>
+            {templates.length === 0 && <option value="">No templates yet: ask Loogo Labs</option>}
+            {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+          </select>
+          {tpl && (
+            <p className="muted" style={{ fontSize: 13 }}>
+              {tpl.description}<br />
+              <strong>From:</strong> {tpl.from_name} · <strong>Subject:</strong> {tpl.subject.replace(/\{\{\s*first_name\s*\|([^}]*)\}\}/g, '$1')}
+            </p>
+          )}
+
+          <div className="section">Who gets it</div>
+          {editable && (
+            <>
+              <p className="muted" style={{ fontSize: 13 }}>Upload a CSV (or tab-separated) file with an email column. A name, full name, or first and last name column is used for the greeting. Only upload people who agreed to get email from you.</p>
+              <input type="file" accept=".csv,.tsv,.txt" onChange={pick} aria-label="Data set file" />
+              {file && (
+                <p className="notice" style={{ marginTop: 10 }}>
+                  {file.name}: {count(file.people.length)} rows. Email from “{file.columns.email}”{file.columns.name ? `, name from “${file.columns.name}”` : ', no name column (greets them as “Trainer”)'}.
+                  <br /><button type="button" className="btn btn-small btn-primary" style={{ marginTop: 8 }} disabled={busy || !form.name} onClick={upload}>{form.name ? 'Upload to this blast' : 'Name the blast first'}</button>
+                </p>
+              )}
+            </>
+          )}
+          {reach !== null && (
+            <p className="muted" style={{ fontSize: 13 }}>
+              {count(reach)} {reach === 1 ? 'person' : 'people'} on this blast’s list.
+              {editable && room !== null && reach > room && ` About ${count(room)} can go out today; the rest follow over the next days at ${count(o.daily_limit)} a day.`}
+              {editable && id && reach > 0 && <> <button type="button" className="link" onClick={clear}>Clear list</button></>}
+            </p>
+          )}
+        </fieldset>
+
+        {progress && <p className="muted">{progress}</p>}
+        {error && <div className="error">{error}</div>}
+        {msg && <p className="notice">{msg}</p>}
+        <div className="actions">
+          {editable && <button className="btn" disabled={busy || !template}>Save draft</button>}
+          {editable && <button type="button" className="btn" disabled={busy || !template || !form.name} onClick={test}>Send me a test</button>}
+          {editable && <button type="button" className="btn btn-primary" disabled={busy || !reach || !template} onClick={send}>Send blast</button>}
+          {blast && blast.status !== 'sending' && <button type="button" className="btn btn-danger" onClick={remove}>Delete</button>}
+        </div>
+
+        <div className="section">Preview</div>
+        {preview?.subject && <p className="muted" style={{ fontSize: 13 }}><strong>Subject:</strong> {preview.subject}</p>}
+        <iframe title="Email preview" sandbox="" srcDoc={preview?.html || '<p style="font-family:sans-serif;color:#888;padding:16px">Loading preview…</p>'}
+          style={{ width: '100%', height: 640, border: '1px solid var(--line, #E3DDCD)', borderRadius: 12, background: '#fff' }} />
       </form>
     </Drawer>
   );
