@@ -289,7 +289,9 @@ async function allowedTemplates(inst) {
   const [i] = await q('SELECT slug FROM crm_instances WHERE id = $1', [inst]);
   const used = new Set((await q(`SELECT DISTINCT template FROM crm_email_campaigns
     WHERE instance_id = $1 AND template IS NOT NULL`, [inst])).map((r) => r.template));
-  return TEMPLATES.filter((t) => (t.instances || []).includes(i?.slug) || used.has(t.id));
+  const direct = (t) => (t.instances || []).includes(i?.slug) || used.has(t.id);
+  const seen = new Set(TEMPLATES.filter(direct).map((t) => t.id));
+  return TEMPLATES.filter((t) => seen.has(t.id) || (t.sameWorkspacesAs || []).some((id) => seen.has(id)));
 }
 async function templateFor(inst, id) {
   const t = (await allowedTemplates(inst)).find((x) => x.id === id);
