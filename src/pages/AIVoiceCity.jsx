@@ -40,7 +40,7 @@ const STEPS = [
 ];
 
 const voiceFaq = (c) => [
-  [`Do you set up AI voice agents for businesses in ${c.name}?`, `Yes. ${c.name} is part of our ${c.county} service area. We build, train, and manage the agent for you, including the questions ${c.name} callers ask most and the neighborhoods you serve.`],
+  ...c.faq,
   ['Can the agent speak Spanish?', 'Yes. The agent can answer and book in English or Spanish. We test both languages with real call scenarios before it goes live.'],
   ['Will callers know they are talking to AI?', 'We recommend the agent identifies itself as a virtual assistant at the start of the call. It still sounds natural, and callers appreciate the honesty.'],
   ['Do I keep my phone number?', 'Yes. Calls route through your existing number, so your signage, ads, and Google Business Profile do not change.'],
@@ -48,7 +48,7 @@ const voiceFaq = (c) => [
 ];
 
 const voiceFaqEs = (c) => [
-  [`¿Configuran agentes de voz con IA para negocios en ${c.name}?`, `Sí. ${c.name} es parte de nuestra área de servicio en el condado de ${c.county.replace(' County', '')}. Construimos, entrenamos y administramos el agente por ti, incluyendo las preguntas que más hacen quienes llaman en ${c.name} y los vecindarios que atiendes.`],
+  ...c.faq,
   ['¿El agente puede hablar español?', 'Sí. El agente puede contestar y agendar en inglés o español. Probamos ambos idiomas con escenarios de llamadas reales antes de lanzarlo.'],
   ['¿Sabrán quienes llaman que hablan con una IA?', 'Recomendamos que el agente se identifique como asistente virtual al inicio de la llamada. Igual suena natural, y la gente agradece la honestidad.'],
   ['¿Me quedo con mi número de teléfono?', 'Sí. Las llamadas pasan por tu número actual, así que tus letreros, anuncios y Perfil de Empresa en Google no cambian.'],

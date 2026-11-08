@@ -29,6 +29,16 @@ const VOICE_COPY = [
       ['caller', 'Tomorrow morning is fine.'],
       ['agent', 'Done. You are booked for 9 to 11 A.M., and you will get a text with the technician\'s name.'],
     ],
+    faq: [
+      [
+        "Will an AI agent sound right for Celebration customers?",
+        "That is the point of setting it up carefully. We script the greeting and tone to match how your best front-desk person talks, and we review real calls in the first 30 days to fix anything that sounds off."
+      ],
+      [
+        "Can it handle calls from vacation-rental guests?",
+        "Yes. It can confirm the property address, take down the issue, book a visit and text a confirmation, so guests staying near the Disney corridor get an answer at night and on weekends."
+      ]
+    ],
   },
   {
     slug: 'kissimmee',
@@ -48,23 +58,15 @@ const VOICE_COPY = [
       ['caller', 'Sí, perfecto.'],
       ['agent', 'Listo. Queda agendado para mañana de 8 a 11. Le enviaré un mensaje de texto con la confirmación.'],
     ],
-  },
-  {
-    slug: 'orlando',
-    headline: 'Orlando leads cost too much to send to voicemail. Answer every one.',
-    intro:
-      'Clicks in Orlando cost more than almost anywhere else in the region. When a paid lead calls and hits voicemail, you paid for a competitor\'s customer. An AI voice agent makes sure every call you pay for gets answered.',
-    moments: [
-      ['Paid calls going unanswered', 'Google Ads and Local Services calls come in all day. The agent picks up in under a second and books the job before the caller tries the next ad.'],
-      ['Law firms and clinics after hours', 'Injury and urgent-care calls happen at night. The agent gathers the details, books a consult, and flags anything urgent to your team.'],
-      ['Neighborhood-level callers', 'A caller from Lake Nona or Dr. Phillips wants to know you serve their area. The agent confirms coverage by neighborhood and books on the spot.'],
-    ],
-    calls: ['Free consultation request', 'Same-day service call', 'Insurance question', 'Quote request'],
-    sample: [
-      ['caller', 'Hi, I was in a car accident on I-4 yesterday and I need to talk to someone.'],
-      ['agent', 'I am sorry that happened. First, are you safe and have you been seen by a doctor? I can set up a free consultation with an attorney today.'],
-      ['caller', 'I am okay. Today would be great.'],
-      ['agent', 'I have you down for 4 P.M. today. You will get a text with the address and what to bring.'],
+    faq: [
+      [
+        "Does the agent switch to Spanish on its own?",
+        "Yes. If the caller speaks Spanish, the agent continues in Spanish, books the appointment and sends the confirmation in the same language."
+      ],
+      [
+        "Can it keep up with a summer rush of AC calls?",
+        "Yes. It answers every call at the same time, so ten callers during a heat wave all get a reply instead of a busy signal or voicemail. Urgent no-cool calls can be flagged to your on-call tech."
+      ]
     ],
   },
   {
@@ -84,23 +86,15 @@ const VOICE_COPY = [
       ['caller', 'Saturday is great.'],
       ['agent', 'You are booked for Saturday at 10. I will text you a reminder Friday evening.'],
     ],
-  },
-  {
-    slug: 'winter-garden',
-    headline: 'Winter Garden families research carefully. Make the first call feel premium.',
-    intro:
-      'Between Horizon West and historic Plant Street, Winter Garden homeowners compare providers closely and judge a business by how its phone is answered. An AI voice agent gives every caller a calm, professional first impression.',
-    moments: [
-      ['High-value project calls', 'Pool builds and outdoor living projects start with a phone call. The agent asks the right questions and books a design consult instead of a callback.'],
-      ['Busy pediatric and family offices', 'Parents call during school pickup and lunch breaks. The agent books, reschedules, and answers common questions without a hold queue.'],
-      ['Weekend restaurant reservations', 'Plant Street restaurants get slammed on Friday nights. The agent takes reservation and catering calls while staff focus on the dining room.'],
-    ],
-    calls: ['Pool design consultation', 'Pediatric appointment', 'Catering inquiry', 'HVAC maintenance plan'],
-    sample: [
-      ['caller', 'Hi, we are in Horizon West and want to talk about building a pool.'],
-      ['agent', 'Wonderful. Do you already have a design in mind, or would you like a designer to come out and walk the yard with you?'],
-      ['caller', 'A designer would be great.'],
-      ['agent', 'I have Thursday at 5:30 open. I will send a text with the designer\'s name and a short questionnaire.'],
+    faq: [
+      [
+        "Is an AI voice agent worth it for a small St. Cloud crew?",
+        "It is often most useful for small teams. When the owner is on a job site, calls go unanswered. The agent covers those calls and books the work so you do not have to stop what you are doing."
+      ],
+      [
+        "Will it answer evening calls from commuters?",
+        "Yes. It works around the clock, so a homeowner calling at 7 P.M. after the drive home can book an estimate on the spot."
+      ]
     ],
   },
   {
@@ -120,77 +114,15 @@ const VOICE_COPY = [
       ['caller', 'Early morning.'],
       ['agent', 'You are set for Tuesday at 7 A.M. I will text you the intake form now.'],
     ],
-  },
-  {
-    slug: 'winter-park',
-    headline: 'Winter Park clients expect a polished answer. Your AI voice agent delivers one.',
-    intro:
-      'Winter Park is an established, affluent market where clients choose on reputation and notice every detail, starting with how the phone is answered. A well-trained AI voice agent sounds composed, never rushed, and never puts a client on hold.',
-    moments: [
-      ['Boutique studios mid-service', 'Salon and spa staff cannot step away from a client to answer. The agent books appointments and answers service questions in your tone.'],
-      ['Professional services after hours', 'Prospective clients of law and financial firms often call in the evening. The agent captures the details and books a consultation.'],
-      ['Specialist home projects', 'Owners of historic and lakefront homes call with detailed questions. The agent gathers the specifics so your specialist calls back prepared.'],
-    ],
-    calls: ['Spa or salon booking', 'Estate planning consultation', 'Interior design inquiry', 'Restaurant reservation'],
-    sample: [
-      ['caller', 'Good evening, I would like to book a facial for Saturday if you have anything.'],
-      ['agent', 'Of course. I have 11 A.M. or 2:30 P.M. with Maria. Which do you prefer?'],
-      ['caller', '2:30, please.'],
-      ['agent', 'Lovely. You are confirmed for Saturday at 2:30, and I will send a reminder the day before.'],
-    ],
-  },
-  {
-    slug: 'lake-mary',
-    headline: 'Lake Mary professionals do not leave voicemails. They book whoever answers.',
-    intro:
-      'Lake Mary is full of high-income, time-starved households and office parks along I-4. Callers here want an answer and a booked time in one short call. An AI voice agent gives them exactly that, at any hour.',
-    moments: [
-      ['Calls squeezed between meetings', 'Professionals call on a five-minute break. The agent answers instantly and books before they get pulled back into work.'],
-      ['B2B buyers along I-4', 'Office managers calling for IT support, cleaning, or catering expect a business-grade response. The agent qualifies the request and routes it to the right person.'],
-      ['Med spa and clinic overflow', 'Aesthetic and specialty clinics compete hard here. The agent books consultations even when the front desk is full.'],
-    ],
-    calls: ['Botox consultation', 'IT support request', 'New client tax appointment', 'Cosmetic dental consult'],
-    sample: [
-      ['caller', 'Hi, our office in Lake Mary needs IT help, our network has been down since this morning.'],
-      ['agent', 'Understood, that is urgent. How many people are affected, and is anyone able to work right now?'],
-      ['caller', 'About twenty people, nobody can work.'],
-      ['agent', 'I am flagging this as urgent and alerting a technician now. You will get a call back within fifteen minutes.'],
-    ],
-  },
-  {
-    slug: 'sanford',
-    headline: 'Sanford businesses: catch every call from downtown to the airport.',
-    intro:
-      'Sanford pairs a revived historic downtown with steady home-service demand and an airport that brings in visitors every day. Many local businesses still rely on a single phone line, which means busy hours become missed calls.',
-    moments: [
-      ['Water damage calls at 2 A.M.', 'Restoration emergencies in older downtown homes do not wait until morning. The agent answers, gathers details, and pages your on-call crew.'],
-      ['Airport travelers looking for service', 'Visitors flying into Sanford call for car repairs, rides, and quick services. The agent answers and books while they are still on the curb.'],
-      ['First Street events and private parties', 'Venues and breweries get event calls during their busiest hours. The agent captures dates, guest counts, and contact details.'],
-    ],
-    calls: ['Water damage emergency', 'Auto repair appointment', 'Private event booking', 'Plumbing estimate'],
-    sample: [
-      ['caller', 'Hi, a pipe burst in our kitchen and there is water everywhere.'],
-      ['agent', 'I am sorry. First, if you can, turn off the main water valve. I am alerting our on-call crew now. What is the address?'],
-      ['caller', 'It is near downtown Sanford, off First Street.'],
-      ['agent', 'Got it. A technician is being dispatched, and you will get a text with their arrival time.'],
-    ],
-  },
-  {
-    slug: 'altamonte-springs',
-    headline: 'Altamonte Springs practices lose patients on hold. An AI voice agent ends the wait.',
-    intro:
-      'Altamonte Springs is a dense medical and retail hub along SR-436, where patients and customers come from across the north side of the metro. When a caller waits on hold, the practice a mile away is one tap away.',
-    moments: [
-      ['Medical offices with full phone queues', 'Patients calling to book or reschedule sit on hold while staff handle check-ins. The agent answers every call at once and cuts the queue to zero.'],
-      ['No-shows and reschedules', 'The agent handles reschedule calls on the spot so open slots get filled instead of wasted.'],
-      ['Competitors one exit away', 'With similar businesses packed along SR-436, the first business to answer wins. The agent makes sure that is you.'],
-    ],
-    calls: ['New patient appointment', 'Reschedule a visit', 'Barbershop walk-in check', 'Auto service quote'],
-    sample: [
-      ['caller', 'Hi, I need to move my dental cleaning on Thursday.'],
-      ['agent', 'No problem. I can offer next Monday at 10 or Tuesday at 3. Which works better?'],
-      ['caller', 'Tuesday at 3.'],
-      ['agent', 'Done. Your cleaning is now Tuesday at 3 P.M., and I will text you a reminder the day before.'],
+    faq: [
+      [
+        "Can the agent book estimates for new homes along US-27?",
+        "Yes. It asks for the address and the job, checks your calendar and books the visit, so new homeowners in growing areas get a time before they call the next company."
+      ],
+      [
+        "Does it work for clinics and fitness studios?",
+        "Yes. For clinics it can book and reschedule appointments and take new-patient details; for studios it can answer schedule questions and book intro sessions. Anything medical or sensitive goes to your staff."
+      ]
     ],
   },
   {
@@ -210,23 +142,15 @@ const VOICE_COPY = [
       ['caller', 'At the center, Tuesdays and Thursdays.'],
       ['agent', 'I have booked a free assessment for this Tuesday at 4:30. I will text you the details now.'],
     ],
-  },
-  {
-    slug: 'apopka',
-    headline: 'Apopka trades are too busy to answer the phone. Let an AI voice agent take it.',
-    intro:
-      'Apopka\'s new neighborhoods along the Wekiva Parkway keep generating calls for landscaping, pest control, and roofing, while many established local businesses still run with a small crew and one phone.',
-    moments: [
-      ['Crews in the field all day', 'Landscape and roofing teams cannot answer from a ladder. The agent books estimates so the crew never loses a job to a missed call.'],
-      ['New homeowners shopping around', 'Families in new developments call several companies in a row. The one that answers and books first usually wins.'],
-      ['Nursery and B2B orders', 'Nurseries and suppliers get order and availability calls from contractors. The agent captures the order details and routes them to your team.'],
-    ],
-    calls: ['Landscape estimate', 'Pest control service', 'Roof repair', 'Wholesale plant order'],
-    sample: [
-      ['caller', 'Hi, we just moved near Wekiva and need someone to redo our landscaping.'],
-      ['agent', 'Congratulations on the new home. I can schedule a free estimate. Is there a day this week that works?'],
-      ['caller', 'Wednesday afternoon.'],
-      ['agent', 'You are set for Wednesday at 3. I will text you a confirmation and our estimator\'s name.'],
+    faq: [
+      [
+        "Can the agent answer the questions parents ask?",
+        "Yes. We train it on your hours, services and the questions families ask most, so it can answer the common ones and book the visit. Anything it is not sure about goes to your team."
+      ],
+      [
+        "Does it help during UCF move-in and move-out?",
+        "Yes. Those weeks bring a spike of calls for cleaning, repairs and moving. The agent answers all of them at once and books what fits your calendar."
+      ]
     ],
   },
 ];

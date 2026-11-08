@@ -19,6 +19,16 @@ export const VOICE_CITIES_ES = {
       ['caller', 'Mañana en la mañana está bien.'],
       ['agent', 'Listo. Quedas agendado de 9 a 11 a. m. y te llegará un texto con el nombre del técnico.'],
     ],
+    faq: [
+      [
+        "¿Un agente de IA sonará adecuado para los clientes de Celebration?",
+        "Para eso lo configuramos con cuidado. Escribimos el saludo y el tono para que suene como tu mejor recepcionista, y revisamos llamadas reales en los primeros 30 días para corregir lo que no suene bien."
+      ],
+      [
+        "¿Puede atender llamadas de huéspedes de rentas vacacionales?",
+        "Sí. Puede confirmar la dirección de la propiedad, anotar el problema, agendar una visita y enviar una confirmación por texto, para que los huéspedes cerca del corredor de Disney reciban respuesta de noche y los fines de semana."
+      ]
+    ],
   },
   kissimmee: {
     headline: 'En Kissimmee la gente llama en inglés y en español. Tu agente de voz con IA también debería hablar ambos.',
@@ -30,22 +40,15 @@ export const VOICE_CITIES_ES = {
       ['Diez llamadas a la vez en verano', 'Cuando sube el calor, las líneas de aire acondicionado y plomería se saturan. El agente contesta todas las llamadas al mismo tiempo, sin música de espera.'],
     ],
     calls: ['Emergencia: el aire no enfría', 'Llamada en español', 'Limpieza entre huéspedes', 'Filtración de techo tras una tormenta'],
-  },
-  orlando: {
-    headline: 'Los clientes en Orlando cuestan demasiado para mandarlos al buzón de voz. Contesta cada uno.',
-    intro:
-      'Los clics en Orlando cuestan más que en casi cualquier otro lugar de la región. Cuando un cliente que pagaste llama y cae en el buzón, pagaste por el cliente de tu competencia. Un agente de voz con IA se asegura de que cada llamada que pagas sea contestada.',
-    moments: [
-      ['Llamadas pagadas sin contestar', 'Las llamadas de Google Ads y Local Services entran todo el día. El agente contesta en menos de un segundo y agenda el trabajo antes de que la persona pruebe el siguiente anuncio.'],
-      ['Bufetes y clínicas fuera de horario', 'Las llamadas por lesiones y atención urgente pasan de noche. El agente recoge los detalles, agenda una consulta y avisa a tu equipo de cualquier urgencia.'],
-      ['Clientes que llaman por vecindario', 'Alguien de Lake Nona o Dr. Phillips quiere saber si atiendes su zona. El agente confirma la cobertura por vecindario y agenda en el momento.'],
-    ],
-    calls: ['Consulta gratis', 'Servicio el mismo día', 'Pregunta sobre seguro', 'Solicitud de cotización'],
-    sample: [
-      ['caller', 'Hola, ayer tuve un accidente de carro en la I-4 y necesito hablar con alguien.'],
-      ['agent', 'Siento mucho que te haya pasado. Primero, ¿estás bien y ya te vio un médico? Te puedo agendar hoy una consulta gratis con un abogado.'],
-      ['caller', 'Estoy bien. Hoy sería perfecto.'],
-      ['agent', 'Te tengo para hoy a las 4 p. m. Te llegará un texto con la dirección y lo que debes traer.'],
+    faq: [
+      [
+        "¿El agente cambia a español por sí solo?",
+        "Sí. Si quien llama habla español, el agente continúa en español, agenda la cita y envía la confirmación en el mismo idioma."
+      ],
+      [
+        "¿Puede con la ola de llamadas de aire acondicionado en verano?",
+        "Sí. Contesta todas las llamadas al mismo tiempo, así que diez personas durante una ola de calor reciben respuesta en vez de una línea ocupada o el buzón de voz. Las llamadas urgentes de aire que no enfría se pueden enviar a tu técnico de guardia."
+      ]
     ],
   },
   'st-cloud': {
@@ -64,22 +67,15 @@ export const VOICE_CITIES_ES = {
       ['caller', 'El sábado está perfecto.'],
       ['agent', 'Quedas agendado para el sábado a las 10. Te mando un recordatorio por texto el viernes en la noche.'],
     ],
-  },
-  'winter-garden': {
-    headline: 'Las familias de Winter Garden investigan con cuidado. Haz que la primera llamada se sienta de primera.',
-    intro:
-      'Entre Horizon West y la histórica Plant Street, los dueños de casa en Winter Garden comparan proveedores de cerca y juzgan a un negocio por cómo contesta el teléfono. Un agente de voz con IA le da a cada persona una primera impresión tranquila y profesional.',
-    moments: [
-      ['Llamadas por proyectos de alto valor', 'La construcción de piscinas y áreas exteriores empieza con una llamada. El agente hace las preguntas correctas y agenda una consulta de diseño en vez de prometer que alguien devolverá la llamada.'],
-      ['Consultorios pediátricos y familiares ocupados', 'Los padres llaman durante la recogida escolar y la hora del almuerzo. El agente agenda, cambia citas y contesta preguntas comunes sin fila de espera.'],
-      ['Reservaciones de restaurante el fin de semana', 'Los restaurantes de Plant Street se llenan los viernes en la noche. El agente toma llamadas de reservaciones y catering mientras el personal atiende el salón.'],
-    ],
-    calls: ['Consulta de diseño de piscina', 'Cita pediátrica', 'Consulta de catering', 'Plan de mantenimiento de aire acondicionado'],
-    sample: [
-      ['caller', 'Hola, estamos en Horizon West y queremos hablar sobre construir una piscina.'],
-      ['agent', 'Excelente. ¿Ya tienen un diseño en mente o prefieren que un diseñador vaya a recorrer el patio con ustedes?'],
-      ['caller', 'Un diseñador sería ideal.'],
-      ['agent', 'Tengo disponible el jueves a las 5:30. Te envío un texto con el nombre del diseñador y un cuestionario corto.'],
+    faq: [
+      [
+        "¿Vale la pena un agente de voz con IA para un equipo pequeño en St. Cloud?",
+        "Muchas veces es más útil para equipos pequeños. Cuando el dueño está en un trabajo, las llamadas se quedan sin contestar. El agente las cubre y agenda el trabajo para que no tengas que parar lo que estás haciendo."
+      ],
+      [
+        "¿Contesta las llamadas de la noche de quienes trabajan fuera?",
+        "Sí. Funciona a toda hora, así que un propietario que llama a las 7 p. m. al llegar a casa puede agendar una cotización en ese momento."
+      ]
     ],
   },
   clermont: {
@@ -98,73 +94,15 @@ export const VOICE_CITIES_ES = {
       ['caller', 'Temprano en la mañana.'],
       ['agent', 'Quedas para el martes a las 7 a. m. Te envío ahora por texto el formulario de admisión.'],
     ],
-  },
-  'winter-park': {
-    headline: 'Los clientes de Winter Park esperan una respuesta impecable. Tu agente de voz con IA se la da.',
-    intro:
-      'Winter Park es un mercado establecido y acomodado donde los clientes eligen por reputación y notan cada detalle, empezando por cómo se contesta el teléfono. Un agente de voz con IA bien entrenado suena sereno, nunca apurado, y nunca deja a un cliente en espera.',
-    moments: [
-      ['Estudios boutique en pleno servicio', 'El personal de salones y spas no puede dejar a un cliente para contestar. El agente agenda citas y responde preguntas sobre servicios con tu mismo tono.'],
-      ['Servicios profesionales fuera de horario', 'Los posibles clientes de bufetes y firmas financieras muchas veces llaman en la noche. El agente recoge los detalles y agenda una consulta.'],
-      ['Proyectos especializados en el hogar', 'Los dueños de casas históricas y frente al lago llaman con preguntas detalladas. El agente reúne los datos para que tu especialista devuelva la llamada preparado.'],
-    ],
-    calls: ['Cita de spa o salón', 'Consulta de planificación patrimonial', 'Consulta de diseño de interiores', 'Reservación de restaurante'],
-    sample: [
-      ['caller', 'Buenas noches, quisiera reservar un facial para el sábado si tienen algo disponible.'],
-      ['agent', 'Claro que sí. Tengo a las 11 a. m. o a las 2:30 p. m. con María. ¿Cuál prefieres?'],
-      ['caller', 'A las 2:30, por favor.'],
-      ['agent', 'Perfecto. Quedas confirmada para el sábado a las 2:30 y te enviaré un recordatorio el día antes.'],
-    ],
-  },
-  'lake-mary': {
-    headline: 'Los profesionales de Lake Mary no dejan mensajes de voz. Agendan con quien conteste.',
-    intro:
-      'Lake Mary está lleno de hogares de altos ingresos con poco tiempo y de parques de oficinas por la I-4. Aquí la gente quiere una respuesta y una cita agendada en una llamada corta. Un agente de voz con IA les da exactamente eso, a cualquier hora.',
-    moments: [
-      ['Llamadas entre reunión y reunión', 'Los profesionales llaman en un descanso de cinco minutos. El agente contesta al instante y agenda antes de que los vuelvan a llamar al trabajo.'],
-      ['Compradores B2B por la I-4', 'Los gerentes de oficina que llaman por soporte de IT, limpieza o catering esperan una respuesta de nivel empresarial. El agente califica la solicitud y la dirige a la persona correcta.'],
-      ['Exceso de llamadas en med spas y clínicas', 'Las clínicas estéticas y de especialidad compiten fuerte aquí. El agente agenda consultas aunque la recepción esté llena.'],
-    ],
-    calls: ['Consulta de Botox', 'Solicitud de soporte de IT', 'Cita de impuestos para cliente nuevo', 'Consulta de odontología estética'],
-    sample: [
-      ['caller', 'Hola, nuestra oficina en Lake Mary necesita ayuda de IT, la red está caída desde esta mañana.'],
-      ['agent', 'Entendido, eso es urgente. ¿Cuántas personas están afectadas y alguien puede trabajar en este momento?'],
-      ['caller', 'Unas veinte personas, nadie puede trabajar.'],
-      ['agent', 'Lo estoy marcando como urgente y avisando a un técnico ahora mismo. Te devolverán la llamada en menos de quince minutos.'],
-    ],
-  },
-  sanford: {
-    headline: 'Negocios de Sanford: no pierdan ni una llamada, desde el downtown hasta el aeropuerto.',
-    intro:
-      'Sanford combina un downtown histórico renovado con una demanda constante de servicios para el hogar y un aeropuerto que trae visitantes todos los días. Muchos negocios locales todavía dependen de una sola línea telefónica, y eso convierte las horas ocupadas en llamadas perdidas.',
-    moments: [
-      ['Llamadas por daños de agua a las 2 a. m.', 'Las emergencias de restauración en casas antiguas del downtown no esperan a la mañana. El agente contesta, reúne los detalles y avisa a tu cuadrilla de guardia.'],
-      ['Viajeros del aeropuerto buscando servicio', 'Los visitantes que llegan a Sanford llaman por reparaciones de carro, transporte y servicios rápidos. El agente contesta y agenda mientras todavía están en la acera.'],
-      ['Eventos en First Street y fiestas privadas', 'Los locales y cervecerías reciben llamadas de eventos en sus horas más ocupadas. El agente toma fechas, número de invitados y datos de contacto.'],
-    ],
-    calls: ['Emergencia por daños de agua', 'Cita de mecánica', 'Reservación de evento privado', 'Estimado de plomería'],
-    sample: [
-      ['caller', 'Hola, se reventó una tubería en la cocina y hay agua por todos lados.'],
-      ['agent', 'Lo siento mucho. Primero, si puedes, cierra la válvula principal del agua. Estoy avisando ahora a nuestra cuadrilla de guardia. ¿Cuál es la dirección?'],
-      ['caller', 'Es cerca del downtown de Sanford, por First Street.'],
-      ['agent', 'Entendido. Ya va un técnico en camino y te llegará un texto con su hora de llegada.'],
-    ],
-  },
-  'altamonte-springs': {
-    headline: 'Los consultorios de Altamonte Springs pierden pacientes en espera. Un agente de voz con IA acaba con la espera.',
-    intro:
-      'Altamonte Springs es un centro médico y comercial muy concurrido por la SR-436, donde pacientes y clientes llegan de todo el norte del área metropolitana. Cuando alguien espera en línea, el consultorio a una milla está a un toque de distancia.',
-    moments: [
-      ['Consultorios médicos con filas de llamadas llenas', 'Los pacientes que llaman para agendar o cambiar citas esperan en línea mientras el personal registra a otros. El agente contesta todas las llamadas a la vez y deja la fila en cero.'],
-      ['Ausencias y cambios de cita', 'El agente maneja los cambios de cita en el momento para que los espacios libres se llenen en vez de desperdiciarse.'],
-      ['La competencia a una salida de distancia', 'Con tantos negocios parecidos por la SR-436, gana el primero que contesta. El agente se asegura de que seas tú.'],
-    ],
-    calls: ['Cita de paciente nuevo', 'Cambiar una visita', 'Turno sin cita en barbería', 'Cotización de servicio de carro'],
-    sample: [
-      ['caller', 'Hola, necesito cambiar mi limpieza dental del jueves.'],
-      ['agent', 'Sin problema. Te puedo ofrecer el próximo lunes a las 10 o el martes a las 3. ¿Cuál te funciona mejor?'],
-      ['caller', 'El martes a las 3.'],
-      ['agent', 'Listo. Tu limpieza ahora es el martes a las 3 p. m. y te enviaré un recordatorio por texto el día antes.'],
+    faq: [
+      [
+        "¿El agente puede agendar cotizaciones para casas nuevas en la US-27?",
+        "Sí. Pide la dirección y el trabajo, revisa tu calendario y agenda la visita, para que los nuevos propietarios en zonas que crecen tengan una hora antes de llamar a la siguiente compañía."
+      ],
+      [
+        "¿Funciona para clínicas y estudios de fitness?",
+        "Sí. En clínicas puede agendar y cambiar citas y tomar los datos de pacientes nuevos; en estudios puede contestar preguntas sobre horarios y agendar clases de introducción. Todo lo médico o delicado pasa a tu personal."
+      ]
     ],
   },
   oviedo: {
@@ -183,22 +121,15 @@ export const VOICE_CITIES_ES = {
       ['caller', 'En el centro, los martes y jueves.'],
       ['agent', 'Te agendé una evaluación gratis para este martes a las 4:30. Te envío los detalles por texto ahora.'],
     ],
-  },
-  apopka: {
-    headline: 'Los oficios de Apopka están demasiado ocupados para contestar el teléfono. Deja que un agente de voz con IA lo haga.',
-    intro:
-      'Los nuevos vecindarios de Apopka por la Wekiva Parkway siguen generando llamadas por jardinería, control de plagas y techos, mientras muchos negocios locales establecidos todavía trabajan con una cuadrilla pequeña y un solo teléfono.',
-    moments: [
-      ['Cuadrillas en el campo todo el día', 'Los equipos de jardinería y techos no pueden contestar desde una escalera. El agente agenda estimados para que la cuadrilla nunca pierda un trabajo por una llamada perdida.'],
-      ['Nuevos dueños comparando opciones', 'Las familias en desarrollos nuevos llaman a varias compañías seguidas. La que contesta y agenda primero casi siempre gana.'],
-      ['Pedidos de viveros y B2B', 'Los viveros y suplidores reciben llamadas de contratistas sobre pedidos y disponibilidad. El agente toma los detalles del pedido y los pasa a tu equipo.'],
-    ],
-    calls: ['Estimado de jardinería', 'Servicio de control de plagas', 'Reparación de techo', 'Pedido de plantas al por mayor'],
-    sample: [
-      ['caller', 'Hola, nos acabamos de mudar cerca de Wekiva y necesitamos a alguien que rehaga el jardín.'],
-      ['agent', 'Felicidades por la casa nueva. Te puedo agendar un estimado gratis. ¿Hay algún día de esta semana que te funcione?'],
-      ['caller', 'El miércoles en la tarde.'],
-      ['agent', 'Quedas para el miércoles a las 3. Te envío por texto la confirmación y el nombre de nuestro estimador.'],
+    faq: [
+      [
+        "¿El agente puede contestar las preguntas que hacen los padres?",
+        "Sí. Lo entrenamos con tu horario, tus servicios y las preguntas que más hacen las familias, para que conteste las comunes y agende la visita. Lo que no tenga claro pasa a tu equipo."
+      ],
+      [
+        "¿Ayuda durante las mudanzas de entrada y salida de UCF?",
+        "Sí. Esas semanas traen un pico de llamadas para limpieza, reparaciones y mudanzas. El agente las contesta todas a la vez y agenda lo que cabe en tu calendario."
+      ]
     ],
   },
 };

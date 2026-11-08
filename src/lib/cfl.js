@@ -24,7 +24,35 @@ export const CITIES = [
     industries: ['Home services & pool care', 'Med spas & wellness', 'Real estate & property management', 'Restaurants on Market Street', 'Dentists & family practices'],
     searches: ['pool service celebration fl', 'dentist celebration fl', 'handyman near celebration', 'med spa celebration'],
     areas: ['West Village', 'North Village', 'Artisan Park', 'Spring Lake', 'Island Village', 'Georgetown', 'Evander Square', 'Celebration Village', 'Celebration Town Center', 'Celebration Downtown'],
-    nearby: ['kissimmee', 'orlando', 'st-cloud'],
+    nearby: ['kissimmee', 'st-cloud', 'clermont'],
+    playbook: [
+      [
+        "Weeks 1-2: one profile for two audiences",
+        "We rebuild your Google Business Profile so it speaks to year-round residents and short-stay visitors at the same time: service area set to Celebration and the US-192 corridor, the right categories, photos of real local jobs, and hours that show when you take after-hours calls."
+      ],
+      [
+        "Weeks 3-6: a review after every job",
+        "An automatic review request goes out by text after each completed job, in English or Spanish, with reply templates so every review gets an answer within a day. In a town where neighbors compare notes, your review count and your replies do most of the selling."
+      ],
+      [
+        "Weeks 7-12: proof by village",
+        "Service pages and profile posts that name the villages you actually work in, like West Village, Artisan Park and Island Village, plus missed-call text-back so a visitor who calls at 8 P.M. hears back before trying the next listing."
+      ]
+    ],
+    faq: [
+      [
+        "Should a Celebration business market to residents or visitors?",
+        "Usually both, but not with the same message. Residents choose on trust: reviews and how long you have been around. Visitors choose on speed: who can come today. We set up your profile and follow-up so each one sees what they need."
+      ],
+      [
+        "Is Celebration too small for local SEO to matter?",
+        "The opposite. With fewer competitors in the map results, a complete profile and a steady flow of reviews can move you up faster than in Orlando. The catch is that reputation travels fast here, good or bad, so follow-up has to be consistent."
+      ],
+      [
+        "Do you only work with businesses on Market Street?",
+        "No. Many businesses serve Celebration from somewhere nearby, like Kissimmee or the US-192 corridor. Google ranks service-area businesses by where they work, not only where their office is, and we build for that."
+      ]
+    ],
   },
   {
     slug: 'kissimmee',
@@ -41,24 +69,35 @@ export const CITIES = [
     industries: ['HVAC, plumbing & roofing', 'Vacation-rental cleaning & maintenance', 'Auto repair & detailing', 'Restaurants & food trucks', 'Insurance & tax services'],
     searches: ['ac repair kissimmee', 'plomero kissimmee', 'vacation rental cleaning kissimmee', 'roofer kissimmee fl'],
     areas: ['Downtown & Broadway', 'US-192 corridor', 'Buenaventura Lakes', 'Poinciana', 'Lake Toho', 'Four Corners'],
-    nearby: ['celebration', 'st-cloud', 'orlando'],
-  },
-  {
-    slug: 'orlando',
-    name: 'Orlando',
-    county: 'Orange County',
-    headline: 'Orlando is crowded. Own your neighborhood instead of chasing the whole city.',
-    intro:
-      'Ranking for "Orlando" alone is a fight with national brands and big-budget agencies. Local businesses win by owning their part of town — Lake Nona, Dr. Phillips, Baldwin Park, College Park — and by following up with every lead faster than anyone else.',
-    market: [
-      ['Neighborhood-level SEO', 'Buyers search by area. We build service-area pages and profile signals around the neighborhoods you actually serve, so you show up where you can win.'],
-      ['Ad spend gets expensive fast', 'Clicks in Orlando cost more than in the suburbs. Every paid lead needs an instant reply and a follow-up sequence, or you are paying for leads you never talk to.'],
-      ['Fast-growing south and east', 'Lake Nona and the east side keep adding households. Being visible early, before the market fills up, is the cheapest it will ever be.'],
+    nearby: ['celebration', 'st-cloud', 'clermont'],
+    playbook: [
+      [
+        "Weeks 1-2: a bilingual front door",
+        "Your Google Business Profile, website forms and missed-call text-back set up in English and Spanish, so every caller gets an answer in the language they used."
+      ],
+      [
+        "Weeks 3-6: win the map for the jobs that pay",
+        "Profile categories, services and photos built around the work you want most, like AC repair, rental turnovers or roofing, with a review request after every job to climb a crowded map pack."
+      ],
+      [
+        "Weeks 7-12: a pipeline for rental managers",
+        "A separate follow-up track for vacation-rental owners and property managers, who send repeat work, with fast after-hours replies and a simple monthly check-in."
+      ]
     ],
-    industries: ['Law firms & professional services', 'Dentists, chiropractors & clinics', 'Home services', 'Fitness studios & gyms', 'Salons & barbershops'],
-    searches: ['personal injury lawyer orlando', 'dentist lake nona', 'electrician dr phillips', 'gym college park orlando'],
-    areas: ['Downtown', 'Lake Nona', 'Dr. Phillips', 'Baldwin Park', 'College Park', 'Conway & MetroWest'],
-    nearby: ['winter-park', 'kissimmee', 'winter-garden'],
+    faq: [
+      [
+        "Do I need Spanish marketing in Kissimmee?",
+        "For most service businesses, yes. A large share of local searches and calls happen in Spanish. We write your follow-up, review requests and key pages in both languages so you never lose a lead to a language gap."
+      ],
+      [
+        "How do I compete with dozens of businesses along US-192?",
+        "By being the most complete, most reviewed and fastest-replying listing in your category. Most competitors leave their profile half-finished and answer leads hours later. Those are the gaps we close first."
+      ],
+      [
+        "Can you help me win work from vacation-rental managers?",
+        "Yes. We build a separate follow-up track for property managers and rental owners, since one manager can send work for many homes. Fast replies at night matter most to them."
+      ]
+    ],
   },
   {
     slug: 'st-cloud',
@@ -75,24 +114,35 @@ export const CITIES = [
     industries: ['Lawn care & landscaping', 'Pest control', 'Home builders & remodelers', 'Family dentists & pediatrics', 'Local restaurants'],
     searches: ['lawn service st cloud fl', 'pest control st cloud', 'dentist st cloud fl', 'pressure washing st cloud'],
     areas: ['Downtown & lakefront', 'Narcoossee Road', 'Harmony', 'East Lake Toho', 'Canoe Creek Road', 'Kissimmee Park Road'],
-    nearby: ['kissimmee', 'celebration', 'orlando'],
-  },
-  {
-    slug: 'winter-garden',
-    name: 'Winter Garden',
-    county: 'Orange County',
-    headline: 'Winter Garden businesses: turn West Orange growth into booked work.',
-    intro:
-      'Between historic Plant Street and the new communities of Horizon West, Winter Garden has become one of the most sought-after places to live in the region. Families here research carefully, read reviews, and expect a fast, professional reply.',
-    market: [
-      ['Horizon West is still filling in', 'Thousands of new homes mean a steady stream of first-time searches for services. Map-pack visibility in these communities pays off for years.'],
-      ['Downtown draws the weekend crowd', 'Plant Street restaurants and shops compete for visitors from across West Orange. Email and SMS campaigns bring past customers back between visits.'],
-      ['Premium, review-driven buyers', 'Homeowners here pay for quality and choose based on reviews. A steady review engine is the best marketing you can buy.'],
+    nearby: ['kissimmee', 'celebration', 'oviedo'],
+    playbook: [
+      [
+        "Weeks 1-2: findable by new neighbors",
+        "A Google Business Profile whose service area covers Narcoossee Road, Harmony and the east side, with services and photos that match what new homeowners search for first."
+      ],
+      [
+        "Weeks 3-6: reviews that name real places",
+        "A review request after every job that invites customers to mention their neighborhood and the work you did, and a reply to every review. Specific reviews build small-town trust faster than generic ones."
+      ],
+      [
+        "Weeks 7-12: answer in the evening",
+        "Missed-call text-back and instant form replies tuned for evening hours, when commuters get home and search, plus a welcome message for new-construction neighborhoods."
+      ]
     ],
-    industries: ['Pool builders & outdoor living', 'Pediatric & family health', 'Restaurants & breweries', 'Home services', 'Boutique fitness'],
-    searches: ['pool builder winter garden', 'pediatric dentist horizon west', 'restaurants plant street', 'hvac winter garden fl'],
-    areas: ['Historic Downtown & Plant Street', 'Horizon West', 'Hamlin', 'Oakland', 'Lake Apopka shore', 'West Orange Trail'],
-    nearby: ['clermont', 'orlando', 'apopka'],
+    faq: [
+      [
+        "Is St. Cloud worth targeting separately from Kissimmee?",
+        "Yes. People here search for St. Cloud businesses by name, and the new neighborhoods on the east side are still choosing their providers. A profile built only for Kissimmee will not automatically show up in St. Cloud results."
+      ],
+      [
+        "When do St. Cloud customers search?",
+        "Many residents commute toward Orlando, so a lot of inquiries come in the evening. If your reply waits until morning, a competitor usually gets there first. Automated replies close that gap."
+      ],
+      [
+        "How do I reach families moving into new subdivisions?",
+        "Show up in local results the week they arrive: a complete profile, neighborhood-specific reviews and posts, and quick replies. New residents tend to stay with the first good provider they find."
+      ]
+    ],
   },
   {
     slug: 'clermont',
@@ -109,75 +159,35 @@ export const CITIES = [
     industries: ['Fitness, sports medicine & PT', 'Home services', 'Landscaping & irrigation', 'Real estate', 'Restaurants on the waterfront'],
     searches: ['physical therapy clermont fl', 'irrigation repair clermont', 'roofer clermont fl', 'gym clermont'],
     areas: ['Downtown & Waterfront Park', 'Lake Minneola', 'US-27 corridor', 'Kings Ridge', 'Minneola', 'South Lake'],
-    nearby: ['winter-garden', 'orlando', 'kissimmee'],
-  },
-  {
-    slug: 'winter-park',
-    name: 'Winter Park',
-    county: 'Orange County',
-    headline: 'Winter Park buyers expect polish. Your marketing should deliver it.',
-    intro:
-      'Winter Park is an established, affluent market anchored by Park Avenue and Rollins College. Clients here compare carefully, value reputation over price, and notice when a business responds quickly and professionally.',
-    market: [
-      ['Reputation over price', 'Winter Park clients pay for the provider they trust. A strong, current review profile is what earns the premium.'],
-      ['Boutique competition', 'Park Avenue and Hannibal Square are full of independent boutiques, salons, and studios. Email and SMS keep your regulars coming back instead of trying someone new.'],
-      ['Older homes, specialized work', 'Historic and lakefront homes need specialists. We target the specific searches homeowners use for that kind of work.'],
+    nearby: ['celebration', 'kissimmee'],
+    playbook: [
+      [
+        "Weeks 1-2: claim South Lake",
+        "A Google Business Profile and service area built for Clermont, Minneola and the US-27 corridor, so you show up for South Lake searches instead of competing in Orlando results."
+      ],
+      [
+        "Weeks 3-6: reviews and local posts",
+        "Review requests after every job, plus profile posts and photos tied to places people here know, like the downtown waterfront and Lake Minneola, so your listing looks local, not generic."
+      ],
+      [
+        "Weeks 7-12: follow-up for growth areas",
+        "Instant replies and estimate follow-up for the newer neighborhoods along US-27 toward Four Corners, where new homeowners are still picking their providers."
+      ]
     ],
-    industries: ['Boutiques & retail', 'Salons, spas & aesthetics', 'Financial & legal services', 'Interior design & remodeling', 'Fine dining'],
-    searches: ['med spa winter park', 'interior designer winter park fl', 'estate planning attorney winter park', 'salon park avenue'],
-    areas: ['Park Avenue', 'Hannibal Square', 'Winter Park Village', 'Aloma', 'Lakes Virginia, Osceola & Maitland', 'Maitland'],
-    nearby: ['orlando', 'altamonte-springs', 'oviedo'],
-  },
-  {
-    slug: 'lake-mary',
-    name: 'Lake Mary',
-    county: 'Seminole County',
-    headline: 'Lake Mary businesses: reach busy professionals the moment they search.',
-    intro:
-      'Lake Mary is Central Florida\'s corporate suburb — regional offices along I-4, established neighborhoods like Heathrow, and households with high incomes and very little free time. They book online, and they book whoever answers first.',
-    market: [
-      ['Time-starved, high-value clients', 'Professionals here want to book without a phone call. Online booking, instant replies, and reminders make you the easy choice.'],
-      ['B2B is local too', 'The office parks along I-4 need IT, cleaning, catering, and professional services. We build follow-up that works for business buyers, not just homeowners.'],
-      ['Health and wellness demand', 'Med spas, dentists, and specialty clinics compete hard here. Reviews and fast follow-up decide who fills the calendar.'],
+    faq: [
+      [
+        "Is local SEO easier in Clermont than in Orlando?",
+        "Usually. Fewer businesses compete for Clermont searches than for Orlando ones, so a well-built profile and steady reviews can move you up faster. You still need to keep the reviews coming, because the market is growing."
+      ],
+      [
+        "Do you work with fitness, wellness and sports businesses?",
+        "Yes. Clermont's hills and chain of lakes draw cyclists, runners and triathletes, which makes it a real market for gyms, physical therapy and sports medicine. We build reviews and follow-up that speak to that audience."
+      ],
+      [
+        "Do you cover Minneola and the US-27 corridor too?",
+        "Yes. We set your service area to the places you actually work, including Minneola and the newer neighborhoods along US-27, so you show up there and not only near downtown Clermont."
+      ]
     ],
-    industries: ['Med spas & aesthetics', 'Dentists & specialty clinics', 'IT & B2B services', 'Financial advisors & CPAs', 'Home services'],
-    searches: ['med spa lake mary', 'cosmetic dentist lake mary fl', 'it support lake mary', 'cpa lake mary'],
-    areas: ['Colonial TownPark', 'Heathrow', 'Timacuan', 'Lake Mary Blvd', 'Primera', 'I-4 office corridor'],
-    nearby: ['sanford', 'altamonte-springs', 'oviedo'],
-  },
-  {
-    slug: 'sanford',
-    name: 'Sanford',
-    county: 'Seminole County',
-    headline: 'Sanford is on the rise. Make sure customers can find you on the way.',
-    intro:
-      'Sanford pairs a revitalized historic downtown on Lake Monroe with steady residential growth and an airport that brings in visitors every day. It is a market where local businesses can still claim the top spot in search.',
-    market: [
-      ['Downtown revival', 'First Street and the riverfront draw a growing crowd to restaurants, breweries, and shops. Campaigns that bring locals back are worth more than one-time foot traffic.'],
-      ['Room to rank', 'Compared with Orlando, fewer local businesses here have a fully built-out Google profile. That is an opening.'],
-      ['Steady home-service demand', 'Older housing stock near downtown and newer subdivisions to the west both need constant repair and upgrade work.'],
-    ],
-    industries: ['Restaurants & breweries', 'Home services & restoration', 'Auto repair', 'Contractors & trades', 'Event venues'],
-    searches: ['restaurants downtown sanford', 'water damage restoration sanford fl', 'auto repair sanford', 'plumber sanford fl'],
-    areas: ['Historic Downtown & First Street', 'Lake Monroe riverfront', 'Midway', 'Lake Forest', 'Sanford airport area', 'West Sanford'],
-    nearby: ['lake-mary', 'oviedo', 'altamonte-springs'],
-  },
-  {
-    slug: 'altamonte-springs',
-    name: 'Altamonte Springs',
-    county: 'Seminole County',
-    headline: 'Altamonte Springs: win the searches happening all along SR-436.',
-    intro:
-      'Altamonte Springs is a dense retail and medical hub where shoppers and patients come from all over the north side of the metro. Plenty of businesses compete for the same customers — the ones with a system win.',
-    market: [
-      ['Medical hub', 'Hospitals and medical offices cluster here, and patients pick providers by reviews and availability. Online booking and reminders cut no-shows.'],
-      ['Retail traffic, not loyalty', 'People pass through for shopping and dining. Capturing their contact info and following up turns a one-time visit into a regular.'],
-      ['Dense competition', 'Many similar businesses sit within a mile of each other. The map pack, not the sign out front, decides who gets the call.'],
-    ],
-    industries: ['Medical & dental practices', 'Retail & dining', 'Salons & barbers', 'Auto services', 'Professional services'],
-    searches: ['urgent care altamonte springs', 'dentist altamonte springs', 'barber altamonte', 'auto repair sr 436'],
-    areas: ['Cranes Roost & Uptown Altamonte', 'SR-436 corridor', 'Spring Valley', 'Forest City', 'Longwood', 'Casselberry'],
-    nearby: ['winter-park', 'lake-mary', 'apopka'],
   },
   {
     slug: 'oviedo',
@@ -194,26 +204,44 @@ export const CITIES = [
     industries: ['Pediatrics & family dentistry', 'Tutoring & enrichment', 'Home services', 'Fitness & youth sports', 'Property management'],
     searches: ['pediatric dentist oviedo', 'tutoring oviedo fl', 'hvac oviedo', 'property management near ucf'],
     areas: ['Oviedo on the Park', 'Alafaya corridor', 'Live Oak Reserve', 'Twin Rivers', 'Chuluota', 'UCF area'],
-    nearby: ['winter-park', 'sanford', 'orlando'],
-  },
-  {
-    slug: 'apopka',
-    name: 'Apopka',
-    county: 'Orange County',
-    headline: 'Apopka is booming. Capture the new homeowners before anyone else does.',
-    intro:
-      'Once known as the Indoor Foliage Capital of the World, Apopka is now one of the fastest-growing cities in Orange County. New neighborhoods along the Wekiva Parkway mean new homeowners searching for every service.',
-    market: [
-      ['New homes, new searches', 'Families moving into new developments need landscapers, pest control, and home services right away — and they search for them by city.'],
-      ['Nursery and trades roots', 'Apopka has deep roots in nurseries and trades. Local B2B and contractor businesses benefit from a professional online presence that matches their experience.'],
-      ['Under-served local search', 'Many established Apopka businesses still rely on word of mouth alone. A modern system puts you ahead quickly.'],
+    nearby: ['st-cloud', 'kissimmee'],
+    playbook: [
+      [
+        "Weeks 1-2: a profile families trust",
+        "A complete Google Business Profile with real photos, clear services and accurate hours. Oviedo families research before they call, so gaps and stale photos cost you the shortlist."
+      ],
+      [
+        "Weeks 3-6: a steady stream of fresh reviews",
+        "Automatic review requests after every job and a reply to each one. Parents compare recent reviews closely for dentists, tutors and contractors, and a steady flow keeps you in the running."
+      ],
+      [
+        "Weeks 7-12: plan around the UCF calendar",
+        "Campaigns and reminders timed to move-in, move-out and semester starts, for property management, cleaning, repairs, moving and tutoring businesses near the Alafaya corridor."
+      ]
     ],
-    industries: ['Landscaping & nurseries', 'Pest control & lawn care', 'Contractors & trades', 'Auto repair', 'Family health'],
-    searches: ['landscaping apopka', 'pest control apopka fl', 'roofing apopka', 'dentist apopka'],
-    areas: ['Downtown Apopka', 'Wekiva Springs', 'Errol Estate', 'Rock Springs', 'Kelly Park area', 'Wekiva Parkway'],
-    nearby: ['winter-garden', 'altamonte-springs', 'orlando'],
+    faq: [
+      [
+        "How does UCF affect marketing in Oviedo?",
+        "It adds a second rhythm to the year. Move-in and move-out bring demand for cleaning, repairs, moving and property management, and semester starts bring demand for tutoring. We time campaigns and reminders to that calendar."
+      ],
+      [
+        "Why do reviews matter so much in Oviedo?",
+        "Families here research before they hire and compare reviews closely. A business with recent reviews and thoughtful replies stays on the shortlist; one with a few old reviews gets skipped."
+      ],
+      [
+        "Do neighborhood Facebook groups still matter if I invest in SEO?",
+        "Yes, they work together. Neighbors recommend businesses in community groups, and the next thing people do is look you up on Google. A strong profile backs up every recommendation."
+      ]
+    ],
   },
 ];
+
+// City pages folded back into the hub on Nov 8, 2026. They sat at positions
+// 57-99 in Search Console with no clicks, and 48 thin city pages read as a
+// doorway pattern. Each slug 301s to /grow and /ai-voice (EN and /es), written
+// into _redirects by scripts/generate-seo-assets.mjs. To bring a city back, add
+// a full entry above (with genuinely local copy) and remove it from this list.
+export const RETIRED_CITY_SLUGS = ['orlando', 'winter-garden', 'winter-park', 'lake-mary', 'sanford', 'altamonte-springs', 'apopka'];
 
 export const CITY_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 
