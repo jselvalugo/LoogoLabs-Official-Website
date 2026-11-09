@@ -1,5 +1,5 @@
 import React from 'react';
-import BlogSidebar, { rankScore } from './BlogSidebar';
+import { rankScore, buildSidebar } from './BlogSidebar';
 import { BLOG_BASE, BLOG_INDEX, applyHead, headForPage, blogLd } from '../lib/seo';
 import { BLOG_CATEGORIES, BLOG_CATEGORY_BY_SLUG, START_HERE, categoryOf, categoryPageKey, categoryPath, categorySlugFromPath } from '../lib/blogCategories';
 import { TOOLS, toolPath } from '../lib/tools';
@@ -20,6 +20,7 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
   const [category, setCategory] = React.useState(categoryProp);
   const [query, setQuery] = React.useState('');
   const [sort, setSort] = React.useState('newest');
+  const [showAll, setShowAll] = React.useState(false);
   const listRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -85,52 +86,58 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
   }, [inCategory, rest, filtering, query, sort]);
   const clearFilters = () => { setQuery(''); setSort('newest'); if (category) pickCategory(null); };
 
+  const mostRead = React.useMemo(() => buildSidebar(posts).mostViewed, [posts]);
+  const LATEST_COUNT = 9;
+  const latest = filtering || showAll ? shown : shown.slice(0, LATEST_COUNT);
+  const hasFeatured = pinned.length > 0 || eventPost || featured;
+
+  const searchBox = (
+    <label className="ln-find__search ln-hero__search">
+      <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
+      <input type="search" aria-label={es ? 'Buscar artículos' : 'Search posts'} placeholder={es ? 'Busca artículos, p. ej. reseñas o HVAC' : 'Search posts, e.g. reviews or HVAC'} value={query} onChange={e => setQuery(e.target.value)} />
+    </label>
+  );
+
   return (
     <div className="lb-page" role="main">
       <div className="lb-wrap">
 
-      {/* ── MASTHEAD ── */}
-      <div className="ln-masthead ll-forest">
-        <img className="ln-masthead__art" src="/loogonews-masthead.webp" alt="" aria-hidden="true" width="720" height="713" decoding="async" />
-        <div className="ln-masthead__inner">
-          <div className="ln-masthead__copy">
-            {cat ? (
-              <>
-                <a className="ln-masthead__kicker" href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); pickCategory(null); }}>
-                  <ArrowLeft size={13} weight="bold" aria-hidden="true" /> Industry LoogoBlog
-                </a>
-                <h1 className="ln-masthead__title ln-masthead__title--cat">{es ? cat.nameEs : cat.name}</h1>
-                <p className="ln-masthead__lede">{es ? cat.blurbEs : cat.blurb}</p>
-              </>
-            ) : (
-              <>
-                <h1 className="ln-masthead__title">
-                  Industry<br /><em>LoogoBlog.</em>
-                </h1>
-                <p className="ln-masthead__lede">
-                  {es ? 'Guías prácticas para usar la IA en tu marketing. Qué automatizar, qué dejar en manos de una persona y qué de verdad te trae clientes.' : 'Practical guides to using AI in your marketing. What to automate, what to keep human, and what actually brings in customers.'}
-                </p>
-              </>
-            )}
-          </div>
-          {/* Featured cards sit beside the intro on desktop and under it on phones. */}
-          {!cat && (loading ? (
-            <div className="ln-masthead__featured" aria-hidden="true"><span className="lb-skel lb-skel--masthead" /></div>
-          ) : (pinned.length > 0 || eventPost || featured) && (
-            <section className="lb-featured ln-masthead__featured" aria-label={es ? 'Destacados' : 'Featured'}>
-              <div className="lb-featured__grid">
-                {pinned.map(p => <PinnedCard key={p.id} post={p} onNavigate={onNavigate} es={es} />)}
-                {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
-                {spotlight
-                  ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} es={es} />
-                  : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
-              </div>
-            </section>
-          ))}
-        </div>
-      </div>
+      {/* ── 1. MASTHEAD: what this is, and a search box ── */}
+      <header className="ln-hero">
+        {cat ? (
+          <>
+            <a className="ln-masthead__kicker" href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); pickCategory(null); }}>
+              <ArrowLeft size={13} weight="bold" aria-hidden="true" /> Industry LoogoBlog
+            </a>
+            <h1 className="ln-hero__title ln-hero__title--cat">{es ? cat.nameEs : cat.name}</h1>
+            <p className="ln-hero__lede">{es ? cat.blurbEs : cat.blurb}</p>
+          </>
+        ) : (
+          <>
+            <span className="ll-eyebrow">{es ? 'Últimas noticias' : 'Latest news'}</span>
+            <h1 className="ln-hero__title">Industry <em>LoogoBlog.</em></h1>
+            <p className="ln-hero__lede">
+              {es ? 'Guías prácticas para usar la IA en tu marketing. Qué automatizar, qué dejar en manos de una persona y qué de verdad te trae clientes.' : 'Practical guides to using AI in your marketing. What to automate, what to keep human, and what actually brings in customers.'}
+            </p>
+          </>
+        )}
+        {searchBox}
+      </header>
 
-      {/* ── CATEGORY BAR: sticky under the nav, swipeable on phones ── */}
+      {/* ── 2. FEATURED: announcement, event and editor's pick in one row ── */}
+      {!cat && !filtering && (loading ? (
+        <div className="ln-feat" aria-hidden="true"><span className="lb-skel lb-skel--masthead" /></div>
+      ) : hasFeatured && (
+        <section className="lb-featured ln-feat" aria-label={es ? 'Destacados' : 'Featured'}>
+          {pinned.map(p => <PinnedCard key={p.id} post={p} onNavigate={onNavigate} es={es} />)}
+          {eventPost && <EventFeaturedCard post={eventPost} onNavigate={onNavigate} es={es} />}
+          {spotlight
+            ? <FeaturedSpotlight post={spotlight} onNavigate={onNavigate} es={es} />
+            : featured && <FeaturedCard post={featured} onNavigate={onNavigate} es={es} />}
+        </section>
+      ))}
+
+      {/* ── 3. TOPICS + SORT: sticky under the nav ── */}
       <nav className="ln-cats" aria-label={es ? 'Categorías del blog' : 'Blog categories'}>
         <div className="ln-cats__track">
           <a href={toHref(BLOG_INDEX)} className="ln-cats__pill" aria-current={!cat ? 'page' : undefined}
@@ -144,11 +151,18 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
             </a>
           ))}
         </div>
+        <label className="ln-find__sort ln-cats__sort">
+          {es ? 'Ordenar' : 'Sort'}
+          <select value={sort} onChange={e => setSort(e.target.value)}>
+            <option value="newest">{es ? 'Más recientes' : 'Newest'}</option>
+            <option value="views">{es ? 'Más vistos' : 'Most viewed'}</option>
+            <option value="ranked">{es ? 'Mejor valorados' : 'Best ranked'}</option>
+          </select>
+        </label>
       </nav>
 
       {/* ── CONTENT ── */}
       <div className="lb-content">
-
         {loading ? (
           <div className="lb-loading" role="status" aria-live="polite">
             <div className="lb-skel-row"><span className="lb-skel" /><span className="lb-skel" /></div>
@@ -157,67 +171,76 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
         ) : posts.length === 0 ? (
           <EmptyState es={es} />
         ) : (
-          <div className="ln-layout">
-           <div className="ln-layout__main">
-            {!filtering && startHere.length > 0 && (
-              <section className="ln-start" aria-labelledby="ln-start-t">
-                <h2 className="lb-list__title" id="ln-start-t">{es ? 'Empieza aquí' : 'Start here'}</h2>
-                <p className="ln-start__lede">{es ? 'Las tres guías que más le sirven a un negocio de servicios.' : 'The three guides that help a service business most.'}</p>
-                <div className="ln-start__grid">
-                  {startHere.map((p, i) => (
-                    <a key={p.slug} href={`${BLOG_BASE}/${p.slug}`} onClick={go(onNavigate, p)} className="ln-start__card ll-glass">
-                      <span className="ln-start__num">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="ln-card-cat">{catName(p, es)}</span>
-                      <span className="ln-start__title">{p.title}</span>
-                      <span className="ln-start__meta">{p.read_time} {es ? 'min de lectura' : 'min read'} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
-                    </a>
-                  ))}
-                </div>
-              </section>
-            )}
-            {(rest.length > 0 || filtering) && (
-              <div className="lb-list" ref={listRef}>
-                <div className="lb-list__head">
-                  <h2 className="lb-list__title">
-                    {filtering
-                      ? (es ? `${shown.length} ${shown.length === 1 ? 'artículo' : 'artículos'}${cat ? ` en ${cat.nameEs}` : ''}` : `${shown.length} ${shown.length === 1 ? 'post' : 'posts'}${cat ? ` in ${cat.name}` : ''}`)
-                      : (es ? 'Todos los artículos' : 'All posts')}
-                  </h2>
-                  {filtering && (
-                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar' : 'Clear'} <X size={12} weight="bold" aria-hidden="true" /></button>
-                  )}
-                </div>
-                <div className="ln-find" role="search">
-                  <div className="ln-find__row">
-                    <label className="ln-find__search">
-                      <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
-                      <input type="search" aria-label={es ? 'Buscar artículos' : 'Search posts'} placeholder={es ? 'Busca artículos, p. ej. reseñas o HVAC' : 'Search posts, e.g. reviews or HVAC'} value={query} onChange={e => setQuery(e.target.value)} />
-                    </label>
-                    <label className="ln-find__sort">
-                      {es ? 'Ordenar' : 'Sort'}
-                      <select value={sort} onChange={e => setSort(e.target.value)}>
-                        <option value="newest">{es ? 'Más recientes' : 'Newest'}</option>
-                        <option value="views">{es ? 'Más vistos' : 'Most viewed'}</option>
-                        <option value="ranked">{es ? 'Mejor valorados' : 'Best ranked'}</option>
-                      </select>
-                    </label>
-                  </div>
-                </div>
-                {shown.length === 0 && (
-                  <div className="lb-nomatch ll-glass">
-                    <p>{es ? 'Ningún artículo coincide con esos filtros.' : 'No posts match those filters.'}</p>
-                    <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar filtros' : 'Clear filters'}</button>
-                  </div>
+          <>
+            {/* 4. Start here + Most read, side by side */}
+            {!filtering && (startHere.length > 0 || mostRead.length > 0) && (
+              <div className="ln-intro">
+                {startHere.length > 0 && (
+                  <section className="ln-start" aria-labelledby="ln-start-t">
+                    <h2 className="lb-list__title" id="ln-start-t">{es ? 'Empieza aquí' : 'Start here'}</h2>
+                    <p className="ln-start__lede">{es ? 'Las tres guías que más le sirven a un negocio de servicios.' : 'The three guides that help a service business most.'}</p>
+                    <div className="ln-start__grid">
+                      {startHere.map((p, i) => (
+                        <a key={p.slug} href={`${BLOG_BASE}/${p.slug}`} onClick={go(onNavigate, p)} className="ln-start__card ll-glass">
+                          <span className="ln-start__num">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="ln-card-cat">{catName(p, es)}</span>
+                          <span className="ln-start__title">{p.title}</span>
+                          <span className="ln-start__meta">{p.read_time} {es ? 'min de lectura' : 'min read'} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
                 )}
-                <div className="lb-grid">
-                  {shown.map((post, i) => <PostCard key={post.id} post={post} onNavigate={onNavigate} es={es} wide={!filtering && shown.length > 2 && i === 0} />)}
-                </div>
+                {mostRead.length > 0 && (
+                  <section className="ln-top" aria-labelledby="ln-top-t">
+                    <h2 className="lb-list__title" id="ln-top-t">{es ? 'Lo más leído' : 'Most read'}</h2>
+                    <ol className="ln-top__list">
+                      {mostRead.map((p, i) => (
+                        <li key={p.id}>
+                          <a href={`${BLOG_BASE}/${p.slug}`} onClick={go(onNavigate, p)}>
+                            <span className="ln-top__num">{String(i + 1).padStart(2, '0')}</span>
+                            <span className="ln-top__title">{p.title}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )}
               </div>
             )}
+
+            {/* 5. The posts */}
+            <div className="lb-list" ref={listRef}>
+              <div className="lb-list__head">
+                <h2 className="lb-list__title">
+                  {filtering
+                    ? (es ? `${shown.length} ${shown.length === 1 ? 'artículo' : 'artículos'}${cat ? ` en ${cat.nameEs}` : ''}` : `${shown.length} ${shown.length === 1 ? 'post' : 'posts'}${cat ? ` in ${cat.name}` : ''}`)
+                    : (es ? 'Artículos recientes' : 'Latest posts')}
+                </h2>
+                {filtering && (
+                  <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar' : 'Clear'} <X size={12} weight="bold" aria-hidden="true" /></button>
+                )}
+              </div>
+              {shown.length === 0 && (
+                <div className="lb-nomatch ll-glass">
+                  <p>{es ? 'Ningún artículo coincide con esos filtros.' : 'No posts match those filters.'}</p>
+                  <button type="button" className="ln-filters__clear" onClick={clearFilters}>{es ? 'Borrar filtros' : 'Clear filters'}</button>
+                </div>
+              )}
+              <div className="lb-grid ln-grid3">
+                {latest.map(post => <PostCard key={post.id} post={post} onNavigate={onNavigate} es={es} />)}
+              </div>
+              {!filtering && !showAll && shown.length > LATEST_COUNT && (
+                <div className="ln-more">
+                  <button type="button" className="ln-more__btn" onClick={() => setShowAll(true)}>
+                    {es ? `Ver los ${shown.length} artículos` : `Show all ${shown.length} posts`} <ArrowRight size={14} weight="bold" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+            </div>
+
             <ToolsStrip es={es} toHref={toHref} />
-           </div>
-            <BlogSidebar posts={posts} category={category} onCategory={pickCategory} onNavigate={onNavigate} />
-          </div>
+          </>
         )}
       </div>
       </div>
@@ -257,12 +280,13 @@ function PinnedCard({ post, onNavigate, es }) {
   const date = fmtDate(post, 'long', es);
   const partner = partnerForPost(post);
   return (
-    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pinned"
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className={`lb-fcard lb-fcard--pinned${partner ? ` lb-fcard--partner lb-fcard--${partner.key}` : ''}`}
+      style={partner ? { '--pt-primary': partner.colors.primary, '--pt-secondary': partner.colors.secondary, '--pt-ink': partner.colors.ink } : undefined}
       aria-label={es ? `Anuncio: ${post.title}` : `Announcement: ${post.title}`}>
       <div className="lb-fcard__body">
         <div className="lb-fcard__top">
           <span className="lb-fcard__kicker lb-fcard__kicker--new">{es ? 'Nuevo lanzamiento' : 'New release'}</span>
-          {partner && <span className="lb-fcard__plogo"><img src={partner.logo} alt={partner.name} width="116" height="28" /></span>}
+          {partner && <img className="lb-fcard__plogo-img" src={partner.logoOnDark} alt={partner.name} width="116" height="28" />}
         </div>
         <h2 className="lb-fcard__title">{post.title}</h2>
         {post.excerpt && <p className="lb-fcard__excerpt">{post.excerpt}</p>}
@@ -287,7 +311,7 @@ function EventFeaturedCard({ post, onNavigate, es }) {
       <div className="lb-fcard__body">
         <div className="lb-fcard__top">
           <span className="lb-fcard__kicker">{es ? 'Evento · 14 nov. 2026' : 'Event · Nov 14, 2026'}</span>
-          <img className="lb-fcard__logo" src={t.logo} alt="Lugo's Craft Distillery" width="44" height="44" />
+          <span className="lb-fcard__logo lb-fcard__logo--mask" role="img" aria-label="Lugo's Craft Distillery" />
         </div>
         <h2 className="lb-fcard__title">{post.title}</h2>
         <p className="lb-fcard__excerpt">{es ? 'Lakeland, FL · Entrada gratis · 2–10 PM' : 'Lakeland, FL · Free admission · 2–10 PM'}</p>
