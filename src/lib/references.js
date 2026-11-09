@@ -14,7 +14,7 @@ export const CLIENT_LOGOS = {
   'Riel Compliance Suite': { src: '/clients/riel-compliance-suite.jpg', w: 600, h: 181, chip: true,
     ticker: T('riel-compliance-suite.png', 372, 131, 30) },
   'Lugo’s Craft Distillery': { src: '/blog/lugos-craft-logo-on-dark.png', w: 640, h: 624, dark: true,
-    ticker: T('lugos-craft.png', 392, 160, 38) },
+    ticker: T('lugos-craft-distillery.png', 180, 176, 46) },
   'Reef Ntwrks': { src: '/clients/reef-consulting.png', w: 242, h: 116,
     ticker: T('reef-consulting.png', 230, 104, 30) },
   'Pronomy.io': { src: '/clients/pronomy.jpg', w: 480, h: 480, dark: true, caption: 'Pronomy.io',

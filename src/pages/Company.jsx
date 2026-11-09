@@ -13,7 +13,7 @@ function CustomerBand({ c, es }) {
   return (
     <li className="ll-cust" style={{ '--cust-accent': c.accent }}>
       <div className="ll-cust__glow" aria-hidden="true" />
-      <div className="ll-cust__chip">
+      <div className={`ll-cust__chip${c.tall ? ' ll-cust__chip--tall' : ''}`}>
         {!c.logo ? <span className="ll-cust__script">{c.wordmark || c.name}</span>
           : c.tint ? (
             <span className="ll-cust__logo" role="img" aria-label={`${c.name} logo`}

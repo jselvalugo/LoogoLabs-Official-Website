@@ -47,6 +47,8 @@
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
 }
+.ll-cust__chip--tall { padding-top: 6px; padding-bottom: 6px; }
+.ll-cust__chip--tall .ll-cust__logo { height: 64px; max-height: 64px; }
 .ll-cust__img { display: block; max-width: 100%; max-height: 34px; width: auto; height: auto; }
 .ll-cust__script { font: italic 400 19px/1.1 var(--font-display); color: var(--cust-accent); text-align: center; }
 
@@ -65,6 +67,7 @@
   .ll-cust { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px 18px 16px 12px; border-radius: 18px; }
   .ll-cust__chip { height: 60px; width: 168px; padding: 10px 16px; }
   .ll-cust__logo { height: 32px; max-height: 32px; }
+  .ll-cust__chip--tall .ll-cust__logo { height: 50px; max-height: 50px; }
   .ll-cust__link:empty { display: none; }
   .ll-cust__glow { background:
     radial-gradient(90px 60px at 60px 30px, color-mix(in srgb, var(--cust-accent) 55%, transparent), transparent 70%),
