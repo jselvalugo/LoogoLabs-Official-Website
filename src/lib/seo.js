@@ -109,10 +109,19 @@ export const ROUTES = [
   {
     page: 'Company',
     path: '/company',
-    title: `Company — Meet Founder ${SITE.founder} | ${SITE.name}`,
+    title: `Who We Serve — Our Clients | ${SITE.name}`,
+    description:
+      `The SaaS brands, creators and local businesses ${SITE.name} plans and builds marketing for, including Engentfy and Lugo’s Craft Distillery.`,
+    priority: '0.6',
+    changefreq: 'monthly',
+  },
+  {
+    page: 'About',
+    path: '/about',
+    title: `About — Meet Founder ${SITE.founder} | ${SITE.name}`,
     description:
       `${SITE.name} is founded by ${SITE.founder}, a professional from Coamo, Puerto Rico with a background in CLM, government contracting, consulting, project management and marketing — now building in Celebration, Florida.`,
-    priority: '0.6',
+    priority: '0.5',
     changefreq: 'monthly',
   },
   {

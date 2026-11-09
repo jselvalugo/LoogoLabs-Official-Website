@@ -6,6 +6,7 @@ import CookieConsent from './components/feedback/CookieConsent';
 import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Company from './pages/Company';
+import About from './pages/About';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
@@ -16,6 +17,7 @@ import './styles/pages/brand-design.css';
 import './styles/pages/consulting.css';
 import './styles/pages/marketplace.css';
 import './styles/pages/game-plan.css';
+import './styles/pages/customers.css';
 import SkillsTopBar from './components/navigation/SkillsTopBar';
 // Loaded with the app, not lazily: a lazy chunk left the page empty for a beat
 // and the footer jumped to the top of the screen while it loaded.
@@ -168,6 +170,7 @@ function App({ initialPath }) {
   else if (page === 'Mission') body = <Mission onNavigate={navigate} />;
   else if (page === 'AIVoice') body = <React.Suspense fallback={null}><AIVoice /></React.Suspense>;
   else if (page === 'Company') body = <Company onNavigate={navigate} />;
+  else if (page === 'About') body = <About onNavigate={navigate} />;
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
   else if (page === 'Tools') body = <React.Suspense fallback={null}><ToolsHub /></React.Suspense>;
   else if (TOOL_PAGES[page]) { const Tool = TOOL_PAGES[page]; body = <React.Suspense fallback={null}><Tool /></React.Suspense>; }
@@ -204,7 +207,7 @@ function App({ initialPath }) {
       </div>
       <Footer
         columns={[
-          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Company', 'Industry LoogoBlog', 'Book a Call'] },
+          { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Who we serve', 'About', 'Industry LoogoBlog', 'Book a Call'] },
           { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services', 'Free Tools'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },

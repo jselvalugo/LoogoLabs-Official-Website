@@ -24,7 +24,11 @@ const STATIC = {
     description: 'Una agencia escribe la estrategia, un desarrollador espera las especificaciones y los meses pasan. Loogo Labs es un solo equipo que planea tu marketing y luego construye y opera el sistema que lo hace funcionar.',
   },
   Company: {
-    title: `La empresa: conoce al fundador | ${BRAND}`,
+    title: `A quién servimos: nuestros clientes | ${BRAND}`,
+    description: `Las marcas SaaS, creadores y negocios locales para los que ${BRAND} planea y construye marketing, entre ellos Engentfy y Lugo’s Craft Distillery.`,
+  },
+  About: {
+    title: `Nosotros: conoce al fundador | ${BRAND}`,
     description: `${BRAND} fue fundada por David Selva, profesional de Coamo, Puerto Rico, con experiencia en CLM, contratos gubernamentales, consultoría, gestión de proyectos y marketing, hoy en Celebration, Florida.`,
   },
   LoogoNews: {

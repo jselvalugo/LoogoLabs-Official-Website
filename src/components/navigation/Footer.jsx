@@ -10,6 +10,8 @@ import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react
 const LABELS_ES = {
   'Mission': 'Misión',
   'Company': 'Empresa',
+  'Who we serve': 'A quién servimos',
+  'About': 'Nosotros',
   'AI Voice': 'Voz con IA',
   'Book a Call': 'Agenda una llamada',
   'Industry LoogoBlog': 'LoogoBlog de la industria',
@@ -25,6 +27,8 @@ const LABELS_ES = {
 const pageMap = {
   'Mission': 'Mission',
   'Company': 'Company',
+  'Who we serve': 'Company',
+  'About': 'About',
   'AI Voice': 'AIVoice',
   'Industry LoogoBlog': 'LoogoNews',
   'Central Florida': 'GrowCFL',

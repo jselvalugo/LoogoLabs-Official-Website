@@ -1,5 +1,5 @@
 // Client names shown on the home ticker and the consulting page.
-export const REFERENCES = ['Feche Consulting', 'Reef Ntwrks', 'Lugo’s Craft Distillery', 'Riel Compliance Suite', 'Pronomy.io', 'Geros Studio'];
+export const REFERENCES = ['Engentfy', 'Feche Consulting', 'Reef Ntwrks', 'Lugo’s Craft Distillery', 'Riel Compliance Suite', 'Pronomy.io', 'Geros Studio'];
 
 // Clients who sent their logo. Shown as the logo instead of initials on the consulting page.
 // `fill`: the image carries its own background and fills the tile edge to edge. `caption`: text shown under the logo. `dark`: a light logo that needs a dark card. `chip`: a logo with its own dark background, shown as a tile.
@@ -7,6 +7,8 @@ export const REFERENCES = ['Feche Consulting', 'Reef Ntwrks', 'Lugo’s Craft Di
 // logo sits directly on the cream with no tiles behind it. `th` is its display height in px.
 const T = (file, w, h, th, extra = {}) => ({ src: `/clients/ticker/${file}`, w, h, th, dark: false, chip: false, fill: false, ...extra });
 export const CLIENT_LOGOS = {
+  'Engentfy': { src: '/partners/engentfy/horizontal-blue.svg', w: 5913, h: 1456,
+    ticker: T('engentfy.png', 592, 104, 22) },
   'Feche Consulting': { src: '/clients/feche-consulting.jpg', w: 600, h: 187,
     ticker: T('feche-consulting.png', 600, 160, 30) },
   'Riel Compliance Suite': { src: '/clients/riel-compliance-suite.jpg', w: 600, h: 181, chip: true,
