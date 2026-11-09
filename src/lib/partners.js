@@ -20,8 +20,8 @@ export const PARTNERS = {
       {
         title: 'Products', titleEs: 'Productos',
         links: [
-          { label: 'Engentfy Assistant', note: 'WhatsApp back office · from $19.99/mo', noteEs: 'Back office en WhatsApp · desde $19.99/mes', href: 'https://engentfy.com/assistant' },
-          { label: 'Plugins for ChatGPT & Claude', note: 'Free to install · from $4.99/mo', noteEs: 'Gratis para instalar · desde $4.99/mes', href: 'https://engentfy.com/plugins' },
+          { label: 'Engentfy Assistant', note: 'Your real estate back office in WhatsApp', noteEs: 'Tu back office de bienes raíces en WhatsApp', href: 'https://engentfy.com/assistant' },
+          { label: 'Plugins for ChatGPT & Claude', note: 'Florida real estate data inside your assistant', noteEs: 'Datos de bienes raíces de Florida en tu asistente', href: 'https://engentfy.com/plugins' },
           { label: 'Parcels', note: '10.8M Florida parcels in your assistant', noteEs: '10.8M de parcelas de Florida en tu asistente', href: 'https://engentfy.com/plugins/parcels' },
           { label: 'Lofty', note: 'Your Lofty CRM, worked from chat', noteEs: 'Tu CRM de Lofty, desde el chat', href: 'https://engentfy.com/plugins/lofty' },
           { label: 'Cadence', note: 'Leads, listings and contracts', noteEs: 'Prospectos, listados y contratos', href: 'https://engentfy.com/plugins/cadence' },

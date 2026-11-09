@@ -1208,11 +1208,11 @@ It starts with real estate, and it is built in Florida. Here is what shipped and
 
 The [Engentfy Assistant](https://engentfy.com/assistant) is a back office you text like a colleague. Deadlines, CRM updates, property records, email and calendar all run through one WhatsApp thread instead of five tabs.
 
-An agent between showings can ask what is due this week, log a call or pull up a property without opening a laptop. Plans start at **$19.99 a month**.
+An agent between showings can ask what is due this week, log a call or pull up a property without opening a laptop.
 
 ## Plugins that bring real records into ChatGPT and Claude
 
-If your team already works in ChatGPT or Claude, the [Engentfy plugins](https://engentfy.com/plugins) bring real data into that conversation instead of making you leave it. They are free to install, the first month is free, and plans start at **$4.99 a month**.
+If your team already works in ChatGPT or Claude, the [Engentfy plugins](https://engentfy.com/plugins) bring real data into that conversation instead of making you leave it. They are free to install.
 
 The first one out is [Engentfy Parcels](https://engentfy.com/plugins/parcels): every Florida parcel, more than 10.8 million of them, available inside your assistant. Ask about an address and get the owner, the last sale and the just value from the parcel record itself, not from a model's best guess.
 
