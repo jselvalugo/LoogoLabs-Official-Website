@@ -11,6 +11,64 @@
 
 export const posts = [
   {
+    slug: `ai-tool-renewal-audit-before-year-end`,
+    title: `Before You Renew That AI Tool for Next Year, Do This`,
+    excerpt: `Most AI subscriptions renew because nobody had time to ask what they do, and a one-page audit in November decides which ones earn another twelve months.`,
+    tags: `Evaluating AI Tools, Marketing Budget, Year-End Planning`,
+    content: `Somewhere in your card statements there are two or three AI subscriptions you signed up for in a burst of curiosity, and at least one of them is about to renew for a full year. Nobody decided that. The date arrived, the card was on file, and the charge went through. If you own a small business or you are the one person who does the marketing, November is when this quietly gets expensive, because budgets get set for next year and tools get renewed on autopilot.
+
+I do not think the fix is a research project. I ask people to fill in one page, with their own numbers, in an afternoon.
+
+## List what you pay for, with the renewal date
+
+Open your card and bank statements and pull out every tool that mentions writing, images, video, chatbots, scheduling or "assistant". Include the free trials you forgot to cancel and the add-ons inside tools you already use.
+
+For each one, write down the monthly or annual price and the renewal date. Annual plans are the ones that hurt, because a mistake costs twelve months instead of one. Put those at the top.
+
+## Name the marketing job, in one sentence
+
+Next to each tool, write the single marketing job it does. "Drafts the first version of my ad headlines." "Answers website chats after hours." "Turns a recorded video into captions."
+
+If you cannot write that sentence, the tool is not doing a job. It is a habit. Mark it for cancellation unless you can name a job by the end of this exercise.
+
+## Count the checking time, not just the saving
+
+Most people judge an AI tool by how fast it produces a draft. That is the wrong clock. The honest number is the time from "asked for it" to "safe to publish", and that includes your edit.
+
+Take the last five things the tool produced for you. For each, note how many minutes you spent fixing it before it went out, and whether you rewrote it so heavily that starting from scratch would have been quicker. If you are working in a tool that talks to your customers, count the replies you went back and corrected too.
+
+Say a tool saves you twenty minutes on a caption and you spend fifteen making it sound like you. You are paying for a five-minute gain. That might still be worth it, or it might not, but now you know instead of guessing.
+
+## Ask what it does without asking you
+
+This is the question that separates tools worth keeping from tools that cost you later. For each one, find out what it can do without your approval:
+
+- Does it publish or send anything on its own?
+- Does it talk to customers, and who reads those conversations?
+- Does it change ad budgets, bids or targeting by itself?
+- If it gets something wrong, who finds out, and how fast?
+
+A drafting tool that only ever hands you text is low risk. A tool that posts, sends, replies or spends is a staff member you have not trained. Keep it only if someone on your side reviews its output on a schedule, and write down who and when.
+
+## Decide with three piles
+
+Sort every tool into one of three piles: keep, trial, cut.
+
+**Keep** means it does a named job, the checking time is small, and you can say what it would cost you to lose it. **Trial** means you are unsure, so move it to monthly billing if possible, or set a reminder for thirty days before the renewal date and decide then with fresh numbers. **Cut** means no named job, or the checking time eats the saving.
+
+Be hard on overlap. If two tools both write captions, one of them is going. Expect to find at least one pair.
+
+## Where AI helps with this, and where it doesn't
+
+I will happily paste a list of tools and jobs into an assistant and ask it to find overlaps or suggest questions I missed. It is quick, and it spots duplicates a tired human skims past.
+
+It cannot tell you how much time you spent fixing its output last month, or whether your customers noticed a change in your replies. Only you know those numbers, and they are the ones that decide.
+
+## This week
+
+Pull up the statement for the card you use for marketing tools and highlight every charge that renews before the end of February. Next to each, write the job it does and the date you will decide. Anything where you cannot write the job in one sentence, cancel or switch to monthly today, before the renewal does it for you.`,
+  },
+  {
     slug: `lead-guarantee-lie-local-marketing`,
     title: `Guaranteed Leads and Page-One SEO: How to Spot the Catch`,
     excerpt: `A marketing guarantee is usually written to be cheap for the agency to keep, and the catch is almost always in how it defines a lead or picks the keywords.`,
