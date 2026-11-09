@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `ai-drafts-same-edits-style-sheet`,
+    title: `Stop Making the Same Edits to Every AI Draft`,
+    excerpt: `If you fix the same three things in every caption and email the AI writes, those fixes are a style sheet you haven't written down yet.`,
+    tags: `AI Content Workflow, Brand Voice, Solo Marketers`,
+    content: `Every draft the AI hands you needs the same three fixes. You delete the opening line. You swap "elevate" for something a person would say. You cut the last sentence, the one that tells the reader what you just told them.
+
+You do it every time, by hand, and you've been doing it for months. That is not an AI problem. It is a briefing problem, and you can fix it in about an hour.
+
+## Your edits are the brief you never wrote
+
+When a tool's draft sounds off, most people respond by rewriting the prompt with more adjectives: "friendly but professional, warm, local." The tool reads that and produces something friendly, professional, warm and local, which is to say the same draft as everyone else who typed those words.
+
+Your edits are far more specific than any adjective. Each time you delete a line, you are stating a rule you hold but have never said out loud. The tool has no way to see those rules. It sees only what you type before the draft, so you pay for the missing rules again on every single post.
+
+## Keep an edit log for one week
+
+For the next seven days, every time you fix an AI draft, write down what you changed, in plain words. Not the whole rewrite. Just the move.
+
+- "Cut the opening that praises the customer's decision."
+- "Replaced 'solutions' with the actual service."
+- "Took out the exclamation marks."
+- "Added the price, because the draft was vague about it."
+
+Keep it in a notes app or on paper beside the keyboard. You will feel silly for about two days. By day five you will notice that you are writing the same line again.
+
+At the end of the week, anything that appears three times or more is a rule. Anything that appears once is taste, and you can leave it out. Most people end up with six to ten rules, which is the right size.
+
+## Turn the repeats into a style sheet
+
+Write the rules as short, checkable instructions, and write them as things to do or avoid, not as moods.
+
+> Start with the customer's problem, never with praise or a greeting.
+> Name the service in the words a customer uses. Never write "solutions."
+> No exclamation marks. One sentence per idea.
+> If there is a price, a day or a deadline, it goes in the first three lines.
+
+Then add two or three pieces you wrote yourself that you were proud of, pasted in as examples, with one line saying what makes them yours. Examples teach tone better than description does, because the tool can copy a shape where it can only guess at a feeling.
+
+Paste the sheet at the top of every request, ahead of the topic. Keep it on one page. Past that, the instructions start competing with each other.
+
+## Where this works, and where it doesn't
+
+A style sheet makes drafts cleaner. It removes the repeat edits, so each draft needs fewer fixes. How many fewer depends on how loose your starting prompt was, so time your editing for a week before and a week after instead of taking my word for it.
+
+It does not give the tool anything to say. If the draft is smooth and empty, no sheet will fix that, because the missing piece is a real detail: what happened on the job, what the customer asked, what you would tell a friend. Only you have those, and the best use of your editing time is adding one per post.
+
+The sheet also drifts. Your customers change and so does your offer. Read it again every couple of months and delete any rule you no longer follow yourself.
+
+## This week
+
+Open the last five AI drafts you published or deleted, and mark every change you made. If one edit shows up in three of them, write it as a one-line rule today, and paste that line above your next request. Check whether the draft comes back needing that fix. If it still does, the rule is too vague, so make it more specific and try again.`,
+  },
+  {
     slug: `ai-tool-renewal-audit-before-year-end`,
     title: `Before You Renew That AI Tool for Next Year, Do This`,
     excerpt: `Most AI subscriptions renew because nobody had time to ask what they do, and a one-page audit in November decides which ones earn another twelve months.`,
