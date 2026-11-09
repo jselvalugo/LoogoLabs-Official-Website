@@ -6,29 +6,49 @@
 
 .ll-cust {
   --cust-accent: var(--amber-500);
-  --cust-chip: var(--ink-900);
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 168px minmax(0, 1fr) auto;
+  grid-template-columns: 184px minmax(0, 1fr) auto;
   align-items: center;
   gap: 28px;
-  padding: 14px 24px 14px 20px;
-  background: color-mix(in srgb, var(--cust-accent) 5%, var(--paper-000));
-  border: 1px solid var(--border-hair);
-  border-left: 5px solid var(--cust-accent);
-  transition: background .2s ease, transform .2s ease;
+  padding: 14px 26px 14px 14px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.5));
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 2px rgba(27,42,18,.05), 0 10px 30px -18px rgba(27,42,18,.28);
+  transition: box-shadow .25s ease, transform .25s ease;
 }
-.ll-cust:hover { background: color-mix(in srgb, var(--cust-accent) 9%, var(--paper-000)); transform: translateX(2px); }
+.ll-cust:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 4px rgba(27,42,18,.05), 0 16px 36px -18px color-mix(in srgb, var(--cust-accent) 45%, transparent); }
+
+/* Brand-coloured light that the frosted tile blurs. */
+.ll-cust__glow {
+  position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(90px 70px at 70px 30%, color-mix(in srgb, var(--cust-accent) 55%, transparent), transparent 70%),
+    radial-gradient(120px 80px at 150px 85%, color-mix(in srgb, var(--cust-accent) 30%, transparent), transparent 70%),
+    radial-gradient(260px 140px at 0% 50%, color-mix(in srgb, var(--cust-accent) 10%, transparent), transparent 80%);
+}
 
 .ll-cust__chip {
-  height: 72px; display: flex; align-items: center; justify-content: center;
-  background: var(--cust-chip); padding: 10px 14px; overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--cust-accent) 25%, transparent);
+  height: 76px; display: flex; align-items: center; justify-content: center; padding: 14px 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,.62), rgba(255,255,255,.32));
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.25), 0 6px 18px -10px color-mix(in srgb, var(--cust-accent) 60%, transparent);
 }
-.ll-cust__chip img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
-.ll-cust__chip--cover { padding: 0; }
-.ll-cust__chip--cover img { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; }
-.ll-cust__script { font: italic 400 20px/1.1 var(--font-display); color: #D9B36A; text-align: center; }
+.ll-cust__logo {
+  display: block; max-width: 100%; max-height: 40px; height: 40px; width: auto;
+  background: var(--cust-accent);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+.ll-cust__img { display: block; max-width: 100%; max-height: 34px; width: auto; height: auto; }
+.ll-cust__script { font: italic 400 19px/1.1 var(--font-display); color: var(--cust-accent); text-align: center; }
 
 .ll-cust__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
 .ll-cust__name { margin: 0; font: 500 22px/1.2 var(--font-display); color: var(--ink-900); }
@@ -42,9 +62,13 @@
 .ll-cust-close { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px; padding-top: 80px; padding-bottom: 96px; }
 
 @media (max-width: 760px) {
-  .ll-cust { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px 16px; }
-  .ll-cust__chip { height: 52px; width: 156px; padding: 8px 12px; }
+  .ll-cust { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px 18px 16px 12px; border-radius: 18px; }
+  .ll-cust__chip { height: 60px; width: 168px; padding: 10px 16px; }
+  .ll-cust__logo { height: 32px; max-height: 32px; }
   .ll-cust__link:empty { display: none; }
+  .ll-cust__glow { background:
+    radial-gradient(90px 60px at 60px 30px, color-mix(in srgb, var(--cust-accent) 55%, transparent), transparent 70%),
+    radial-gradient(110px 60px at 150px 75px, color-mix(in srgb, var(--cust-accent) 28%, transparent), transparent 70%); }
   .ll-cust__name { font-size: 20px; }
   .ll-cust-hero { padding-top: 48px; }
   .ll-cust-close { padding-top: 56px; padding-bottom: 72px; }

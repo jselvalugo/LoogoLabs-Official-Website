@@ -11,11 +11,14 @@ import { useLang } from '../lib/i18n';
 function CustomerBand({ c, es }) {
   const blurb = (es && c.blurbEs) || c.blurb;
   return (
-    <li className="ll-cust" style={{ '--cust-accent': c.accent, '--cust-chip': c.chipBg }}>
-      <div className={`ll-cust__chip${c.fit === 'cover' ? ' ll-cust__chip--cover' : ''}`}>
-        {c.logo
-          ? <img src={c.logo} alt={`${c.name} logo`} loading="lazy" decoding="async" />
-          : <span className="ll-cust__script">{c.wordmark || c.name}</span>}
+    <li className="ll-cust" style={{ '--cust-accent': c.accent }}>
+      <div className="ll-cust__glow" aria-hidden="true" />
+      <div className="ll-cust__chip">
+        {!c.logo ? <span className="ll-cust__script">{c.wordmark || c.name}</span>
+          : c.tint ? (
+            <span className="ll-cust__logo" role="img" aria-label={`${c.name} logo`}
+              style={{ aspectRatio: `${c.w} / ${c.h}`, WebkitMaskImage: `url(${c.logo})`, maskImage: `url(${c.logo})` }} />
+          ) : <img className="ll-cust__img" src={c.logo} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />}
       </div>
       <div className="ll-cust__body">
         <div className="ll-cust__head">
