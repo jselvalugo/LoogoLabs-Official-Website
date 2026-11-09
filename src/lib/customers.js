@@ -4,6 +4,7 @@
 //   accent   — brand colour: the glow behind the glass tile, the logo tint and the link
 //   logo     — transparent image in /public, w/h its pixel size (null = show
 //              `wordmark` as script text instead)
+//   tall     — square/stacked logo: shown larger so its text stays legible
 //   tint     — true paints a one-colour logo in `accent`; false keeps its own colours
 //   blurb    — the short paragraph (2–3 sentences). blurbEs is the Spanish copy;
 //              when it is empty the English copy is shown on /es.
@@ -24,9 +25,9 @@ export const CUSTOMERS = [
     name: 'Lugo’s Craft Distillery',
     kind: 'Craft distillery',
     kindEs: 'Destilería artesanal',
-    accent: '#C79A2E',
-    logo: '/clients/ticker/lugos-craft.png', w: 392, h: 160, tint: true,
-    url: 'https://www.lugoscraftdistillery.com',
+    accent: '#9C7420',
+    logo: '/clients/ticker/lugos-craft-distillery.png', w: 180, h: 176, tint: true, tall: true,
+    url: 'https://www.lugoscraftspirits.com',
     blurb: "We led the promotion for Lugo's Cards and Cocktails event from start to finish: the campaign plan, the content and the social media push behind it.",
     blurbEs: "Dirigimos la promoción del evento Cards and Cocktails de Lugo's de principio a fin: el plan de campaña, el contenido y el impulso en redes sociales.",
   },
