@@ -353,7 +353,6 @@ function Home({ onNavigate }) {
     <main>
       <Hero es={es}>
             <div className="hm-hero__copy">
-              <Reveal y={10}><span className="hm-hero__kicker ll-label">{es ? 'Marketing y automatización · Orlando, FL' : 'Marketing & automation · Orlando, FL'}</span></Reveal>
               <h1 className="hm-hero__title">
                 <Words text={es ? 'Tú manejas el negocio.' : 'You run the business.'} delay={0.1} step={0.07} />{' '}
                 <Words as="em" text={es ? 'Nosotros traemos los clientes.' : 'We bring the customers.'} delay={0.5} step={0.07} />
