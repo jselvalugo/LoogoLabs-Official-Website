@@ -192,17 +192,20 @@ export const SKILLS = [
     buyUrl: BUY_URLS['viral-cut-studio'],
     tagline: 'Raw footage in. Scroll-stopping Reels, TikToks and Shorts out.',
     description:
-      'You filmed it, and now it sits in your camera roll because editing takes hours. Viral Cut Studio turns Claude into your video editor. It cuts the dead air, the ums and the retakes, finds your strongest line and opens on it, reframes to vertical with a camera that follows your face, then adds punch-in zooms, animated captions, sound effects and a call to action. Got a podcast or webinar? It finds the best clips and finishes each one as its own Short. English, Spanish and 20+ more languages.',
+      'You filmed it, and now it sits in your camera roll because editing takes hours. Viral Cut Studio turns Claude into your video editor. It cuts the dead air, the ums and the retakes, finds your strongest line and opens on it, reframes to vertical with a camera that follows your face, then adds punch-in zooms, screenshots and B-roll right when you mention them, animated captions, sound effects and a call to action. It renders different openings so you can test which hook wins, edits a whole folder of videos in one go, and turns a podcast or webinar into its best Shorts. English, Spanish and 20+ more languages.',
     outputs: [
       'Finished 9:16 videos ready to post (1080×1920, loudness set for Instagram, TikTok and YouTube)',
       'The hook moved to the first second, with an on-screen title',
       'Animated captions in 6 styles, in your brand color, plus an .srt file',
       'The 3–5 best clips from any long video or podcast',
+      'Two or three versions with different hooks, plus a plan to test which one wins',
+      'Screenshots, product photos and B-roll that pop in on the exact word',
+      'A whole folder of videos edited in one batch, with a summary',
       'Post copy: hook caption, Instagram and TikTok versions, hashtags and a cover image',
       'An edit report: what was cut, why, and a checklist before you post',
     ],
     inside: [
-      'A full editing engine: silence and filler removal, retake detection, face-tracked reframing and split-screen for two people',
+      'A full editing engine: silence and filler removal, retake detection, face-tracked reframing, split-screen for two people, overlays and batch mode',
       'Editing playbooks: cut rules, 10 hook formulas, clip scoring, caption and motion guides',
       'Bonus: the Number-Hook Reel, the motion-graphics format Loogo Labs uses on its own channels',
       'Built-in sound effects, free for commercial use, synced to every cut',
