@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, ArrowRight, Printer, Check } from '@phosphor-icons/react';
+import { ArrowDown, ArrowRight, Check, DownloadSimple, FilePdf } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
 import { fireCustom } from '../components/funnel/ScrollFunnel';
@@ -176,6 +176,112 @@ function TailorForm({ token, onBook }) {
   );
 }
 
+const PDF_URL = '/downloads/Loogo-Labs-90-Day-Marketing-Game-Plan.pdf';
+const PDF_NAME = 'Loogo Labs 90-Day Marketing Game Plan.pdf';
+const DL_SOURCE = 'game_plan_download';
+
+function startDownload() {
+  const a = document.createElement('a');
+  a.href = PDF_URL; a.download = PDF_NAME; a.rel = 'noopener';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+// Email-gated download of the 12-page workbook. New visitors give a name and
+// email (lead + optional newsletter); readers from our emails (?s=<token>)
+// download in one click and are still logged as a lead.
+function DownloadForm({ token, onBook }) {
+  const known = !!token;
+  const [form, setForm] = React.useState({ fullName: '', email: '', newsletter: true });
+  const [error, setError] = React.useState('');
+  const [busy, setBusy] = React.useState(false);
+  const [done, setDone] = React.useState(false);
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!known && (!form.fullName.trim() || !EMAIL_RE.test(form.email.trim()))) { setError('Enter your name and a valid email.'); return; }
+    setError(''); setBusy(true);
+    const metaId = trackLead({ content_name: DL_SOURCE });
+    gaLead(DL_SOURCE);
+    fireCustom('GamePlanDownload', { funnel: SOURCE });
+    try {
+      await fetch('/.netlify/functions/create-lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...(known ? { subscriber_token: token } : { full_name: form.fullName.trim(), email: form.email.trim(), newsletter: form.newsletter }),
+          source: DL_SOURCE, notes: 'Downloaded the 90-Day Marketing Game Plan workbook (PDF)',
+          session_id: getSessionId(), attribution: getAttribution(), ...leadMeta(metaId),
+        }),
+      });
+    } catch {
+      // Never block the download on the lead call.
+    }
+    startDownload();
+    setBusy(false); setDone(true);
+  }
+
+  if (done) {
+    return (
+      <div className="gp-dl__card gp-dl__card--done">
+        <span className="gp-done__icon"><Check size={22} weight="bold" /></span>
+        <h3>Your workbook is downloading.</h3>
+        <p>Didn’t start? <a href={PDF_URL} download={PDF_NAME}>Download it here</a>. Print it, or fill it in on screen, and start with page 4.</p>
+        <p className="gp-dl__next"><strong>Want it built for your business?</strong> On a free strategy call we fill in the plan with you: your offer, your channel and your first 30 days.</p>
+        <div className="gp-dl__actions">
+          <Button variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={onBook}>Book my free strategy call</Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <form className="gp-dl__card" onSubmit={submit} noValidate>
+      <p className="gp-kicker">Free download · 12-page PDF</p>
+      <h3>Get the workbook</h3>
+      {known
+        ? <p>Welcome from the Letter. We already have your email, so it’s one click.</p>
+        : <p>Tell us where to send updates and the download starts right away.</p>}
+      {!known && (
+        <div className="gp-dl__fields">
+          <Input label="First name" value={form.fullName} onChange={set('fullName')} placeholder="Jane" />
+          <Input label="Email" type="email" value={form.email} onChange={set('email')} placeholder="jane@yourbusiness.com" />
+        </div>
+      )}
+      {!known && (
+        <label className="gp-check"><input type="checkbox" checked={form.newsletter} onChange={set('newsletter')} /> Also send me the Loogo Labs Letter: marketing news and ideas, once a month.</label>
+      )}
+      {error && <p className="gp-error" role="alert">{error}</p>}
+      <div className="gp-dl__actions">
+        <Button type="submit" variant="primary" size="lg" iconRight={<DownloadSimple size={16} weight="bold" />} fullWidth disabled={busy}>{busy ? 'Preparing…' : 'Download my free workbook'}</Button>
+      </div>
+      <p className="gp-dl__fine">Free. No spam. Unsubscribe anytime.</p>
+    </form>
+  );
+}
+
+function DownloadSection({ token, onBook }) {
+  return (
+    <section className="gp-dl" id="download" aria-labelledby="gp-dl-title">
+      <div className="gp-dl__copy">
+        <p className="gp-kicker">The printable workbook</p>
+        <h2 id="gp-dl-title">Take the plan with you. <em>Fill it in. Follow it.</em></h2>
+        <p className="gp-dl__lede">Everything on this page, turned into a 12-page workbook you can print or fill in on screen.</p>
+        <ul className="gp-dl__list">
+          {[
+            'The five questions and a fill-in-the-blank offer builder',
+            'Week-by-week checklists for all 13 weeks',
+            'A monthly content planner, so you never start from a blank screen',
+            'A 13-week scorecard to see what actually brings customers',
+            'A day-90 review: what to keep, cut and double down on',
+          ].map((t) => <li key={t}><Check size={16} weight="bold" aria-hidden="true" /><span>{t}</span></li>)}
+        </ul>
+        <p className="gp-dl__file"><FilePdf size={18} weight="bold" aria-hidden="true" /> PDF · US Letter · Print-ready</p>
+      </div>
+      <DownloadForm token={token} onBook={onBook} />
+    </section>
+  );
+}
+
 function Newsletter() {
   const [email, setEmail] = React.useState('');
   const [hp, setHp] = React.useState('');
@@ -246,10 +352,12 @@ export default function GamePlan() {
         <h1>Stop guessing at marketing. <em>Run a 90-day game plan.</em></h1>
         <p className="cs-lede">Posting more and boosting more rarely fixes it. A plan does. This is the framework we use with clients, free. Work through it below, then get it built for your business.</p>
         <div className="gp-hero__ctas">
-          <Button variant="primary" size="lg" iconRight={<ArrowDown size={16} weight="bold" />} onClick={go('plan')}>Read the plan</Button>
-          <button type="button" className="cs-textcta" onClick={go('get-started')}>Get it tailored to me <ArrowRight size={18} weight="bold" /></button>
+          <Button variant="primary" size="lg" iconRight={<DownloadSimple size={16} weight="bold" />} onClick={go('download')}>Download the free workbook</Button>
+          <button type="button" className="cs-textcta" onClick={go('plan')}>Read the plan first <ArrowDown size={18} weight="bold" /></button>
         </div>
       </section>
+
+      <DownloadSection token={token} onBook={onBook} />
 
       <section className="gp-section" id="plan" aria-labelledby="gp-found-title">
         <p className="gp-kicker">Before day 1</p>
@@ -283,7 +391,7 @@ export default function GamePlan() {
         <dl className="gp-week">
           {WEEK.map(([d, t]) => <div key={d}><dt>{d}</dt><dd>{t}</dd></div>)}
         </dl>
-        <button type="button" className="cs-textcta gp-print" onClick={() => window.print()}><Printer size={18} weight="bold" /> Save or print this plan</button>
+        <button type="button" className="cs-textcta gp-print" onClick={go('download')}><DownloadSimple size={18} weight="bold" /> Get the printable 12-page workbook</button>
       </section>
 
       <section className="cs-form bd gp-form" id="get-started">
