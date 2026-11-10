@@ -242,7 +242,6 @@ export default function GamePlan() {
       </header>
 
       <section className="cs-hero gp-hero">
-        <p className="gp-kicker">Free · The Loogo Labs 90-day Marketing Game Plan</p>
         <h1>Stop guessing at marketing. <em>Run a 90-day game plan.</em></h1>
         <p className="cs-lede">Posting more and boosting more rarely fixes it. A plan does. This is the framework we use with clients, free. Work through it below, then get it built for your business.</p>
         <div className="gp-hero__ctas">

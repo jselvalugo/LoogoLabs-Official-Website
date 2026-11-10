@@ -264,7 +264,6 @@ export default function ParkSupply() {
         <section style={{ padding: '28px 0 0' }}>
           <Wrap>
            <div className="ps-hero ll-forest ll-bezel--dark">
-            <Eyebrow light>Pet waste stations · Dog park amenities</Eyebrow>
             <h1 className="ps-h1">
               Cleaner parks, <em>fewer complaints</em>.
             </h1>

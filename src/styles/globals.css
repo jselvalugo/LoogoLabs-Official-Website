@@ -1410,3 +1410,4 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-founder__photo { max-width: none; }
   .hm-founder__photo img { aspect-ratio: 1 / 1; object-position: center 20%; }
 }
+.ll-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

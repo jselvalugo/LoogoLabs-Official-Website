@@ -297,7 +297,6 @@ function Packages({ onNavigate }) {
     <main className="pk-page">
       <div className="pk-ambient" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <section className="pk-wrap pk-hero">
-        <span className="ll-eyebrow">{es ? 'Software y servicios' : 'Software & services'}</span>
         {es ? (
           <>
             <h1 className="pk-title">Nuestro software, <em>o nuestro equipo.</em></h1>

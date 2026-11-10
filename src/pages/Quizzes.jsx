@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { pathForPage } from '../lib/seo';
 import { NICHE_QUIZZES } from '../lib/nicheQuizzes';
@@ -45,7 +44,6 @@ function Quizzes({ onNavigate }) {
   return (
     <main className="qz-hub">
       <div className="qz-wrap qz-hero">
-        <Badge tone="accent">{es ? 'Herramientas gratis' : 'Free tools'}</Badge>
         {es ? (
           <>
             <h1 className="qz-hero__title">Evaluaciones rápidas. <em>Sin necesidad de llamar.</em></h1>

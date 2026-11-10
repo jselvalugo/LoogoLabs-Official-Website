@@ -68,7 +68,6 @@ function Mission({ onNavigate }) {
           <div className="ll-hero-grid-bg" aria-hidden="true" />
           <div className="ll-staple-hero-inner">
             <div>
-              <span className="ll-staple-kicker">{es ? 'Nuestra misión' : 'Our mission'}</span>
               {es ? (
               <h1 className="ll-staple-title">
                 La mayoría de los planes de marketing <em>nunca se construyen.</em>

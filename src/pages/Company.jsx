@@ -41,7 +41,6 @@ function Company({ onNavigate }) {
   return (
     <main>
       <section className="ll-staple-wrap ll-cust-hero">
-        <span className="ll-eyebrow">{es ? 'A quién servimos' : 'Who we serve'}</span>
         {es
           ? <h1 className="ll-staple-h2">Las marcas para las que <em>construimos.</em></h1>
           : <h1 className="ll-staple-h2">The brands we <em>build for.</em></h1>}

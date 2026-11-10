@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 import { ArrowRight, Check, Plus } from '@phosphor-icons/react';
@@ -146,7 +145,6 @@ function PressRelease() {
     <main>
       {/* ── HERO ── */}
       <section className="pk-wrap pk-hero pk-hero--center">
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">{es ? 'Distribución de comunicados de prensa' : 'Press release distribution'}</Badge></div>
         <h1 className="pk-title">{es ? <>Pon tu negocio en las noticias. <em>Desde $149.</em></> : <>Get your business in the news. <em>Starting at $149.</em></>}</h1>
         <p className="pk-lede">
           {es ? 'Redactamos, publicamos y reportamos tu comunicado de prensa en más de 350 sitios de noticias, para que clientes, buscadores y asistentes de IA encuentren una historia creíble cuando te busquen.' : <>

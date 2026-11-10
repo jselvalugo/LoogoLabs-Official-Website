@@ -176,10 +176,6 @@ export default function NicheQuiz({ page }) {
     if (id === 'hero') {
       body = (
         <Card wide className="lp-hero">
-          <div className="lp-center lp-hero__badge">
-            <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="accent">{t.label}</Badge>
-          </div>
           <h1 className="lp-h1">{f.h1[0]} <em>{f.h1[1]}</em></h1>
           <p className="lp-lede">{t.lede}</p>
           <div className="lp-stats">

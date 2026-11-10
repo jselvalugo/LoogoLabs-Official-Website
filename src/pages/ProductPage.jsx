@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 import SectionHeading from '../components/surfaces/SectionHeading';
@@ -49,7 +48,6 @@ function ProductPage({ product = 'CartCaddy', onNavigate }) {
       <section style={{ borderBottom: '1px solid var(--border-hair)' }}>
         <Wrap style={{ padding: '80px 24px 64px', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div>
-            <Badge tone="accent">{c.industry}</Badge>
             <h1 style={{ margin: '18px 0 0', fontWeight: 500, fontSize: 'var(--fs-display-2)', lineHeight: 'var(--lh-display-2)',
               letterSpacing: 'var(--ls-display-2)', maxWidth: '20ch' }}>{c.headline}</h1>
             <p style={{ maxWidth: '50ch', margin: '20px 0 0', fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)' }}>{c.lede}</p>

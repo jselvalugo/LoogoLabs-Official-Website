@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { getSessionId } from '../lib/sessionTracker';
 import { leadEventId, leadMeta, pixelTrack } from '../lib/metaEvents';
@@ -187,7 +186,6 @@ function BrandPartners() {
   return (
     <main>
       <section className="pk-wrap pk-hero pk-hero--center">
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">{c.badge}</Badge></div>
         <h1 className="pk-title">{c.h1}</h1>
         <p className="pk-lede">{c.lede}</p>
         <div className="pk-hero__actions">
