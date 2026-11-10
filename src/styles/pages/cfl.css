@@ -120,7 +120,7 @@
 .cfl-transcript__head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-family: var(--font-body); font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--ink-200); }
 .cfl-transcript__list { display: grid; gap: 10px; }
 .cfl-bubble { max-width: 88%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
-.cfl-bubble small { display: block; font-family: var(--font-body); font-size: 10px; letter-spacing: 0; text-transform: none; opacity: 0.6; margin-bottom: 3px; }
+.cfl-bubble small { display: block; font-family: var(--font-body); font-size: 10px; letter-spacing: 0; text-transform: none; opacity: 0.85; margin-bottom: 3px; }
 .cfl-bubble--agent { justify-self: end; background: var(--paper-000); color: var(--ink-900); border-bottom-right-radius: 6px; }
 .cfl-bubble--caller { justify-self: start; background: rgba(245, 242, 235, 0.12); color: var(--paper-000); border-bottom-left-radius: 6px; }
 @media (max-width: 900px) { .cfl-transcript { justify-self: stretch; max-width: none; } }
@@ -326,6 +326,6 @@
 /* Tone modifiers win over the paper defaults of .cfl-tile / .cfl-card. */
 .cfl-tile.ll-sage { background: var(--paper-200); }
 .cfl-tile.ll-forest, .cfl-card.ll-forest {
-  background: var(--ink-900) 45%, var(--ink-600) 100%);
+  background: var(--ink-900);
   color: var(--paper-100);
 }

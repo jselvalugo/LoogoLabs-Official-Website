@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { useFocusTrap } from '../lib/a11y';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight, Bell, Brain, Browser, CalendarBlank, ChartLineUp, ChatsCircle, Check, ClipboardText,
@@ -222,6 +223,8 @@ function useIsPhone() {
 }
 
 function Drawer({ skill, onClose }) {
+  const panelRef = React.useRef(null);
+  useFocusTrap(panelRef, !!skill);
   const reduce = useReducedMotion();
   const phone = useIsPhone();
   // Side panel on desktop; a bottom sheet that slides up on phones.
@@ -246,7 +249,7 @@ function Drawer({ skill, onClose }) {
       {skill ? (
         <motion.div key="scrim" className="mk-scrim" onClick={onClose}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          <motion.aside className="mk-drawer" role="dialog" aria-modal="true" aria-label={skill.name}
+          <motion.aside ref={panelRef} className="mk-drawer" role="dialog" aria-modal="true" aria-label={skill.name}
             onClick={(e) => e.stopPropagation()}
             initial={off} animate={on}
             exit={off} transition={{ duration: 0.45, ease: EASE }}>
@@ -277,7 +280,7 @@ function Drawer({ skill, onClose }) {
             {skill.buyUrl ? <p className="mk-drawer__fine">One-time payment · instant download, plus the link by email · all sales final · secure checkout by Stripe</p> : null}
 
             <section className="mk-drawer__sec">
-              <h4 className="ll-eyebrow">What you get</h4>
+              <h3 className="ll-eyebrow">What you get</h3>
               <ul className="mk-card__outs mk-card__outs--lg">
                 {skill.outputs.map((o) => <li key={o}><Check size={14} weight="bold" aria-hidden="true" />{o}</li>)}
               </ul>
@@ -285,14 +288,14 @@ function Drawer({ skill, onClose }) {
 
             {skill.prompt ? (
               <section className="mk-drawer__sec">
-                <h4 className="ll-eyebrow">Try asking</h4>
+                <h3 className="ll-eyebrow">Try asking</h3>
                 <p className="mk-drawer__prompt">“{skill.prompt}”</p>
               </section>
             ) : null}
 
             {skill.inside ? (
               <section className="mk-drawer__sec">
-                <h4 className="ll-eyebrow">What's inside</h4>
+                <h3 className="ll-eyebrow">What's inside</h3>
                 <ul className="mk-card__outs mk-card__outs--lg">
                   {skill.inside.map((o) => <li key={o}><Check size={14} weight="bold" aria-hidden="true" />{o}</li>)}
                 </ul>
@@ -301,7 +304,7 @@ function Drawer({ skill, onClose }) {
 
             {skill.buyUrl ? (
               <section className="mk-drawer__sec">
-                <h4 className="ll-eyebrow">How you get it</h4>
+                <h3 className="ll-eyebrow">How you get it</h3>
                 <ol className="mk-steps-sm">
                   <li>Pay securely through Stripe. You'll get a receipt by email.</li>
                   <li>You land on a download page right away, and we email you the download link too. It keeps working for 30 days.</li>
@@ -314,15 +317,15 @@ function Drawer({ skill, onClose }) {
             {skill.tier === 'free' ? (
               <>
                 <section className="mk-drawer__sec">
-                  <h4 className="ll-eyebrow">How to install</h4>
+                  <h3 className="ll-eyebrow">How to install</h3>
                   <ol className="mk-steps-sm">
                     <li><b>Claude (web & desktop):</b> Settings → Capabilities. Turn on code execution and file creation, then under Skills choose <i>Upload skill</i> and pick the .zip.</li>
                     <li><b>Claude Code:</b> unzip into <code>~/.claude/skills/</code> so you have <code>~/.claude/skills/{skill.slug}/SKILL.md</code>.</li>
                   </ol>
                 </section>
                 <section className="mk-drawer__sec">
-                  <h4 className="ll-eyebrow">Inside SKILL.md</h4>
-                  <pre className="mk-source">{skill.leadMagnet && !isUnlocked(skill.slug)
+                  <h3 className="ll-eyebrow">Inside SKILL.md</h3>
+                  <pre className="mk-source" tabIndex={0} aria-label="SKILL.md source">{skill.leadMagnet && !isUnlocked(skill.slug)
                     ? `${skill.source.split('\n').slice(0, 24).join('\n')}\n\n… unlock with your email to get the full skill.`
                     : skill.source}</pre>
                 </section>
@@ -396,6 +399,8 @@ function SearchField({ value, onChange, id }) {
 // Phone filter sheet: price and category as large tap targets with live counts,
 // changes apply instantly and the footer button shows how many skills match.
 function FilterSheet({ open, onClose, tier, setTier, cat, setCat, q, total, onClear }) {
+  const panelRef = React.useRef(null);
+  useFocusTrap(panelRef, open);
   const reduce = useReducedMotion();
   React.useEffect(() => {
     if (!open) return undefined;
@@ -414,7 +419,7 @@ function FilterSheet({ open, onClose, tier, setTier, cat, setCat, q, total, onCl
         <>
           <motion.div key="scrim" className="mk-scrim" onClick={onClose}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} />
-          <motion.div key="sheet" className="mk-fsheet" role="dialog" aria-modal="true" aria-label="Filter skills"
+          <motion.div ref={panelRef} key="sheet" className="mk-fsheet" role="dialog" aria-modal="true" aria-label="Filter skills"
             initial={reduce ? { opacity: 0 } : { y: '100%' }} animate={reduce ? { opacity: 1 } : { y: 0 }}
             exit={reduce ? { opacity: 0 } : { y: '100%' }} transition={{ duration: 0.4, ease: EASE }}>
             <div className="mk-fsheet__head">
@@ -543,6 +548,7 @@ function Marketplace() {
           </div>
         </div>
 
+        <h2 className="ll-sr-only">All skills</h2>
         <div className="mk-status">
           <p className="mk-count">{list.length} {list.length === 1 ? 'skill' : 'skills'}</p>
           {tier !== 'all' ? <button type="button" className="mk-pill" onClick={() => setTier('all')}>{tierLabel}<X size={12} aria-label="Remove" /></button> : null}

@@ -145,10 +145,18 @@ function References() {
     ...REFERENCES.map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name]?.ticker })),
     ...CLIENT_WORDMARKS.map((name) => ({ name, wordmark: name.split(' - ')[0] })),
   ];
+  // WCAG 2.2.2: anything that moves on its own for more than 5s needs a pause control.
+  const [paused, setPaused] = React.useState(false);
   return (
     <div className="ll-ticker-bar" role="region" aria-label={es ? 'Clientes seleccionados' : 'Selected clients'}>
-      <div className="ll-ticker-label">{es ? 'Hemos trabajado con' : 'Work we have done for'}</div>
-      <div className="ll-ticker-belt">
+      <div className="ll-ticker-label">
+        {es ? 'Hemos trabajado con' : 'Work we have done for'}
+        <button type="button" className="ll-ticker-pause" aria-pressed={paused} onClick={() => setPaused(p => !p)}>
+          {paused ? (es ? 'Reanudar' : 'Play') : (es ? 'Pausar' : 'Pause')}
+          <span className="ll-sr-only">{es ? ' el desplazamiento de logos' : ' scrolling logos'}</span>
+        </button>
+      </div>
+      <div className={`ll-ticker-belt${paused ? ' is-paused' : ''}`}>
         <div className="ll-ticker-track">
           {[0, 1].map(copy => items.map((item) => (
             item.src ? (
@@ -204,7 +212,7 @@ function Carousel({ es, items }) {
           <button type="button" onClick={() => go(active + 1)} disabled={active === items.length - 1} aria-label={es ? 'Siguiente' : 'Next'}>→</button>
         </div>
       </div>
-      <div ref={track} className="hm-car__track" onScroll={onScroll} role="region" aria-label={es ? 'Servicios' : 'Services'}>
+      <div ref={track} className="hm-car__track" onScroll={onScroll} role="region" aria-label={es ? 'Servicios' : 'Services'} tabIndex={0}>
         {items.map((s, i) => (
           <article key={s.title} className={`hm-car__card${i === active ? ' on' : ''}`} aria-roledescription="slide" aria-label={`${i + 1} / ${items.length}`}>
             <div className="hm-car__head">
@@ -502,7 +510,7 @@ function Home({ onNavigate }) {
             <SectionHeading eyebrow={es ? 'Trabajo seleccionado' : 'Selected work'}
               title={es ? 'Algunas de las marcas con las que hemos trabajado.' : 'Some of the brands we have worked with.'} />
           </Reveal>
-          <Stagger className="hm-work__grid" gap={0.08}>
+          <Stagger className="hm-work__grid" gap={0.08} tabIndex={0} role="region" aria-label={es ? 'Trabajo de clientes' : 'Client work'}>
             {WORK.map(w => {
               const logo = CLIENT_LOGOS[w.name]?.ticker;
               const [k, v] = es ? w.es : w.en;

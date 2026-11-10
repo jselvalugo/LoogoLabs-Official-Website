@@ -383,6 +383,14 @@ export const ROUTES = [
     changefreq: 'yearly',
   },
   {
+    page: 'Accessibility',
+    path: '/accessibility',
+    title: `Accessibility Statement | ${SITE.name}`,
+    description: `How ${SITE.name} makes loogolabs.com usable for everyone, following WCAG 2.1 AA, and how to report a barrier.`,
+    priority: '0.3',
+    changefreq: 'yearly',
+  },
+  {
     page: 'Terms',
     path: '/terms',
     title: `Terms of Service | ${SITE.name}`,

@@ -21,6 +21,7 @@ const LABELS_ES = {
   'Free Tools': 'Herramientas gratis',
   'Privacy Policy': 'Política de privacidad',
   'Terms of Service': 'Términos del servicio',
+  'Accessibility': 'Accesibilidad',
   'Cookie Preferences': 'Preferencias de cookies',
 };
 
@@ -37,6 +38,7 @@ const pageMap = {
   'Free Tools': 'Tools',
   'Privacy Policy': 'Privacy',
   'Terms of Service': 'Terms',
+  'Accessibility': 'Accessibility',
 };
 
 const externalLinks = {

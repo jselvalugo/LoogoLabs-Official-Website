@@ -42,14 +42,14 @@ export function Reveal({ children, delay = 0, y = 28, className, style, as = 'di
 }
 
 /* Stagger a list of children. Wrap each child in <Item>. */
-export function Stagger({ children, className, style, gap = 0.08, delay = 0, amount = 0.2, as = 'div' }) {
+export function Stagger({ children, className, style, gap = 0.08, delay = 0, amount = 0.2, as = 'div', ...rest }) {
   const reduce = useReducedMotion(); const mounted = useMounted();
   const { pace, amount: paceAmount } = usePace();
   gap *= pace; delay *= pace; if (paceAmount != null) amount = paceAmount;
   const Tag = motion[as] || motion.div;
-  if (!mounted || reduce) { const Plain = as; return <Plain className={className} style={style}>{children}</Plain>; }
+  if (!mounted || reduce) { const Plain = as; return <Plain className={className} style={style} {...rest}>{children}</Plain>; }
   return (
-    <Tag className={className} style={style} initial="hidden" whileInView="show" viewport={{ once: true, amount }}
+    <Tag className={className} style={style} {...rest} initial="hidden" whileInView="show" viewport={{ once: true, amount }}
       variants={{ hidden: {}, show: { transition: { staggerChildren: gap, delayChildren: delay } } }}>
       {children}
     </Tag>
@@ -75,7 +75,8 @@ export function Words({ text, className, as = 'span', delay = 0, step = 0.05 }) 
   const Tag = as;
   if (!mounted || reduce) return <Tag className={className}>{text}</Tag>;
   return (
-    <Tag className={className} aria-label={text}>
+    <Tag className={className}>
+      <span className="ll-sr-only">{text}</span>
       {words.map((w, i) => (
         <React.Fragment key={i}>
           <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', paddingBottom: '0.08em', marginBottom: '-0.08em' }} aria-hidden="true">

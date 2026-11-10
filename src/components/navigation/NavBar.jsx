@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SITE, pathForPage } from '../../lib/seo';
 import { LangToggle, useHref, useLang } from '../../lib/i18n';
 import { AmbientShape } from '../brand/Morph';
+import { useFocusTrap } from '../../lib/a11y';
 
 const LABELS = {
   en: { Mission: 'What we do', Company: 'Who we serve', LoogoNews: 'Latest News', AIVoice: 'AI Voice', Packages: 'Packaged Services', BrandPartners: 'Partner with us' },
@@ -27,6 +28,9 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
   const lang = useLang();
   const toHref = useHref();
   const label = it => LABELS[lang][it] || it;
+  const menuRef = React.useRef(null);
+  const burgerRef = React.useRef(null);
+  useFocusTrap(menuRef, open, burgerRef);
 
   React.useEffect(() => { setMounted(true); }, []);
 
@@ -90,7 +94,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
             <LangToggle className="ll-lang--bar" />
             <a href={`tel:${SITE.tel}`} className="ll-nav__phone">{SITE.phone}</a>
             <div className="ll-cta-desktop">{cta}</div>
-            <button className={`ll-nav-burger${open ? ' is-open' : ''}`} onClick={() => setOpen(o => !o)}
+            <button ref={burgerRef} type="button" className={`ll-nav-burger${open ? ' is-open' : ''}`} onClick={() => setOpen(o => !o)}
               aria-label={open ? (lang === 'es' ? 'Cerrar menú' : 'Close menu') : (lang === 'es' ? 'Abrir menú' : 'Open menu')}
               aria-expanded={open} aria-controls="ll-nav-mobile">
               <span /><span />
@@ -101,7 +105,7 @@ function NavBar({ items = [], active, onNavigate, cta, feature, style, overHero 
 
       <AnimatePresence>
         {open && (
-          <motion.div id="ll-nav-mobile" className="ll-menu" role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Menú' : 'Menu'}
+          <motion.div ref={menuRef} id="ll-nav-mobile" className="ll-menu" role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Menú' : 'Menu'}
             initial={{ clipPath: 'circle(0% at calc(100% - 44px) 36px)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 44px) 36px)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 44px) 36px)' }}

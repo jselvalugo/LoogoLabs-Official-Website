@@ -6,6 +6,7 @@ import { pathForPage } from '../../lib/seo';
 // It sits in normal flow, so it scrolls away and the sticky nav takes the top.
 function SkillsTopBar({ es, onNavigate }) {
   return (
+    <aside aria-label={es ? 'Anuncio' : 'Announcement'}>
     <a href={pathForPage('Marketplace')} className="ll-topbar"
       onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate('Marketplace'); } }}>
       <span className="ll-topbar__inner">
@@ -15,6 +16,7 @@ function SkillsTopBar({ es, onNavigate }) {
         <span className="ll-topbar__go" aria-hidden="true"><ArrowRight size={14} weight="light" /></span>
       </span>
     </a>
+    </aside>
   );
 }
 

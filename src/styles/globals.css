@@ -24,7 +24,7 @@
   --ink-700: #2C4120;
   --ink-600: #3A5229;
   --ink-500: #5C564C;   /* secondary text on cream (warm grey) */
-  --ink-400: #7E776C;   /* muted text, captions */
+  --ink-400: #675F54;   /* muted text, captions (4.9:1 on bone, WCAG AA) */
   --ink-300: #A3AF96;   /* placeholders, disabled */
   --ink-200: #C9D0BD;   /* secondary text on forest */
   --ink-100: #E4E8DB;   /* body text on forest */
@@ -36,8 +36,8 @@
   --tan-300: #D9CDB7;     /* warm tan band */
 
   /* Accent — amber. Used once per screen at most. */
-  --amber-500: #8A6A3F;  /* warm bronze, used as the single accent */
-  --amber-600: #6B5740;
+  --amber-500: #765832;  /* warm bronze, the single accent (5.1:1 on bone, WCAG AA) */
+  --amber-600: #5E4527;
 
   /* Legacy accent names kept so older page styles resolve. */
   --cyan-500: var(--amber-500);
@@ -402,9 +402,9 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   transition: color 120ms ease;
 }
 .ll-footer__link:hover, .ll-footer__link:focus-visible { color: var(--paper-000); }
-.ll-footer__link--muted { color: var(--ink-400); cursor: default; }
+.ll-footer__link--muted { color: var(--ink-300); cursor: default; }
 .ll-footer__ext { font-size: 12px; opacity: 0.6; }
-.ll-footer a:focus-visible, .ll-footer button:focus-visible { outline: 2px solid var(--amber-500); outline-offset: 3px; }
+.ll-footer a:focus-visible, .ll-footer button:focus-visible { outline: 2px solid var(--paper-000); outline-offset: 3px; }
 .ll-footer__bottom {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding-top: 24px;
   font-size: 13px; color: var(--ink-300);
@@ -413,7 +413,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-footer__license { color: var(--ink-300); }
 .ll-footer__license a { color: var(--ink-100); text-decoration: underline; text-underline-offset: 3px; }
 .ll-footer__license a:hover { color: var(--paper-000); }
-.ll-footer__admin { background: none; border: none; padding: 0; cursor: pointer; font-size: 13px; color: var(--ink-400); }
+.ll-footer__admin { background: none; border: none; padding: 0; cursor: pointer; font-size: 13px; color: var(--ink-300); }
 .ll-footer__admin:hover { color: var(--ink-200); }
 @media (max-width: 640px) {
   .ll-footer { padding: 48px 16px 24px; margin-top: 80px; }
@@ -430,7 +430,10 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-ticker-live { display: none; }
 .ll-ticker-belt { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .ll-ticker-track { display: flex; align-items: center; gap: 0 52px; width: max-content; animation: ll-marquee 36s linear infinite; }
-.ll-ticker-belt:hover .ll-ticker-track { animation-play-state: paused; }
+.ll-ticker-belt:hover .ll-ticker-track, .ll-ticker-belt:focus-within .ll-ticker-track, .ll-ticker-belt.is-paused .ll-ticker-track { animation-play-state: paused; }
+.ll-ticker-pause { margin-left: auto; background: none; border: 1px solid var(--border-hair); color: var(--ink-700); font: inherit; font-size: 13px; padding: 4px 12px; min-height: 28px; border-radius: var(--radius-pill); cursor: pointer; }
+.ll-ticker-pause:hover { border-color: var(--ink-900); color: var(--ink-900); }
+@media (prefers-reduced-motion: reduce) { .ll-ticker-pause { display: none; } }
 @keyframes ll-marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .ll-ticker-track { animation: none; flex-wrap: wrap; width: auto; gap: 12px 36px; } .ll-ticker-track > [aria-hidden="true"] { display: none; } .ll-ticker-belt { -webkit-mask-image: none; mask-image: none; } }
 .ll-ticker-ref { font-size: 16px; font-weight: 500; color: var(--ink-700); white-space: nowrap; }
@@ -1046,7 +1049,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   :root .ll-footer__bottom { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; padding-top: 14px;
     font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 12px; }
   .ll-footer__strap { display: none; }
-  :root .ll-footer__license { order: 3; flex-basis: 100%; font-size: 11px; line-height: 1.5; color: var(--ink-400); }
+  :root .ll-footer__license { order: 3; flex-basis: 100%; font-size: 11px; line-height: 1.5; color: var(--ink-300); }
   .ll-footer__admin { font-size: 12px; }
 }
 
@@ -1229,7 +1232,7 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .ll-topbar:hover, .ll-topbar:focus-visible { background: var(--ink-800); }
 .ll-topbar__inner { max-width: 1440px; margin: 0 auto; min-height: 36px; padding: 8px 24px; display: flex; align-items: center; justify-content: center; gap: 12px;
   font-family: var(--font-label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.3; text-align: center; }
-.ll-topbar__tag { color: var(--amber-500); white-space: nowrap; }
+.ll-topbar__tag { color: #C4A375; white-space: nowrap; } /* light bronze: 6.4:1 on forest */
 .ll-topbar__sep { width: 1px; height: 12px; background: var(--border-hair-inverse); flex: none; }
 .ll-topbar__go { display: inline-flex; flex: none; transition: transform .3s cubic-bezier(.32,.72,0,1); }
 .ll-topbar:hover .ll-topbar__go { transform: translateX(3px); }
@@ -1353,9 +1356,10 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .hm-car__card .hm-gets { grid-template-columns: 1fr; }
 .hm-car__card .hm-price { margin-top: auto; }
 .hm-car__card .hm-price .ll-btn { width: 100%; }
-.hm-car__dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
-.hm-car__dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px; background: rgba(27,42,18,0.2); cursor: pointer; transition: width var(--dur-base) var(--ease-standard), background var(--dur-base) ease; }
-.hm-car__dots button.on { width: 28px; background: var(--ink-900); }
+.hm-car__dots { display: flex; justify-content: center; gap: 0; margin-top: 10px; }
+/* 24px touch target (WCAG 2.5.8); the visible dot is the 8px content box. */
+.hm-car__dots button { box-sizing: content-box; width: 8px; height: 8px; padding: 8px; background-clip: content-box; border: 0; border-radius: 99px; background-color: rgba(27,42,18,0.2); cursor: pointer; transition: width var(--dur-base) var(--ease-standard), background var(--dur-base) ease; }
+.hm-car__dots button.on { width: 28px; background-color: var(--ink-900); }
 @media (max-width: 767px) {
   .hm-car__track { grid-auto-columns: 86%; gap: 12px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; scroll-padding-left: 20px; }
   .hm-car__card { padding: 22px 20px 20px; }
@@ -1632,4 +1636,34 @@ main .hm-hero .ll-btn--primary:hover { background: var(--ink-700, #2c3d22); colo
 @media (max-width: 767px) {
   .hm-blog__head .hm-btn-outline { display: none; }
   .hm-blog__more { display: flex; width: 100%; justify-content: center; margin-top: 24px; }
+}
+
+/* ── Accessibility (WCAG 2.1 / 2.2 AA) ──────────────────────────────────────── */
+/* Skip link: first stop for keyboard users, hidden until it receives focus. */
+.ll-skip {
+  position: fixed; top: 8px; left: 8px; z-index: 1000; transform: translateY(-150%);
+  padding: 12px 18px; background: var(--ink-900); color: var(--paper-000);
+  font-family: var(--font-body); font-size: 15px; font-weight: 500; text-decoration: none;
+  border: 2px solid var(--paper-000); transition: transform 120ms ease;
+}
+.ll-skip:focus, .ll-skip:focus-visible { transform: translateY(0); outline: 2px solid var(--amber-500); outline-offset: 2px; }
+main:focus, [role="main"]:focus { outline: none; }
+
+/* Focus ring stays visible (3:1+) on the forest surfaces, where bronze is too dark. */
+.ll-forest :focus-visible, .ll-glass--dark :focus-visible, .ll-on-dark :focus-visible, .ll-band :focus-visible,
+.hm-hero :focus-visible, .ll-menu :focus-visible, .ll-topbar:focus-visible, .cfl-panel.ll-forest :focus-visible {
+  outline-color: var(--paper-000);
+}
+
+/* Inputs whose own outline is removed show focus on their wrapper instead. */
+.mk-search:focus-within, .ln-find__search:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+/* Visually hidden native control that keeps Checkbox / Switch keyboard-operable. */
+.ll-native-toggle { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.ll-native-toggle:focus-visible + .ll-toggle-face { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+
+/* Respect the OS "reduce motion" setting site-wide, on top of the per-component rules. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
