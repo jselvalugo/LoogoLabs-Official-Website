@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `ask-ai-who-to-hire-in-your-town`,
+    title: `Ask an AI Who to Hire in Your Town. Were You Named?`,
+    excerpt: `A twenty-minute test with the questions customers actually type shows whether an assistant can describe your business accurately, and which one page to fix first.`,
+    tags: `Found in AI Answers, Local Visibility, Service Business Owners`,
+    content: `Ask an AI assistant who to call for your kind of work in your town, and the answer may not include you. It may include a competitor with a worse website. Most owners I know have never run that test, so they have no idea which of the two is happening to them.
+
+## The problem is rarely your ranking
+
+When a customer asks an assistant for a recommendation, the assistant has to say something specific and confident about a business. It can only do that if it found something specific and confident to repeat. A page that says "quality service you can trust" gives it nothing. A page that says "we repair and replace tankless water heaters in the east side of town, same-day quotes, closed Sundays" gives it a sentence it can pass along.
+
+I can't tell you how any given assistant decides who to mention, and nobody outside those companies can. What I can tell you is what I see when I read the pages of businesses that get named and ones that don't. The ones that get named state plainly what they do, where they do it and for whom. The ones that don't are vague, or say three different things in three different places.
+
+## Run the test before you change anything
+
+Take twenty minutes and ask the way a customer would. Don't ask "who is the best plumber"; ask the messy version someone types on a phone: "my water heater is leaking, who can come out today near the east side?"
+
+Ask four or five variations. Write down, for each one:
+
+- whether you were mentioned at all
+- what the assistant said about you, word for word
+- who was mentioned instead, and what it said about them
+
+Do this in more than one assistant if you use more than one, and do it again on another day. These tools answer differently from one run to the next, so a single result tells you very little. A pattern across ten answers tells you something.
+
+## Read what it said about you
+
+This is the part owners skip, and it's the useful part. If you were mentioned, check the facts. Is the service area right? Are the hours right? Does it describe what you actually do, or something adjacent?
+
+Wrong details usually trace back to your own inconsistency. Your website says you serve three towns, your business listing says five, and an old directory page says one. The assistant has nothing to choose between, so it guesses, or it leaves you out. Reconciling those is dull work and it is entirely in your hands.
+
+If you weren't mentioned, look at what the competitor that was mentioned is saying about themselves and compare it to your page, but don't copy their wording. Look at what kind of facts they give. Usually it's specifics you also have and never wrote down.
+
+## Fix one page, not the whole site
+
+Pick the service that earns you the most and write one page for it. Put the plain answers at the top, in the words a customer would use:
+
+- what the job is and what it typically involves
+- the area you cover, named as places, not "the surrounding area"
+- what you don't do, which saves everyone's time
+- how quickly you respond, if you can keep that promise
+- how to reach you, with the same name, address and phone number you use everywhere else
+
+An AI tool is useful here for turning your rough notes into clean sentences, or for asking what a confused customer would still want to know after reading the page. It is not useful for inventing the facts. If it adds a service you don't offer or a response time you can't meet, that goes into the page and then into the assistant's answer about you, and you will be the one taking the call.
+
+I'll be straight about the limit: you can make yourself easy to describe accurately, but you can't make any assistant mention you. Anyone who promises that is selling something. Being clear helps with search results and with the person reading your page too, so the work isn't wasted either way.
+
+## This week
+
+Ask an assistant the messy, phone-typed version of your best-paying job, five different ways. Write down what it says about you. Then fix the first wrong or missing fact you find, on your own site, and make your business listing match it.`,
+  },
+  {
     slug: `search-terms-review-before-december-ad-budget`,
     title: `Read Your Search Terms Before You Raise the Ad Budget`,
     excerpt: `A bigger December budget just pays for more clicks from people who never wanted to hire you, and thirty minutes with the phrases they typed shows how many.`,
