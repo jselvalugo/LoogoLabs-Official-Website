@@ -189,7 +189,7 @@ function App({ initialPath }) {
 
   return (
     <div className="ll-shell">
-      {page !== 'Marketplace' && page !== 'MarketplaceThankYou' && <SkillsTopBar es={es} onNavigate={navigate} />}
+      {page !== 'Home' && page !== 'Marketplace' && page !== 'MarketplaceThankYou' && <SkillsTopBar es={es} onNavigate={navigate} />}
       <NavBar items={nav} active={categorySlugFromPage(page) ? 'LoogoNews' : page} onNavigate={navigate} overHero={false} home={page === 'Home'}
         feature={{ page: 'LoogoNews', label: es ? 'Últimas noticias' : 'Latest News' }}
         cta={<Button size="sm" variant="primary" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada' : 'Book a call'}</Button>}

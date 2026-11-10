@@ -204,6 +204,21 @@ const SERVICE_GROUPS_ES = {
 
 const Arrow = <ArrowRight size={16} weight="bold" />;
 
+const FAQ = [
+  ['How much does it cost?', 'It depends on what you need. Content and social media runs $500–$2,000/mo depending on your industry and how much content you need. Ads management is 20% of your monthly ad spend, with a $500/mo minimum. For example, $1,500 in ads is a $500 fee; $5,000 in ads is a $1,000 fee. Websites start at $1,500. Separately, our marketing software (SaaS) starts at $297/mo, and the $1,297/mo Scale plan includes consulting on the software itself. The Game Plan call is free, and you get a clear quote before anything starts.'],
+  ['I’m not sure what I need. Where do I start?', 'Start with the free Game Plan call. We look at your business and tell you honestly what to fix first, even if the answer is something you can do yourself.'],
+  ['Do I have to do the work?', 'No. We make the content, run the ads and build the systems. We need some time from you at the start to learn your business, then quick approvals along the way.'],
+  ['How soon will I see results?', 'Fixes like automatic follow-up can help within weeks. Content and ads usually take a few months of testing to find what works. We will not promise numbers we cannot control.'],
+  ['Do you only work with Orlando businesses?', 'No. We are based in Orlando, Florida and work with businesses across the United States and Mexico, in English and Spanish.'],
+];
+const FAQ_ES = [
+  ['¿Cuánto cuesta?', 'Depende de lo que necesites. Contenido y redes sociales va de $500 a $2,000/mes según tu industria y cuánto contenido necesitas. El manejo de anuncios es el 20% de tu inversión mensual en anuncios, con un mínimo de $500/mes. Por ejemplo, $1,500 en anuncios es una tarifa de $500; $5,000 en anuncios es una tarifa de $1,000. Los sitios web empiezan en $1,500. Aparte, nuestro software de marketing (SaaS) empieza en $297/mes, y el plan Scale de $1,297/mes incluye consultoría sobre el software. La llamada del plan es gratis y recibes una cotización clara antes de empezar.'],
+  ['No sé qué necesito. ¿Por dónde empiezo?', 'Empieza con la llamada gratis. Revisamos tu negocio y te decimos con honestidad qué arreglar primero, aunque sea algo que puedas hacer tú mismo.'],
+  ['¿Tengo que hacer el trabajo yo?', 'No. Nosotros hacemos el contenido, manejamos los anuncios y montamos los sistemas. Necesitamos algo de tu tiempo al inicio para conocer tu negocio y aprobaciones rápidas en el camino.'],
+  ['¿Cuándo veré resultados?', 'Cosas como el seguimiento automático pueden ayudar en semanas. El contenido y los anuncios suelen tomar unos meses de pruebas para encontrar lo que funciona. No prometemos números que no controlamos.'],
+  ['¿Solo trabajan con negocios de Orlando?', 'No. Estamos en Orlando, Florida y trabajamos con negocios en Estados Unidos y México, en inglés y en español.'],
+];
+
 function PackageCard({ pkg, es, esPkg }) {
   // On phones the feature list starts collapsed so all three packages fit on a
   // couple of screens; desktop always shows it (see .pk-features in packages.css).
@@ -387,6 +402,20 @@ function Packages({ onNavigate }) {
           ]).map((n) => <li key={n}>{n}</li>)}
         </ul>
       </div>
+      <section className="pk-wrap pk-section pk-faq">
+        <div className="pk-head">
+          <span className="pk-tag">{es ? 'Preguntas' : 'Questions'}</span>
+          <h2 className="pk-h2">{es ? <>Lo que la gente pregunta <em>antes de llamarnos.</em></> : <>What people ask <em>before they call.</em></>}</h2>
+        </div>
+        <div className="hm-faq__list">
+          {(es ? FAQ_ES : FAQ).map(([q, a], i) => (
+            <details key={q} className="hm-faq__item" open={i === 0}>
+              <summary>{q}<span aria-hidden="true" /></summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

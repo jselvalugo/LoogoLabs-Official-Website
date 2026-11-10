@@ -7,7 +7,7 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
-import NewsletterSignup from '../components/funnel/NewsletterSignup';
+import { loadPosts, cachedPosts } from '../lib/postsCache';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
@@ -69,32 +69,6 @@ const SERVICES_ES = [
   },
 ];
 
-// "Sound familiar?": the problems owners tell us about, each tied to the service that fixes it.
-const PROBLEMS = [
-  { q: 'I post, but nothing happens.', fix: 'We plan content around what your customers care about, then make the videos and posts that get them to call or buy.', svc: 1, svcName: 'Content & social media' },
-  { q: 'I tried ads and lost money.', fix: 'We set up tracking first, aim at the people most likely to buy, and show you which dollars brought customers.', svc: 2, svcName: 'Paid ads' },
-  { q: 'Leads come in, then go cold.', fix: 'We set up a system that texts and emails every lead right away and reminds you who to call.', svc: 3, svcName: 'CRM & automation' },
-  { q: 'I don’t know what to focus on.', fix: 'On a free call we look at your business and give you a 90-day plan: what to fix first and where to spend.', svc: 0, svcName: 'Marketing strategy' },
-];
-const PROBLEMS_ES = [
-  { q: 'Publico, pero no pasa nada.', fix: 'Planeamos el contenido según lo que le importa a tus clientes y hacemos los videos y publicaciones que los llevan a llamar o comprar.', svc: 1, svcName: 'Contenido y redes' },
-  { q: 'Probé anuncios y perdí dinero.', fix: 'Primero configuramos la medición, apuntamos a quienes tienen más probabilidad de comprar y te mostramos qué dólares trajeron clientes.', svc: 2, svcName: 'Anuncios pagados' },
-  { q: 'Llegan prospectos y se enfrían.', fix: 'Montamos un sistema que le escribe por texto y email a cada prospecto al instante y te recuerda a quién llamar.', svc: 3, svcName: 'CRM y automatización' },
-  { q: 'No sé en qué enfocarme.', fix: 'En una llamada gratis revisamos tu negocio y te damos un plan de 90 días: qué arreglar primero y dónde invertir.', svc: 0, svcName: 'Estrategia de marketing' },
-];
-
-const WHO = [
-  ['Local service businesses', 'Restaurants, salons, clinics, contractors, distilleries and shops that need more calls, bookings and walk-ins.'],
-  ['Growing brands and startups', 'Software, products and creators that need a clear message, steady content and a funnel that turns attention into sales.'],
-  ['Spanish-speaking businesses', 'Bilingual marketing for businesses serving Hispanic customers in the United States and in Mexico.'],
-];
-const WHO_ES = [
-  ['Negocios de servicio locales', 'Restaurantes, salones, clínicas, contratistas, destilerías y tiendas que necesitan más llamadas, citas y visitas.'],
-  ['Marcas y startups en crecimiento', 'Software, productos y creadores que necesitan un mensaje claro, contenido constante y un embudo que convierta la atención en ventas.'],
-  ['Negocios hispanohablantes', 'Marketing bilingüe para negocios que atienden clientes hispanos en Estados Unidos y en México.'],
-];
-
-// Real client work. Keep each line to what we actually did.
 const WORK = [
   { name: 'Engentfy', en: ['Marketing consultant', 'Strategy, UGC video, social posts, newsletter, and Google and Meta ads.'], es: ['Consultor de marketing', 'Estrategia, video UGC, redes sociales, boletín, y anuncios en Google y Meta.'] },
   { name: 'Lugo’s Craft Distillery', en: ['Event promotion', 'Led the promotion for their Cards and Cocktails event, plus video editing.'], es: ['Promoción de eventos', 'Dirigimos la promoción de su evento Cards and Cocktails, más edición de video.'] },
@@ -104,60 +78,17 @@ const WORK = [
   { name: 'Dalitzandra Padial', en: ['Creator automation', 'Automated the back end of a women’s mentorship creator business.'], es: ['Automatización para creadora', 'Automatizamos la operación de un negocio de mentoría para mujeres.'] },
 ];
 
-const FAQ = [
-  ['How much does it cost?', 'It depends on what you need. Content and social media runs $500–$2,000/mo depending on your industry and how much content you need. Ads management is 20% of your monthly ad spend, with a $500/mo minimum. For example, $1,500 in ads is a $500 fee; $5,000 in ads is a $1,000 fee. Websites start at $1,500. Separately, our marketing software (SaaS) starts at $297/mo, and the $1,297/mo Scale plan includes consulting on the software itself. The Game Plan call is free, and you get a clear quote before anything starts.'],
-  ['I’m not sure what I need. Where do I start?', 'Start with the free Game Plan call. We look at your business and tell you honestly what to fix first, even if the answer is something you can do yourself.'],
-  ['Do I have to do the work?', 'No. We make the content, run the ads and build the systems. We need some time from you at the start to learn your business, then quick approvals along the way.'],
-  ['How soon will I see results?', 'Fixes like automatic follow-up can help within weeks. Content and ads usually take a few months of testing to find what works. We will not promise numbers we cannot control.'],
-  ['Do you only work with Orlando businesses?', 'No. We are based in Orlando, Florida and work with businesses across the United States and Mexico, in English and Spanish.'],
-];
-const FAQ_ES = [
-  ['¿Cuánto cuesta?', 'Depende de lo que necesites. Contenido y redes sociales va de $500 a $2,000/mes según tu industria y cuánto contenido necesitas. El manejo de anuncios es el 20% de tu inversión mensual en anuncios, con un mínimo de $500/mes. Por ejemplo, $1,500 en anuncios es una tarifa de $500; $5,000 en anuncios es una tarifa de $1,000. Los sitios web empiezan en $1,500. Aparte, nuestro software de marketing (SaaS) empieza en $297/mes, y el plan Scale de $1,297/mes incluye consultoría sobre el software. La llamada del plan es gratis y recibes una cotización clara antes de empezar.'],
-  ['No sé qué necesito. ¿Por dónde empiezo?', 'Empieza con la llamada gratis. Revisamos tu negocio y te decimos con honestidad qué arreglar primero, aunque sea algo que puedas hacer tú mismo.'],
-  ['¿Tengo que hacer el trabajo yo?', 'No. Nosotros hacemos el contenido, manejamos los anuncios y montamos los sistemas. Necesitamos algo de tu tiempo al inicio para conocer tu negocio y aprobaciones rápidas en el camino.'],
-  ['¿Cuándo veré resultados?', 'Cosas como el seguimiento automático pueden ayudar en semanas. El contenido y los anuncios suelen tomar unos meses de pruebas para encontrar lo que funciona. No prometemos números que no controlamos.'],
-  ['¿Solo trabajan con negocios de Orlando?', 'No. Estamos en Orlando, Florida y trabajamos con negocios en Estados Unidos y México, en inglés y en español.'],
-];
-
-const OFFER = {
-  en: {
-    eyebrow: 'Start here',
-    title: 'Your free Marketing Game Plan.',
-    lede: 'One free 30-minute call. You leave with a 90-day marketing plan built for your business, whether you hire us or not.',
-    getsTitle: 'What you get',
-    gets: ['An honest look at your marketing today: what is working and what is not', 'The first things to fix, in order', 'A 90-day plan in three 30-day phases, with a weekly rhythm', 'A clear price if you want us to do it for you'],
-    fine: 'No cost. No obligation. The plan is yours to keep.',
-    cta: 'Book my free Game Plan',
-    more: 'See what is in the plan',
-  },
-  es: {
-    eyebrow: 'Empieza aquí',
-    title: 'Tu Plan de Marketing gratis.',
-    lede: 'Una llamada gratis de 30 minutos. Sales con un plan de marketing de 90 días hecho para tu negocio, nos contrates o no.',
-    getsTitle: 'Lo que recibes',
-    gets: ['Una mirada honesta a tu marketing hoy: qué funciona y qué no', 'Lo primero que hay que arreglar, en orden', 'Un plan de 90 días en tres fases de 30 días, con un ritmo semanal', 'Un precio claro si quieres que lo hagamos por ti'],
-    fine: 'Sin costo. Sin compromiso. El plan es tuyo.',
-    cta: 'Agenda mi plan gratis',
-    more: 'Ver qué incluye el plan',
-  },
-};
-
 const STEPS = [
-  ['Free Game Plan call', '30 minutes. We look at your business, your numbers and what is holding growth back.'],
+  ['Free Game Plan call', 'A free 30-minute call. We look at your business, your numbers and what is holding growth back. No obligation.'],
   ['Your 90-day plan', 'What to fix first, which channels to focus on, and the budget and targets for each month.'],
   ['We build and run it', 'Content, ads, website and automations, with a monthly check-in on results.'],
 ];
 const STEPS_ES = [
-  ['Llamada gratis del Plan', '30 minutos. Revisamos tu negocio, tus números y qué está frenando el crecimiento.'],
+  ['Llamada gratis del Plan', 'Una llamada gratis de 30 minutos. Revisamos tu negocio, tus números y qué está frenando el crecimiento. Sin compromiso.'],
   ['Tu plan de 90 días', 'Qué arreglar primero, en qué canales enfocarte, y el presupuesto y las metas de cada mes.'],
   ['Lo construimos y operamos', 'Contenido, anuncios, sitio web y automatizaciones, con una revisión mensual de resultados.'],
 ];
 
-const LOCAL = [
-  { page: 'AIReceptionist', en: ['AI receptionist', 'Answers every call, books the appointment, texts back missed calls.'], es: ['Recepcionista con IA', 'Contesta cada llamada, agenda la cita y responde por texto las perdidas.'] },
-  { page: 'ReputationAutopilot', en: ['Reviews on autopilot', 'Review requests, replies and monitoring, run for you.'], es: ['Reseñas en automático', 'Solicitudes, respuestas y monitoreo de reseñas, operados por nosotros.'] },
-  { page: 'GrowCFL', en: ['Central Florida', 'Local SEO and follow-up systems for Orlando, Lakeland and Tampa businesses.'], es: ['Florida Central', 'SEO local y sistemas de seguimiento para negocios en Orlando, Lakeland y Tampa.'] },
-];
 
 // Cartoon David: the friendly face of the home page. Each section gets a pose
 // that matches what it says. Decorative, so hidden from screen readers.
@@ -282,7 +213,7 @@ function Carousel({ es, items }) {
             <h3>{s.title}</h3>
             <p>{s.summary}</p>
             <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
-            <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong><Button variant="primary" size="md" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Hablemos' : "Let's talk"}</Button></div>
+            <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong></div>
           </article>
         ))}
       </div>
@@ -323,7 +254,7 @@ function Scene({ es, items, onNavigate }) {
         <div className="hm-wrap hm-scene__grid">
           <div className="hm-scene__left">
             <span className="ll-label">{es ? 'Qué hacemos' : 'What we do'}</span>
-            <h2 className="hm-scene__h2">{es ? 'Luego hacemos el trabajo. Elige lo que necesitas.' : 'Then we do the work. Pick what you need.'}</h2>
+            <h2 className="hm-scene__h2">{es ? 'Cuatro formas en que te ayudamos a crecer.' : 'Four ways we help you grow.'}</h2>
             <ol className="hm-scene__nav">
               {items.map((it, i) => (
                 <li key={it.title}>
@@ -334,7 +265,7 @@ function Scene({ es, items, onNavigate }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
-            <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
+            <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} →</a>
             <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
@@ -346,7 +277,7 @@ function Scene({ es, items, onNavigate }) {
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
                 <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
-                  <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong><Button variant="primary" size="md" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Hablemos' : "Let's talk"}</Button></div>
+                  <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong></div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -369,29 +300,45 @@ function Explorer({ es, onNavigate }) {
           <Buddy pose="explain" />
           <SectionHeading
             eyebrow={es ? 'Qué hacemos' : 'What we do'}
-            title={es ? 'Luego hacemos el trabajo. Elige lo que necesitas.' : 'Then we do the work. Pick what you need.'}
-            description={es ? 'Cuatro servicios, cada uno con lo que incluye y su precio. Desliza para ver cada uno.' : 'Four services, each with what is included and what it costs. Swipe to see each one.'} />
+            title={es ? 'Cuatro formas en que te ayudamos a crecer.' : 'Four ways we help you grow.'}
+            description={es ? 'Lo que incluye cada servicio y cuánto cuesta. Desliza para ver cada uno.' : 'What each service includes and what it costs. Swipe to see each one.'} />
         </div>
         <Carousel es={es} items={items} />
-        <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
+        <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} →</a>
       </div>
     </Wrap>
   );
 }
 
-function StickyCta({ es }) {
-  const [on, setOn] = React.useState(false);
-  React.useEffect(() => {
-    const hero = document.querySelector('.hm-hero');
-    if (!hero || !('IntersectionObserver' in window)) return undefined;
-    const io = new IntersectionObserver(([e]) => setOn(!e.isIntersecting), { threshold: 0 });
-    io.observe(hero);
-    return () => io.disconnect();
-  }, []);
+function Journal({ es, onNavigate }) {
+  const toHref = useHref();
+  const [posts, setPosts] = React.useState(() => cachedPosts() || []);
+  React.useEffect(() => { let on = true; loadPosts().then(p => { if (on) setPosts(p || []); }); return () => { on = false; }; }, []);
+  const list = posts.slice(0, 3);
+  if (!list.length) return null;
+  const fmt = (d) => (d ? new Date(d).toLocaleDateString(es ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '');
   return (
-    <div className={`hm-sticky${on ? ' on' : ''}`} aria-hidden={!on}>
-      <Button variant="primary" size="lg" onClick={openBooking} tabIndex={on ? 0 : -1}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>
-    </div>
+    <Wrap className="hm-section">
+      <div className="hm-journal__head">
+        <Reveal>
+          <SectionHeading eyebrow={es ? 'Del blog' : 'From the blog'}
+            title={es ? 'Lo que estamos aprendiendo sobre IA y marketing.' : 'What we are learning about AI and marketing.'} />
+        </Reveal>
+        <a className="hm-allpk" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} →</a>
+      </div>
+      <Stagger className="hm-journal" gap={0.08}>
+        {list.map(p => (
+          <Item key={p.slug} className="hm-journal__item">
+            <a href={toHref(pathForPage('BlogPost', p.slug))} onClick={e => { e.preventDefault(); onNavigate('BlogPost', p.slug); }}>
+              <span className="hm-journal__meta">{fmt(p.published_at)}{p.read_time ? ` · ${p.read_time} ${es ? 'min' : 'min read'}` : ''}</span>
+              <h3>{p.title}</h3>
+              {p.excerpt && <p>{p.excerpt}</p>}
+              <em aria-hidden="true">{es ? 'Leer' : 'Read'} →</em>
+            </a>
+          </Item>
+        ))}
+      </Stagger>
+    </Wrap>
   );
 }
 
@@ -418,14 +365,11 @@ function Home({ onNavigate }) {
                   ? 'Loogo Labs es un equipo de marketing en Orlando. Planeamos tu marketing, hacemos el contenido, manejamos los anuncios y montamos el seguimiento, para que más gente te encuentre, te llame y te compre. En inglés y en español.'
                   : 'Loogo Labs is a marketing team in Orlando. We plan your marketing, make the content, run the ads and set up the follow-up, so more people find you, call you and buy from you. In English and Spanish.'}
               </p>
-              <ul className="hm-hero__checks">
-                {(es ? ['Plan de 90 días gratis', 'Precios claros', 'Inglés y español'] : ['Free 90-day Game Plan', 'Clear pricing', 'English & Spanish']).map(t => <li key={t}>{t}</li>)}
-              </ul>
               </Reveal>
               <Reveal delay={1.15} y={16}>
               <div className="hm-hero__actions">
-                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Obtén tu plan gratis' : 'Get your free Game Plan'}</Button></Magnetic>
-                <Button variant="ghost" size="md" iconRight={<span>→</span>} onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver nuestros servicios' : 'See our services'}</Button>
+                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free strategy call'}</Button></Magnetic>
+                <Button variant="ghost" size="md" iconRight={<span>→</span>} onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Qué hacemos' : 'What we do'}</Button>
               </div>
               </Reveal>
             </div>
@@ -440,64 +384,29 @@ function Home({ onNavigate }) {
 
       <References />
 
-      <Wrap className="hm-section hm-offer-wrap">
-        {(() => { const o = es ? OFFER.es : OFFER.en; return (
-          <Reveal className="hm-offer">
-            <div className="hm-offer__main">
-              <span className="hm-offer__eyebrow">{o.eyebrow}</span>
-              <h2>{o.title}</h2>
-              <p>{o.lede}</p>
-              <div className="hm-offer__actions">
-                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{o.cta}</Button></Magnetic>
-                <a href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{o.more} →</a>
-              </div>
-            </div>
-            <div className="hm-offer__side">
-              <span className="hm-offer__k">{o.getsTitle}</span>
-              <ul>{o.gets.map(g => <li key={g}>{g}</li>)}</ul>
-              <p className="hm-offer__fine">{o.fine}</p>
-            </div>
-          </Reveal>
-        ); })()}
-      </Wrap>
-
-      <section className="hm-pain ll-band ll-band--tan">
-        <Wrap>
-          <Reveal>
-            <SectionHeading eyebrow={es ? '¿Te suena familiar?' : 'Sound familiar?'}
-              title={es ? 'Lo que nos dicen los dueños de negocio, y lo que hacemos al respecto.' : 'What business owners tell us, and what we do about it.'} />
-          </Reveal>
-          <Stagger className="hm-pain__grid" gap={0.1}>
-            {(es ? PROBLEMS_ES : PROBLEMS).map(pr => (
-              <Item key={pr.q} className="hm-pain__card">
-                <p className="hm-pain__q">“{pr.q}”</p>
-                <p className="hm-pain__fix">{pr.fix}</p>
-                <button type="button" className="hm-pain__link" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{pr.svcName} →</button>
-              </Item>
-            ))}
-          </Stagger>
-        </Wrap>
-      </section>
-
-      <Explorer es={es} onNavigate={onNavigate} />
-
-      <Wrap className="hm-section">
+      <Wrap className="hm-section hm-intro">
         <Reveal>
-          <SectionHeading eyebrow={es ? 'A quién ayudamos' : 'Who we help'}
-            title={es ? 'Hecho para negocios que quieren crecer sin contratar un equipo de marketing.' : 'Built for businesses that want to grow without hiring a marketing team.'} />
+          <p className="hm-intro__text">
+            {es
+              ? <>Somos una compañía de marketing y automatización en Orlando. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en Estados Unidos y México, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
+              : <>We are a marketing and automation company in Orlando. We work with <em>local businesses and growing brands</em> across the United States and Mexico, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
+          </p>
         </Reveal>
-        <Stagger className="hm-who" gap={0.1}>
-          {(es ? WHO_ES : WHO).map(([k, v]) => (
-            <Item key={k} className="hm-who__item"><h3>{k}</h3><p>{v}</p></Item>
-          ))}
+        <Stagger as="dl" className="hm-facts" gap={0.08}>
+          {(es
+            ? [['Base', 'Orlando, Florida'], ['Mercados', 'EE. UU. y México'], ['Idiomas', 'Inglés y español'], ['Enfoque', 'Marketing con IA y automatización']]
+            : [['Based in', 'Orlando, Florida'], ['Markets', 'United States & Mexico'], ['Languages', 'English & Spanish'], ['Focus', 'AI marketing & automation']]
+          ).map(([k, v]) => <Item key={k} className="hm-facts__item"><dt>{k}</dt><dd>{v}</dd></Item>)}
         </Stagger>
       </Wrap>
+
+      <Explorer es={es} onNavigate={onNavigate} />
 
       <section className="hm-work ll-band ll-band--tan">
         <Wrap>
           <Reveal>
-            <SectionHeading eyebrow={es ? 'Nuestro trabajo' : 'Our work'}
-              title={es ? 'Lo que hemos hecho para nuestros clientes.' : 'What we have done for our clients.'} />
+            <SectionHeading eyebrow={es ? 'Trabajo seleccionado' : 'Selected work'}
+              title={es ? 'Algunas de las marcas con las que hemos trabajado.' : 'Some of the brands we have worked with.'} />
           </Reveal>
           <Stagger className="hm-work__grid" gap={0.08}>
             {WORK.map(w => {
@@ -517,59 +426,38 @@ function Home({ onNavigate }) {
 
       <Wrap className="hm-section">
         <Reveal>
-          <SectionHeading eyebrow={es ? 'Cómo funciona' : 'How it works'}
-            title={es ? 'De la primera llamada a resultados, en tres pasos.' : 'From first call to results, in three steps.'} />
+          <SectionHeading eyebrow={es ? 'Cómo trabajamos' : 'How we work'}
+            title={es ? 'Empieza con una conversación, no con un contrato.' : 'It starts with a conversation, not a contract.'} />
         </Reveal>
         <Stagger as="ol" className="hm-steps" gap={0.12}>
           {(es ? STEPS_ES : STEPS).map(([k, v], i) => (
             <Item key={k} as="li" className="hm-steps__item"><span className="hm-steps__num">0{i + 1}</span><h3>{k}</h3><p>{v}</p></Item>
           ))}
         </Stagger>
+        <Reveal className="hm-steps__cta">
+          <a className="hm-allpk" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} →</a>
+        </Reveal>
       </Wrap>
 
       <Wrap className="hm-section">
-        <div className="hm-faq">
-          <Reveal>
-            <SectionHeading eyebrow={es ? 'Preguntas frecuentes' : 'Questions'}
-              title={es ? 'Lo que la gente pregunta antes de llamarnos.' : 'What people ask before they call.'} />
+        <div className="hm-founder">
+          <Reveal className="hm-founder__photo">
+            <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} width="480" height="600" loading="lazy" />
           </Reveal>
-          <div className="hm-faq__list">
-            {(es ? FAQ_ES : FAQ).map(([q, a], i) => (
-              <details key={q} className="hm-faq__item" open={i === 0}>
-                <summary>{q}<span aria-hidden="true" /></summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
+          <Reveal className="hm-founder__copy" delay={0.1}>
+            <span className="ll-label">{es ? 'El fundador' : 'The founder'}</span>
+            <blockquote>
+              {es
+                ? '“He pasado mi carrera construyendo sistemas que hacen que las cosas realmente se cumplan. Loogo Labs es eso aplicado al marketing: escribimos el plan, construimos lo que necesita y nos quedamos para operarlo.”'
+                : '“I have spent my career building systems that make things actually get done. Loogo Labs is that applied to marketing: we write the plan, build what it needs and stay to run it.”'}
+            </blockquote>
+            <div className="hm-founder__sig"><strong>David Selva</strong><span>{es ? 'Fundador, Loogo Labs LLC' : 'Founder, Loogo Labs LLC'}</span></div>
+            <a className="hm-allpk" href={toHref(pathForPage('About'))} onClick={e => { e.preventDefault(); onNavigate('About'); }}>{es ? 'Conoce al fundador' : 'Meet the founder'} →</a>
+          </Reveal>
         </div>
       </Wrap>
 
-      <Wrap className="hm-section">
-        <div className="hm-local">
-          <div className="hm-has-buddy">
-          <Reveal>
-          <SectionHeading eyebrow={es ? 'Para negocios locales' : 'For local businesses'}
-            title={es ? 'Sistemas listos para negocios de servicio.' : 'Ready-made systems for service businesses.'}
-            description={es ? '¿Prefieres empezar con algo puntual? Estos sistemas se configuran rápido y los operamos por ti.' : 'Want to start with one thing? These systems set up fast and we run them for you.'} />
-          </Reveal>
-          <Buddy pose="point" />
-          </div>
-          <Stagger as="ul" className="hm-local__links" gap={0.1}>
-            {LOCAL.map(l => {
-              const [t, d] = es ? l.es : l.en;
-              return (
-                <Item key={l.page} as="li">
-                  <a href={toHref(pathForPage(l.page))} onClick={e => { e.preventDefault(); onNavigate(l.page); }}>
-                    <strong>{t}</strong><span>{d}</span><em aria-hidden="true">→</em>
-                  </a>
-                </Item>
-              );
-            })}
-          </Stagger>
-        </div>
-      </Wrap>
-
-      <NewsletterSignup variant="band" source="home" />
+      <Journal es={es} onNavigate={onNavigate} />
 
       <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
         <AmbientShape index={3} className="hm-cta__shape" />
@@ -587,8 +475,6 @@ function Home({ onNavigate }) {
           </div>
         </Wrap>
       </section>
-
-      <StickyCta es={es} />
     </main>
     </MotionPace>
   );
