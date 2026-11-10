@@ -49,7 +49,7 @@ export const SITE = {
   blogImage: '/og-image-blog.jpg',
   themeColor: '#1a1f14',
   description:
-    'A marketing partner for SaaS brands and creators. One team writes the strategy, runs the ads and email, and builds the tracking, automations and AI that make it work.',
+    'Loogo Labs LLC is an AI marketing and automation company in Orlando, FL. Marketing strategy, content and social media, paid ads, websites, CRM and automation for small businesses and growing brands, in English and Spanish.',
   tagline: 'We plan your marketing. Then we build it.',
   // Profiles that corroborate the Organization entity. Add Instagram, LinkedIn
   // and the Google Business Profile URL here as they go live — each one should
@@ -92,7 +92,7 @@ export const ROUTES = [
   {
     page: 'Home',
     path: '/',
-    title: `${SITE.name} | Marketing Consultants`,
+    title: `${SITE.name} | AI Marketing & Automation in Orlando, FL`,
     description: SITE.description,
     priority: '1.0',
     changefreq: 'weekly',
@@ -296,9 +296,9 @@ export const ROUTES = [
   {
     page: 'Packages',
     path: '/packages',
-    title: `Growth Packages & Quick Starts — Done For You | ${SITE.name}`,
+    title: `Marketing Software Plans & Services | ${SITE.name}`,
     description:
-      'Done-for-you growth packages — Launch, Growth and Scale — plus fixed-price quick starts for reviews, Google Business Profile, city pages and press releases.',
+      'Launch, Growth and Scale software plans (SaaS) for marketing automation, plus services done by our team: content and social media, ads management, local SEO, websites, reviews and press releases.',
     priority: '0.7',
     changefreq: 'monthly',
   },

@@ -43,19 +43,19 @@ export const SERVICE_PACKAGES = [
   {
     page: 'ReviewKickstart',
     path: '/packages/review-kickstart',
-    badge: 'Review Kickstart',
-    cardTitle: 'Review Kickstart',
+    badge: 'Past Customer Review Drive',
+    cardTitle: 'Past Customer Review Drive',
     from: '$399',
     headline: 'Wake up the happy customers you already have.',
     accent: '$399, done in 14 days.',
     summary: 'Most businesses have hundreds of satisfied past customers who were never asked for a review. We ask them for you (by text and email) and set you up to keep the reviews coming.',
     cardDescription: 'We import your past customers, run a one-time SMS & email review campaign, and hand over reply templates and a QR review card. Delivered in 14 days.',
-    metaTitle: 'Review Kickstart — Review Campaign for Past Customers',
+    metaTitle: 'Past Customer Review Drive — Review Campaign for Past Customers',
     metaDescription: 'A one-time SMS and email review campaign to your past customers, plus reply templates and a QR review card design. $399, delivered in 14 days.',
     turnaround: 'Delivered in 14 days',
     tiers: [
       {
-        name: 'Review Kickstart',
+        name: 'Past Customer Review Drive',
         price: '$399',
         featured: true,
         items: ['Import & clean your past customer list', 'One-time SMS & email review campaign', 'Review reply templates (positive & negative)', 'QR review card design, print-ready', 'Results summary at day 14'],

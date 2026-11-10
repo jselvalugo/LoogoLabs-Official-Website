@@ -234,7 +234,7 @@
 
 .pk-pricing { margin-top: 24px; }
 
-/* Phones: shorter hero and sections, two-up service cards, compact plan cards. */
+/* Phones: shorter hero and sections, one-column service cards, compact plan cards. */
 @media (max-width: 767px) {
   .pk-hero { padding-top: 32px; padding-bottom: 24px; }
   .pk-lede { font-size: 16px; margin-top: 14px; }
@@ -244,10 +244,18 @@
   .pk-card { padding: 20px !important; }
   .pk-price { font-size: 36px; }
   .pk-services-head { margin-top: 40px; }
-  .pk-grid--services { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-  .pk-service { padding: 16px; gap: 8px; }
-  .pk-service-title { font-size: 16px; }
-  .pk-service-price { font-size: 24px; }
-  .pk-service-desc { font-size: 13px; }
+  .pk-grid--services { grid-template-columns: 1fr !important; gap: 10px; }
+  .pk-service:last-child:nth-child(odd) { grid-column: auto; }
+  .pk-service { min-width: 0; padding: 18px 18px 16px; gap: 6px; }
+  .pk-service-title { font-size: 19px; }
+  .pk-service-price { font-size: 26px; }
+  .pk-price-row { flex-wrap: wrap; align-items: baseline; }
+  .pk-service-desc { font-size: 14px; line-height: 1.55; }
+  .pk-service .ll-btn { width: 100%; min-width: 0; margin-top: 6px; padding-top: 12px; padding-bottom: 12px; white-space: normal; letter-spacing: 0.1em; }
+  .pk-group__head { margin-bottom: 12px; }
+  .pk-notes { margin-top: 28px; }
+  main { overflow-x: clip; }
   .pk-diy { margin-top: 12px; gap: 12px; }
 }
+
+.pk-kind { display: inline-block; margin-bottom: 10px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }

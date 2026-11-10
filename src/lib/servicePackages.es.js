@@ -30,8 +30,8 @@ export const SERVICE_PACKAGES_ES = {
     ],
   },
   ReviewKickstart: {
-    badge: 'Review Kickstart',
-    cardTitle: 'Review Kickstart',
+    badge: 'Campaña de reseñas de clientes anteriores',
+    cardTitle: 'Campaña de reseñas de clientes anteriores',
     from: '$399',
     headline: 'Despierta a los clientes satisfechos que ya tienes.',
     accent: '$399, listo en 14 días.',
@@ -39,7 +39,7 @@ export const SERVICE_PACKAGES_ES = {
     cardDescription: 'Importamos a tus clientes anteriores, hacemos una campaña única de reseñas por SMS y correo, y te entregamos plantillas de respuesta y una tarjeta de reseñas con código QR. Listo en 14 días.',
     turnaround: 'Entregado en 14 días',
     tiers: [
-      { name: 'Review Kickstart',
+      { name: 'Campaña de reseñas de clientes anteriores',
         items: ['Importamos y limpiamos tu lista de clientes anteriores', 'Campaña única de reseñas por SMS y correo', 'Plantillas para responder reseñas (positivas y negativas)', 'Diseño de tarjeta de reseñas con QR, lista para imprimir', 'Resumen de resultados al día 14'] },
     ],
     steps: [
