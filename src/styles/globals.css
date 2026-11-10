@@ -1411,3 +1411,58 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-founder__photo img { aspect-ratio: 1 / 1; object-position: center 20%; }
 }
 .ll-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ── Home v5: hero button contrast + phone design pass (no copy changes) ── */
+main .hm-hero .ll-btn--primary { background: var(--ink-900); color: var(--paper-000); border-color: var(--ink-900); }
+main .hm-hero .ll-btn--primary:hover { background: var(--ink-700, #2c3d22); color: var(--paper-000); border-color: var(--ink-700, #2c3d22); }
+
+@media (max-width: 767px) {
+  /* Hero: text-led, no leftover side block; both actions visible */
+  main .hm-hero { padding: 44px 0 40px; }
+  main .hm-hero .hm-hero__side { display: none; }
+  main .hm-hero__title { font-size: 42px; line-height: 1.04; letter-spacing: -0.02em; }
+  main .hm-hero__sub { margin-top: 18px; font-size: 10.5px; line-height: 1.8; }
+  main .hm-hero__lede { margin-top: 16px; font-size: 16px; line-height: 1.6; }
+  main .hm-hero__actions { margin-top: 26px; display: grid; grid-template-columns: 1fr; gap: 14px; }
+  main .hm-hero__actions .ll-btn--primary { width: 100%; justify-content: center; padding-top: 17px; padding-bottom: 17px; }
+  main .hm-hero__actions > .ll-btn--ghost { display: inline-flex; justify-self: center; width: auto; }
+
+  /* Client logos */
+  .ll-ticker-bar { padding-top: 24px; padding-bottom: 20px; }
+  .ll-ticker-label { font-size: 10.5px; }
+
+  /* Intro statement: readable size, calmer rhythm */
+  main .hm-intro { padding-top: 48px; padding-bottom: 8px; }
+  main .hm-intro__text { font-size: 25px; line-height: 1.28; letter-spacing: -0.01em; }
+  main .hm-facts { margin-top: 28px; row-gap: 4px; }
+  main .hm-facts dt { font-size: 10px; }
+
+  /* Services: no floating figure over the heading */
+  main .hm-plan__head > .hm-buddy { display: none; }
+  main .hm-plan__head .ll-sh__title, main .hm-plan__head h2 { font-size: 30px; }
+  main .hm-car__bar { margin-bottom: 12px; }
+  main .hm-car__card { gap: 12px; }
+  main .hm-car__head { min-height: 56px; }
+
+  /* Selected work: swipe rail instead of a long stack */
+  main .hm-work { padding: 56px 0 48px; }
+  main .hm-work__grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; gap: 12px;
+    margin: 28px -24px 0; padding: 2px 24px 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 24px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  main .hm-work__grid::-webkit-scrollbar { display: none; }
+  main .hm-work__card { scroll-snap-align: start; padding: 22px 20px; min-height: 176px; }
+
+  /* How we work */
+  main .hm-steps__item h3 { font-size: 21px; }
+
+  /* Founder: photo and quote side by side would be cramped, so a framed photo above a smaller quote */
+  main .hm-founder { gap: 24px; }
+  main .hm-founder__photo { max-width: none; width: 100%; aspect-ratio: 4 / 4.4; }
+  main .hm-founder__photo img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: center 25%; }
+  main .hm-founder blockquote { font-size: 22px; line-height: 1.38; }
+  main .hm-founder__copy { gap: 16px; }
+
+  /* Closing CTA */
+  main .hm-cta h2 { font-size: 32px; }
+  main .hm-cta__side .ll-btn--primary { width: 100%; justify-content: center; }
+}

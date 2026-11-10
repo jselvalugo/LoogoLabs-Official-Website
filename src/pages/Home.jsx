@@ -374,10 +374,6 @@ function Home({ onNavigate }) {
             </div>
             <div className="hm-hero__side">
               <div className="hm-hero__mark" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-200)" delay={1.1} /></div>
-              <figure className="hm-hero__founder hm-hero__founder--toon">
-                <img src="/character/wave.webp" alt={es ? 'Ilustración de David Selva, fundador de Loogo Labs, saludando' : 'Illustration of David Selva, founder of Loogo Labs, waving hello'} width="391" height="742" fetchpriority="high" />
-                <figcaption><strong>David Selva</strong><span>{es ? 'Fundador' : 'Founder'}</span></figcaption>
-              </figure>
             </div>
       </Hero>
 
