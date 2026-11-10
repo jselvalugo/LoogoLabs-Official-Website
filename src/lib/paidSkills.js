@@ -15,4 +15,11 @@ export const PAID_SKILLS = {
       'Plan and run your SaaS launch with Claude: positioning, pricing, launch model, dated calendar, launch day, ads, email, scorecard and 30/60/90 review. Instant download.',
     image: '/skills/covers/saas-launch-playbook.png',
   },
+  'viral-cut-studio': {
+    priceUsd: 19.99,
+    name: 'Viral Cut Studio — Claude skill',
+    checkoutDescription:
+      'Turn raw footage into finished Reels, TikToks and Shorts with Claude: cuts, hook, vertical reframing, zooms, animated captions, sound, clips from long videos, post copy, plus the Number-Hook Reel format. Instant download.',
+    image: '/skills/covers/viral-cut-studio.png',
+  },
 };

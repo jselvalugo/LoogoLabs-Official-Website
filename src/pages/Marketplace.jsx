@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight, Bell, Brain, Browser, CalendarBlank, ChartLineUp, ChatsCircle, Check, ClipboardText,
   Crosshair, DownloadSimple, EnvelopeSimple, Eye, FileText, FilmSlate, LinkSimple, LockSimple,
-  MagnifyingGlass, Megaphone, PenNib, RocketLaunch, SlidersHorizontal, Star, X,
+  MagnifyingGlass, Megaphone, PenNib, RocketLaunch, Scissors, SlidersHorizontal, Star, X,
 } from '@phosphor-icons/react';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
@@ -13,7 +13,7 @@ import { CATEGORIES, SKILLS, isPreviewHost, skillDownloadHref } from '../lib/mar
 
 const ICONS = {
   Megaphone, ClipboardText, LinkSimple, EnvelopeSimple, RocketLaunch, MagnifyingGlass, Brain, CalendarBlank,
-  FilmSlate, PenNib, ChartLineUp, Browser, ChatsCircle, Star, Crosshair, FileText,
+  FilmSlate, PenNib, ChartLineUp, Browser, ChatsCircle, Star, Crosshair, FileText, Scissors,
 };
 const EASE = [0.32, 0.72, 0, 1];
 const TIERS = [['all', 'All skills'], ['free', 'Free'], ['paid', 'Paid'], ['soon', 'Coming soon']];
