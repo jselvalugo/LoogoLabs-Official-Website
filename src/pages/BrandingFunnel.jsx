@@ -319,6 +319,7 @@ export default function BrandingFunnel() {
           <span>© {new Date().getFullYear()} Loogo Labs</span>
           <a href={toHref('/privacy')}>Privacy</a>
           <a href={toHref('/terms')}>Terms</a>
+          <a href={toHref('/accessibility')}>Accessibility</a>
         </div>
       </footer>
     </main>

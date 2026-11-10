@@ -103,7 +103,7 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
       <div className="lb-wrap">
 
       {/* ── 1. MASTHEAD: what this is, and a search box ── */}
-      <header className="ln-hero">
+      <div className="ln-hero">
         {cat ? (
           <>
             <a className="ln-masthead__kicker" href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); pickCategory(null); }}>
@@ -121,7 +121,7 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
           </>
         )}
         {searchBox}
-      </header>
+      </div>
 
       {/* ── 2. FEATURED: announcement, event and editor's pick in one row ── */}
       {!cat && !filtering && (loading ? (

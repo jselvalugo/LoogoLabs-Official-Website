@@ -2,6 +2,7 @@ import React from 'react';
 import Switch from '../forms/Switch';
 import { getConsent, setConsent } from '../../lib/cookieConsent';
 import { useLang } from '../../lib/i18n';
+import { useFocusTrap } from '../../lib/a11y';
 
 const CATEGORIES = [
   {
@@ -50,6 +51,14 @@ function CookieConsent() {
   const [stage, setStage] = React.useState('hidden'); // hidden | banner | customize
   const [prefs, setPrefs] = React.useState({ analytics: false, marketing: false });
   const es = useLang() === 'es';
+  const dialogRef = React.useRef(null);
+  useFocusTrap(dialogRef, stage === 'customize');
+  React.useEffect(() => {
+    if (stage !== 'customize') return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') closeCustomize(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [stage]);
 
   React.useEffect(() => {
     const existing = getConsent();
@@ -114,8 +123,8 @@ function CookieConsent() {
 
       {stage === 'customize' && (
         <>
-          <div onClick={closeCustomize} style={{ position: 'fixed', inset: 0, zIndex: 95, background: 'rgba(26,38,16,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }} />
-          <div role="dialog" aria-modal="true" aria-label={es ? 'Preferencias de cookies' : 'Cookie preferences'} style={{
+          <div onClick={closeCustomize} aria-hidden="true" style={{ position: 'fixed', inset: 0, zIndex: 95, background: 'rgba(26,38,16,0.4)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }} />
+          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="ll-cookie-title" style={{
             position: 'fixed', zIndex: 96, left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
             width: 'min(520px, calc(100vw - 32px))', maxHeight: 'calc(100vh - 48px)', overflowY: 'auto',
             background: 'var(--paper-000)', color: 'var(--ink-900)', border: '1px solid var(--border-hair)',
@@ -124,11 +133,11 @@ function CookieConsent() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
               <div>
                 <span className="ll-eyebrow" style={{ color: 'var(--ink-500)' }}>{es ? 'Preferencias de cookies' : 'Cookie Preferences'}</span>
-                <h3 style={{ margin: '8px 0 0', fontSize: 20, fontWeight: 500, letterSpacing: '-0.01em' }}>{es ? 'Elige qué podemos usar.' : 'Choose what we can use.'}</h3>
+                <h2 id="ll-cookie-title" style={{ margin: '8px 0 0', fontSize: 20, fontWeight: 500, letterSpacing: '-0.01em' }}>{es ? 'Elige qué podemos usar.' : 'Choose what we can use.'}</h2>
               </div>
               <button aria-label={es ? 'Cerrar' : 'Close'} onClick={closeCustomize}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: 'var(--ink-400)', padding: 4 }}>
-                ×
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: 'var(--ink-500)', padding: 4, minWidth: 32, minHeight: 32 }}>
+                <span aria-hidden="true">×</span>
               </button>
             </div>
             <p style={{ margin: '14px 0 0', fontSize: 13.5, lineHeight: 1.65, color: 'var(--ink-500)' }}>
@@ -138,10 +147,10 @@ function CookieConsent() {
               {CATEGORIES.map(cat => (
                 <div key={cat.key} style={{ background: 'rgba(26,38,16,0.035)', borderRadius: 'var(--radius-2)', padding: '14px 16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-                    <span style={{ fontWeight: 500, fontSize: 14 }}>{es ? CATEGORIES_ES[cat.key].title : cat.title}</span>
+                    <span id={`ll-cookie-${cat.key}`} style={{ fontWeight: 500, fontSize: 14 }}>{es ? CATEGORIES_ES[cat.key].title : cat.title}</span>
                     {cat.locked
                       ? <span className="ll-eyebrow" style={{ color: 'var(--ink-400)' }}>{es ? 'Siempre activas' : 'Always on'}</span>
-                      : <Switch checked={prefs[cat.key]} onChange={(v) => setPrefs(p => ({ ...p, [cat.key]: v }))} />}
+                      : <Switch ariaLabel={`${es ? CATEGORIES_ES[cat.key].title : cat.title} cookies`} checked={prefs[cat.key]} onChange={(v) => setPrefs(p => ({ ...p, [cat.key]: v }))} />}
                   </div>
                   <p style={{ margin: '8px 0 0', fontSize: 12.5, lineHeight: 1.6, color: 'var(--ink-500)' }}>{es ? CATEGORIES_ES[cat.key].desc : cat.desc}</p>
                 </div>

@@ -79,6 +79,10 @@ const STATIC = {
     title: `Política de privacidad | ${BRAND}`,
     description: `Cómo ${BRAND} recopila, usa y protege la información que compartes con nosotros.`,
   },
+  Accessibility: {
+    title: `Declaración de accesibilidad | ${BRAND}`,
+    description: `Cómo ${BRAND} hace que loogolabs.com funcione para todas las personas según WCAG 2.1 AA, y cómo reportar una barrera.`,
+  },
   Terms: {
     title: `Términos de servicio | ${BRAND}`,
     description: `Los términos que rigen el uso de los servicios de ${BRAND} y de este sitio web.`,

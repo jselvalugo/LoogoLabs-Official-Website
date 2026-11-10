@@ -249,8 +249,8 @@ export default function ParkSupply() {
               <a href="/" aria-label="Loogo Labs home" className="ll-nav__logo">
                 <img src="/monogram.png" alt="Loogo Labs" width="28" height="28" />
               </a>
-              <span style={{ color: 'var(--paper-000)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
-              <span className="ps-hide-sm" style={{ fontSize: 16, fontStyle: 'italic', color: 'var(--ink-200)', whiteSpace: 'nowrap' }}>Park Supply</span>
+              <span style={{ color: 'var(--ink-900)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 17, whiteSpace: 'nowrap' }}>Loogo Labs</span>
+              <span className="ps-hide-sm" style={{ fontSize: 16, fontStyle: 'italic', color: 'var(--ink-500)', whiteSpace: 'nowrap' }}>Park Supply</span>
             </div>
             <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}
               style={{ ...btn('secondary'), minHeight: 48, padding: '8px 18px', background: 'var(--paper-000)', borderColor: 'transparent' }}>

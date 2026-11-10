@@ -6,7 +6,7 @@ import { openBooking } from '../../lib/booking';
 import Input from '../forms/Input';
 import { getSessionId } from '../../lib/sessionTracker';
 import { trackLead, leadMeta, trackSchedule } from '../../lib/metaEvents';
-import { useHref } from '../../lib/i18n';
+import { useHref, useLang } from '../../lib/i18n';
 import '../../styles/pages/landing.css';
 import '../../styles/pages/brand-design.css';
 import { getAttribution, gaLead } from '../../lib/attribution';
@@ -144,6 +144,7 @@ export function SignupForm({ c, onBook }) {
 }
 
 export default function ScrollFunnel({ c }) {
+  const isEs = useLang() === 'es';
   const toHref = useHref();
   const onBook = () => openBooking({ content_name: c.source });
   const toSignup = () => { fireCustom('FunnelScrollToForm', { funnel: c.source }); scrollToSignup(); };
@@ -249,7 +250,7 @@ export default function ScrollFunnel({ c }) {
             <h2 className="lp-h2">{c.compare.title}</h2>
             <div className="bd-compare" role="table">
               <div className="bd-compare__row bd-compare__head" role="row">
-                <span role="columnheader" />
+                <span role="columnheader"><span className="ll-sr-only">{isEs ? 'Comparación' : 'Comparison'}</span></span>
                 <span role="columnheader">{c.compare.cols[0]}</span>
                 <span role="columnheader" className="bd-compare__us">{c.compare.cols[1]}</span>
               </div>
@@ -346,6 +347,7 @@ export default function ScrollFunnel({ c }) {
           <span>© {new Date().getFullYear()} Loogo Labs</span>
           <a href={toHref('/privacy')}>Privacy</a>
           <a href={toHref('/terms')}>Terms</a>
+          <a href={toHref('/accessibility')}>Accessibility</a>
         </div>
       </footer>
     </main>

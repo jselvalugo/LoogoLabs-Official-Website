@@ -117,18 +117,18 @@ export function LangToggle({ className = '' }) {
     <div className={`ll-langsw ${className}`} ref={ref}>
       <div className="ll-lang" role="group" aria-label="Language / Idioma">
         {OPTIONS.map(({ code, label, name, Flag }) => (
-          <button key={code} type="button" lang={code} aria-label={name} aria-pressed={current === code}
+          <button key={code} type="button" lang={code} aria-pressed={current === code}
             className={`ll-lang__opt${current === code ? ' on' : ''}`} onClick={() => choose(code)}>
-            <Flag />{label}
+            <Flag />{label}<span className="ll-sr-only"> {name}</span>
           </button>
         ))}
       </div>
 
       <div className="ll-lang-dd">
         <button type="button" className="ll-lang-dd__btn" aria-haspopup="menu" aria-expanded={open}
-          aria-label={`Language: ${active.name}`} onClick={() => setOpen((o) => !o)}>
+          onClick={() => setOpen((o) => !o)}>
           <active.Flag />
-          <span className="ll-lang-dd__code">{active.label}</span>
+          <span className="ll-lang-dd__code">{active.label}</span><span className="ll-sr-only"> {active.name}, Language / Idioma</span>
           <svg className="ll-lang-dd__chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
         {open && (

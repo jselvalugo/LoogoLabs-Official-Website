@@ -26,6 +26,7 @@ import Marketplace from './pages/Marketplace';
 import MarketplaceThankYou from './pages/MarketplaceThankYou';
 import Newsletter from './pages/Newsletter';
 import Privacy from './pages/Privacy';
+import Accessibility from './pages/Accessibility';
 import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
 import Packages from './pages/Packages';
@@ -37,6 +38,7 @@ import { NICHE_BY_PAGE } from './lib/nicheQuizzes';
 import { openBooking } from './lib/booking';
 import { BLOG_BASE, applyHead, headForPage, pathForPage, routeForPath } from './lib/seo';
 import { currentLang, localizePath, syncLangToPath, useLang } from './lib/i18n';
+import { SkipLink } from './lib/a11y';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { citySlugFromPage } from './lib/cfl';
@@ -78,7 +80,7 @@ function getInitialState(initialPath) {
   return routeForPath(window.location.pathname);
 }
 
-function App({ initialPath }) {
+function AppRoutes({ initialPath }) {
   const init = getInitialState(initialPath);
   const [page, setPage] = React.useState(init.page);
   const [postSlug, setPostSlug] = React.useState(init.slug);
@@ -188,6 +190,7 @@ function App({ initialPath }) {
   else if (page === 'Newsletter') body = <Newsletter />;
   else if (page === 'Privacy') body = <Privacy onNavigate={navigate} />;
   else if (page === 'Terms') body = <Terms onNavigate={navigate} />;
+  else if (page === 'Accessibility') body = <Accessibility />;
   else body = <NotFound onNavigate={navigate} />;
 
   return (
@@ -212,7 +215,7 @@ function App({ initialPath }) {
         columns={[
           { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Who we serve', 'About', 'Industry LoogoBlog', 'Book a Call'] },
           { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services', 'Free Tools'] },
-          { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Preferences'] },
+          { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Accessibility', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}
         style={page === 'Home' ? { marginTop: 0 } : undefined}
@@ -221,6 +224,12 @@ function App({ initialPath }) {
       <CookieConsent />
     </div>
   );
+}
+
+// Every route gets the skip link as the first focusable element on the page.
+function App(props) {
+  const es = useLang() === 'es';
+  return <><SkipLink es={es} /><AppRoutes {...props} /></>;
 }
 
 export default App;

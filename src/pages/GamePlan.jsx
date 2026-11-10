@@ -295,6 +295,7 @@ export default function GamePlan() {
         <span>© {new Date().getFullYear()} Loogo Labs LLC</span>
         <a href={toHref('/privacy')}>Privacy</a>
         <a href={toHref('/terms')}>Terms</a>
+        <a href={toHref('/accessibility')}>Accessibility</a>
       </footer>
     </main>
   );

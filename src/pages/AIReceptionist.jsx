@@ -326,7 +326,7 @@ export default function AIReceptionist() {
           <StepHeading>{es ? 'Lado a lado, no hay comparación.' : "Side by side, it's not close."}</StepHeading>
           <div className="lp-compare" role="table">
             <div className="lp-compare__head" role="row">
-              <span role="columnheader" />
+              <span role="columnheader"><span className="ll-sr-only">{es ? 'Comparación' : 'Comparison'}</span></span>
               <span role="columnheader" className="lp-compare__us">AI Receptionist</span>
               <span role="columnheader">{es ? 'Recepcionista humana' : 'Human Receptionist'}</span>
             </div>
@@ -392,6 +392,7 @@ export default function AIReceptionist() {
           <span>© {new Date().getFullYear()} Loogo Labs</span>
           <a href={toHref('/privacy')}>{es ? 'Privacidad' : 'Privacy'}</a>
           <a href={toHref('/terms')}>{es ? 'Términos' : 'Terms'}</a>
+          <a href={toHref('/accessibility')}>{es ? 'Accesibilidad' : 'Accessibility'}</a>
         </div>
       </footer>
     </main>

@@ -226,6 +226,7 @@ const HEADINGS = {
   ParkSupply: 'Pet waste stations & dog park amenities',
   Privacy: 'Privacy Policy',
   Terms: 'Terms of Service',
+  Accessibility: 'Accessibility Statement',
 };
 
 let written = 0;

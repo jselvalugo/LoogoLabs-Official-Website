@@ -214,9 +214,9 @@ export default function NovemberOffer() {
       <section className="gp-section" aria-labelledby="no-pain-title">
         <h2 id="no-pain-title">Running ads yourself is a second job. <em>One you never applied for.</em></h2>
         <p className="no-sub">You started a business to serve customers, not to learn bid strategies at midnight. If any of this sounds familiar, you’re not behind. You’re just doing it alone.</p>
-        <div className="gp-week no-pains">
+        <dl className="gp-week no-pains">
           {PAINS.map(([q, a]) => <div key={q}><dt>{q}</dt><dd>{a}</dd></div>)}
-        </div>
+        </dl>
       </section>
 
       <section className="gp-section no-wide" id="included" aria-labelledby="no-inc-title">
@@ -257,6 +257,7 @@ export default function NovemberOffer() {
         <a href="tel:+14077489150">(407) 748-9150</a>
         <a href={toHref('/privacy')}>Privacy</a>
         <a href={toHref('/terms')}>Terms</a>
+        <a href={toHref('/accessibility')}>Accessibility</a>
       </footer>
     </main>
   );
