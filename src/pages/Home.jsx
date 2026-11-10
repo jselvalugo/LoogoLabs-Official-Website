@@ -245,38 +245,56 @@ function useMedia(q) {
   return m;
 }
 
-// Accordion version: phones, reduced motion, and the server render.
-function Accordion({ es, items }) {
-  const [open, setOpen] = React.useState(0);
+// Swipe carousel: phones, tablets, reduced motion and the server render.
+// Every card shows everything (what you get, price, CTA), so nothing hides behind a "+".
+function Carousel({ es, items }) {
+  const track = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+  const onScroll = () => {
+    const el = track.current; if (!el) return;
+    const card = el.firstElementChild; if (!card) return;
+    const step = card.getBoundingClientRect().width + 16;
+    const i = Math.max(0, Math.min(items.length - 1, Math.round(el.scrollLeft / step)));
+    if (i !== active) setActive(i);
+  };
+  const go = (i) => {
+    const el = track.current; if (!el) return;
+    const card = el.children[Math.max(0, Math.min(items.length - 1, i))];
+    if (card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: 'smooth' });
+  };
   return (
-    <ul className="hm-acc">
-      {items.map((s, i) => {
-        const on = open === i;
-        return (
-          <li key={s.title}>
-            <button type="button" className="hm-acc__btn" aria-expanded={on} aria-controls={`svc-${i}`} onClick={() => setOpen(on ? -1 : i)}>
-              <span className="hm-acc__num">0{i + 1}</span>
-              <span className="hm-acc__title">{s.title}</span>
-              <span className="hm-acc__icon" aria-hidden="true" />
-            </button>
-            <div id={`svc-${i}`} className="hm-acc__panel" data-open={on} aria-hidden={!on}>
-              <div className="hm-acc__inner">
-                <div className="hm-acc__body">
-                  <p>{s.summary}</p>
-                  <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
-                  <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong><Button variant="primary" size="md" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Hablemos' : "Let's talk"}</Button></div>
-                </div>
-              </div>
+    <div className="hm-car">
+      <div className="hm-car__bar">
+        <span className="hm-car__count">0{active + 1} <i>/ 0{items.length}</i></span>
+        <span className="hm-car__hint" aria-hidden="true">{es ? 'Desliza' : 'Swipe'} →</span>
+        <div className="hm-car__arrows">
+          <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label={es ? 'Anterior' : 'Previous'}>←</button>
+          <button type="button" onClick={() => go(active + 1)} disabled={active === items.length - 1} aria-label={es ? 'Siguiente' : 'Next'}>→</button>
+        </div>
+      </div>
+      <div ref={track} className="hm-car__track" onScroll={onScroll} role="region" aria-label={es ? 'Servicios' : 'Services'}>
+        {items.map((s, i) => (
+          <article key={s.title} className={`hm-car__card${i === active ? ' on' : ''}`} aria-roledescription="slide" aria-label={`${i + 1} / ${items.length}`}>
+            <div className="hm-car__head">
+              <span className="hm-car__num">0{i + 1}</span>
+              <div className="hm-car__glyph" aria-hidden="true"><ServiceGlyph index={i} built={1} size={56} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
             </div>
-          </li>
-        );
-      })}
-    </ul>
+            <h3>{s.title}</h3>
+            <p>{s.summary}</p>
+            <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
+            <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong><Button variant="primary" size="md" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Hablemos' : "Let's talk"}</Button></div>
+          </article>
+        ))}
+      </div>
+      <div className="hm-car__dots">
+        {items.map((s, i) => <button key={s.title} type="button" className={i === active ? 'on' : ''} onClick={() => go(i)} aria-label={s.title} aria-current={i === active || undefined} />)}
+      </div>
+    </div>
   );
 }
 
 // Pinned scroll scene: the viewport locks while the four services advance.
-function Scene({ es, items }) {
+function Scene({ es, items, onNavigate }) {
   const pkHref = useHref()(pathForPage('Packages'));
   const ref = React.useRef(null);
   const [active, setActive] = React.useState(0);
@@ -316,7 +334,7 @@ function Scene({ es, items }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
-            <a className="hm-allpk" href={pkHref}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
+            <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
             <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
@@ -338,24 +356,24 @@ function Scene({ es, items }) {
   );
 }
 
-function Explorer({ es }) {
+function Explorer({ es, onNavigate }) {
   const pkHref = useHref()(pathForPage('Packages'));
   const items = es ? SERVICES_ES : SERVICES;
   const reduce = useReducedMotion();
   const wide = useMedia('(min-width: 961px)');
-  if (wide && !reduce) return <section id="services"><Scene es={es} items={items} /></section>;
+  if (wide && !reduce) return <section id="services"><Scene es={es} items={items} onNavigate={onNavigate} /></section>;
   return (
     <Wrap className="hm-section" id="services">
-      <div className="hm-plan">
+      <div className="hm-plan hm-plan--car">
         <div className="hm-plan__head hm-has-buddy">
           <Buddy pose="explain" />
           <SectionHeading
             eyebrow={es ? 'Qué hacemos' : 'What we do'}
             title={es ? 'Luego hacemos el trabajo. Elige lo que necesitas.' : 'Then we do the work. Pick what you need.'}
-            description={es ? 'Cuatro servicios, cada uno con lo que incluye y su precio. Toca uno para verlo.' : 'Four services, each with what is included and what it costs. Tap one to see it.'} />
+            description={es ? 'Cuatro servicios, cada uno con lo que incluye y su precio. Desliza para ver cada uno.' : 'Four services, each with what is included and what it costs. Swipe to see each one.'} />
         </div>
-        <Accordion es={es} items={items} />
-        <a className="hm-allpk" href={pkHref}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
+        <Carousel es={es} items={items} />
+        <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los paquetes y precios' : 'See all packages & pricing'} →</a>
       </div>
     </Wrap>
   );
@@ -461,7 +479,7 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Explorer es={es} />
+      <Explorer es={es} onNavigate={onNavigate} />
 
       <Wrap className="hm-section">
         <Reveal>

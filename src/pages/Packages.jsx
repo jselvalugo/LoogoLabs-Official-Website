@@ -279,7 +279,8 @@ function ServiceCard({ id, es, onNavigate }) {
 function Packages({ onNavigate }) {
   const es = useLang() === 'es';
   return (
-    <main>
+    <main className="pk-page">
+      <div className="pk-ambient" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <section className="pk-wrap pk-hero">
         <span className="ll-eyebrow">{es ? 'Software y servicios' : 'Software & services'}</span>
         {es ? (

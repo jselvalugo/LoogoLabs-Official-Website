@@ -1329,3 +1329,41 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
   .hm-offer__actions > * { width: 100%; }
   .hm-offer__actions .ll-btn { width: 100%; white-space: normal; }
 }
+
+/* Home: swipeable service cards (replaces the +/- accordion) */
+.hm-car { margin-top: 28px; }
+.hm-car__bar { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.hm-car__count { font-family: var(--font-label); font-size: 13px; letter-spacing: 0.16em; color: var(--ink-900); }
+.hm-car__count i { font-style: normal; color: var(--ink-400); }
+.hm-car__hint { font-size: 13px; color: var(--ink-400); }
+.hm-car__arrows { margin-left: auto; display: flex; gap: 8px; }
+.hm-car__arrows button { width: 44px; height: 44px; border: 1px solid var(--ink-900); background: transparent; color: var(--ink-900); font-size: 18px; cursor: pointer; transition: background var(--dur-fast) ease, color var(--dur-fast) ease, opacity var(--dur-fast) ease; }
+.hm-car__arrows button:hover:not(:disabled) { background: var(--ink-900); color: var(--paper-000); }
+.hm-car__arrows button:disabled { opacity: 0.25; cursor: default; }
+.hm-car__track { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 46%); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 0; padding: 4px 2px 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.hm-car__track::-webkit-scrollbar { display: none; }
+.hm-car__card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; padding: 26px 24px 24px; background: var(--paper-000); border: 1px solid var(--border-hair); transition: border-color var(--dur-base) ease, box-shadow var(--dur-base) ease; }
+.hm-car__card.on { border-color: rgba(27,42,18,0.35); box-shadow: 0 18px 40px -24px rgba(27,42,18,0.35); }
+.hm-car__head { display: flex; align-items: center; justify-content: space-between; }
+.hm-car__num { font-family: var(--font-label); font-size: 12px; letter-spacing: 0.16em; color: var(--amber-500); }
+.hm-car__glyph { width: 56px; height: 56px; }
+.hm-car__glyph svg { width: 56px; height: 56px; }
+.hm-car__card h3 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 1.1; color: var(--ink-900); }
+.hm-car__card > p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-500); }
+.hm-car__card .hm-gets { grid-template-columns: 1fr; }
+.hm-car__card .hm-price { margin-top: auto; }
+.hm-car__card .hm-price .ll-btn { width: 100%; }
+.hm-car__dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.hm-car__dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px; background: rgba(27,42,18,0.2); cursor: pointer; transition: width var(--dur-base) var(--ease-standard), background var(--dur-base) ease; }
+.hm-car__dots button.on { width: 28px; background: var(--ink-900); }
+@media (max-width: 767px) {
+  .hm-car__track { grid-auto-columns: 86%; gap: 12px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; scroll-padding-left: 20px; }
+  .hm-car__card { padding: 22px 20px 20px; }
+  .hm-car__card h3 { font-size: 24px; }
+  .hm-car__arrows button { width: 40px; height: 40px; }
+}
+.hm-plan--car { grid-template-columns: minmax(0, 1fr) !important; gap: 8px; }
+.hm-plan--car > * { min-width: 0; }
+.hm-car, .hm-car__track { min-width: 0; max-width: 100%; }
+@media (min-width: 961px) { .hm-car__track { grid-auto-columns: minmax(0, calc((100% - 32px) / 3)); } }
+@media (max-width: 767px) { .hm-plan--car .hm-car__track { max-width: none; width: calc(100% + 40px); grid-auto-columns: 84%; } }
