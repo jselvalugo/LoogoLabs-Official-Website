@@ -296,9 +296,9 @@ export const ROUTES = [
   {
     page: 'Packages',
     path: '/packages',
-    title: `Marketing Software Plans & Services | ${SITE.name}`,
+    title: `Marketing Packages & Pricing | ${SITE.name}`,
     description:
-      'Launch, Growth and Scale software plans (SaaS) for marketing automation, plus services done by our team: content and social media, ads management, local SEO, websites, reviews and press releases.',
+      'Marketing strategy, done-for-you retainers from $750/mo, a Fractional CMO, Launch, Growth and Scale software plans (SaaS) from $147/mo, and one-time projects from $97.',
     priority: '0.7',
     changefreq: 'monthly',
   },
@@ -307,7 +307,7 @@ export const ROUTES = [
     path: '/packages/press-release',
     title: `Press Release Writing & Distribution | ${SITE.name}`,
     description:
-      'Press release writing and distribution to 350+ news sites, broadcast affiliate pages, and Google News. Fixed prices from $149.',
+      'Press release writing and distribution to 350+ news sites, broadcast affiliate pages, and Google News. Fixed prices from $199.',
     priority: '0.7',
     changefreq: 'monthly',
   },

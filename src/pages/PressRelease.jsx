@@ -145,7 +145,7 @@ function PressRelease() {
     <main>
       {/* ── HERO ── */}
       <section className="pk-wrap pk-hero pk-hero--center">
-        <h1 className="pk-title">{es ? <>Pon tu negocio en las noticias. <em>Desde $149.</em></> : <>Get your business in the news. <em>Starting at $149.</em></>}</h1>
+        <h1 className="pk-title">{es ? <>Pon tu negocio en las noticias. <em>Desde $199.</em></> : <>Get your business in the news. <em>Starting at $199.</em></>}</h1>
         <p className="pk-lede">
           {es ? 'Redactamos, publicamos y reportamos tu comunicado de prensa en más de 350 sitios de noticias, para que clientes, buscadores y asistentes de IA encuentren una historia creíble cuando te busquen.' : <>
           We write, publish, and report on your press release across 350+ news sites, so customers, search engines,
@@ -303,7 +303,7 @@ function PressRelease() {
         <div className="pr-price ll-forest ll-bezel--dark pk-dark">
           <div>
             <span className="pk-tag">{es ? 'Desde' : 'Starting at'}</span>
-            <div className="pk-price" style={{ marginTop: 8 }}>$149</div>
+            <div className="pk-price" style={{ marginTop: 8 }}>$199</div>
             <div className="pr-price__sub">{es ? 'por comunicado · precio fijo' : 'per release · fixed price'}</div>
           </div>
           <ul className="pk-list">

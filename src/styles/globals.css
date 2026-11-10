@@ -1377,6 +1377,8 @@ p a:hover, dd a:hover, blockquote a:hover, li a:hover, .ll-prose a:hover { text-
 .hm-facts__item { padding: 22px 20px 0 0; }
 .hm-facts dt { font-family: var(--font-label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-400); }
 .hm-facts dd { margin: 8px 0 0; font-size: 17px; color: var(--ink-900); }
+.hm-prices { margin: 0; }
+.hm-prices-wrap { padding-bottom: 72px; }
 .hm-steps__cta { margin-top: 28px; }
 .hm-founder { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: center; }
 .hm-founder__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
