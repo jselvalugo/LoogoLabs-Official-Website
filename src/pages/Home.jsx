@@ -8,6 +8,7 @@ import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
 import { loadPosts, cachedPosts } from '../lib/postsCache';
+import { categoryOf, BLOG_CATEGORY_BY_SLUG } from '../lib/blogCategories';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
@@ -314,31 +315,129 @@ function Journal({ es, onNavigate }) {
   const toHref = useHref();
   const [posts, setPosts] = React.useState(() => cachedPosts() || []);
   React.useEffect(() => { let on = true; loadPosts().then(p => { if (on) setPosts(p || []); }); return () => { on = false; }; }, []);
-  const list = posts.slice(0, 3);
-  if (!list.length) return null;
+  if (!posts.length) return null;
+  const [lead, ...rest] = posts.slice(0, 4);
   const fmt = (d) => (d ? new Date(d).toLocaleDateString(es ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '');
+  const cat = (p) => { const c = BLOG_CATEGORY_BY_SLUG.get(categoryOf(p)); return c ? (es ? c.nameEs : c.name) : (es ? 'Artículo' : 'Article'); };
+  const href = (p) => toHref(pathForPage('BlogPost', p.slug));
+  const open = (p) => (e) => { e.preventDefault(); onNavigate('BlogPost', p.slug); };
   return (
-    <Wrap className="hm-section">
-      <div className="hm-journal__head">
-        <Reveal>
-          <SectionHeading eyebrow={es ? 'Del blog' : 'From the blog'}
-            title={es ? 'Lo que estamos aprendiendo sobre IA y marketing.' : 'What we are learning about AI and marketing.'} />
-        </Reveal>
-        <a className="hm-allpk" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} →</a>
-      </div>
-      <Stagger className="hm-journal" gap={0.08}>
-        {list.map(p => (
-          <Item key={p.slug} className="hm-journal__item">
-            <a href={toHref(pathForPage('BlogPost', p.slug))} onClick={e => { e.preventDefault(); onNavigate('BlogPost', p.slug); }}>
-              <span className="hm-journal__meta">{fmt(p.published_at)}{p.read_time ? ` · ${p.read_time} ${es ? 'min' : 'min read'}` : ''}</span>
-              <h3>{p.title}</h3>
-              {p.excerpt && <p>{p.excerpt}</p>}
-              <em aria-hidden="true">{es ? 'Leer' : 'Read'} →</em>
+    <section className="hm-blog">
+      <Wrap>
+        <div className="hm-blog__head">
+          <Reveal>
+            <SectionHeading eyebrow={es ? 'Del blog' : 'From the blog'}
+              title={es ? 'Lo que estamos aprendiendo sobre IA y marketing.' : 'What we are learning about AI and marketing.'} />
+          </Reveal>
+          <a className="hm-btn-outline" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} <span aria-hidden="true">→</span></a>
+        </div>
+        <div className="hm-blog__grid">
+          <Reveal className="hm-blog__lead">
+            <a href={href(lead)} onClick={open(lead)}>
+              <span className="hm-blog__tag">{es ? 'Lo más reciente' : 'Latest'} · {cat(lead)}</span>
+              <h3>{lead.title}</h3>
+              {lead.excerpt && <p>{lead.excerpt}</p>}
+              <span className="hm-blog__meta">{fmt(lead.published_at)}{lead.read_time ? ` · ${lead.read_time} ${es ? 'min de lectura' : 'min read'}` : ''}</span>
+              <span className="hm-blog__read">{es ? 'Leer artículo' : 'Read the article'} <span aria-hidden="true">→</span></span>
             </a>
-          </Item>
-        ))}
-      </Stagger>
-    </Wrap>
+          </Reveal>
+          <Stagger as="ol" className="hm-blog__list" gap={0.08}>
+            {rest.map((p, i) => (
+              <Item key={p.slug} as="li">
+                <a href={href(p)} onClick={open(p)}>
+                  <span className="hm-blog__num" aria-hidden="true">0{i + 2}</span>
+                  <span className="hm-blog__body">
+                    <span className="hm-blog__cat">{cat(p)}</span>
+                    <strong>{p.title}</strong>
+                    <span className="hm-blog__meta">{fmt(p.published_at)}{p.read_time ? ` · ${p.read_time} min` : ''}</span>
+                  </span>
+                  <span className="hm-blog__arrow" aria-hidden="true">→</span>
+                </a>
+              </Item>
+            ))}
+          </Stagger>
+        </div>
+        <a className="hm-btn-outline hm-blog__more" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} <span aria-hidden="true">→</span></a>
+      </Wrap>
+    </section>
+  );
+}
+
+// How we work: the section pins while the three steps switch in place, so it
+// takes a short scroll instead of a long list. Reduced motion gets the list.
+function HowWeWork({ es, onNavigate }) {
+  const toHref = useHref();
+  const steps = es ? STEPS_ES : STEPS;
+  const reduce = useReducedMotion();
+  const mounted = useMounted();
+  const ref = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    const i = Math.min(steps.length - 1, Math.max(0, Math.floor(v * steps.length * 0.999)));
+    if (i !== active) setActive(i);
+  });
+  const fill = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const heading = (
+    <SectionHeading eyebrow={es ? 'Cómo trabajamos' : 'How we work'}
+      title={es ? 'Empieza con una conversación, no con un contrato.' : 'It starts with a conversation, not a contract.'} />
+  );
+  const cta = (
+    <a className="hm-btn-outline" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} <span aria-hidden="true">→</span></a>
+  );
+  if (!mounted || reduce) {
+    return (
+      <Wrap className="hm-section">
+        <Reveal>{heading}</Reveal>
+        <ol className="hm-flow">
+          {steps.map(([k, v], i) => (
+            <li key={k} className={`hm-flow__step${i === 0 ? ' hm-flow__step--first' : ''}`}>
+              <span className="hm-flow__num" aria-hidden="true">{i + 1}</span><h3>{k}</h3><p>{v}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="hm-flow__cta">{cta}</div>
+      </Wrap>
+    );
+  }
+  const jump = (i) => {
+    const el = ref.current; if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const h = el.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: top + (h * (i + 0.5)) / steps.length, behavior: 'smooth' });
+  };
+  const [k, v] = steps[active];
+  return (
+    <section ref={ref} className="hm-hww" style={{ height: `calc(100vh + ${steps.length * 38}vh)` }}>
+      <div className="hm-hww__pin">
+        <div className="hm-wrap hm-hww__inner">
+          {heading}
+          <div className="hm-hww__rail" role="tablist" aria-label={es ? 'Pasos' : 'Steps'}>
+            <div className="hm-hww__track" aria-hidden="true"><motion.span style={{ width: fill }} /></div>
+            {steps.map(([t], i) => (
+              <button key={t} type="button" role="tab" aria-selected={i === active} className={`hm-hww__dot${i <= active ? ' done' : ''}${i === active ? ' on' : ''}`} onClick={() => jump(i)}>
+                <span>{i + 1}</span><em>{t}</em>
+              </button>
+            ))}
+          </div>
+          <div className="hm-hww__stage" aria-live="polite">
+            <AnimatePresence mode="wait">
+              <motion.div key={active} className="hm-hww__card"
+                initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -22 }}
+                transition={{ duration: 0.38, ease: EASE }}>
+                <span className="hm-hww__big" aria-hidden="true">0{active + 1}</span>
+                <div>
+                  <span className="hm-hww__step">{es ? `Paso ${active + 1} de ${steps.length}` : `Step ${active + 1} of ${steps.length}`}</span>
+                  <h3>{k}</h3>
+                  <p>{v}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="hm-hww__cta">{cta}</div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -419,24 +518,7 @@ function Home({ onNavigate }) {
         </Wrap>
       </section>
 
-      <Wrap className="hm-section">
-        <Reveal>
-          <SectionHeading eyebrow={es ? 'Cómo trabajamos' : 'How we work'}
-            title={es ? 'Empieza con una conversación, no con un contrato.' : 'It starts with a conversation, not a contract.'} />
-        </Reveal>
-        <Stagger as="ol" className="hm-flow" gap={0.12}>
-          {(es ? STEPS_ES : STEPS).map(([k, v], i) => (
-            <Item key={k} as="li" className={`hm-flow__step${i === 0 ? ' hm-flow__step--first' : ''}`}>
-              <span className="hm-flow__num" aria-hidden="true">{i + 1}</span>
-              <h3>{k}</h3>
-              <p>{v}</p>
-            </Item>
-          ))}
-        </Stagger>
-        <Reveal className="hm-flow__cta">
-          <a className="hm-btn-outline" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} <span aria-hidden="true">→</span></a>
-        </Reveal>
-      </Wrap>
+      <HowWeWork es={es} onNavigate={onNavigate} />
 
       <section className="hm-founder-band">
         <Wrap>
