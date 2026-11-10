@@ -246,6 +246,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // November 2026 offer: Meta + Google Ads set up and managed for $299/mo.
+    // Ad landing page, unlisted like /game-plan (no nav).
+    page: 'NovemberOffer',
+    path: '/november-offer',
+    title: `Meta & Google Ads Management, $299/mo November Offer | ${SITE.name}`,
+    description:
+      'This November, Loogo Labs sets up and manages your Meta and Google Ads for $299 a month. Setup included, month-to-month, conversion tracking and a plain-English monthly report.',
+    priority: '0.3',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     // The Loogo Labs Letter: monthly newsletter sign-up. Linked from social
     // bios, the email signature and outreach emails.
     page: 'Newsletter',
