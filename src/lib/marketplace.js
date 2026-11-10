@@ -181,6 +181,39 @@ export const SKILLS = [
     ],
     prompt: 'Plan our December content. We post daily: Reels, carousels and stories.',
   },
+  {
+    slug: 'viral-cut-studio',
+    name: 'Viral Cut Studio',
+    category: 'Social',
+    tier: 'paid',
+    // Built and tested (v1.0); goes on sale with the encrypted paid-skills batch.
+    // Then: add to PAID_SKILLS (priceUsd 19.99, image /skills/covers/viral-cut-studio.png) + BUY_URLS +
+    // skill-order CATALOG, use buyUrl, drop soon/eta.
+    soon: true,
+    eta: 'November 2026',
+    icon: 'Scissors',
+    price: 19.99,
+    tagline: 'Raw footage in. Scroll-stopping Reels, TikToks and Shorts out.',
+    description:
+      'You filmed it, and now it sits in your camera roll because editing takes hours. Viral Cut Studio turns Claude into your video editor. It cuts the dead air, the ums and the retakes, finds your strongest line and opens on it, reframes to vertical with a camera that follows your face, then adds punch-in zooms, animated captions, sound effects and a call to action. Got a podcast or webinar? It finds the best clips and finishes each one as its own Short. English, Spanish and 20+ more languages.',
+    outputs: [
+      'Finished 9:16 videos ready to post (1080×1920, loudness set for Instagram, TikTok and YouTube)',
+      'The hook moved to the first second, with an on-screen title',
+      'Animated captions in 6 styles, in your brand color, plus an .srt file',
+      'The 3–5 best clips from any long video or podcast',
+      'Post copy: hook caption, Instagram and TikTok versions, hashtags and a cover image',
+      'An edit report: what was cut, why, and a checklist before you post',
+    ],
+    inside: [
+      'A full editing engine: silence and filler removal, retake detection, face-tracked reframing and split-screen for two people',
+      'Editing playbooks: cut rules, 10 hook formulas, clip scoring, caption and motion guides',
+      'Bonus: the Number-Hook Reel, the motion-graphics format Loogo Labs uses on its own channels',
+      'Built-in sound effects, free for commercial use, synced to every cut',
+      'Reads your free Brand Brain profile for colors, CTA and words to avoid',
+      'Runs on your computer, so your footage never leaves it',
+    ],
+    prompt: 'Edit this talking-head video into a 30-second Reel with bold captions, and write the Instagram caption.',
+  },
   // Coming soon: listed with details and planned price; buyers can join the waitlist
   // (CRM email tag "waitlist-<slug>"). To launch one, build it, add it to PAID_SKILLS
   // and BUY_URLS, and remove `soon: true`.
