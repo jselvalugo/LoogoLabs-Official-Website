@@ -22,25 +22,25 @@ const SERVICES = [
     title: 'Marketing strategy',
     summary: 'Not sure what is working or where to spend? We study your business, your customers and your competition, then hand you a clear 90-day plan.',
     gets: ['Free Marketing Game Plan call', 'Your offer, message and who to target', 'Channel plan with budget and monthly targets', 'Monthly review of what worked'],
-    price: 'Starts with a free Game Plan call',
+    price: 'Free Game Plan call · Strategy Sprint $750–$1,500',
   },
   {
     title: 'Content & social media',
     summary: 'Show up every week with content that sounds like you: short-form video, carousels and posts made to get attention and turn followers into customers.',
     gets: ['Short-form video and Reels editing', 'UGC and creator content', 'Monthly content calendar, hooks and captions', 'Instagram, Facebook, TikTok and LinkedIn'],
-    price: '$500–$2,000/mo, based on industry and volume',
+    price: 'Included in retainers from $750/mo',
   },
   {
     title: 'Paid ads',
     summary: 'Google, Facebook, Instagram and YouTube ads aimed at the people most likely to buy, with tracking so you see which dollars bring customers.',
     gets: ['Campaign setup, targeting and ad creative', 'Landing pages that match the ad', 'Conversion tracking set up first', 'Results explained in plain English'],
-    price: '$500/mo minimum, or 20% of ad spend (whichever is higher)',
+    price: 'In the $1,500/mo Growth Retainer, or $500/mo minimum on its own',
   },
   {
     title: 'Websites, CRM & automation',
     summary: 'A website that turns visitors into leads, and a system that follows up for you so no lead slips through the cracks.',
     gets: ['Websites and landing pages', 'CRM setup on GoHighLevel', 'Automatic email and text follow-up', 'AI receptionist and review requests'],
-    price: 'Websites from $1,500 · Software from $297/mo',
+    price: 'Websites from $499 · Software from $147/mo',
   },
 ];
 const SERVICES_ES = [
@@ -48,25 +48,25 @@ const SERVICES_ES = [
     title: 'Estrategia de marketing',
     summary: '¿No sabes qué funciona ni dónde invertir? Estudiamos tu negocio, tus clientes y tu competencia, y te entregamos un plan claro de 90 días.',
     gets: ['Llamada gratis para tu Plan de Marketing', 'Tu oferta, tu mensaje y a quién dirigirte', 'Plan de canales con presupuesto y metas mensuales', 'Revisión mensual de lo que funcionó'],
-    price: 'Empieza con una llamada gratis',
+    price: 'Llamada gratis · Strategy Sprint $750–$1,500',
   },
   {
     title: 'Contenido y redes sociales',
     summary: 'Aparece cada semana con contenido que suena a ti: videos cortos, carruseles y publicaciones hechos para captar atención y convertir seguidores en clientes.',
     gets: ['Edición de videos cortos y Reels', 'Contenido UGC y de creadores', 'Calendario mensual, ganchos y textos', 'Instagram, Facebook, TikTok y LinkedIn'],
-    price: '$500–$2,000/mes, según industria y volumen',
+    price: 'Incluido en servicios mensuales desde $750/mes',
   },
   {
     title: 'Anuncios pagados',
     summary: 'Anuncios en Google, Facebook, Instagram y YouTube dirigidos a quienes tienen más probabilidad de comprar, con medición para ver qué dólares traen clientes.',
     gets: ['Configuración, segmentación y creatividades', 'Páginas de destino que coinciden con el anuncio', 'Medición de conversiones desde el inicio', 'Resultados explicados en palabras simples'],
-    price: '$500/mes mínimo, o 20% de la inversión (lo que sea mayor)',
+    price: 'En el Growth Retainer de $1,500/mes, o desde $500/mes por separado',
   },
   {
     title: 'Sitios web, CRM y automatización',
     summary: 'Un sitio web que convierte visitas en prospectos, y un sistema que les da seguimiento por ti para que ningún prospecto se pierda.',
     gets: ['Sitios web y páginas de destino', 'CRM en GoHighLevel', 'Seguimiento automático por email y texto', 'Recepcionista con IA y solicitudes de reseñas'],
-    price: 'Sitios desde $1,500 · Software desde $297/mes',
+    price: 'Sitios desde $499 · Software desde $147/mes',
   },
 ];
 
@@ -288,6 +288,20 @@ function Scene({ es, items, onNavigate }) {
   );
 }
 
+// Starting prices for each kind of work, shown under "What we do".
+function PriceStrip({ es }) {
+  return (
+    <Wrap className="hm-prices-wrap">
+      <Stagger as="dl" className="hm-facts hm-prices" gap={0.08}>
+        {(es
+          ? [['Estrategia', 'Plan gratis'], ['Servicios mensuales', 'Desde $750/mes'], ['Software (SaaS)', 'Desde $147/mes'], ['Proyectos únicos', 'Desde $97']]
+          : [['Strategy', 'Free Game Plan'], ['Retainers', 'From $750/mo'], ['Software (SaaS)', 'From $147/mo'], ['One-time projects', 'From $97']]
+        ).map(([k, v]) => <Item key={k} className="hm-facts__item"><dt>{k}</dt><dd>{v}</dd></Item>)}
+      </Stagger>
+    </Wrap>
+  );
+}
+
 function Explorer({ es, onNavigate }) {
   const pkHref = useHref()(pathForPage('Packages'));
   const items = es ? SERVICES_ES : SERVICES;
@@ -495,6 +509,7 @@ function Home({ onNavigate }) {
       </Wrap>
 
       <Explorer es={es} onNavigate={onNavigate} />
+      <PriceStrip es={es} />
 
       <section className="hm-work ll-band ll-band--tan">
         <Wrap>

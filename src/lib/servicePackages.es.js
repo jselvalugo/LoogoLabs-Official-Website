@@ -32,9 +32,9 @@ export const SERVICE_PACKAGES_ES = {
   ReviewKickstart: {
     badge: 'Campaña de reseñas de clientes anteriores',
     cardTitle: 'Campaña de reseñas de clientes anteriores',
-    from: '$399',
+    from: '$299',
     headline: 'Despierta a los clientes satisfechos que ya tienes.',
-    accent: '$399, listo en 14 días.',
+    accent: '$299, listo en 14 días.',
     summary: 'La mayoría de los negocios tienen cientos de clientes satisfechos a quienes nunca se les pidió una reseña. Nosotros se la pedimos por ti (por mensaje de texto y correo) y te dejamos listo para que las reseñas sigan llegando.',
     cardDescription: 'Importamos a tus clientes anteriores, hacemos una campaña única de reseñas por SMS y correo, y te entregamos plantillas de respuesta y una tarjeta de reseñas con código QR. Listo en 14 días.',
     turnaround: 'Entregado en 14 días',
@@ -58,17 +58,15 @@ export const SERVICE_PACKAGES_ES = {
   CityPages: {
     badge: 'Paquete de páginas por ciudad',
     cardTitle: 'Paquete de páginas por ciudad',
-    from: 'Desde $499',
+    from: '$97',
     headline: 'Aparece en cada ciudad que atiendes.',
-    accent: '5 páginas por $499.',
+    accent: '5 páginas por $97.',
     summary: 'Los clientes buscan “servicio + ciudad.” Si tu sitio solo tiene una página sobre un pueblo, eres invisible en todos los demás. Redactamos y publicamos páginas de ciudad y servicio genuinamente locales para tu sitio.',
-    cardDescription: '5 o 10 páginas SEO de ciudad y servicio, redactadas para tus zonas de servicio y publicadas en tu sitio.',
+    cardDescription: '5 páginas SEO de ciudad y servicio, redactadas para tus zonas de servicio y publicadas en tu sitio.',
     turnaround: 'Publicado en 10-14 días',
     tiers: [
       { name: '5 páginas',
         items: ['5 páginas de ciudad/servicio redactadas', 'Detalles locales de cada zona', 'Títulos, meta y enlaces internos configurados', 'Publicadas en tu sitio'] },
-      { name: '10 páginas',
-        items: ['10 páginas de ciudad/servicio redactadas', 'Todo lo del paquete de 5 páginas', 'El mejor precio por página'] },
     ],
     steps: [
       ['Elige tus zonas', 'Dinos las ciudades y servicios que más te importan.'],

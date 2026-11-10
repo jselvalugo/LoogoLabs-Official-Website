@@ -60,12 +60,12 @@ const STATIC = {
     description: 'Herramientas gratis para dueños de negocio: generador de enlace y QR para reseñas de Google, calculadora de llamadas perdidas y generador de enlaces UTM. Sin registro.',
   },
   Packages: {
-    title: `Planes de software de marketing y servicios | ${BRAND}`,
-    description: 'Planes de software (SaaS) Launch, Growth y Scale para automatizar tu marketing, más servicios hechos por nuestro equipo: contenido y redes, anuncios, SEO local, sitios web, reseñas y comunicados de prensa.',
+    title: `Paquetes y precios de marketing | ${BRAND}`,
+    description: 'Estrategia de marketing, servicios mensuales desde $750/mes, CMO fraccional, planes de software (SaaS) Launch, Growth y Scale desde $147/mes y proyectos únicos desde $97.',
   },
   PressRelease: {
     title: `Redacción y distribución de comunicados de prensa | ${BRAND}`,
-    description: 'Redacción y distribución de comunicados de prensa en más de 350 sitios de noticias, afiliadas de televisión y Google News. Precios fijos desde $149.',
+    description: 'Redacción y distribución de comunicados de prensa en más de 350 sitios de noticias, afiliadas de televisión y Google News. Precios fijos desde $199.',
   },
   BrandPartners: {
     title: `Alianzas con marcas: estrategia de marketing y consultoría de IA | ${BRAND}`,
