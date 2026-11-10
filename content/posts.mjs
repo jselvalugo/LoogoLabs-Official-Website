@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `search-terms-review-before-december-ad-budget`,
+    title: `Read Your Search Terms Before You Raise the Ad Budget`,
+    excerpt: `A bigger December budget just pays for more clicks from people who never wanted to hire you, and thirty minutes with the phrases they typed shows how many.`,
+    tags: `AI for Paid Ads, Search Terms, Small Business Owners`,
+    content: `Over the next two weeks a lot of owners will raise their ad budget because it is the busy season, and the extra money will mostly buy clicks from people who were never going to hire them. The budget is not the problem. The problem is that nobody has read what those people actually typed into the search box since the summer.
+
+## The report nobody opens
+
+Every search ad account keeps a list of the exact phrases people typed before they clicked your ad. It is dull to read and it is the most honest document in your marketing. Your keywords are what you hoped people would type. This list is what they did type.
+
+When I open one for the first time on an account, I almost always find the same shape: a handful of phrases that bring the real customers, and a long tail of curiosity, job seekers, do-it-yourselfers and people in a town you don't serve. You pay for all of them at the same price per click.
+
+## Why now
+
+Two things line up this month. Holiday and year-end budgets tend to crowd the same auctions, so a wasted click can cost you more than it did in September. And in a few weeks you will sit down to decide next year's budget, probably from this year's numbers. If those numbers carry months of junk clicks, you will plan next year on a distorted picture.
+
+Here is the arithmetic, with made-up figures. Say you pay $4 a click and get 500 clicks a month. That is $2,000. If a third of those clicks come from phrases you would never take a job from, about $670 a month is going nowhere, and a bigger budget just makes the leak bigger.
+
+## Thirty minutes, once a week
+
+Export the last 30 days of search phrases into a spreadsheet. Keep the phrase, the clicks, the cost and the number of enquiries each one produced. Then sort them into three piles.
+
+- **Keep**: the phrase is clearly your customer asking for your service.
+- **Block**: you can say in one sentence why it is wrong, such as the wrong service, the wrong place, or someone looking for a job or a free manual.
+- **Watch**: anything you honestly can't call. Leave it another week.
+
+Add the Block phrases to the account as negative keywords, which tells the ad system never to show your ad for them again. Do the clear ones first and resist blocking half the list in one sitting. A phrase that sounds wrong sometimes turns out to be your best enquiry.
+
+## Where AI helps and where it doesn't
+
+This is a good job for an AI tool, up to a point. Paste in the list and ask it to group the phrases by what the searcher seems to want, and to flag the ones that look unrelated to your services. It gets through three hundred phrases faster than you will, and it notices patterns you would skim past, like a whole cluster of people searching for training courses.
+
+What it can't do is know your business. It doesn't know that you gave up commercial work last year, that you stop at the river, or that the odd phrase it flagged is exactly how your best customers describe their problem. When it proposes a block, ask whether you could say why in one sentence. If you can't, the phrase goes in Watch.
+
+I would not let any tool add negatives to your account on its own, either. A wrong block is silent. You never see the customers it kept away.
+
+## Don't skip the Keep pile
+
+If a phrase brought three enquiries and you only reach it through a loose match, give it a home of its own in the account and a line on the page it lands on. Those are your customers' own words, which makes them free research for your ads, your page and your follow-up texts. Ask the AI to draft ad lines from the Keep pile if you like, then rewrite anything that sounds like every other ad.
+
+## This week
+
+Before you touch the December budget, export last month's search phrases, take the fifty that cost you the most, and sort them into Keep, Block and Watch. Write down the dollar total of the Block pile. That is the money you can win back before you spend a cent more.`,
+  },
+  {
     slug: `ai-drafts-same-edits-style-sheet`,
     title: `Stop Making the Same Edits to Every AI Draft`,
     excerpt: `If you fix the same three things in every caption and email the AI writes, those fixes are a style sheet you haven't written down yet.`,
