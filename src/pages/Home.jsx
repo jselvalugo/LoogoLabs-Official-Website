@@ -213,7 +213,7 @@ function Carousel({ es, items }) {
             <h3>{s.title}</h3>
             <p>{s.summary}</p>
             <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
-            <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong></div>
+            
           </article>
         ))}
       </div>
@@ -265,7 +265,7 @@ function Scene({ es, items, onNavigate }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
-            <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} →</a>
+            <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
             <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
@@ -277,7 +277,7 @@ function Scene({ es, items, onNavigate }) {
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
                 <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
-                  <div className="hm-price"><span className="hm-price__k">{es ? 'Inversión' : 'Pricing'}</span><strong>{s.price}</strong></div>
+                  
               </motion.div>
             </AnimatePresence>
           </div>
@@ -301,10 +301,10 @@ function Explorer({ es, onNavigate }) {
           <SectionHeading
             eyebrow={es ? 'Qué hacemos' : 'What we do'}
             title={es ? 'Cuatro formas en que te ayudamos a crecer.' : 'Four ways we help you grow.'}
-            description={es ? 'Lo que incluye cada servicio y cuánto cuesta. Desliza para ver cada uno.' : 'What each service includes and what it costs. Swipe to see each one.'} />
+            description={es ? 'Lo que incluye cada servicio. Desliza para ver cada uno.' : 'What each service includes. Swipe to see each one.'} />
         </div>
         <Carousel es={es} items={items} />
-        <a className="hm-allpk" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} →</a>
+        <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
       </div>
     </Wrap>
   );
@@ -383,14 +383,14 @@ function Home({ onNavigate }) {
         <Reveal>
           <p className="hm-intro__text">
             {es
-              ? <>Somos una compañía de marketing y automatización en Orlando. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en Estados Unidos y México, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
-              : <>We are a marketing and automation company in Orlando. We work with <em>local businesses and growing brands</em> across the United States and Mexico, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
+              ? <>Somos una compañía de marketing y automatización en Orlando. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en todo Estados Unidos, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
+              : <>We are a marketing and automation company in Orlando. We work with <em>local businesses and growing brands</em> across the United States, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
           </p>
         </Reveal>
         <Stagger as="dl" className="hm-facts" gap={0.08}>
           {(es
-            ? [['Base', 'Orlando, Florida'], ['Mercados', 'EE. UU. y México'], ['Idiomas', 'Inglés y español'], ['Enfoque', 'Marketing con IA y automatización']]
-            : [['Based in', 'Orlando, Florida'], ['Markets', 'United States & Mexico'], ['Languages', 'English & Spanish'], ['Focus', 'AI marketing & automation']]
+            ? [['Base', 'Orlando, Florida'], ['Mercado', 'Estados Unidos'], ['Idiomas', 'Inglés y español'], ['Enfoque', 'Marketing con IA y automatización']]
+            : [['Based in', 'Orlando, Florida'], ['Market', 'United States'], ['Languages', 'English & Spanish'], ['Focus', 'AI marketing & automation']]
           ).map(([k, v]) => <Item key={k} className="hm-facts__item"><dt>{k}</dt><dd>{v}</dd></Item>)}
         </Stagger>
       </Wrap>
@@ -424,46 +424,48 @@ function Home({ onNavigate }) {
           <SectionHeading eyebrow={es ? 'Cómo trabajamos' : 'How we work'}
             title={es ? 'Empieza con una conversación, no con un contrato.' : 'It starts with a conversation, not a contract.'} />
         </Reveal>
-        <Stagger as="ol" className="hm-steps" gap={0.12}>
+        <Stagger as="ol" className="hm-flow" gap={0.12}>
           {(es ? STEPS_ES : STEPS).map(([k, v], i) => (
-            <Item key={k} as="li" className="hm-steps__item"><span className="hm-steps__num">0{i + 1}</span><h3>{k}</h3><p>{v}</p></Item>
+            <Item key={k} as="li" className={`hm-flow__step${i === 0 ? ' hm-flow__step--first' : ''}`}>
+              <span className="hm-flow__num" aria-hidden="true">{i + 1}</span>
+              <h3>{k}</h3>
+              <p>{v}</p>
+            </Item>
           ))}
         </Stagger>
-        <Reveal className="hm-steps__cta">
-          <a className="hm-allpk" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} →</a>
+        <Reveal className="hm-flow__cta">
+          <a className="hm-btn-outline" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} <span aria-hidden="true">→</span></a>
         </Reveal>
       </Wrap>
 
-      <Wrap className="hm-section">
-        <div className="hm-founder">
-          <Reveal className="hm-founder__photo">
-            <img src="/founder-david-selva.jpg" alt={es ? 'David Selva, fundador de Loogo Labs' : 'David Selva, founder of Loogo Labs'} width="480" height="600" loading="lazy" />
-          </Reveal>
-          <Reveal className="hm-founder__copy" delay={0.1}>
-            <span className="ll-label">{es ? 'El fundador' : 'The founder'}</span>
+      <section className="hm-founder-band">
+        <Wrap>
+          <Reveal className="hm-founder2">
+            <span className="hm-founder2__label">{es ? 'El fundador' : 'The founder'}</span>
             <blockquote>
               {es
                 ? '“He pasado mi carrera construyendo sistemas que hacen que las cosas realmente se cumplan. Loogo Labs es eso aplicado al marketing: escribimos el plan, construimos lo que necesita y nos quedamos para operarlo.”'
                 : '“I have spent my career building systems that make things actually get done. Loogo Labs is that applied to marketing: we write the plan, build what it needs and stay to run it.”'}
             </blockquote>
-            <div className="hm-founder__sig"><strong>David Selva</strong><span>{es ? 'Fundador, Loogo Labs LLC' : 'Founder, Loogo Labs LLC'}</span></div>
-            <a className="hm-allpk" href={toHref(pathForPage('About'))} onClick={e => { e.preventDefault(); onNavigate('About'); }}>{es ? 'Conoce al fundador' : 'Meet the founder'} →</a>
+            <div className="hm-founder2__foot">
+              <div className="hm-founder2__sig"><strong>David Selva</strong><span>{es ? 'Fundador, Loogo Labs LLC' : 'Founder, Loogo Labs LLC'}</span></div>
+              <a className="hm-btn-outline hm-btn-outline--light" href={toHref(pathForPage('About'))} onClick={e => { e.preventDefault(); onNavigate('About'); }}>{es ? 'Conoce al fundador' : 'Meet the founder'} <span aria-hidden="true">→</span></a>
+            </div>
           </Reveal>
-        </div>
-      </Wrap>
+        </Wrap>
+      </section>
 
       <Journal es={es} onNavigate={onNavigate} />
 
-      <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
-        <AmbientShape index={3} className="hm-cta__shape" />
-        <Wrap style={{ position: 'relative' }}>
-          <div className="hm-cta__grid hm-has-buddy">
-            <Buddy pose="happy" />
-            <Reveal>
+      <section className="hm-glasscta">
+        <div className="hm-glasscta__light" aria-hidden="true"><i /><i /><i /></div>
+        <Wrap>
+          <div className="hm-glasscta__panel">
+            <Reveal className="hm-glasscta__copy">
               <h2>{es ? 'Cuéntanos qué quieres que crezca.' : 'Tell us what you want to grow.'}</h2>
               <p>{es ? 'Una llamada gratis de 30 minutos. Revisamos dónde estás, qué está frenando el crecimiento y te llevas un plan de marketing de 90 días. Sin compromiso.' : 'A free 30-minute call. We look at where you are and what is holding growth back, and you leave with a 90-day marketing game plan. No commitment.'}</p>
             </Reveal>
-            <Reveal className="hm-cta__side" delay={0.15}>
+            <Reveal className="hm-glasscta__side" delay={0.12}>
               <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
               <a href={`mailto:${SITE.email}`}>{es ? '¿Prefieres escribir? ' : 'Rather write? '}{SITE.email}</a>
             </Reveal>
