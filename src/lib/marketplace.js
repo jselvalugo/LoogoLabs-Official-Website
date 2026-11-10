@@ -23,6 +23,7 @@ export const LAUNCHED = true;
 // /marketplace/thank-you?session_id=..., where skill-order.js verifies and delivers.
 export const BUY_URLS = {
   'saas-launch-playbook': '/.netlify/functions/skill-order?buy=saas-launch-playbook',
+  'viral-cut-studio': '/.netlify/functions/skill-order?buy=viral-cut-studio',
 };
 const PREVIEW_KEY = 'll_marketplace_preview';
 const PROD_HOSTS = ['loogolabs.com', 'www.loogolabs.com'];
@@ -186,13 +187,9 @@ export const SKILLS = [
     name: 'Viral Cut Studio',
     category: 'Social',
     tier: 'paid',
-    // Built and tested (v1.0); goes on sale with the encrypted paid-skills batch.
-    // Then: add to PAID_SKILLS (priceUsd 19.99, image /skills/covers/viral-cut-studio.png) + BUY_URLS +
-    // skill-order CATALOG, use buyUrl, drop soon/eta.
-    soon: true,
-    eta: 'November 2026',
     icon: 'Scissors',
-    price: 19.99,
+    price: PAID_SKILLS['viral-cut-studio'].priceUsd,
+    buyUrl: BUY_URLS['viral-cut-studio'],
     tagline: 'Raw footage in. Scroll-stopping Reels, TikToks and Shorts out.',
     description:
       'You filmed it, and now it sits in your camera roll because editing takes hours. Viral Cut Studio turns Claude into your video editor. It cuts the dead air, the ums and the retakes, finds your strongest line and opens on it, reframes to vertical with a camera that follows your face, then adds punch-in zooms, animated captions, sound effects and a call to action. Got a podcast or webinar? It finds the best clips and finishes each one as its own Short. English, Spanish and 20+ more languages.',

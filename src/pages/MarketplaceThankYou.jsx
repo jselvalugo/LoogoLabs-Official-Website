@@ -73,6 +73,16 @@ function MarketplaceThankYou() {
                     <b>Start.</b> In a new chat, say: <i>"Use the 30-Day Content Engine. Plan next month: Instagram and TikTok, daily."</i>
                   </li>
                 </>
+              ) : state.sku === 'viral-cut-studio' ? (
+                <>
+                  <li>
+                    <b>Run it where your videos are.</b> It works best in Claude Code or the Claude desktop app with access to your
+                    computer. The first time, say: <i>"Run the Viral Cut Studio setup."</i> It checks for ffmpeg and installs the rest.
+                  </li>
+                  <li>
+                    <b>Start.</b> Say: <i>"Use Viral Cut Studio. Edit this video into a 30-second Reel with bold captions."</i> and give it the file.
+                  </li>
+                </>
               ) : (
                 <>
                   <li>
