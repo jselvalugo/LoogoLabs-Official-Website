@@ -44,7 +44,6 @@ function GrowCity({ slug }) {
           </nav>
           <div className="cfl-hero-grid">
             <div>
-              <Eyebrow>{es ? `SEO local y automatización de marketing en ${c.name}` : <>{c.name} local SEO &amp; marketing automation</>}</Eyebrow>
               <h1 className="cfl-h1" style={{ fontSize: 'clamp(34px, 4.6vw, 56px)' }}>{c.headline}</h1>
               <p className="cfl-lede">{tidy(c.intro)}</p>
               <div className="cfl-actions"><BookBtn label={es ? `Auditoría local gratis en ${c.name}` : `Free ${c.name} local audit`} /></div>

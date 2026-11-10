@@ -261,10 +261,6 @@ export default function AIReceptionist() {
     if (id === 'hero') {
       body = (
         <Card wide className="lp-hero">
-          <div className="lp-center lp-hero__badge">
-            <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="accent">AI Receptionist</Badge>
-          </div>
           <h1 className="lp-h1">
             {es ? <>Una recepcionista de tiempo completo. <em>Sin el costo de tiempo completo.</em></> : <>A Full-Time Receptionist. <em>Without The Full-Time Cost.</em></>}
           </h1>

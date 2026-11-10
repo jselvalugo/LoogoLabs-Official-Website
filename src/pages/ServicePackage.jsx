@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import { openBooking } from '../lib/booking';
 import { SERVICE_PACKAGE_BY_PAGE } from '../lib/servicePackages';
@@ -24,7 +23,6 @@ function ServicePackage({ page }) {
     <main>
       {/* ── HERO ── */}
       <section className="pk-wrap pk-hero pk-hero--center">
-        <div style={{ display: 'flex', justifyContent: 'center' }}><Badge tone="accent">{t.badge}</Badge></div>
         <h1 className="pk-title">{t.headline} <em>{t.accent}</em></h1>
         <p className="pk-lede">{t.summary}</p>
         <div className="pk-hero__actions">

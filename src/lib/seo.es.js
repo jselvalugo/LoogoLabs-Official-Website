@@ -60,8 +60,8 @@ const STATIC = {
     description: 'Herramientas gratis para dueños de negocio: generador de enlace y QR para reseñas de Google, calculadora de llamadas perdidas y generador de enlaces UTM. Sin registro.',
   },
   Packages: {
-    title: `Paquetes de crecimiento y arranques rápidos | ${BRAND}`,
-    description: 'Paquetes de crecimiento hechos por nosotros (Launch, Growth y Scale) y arranques rápidos a precio fijo para reseñas, Perfil de Empresa en Google, páginas por ciudad y comunicados de prensa.',
+    title: `Planes de software de marketing y servicios | ${BRAND}`,
+    description: 'Planes de software (SaaS) Launch, Growth y Scale para automatizar tu marketing, más servicios hechos por nuestro equipo: contenido y redes, anuncios, SEO local, sitios web, reseñas y comunicados de prensa.',
   },
   PressRelease: {
     title: `Redacción y distribución de comunicados de prensa | ${BRAND}`,

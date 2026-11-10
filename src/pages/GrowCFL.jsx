@@ -50,7 +50,6 @@ function GrowCFL() {
         <div className="cfl-panel ll-forest cfl-hero">
           <div className="cfl-hero-grid">
             <div>
-              <Eyebrow>Orlando · Kissimmee · Celebration · {es ? 'y más' : 'and beyond'}</Eyebrow>
               <h1 className="cfl-h1">
                 {es
                   ? <>El equipo de SEO local y <em>automatización de marketing</em> de la Florida Central.</>

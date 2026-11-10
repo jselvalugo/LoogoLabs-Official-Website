@@ -96,7 +96,6 @@ function AIVoiceCity({ slug }) {
           </nav>
           <div className="cfl-hero-grid">
             <div>
-              <Eyebrow>{es ? `Agente de voz con IA · ${c.name}, FL` : <>AI voice agent · {c.name}, FL</>}</Eyebrow>
               <h1 className="cfl-h1" style={{ fontSize: 'clamp(34px, 4.6vw, 56px)' }}>{c.headline}</h1>
               <p className="cfl-lede">{tidy(c.intro)}</p>
               <div className="cfl-actions"><BookBtn label={es ? `Escucha una llamada demo de ${c.name}` : `Hear a ${c.name} demo call`} /></div>

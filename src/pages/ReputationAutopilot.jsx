@@ -259,10 +259,6 @@ export default function ReputationAutopilot() {
     if (id === 'hero') {
       body = (
         <Card wide className="lp-hero">
-          <div className="lp-center lp-hero__badge">
-            <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="accent">Reputation Autopilot</Badge>
-          </div>
           <h1 className="lp-h1">
             {es ? <>Cada trabajo terminado se convierte en <em>una solicitud de reseña de 5 estrellas.</em></> : <>Every Completed Job Becomes <em>A 5-Star Review Request.</em></>}
           </h1>

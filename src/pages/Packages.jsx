@@ -51,15 +51,15 @@ const PRIMARY_PACKAGES = [
   },
   {
     name: 'Scale',
-    tagline: 'AI receptionist, ads, memberships and custom integrations.',
+    tagline: 'The full platform, plus hands-on consulting on the software itself.',
     ideal: 'Multi-location or $3M+ / high-ticket firms',
     monthly: '$1,297',
     setup: '$2,997 setup',
     term: '12-month term · live in 45 days',
     includesPrev: 'Everything in Growth, plus',
     features: [
+      'Consulting on the software: strategy and hands-on help using it',
       '24/7 Voice AI receptionist',
-      'Ad management & ad reporting',
       'Courses, memberships & communities',
       'E-commerce & webinars',
       'Power dialer & prospecting',
@@ -78,10 +78,17 @@ const SERVICES = {
     unit: '/mo',
     description: 'Ongoing Google Business Profile management, citations, on-page fixes, local content, and monthly ranking reports.',
   },
+  ContentSocial: {
+    title: 'Content & Social Media',
+    price: '$500–$2,000',
+    unit: '/mo',
+    description: 'Short-form video and Reels, UGC, carousels, captions and a monthly content calendar for Instagram, Facebook, TikTok and LinkedIn. Price depends on your industry and how much content you need.',
+  },
   AdsManagement: {
     title: 'Ads Management',
-    price: '$500+',
-    unit: '/mo per platform',
+    price: '$500',
+    unit: '/mo minimum, or 20% of ad spend (whichever is higher)',
+    kind: 'Monthly',
     description: 'Google, Facebook & Instagram, and TikTok ads, run from one place: campaign setup, targeting and keywords, ad copy and creative, conversion tracking, and ongoing bid and budget optimization.',
   },
   WebDesign: {
@@ -102,8 +109,8 @@ const SERVICES = {
 // Services grouped by the job they do. Add a new service to SERVICES above,
 // then list its id in the group it belongs to.
 const SERVICE_GROUPS = [
-  { id: 'found', title: 'Get found', blurb: 'Show up on Google and Maps when nearby customers search.', items: ['LocalSEO', 'GBPMakeover', 'CityPages'] },
-  { id: 'leads', title: 'Get leads', blurb: 'Paid campaigns on every major platform, managed in one place.', items: ['AdsManagement'] },
+  { id: 'found', title: 'Get found', blurb: 'Show up on Google, Maps and social feeds when customers are looking, with search and paid ads.', items: ['LocalSEO', 'AdsManagement', 'GBPMakeover', 'CityPages'] },
+  { id: 'content', title: 'Get seen', blurb: 'Content that keeps you in front of customers every week.', items: ['ContentSocial'] },
   { id: 'reputation', title: 'Build trust', blurb: 'Reviews and press that make customers pick you.', items: ['ReviewKickstart', 'PressRelease'] },
   { id: 'brand', title: 'Brand & web', blurb: 'The look and the website everything else points to.', items: ['WebDesign'], branding: true },
 ];
@@ -141,14 +148,14 @@ const PRIMARY_PACKAGES_ES = [
     ],
   },
   {
-    tagline: 'Recepcionista con IA, publicidad, membresías e integraciones a la medida.',
+    tagline: 'La plataforma completa, más consultoría práctica sobre el software.',
     ideal: 'Negocios con varias sedes o de $3M+ / alto valor',
     setup: '$2,997 de instalación',
     term: 'Contrato de 12 meses · listo en 45 días',
     includesPrev: 'Todo lo de Growth, más',
     features: [
+      'Consultoría sobre el software: estrategia y ayuda práctica para usarlo',
       'Recepcionista de voz con IA 24/7',
-      'Manejo y reportes de publicidad',
       'Cursos, membresías y comunidades',
       'Tienda en línea y webinars',
       'Marcador automático y prospección',
@@ -164,9 +171,15 @@ const SERVICES_ES = {
     unit: '/mes',
     description: 'Manejo continuo del Perfil de Empresa en Google, citas en directorios, ajustes en la página, contenido local y reportes mensuales de posiciones.',
   },
+  ContentSocial: {
+    title: 'Contenido y redes sociales',
+    unit: '/mes',
+    description: 'Videos cortos y Reels, UGC, carruseles, textos y un calendario mensual de contenido para Instagram, Facebook, TikTok y LinkedIn. El precio depende de tu industria y de cuánto contenido necesitas.',
+  },
   AdsManagement: {
     title: 'Manejo de publicidad',
-    unit: '/mes por plataforma',
+    unit: '/mes mínimo, o 20% de la inversión en anuncios (lo que sea mayor)',
+    kind: 'Mensual',
     description: 'Anuncios en Google, Facebook e Instagram, y TikTok, manejados desde un solo lugar: configuración de campañas, segmentación y palabras clave, textos y creativos, seguimiento de conversiones y optimización continua de pujas y presupuesto.',
   },
   WebDesign: {
@@ -183,13 +196,28 @@ const SERVICES_ES = {
 };
 
 const SERVICE_GROUPS_ES = {
-  found: { title: 'Que te encuentren', blurb: 'Aparece en Google y Maps cuando los clientes cercanos te buscan.' },
-  leads: { title: 'Consigue clientes', blurb: 'Campañas pagadas en cada plataforma importante, manejadas en un solo lugar.' },
+  found: { title: 'Que te encuentren', blurb: 'Aparece en Google, Maps y redes sociales cuando los clientes buscan, con búsqueda y anuncios pagados.' },
+  content: { title: 'Que te vean', blurb: 'Contenido que te mantiene frente a tus clientes cada semana.' },
   reputation: { title: 'Genera confianza', blurb: 'Reseñas y prensa que hacen que los clientes te elijan.' },
   brand: { title: 'Marca y web', blurb: 'La imagen y el sitio web al que apunta todo lo demás.' },
 };
 
 const Arrow = <ArrowRight size={16} weight="bold" />;
+
+const FAQ = [
+  ['How much does it cost?', 'It depends on what you need. Content and social media runs $500–$2,000/mo depending on your industry and how much content you need. Ads management is 20% of your monthly ad spend, with a $500/mo minimum. For example, $1,500 in ads is a $500 fee; $5,000 in ads is a $1,000 fee. Websites start at $1,500. Separately, our marketing software (SaaS) starts at $297/mo, and the $1,297/mo Scale plan includes consulting on the software itself. The Game Plan call is free, and you get a clear quote before anything starts.'],
+  ['I’m not sure what I need. Where do I start?', 'Start with the free Game Plan call. We look at your business and tell you honestly what to fix first, even if the answer is something you can do yourself.'],
+  ['Do I have to do the work?', 'No. We make the content, run the ads and build the systems. We need some time from you at the start to learn your business, then quick approvals along the way.'],
+  ['How soon will I see results?', 'Fixes like automatic follow-up can help within weeks. Content and ads usually take a few months of testing to find what works. We will not promise numbers we cannot control.'],
+  ['Do you only work with Orlando businesses?', 'No. We are based in Orlando, Florida and work with businesses across the United States, in English and Spanish.'],
+];
+const FAQ_ES = [
+  ['¿Cuánto cuesta?', 'Depende de lo que necesites. Contenido y redes sociales va de $500 a $2,000/mes según tu industria y cuánto contenido necesitas. El manejo de anuncios es el 20% de tu inversión mensual en anuncios, con un mínimo de $500/mes. Por ejemplo, $1,500 en anuncios es una tarifa de $500; $5,000 en anuncios es una tarifa de $1,000. Los sitios web empiezan en $1,500. Aparte, nuestro software de marketing (SaaS) empieza en $297/mes, y el plan Scale de $1,297/mes incluye consultoría sobre el software. La llamada del plan es gratis y recibes una cotización clara antes de empezar.'],
+  ['No sé qué necesito. ¿Por dónde empiezo?', 'Empieza con la llamada gratis. Revisamos tu negocio y te decimos con honestidad qué arreglar primero, aunque sea algo que puedas hacer tú mismo.'],
+  ['¿Tengo que hacer el trabajo yo?', 'No. Nosotros hacemos el contenido, manejamos los anuncios y montamos los sistemas. Necesitamos algo de tu tiempo al inicio para conocer tu negocio y aprobaciones rápidas en el camino.'],
+  ['¿Cuándo veré resultados?', 'Cosas como el seguimiento automático pueden ayudar en semanas. El contenido y los anuncios suelen tomar unos meses de pruebas para encontrar lo que funciona. No prometemos números que no controlamos.'],
+  ['¿Solo trabajan con negocios de Orlando?', 'No. Estamos en Orlando, Florida y trabajamos con negocios en todo Estados Unidos, en inglés y en español.'],
+];
 
 function PackageCard({ pkg, es, esPkg }) {
   // On phones the feature list starts collapsed so all three packages fit on a
@@ -199,6 +227,7 @@ function PackageCard({ pkg, es, esPkg }) {
   const t = es ? { ...pkg, ...esPkg } : pkg;
   return (
     <div className={`pk-card ${dark ? 'pk-card--dark ll-forest pk-dark' : 'pk-card--paper'}${open ? ' is-open' : ''}`}>
+      <span className="pk-tag pk-kind">{es ? 'Plan de software · SaaS' : 'Software plan · SaaS'}</span>
       <div className="pk-card__top">
         <h2>{pkg.name}</h2>
         {pkg.featured && <span className="pk-pop">{es ? 'Más popular' : 'Most popular'}</span>}
@@ -236,7 +265,7 @@ function PackageCard({ pkg, es, esPkg }) {
 function ServiceCard({ id, es, onNavigate }) {
   const toHref = useHref();
   const s = es ? { ...SERVICES[id], ...SERVICES_ES[id] } : SERVICES[id];
-  const kind = s.page ? (es ? 'Pago único · precio fijo' : 'One-off · fixed price') : s.unit.includes('/') ? (es ? 'Mensual' : 'Monthly') : (es ? 'Proyecto' : 'Project');
+  const kind = s.page ? (es ? 'Pago único · precio fijo' : 'One-off · fixed price') : s.kind ? s.kind : s.unit.includes('/') ? (es ? 'Mensual' : 'Monthly') : (es ? 'Proyecto' : 'Project');
   return (
     <div className="pk-service ll-glass">
       <span className="pk-tag" style={{ fontSize: 10 }}>{kind}</span>
@@ -265,29 +294,34 @@ function ServiceCard({ id, es, onNavigate }) {
 function Packages({ onNavigate }) {
   const es = useLang() === 'es';
   return (
-    <main>
+    <main className="pk-page">
+      <div className="pk-ambient" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <section className="pk-wrap pk-hero">
-        <span className="ll-eyebrow">{es ? 'Paquetes' : 'Packages'}</span>
         {es ? (
           <>
-            <h1 className="pk-title">Los sistemas que construimos, <em>en paquetes para negocios locales.</em></h1>
+            <h1 className="pk-title">Nuestro software, <em>o nuestro equipo.</em></h1>
             <p className="pk-lede">
-              CRM, seguimiento automático, reseñas y atención de llamadas con IA, configurados por nuestro equipo y operados cada mes.
-              Elige el paquete que corresponda a donde está tu negocio hoy, o empieza con un solo servicio.
+              Launch, Growth y Scale son planes de software (SaaS): nuestra plataforma de marketing todo en uno, configurada para ti.
+              Todo lo demás en esta página son servicios que hace nuestro equipo. Usa uno, el otro, o ambos.
             </p>
           </>
         ) : (
           <>
-            <h1 className="pk-title">The systems we build, <em>packaged for local businesses.</em></h1>
+            <h1 className="pk-title">Our software, <em>or our team.</em></h1>
             <p className="pk-lede">
-              CRM, automated follow-up, reviews and AI call answering, set up by our team and run every month.
-              Pick the package that fits where your business is today, or start with a single service.
+              Launch, Growth and Scale are software plans (SaaS): our all-in-one marketing platform, set up for you.
+              Everything else on this page is a service our team does for you. Use one, the other, or both.
             </p>
           </>
         )}
       </section>
 
       <div className="pk-wrap pk-section" style={{ paddingBottom: 96 }}>
+        <div className="pk-head">
+          <span className="pk-tag">{es ? 'Software · SaaS' : 'Software · SaaS'}</span>
+          <h2 className="pk-h2">{es ? <>Planes de software, <em>configurados para ti.</em></> : <>Software plans, <em>set up for you.</em></>}</h2>
+          <p>{es ? 'Suscripciones mensuales a la plataforma de marketing de Loogo Labs: CRM, automatización e IA en un solo lugar. Nosotros la configuramos; Scale incluye consultoría sobre cómo usarla.' : 'Monthly subscriptions to the Loogo Labs marketing platform: CRM, automation and AI in one place. We set it up for you, and Scale includes consulting on how to use it.'}</p>
+        </div>
         <div className="pk-grid">
           {PRIMARY_PACKAGES.map((p, i) => <PackageCard key={p.name} pkg={p} es={es} esPkg={PRIMARY_PACKAGES_ES[i]} />)}
         </div>
@@ -316,13 +350,15 @@ function Packages({ onNavigate }) {
         <div className="pk-head pk-services-head">
           {es ? (
             <>
-              <h2 className="pk-h2">¿Necesitas una sola cosa <em>bien hecha?</em></h2>
-              <p>Contrátanos para un solo servicio, o agrégalo a cualquier paquete. Los servicios mensuales se cotizan según el alcance; los de pago único tienen precio fijo.</p>
+              <span className="pk-tag">Servicios</span>
+              <h2 className="pk-h2">Servicios, <em>hechos por nuestro equipo.</em></h2>
+              <p>Contrátanos para un solo servicio, o agrégalo a cualquier plan de software. Los servicios mensuales se cobran cada mes; los de pago único tienen precio fijo.</p>
             </>
           ) : (
             <>
-              <h2 className="pk-h2">Need one thing <em>done well?</em></h2>
-              <p>Hire us for a single service, or add it to any package. Monthly services are quoted by scope; one-offs are fixed-price.</p>
+              <span className="pk-tag">Services</span>
+              <h2 className="pk-h2">Services, <em>done by our team.</em></h2>
+              <p>Hire us for a single service, or add one to any software plan. Monthly services are billed each month; one-offs are fixed-price.</p>
             </>
           )}
         </div>
@@ -365,6 +401,20 @@ function Packages({ onNavigate }) {
           ]).map((n) => <li key={n}>{n}</li>)}
         </ul>
       </div>
+      <section className="pk-wrap pk-section pk-faq">
+        <div className="pk-head">
+          <span className="pk-tag">{es ? 'Preguntas' : 'Questions'}</span>
+          <h2 className="pk-h2">{es ? <>Lo que la gente pregunta <em>antes de llamarnos.</em></> : <>What people ask <em>before they call.</em></>}</h2>
+        </div>
+        <div className="hm-faq__list">
+          {(es ? FAQ_ES : FAQ).map(([q, a], i) => (
+            <details key={q} className="hm-faq__item" open={i === 0}>
+              <summary>{q}<span aria-hidden="true" /></summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

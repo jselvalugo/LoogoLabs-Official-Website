@@ -238,7 +238,6 @@ export function ToolFrame({ tool, title, lede, children }) {
             <span aria-hidden="true">/</span>
             <span>{es ? tool.es.short : tool.short}</span>
           </nav>
-          <p className="tl-kicker">{es ? 'Herramienta gratis · Sin registro' : 'Free tool · No sign-up'}</p>
           <h1 className="tl-title">{title}</h1>
           <p className="tl-lede">{lede}</p>
         </header>

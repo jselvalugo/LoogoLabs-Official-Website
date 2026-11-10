@@ -234,7 +234,7 @@
 
 .pk-pricing { margin-top: 24px; }
 
-/* Phones: shorter hero and sections, two-up service cards, compact plan cards. */
+/* Phones: shorter hero and sections, one-column service cards, compact plan cards. */
 @media (max-width: 767px) {
   .pk-hero { padding-top: 32px; padding-bottom: 24px; }
   .pk-lede { font-size: 16px; margin-top: 14px; }
@@ -244,10 +244,57 @@
   .pk-card { padding: 20px !important; }
   .pk-price { font-size: 36px; }
   .pk-services-head { margin-top: 40px; }
-  .pk-grid--services { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-  .pk-service { padding: 16px; gap: 8px; }
-  .pk-service-title { font-size: 16px; }
-  .pk-service-price { font-size: 24px; }
-  .pk-service-desc { font-size: 13px; }
+  .pk-grid--services { grid-template-columns: 1fr !important; gap: 10px; }
+  .pk-service:last-child:nth-child(odd) { grid-column: auto; }
+  .pk-service { min-width: 0; padding: 18px 18px 16px; gap: 6px; }
+  .pk-service-title { font-size: 19px; }
+  .pk-service-price { font-size: 26px; }
+  .pk-price-row { flex-wrap: wrap; align-items: baseline; }
+  .pk-service-desc { font-size: 14px; line-height: 1.55; }
+  .pk-service .ll-btn { width: 100%; min-width: 0; margin-top: 6px; padding-top: 12px; padding-bottom: 12px; white-space: normal; letter-spacing: 0.1em; }
+  .pk-group__head { margin-bottom: 12px; }
+  .pk-notes { margin-top: 28px; }
+  main { overflow-x: clip; }
   .pk-diy { margin-top: 12px; gap: 12px; }
+}
+
+.pk-kind { display: inline-block; margin-bottom: 10px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* ── Glass: soft brand-colour light behind frosted cards ── */
+.pk-page { position: relative; isolation: isolate; overflow-x: clip; }
+.pk-ambient { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.pk-ambient i { position: absolute; display: block; border-radius: 50%; filter: blur(70px); opacity: 0.75; }
+.pk-ambient i:nth-child(1) { width: 520px; height: 520px; top: 120px; left: -140px; background: radial-gradient(circle, rgba(196,154,92,0.55), transparent 70%); }
+.pk-ambient i:nth-child(2) { width: 620px; height: 620px; top: 420px; right: -180px; background: radial-gradient(circle, rgba(46,74,34,0.45), transparent 70%); }
+.pk-ambient i:nth-child(3) { width: 480px; height: 480px; top: 1350px; left: 18%; background: radial-gradient(circle, rgba(150,170,120,0.5), transparent 70%); }
+.pk-ambient i:nth-child(4) { width: 560px; height: 560px; top: 2200px; right: -120px; background: radial-gradient(circle, rgba(196,154,92,0.45), transparent 70%); }
+.pk-ambient i:nth-child(5) { width: 600px; height: 600px; top: 3100px; left: -160px; background: radial-gradient(circle, rgba(46,74,34,0.35), transparent 70%); }
+
+.pk-page .pk-card--paper,
+.pk-page .pk-service,
+.pk-page .pk-diy {
+  background: linear-gradient(145deg, rgba(255,255,255,0.62), rgba(250,248,244,0.38)) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.7) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 1px 0 rgba(27,42,18,0.04), 0 24px 48px -28px rgba(27,42,18,0.35);
+}
+.pk-page .pk-card--dark {
+  background: linear-gradient(150deg, rgba(36,56,26,0.86), rgba(20,32,14,0.78)) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(245,242,235,0.18) !important;
+  box-shadow: inset 0 1px 0 rgba(245,242,235,0.18), 0 30px 60px -30px rgba(20,32,14,0.6);
+}
+.pk-page .pk-ideal { background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.6); }
+.pk-page .pk-card--dark .pk-ideal { background: rgba(245,242,235,0.08); border-color: rgba(245,242,235,0.12); }
+.pk-page .pk-toggle { background: rgba(255,255,255,0.5); }
+.pk-page .pk-service, .pk-page .pk-card { transition: transform var(--dur-base, 240ms) var(--ease-standard), box-shadow var(--dur-base, 240ms) var(--ease-standard); }
+@media (hover: hover) {
+  .pk-page .pk-service:hover, .pk-page .pk-card:hover { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 32px 60px -30px rgba(27,42,18,0.45); }
+  .pk-page .pk-card--dark:hover { box-shadow: inset 0 1px 0 rgba(245,242,235,0.18), 0 36px 70px -30px rgba(20,32,14,0.7); }
+}
+@media (max-width: 767px) {
+  .pk-ambient i { filter: blur(50px); opacity: 0.5; transform: scale(0.7); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pk-page .pk-card--paper, .pk-page .pk-service, .pk-page .pk-diy { background: rgba(250,248,244,0.94) !important; }
 }

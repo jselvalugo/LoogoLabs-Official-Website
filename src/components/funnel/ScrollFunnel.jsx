@@ -176,7 +176,6 @@ export default function ScrollFunnel({ c }) {
       {/* Hero + video */}
       <section className="bd-section">
         <div className="lp-card lp-card--glass lp-card--wide lp-hero">
-          <div className="lp-center lp-hero__badge"><Badge tone="accent">{c.badge}</Badge></div>
           {hero.callout && <p className="bd-callout">{hero.callout}</p>}
           <h1 className="lp-h1">{hero.h1}</h1>
           <p className="lp-lede">{hero.lede}</p>

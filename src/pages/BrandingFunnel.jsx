@@ -214,10 +214,6 @@ export default function BrandingFunnel() {
     if (id === 'hero') {
       body = (
         <Card wide className="lp-hero">
-          <div className="lp-center lp-hero__badge">
-            <span className="ll-live-dot" aria-hidden="true" />
-            <Badge tone="accent">Branding Design</Badge>
-          </div>
           <h1 className="lp-h1">A Brand That Makes You Look Like <em>The Obvious Choice.</em></h1>
           <p className="lp-lede">
             Custom logo, visual identity and brand guidelines, designed for your business and ready to use on

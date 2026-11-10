@@ -50,7 +50,7 @@ function About({ onNavigate }) {
           </div>
         ) : null}
         <div className="ll-staple-quote ll-glass" style={imgOk ? undefined : { gridColumn: '1 / -1' }}>
-          <h1 style={{ margin: 0, font: 'inherit' }}><span className="ll-staple-kicker ll-staple-kicker--light">{es ? 'Conoce al fundador' : 'Meet the founder'}</span></h1>
+          <h1 className="ll-sr-only" style={{ margin: 0, font: 'inherit' }}><span>{es ? 'Conoce al fundador' : 'Meet the founder'}</span></h1>
           {es ? (
           <blockquote>
             “He pasado mi carrera construyendo sistemas que hacen que las cosas realmente se cumplan.

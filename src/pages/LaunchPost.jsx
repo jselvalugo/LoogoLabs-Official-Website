@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '../components/feedback/Badge';
 import Button from '../components/core/Button';
 import Callout from '../components/feedback/Callout';
 import { openBooking } from '../lib/booking';
@@ -43,7 +42,6 @@ function LaunchPost({ onNavigate }) {
           <span style={{ borderTop: '1px solid var(--border-hair)', paddingTop: 10 }}>Status<br /><span style={{ color: 'var(--status-ok)' }}>Live now</span></span>
         </aside>
         <article>
-          <Badge tone="accent">{p.badge}</Badge>
           <h1 style={{ margin: '18px 0 0', fontWeight: 500, fontSize: 'var(--fs-display-3)', lineHeight: 'var(--lh-display-3)', letterSpacing: 'var(--ls-display-3)' }}>{p.title}</h1>
           <p style={{ fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body-lg)', color: 'var(--ink-400)', marginTop: 18, maxWidth: '54ch' }}>{p.lede}</p>
           <p style={{ fontSize: 'var(--fs-body)', lineHeight: 'var(--lh-body)', color: 'var(--ink-600)', marginTop: 24, maxWidth: '60ch' }}>{p.body}</p>

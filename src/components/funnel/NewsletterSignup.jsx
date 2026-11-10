@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Check } from '@phosphor-icons/react';
+import { ArrowRight, Check, EnvelopeSimpleOpen } from '@phosphor-icons/react';
 import { useLang } from '../../lib/i18n';
 import '../../styles/components/newsletter.css';
 
@@ -21,6 +21,8 @@ const COPY = {
     lede: 'Most owners post, boost and hope. Once a month we send what’s working in marketing right now, an AI tool that saves you hours, and one thing to fix this week. Free.',
     footerTitle: 'The Loogo Labs Letter',
     footerLede: 'Marketing ideas that bring in customers. One email a month.',
+    footerTag: 'Free monthly newsletter',
+    footerPoints: ['What’s working in marketing now', 'One AI tool that saves you hours', 'One thing to fix this week'],
     name: 'First name', email: 'Your business email',
     button: 'Send me the Letter', busy: 'Subscribing…',
     fine: 'One email a month. No spam. Unsubscribe anytime.',
@@ -33,6 +35,8 @@ const COPY = {
     lede: 'La mayoría publica, promociona y espera. Una vez al mes te enviamos lo que está funcionando en marketing, una herramienta de IA que te ahorra horas y una cosa para mejorar esta semana. Gratis.',
     footerTitle: 'La carta de Loogo Labs',
     footerLede: 'Ideas de marketing que traen clientes. Un email al mes.',
+    footerTag: 'Boletín mensual gratis',
+    footerPoints: ['Lo que funciona en marketing hoy', 'Una herramienta de IA que te ahorra horas', 'Una cosa para mejorar esta semana'],
     name: 'Nombre', email: 'Tu email de negocio',
     button: 'Envíame la carta', busy: 'Suscribiendo…',
     fine: 'Un email al mes. Sin spam. Cancela cuando quieras.',
@@ -71,8 +75,11 @@ export default function NewsletterSignup({ variant = 'band', source = 'website',
       <div className="nl__copy">
         {footer ? (
           <>
-            <p className="nl__kicker" id={`${id}-t`}>{c.footerTitle}</p>
+            <div className="nl__mark" aria-hidden="true"><EnvelopeSimpleOpen size={26} weight="light" /></div>
+            <p className="nl__tag">{c.footerTag}</p>
+            <p className="nl__ftitle" id={`${id}-t`}>{c.footerTitle}</p>
             <p className="nl__lede">{c.footerLede}</p>
+            <ul className="nl__points">{c.footerPoints.map(t => <li key={t}>{t}</li>)}</ul>
           </>
         ) : (
           <>

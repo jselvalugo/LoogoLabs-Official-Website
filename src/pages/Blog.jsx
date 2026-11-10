@@ -114,7 +114,6 @@ export default function Blog({ onNavigate, category: categoryProp = null }) {
           </>
         ) : (
           <>
-            <span className="ll-eyebrow">{es ? 'Últimas noticias' : 'Latest news'}</span>
             <h1 className="ln-hero__title">Industry <em>LoogoBlog.</em></h1>
             <p className="ln-hero__lede">
               {es ? 'Guías prácticas para usar la IA en tu marketing. Qué automatizar, qué dejar en manos de una persona y qué de verdad te trae clientes.' : 'Practical guides to using AI in your marketing. What to automate, what to keep human, and what actually brings in customers.'}

@@ -226,7 +226,6 @@ export default function AIVoice() {
         <Wrap>
           <div className="av-hero__grid">
             <div>
-              <span className="av-pill ll-glass"><span className="av-pill__tag">{es ? 'Voz con IA' : 'AI Voice'}</span>{es ? 'Funciona en inglés y español' : 'Works in English and Spanish'}</span>
               <h1 className="av-hero__title">
                 {es ? <>Tu negocio contesta cada llamada. <em>Hasta las de las 2 a. m.</em></> : <>Your Business Answers Every Call. <em>Even the 2 A.M. Ones.</em></>}
               </h1>

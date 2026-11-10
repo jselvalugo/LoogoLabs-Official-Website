@@ -15,7 +15,6 @@ function ToolsHub() {
     <main className="tl-page">
       <div className="tl-wrap">
         <header className="tl-hero">
-          <p className="tl-kicker">{es ? 'Herramientas gratis · Sin registro' : 'Free tools · No sign-up'}</p>
           <h1 className="tl-title">{es ? <>Herramientas de marketing <em>gratis para tu negocio.</em></> : <>Free marketing tools <em>for local businesses.</em></>}</h1>
           <p className="tl-lede">{es
             ? 'Herramientas sencillas que resuelven un problema concreto en minutos: más reseñas, menos llamadas perdidas y saber qué marketing funciona. Todo corre en tu navegador; no guardamos lo que escribes.'

@@ -7,101 +7,89 @@ import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
 import { useHref, useLang } from '../lib/i18n';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react';
 import { Reveal, Stagger, Item, Words, Parallax, Magnetic, MotionPace, EASE, useMounted } from '../lib/motion';
-import NewsletterSignup from '../components/funnel/NewsletterSignup';
+import { loadPosts, cachedPosts } from '../lib/postsCache';
+import { categoryOf, BLOG_CATEGORY_BY_SLUG } from '../lib/blogCategories';
 import { LivingMonogram, ServiceGlyph, AmbientShape } from '../components/brand/Morph';
 
 const Wrap = ({ children, style, className, id }) => (
   <div id={id} className={['hm-wrap', className].filter(Boolean).join(' ')} style={style}>{children}</div>
 );
 
-// ── The story, in one place ────────────────────────────────────────────────
-// Every service is a plan and a build. The explorer below shows both halves.
+// ── What we do, in plain words ─────────────────────────────────────────────
+// Four service lines. Each says what it is, then exactly what the client gets.
 const SERVICES = [
   {
-    title: 'Positioning & messaging',
-    summary: 'Get clear on who you are for and why they should choose you, then put that everywhere a customer looks.',
-    retires: ['Unclear offer', 'Guessing at messaging'],
-    plan: ['Audience and segments worth winning', 'The offer, the promise and the proof', 'Messaging for site, ads and email'],
-    build: ['Landing pages that say it in seconds', 'Email and SMS welcome sequences', 'Tracking so you see what the message does'],
+    title: 'Marketing strategy',
+    summary: 'Not sure what is working or where to spend? We study your business, your customers and your competition, then hand you a clear 90-day plan.',
+    gets: ['Free Marketing Game Plan call', 'Your offer, message and who to target', 'Channel plan with budget and monthly targets', 'Monthly review of what worked'],
+    price: 'Starts with a free Game Plan call',
   },
   {
-    title: 'Go-to-market strategy',
-    summary: 'A channel plan with budget and targets, and the funnel that turns attention into users and paying customers.',
-    retires: ['Random posting', 'No clear funnel'],
-    plan: ['Channel audit and the two or three that matter', 'Budget, targets and a 90-day calendar', 'Funnel stages and what moves each one'],
-    build: ['The funnel itself: pages, forms, CRM pipeline', 'Automated follow-up for every lead', 'A dashboard with the numbers that count'],
+    title: 'Content & social media',
+    summary: 'Show up every week with content that sounds like you: short-form video, carousels and posts made to get attention and turn followers into customers.',
+    gets: ['Short-form video and Reels editing', 'UGC and creator content', 'Monthly content calendar, hooks and captions', 'Instagram, Facebook, TikTok and LinkedIn'],
+    price: '$500–$2,000/mo, based on industry and volume',
   },
   {
-    title: 'Ads strategy',
-    summary: 'Meta, Google and YouTube campaigns built around targeting, creative and budgets that pay back.',
-    retires: ['Wasted ad spend', 'No tracking'],
-    plan: ['Targeting, offers and creative angles', 'Test plan and budget pacing', 'What a good CAC looks like for you'],
-    build: ['Server-side tracking and Conversions API', 'Campaigns, audiences and creative in batches', 'Attribution tied to real revenue'],
+    title: 'Paid ads',
+    summary: 'Google, Facebook, Instagram and YouTube ads aimed at the people most likely to buy, with tracking so you see which dollars bring customers.',
+    gets: ['Campaign setup, targeting and ad creative', 'Landing pages that match the ad', 'Conversion tracking set up first', 'Results explained in plain English'],
+    price: '$500/mo minimum, or 20% of ad spend (whichever is higher)',
   },
   {
-    title: 'Growth plan',
-    summary: 'A roadmap your team can run, reviewed against results so every month builds on the last.',
-    retires: ['No roadmap', 'Guesswork'],
-    plan: ['Quarterly targets and the bets behind them', 'Monthly review of what worked', 'Where AI actually moves your numbers'],
-    build: ['AI for lead qualification, reporting and content ops', 'Integrations between your tools', 'Automations that replace manual work'],
+    title: 'Websites, CRM & automation',
+    summary: 'A website that turns visitors into leads, and a system that follows up for you so no lead slips through the cracks.',
+    gets: ['Websites and landing pages', 'CRM setup on GoHighLevel', 'Automatic email and text follow-up', 'AI receptionist and review requests'],
+    price: 'Websites from $1,500 · Software from $297/mo',
   },
 ];
 const SERVICES_ES = [
   {
-    title: 'Posicionamiento y mensaje',
-    summary: 'Ten claro para quién eres y por qué deberían elegirte, y ponlo en todos los lugares donde mira un cliente.',
-    retires: ['Oferta poco clara', 'Mensaje a ciegas'],
-    plan: ['Audiencia y segmentos que vale la pena ganar', 'La oferta, la promesa y la prueba', 'Mensaje para sitio, anuncios y email'],
-    build: ['Páginas que lo dicen en segundos', 'Secuencias de bienvenida por email y SMS', 'Medición para ver qué hace el mensaje'],
+    title: 'Estrategia de marketing',
+    summary: '¿No sabes qué funciona ni dónde invertir? Estudiamos tu negocio, tus clientes y tu competencia, y te entregamos un plan claro de 90 días.',
+    gets: ['Llamada gratis para tu Plan de Marketing', 'Tu oferta, tu mensaje y a quién dirigirte', 'Plan de canales con presupuesto y metas mensuales', 'Revisión mensual de lo que funcionó'],
+    price: 'Empieza con una llamada gratis',
   },
   {
-    title: 'Estrategia de salida al mercado',
-    summary: 'Un plan de canales con presupuesto y metas, y el embudo que convierte la atención en usuarios y clientes que pagan.',
-    retires: ['Publicaciones al azar', 'Sin embudo claro'],
-    plan: ['Auditoría de canales y los dos o tres que importan', 'Presupuesto, metas y un calendario de 90 días', 'Etapas del embudo y qué mueve cada una'],
-    build: ['El embudo: páginas, formularios, pipeline en el CRM', 'Seguimiento automático para cada prospecto', 'Un tablero con los números que cuentan'],
+    title: 'Contenido y redes sociales',
+    summary: 'Aparece cada semana con contenido que suena a ti: videos cortos, carruseles y publicaciones hechos para captar atención y convertir seguidores en clientes.',
+    gets: ['Edición de videos cortos y Reels', 'Contenido UGC y de creadores', 'Calendario mensual, ganchos y textos', 'Instagram, Facebook, TikTok y LinkedIn'],
+    price: '$500–$2,000/mes, según industria y volumen',
   },
   {
-    title: 'Estrategia de anuncios',
-    summary: 'Campañas en Meta, Google y YouTube con segmentación, creatividades y presupuestos que se pagan solos.',
-    retires: ['Gasto publicitario perdido', 'Sin medición'],
-    plan: ['Segmentación, ofertas y ángulos creativos', 'Plan de pruebas y ritmo de presupuesto', 'Cómo se ve un buen CAC para ti'],
-    build: ['Seguimiento del lado del servidor y Conversions API', 'Campañas, audiencias y creatividades por lotes', 'Atribución ligada a ingresos reales'],
+    title: 'Anuncios pagados',
+    summary: 'Anuncios en Google, Facebook, Instagram y YouTube dirigidos a quienes tienen más probabilidad de comprar, con medición para ver qué dólares traen clientes.',
+    gets: ['Configuración, segmentación y creatividades', 'Páginas de destino que coinciden con el anuncio', 'Medición de conversiones desde el inicio', 'Resultados explicados en palabras simples'],
+    price: '$500/mes mínimo, o 20% de la inversión (lo que sea mayor)',
   },
   {
-    title: 'Plan de crecimiento',
-    summary: 'Una hoja de ruta que tu equipo puede ejecutar, revisada contra resultados para que cada mes construya sobre el anterior.',
-    retires: ['Sin hoja de ruta', 'Adivinanzas'],
-    plan: ['Metas trimestrales y las apuestas detrás', 'Revisión mensual de lo que funcionó', 'Dónde la IA realmente mueve tus números'],
-    build: ['IA para calificar prospectos, reportes y contenido', 'Integraciones entre tus herramientas', 'Automatizaciones que reemplazan trabajo manual'],
+    title: 'Sitios web, CRM y automatización',
+    summary: 'Un sitio web que convierte visitas en prospectos, y un sistema que les da seguimiento por ti para que ningún prospecto se pierda.',
+    gets: ['Sitios web y páginas de destino', 'CRM en GoHighLevel', 'Seguimiento automático por email y texto', 'Recepcionista con IA y solicitudes de reseñas'],
+    price: 'Sitios desde $1,500 · Software desde $297/mes',
   },
 ];
 
-const BUILD = [
-  ['Performance marketing, engineered', 'Paid media run like an engineering problem: clean server-side tracking, real attribution, tight testing loops. Every dollar measured against revenue, not clicks.'],
-  ['AI that ships', 'No slide-deck AI strategy. We find where AI moves your numbers (lead qualification, voice agents, content ops, reporting) and deploy it into your workflow.'],
-  ['The system underneath', 'CRM, pipelines, email and SMS, booking, reviews. One connected setup instead of ten tools taped together, configured and run by us.'],
-  ['Software and backend work', 'APIs, data pipelines, integrations, custom automations. When marketing hits a technical wall we write the code ourselves.'],
-];
-const BUILD_ES = [
-  ['Marketing de rendimiento, con ingeniería', 'Publicidad pagada manejada como un problema de ingeniería: seguimiento limpio del lado del servidor, atribución real y ciclos de prueba ágiles. Cada dólar medido contra ingresos, no clics.'],
-  ['IA que se pone en marcha', 'Nada de estrategias de IA en diapositivas. Encontramos dónde la IA mueve tus números (calificación de prospectos, agentes de voz, contenido, reportes) y la integramos en tu flujo de trabajo.'],
-  ['El sistema debajo', 'CRM, pipelines, email y SMS, agenda, reseñas. Una configuración conectada en lugar de diez herramientas pegadas con cinta, configurada y operada por nosotros.'],
-  ['Software y trabajo de backend', 'APIs, flujos de datos, integraciones, automatizaciones a la medida. Cuando el marketing choca con un muro técnico, escribimos el código nosotros.'],
+const WORK = [
+  { name: 'Engentfy', en: ['Marketing consultant', 'Strategy, UGC video, social posts, newsletter, and Google and Meta ads.'], es: ['Consultor de marketing', 'Estrategia, video UGC, redes sociales, boletín, y anuncios en Google y Meta.'] },
+  { name: 'Lugo’s Craft Distillery', en: ['Event promotion', 'Led the promotion for their Cards and Cocktails event, plus video editing.'], es: ['Promoción de eventos', 'Dirigimos la promoción de su evento Cards and Cocktails, más edición de video.'] },
+  { name: 'Geros Studio', en: ['Brand & social', 'A six-year partnership in design, branding and social media presence.'], es: ['Marca y redes', 'Seis años de colaboración en diseño, marca y presencia en redes sociales.'] },
+  { name: 'Feche Consulting', en: ['Business automation', 'Automation consulting on projects in the healthcare industry.'], es: ['Automatización', 'Consultoría de automatización en proyectos del sector salud.'] },
+  { name: 'Riel Compliance Suite', en: ['Market strategy', 'Go-to-market strategy and work on government RFP opportunities.'], es: ['Estrategia de mercado', 'Estrategia de salida al mercado y trabajo en oportunidades de licitaciones.'] },
+  { name: 'Dalitzandra Padial', en: ['Creator automation', 'Automated the back end of a women’s mentorship creator business.'], es: ['Automatización para creadora', 'Automatizamos la operación de un negocio de mentoría para mujeres.'] },
 ];
 
-const BUILD_ICONS = [
-  <svg key="a" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 20l6-8 5 5 9-11"/><path d="M4 24h20"/></svg>,
-  <svg key="b" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="14" cy="14" r="9"/><path d="M14 9v5l3 3"/></svg>,
-  <svg key="c" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="9" height="9"/><rect x="15" y="4" width="9" height="9"/><rect x="4" y="15" width="9" height="9"/><rect x="15" y="15" width="9" height="9"/></svg>,
-  <svg key="d" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 8l-6 6 6 6"/><path d="M18 8l6 6-6 6"/></svg>,
+const STEPS = [
+  ['Free Game Plan call', 'A free 30-minute call. We look at your business, your numbers and what is holding growth back. No obligation.'],
+  ['Your 90-day plan', 'What to fix first, which channels to focus on, and the budget and targets for each month.'],
+  ['We build and run it', 'Content, ads, website and automations, with a monthly check-in on results.'],
+];
+const STEPS_ES = [
+  ['Llamada gratis del Plan', 'Una llamada gratis de 30 minutos. Revisamos tu negocio, tus números y qué está frenando el crecimiento. Sin compromiso.'],
+  ['Tu plan de 90 días', 'Qué arreglar primero, en qué canales enfocarte, y el presupuesto y las metas de cada mes.'],
+  ['Lo construimos y operamos', 'Contenido, anuncios, sitio web y automatizaciones, con una revisión mensual de resultados.'],
 ];
 
-const LOCAL = [
-  { page: 'AIReceptionist', en: ['AI receptionist', 'Answers every call, books the appointment, texts back missed calls.'], es: ['Recepcionista con IA', 'Contesta cada llamada, agenda la cita y responde por texto las perdidas.'] },
-  { page: 'ReputationAutopilot', en: ['Reviews on autopilot', 'Review requests, replies and monitoring, run for you.'], es: ['Reseñas en automático', 'Solicitudes, respuestas y monitoreo de reseñas, operados por nosotros.'] },
-  { page: 'GrowCFL', en: ['Central Florida', 'Local SEO and follow-up systems for Orlando, Lakeland and Tampa businesses.'], es: ['Florida Central', 'SEO local y sistemas de seguimiento para negocios en Orlando, Lakeland y Tampa.'] },
-];
 
 // Cartoon David: the friendly face of the home page. Each section gets a pose
 // that matches what it says. Decorative, so hidden from screen readers.
@@ -189,36 +177,57 @@ function useMedia(q) {
   return m;
 }
 
-// Accordion version: phones, reduced motion, and the server render.
-function Accordion({ es, items }) {
-  const [open, setOpen] = React.useState(0);
+// Swipe carousel: phones, tablets, reduced motion and the server render.
+// Every card shows everything (what you get, price, CTA), so nothing hides behind a "+".
+function Carousel({ es, items }) {
+  const track = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+  const onScroll = () => {
+    const el = track.current; if (!el) return;
+    const card = el.firstElementChild; if (!card) return;
+    const step = card.getBoundingClientRect().width + 16;
+    const i = Math.max(0, Math.min(items.length - 1, Math.round(el.scrollLeft / step)));
+    if (i !== active) setActive(i);
+  };
+  const go = (i) => {
+    const el = track.current; if (!el) return;
+    const card = el.children[Math.max(0, Math.min(items.length - 1, i))];
+    if (card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: 'smooth' });
+  };
   return (
-    <ul className="hm-acc">
-      {items.map((s, i) => {
-        const on = open === i;
-        return (
-          <li key={s.title}>
-            <button type="button" className="hm-acc__btn" aria-expanded={on} aria-controls={`svc-${i}`} onClick={() => setOpen(on ? -1 : i)}>
-              <span className="hm-acc__num">0{i + 1}</span>
-              <span className="hm-acc__title">{s.title}</span>
-              <span className="hm-acc__icon" aria-hidden="true" />
-            </button>
-            <div id={`svc-${i}`} className="hm-acc__panel" data-open={on} aria-hidden={!on}>
-              <div className="hm-acc__inner">
-                <div className="hm-acc__body">
-                  <p>{s.summary}</p>
-                </div>
-              </div>
+    <div className="hm-car">
+      <div className="hm-car__bar">
+        <span className="hm-car__count">0{active + 1} <i>/ 0{items.length}</i></span>
+        <span className="hm-car__hint" aria-hidden="true">{es ? 'Desliza' : 'Swipe'} →</span>
+        <div className="hm-car__arrows">
+          <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label={es ? 'Anterior' : 'Previous'}>←</button>
+          <button type="button" onClick={() => go(active + 1)} disabled={active === items.length - 1} aria-label={es ? 'Siguiente' : 'Next'}>→</button>
+        </div>
+      </div>
+      <div ref={track} className="hm-car__track" onScroll={onScroll} role="region" aria-label={es ? 'Servicios' : 'Services'}>
+        {items.map((s, i) => (
+          <article key={s.title} className={`hm-car__card${i === active ? ' on' : ''}`} aria-roledescription="slide" aria-label={`${i + 1} / ${items.length}`}>
+            <div className="hm-car__head">
+              <span className="hm-car__num">0{i + 1}</span>
+              <div className="hm-car__glyph" aria-hidden="true"><ServiceGlyph index={i} built={1} size={56} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
             </div>
-          </li>
-        );
-      })}
-    </ul>
+            <h3>{s.title}</h3>
+            <p>{s.summary}</p>
+            <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
+            
+          </article>
+        ))}
+      </div>
+      <div className="hm-car__dots">
+        {items.map((s, i) => <button key={s.title} type="button" className={i === active ? 'on' : ''} onClick={() => go(i)} aria-label={s.title} aria-current={i === active || undefined} />)}
+      </div>
+    </div>
   );
 }
 
 // Pinned scroll scene: the viewport locks while the four services advance.
-function Scene({ es, items }) {
+function Scene({ es, items, onNavigate }) {
+  const pkHref = useHref()(pathForPage('Packages'));
   const ref = React.useRef(null);
   const [active, setActive] = React.useState(0);
   const [built, setBuilt] = React.useState(0);
@@ -245,7 +254,8 @@ function Scene({ es, items }) {
       <div className="hm-scene__pin">
         <div className="hm-wrap hm-scene__grid">
           <div className="hm-scene__left">
-            <h2 className="hm-scene__h2">{es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}</h2>
+            <span className="ll-label">{es ? 'Qué hacemos' : 'What we do'}</span>
+            <h2 className="hm-scene__h2">{es ? 'Cuatro formas en que te ayudamos a crecer.' : 'Four ways we help you grow.'}</h2>
             <ol className="hm-scene__nav">
               {items.map((it, i) => (
                 <li key={it.title}>
@@ -256,6 +266,7 @@ function Scene({ es, items }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
+            <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
             <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
@@ -266,6 +277,8 @@ function Scene({ es, items }) {
                 <div className="hm-scene__glyph"><ServiceGlyph index={active} built={built} size={150} fill="var(--ink-900)" stroke="var(--amber-500)" /></div>
                 <h3>{s.title}</h3>
                 <p>{s.summary}</p>
+                <ul className="hm-gets">{s.gets.map(g => <li key={g}>{g}</li>)}</ul>
+                  
               </motion.div>
             </AnimatePresence>
           </div>
@@ -275,39 +288,156 @@ function Scene({ es, items }) {
   );
 }
 
-function Explorer({ es }) {
+function Explorer({ es, onNavigate }) {
+  const pkHref = useHref()(pathForPage('Packages'));
   const items = es ? SERVICES_ES : SERVICES;
   const reduce = useReducedMotion();
   const wide = useMedia('(min-width: 961px)');
-  if (wide && !reduce) return <section id="services"><Scene es={es} items={items} /></section>;
+  if (wide && !reduce) return <section id="services"><Scene es={es} items={items} onNavigate={onNavigate} /></section>;
   return (
     <Wrap className="hm-section" id="services">
-      <div className="hm-plan">
+      <div className="hm-plan hm-plan--car">
         <div className="hm-plan__head hm-has-buddy">
           <Buddy pose="explain" />
           <SectionHeading
-            title={es ? 'Cada plan llega con su construcción.' : 'Every plan ships with its build.'}
-            description={es ? 'Cuatro servicios para marcas SaaS y creadores. Toca uno para ver de qué se trata.' : 'Four services for SaaS brands and creators. Tap one to see what it covers.'} />
+            eyebrow={es ? 'Qué hacemos' : 'What we do'}
+            title={es ? 'Cuatro formas en que te ayudamos a crecer.' : 'Four ways we help you grow.'}
+            description={es ? 'Lo que incluye cada servicio. Desliza para ver cada uno.' : 'What each service includes. Swipe to see each one.'} />
         </div>
-        <Accordion es={es} items={items} />
+        <Carousel es={es} items={items} />
+        <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
       </div>
     </Wrap>
   );
 }
 
-function StickyCta({ es }) {
-  const [on, setOn] = React.useState(false);
-  React.useEffect(() => {
-    const hero = document.querySelector('.hm-hero');
-    if (!hero || !('IntersectionObserver' in window)) return undefined;
-    const io = new IntersectionObserver(([e]) => setOn(!e.isIntersecting), { threshold: 0 });
-    io.observe(hero);
-    return () => io.disconnect();
-  }, []);
+function Journal({ es, onNavigate }) {
+  const toHref = useHref();
+  const [posts, setPosts] = React.useState(() => cachedPosts() || []);
+  React.useEffect(() => { let on = true; loadPosts().then(p => { if (on) setPosts(p || []); }); return () => { on = false; }; }, []);
+  if (!posts.length) return null;
+  const [lead, ...rest] = posts.slice(0, 4);
+  const fmt = (d) => (d ? new Date(d).toLocaleDateString(es ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '');
+  const cat = (p) => { const c = BLOG_CATEGORY_BY_SLUG.get(categoryOf(p)); return c ? (es ? c.nameEs : c.name) : (es ? 'Artículo' : 'Article'); };
+  const href = (p) => toHref(pathForPage('BlogPost', p.slug));
+  const open = (p) => (e) => { e.preventDefault(); onNavigate('BlogPost', p.slug); };
   return (
-    <div className={`hm-sticky${on ? ' on' : ''}`} aria-hidden={!on}>
-      <Button variant="primary" size="lg" onClick={openBooking} tabIndex={on ? 0 : -1}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button>
-    </div>
+    <section className="hm-blog">
+      <Wrap>
+        <div className="hm-blog__head">
+          <Reveal>
+            <SectionHeading eyebrow={es ? 'Del blog' : 'From the blog'}
+              title={es ? 'Lo que estamos aprendiendo sobre IA y marketing.' : 'What we are learning about AI and marketing.'} />
+          </Reveal>
+          <a className="hm-btn-outline" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} <span aria-hidden="true">→</span></a>
+        </div>
+        <div className="hm-blog__grid">
+          <Reveal className="hm-blog__lead">
+            <a href={href(lead)} onClick={open(lead)}>
+              <span className="hm-blog__tag">{es ? 'Lo más reciente' : 'Latest'} · {cat(lead)}</span>
+              <h3>{lead.title}</h3>
+              {lead.excerpt && <p>{lead.excerpt}</p>}
+              <span className="hm-blog__meta">{fmt(lead.published_at)}{lead.read_time ? ` · ${lead.read_time} ${es ? 'min de lectura' : 'min read'}` : ''}</span>
+              <span className="hm-blog__read">{es ? 'Leer artículo' : 'Read the article'} <span aria-hidden="true">→</span></span>
+            </a>
+          </Reveal>
+          <Stagger as="ol" className="hm-blog__list" gap={0.08}>
+            {rest.map((p, i) => (
+              <Item key={p.slug} as="li">
+                <a href={href(p)} onClick={open(p)}>
+                  <span className="hm-blog__num" aria-hidden="true">0{i + 2}</span>
+                  <span className="hm-blog__body">
+                    <span className="hm-blog__cat">{cat(p)}</span>
+                    <strong>{p.title}</strong>
+                    <span className="hm-blog__meta">{fmt(p.published_at)}{p.read_time ? ` · ${p.read_time} min` : ''}</span>
+                  </span>
+                  <span className="hm-blog__arrow" aria-hidden="true">→</span>
+                </a>
+              </Item>
+            ))}
+          </Stagger>
+        </div>
+        <a className="hm-btn-outline hm-blog__more" href={toHref(pathForPage('LoogoNews'))} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }}>{es ? 'Ver todos los artículos' : 'All articles'} <span aria-hidden="true">→</span></a>
+      </Wrap>
+    </section>
+  );
+}
+
+// How we work: the section pins while the three steps switch in place, so it
+// takes a short scroll instead of a long list. Reduced motion gets the list.
+function HowWeWork({ es, onNavigate }) {
+  const toHref = useHref();
+  const steps = es ? STEPS_ES : STEPS;
+  const reduce = useReducedMotion();
+  const mounted = useMounted();
+  const ref = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    const i = Math.min(steps.length - 1, Math.max(0, Math.floor(v * steps.length * 0.999)));
+    if (i !== active) setActive(i);
+  });
+  const fill = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const heading = (
+    <SectionHeading eyebrow={es ? 'Cómo trabajamos' : 'How we work'}
+      title={es ? 'Empieza con una conversación, no con un contrato.' : 'It starts with a conversation, not a contract.'} />
+  );
+  const cta = (
+    <a className="hm-btn-outline" href={toHref(pathForPage('GamePlan'))} onClick={e => { e.preventDefault(); onNavigate('GamePlan'); }}>{es ? 'Qué incluye el Plan de Marketing gratis' : 'What is in the free Marketing Game Plan'} <span aria-hidden="true">→</span></a>
+  );
+  if (!mounted || reduce) {
+    return (
+      <Wrap className="hm-section">
+        <Reveal>{heading}</Reveal>
+        <ol className="hm-flow">
+          {steps.map(([k, v], i) => (
+            <li key={k} className={`hm-flow__step${i === 0 ? ' hm-flow__step--first' : ''}`}>
+              <span className="hm-flow__num" aria-hidden="true">{i + 1}</span><h3>{k}</h3><p>{v}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="hm-flow__cta">{cta}</div>
+      </Wrap>
+    );
+  }
+  const jump = (i) => {
+    const el = ref.current; if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const h = el.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: top + (h * (i + 0.5)) / steps.length, behavior: 'smooth' });
+  };
+  const [k, v] = steps[active];
+  return (
+    <section ref={ref} className="hm-hww" style={{ height: `calc(100vh + ${steps.length * 38}vh)` }}>
+      <div className="hm-hww__pin">
+        <div className="hm-wrap hm-hww__inner">
+          {heading}
+          <div className="hm-hww__rail" role="tablist" aria-label={es ? 'Pasos' : 'Steps'}>
+            <div className="hm-hww__track" aria-hidden="true"><motion.span style={{ width: fill }} /></div>
+            {steps.map(([t], i) => (
+              <button key={t} type="button" role="tab" aria-selected={i === active} className={`hm-hww__dot${i <= active ? ' done' : ''}${i === active ? ' on' : ''}`} onClick={() => jump(i)}>
+                <span>{i + 1}</span><em>{t}</em>
+              </button>
+            ))}
+          </div>
+          <div className="hm-hww__stage" aria-live="polite">
+            <AnimatePresence mode="wait">
+              <motion.div key={active} className="hm-hww__card"
+                initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -22 }}
+                transition={{ duration: 0.38, ease: EASE }}>
+                <span className="hm-hww__big" aria-hidden="true">0{active + 1}</span>
+                <div>
+                  <span className="hm-hww__step">{es ? `Paso ${active + 1} de ${steps.length}` : `Step ${active + 1} of ${steps.length}`}</span>
+                  <h3>{k}</h3>
+                  <p>{v}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="hm-hww__cta">{cta}</div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -322,101 +452,108 @@ function Home({ onNavigate }) {
     <main>
       <Hero es={es}>
             <div className="hm-hero__copy">
-              <Reveal y={10}><span className="hm-hero__kicker ll-label">{es ? 'Orlando, Florida' : 'Orlando, Florida'}</span></Reveal>
               <h1 className="hm-hero__title">
-                <Words text={es ? 'Planeamos tu marketing.' : 'We plan your marketing.'} delay={0.1} step={0.07} />{' '}
-                <Words as="em" text={es ? 'Luego lo construimos.' : 'Then we build it.'} delay={0.5} step={0.07} />
+                <Words text={es ? 'Tú manejas el negocio.' : 'You run the business.'} delay={0.1} step={0.07} />{' '}
+                <Words as="em" text={es ? 'Nosotros traemos los clientes.' : 'We bring the customers.'} delay={0.5} step={0.07} />
               </h1>
-              <Reveal delay={0.9} y={10}><span className="hm-hero__sub ll-label">{es ? 'IA, marketing y automatización para marcas SaaS y creadores' : 'AI, marketing & automation for SaaS brands and creators'}</span></Reveal>
+              <Reveal delay={0.9} y={10}><span className="hm-hero__sub ll-label">{es ? 'Estrategia · Contenido · Anuncios · Sitios web · Automatización' : 'Strategy · Content · Ads · Websites · Automation'}</span></Reveal>
               <Reveal delay={1.0} y={16}>
               <p className="hm-hero__lede">
                 {es
-                  ? 'Un mismo equipo escribe la estrategia, corre los anuncios y el email, y construye el sistema que lo hace funcionar: seguimiento, automatizaciones, IA. Nada se queda esperando un traspaso.'
-                  : 'One team writes the strategy, runs the ads and email, and builds the system that makes it work: tracking, automations, AI. Nothing waits on a handoff.'}
+                  ? 'Loogo Labs es un equipo de marketing en Orlando. Planeamos tu marketing, hacemos el contenido, manejamos los anuncios y montamos el seguimiento, para que más gente te encuentre, te llame y te compre. En inglés y en español.'
+                  : 'Loogo Labs is a marketing team in Orlando. We plan your marketing, make the content, run the ads and set up the follow-up, so more people find you, call you and buy from you. In English and Spanish.'}
               </p>
               </Reveal>
               <Reveal delay={1.15} y={16}>
               <div className="hm-hero__actions">
-                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
-                <Button variant="ghost" size="md" iconRight={<span>→</span>} onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Ver qué hacemos' : 'Explore what we do'}</Button>
+                <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free strategy call'}</Button></Magnetic>
+                <Button variant="ghost" size="md" iconRight={<span>→</span>} onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>{es ? 'Qué hacemos' : 'What we do'}</Button>
               </div>
               </Reveal>
             </div>
             <div className="hm-hero__side">
               <div className="hm-hero__mark" aria-hidden="true"><LivingMonogram fill="var(--ink-900)" bg="var(--paper-200)" delay={1.1} /></div>
-              <figure className="hm-hero__founder hm-hero__founder--toon">
-                <img src="/character/wave.webp" alt={es ? 'Ilustración de David Selva, fundador de Loogo Labs, saludando' : 'Illustration of David Selva, founder of Loogo Labs, waving hello'} width="391" height="742" fetchpriority="high" />
-                <figcaption><strong>David Selva</strong><span>{es ? 'Fundador' : 'Founder'}</span></figcaption>
-              </figure>
             </div>
       </Hero>
 
       <References />
 
-      <Explorer es={es} />
+      <Wrap className="hm-section hm-intro">
+        <Reveal>
+          <p className="hm-intro__text">
+            {es
+              ? <>Somos una compañía de marketing y automatización en Orlando. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en todo Estados Unidos, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
+              : <>We are a marketing and automation company in Orlando. We work with <em>local businesses and growing brands</em> across the United States, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
+          </p>
+        </Reveal>
+        <Stagger as="dl" className="hm-facts" gap={0.08}>
+          {(es
+            ? [['Base', 'Orlando, Florida'], ['Mercado', 'Estados Unidos'], ['Idiomas', 'Inglés y español'], ['Enfoque', 'Marketing con IA y automatización']]
+            : [['Based in', 'Orlando, Florida'], ['Market', 'United States'], ['Languages', 'English & Spanish'], ['Focus', 'AI marketing & automation']]
+          ).map(([k, v]) => <Item key={k} className="hm-facts__item"><dt>{k}</dt><dd>{v}</dd></Item>)}
+        </Stagger>
+      </Wrap>
 
-      <section className="hm-build ll-band ll-band--tan">
-        <Wrap className="hm-has-buddy">
-          <Buddy pose="cool" />
+      <Explorer es={es} onNavigate={onNavigate} />
+
+      <section className="hm-work ll-band ll-band--tan">
+        <Wrap>
           <Reveal>
-          <SectionHeading eyebrow={es ? 'Qué construimos' : 'What we build'}
-            title={es ? 'Consultores que de verdad lo construyen.' : 'Consultants who can actually build it.'}
-            description={es ? 'La mayoría de las agencias te entregan una presentación. La mayoría de los desarrolladores esperan especificaciones. Nosotros estamos en el medio: especialistas en marketing que escriben el código, conectan el seguimiento y ponen en marcha la IA.' : 'Most agencies hand you a deck. Most dev shops wait for a spec. We sit in the middle: marketers who write the code, wire the tracking and ship the AI.'} />
+            <SectionHeading eyebrow={es ? 'Trabajo seleccionado' : 'Selected work'}
+              title={es ? 'Algunas de las marcas con las que hemos trabajado.' : 'Some of the brands we have worked with.'} />
           </Reveal>
-          <Stagger className="hm-build__grid" gap={0.12}>
-            {(es ? BUILD_ES : BUILD).map(([k, v], i) => (
-              <Item key={k} className="hm-build__tile">{BUILD_ICONS[i]}<h3>{k}</h3><p>{v}</p></Item>
-            ))}
-          </Stagger>
-        </Wrap>
-      </section>
-
-
-      <Wrap className="hm-section">
-        <div className="hm-local">
-          <div className="hm-has-buddy">
-          <Reveal>
-          <SectionHeading eyebrow={es ? 'Para negocios locales' : 'For local businesses'}
-            title={es ? 'Los mismos sistemas, listos para la tienda de la esquina.' : 'The same systems, ready-made for the shop down the street.'}
-            description={es ? 'Lo que construimos a la medida para marcas SaaS también existe como sistemas listos que operamos para negocios de servicio en Florida Central.' : 'What we build custom for SaaS brands also exists as ready-made systems we run for service businesses in Central Florida.'} />
-          </Reveal>
-          <Buddy pose="point" />
-          </div>
-          <Stagger as="ul" className="hm-local__links" gap={0.1}>
-            {LOCAL.map(l => {
-              const [t, d] = es ? l.es : l.en;
+          <Stagger className="hm-work__grid" gap={0.08}>
+            {WORK.map(w => {
+              const logo = CLIENT_LOGOS[w.name]?.ticker;
+              const [k, v] = es ? w.es : w.en;
               return (
-                <Item key={l.page} as="li">
-                  <a href={toHref(pathForPage(l.page))} onClick={e => { e.preventDefault(); onNavigate(l.page); }}>
-                    <strong>{t}</strong><span>{d}</span><em aria-hidden="true">→</em>
-                  </a>
+                <Item key={w.name} className="hm-work__card">
+                  <div className="hm-work__logo">{logo ? <img src={logo.src} alt={w.name} width={logo.w} height={logo.h} loading="lazy" style={{ height: Math.min(logo.th, 32) }} /> : <span>{w.name}</span>}</div>
+                  <span className="hm-work__k">{k}</span>
+                  <p>{v}</p>
                 </Item>
               );
             })}
           </Stagger>
-        </div>
-      </Wrap>
+        </Wrap>
+      </section>
 
-      <NewsletterSignup variant="band" source="home" />
+      <HowWeWork es={es} onNavigate={onNavigate} />
 
-      <section className="hm-cta ll-band" style={{ position: 'relative', overflow: 'hidden' }}>
-        <AmbientShape index={3} className="hm-cta__shape" />
-        <Wrap style={{ position: 'relative' }}>
-          <div className="hm-cta__grid hm-has-buddy">
-            <Buddy pose="happy" />
-            <Reveal>
+      <section className="hm-founder-band">
+        <Wrap>
+          <Reveal className="hm-founder2">
+            <span className="hm-founder2__label">{es ? 'El fundador' : 'The founder'}</span>
+            <blockquote>
+              {es
+                ? '“He pasado mi carrera construyendo sistemas que hacen que las cosas realmente se cumplan. Loogo Labs es eso aplicado al marketing: escribimos el plan, construimos lo que necesita y nos quedamos para operarlo.”'
+                : '“I have spent my career building systems that make things actually get done. Loogo Labs is that applied to marketing: we write the plan, build what it needs and stay to run it.”'}
+            </blockquote>
+            <div className="hm-founder2__foot">
+              <div className="hm-founder2__sig"><strong>David Selva</strong><span>{es ? 'Fundador, Loogo Labs LLC' : 'Founder, Loogo Labs LLC'}</span></div>
+              <a className="hm-btn-outline hm-btn-outline--light" href={toHref(pathForPage('About'))} onClick={e => { e.preventDefault(); onNavigate('About'); }}>{es ? 'Conoce al fundador' : 'Meet the founder'} <span aria-hidden="true">→</span></a>
+            </div>
+          </Reveal>
+        </Wrap>
+      </section>
+
+      <Journal es={es} onNavigate={onNavigate} />
+
+      <section className="hm-glasscta">
+        <div className="hm-glasscta__light" aria-hidden="true"><i /><i /><i /></div>
+        <Wrap>
+          <div className="hm-glasscta__panel">
+            <Reveal className="hm-glasscta__copy">
               <h2>{es ? 'Cuéntanos qué quieres que crezca.' : 'Tell us what you want to grow.'}</h2>
-              <p>{es ? 'Una llamada de 30 minutos. Revisamos dónde estás, qué está frenando el crecimiento y qué construiríamos primero. Sin presentación, sin compromiso.' : 'A 30-minute call. We look at where you are, what is holding growth back, and what we would build first. No deck, no commitment.'}</p>
+              <p>{es ? 'Una llamada gratis de 30 minutos. Revisamos dónde estás, qué está frenando el crecimiento y te llevas un plan de marketing de 90 días. Sin compromiso.' : 'A free 30-minute call. We look at where you are and what is holding growth back, and you leave with a 90-day marketing game plan. No commitment.'}</p>
             </Reveal>
-            <Reveal className="hm-cta__side" delay={0.15}>
+            <Reveal className="hm-glasscta__side" delay={0.12}>
               <Magnetic><Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={openBooking}>{es ? 'Agenda una llamada gratis' : 'Book a free call'}</Button></Magnetic>
               <a href={`mailto:${SITE.email}`}>{es ? '¿Prefieres escribir? ' : 'Rather write? '}{SITE.email}</a>
             </Reveal>
           </div>
         </Wrap>
       </section>
-
-      <StickyCta es={es} />
     </main>
     </MotionPace>
   );
