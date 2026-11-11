@@ -280,8 +280,7 @@ function PinnedCard({ post, onNavigate, es }) {
   const partner = partnerForPost(post);
   return (
     <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className={`lb-fcard lb-fcard--pinned${partner ? ` lb-fcard--partner lb-fcard--${partner.key}` : ''}`}
-      style={partner ? { '--pt-primary': partner.colors.primary, '--pt-secondary': partner.colors.secondary, '--pt-ink': partner.colors.ink } : undefined}
-      aria-label={es ? `Anuncio: ${post.title}` : `Announcement: ${post.title}`}>
+      style={partner ? { '--pt-primary': partner.colors.primary, '--pt-secondary': partner.colors.secondary, '--pt-ink': partner.colors.ink } : undefined}>
       <div className="lb-fcard__body">
         <div className="lb-fcard__top">
           <span className="lb-fcard__kicker lb-fcard__kicker--new">{es ? 'Nuevo lanzamiento' : 'New release'}</span>
@@ -305,8 +304,7 @@ function PinnedCard({ post, onNavigate, es }) {
 function EventFeaturedCard({ post, onNavigate, es }) {
   const t = EVENT_THEME;
   return (
-    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--event"
-      aria-label={es ? `Evento destacado: ${post.title}` : `Featured event: ${post.title}`}>
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--event">
       <div className="lb-fcard__body">
         <div className="lb-fcard__top">
           <span className="lb-fcard__kicker">{es ? 'Evento · 14 nov. 2026' : 'Event · Nov 14, 2026'}</span>
@@ -328,8 +326,7 @@ function EventFeaturedCard({ post, onNavigate, es }) {
 // The editor-picked featured post (daily routine): compact forest card.
 function FeaturedSpotlight({ post, onNavigate, es }) {
   return (
-    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pick"
-      aria-label={es ? `Artículo destacado: ${post.title}` : `Featured post: ${post.title}`}>
+    <a href={`${BLOG_BASE}/${post.slug}`} onClick={go(onNavigate, post)} className="lb-fcard lb-fcard--pick">
       <div className="lb-fcard__body">
         <span className="lb-fcard__kicker"><Star size={11} weight="fill" aria-hidden="true" /> {es ? 'Selección del editor' : "Editor's pick"}</span>
         <h2 className="lb-fcard__title">{post.title}</h2>

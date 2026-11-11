@@ -141,7 +141,7 @@ export default function BlogPost({ slug, onNavigate }) {
         <FeaturedHero post={post} tags={tags} date={date} onNavigate={onNavigate} es={es} partner={partner} cat={cat} />
       ) : (
       /* ── HERO HEADER ── */
-      <header className="lb-hero ll-forest">
+      <div className="lb-hero ll-forest">
         {/* Back nav: a real breadcrumb link, so the post is not an orphan */}
         <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
           <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
@@ -166,7 +166,7 @@ export default function BlogPost({ slug, onNavigate }) {
             <span>{post.read_time} {es ? 'min de lectura' : 'min read'}</span>
           </div>
         </div>
-      </header>
+      </div>
       )}
 
       {/* ── BODY ── */}
@@ -276,7 +276,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es, partner, cat }) {
   return (
     <>
       <div className="ll-read-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
-      <header className="lb-hero lb-hero--feature ll-forest">
+      <div className="lb-hero lb-hero--feature ll-forest">
         <nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'} className="lb-hero__nav">
           <a href={toHref(BLOG_INDEX)} onClick={e => { e.preventDefault(); onNavigate('LoogoNews'); }} className="lb-back lb-back--dark">
             <ArrowLeft size={14} weight="bold" aria-hidden="true" /> Industry LoogoBlog
@@ -312,7 +312,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es, partner, cat }) {
             <span className="ll-feature-cell__v">{post.read_time} min</span>
           </div>
         </div>
-      </header>
+      </div>
     </>
   );
 }
@@ -320,8 +320,7 @@ function FeaturedHero({ post, tags, date, onNavigate, es, partner, cat }) {
 // Partner logo in the post header, on a white plate so the brand colors hold.
 function PartnerBadge({ partner, slug, es }) {
   return (
-    <a className="lb-partner-badge" href={partnerHref(partner.url, slug)} target="_blank" rel="noopener noreferrer"
-      aria-label={es ? `Visita ${partner.name}` : `Visit ${partner.name}`}>
+    <a className="lb-partner-badge" href={partnerHref(partner.url, slug)} target="_blank" rel="noopener noreferrer">
       <span className="lb-partner-badge__k">{es ? 'Anuncio de' : 'Announcement from'}</span>
       <img src={partner.logo} alt={partner.name} width="132" height="32" />
     </a>

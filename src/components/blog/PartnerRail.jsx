@@ -22,8 +22,8 @@ export default function PartnerRail({ partner, slug, es, variant = 'rail' }) {
         </a>
 
         {p.groups.map(g => (
-          <nav key={g.title} className="pt-rail__group" aria-label={t(g.title, g.titleEs)}>
-            <h3 className="pt-rail__h">{t(g.title, g.titleEs)}</h3>
+          <div key={g.title} className="pt-rail__group">
+            <h2 className="pt-rail__h">{t(g.title, g.titleEs)}</h2>
             <ul>
               {g.links.map(l => (
                 <li key={l.href}>
@@ -34,7 +34,7 @@ export default function PartnerRail({ partner, slug, es, variant = 'rail' }) {
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
         ))}
 
         {p.newsletter && (
