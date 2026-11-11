@@ -217,27 +217,31 @@
 
 /* Event posts (src/lib/featuredEvent.js): the event's own black-and-gold finish
    in place of the forest palette. */
-.lb-page--event { background: var(--ink-900); color: var(--paper-100); }
+/* Event gold: lighter than the site bronze so it reads on the dark event page (6:1+ on ink-900/800, WCAG AA). */
+.lb-page--event { --lb-event-gold: #D4A64A; background: var(--ink-900); color: var(--paper-100); }
 .lb-page--event .lb-hero, .lb-page--event .lb-cta {
   background: linear-gradient(165deg, #0A0906 0%, #120F09 40%, var(--ink-900) 70%, #160A06 100%);
   border: 1px solid rgba(201,149,42,.28); 
 }
-.lb-page--event .lb-hero__title, .lb-page--event .lb-cta__title { font-family: 'Playfair Display', 'Fraunces', Georgia, serif; color: var(--amber-500); }
+.lb-page--event .lb-hero__title, .lb-page--event .lb-cta__title { font-family: 'Playfair Display', 'Fraunces', Georgia, serif; color: var(--lb-event-gold); }
 .lb-page--event .lb-hero__meta, .lb-page--event .lb-hero__author, .lb-page--event .lb-back--dark,
 .lb-page--event .lb-cta__text, .lb-page--event .lb-standfirst { color: var(--ink-300); }
 .lb-page--event .lb-prose { color: var(--paper-100); }
-.lb-page--event .lb-prose h2, .lb-page--event .lb-prose h3, .lb-page--event .lb-prose strong { color: var(--amber-500); }
-.lb-page--event .lb-prose a { color: var(--amber-500); }
-.lb-page--event .lb-prose li::marker { color: var(--amber-500); }
+.lb-page--event .lb-prose h2, .lb-page--event .lb-prose h3, .lb-page--event .lb-prose strong { color: var(--lb-event-gold); }
+.lb-page--event .lb-prose a { color: var(--lb-event-gold); }
+.lb-page--event .lb-prose li::marker { color: var(--lb-event-gold); }
 .lb-page--event .lb-figure img { max-width: 200px; border-radius: 0; }
-.lb-page--event .lb-tag { color: var(--amber-500); background: rgba(201,149,42,.08); border-color: rgba(201,149,42,.28); }
+.lb-page--event .lb-tag { color: var(--lb-event-gold); background: rgba(201,149,42,.08); border-color: rgba(201,149,42,.28); }
 .lb-page--event .ll-glass { background: var(--ink-800); border-color: rgba(201,149,42,.22);    }
 .lb-page--event .lb-bio__name { color: var(--paper-100); }
+.lb-page--event .lb-more__t { color: var(--paper-100); }
+.lb-page--event .lb-more__m { color: var(--ink-300); }
+.lb-page--event .lb-more .ln-card-cat { color: var(--lb-event-gold); }
 .lb-page--event .lb-bio__text, .lb-page--event .lb-bio__kicker { color: var(--ink-300); }
-.lb-page--event .lb-cta__btn { background: var(--amber-500); color: var(--ink-900); }
-.lb-page--event .lb-cta__btn:hover { background: var(--amber-500); }
-.lb-page--event .lb-cta__btn .lb-go__icon { background: var(--ink-900); color: var(--amber-500); }
-.lb-page--event .lb-back--pill { color: var(--amber-500); background: var(--ink-800); border-color: rgba(201,149,42,.28); }
+.lb-page--event .lb-cta__btn { background: var(--lb-event-gold); color: var(--ink-900); }
+.lb-page--event .lb-cta__btn:hover { background: var(--lb-event-gold); }
+.lb-page--event .lb-cta__btn .lb-go__icon { background: var(--ink-900); color: var(--lb-event-gold); }
+.lb-page--event .lb-back--pill { color: var(--lb-event-gold); background: var(--ink-800); border-color: rgba(201,149,42,.28); }
 .lb-event-logo { display: block; width: 96px; height: auto; margin-bottom: 24px; }
 
 /* Event posts: the ticket CTA floats in a sticky right rail on desktop and
@@ -331,6 +335,7 @@
 .lb-fcard--latest .lb-fcard__title { color: var(--ink-900); }
 .lb-fcard--latest .lb-fcard__excerpt { color: var(--ink-500); }
 .lb-fcard--latest .lb-fcard__kicker { color: var(--ink-500); }
+.lb-fcard--latest .lb-fcard__meta { color: var(--ink-500); }
 
 @media (max-width: 640px) {
   .lb-featured { margin-top: 24px; }
