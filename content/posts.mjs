@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `chat-assistant-holiday-shipping-answers`,
+    title: `Your Shop's Chat Assistant Will Guess Your Holiday Shipping Dates`,
+    excerpt: `The question your website assistant will hear most in December is the one nobody gave it an answer to, so write that answer down before the first customer asks.`,
+    tags: `AI Agents & Assistants, Holiday Shipping, Online Shops`,
+    content: `Sometime in the next few weeks a customer will open the chat window on your shop's website and type "if I order today, will it get there before Christmas?" Your assistant will answer, and it will sound sure of itself. Unless someone gave it this year's cutoff dates, it will be working from your general shipping page, a policy written last spring, or nothing at all.
+
+That is the trouble with a chat assistant in December. It rarely goes quiet when it doesn't know. It fills the gap with something reasonable-sounding, and a reasonable-sounding guess about a delivery date is exactly what turns into a refund request and a one-star review on the 27th.
+
+## It can only repeat what it was given
+
+The assistant on your site knows what is in the material it was connected to: your pages, your FAQ, perhaps your product descriptions. If none of that mentions a last order date, it has two options. It can say it doesn't know, or it can work something out from whatever sits nearby. Depending on how it was set up, you may get either.
+
+I've seen an assistant asked about holiday delivery take the standard "ships in 3 to 5 business days" line, count forward from the day of the question and announce a date. The arithmetic was fine. The premise wasn't. Deliveries often take longer in December, your own packing slows down when orders pile up, and a made-to-order piece has a lead time the shipping page never mentioned.
+
+## Write one dated answer sheet
+
+The fix is not a smarter assistant. It is a short page of facts with dates on them, written by you, that the assistant can read. Keep it to what customers ask in the holiday weeks:
+
+- The last order date for each shipping option, with personalized or made-to-order items listed separately
+- What happens to an order placed after that date, and when it will ship
+- Whether you can ship to a different address or include a gift note
+- Your return window for holiday purchases, if it differs from the usual one
+- The days you are closed and when replies resume
+
+Write dates as dates. "Order by Wednesday, December 16" leaves nothing to interpret. "Order early for holiday delivery" invites the assistant to interpret it for you.
+
+Put the sheet wherever your assistant draws its answers from, a page on your site or the tool's own knowledge area, and copy the same dates onto your shipping page so customers who never open the chat see them too.
+
+## Decide which questions go to a person
+
+Some holiday questions shouldn't be answered by the assistant at all. "Where is my order?" with a specific order number, "can you rush this one?", and a package marked delivered that never showed up all need someone who can look things up and make a decision.
+
+If your assistant lets you set a handoff rule, use it for exactly these. Have it collect the customer's name, email and order number, say that a person will reply, and give the time they'll hear back. Make that time true. If you check messages twice a day, say so. In December, "we'll be in touch shortly" reads as "never" by evening.
+
+## What it is good for once it knows
+
+With the sheet in place, the assistant earns its spot this season. It gives the same correct cutoff at eleven at night as it does at six in the morning, and the fortieth person to ask gets the same patience as the first. Meanwhile you are packing boxes instead of typing one date into reply after reply. It can also turn your scribbled notes into a first draft of the answer sheet, as long as you check every date it writes.
+
+What it cannot do is choose your cutoffs. They depend on how many orders you can pack in a day, how long deliveries are really taking for you this year, and whether you would rather turn away a late order than disappoint someone on the 25th. That judgment is yours, and the assistant will repeat whatever you decide, good or bad.
+
+## Ask it twelve questions before Friday
+
+Open your own site in a private browser window and ask your assistant twelve questions the way a rushed customer types them on a phone, such as "will this get here by xmas", "last day to order", "can u send it to my sister" and "what if its late". Write each answer next to the one you meant it to give. Every answer that guesses, hedges or names a date you never set gets a line added to the sheet, and you ask again until it reads back your dates.`,
+  },
+  {
     slug: `ask-ai-who-to-hire-in-your-town`,
     title: `Ask an AI Who to Hire in Your Town. Were You Named?`,
     excerpt: `A twenty-minute test with the questions customers actually type shows whether an assistant can describe your business accurately, and which one page to fix first.`,
