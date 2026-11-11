@@ -8,6 +8,7 @@ import { getSessionId } from '../lib/sessionTracker';
 import { trackLead, leadMeta } from '../lib/metaEvents';
 import { getAttribution, gaLead } from '../lib/attribution';
 import { useHref } from '../lib/i18n';
+import { REFERENCES, CLIENT_LOGOS } from '../lib/references';
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
@@ -19,6 +20,10 @@ import '../styles/pages/november-offer.css';
 // the Game Plan sections (.gp). The form creates a lead (source
 // november_ads_offer), then sends the visitor to book a call.
 // Change the offer in one place: OFFER below.
+
+// Past-client logo belt: the same transparent, one-colour logos as the
+// homepage ticker and the consulting page.
+const LOGOS = REFERENCES.filter((n) => CLIENT_LOGOS[n]).map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name].ticker }));
 
 const SOURCE = 'november_ads_offer';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -209,6 +214,18 @@ export default function NovemberOffer() {
           <button type="button" className="no-card__cta" onClick={go('claim')}>Lock in {OFFER.price} a month <ArrowRight size={16} weight="bold" /></button>
           <p className="no-card__fine">Sign up by {OFFER.deadline}. Ad spend is paid directly to Meta and Google. For ad budgets up to {OFFER.spendCap} a month.</p>
         </aside>
+      </section>
+
+      <section className="cs-loop no-loop" aria-label="Past clients">
+        <p className="cs-loop__label">Trusted by</p>
+        <ul className="cs-loop__track">
+          {LOGOS.map((item) => (
+            <li key={item.name} className="cs-loop__item" style={{ '--th': `${item.th}px` }}>
+              <img src={item.src} width={item.w} height={item.h} alt={item.caption ? '' : item.name} loading="lazy" />
+              {item.caption && <span className="cs-loop__cap">{item.caption}</span>}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="gp-section" aria-labelledby="no-pain-title">

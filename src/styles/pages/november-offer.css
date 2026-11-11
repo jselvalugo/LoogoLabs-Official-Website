@@ -19,6 +19,8 @@
 .no-card__cta:hover { background: var(--paper-200); }
 .no-card__fine { margin: 14px 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-200); }
 
+.no-loop { border-top: 1px solid var(--border-hair); padding-top: 28px; padding-bottom: 28px; }
+.no-loop + .gp-section { border-top: 0; }
 .no-sub { max-width: 36em; margin: 16px auto 0; font-size: 17px; line-height: 1.55; color: var(--ink-500); }
 .no-wide { max-width: 1040px; }
 .no-pains { max-width: 880px; }
