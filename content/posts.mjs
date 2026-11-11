@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `ai-report-summary-guessing-why-leads-dropped`,
+    title: `Your AI Report Summary Is Guessing Why Leads Dropped`,
+    excerpt: `An AI can tell you which numbers moved last month but not why, and a one-line log of what you changed keeps its guesses from deciding your next spend.`,
+    tags: `Measurement & Tracking, Monthly Reports, Owners and Solo Marketers`,
+    content: `Leads fell from 41 in September to 29 in October. You pasted the numbers into an AI chat and asked what happened, and it told you: your ad creative is wearing out, and people have stopped noticing it. It sounded reasonable, so you asked it for new ad ideas.
+
+Here is what it didn't know. Your booking form broke for six days in the middle of the month. You paused one campaign while you were on vacation. Your best referral partner retired. None of that is in a spreadsheet, so none of it was in the answer. The tool filled the gap with the most common explanation for a dip, and it delivered that guess in the same calm voice it uses for arithmetic.
+
+I see this often in the accounts I take over. The owner has a monthly report, an AI summary of it, and a decision that came from the summary. The numbers are usually right. The reasons are often invented.
+
+## The tool can see what changed, not why
+
+Give an AI assistant a table of numbers and it is genuinely good at the first half of the job. It will spot that cost per lead rose on one campaign and not the others. It will notice that calls held steady while form fills dropped. It will work out the percentage changes in seconds, though I still spot-check one or two by hand, because it can slip on arithmetic too.
+
+What it cannot do is look outside the table. It doesn't know you raised your prices, hired a new front-desk person, changed the headline on your service page, or that a storm kept everyone home for a week. When the numbers move and the table holds no reason, it will still write one, because you asked for one.
+
+So the problem isn't that the tool is bad at reports. It's that you asked a question only you can answer, and it answered anyway.
+
+## Keep a change log the tool can read
+
+The fix starts with a habit, not a prompt. Keep one running note, a plain document or a tab in your report, where you write down anything that could move your marketing numbers, on the day it happens. One line each, with a date.
+
+- Oct 3: raised the price of the standard service by $20
+- Oct 9 to 15: booking form not sending (found and fixed on the 15th)
+- Oct 12: paused the brand campaign while away
+- Oct 20: new reviews widget on the homepage
+
+It takes ten seconds a line. Most owners I work with end up with four to eight lines a month. That small list is the context the tool was missing, and it's also the thing you will forget by the time the report arrives.
+
+## Ask two questions instead of one
+
+When the month closes, paste in the numbers and the change log together. Then split what you ask.
+
+First, ask only what moved: which figures changed the most against last month, by how much, and on which channel. That part is arithmetic and comparison, and it plays to the tool's strengths.
+
+Second, ask it to line up each big change against the change log and sort its explanations into two kinds: ones the log supports, and ones that are guesses. Tell it plainly that a guess has to be labeled as one, and that for each guess it should say what number you could check to confirm or rule it out.
+
+In the example above, that second answer looks very different. At 41 leads a month you average a little over one a day, so six days of a broken form costs you around eight leads on its own, and the paused campaign plausibly accounts for most of the rest. Worn-out ad creative moves from "the reason" to "a guess worth checking only if the drop continues in November once the form is working."
+
+## Where you still have to be the one who decides
+
+Even with the log, the tool can't weigh things it has never seen. It doesn't know that a referral partner retiring will hurt for a year, or that October is slow for you every year. You know which explanations matter for your business. It knows which explanations are common across all businesses.
+
+Treat the summary as a draft of the questions, not a verdict. If a recommendation would cost money, like new creative or a bigger budget, it should rest on something in the log or on a number you went and checked, not on a sentence that sounded sure of itself.
+
+## Start the log today
+
+Open a blank note, title it with this month, and write down every change you can remember making since the first: prices, pages, forms, budgets, staff, days you were closed. Then find last month's AI summary, if you have one, and next to each "because" it gave you, write whether the log backs it up. Any "because" you can't back up is a decision you should look at again before you spend on it.
+`,
+  },
+  {
     slug: `chat-assistant-holiday-shipping-answers`,
     title: `Your Shop's Chat Assistant Will Guess Your Holiday Shipping Dates`,
     excerpt: `The question your website assistant will hear most in December is the one nobody gave it an answer to, so write that answer down before the first customer asks.`,
