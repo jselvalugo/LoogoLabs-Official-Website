@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `ai-ad-variations-same-promise`,
+    title: `Your Twenty AI Ad Variations Are One Ad Written Twenty Ways`,
+    excerpt: `When an AI writes every ad variation from the same promise, your test can only tell you which wording got lucky, so choose the reasons to buy yourself first.`,
+    tags: `AI for Paid Ads, Ad Creative, Small Business Owners`,
+    content: `Twenty headlines is not twenty tests. Most of the AI-written ad sets I review look busy and say one thing. The owner asked for variations, the tool returned twenty ways to phrase the same promise, all twenty went into the ad account, and everyone waited for a winner.
+
+A winner did turn up. One always does. But when I ask what it taught them, the honest answer is nothing they can use next month.
+
+## Why the variations come out the same
+
+When you ask an AI for ad variations, it starts from whatever you handed it, usually your current ad or a line about your business. It is good at rewording. It swaps "fast" for "quick", moves the price to the front, opens with a question, trims a clause. Each version reads a little differently, and every one of them makes the same claim to the same person for the same reason.
+
+That isn't the tool failing. You asked for variations and got variations. The trouble is that wording is rarely what decides whether someone clicks. The reason they should care decides it, and the tool can't pick that reason for you, because it has never heard your customers explain why they chose you.
+
+## What a test of wordings costs
+
+Say you put $300 behind twenty near-identical ads. Split evenly, that is $15 an ad, which buys each one a handful of clicks at most. Ad platforms usually start favoring one version early, often on very little evidence, so in practice many of the twenty barely get shown.
+
+You end up with a "winning" headline that won by a few clicks, beating losers that were never really different from it. Next month you ask the AI for variations of the winner, and the loop starts over from a slightly different spot. Months of spend, and you still couldn't tell me why your customers buy.
+
+## Decide the promises first
+
+The fix is to split the work. You choose the reasons. The AI writes the words.
+
+Before you open the chat window, write down two or three genuinely different reasons a customer might hire you. Not three ways of saying "quality". Reasons that pull in different people on different days. For a made-up mobile dog groomer, that could be:
+
+- **The driveway:** the van comes to you, so nobody loses a Saturday to drop-off and pick-up.
+- **The nervous dog:** one groomer, one dog, no room full of barking, which matters if your dog shakes at the vet.
+- **The calendar:** booked every six weeks without the owner having to remember.
+
+Those are separate ads, not variations. Someone whose dog trembles in the car may scroll straight past the driveway ad and stop dead at the nervous-dog one.
+
+The best place to find these reasons is your own customers' words: reviews they left, the text they sent when they booked, what they said at the door. If two customers used the same phrase, copy it down exactly. That phrase is worth more than anything the AI will invent.
+
+## Where AI earns its keep here
+
+Once the promises are yours, the AI is useful. Give it one promise at a time, with a few lines of real customer wording, and ask for four or five short versions of that single promise. You'll have drafts in a minute, and you can cut the ones that overclaim or sound like nobody you'd want to meet.
+
+Then load the ads grouped by promise, a few versions under each, and read the results by group. The question changes from "which headline won" to "which reason to buy brings the cheapest real inquiry". That answer lasts. It is the line you should be leading with on your website too, long after this campaign ends.
+
+Where the AI won't help: choosing which promise is true for your business, and deciding which customers are worth paying for. If it slips in a reason you can't back up, like same-day appointments when you're booked two weeks out, delete it, however well it reads.
+
+## Label last month's ads by the reason they give
+
+Open your ad account and list every ad that ran last month. Next to each, write in five words or fewer the reason it gives someone to buy. If most of the list says the same thing, you haven't tested anything yet. Pick one reason you've never run, write it yourself in one sentence, and let the AI give you four versions of that sentence for this week's test.`,
+  },
+  {
     slug: `black-friday-discount-break-even-math`,
     title: `Do the Math Before You Copy Everyone's Black Friday Discount`,
     excerpt: `A Black Friday discount is paid for by every customer who would have bought anyway, so know how many extra sales it has to win before you announce it.`,
