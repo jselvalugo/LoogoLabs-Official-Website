@@ -11,6 +11,61 @@
 
 export const posts = [
   {
+    slug: `black-friday-discount-break-even-math`,
+    title: `Do the Math Before You Copy Everyone's Black Friday Discount`,
+    excerpt: `A Black Friday discount is paid for by every customer who would have bought anyway, so know how many extra sales it has to win before you announce it.`,
+    tags: `Positioning and Offers, Holiday Promotions, Small Business Owners`,
+    content: `Your inbox is already filling with Black Friday emails from every company you have ever bought from, and most of the small business owners I work with feel they have to send one too. So they pick a number, usually twenty percent, because that looks like what everyone else picked last year. Nobody works out what that twenty percent costs until the January numbers come in.
+
+I have nothing against discounts. What goes wrong is the order: the percentage gets chosen before anyone has asked what it's for.
+
+## Who actually pays for it
+
+A discount doesn't only reach the new customer it was meant to attract. It reaches everyone who buys that week, including the regular who was going to book anyway and the person who has had your product sitting in a cart since October.
+
+That second group is the part owners leave out of the math. Every one of them is full-price revenue you handed back, and none of them came because of the offer.
+
+## The napkin version
+
+Take a service you sell for $200 that costs you $120 to deliver once you count materials and hours. You keep $80.
+
+Take twenty percent off and the price drops to $160. You now keep $40. Half the profit is gone on every sale, so you need to sell twice as many in that window just to end up where you would have been with no sale at all.
+
+If you'd normally sell ten that week, you'd keep $800. To keep the same $800 at the discount, you need twenty sales. Be honest about where the extra ten would come from. If the answer is "mostly the same regulars, plus a few strangers," you're working harder that week for less money.
+
+Your numbers will be different, so run them. What you keep on each sale matters far more than the headline percentage. A business that keeps $30 on every $100 it sells can't run thirty percent off at all; every sale would earn nothing.
+
+## Offers that do a job
+
+Once you know what a sale costs, you can decide what it should buy you. Here is how I'd think about it for a small business.
+
+### Point the discount at your slow month
+
+This is the one I recommend most. If January is quiet for you, tie the offer to it: the lower price applies to bookings in January or February, bought this week. You're trading margin for work you would not otherwise have, which is the only trade a discount should be making.
+
+### If December is already full, skip it
+
+A full calendar plus a price cut just gives away money. Send an email with your last open dates before the holidays instead. What your customers are short of in December is time, and a clear date often moves them faster than a lower price.
+
+### Add something instead of taking something off
+
+Pick an extra that costs you little and that the customer genuinely wants: a longer session, a follow-up visit, a small item that goes with the main purchase. If it costs you $15 and the customer would happily pay $40 for it, that's a much cheaper gift than $40 off the price.
+
+## Where AI helps, and where it just agrees with you
+
+Ask an AI chat whether you should run a Black Friday sale and you will usually get a confident yes and a suggested percentage. It doesn't know what you keep on each sale, how full your December is, or which customers buy from you regardless. It's answering for an average business, and you aren't one.
+
+Give it your numbers and it becomes useful. Paste in your price, your cost and last year's sales for that week, and ask it to lay out what you'd keep at ten, twenty and thirty percent off. Then check one line by hand before you trust the rest. These tools are quick with arithmetic and occasionally quick in the wrong direction.
+
+It earns its keep in the writing, once the decision is made. Ask for the offer email in five versions, then ask it to read each one as a regular who paid full price last month and tell you which version would annoy that person. Drop that one.
+
+The decision about what the offer is for stays with you. Write it down in one sentence before anyone, human or machine, writes the copy.
+
+## Run your own numbers tonight
+
+Before you schedule a single Black Friday email, write three figures on one line: the price of your most popular service or product, what you keep from each sale, and how many you sold in the same week last year. Then work out how many you'd have to sell at your planned discount to keep the same amount you kept last year. If that number is more than you can realistically sell, change the offer while there's still time to write a good one.`,
+  },
+  {
     slug: `ai-report-summary-guessing-why-leads-dropped`,
     title: `Your AI Report Summary Is Guessing Why Leads Dropped`,
     excerpt: `An AI can tell you which numbers moved last month but not why, and a one-line log of what you changed keeps its guesses from deciding your next spend.`,
