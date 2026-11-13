@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `ai-argue-against-next-year-marketing-plan`,
+    title: `Make the AI Argue Against Next Year's Marketing Plan`,
+    excerpt: `An AI asked to help with your marketing plan will build whatever you hand it, so write the plan yourself and ask it which of your assumptions is most likely wrong.`,
+    tags: `Positioning and Offers, Annual Planning, Small Business Owners`,
+    content: `The marketing plan a lot of owners will finish this month lists eight channels, a bigger budget and a growth target, with almost no reason to believe any of it. I read a stack of these every November. More of them now carry an AI's fingerprints, and that hasn't made them better. It has made them longer and more sure of themselves.
+
+## Why an AI-assisted plan comes out agreeable
+
+When you ask an AI to help with next year's plan, it works from what you tell it. Say you want to grow by a third and you think video is the answer, and it will build you a tidy plan for growing by a third with video. It fills the gaps with sensible-sounding activity: a newsletter, a referral push, posts every week, a few ads. Each line is defensible. Together they're a to-do list for a team you don't have.
+
+What it rarely does, unless you ask, is tell you the target doesn't add up. It isn't hiding anything. It doesn't know your numbers, and its habit is to help with the job it was handed.
+
+## Write the first page yourself
+
+So turn the order around. Before any AI sees it, write the plan on one page, in your own words. Mine always come down to five lines:
+
+- who the plan is for, described as one kind of customer you'd recognize at the door
+- the offer you'll put in front of them that you didn't push this year
+- the two places most of your time and money will go
+- how many new customers you need, and by when
+- what you'll stop doing to make room
+
+If you can't write one of those lines, that's your first finding, and no tool will fill it in honestly for you.
+
+## Then ask it to attack the page
+
+Now paste the page into the AI and give it a different job. Not "improve this." Ask it to play a skeptical partner who has to put their own money into the plan, and to list the assumptions the plan depends on, starting with the one most likely to be wrong. Ask it to point out anywhere the budget, your hours and the target can't all be true at once.
+
+This is where the AI earns its place. It's good at noticing a sentence that quietly depends on another sentence, and at doing the arithmetic you skipped, though you should check its sums yourself. Here's the kind of thing it catches. Say the plan wants 120 new customers next year, and roughly one in four of your inquiries turns into a booking. That's 480 inquiries, or 40 a month. If you averaged 25 a month this year, the plan needs 15 more every month, and the page should say where they come from. If the answer is "the two places I'm focusing on," you now know what each has to deliver, in numbers you can check by March.
+
+## Sort its objections with your own records
+
+Not every objection deserves an answer. The AI will raise some that sound serious and don't fit you: that your work is seasonal when it isn't, that your price is high for a customer it's picturing, that you need a channel your customers never touch. It's arguing from what a business like yours usually looks like, and yours isn't usual in every way.
+
+So go down its list with this year's records open: sales, the lead list, last year's calendar. Next to each assumption, write whether you can show it's true. In my experience, owners can show fewer than they expect.
+
+The ones you can't show are the plan's real risks. Don't argue them away. Move each to the front of the year as a small, dated test. Offer the new package to past customers in January before you build ads around it. Spend one month's budget on the new channel and count what comes back before you commit to twelve.
+
+## Two decisions I keep away from the AI
+
+The first is who the plan is for. An AI can list possible customers all day, but it doesn't know which ones you enjoy working with, which pay on time, or which send their friends.
+
+The second is what you stop doing. Most plans I've watched fall apart did it by piling on: a new channel stacked on the old ones until none got real attention. The AI won't volunteer a cut, because you never asked it for less.
+
+## Find the assumption you can't prove
+
+This week, write next year's plan on one page before you open any AI tool. Then ask it for the assumptions most likely to be wrong, pick the one you have the least evidence for, and put a dated test for it on your January calendar.`,
+  },
+  {
     slug: `ai-ad-variations-same-promise`,
     title: `Your Twenty AI Ad Variations Are One Ad Written Twenty Ways`,
     excerpt: `When an AI writes every ad variation from the same promise, your test can only tell you which wording got lucky, so choose the reasons to buy yourself first.`,
