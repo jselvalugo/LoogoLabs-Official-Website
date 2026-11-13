@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `customer-questions-not-ai-content-ideas`,
+    title: `Your Best Post Ideas Are Questions Customers Already Asked`,
+    excerpt: `An AI asked for content ideas hands you what every business like yours posts, so collect the questions your own customers ask and let it tidy your answers instead.`,
+    tags: `AI Content Workflow, Content Ideas, Home Service Owners`,
+    content: `Ask an AI for a month of social posts for a roofing company and you will get the list every roofer already has: signs your roof needs replacing, why gutters matter, how to choose a contractor, a reminder to book before winter. None of it is wrong. None of it would make a homeowner stop scrolling either, because they've seen that exact list from the three other roofers in town, all of whom asked the same question of the same kind of tool.
+
+I see this in almost every content calendar I'm handed. The owner isn't short on posts. They're short on posts that only they could have made.
+
+## Why the idea list comes out generic
+
+An AI suggesting content ideas works from what is typical for your kind of business. That is what it's good at. It knows what roofers usually talk about, so it gives you the average of what roofers usually talk about. It has no idea that, say, half your calls this month came from people who just bought an older house and don't know how old the roof is.
+
+That last part is the content. And you already have it. It sits in your texts, your missed-call notes, the questions people ask while you're up on the ladder, and the odd thing someone wrote in the comments box of your quote form.
+
+## Keep a question list, not an idea list
+
+For two weeks, write down every question a customer or lead asks you. Not the topic, the question, in their words. "Is it normal for the shingles to look curly on one side?" is a post. "Shingle damage" is a topic, and topics are what the AI already has plenty of.
+
+A note on your phone works. So does a shared list if someone else answers the phone. The only rule is that it gets written down the day it's asked, because by Friday you will remember that someone asked about shingles and forget the word "curly", which was the part worth keeping.
+
+Some of what you write down will be repeats. The repeats are the best ones, because a question three different people asked is one plenty of others are wondering about without calling.
+
+## Answer out loud first
+
+Here is where most people go wrong. They paste the question into the AI and ask it to write the post. You get a tidy, accurate answer that sounds like every other one online.
+
+Instead, pick a question and answer it out loud into your phone's voice recorder, the way you'd answer the customer standing in their driveway. A minute is plenty. Include the bit you always add, the "honestly, I'd wait until spring on that one" or "I've seen that go both ways." That's your opinion, and opinion is the one thing the tool can't supply.
+
+Then give the AI the transcript and a short brief: keep my wording, cut repeats, put the answer in the first line, keep it under a set length, don't add advice I didn't give. Now it's doing what it does well, which is tightening and ordering, without inventing the substance.
+
+## Where the AI still helps, and where it doesn't
+
+It's good at turning one spoken answer into a short caption and a script for a thirty-second video, so a single minute of talking covers two places. It's also good at reading your whole list and telling you which questions are really the same one asked in different words.
+
+It is not useful for deciding what's true about roofs in your area, or what you'd recommend. If the cleaned-up version says something you didn't say, cut it, even when it sounds smart. That is how the generic slips back in.
+
+## The arithmetic of a list
+
+If you get two genuine questions a working day, that's ten a week. Even if you only post the best half, you have five pieces a week that a competitor's AI won't hand them, because it never heard your customers ask. That beats thirty AI ideas you never get round to posting, and it costs about two minutes a day of writing things down.
+
+## Start the list today
+
+Open a note on your phone called "Questions" and pin it. Every time a customer asks you something this week, add it in their words before you put the phone back in your pocket. On Friday, pick the one that came up most, answer it out loud for a minute, and make that your next post.`,
+  },
+  {
     slug: `ai-argue-against-next-year-marketing-plan`,
     title: `Make the AI Argue Against Next Year's Marketing Plan`,
     excerpt: `An AI asked to help with your marketing plan will build whatever you hand it, so write the plan yourself and ask it which of your assumptions is most likely wrong.`,
