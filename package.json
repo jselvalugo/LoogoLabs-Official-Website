@@ -10,7 +10,8 @@
     "db:seed-posts": "node scripts/seed-blog-posts.mjs",
     "db:generate-post-migration": "node scripts/generate-post-migration.mjs",
     "db:feature-post": "node scripts/feature-post.mjs",
-    "seo:generate": "node scripts/generate-seo-assets.mjs"
+    "seo:generate": "node scripts/generate-seo-assets.mjs",
+    "check:invoices": "node scripts/check-invoice-templates.mjs"
   },
   "dependencies": {
     "@fontsource-variable/work-sans": "^5.3.0",

@@ -129,7 +129,7 @@ function InvoicePage({ id }) {
   const [record, setRecord] = React.useState(null);
   const [error, setError] = React.useState('');
   const [tab, setTab] = React.useState('items');
-  const [panel, setPanel] = React.useState(null); // 'preview' | 'send'
+  const [panel, setPanel] = React.useState(null); // 'preview' | 'send' | 'billto'
   const [busy, setBusy] = React.useState(false);
 
   const load = React.useCallback(() => data('get', { entity: 'invoices', id }).then(setRecord).catch((err) => setError(err.message)), [id]);
@@ -177,8 +177,9 @@ function InvoicePage({ id }) {
             <div className="kicker">Invoice · <InvoiceStatus record={record} overdue={t.overdue} /></div>
             <h1>{record.name}{record.bill_to_name ? <span className="muted" style={{ fontWeight: 400 }}> · {record.bill_to_name}</span> : null}</h1>
           </div>
-          <div className="rec-actions">
+          <div className="rec-actions inv-actions">
             {record.status !== 'void' && <button className="btn btn-primary" onClick={() => setPanel('send')}>{record.sent_at ? 'Resend' : 'Send invoice'}</button>}
+            <button className="btn" onClick={() => setPanel('billto')}>Edit bill-to</button>
             <button className="btn" onClick={() => setPanel('preview')}>Preview</button>
             <button className="btn" onClick={print}>Print / PDF</button>
             {record.status === 'sent' && <button className="btn" disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
@@ -199,6 +200,12 @@ function InvoicePage({ id }) {
       </section>
 
       {!record.template && <div className="notice warn-notice" style={{ marginBottom: 12 }}>No invoice template is set up for this workspace yet. Loogo Labs adds templates in code; ask us for one.</div>}
+      {!record.bill_to_email && record.status !== 'void' && (
+        <div className="notice warn-notice inv-banner">
+          <span>No email on this invoice yet. Add one to send it.</span>
+          <button className="btn btn-small btn-primary" onClick={() => setPanel('billto')}>Add email</button>
+        </div>
+      )}
       {error && <div className="error" style={{ marginBottom: 12 }}>{error}</div>}
 
       <div className="rec-grid">
@@ -218,12 +225,12 @@ function InvoicePage({ id }) {
         </div>
         <aside className="rec-side">
           <div className="card side-card">
-            <div className="side-head">Bill to</div>
+            <div className="side-head inv-side-head">Bill to <button className="link" onClick={() => setPanel('billto')}>Edit</button></div>
             <dl className="kv">
               <dt>Name</dt><dd>{record.bill_to_name || '—'}</dd>
               {record.bill_to_title && <><dt>Title</dt><dd>{record.bill_to_title}</dd></>}
               <dt>Business</dt><dd>{record.bill_to_company || '—'}</dd>
-              <dt>Email</dt><dd>{record.bill_to_email || <span className="overdue">Missing</span>}</dd>
+              <dt>Email</dt><dd>{record.bill_to_email || <button className="link overdue" onClick={() => setPanel('billto')}>Add email</button>}</dd>
               <dt>Phone</dt><dd>{record.bill_to_phone || '—'}</dd>
             </dl>
           </div>
@@ -244,6 +251,7 @@ function InvoicePage({ id }) {
       </div>
 
       {panel === 'preview' && <PreviewDrawer record={record} onClose={() => setPanel(null)} />}
+      {panel === 'billto' && <BillToDrawer record={record} onClose={() => setPanel(null)} onSaved={() => { setPanel(null); refresh(); }} />}
       {panel === 'send' && <SendDrawer record={record} onClose={() => setPanel(null)} onSent={() => { setPanel(null); refresh(); }} />}
     </div>
   );
@@ -278,45 +286,42 @@ function ItemsTab({ record, onChanged }) {
   return (
     <>
       {error && <div className="error">{error}</div>}
-      <div style={{ overflowX: 'auto' }}>
-        <table className="static ledger">
-          <thead><tr><th>Item</th><th className="num">Qty</th><th className="num">Rate</th><th className="num">Amount</th><th /></tr></thead>
-          <tbody>
-            {items.map((it, i) => (editing === it.id
-              ? <tr key={it.id}><td colSpan={5}><ItemForm invoiceId={record.id} item={it} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} /></td></tr>
-              : (
-                <tr key={it.id}>
-                  <td>
-                    <strong>{it.description}</strong>
-                    {it.details && <ul className="inv-details">{it.details.split('\n').filter((d) => d.trim()).map((d) => <li key={d}>{d}</li>)}</ul>}
-                  </td>
-                  <td className="num">{it.quantity}</td>
-                  <td className="num">{money2(it.unit_price)}{it.unit_label ? ` / ${it.unit_label}` : ''}</td>
-                  <td className="num">{money2(it.amount)}{it.note && <div className="inv-note">{it.note}</div>}</td>
-                  <td className="row-actions">
-                    {!locked && <>
-                      <button className="link" disabled={i === 0} onClick={() => move(it, -1)} aria-label="Move up">↑</button>
-                      <button className="link" disabled={i === items.length - 1} onClick={() => move(it, 1)} aria-label="Move down">↓</button>
-                      <button className="link" onClick={() => setEditing(it.id)}>Edit</button>
-                      <button className="link danger" onClick={() => remove(it)}>Remove</button>
-                    </>}
-                  </td>
-                </tr>
-              )))}
-            {items.length === 0 && editing !== 'new' && <tr><td colSpan={5} className="muted">No line items yet. Add the first one below.</td></tr>}
-          </tbody>
-          <tfoot>
-            <tr><td colSpan={3} className="num">Subtotal</td><td className="num">{money2(t.subtotal)}</td><td /></tr>
-            {t.discount ? <tr><td colSpan={3} className="num">Discount</td><td className="num">−{money2(t.discount)}</td><td /></tr> : null}
-            {t.tax ? <tr><td colSpan={3} className="num">Tax ({t.tax_rate}%)</td><td className="num">{money2(t.tax)}</td><td /></tr> : null}
-            <tr className="inv-total"><td colSpan={3} className="num">Total</td><td className="num">{money2(t.total)}</td><td /></tr>
-            <tr><td colSpan={3} className="num">Amount due</td><td className={`num ${t.overdue ? 'overdue' : ''}`}><strong>{money2(t.amount_due)}</strong></td><td /></tr>
-          </tfoot>
-        </table>
-      </div>
+      <ul className="inv-items">
+        {items.map((it, i) => (editing === it.id
+          ? <li key={it.id} className="inv-item editing"><ItemForm invoiceId={record.id} item={it} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} /></li>
+          : (
+            <li key={it.id} className="inv-item">
+              <div className="inv-item-top">
+                <strong className="inv-item-name">{it.description}</strong>
+                <span className="inv-item-amt">{money2(it.amount)}</span>
+              </div>
+              <div className="inv-item-meta">
+                {it.quantity} × {money2(it.unit_price)}{it.unit_label ? ` / ${it.unit_label}` : ''}
+                {it.note && <span className="inv-tag">{it.note}</span>}
+              </div>
+              {it.details && <ul className="inv-details">{it.details.split('\n').filter((d) => d.trim()).map((d, k) => <li key={k}>{d}</li>)}</ul>}
+              {!locked && (
+                <div className="inv-item-actions">
+                  <button className="btn btn-small" onClick={() => setEditing(it.id)}>Edit</button>
+                  <button className="btn btn-small" disabled={i === 0} onClick={() => move(it, -1)} aria-label="Move up">↑</button>
+                  <button className="btn btn-small" disabled={i === items.length - 1} onClick={() => move(it, 1)} aria-label="Move down">↓</button>
+                  <button className="btn btn-small danger-text" onClick={() => remove(it)}>Remove</button>
+                </div>
+              )}
+            </li>
+          )))}
+        {items.length === 0 && editing !== 'new' && <li className="inv-item muted">No line items yet. Add the first one below.</li>}
+      </ul>
       {editing === 'new'
         ? <ItemForm invoiceId={record.id} item={blankItem} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} />
-        : !locked && <div className="actions" style={{ marginTop: 12 }}><button className="btn" onClick={() => setEditing('new')}>Add line item</button></div>}
+        : !locked && <button className="btn inv-add" onClick={() => setEditing('new')}>+ Add line item</button>}
+      <dl className="inv-totals">
+        <div><dt>Subtotal</dt><dd>{money2(t.subtotal)}</dd></div>
+        {t.discount ? <div><dt>Discount</dt><dd>−{money2(t.discount)}</dd></div> : null}
+        {t.tax ? <div><dt>Tax ({t.tax_rate}%)</dt><dd>{money2(t.tax)}</dd></div> : null}
+        <div><dt>Total</dt><dd>{money2(t.total)}</dd></div>
+        <div className="due"><dt>Amount due</dt><dd className={t.overdue ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>
+      </dl>
       {locked && <p className="muted hint">This invoice is {record.status}; restore it to change line items.</p>}
     </>
   );
@@ -376,9 +381,9 @@ function DetailsView({ record, onSaved }) {
             {sec.keys.map((k) => (editing === k
               ? <InlineEdit key={k} record={record} field={F[k]} onCancel={() => setEditing(null)} onSaved={() => { setEditing(null); onSaved(); }} />
               : (
-                <div key={k} className="det-item" onDoubleClick={() => setEditing(k)} title="Double-click to edit">
+                <div key={k} className="det-item tap-edit" role="button" tabIndex={0} onClick={(e) => { if (!e.target.closest('a, .link')) setEditing(k); }} onKeyDown={(e) => { if (e.key === 'Enter') setEditing(k); }} title="Tap to edit">
                   <dt>{F[k].label}</dt>
-                  <dd><span className="dv">{valueOf(record, k, open)}</span><button className="pencil" onClick={() => setEditing(k)} aria-label={`Edit ${F[k].label}`}>✎</button></dd>
+                  <dd><span className="dv">{valueOf(record, k, open)}</span><span className="pencil" aria-hidden="true">✎</span></dd>
                 </div>
               )))}
           </dl>
@@ -458,13 +463,14 @@ function PreviewDrawer({ record, onClose }) {
 function SendDrawer({ record, onClose, onSent }) {
   const [to, setTo] = React.useState(record.bill_to_email || '');
   const [cc, setCc] = React.useState('');
+  const [save, setSave] = React.useState(true);
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const t = record.totals || {};
   async function send(e) {
     e.preventDefault();
     setBusy(true); setError('');
-    try { await data('send_invoice', { id: record.id, values: { to, cc } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
+    try { await data('send_invoice', { id: record.id, values: { to, cc, save_email: save } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
   }
   return (
     <Drawer title={record.sent_at ? 'Resend invoice' : 'Send invoice'} kicker={record.name} onClose={onClose}>
@@ -475,12 +481,51 @@ function SendDrawer({ record, onClose, onSent }) {
         </p>
         <label className="label" htmlFor="si-to">To</label>
         <input id="si-to" className="field" value={to} onChange={(e) => setTo(e.target.value)} placeholder="client@example.com" required />
+        {!record.bill_to_email && (
+          <label className="check" style={{ marginTop: 10 }}>
+            <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} /> Save this as the bill-to email{record.contact_id ? ' (and on the contact)' : ''}
+          </label>
+        )}
         <label className="label" htmlFor="si-cc">Cc <span className="muted">· optional, comma separated</span></label>
         <input id="si-cc" className="field" value={cc} onChange={(e) => setCc(e.target.value)} />
         {!(record.items || []).length && <div className="notice warn-notice" style={{ marginTop: 12 }}>Add at least one line item first.</div>}
         {error && <div className="error">{error}</div>}
         <div className="actions">
           <button className="btn btn-primary" disabled={busy || !(record.items || []).length || !record.template}>{busy ? 'Sending…' : 'Send now'}</button>
+          <button type="button" className="btn" onClick={onClose}>Cancel</button>
+        </div>
+      </form>
+    </Drawer>
+  );
+}
+
+// ── Edit bill-to and dates in one form (works on phones) ───────────────────
+
+const BILL_KEYS = ['bill_to_name', 'bill_to_email', 'bill_to_title', 'bill_to_company', 'bill_to_phone', 'bill_to_address', 'issue_date', 'due_date', 'payment_link'];
+
+function BillToDrawer({ record, onClose, onSaved }) {
+  const [v, setV] = React.useState(Object.fromEntries(BILL_KEYS.map((k) => [k, record[k] ?? ''])));
+  const [error, setError] = React.useState('');
+  const [busy, setBusy] = React.useState(false);
+  const set = (k) => (val) => setV((p) => ({ ...p, [k]: val }));
+  async function save(e) {
+    e.preventDefault();
+    setBusy(true); setError('');
+    const changed = Object.fromEntries(BILL_KEYS.filter((k) => String(v[k] ?? '') !== String(record[k] ?? '')).map((k) => [k, v[k]]));
+    try { if (Object.keys(changed).length) await data('update', { entity: 'invoices', id: record.id, values: changed }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
+  }
+  return (
+    <Drawer title="Edit bill-to & dates" kicker={record.name} onClose={onClose}>
+      <form onSubmit={save}>
+        {BILL_KEYS.map((k) => (
+          <div key={k}>
+            <label className="label" htmlFor={`bt-${k}`}>{F[k].label}{k === 'due_date' ? <span className="muted"> · blank = on receipt</span> : null}</label>
+            <FieldInput id={`bt-${k}`} field={F[k]} value={v[k]} onChange={set(k)} />
+          </div>
+        ))}
+        {error && <div className="error">{error}</div>}
+        <div className="actions">
+          <button className="btn btn-primary" disabled={busy}>{busy ? 'Saving…' : 'Save'}</button>
           <button type="button" className="btn" onClick={onClose}>Cancel</button>
         </div>
       </form>

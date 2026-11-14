@@ -461,10 +461,50 @@ a.btn { color: inherit; text-decoration: none; display: inline-block; }
 @media (max-width: 760px) { .me-row { grid-template-columns: 20px 1fr 90px 56px 32px; } }
 
 /* Invoices */
-.inv-details { margin: 4px 0 0; padding-left: 16px; color: var(--muted); font-size: 13px; }
+.inv-details { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
 .inv-details li { margin: 1px 0; }
 .inv-note { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #8A6A3F; }
 .ledger tfoot td { border-top: 0; padding-top: 6px; padding-bottom: 6px; }
 .ledger tfoot tr:first-child td { border-top: 1px solid var(--line); padding-top: 12px; }
 .ledger tfoot .inv-total td { font-weight: 600; }
 .inv-frame { width: 100%; height: 70vh; border: 1px solid var(--line); border-radius: 10px; background: #F4F0E9; }
+
+/* Invoices: line items as a list (reads well on phones) */
+.inv-items { list-style: none; margin: 0; padding: 0; }
+.inv-item { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.inv-item:first-child { padding-top: 4px; }
+.inv-item.editing { border-bottom: none; }
+.inv-item-top { display: flex; align-items: baseline; gap: 12px; }
+.inv-item-name { flex: 1; min-width: 0; font-size: 15px; }
+.inv-item-amt { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.inv-item-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 2px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.inv-tag { display: inline-block; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; background: #F4F0E9; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #8A6A3F; }
+.inv-item-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.danger-text { color: var(--danger) !important; }
+.inv-add { margin-top: 14px; }
+.inv-totals { margin: 18px 0 0 auto; max-width: 320px; }
+.inv-totals > div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; font-size: 14px; }
+.inv-totals dt { color: var(--muted); }
+.inv-totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+.inv-totals .due { border-top: 1px solid var(--ink); margin-top: 6px; padding-top: 10px; font-weight: 600; font-size: 16px; }
+.inv-totals .due dt { color: var(--ink); }
+.inv-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 12px; }
+.inv-banner .btn-primary { color: #fff; }
+.inv-side-head { display: flex; align-items: center; justify-content: space-between; }
+.inv-side-head .link { font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: 400; }
+
+/* Tap anywhere on a field to edit it; the pencil always shows on touch screens */
+.det-item.tap-edit { cursor: pointer; }
+@media (hover: none) {
+  .pencil { opacity: 1; }
+  .det-item:hover { background: none; }
+}
+
+@media (max-width: 760px) {
+  .inv-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .inv-actions .btn { width: 100%; padding: 10px 12px; }
+  .inv-actions .btn-primary { grid-column: 1 / -1; }
+  .inv-totals { max-width: none; }
+  .inv-frame { height: 75vh; border-radius: 8px; }
+  .inv-item-actions .btn { flex: 1 1 auto; }
+}

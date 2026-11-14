@@ -12,9 +12,16 @@ const q = (text, params = []) => db().sql.unsafe(text, params);
 const round2 = (n) => Math.round((Number(n) || 0) * 100) / 100;
 const todayYmd = () => new Date().toISOString().slice(0, 10);
 
-async function instanceSlug(inst) {
-  const [row] = await q('SELECT slug FROM crm_instances WHERE id = $1', [inst]);
-  return row?.slug || '';
+async function instanceRow(inst) {
+  const [row] = await q('SELECT name, slug FROM crm_instances WHERE id = $1', [inst]);
+  return row || { name: '', slug: '' };
+}
+const instanceSlug = async (inst) => (await instanceRow(inst)).slug;
+
+// What a template knows about the workspace sending the invoice.
+async function workspace(inst, me = {}) {
+  const row = await instanceRow(inst);
+  return { name: row.name, email: me.email || '', contact: me.name ? String(me.name).split(/\s+/)[0] : '' };
 }
 
 async function usedTemplates(inst) {
@@ -166,15 +173,15 @@ function templateFor(inv) {
   return t;
 }
 
-export async function preview(inst, id, { forPrint = false } = {}) {
+export async function preview(inst, id, { forPrint = false } = {}, me = {}) {
   const inv = await fullInvoice(inst, needId(id));
-  const out = templateFor(inv).render(inv, { forPrint });
+  const out = templateFor(inv).render(inv, { forPrint, workspace: await workspace(inst, me) });
   return { ...out, to: inv.bill_to_email || null };
 }
 
 // Sends the invoice email, marks a draft as sent, and logs it on the invoice
 // (and its contact, if linked).
-export async function send(inst, id, { to, cc } = {}, me = {}) {
+export async function send(inst, id, { to, cc, save_email = true } = {}, me = {}) {
   const inv = await fullInvoice(inst, needId(id));
   if (inv.status === 'void') throw new CrmError('This invoice is void');
   if (!inv.items.length) throw new CrmError('Add at least one line item before sending');
@@ -182,11 +189,16 @@ export async function send(inst, id, { to, cc } = {}, me = {}) {
   if (!recipients.length) throw new CrmError('Add the bill-to email, or who to send it to');
   const copies = cc ? emailList(cc) : [];
   const t = templateFor(inv);
-  const { subject, html, text } = t.render(inv, {});
+  const { subject, html, text } = t.render(inv, { workspace: await workspace(inst, me) });
   const messageId = await sendEmail({ to: recipients, cc: copies, subject, html, text, replyTo: t.reply_to || me.email });
   const audit = { userId: me.id };
   await updateRecord(inst, 'invoices', inv.id, inv.status === 'draft' ? { status: 'sent' } : {}, audit);
   await q('UPDATE crm_invoices SET sent_at = now(), sent_to = $3 WHERE id = $1 AND instance_id = $2', [inv.id, inst, recipients.join(', ')]);
+  // First send to a new address: keep it as the bill-to email (and on the contact if it has none).
+  if (save_email && !inv.bill_to_email) {
+    await q('UPDATE crm_invoices SET bill_to_email = $3 WHERE id = $1 AND instance_id = $2', [inv.id, inst, recipients[0]]);
+    if (inv.contact_id) await q(`UPDATE crm_contacts SET email = $3, updated_at = now() WHERE id = $1 AND instance_id = $2 AND (email IS NULL OR email = '')`, [inv.contact_id, inst, recipients[0]]);
+  }
   const note = { type: 'email', subject: `Invoice ${inv.name} sent`, body: `${subject}\nTo: ${recipients.join(', ')}${copies.length ? `\nCc: ${copies.join(', ')}` : ''}\nAmount due: $${inv.totals.amount_due.toFixed(2)}` };
   await addActivity(inst, { ...note, entity_type: 'invoices', entity_id: inv.id }, audit);
   if (inv.contact_id) await addActivity(inst, { ...note, entity_type: 'contacts', entity_id: inv.contact_id }, audit).catch(() => {});
