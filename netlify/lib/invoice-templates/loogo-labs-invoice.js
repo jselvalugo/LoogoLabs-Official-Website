@@ -5,7 +5,7 @@ import { renderInvoice } from './layout.js';
 // labels, Marcellus headings, Work Sans body, the real logo (never typed).
 
 const BRAND = {
-  logo: 'https://www.loogolabs.com/email-logo.png',
+  logo: 'https://www.loogolabs.com/invoice-logo.png',
   logoAlt: 'Loogo Labs · AI, Marketing & Automation',
   tagline: 'AI, Marketing & Automation',
   colors: {
@@ -13,7 +13,7 @@ const BRAND = {
   },
   business: {
     name: 'Loogo Labs LLC',
-    address: ['2875 S Orange Ave STE 500 #6412', 'Orlando, FL 32806-5471'],
+    address: ['2875 S Orange Ave', 'STE 500 #6412', 'Orlando, FL 32806-5471'],
     contact: 'David',
     email: 'david@loogolabs.com',
     phone: '(407) 748-9150',
