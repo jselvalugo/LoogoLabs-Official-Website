@@ -8,6 +8,7 @@ import { Crm, useCrm } from './ctx';
 import { Activities, FieldInput, HALF, fieldsFor, withLifecycle } from './records';
 import { HealthPill, LifecyclePill, ProjectsOverview, ProjectsPage } from './Projects';
 import { ProjectRecord } from './ProjectRecord';
+import { InvoiceRecord, InvoicesPage } from './Invoices';
 
 const PAGES = [
   { id: 'overview', label: 'Overview', path: '' },
@@ -16,6 +17,7 @@ const PAGES = [
   { id: 'companies', label: 'Companies', path: '/companies', entity: 'companies' },
   { id: 'opportunities', label: 'Opportunities', path: '/opportunities', entity: 'opportunities' },
   { id: 'projects', label: 'Projects', path: '/projects' },
+  { id: 'invoices', label: 'Invoices', path: '/invoices' },
   { id: 'tasks', label: 'Tasks', path: '/tasks' },
   { id: 'dashboards', label: 'Dashboards', path: '/dashboards' },
   { id: 'approvals', label: 'Approvals', path: '/approvals' },
@@ -31,6 +33,7 @@ const PAGES = [
 const NAV = [
   'overview',
   'projects',
+  'invoices',
   { id: 'crm', label: 'CRM', items: ['leads', 'contacts', 'companies', 'opportunities', 'tasks'] },
   'dashboards', 'approvals', 'recaps',
   { id: 'email', label: 'Email', items: ['blasts', 'campaigns', 'automations', 'audience'] },
@@ -46,12 +49,13 @@ const today = () => new Date().toISOString().slice(0, 10);
 // Served at the root of crm.loogolabs.com, and under /crm on the main domain
 // (for local dev and before DNS is set up).
 const BASE = window.location.pathname.startsWith('/crm') ? '/crm' : '';
-// Record pages: /projects/<id> and /projects/new open a full page, not the drawer.
-const RECORD_PATH = /^\/projects\/(new|[0-9a-f-]{36})$/i;
+// Record pages: /projects/<id>, /invoices/<id> (and /new) open a full page, not the drawer.
+const RECORD_PATH = /^\/(projects|invoices)\/(new|[0-9a-f-]{36})$/i;
+const RECORD_PAGE = { projects: 'project', invoices: 'invoice' };
 const routeFromPath = () => {
   const rest = window.location.pathname.slice(BASE.length).replace(/\/$/, '');
   const rec = rest.match(RECORD_PATH);
-  if (rec) return { page: 'project', id: rec[1] === 'new' ? null : rec[1] };
+  if (rec) return { page: RECORD_PAGE[rec[1].toLowerCase()], id: rec[2] === 'new' ? null : rec[2] };
   return { page: (PAGES.find((p) => p.path === rest) || PAGES[0]).id, id: null };
 };
 
@@ -83,13 +87,13 @@ export default function App() {
     window.scrollTo(0, 0);
   }
 
-  // Projects open as full record pages; every other record opens in the drawer.
+  // Projects and invoices open as full record pages; every other record opens in the drawer.
   function openRecord(entity, id, values) {
-    if (entity !== 'projects') { setDrawer({ entity, id, values }); return; }
+    if (!RECORD_PAGE[entity]) { setDrawer({ entity, id, values }); return; }
     setDrawer(null);
     preset.current = id ? null : values || null;
-    window.history.pushState(null, '', `${BASE}/projects/${id || 'new'}`);
-    setRoute({ page: 'project', id: id || null });
+    window.history.pushState(null, '', `${BASE}/${entity}/${id || 'new'}`);
+    setRoute({ page: RECORD_PAGE[entity], id: id || null });
     window.scrollTo(0, 0);
   }
 
@@ -109,7 +113,7 @@ export default function App() {
   if (checking) return null;
   if (!me) return <SignIn onSignedIn={setMe} />;
   const current = PAGES.find((p) => p.id === page) || {};
-  const navPage = page === 'project' ? 'projects' : page;
+  const navPage = page === 'project' ? 'projects' : page === 'invoice' ? 'invoices' : page;
 
   return (
     <Crm.Provider value={ctx}>
@@ -123,11 +127,13 @@ export default function App() {
         <div className="who hide-sm">{me.instance_name}<br />{me.name || me.email}</div>
         <button className="btn" onClick={signOut}>Sign out</button>
       </header>
-      <main className={`page ${page === 'project' ? 'page-wide' : ''}`}>
+      <main className={`page ${page === 'project' || page === 'invoice' ? 'page-wide' : ''}`}>
         {page === 'overview' && <Overview />}
         {current.entity && <RecordList key={current.entity} entityKey={current.entity} />}
         {page === 'projects' && <ProjectsPage />}
         {page === 'project' && <ProjectRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
+        {page === 'invoices' && <InvoicesPage />}
+        {page === 'invoice' && <InvoiceRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
         {page === 'tasks' && <Tasks />}
         {page === 'dashboards' && <Dashboards version={version} />}
         {page === 'approvals' && <Approvals version={version} />}

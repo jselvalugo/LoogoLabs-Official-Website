@@ -3,6 +3,7 @@ import {
   ACTIVITY_FIELDS, CHARGE_FIELDS, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_LIFECYCLES, REPORT_CADENCES, REPORT_FIELDS,
   SOCIAL_FIELDS, SOURCE_FIELDS, stageInfo, stagesFor,
 } from '../../src/crm/entities.js';
+import * as invoices from './crm-invoices.js';
 
 // Generic, instance-scoped CRUD over the entities in src/crm/entities.js, used by
 // both the CRM app API and the MCP server. Table and column names only ever come
@@ -60,7 +61,7 @@ async function checkRef(inst, table, id, label) {
 
 // Validates a write against the field list. Unknown keys are ignored, empty
 // strings clear a field, and ref/user ids must belong to the same instance.
-async function clean(inst, fields, input, { partial }) {
+export async function clean(inst, fields, input, { partial }) {
   const out = {};
   for (const f of fields) {
     if (!Object.prototype.hasOwnProperty.call(input, f.key)) {
@@ -213,6 +214,7 @@ export async function getRecord(inst, key, id, { related = true } = {}) {
   }
   if (key === 'contacts') rel.opportunities = await list('opportunities', 'contact_id');
   if (key === 'opportunities') rel.projects = await list('projects', 'opportunity_id');
+  if (key === 'invoices') return { ...record, related: rel, ...(await invoices.extras(inst, record)), activities: await listActivities(inst, { entity_type: key, entity_id: id }) };
   const extra = key === 'projects' ? {
     reports: await listReports(inst, id),
     charges: await listCharges(inst, id),
@@ -225,6 +227,7 @@ export async function getRecord(inst, key, id, { related = true } = {}) {
 
 export async function createRecord(inst, key, input, audit = {}) {
   const e = entity(key);
+  if (key === 'invoices') input = await invoices.beforeCreate(inst, input);
   const values = await clean(inst, e.fields, input, { partial: false });
   if (key === 'opportunities') opportunityDefaults(values, null);
   if (key === 'projects') projectDefaults(values, null);
@@ -241,6 +244,7 @@ export async function createRecord(inst, key, input, audit = {}) {
 export async function updateRecord(inst, key, id, input, audit = {}) {
   const e = entity(key);
   const before = await getRecord(inst, key, id, { related: false });
+  if (key === 'invoices') input = await invoices.beforeUpdate(inst, input);
   const values = await clean(inst, e.fields, input, { partial: true });
   if (key === 'opportunities') opportunityDefaults(values, before);
   const moved = key === 'projects' && Object.keys(values).length ? projectDefaults(values, before) : null;
@@ -271,7 +275,7 @@ const ACTIVITY_SELECT = `a.id, a.entity_type, a.entity_id, a.type, a.subject, a.
   COALESCE((SELECT COALESCE(NULLIF(u.name, ''), u.email) FROM crm_users u WHERE u.id = a.user_id), a.author_label) AS author,
   COALESCE((SELECT name FROM crm_companies WHERE id = a.entity_id), (SELECT name FROM crm_contacts WHERE id = a.entity_id),
     (SELECT name FROM crm_leads WHERE id = a.entity_id), (SELECT name FROM crm_opportunities WHERE id = a.entity_id),
-    (SELECT name FROM crm_projects WHERE id = a.entity_id)) AS entity_name`;
+    (SELECT name FROM crm_projects WHERE id = a.entity_id), (SELECT name FROM crm_invoices WHERE id = a.entity_id)) AS entity_name`;
 
 const shapeActivity = (a) => ({ ...a, due_date: ymd(a.due_date) });
 

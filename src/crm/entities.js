@@ -108,6 +108,23 @@ export const SOURCE_FIELDS = [
   { key: 'period_end', label: 'Period to', type: 'date' },
   { key: 'notes', label: 'Notes', type: 'textarea' },
 ];
+// Invoices: a status, bill-to details and line items (INVOICE_ITEM_FIELDS).
+// "Overdue" is not stored; the app shows it when a sent invoice is past due.
+export const INVOICE_STATUSES = [
+  { id: 'draft', label: 'Draft' },
+  { id: 'sent', label: 'Sent' },
+  { id: 'paid', label: 'Paid' },
+  { id: 'void', label: 'Void' },
+];
+export const INVOICE_ITEM_FIELDS = [
+  { key: 'description', label: 'Item', type: 'text', required: true },
+  { key: 'details', label: 'Details (one per line)', type: 'textarea' },
+  { key: 'quantity', label: 'Qty', type: 'number', default: 1 },
+  { key: 'unit_price', label: 'Unit price', type: 'money', default: 0 },
+  { key: 'unit_label', label: 'Unit (e.g. hr)', type: 'text' },
+  { key: 'note', label: 'Price note (e.g. Complimentary)', type: 'text' },
+  { key: 'position', label: 'Order', type: 'number' },
+];
 export const REPORT_STATUSES = [{ id: 'draft', label: 'Draft' }, { id: 'final', label: 'Final' }];
 export const REPORT_FIELDS = [
   { key: 'report_date', label: 'Report date', type: 'date', required: true },
@@ -252,6 +269,40 @@ export const ENTITIES = {
       { key: 'description', label: 'Scope & goals', type: 'textarea' },
     ],
     readonly: ['stage_changed_at', 'closed_at', 'last_report_at'],
+  },
+  invoices: {
+    table: 'crm_invoices',
+    label: 'Invoice', plural: 'Invoices',
+    title: (r) => r.name,
+    search: ['name', 'bill_to_name', 'bill_to_company', 'bill_to_email'],
+    columns: ['name', 'bill_to_name', 'issue_date', 'due_date', 'status'],
+    fields: [
+      // Left blank, the server numbers it INV-<year>-<nnn>.
+      { key: 'name', label: 'Invoice number', type: 'text' },
+      { key: 'status', label: 'Status', type: 'select', options: INVOICE_STATUSES, default: 'draft' },
+      { key: 'template', label: 'Invoice template', type: 'text' },
+      { key: 'company_id', label: 'Company', type: 'ref', to: 'companies' },
+      { key: 'contact_id', label: 'Contact', type: 'ref', to: 'contacts' },
+      { key: 'project_id', label: 'Project', type: 'ref', to: 'projects' },
+      // Filled from the contact / company when left blank on create.
+      { key: 'bill_to_name', label: 'Bill to', type: 'text' },
+      { key: 'bill_to_title', label: 'Bill-to title', type: 'text' },
+      { key: 'bill_to_company', label: 'Bill-to business', type: 'text' },
+      { key: 'bill_to_email', label: 'Bill-to email', type: 'email' },
+      { key: 'bill_to_phone', label: 'Bill-to phone', type: 'phone' },
+      { key: 'bill_to_address', label: 'Bill-to address', type: 'textarea' },
+      { key: 'issue_date', label: 'Issue date', type: 'date' },
+      { key: 'due_date', label: 'Due date', type: 'date' },
+      { key: 'tax_rate', label: 'Tax rate', type: 'percent' },
+      { key: 'discount', label: 'Discount', type: 'money' },
+      { key: 'payment_link', label: 'Payment link', type: 'url' },
+      { key: 'notes', label: 'Notes to the client', type: 'textarea' },
+      { key: 'terms', label: 'Terms & scope', type: 'textarea' },
+      { key: 'paid_at', label: 'Paid on', type: 'date' },
+      { key: 'payment_method', label: 'Paid by', type: 'text' },
+      { key: 'owner_id', label: 'Owner', type: 'user' },
+    ],
+    readonly: ['sent_at', 'sent_to'],
   },
 };
 

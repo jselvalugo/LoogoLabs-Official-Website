@@ -4,9 +4,10 @@ import {
   listRecords, listReports, overview, updateActivity, updateRecord,
 } from '../lib/crm-records.js';
 import * as records from '../lib/crm-records.js';
+import * as invoices from '../lib/crm-invoices.js';
 import {
   ACTIVITY_FIELDS, ACTIVITY_TYPES, CHARGE_KINDS, CHARGE_STATUSES, ENTITIES, ENTITY_KEYS, OPPORTUNITY_STAGES, PROJECT_HEALTH,
-  PROJECT_LIFECYCLES, PROJECT_STAGES, SOURCE_KINDS,
+  PROJECT_LIFECYCLES, PROJECT_STAGES, SOURCE_KINDS, INVOICE_ITEM_FIELDS,
 } from '../../src/crm/entities.js';
 
 // "Loogo Labs CRM" — an MCP server (Streamable HTTP, stateless JSON responses)
@@ -20,7 +21,7 @@ import {
 // CRM instances/users themselves, which stay in /admin.
 export const config = { path: ['/mcp', '/mcp/*'] };
 
-const SERVER = { name: 'Loogo Labs CRM', version: '2.2.0' };
+const SERVER = { name: 'Loogo Labs CRM', version: '2.3.0' };
 const PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
 const typeArg = { type: 'string', enum: ENTITY_KEYS, description: 'Record type' };
@@ -37,14 +38,14 @@ const TOOLS = [
   {
     name: 'describe_crm',
     title: 'CRM: Describe data model',
-    description: 'Lists the CRM record types (companies, contacts, leads, opportunities, projects), every field with its type and allowed values, and activity types. Call this first if unsure which fields exist.',
+    description: 'Lists the CRM record types (companies, contacts, leads, opportunities, projects, invoices), every field with its type and allowed values, and activity types. Call this first if unsure which fields exist.',
     inputSchema: { type: 'object', properties: {} },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'search_records',
     title: 'CRM: Search records',
-    description: 'Search companies, contacts, leads, opportunities or projects. query matches names, emails, phones and similar text; filters match exact field values (e.g. {"stage":"proposal"}, {"company_id":"..."}, {"status":["new","contacted"]}). Results include display names for linked records (company_id_name, owner_id_name).',
+    description: 'Search companies, contacts, leads, opportunities, projects or invoices. query matches names, emails, phones and similar text; filters match exact field values (e.g. {"stage":"proposal"}, {"company_id":"..."}, {"status":["new","contacted"]}). Results include display names for linked records (company_id_name, owner_id_name).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -62,14 +63,14 @@ const TOOLS = [
   {
     name: 'get_record',
     title: 'CRM: Get record',
-    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts, opportunities and projects; a contact\'s opportunities). Projects also include status reports, the billing ledger and summary, uploaded research sources (metadata; read text with read_research_source) and the client card (logo, website, social profile links).',
+    description: 'One record with all its fields, its activity timeline, and related records (a company\'s contacts, opportunities and projects; a contact\'s opportunities). Projects also include status reports, the billing ledger and summary, uploaded research sources (metadata; read text with read_research_source) and the client card (logo, website, social profile links). Invoices also include their line items and totals.',
     inputSchema: { type: 'object', properties: { type: typeArg, id: idArg }, required: ['type', 'id'] },
     annotations: { readOnlyHint: true },
   },
   {
     name: 'create_record',
     title: 'CRM: Create record',
-    description: 'Create a company, contact, lead, opportunity or project. Link records with company_id / contact_id / opportunity_id. Opportunity probability follows its stage unless given. A project\'s lifecycle is agency (start to finish, the default) or evergreen (ongoing, no set end); its stage must belong to that lifecycle (see describe_crm).',
+    description: 'Create a company, contact, lead, opportunity, project or invoice. An invoice left without a name gets the next number (INV-<year>-<nnn>), today as its issue date, the workspace\'s invoice template, and bill-to details from its contact / company; add its lines with add_invoice_item. Link records with company_id / contact_id / opportunity_id. Opportunity probability follows its stage unless given. A project\'s lifecycle is agency (start to finish, the default) or evergreen (ongoing, no set end); its stage must belong to that lifecycle (see describe_crm).',
     inputSchema: { type: 'object', properties: { type: typeArg, values: valuesArg }, required: ['type', 'values'] },
   },
   {
@@ -230,6 +231,40 @@ const TOOLS = [
     },
   },
   {
+    name: 'add_invoice_item',
+    title: 'CRM: Add invoice line item',
+    description: 'Add a line to an invoice: description (required), details (one bullet per line), quantity (default 1), unit_price, unit_label (e.g. hr), note (shown under the amount, e.g. Complimentary), position. Amount = quantity × unit_price. Confirm amounts with the user before writing.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        invoice_id: idArg,
+        ...Object.fromEntries(INVOICE_ITEM_FIELDS.map((f) => [f.key, { type: ['number', 'money'].includes(f.type) ? 'number' : 'string', description: f.label }])),
+      },
+      required: ['invoice_id', 'description'],
+    },
+  },
+  {
+    name: 'update_invoice_item',
+    title: 'CRM: Update invoice line item',
+    description: 'Change fields on one invoice line item (ids come from get_record on the invoice).',
+    inputSchema: { type: 'object', properties: { id: { type: 'string' }, values: { type: 'object', additionalProperties: true } }, required: ['id', 'values'] },
+    annotations: { idempotentHint: true },
+  },
+  {
+    name: 'delete_invoice_item',
+    title: 'CRM: Delete invoice line item',
+    description: 'Remove one line item from an invoice.',
+    inputSchema: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] },
+    annotations: { destructiveHint: true },
+  },
+  {
+    name: 'preview_invoice',
+    title: 'CRM: Preview invoice email',
+    description: 'The subject and plain-text version of the invoice email as it would be sent with its coded template. Sending happens in the CRM app (Invoices → Send), not here.',
+    inputSchema: { type: 'object', properties: { id: idArg }, required: ['id'] },
+    annotations: { readOnlyHint: true },
+  },
+  {
     name: 'pipeline_overview',
     title: 'CRM: Pipeline overview',
     description: 'Record counts, opportunities by stage (count, amount, probability-weighted amount), leads by status, open projects (active, at risk, status reports due), open tasks and recent activity.',
@@ -283,6 +318,10 @@ async function runTool(name, a, auth) {
     case 'add_research_source': return records.addSource(inst, a, audit);
     case 'add_project_charge': return records.addCharge(inst, a);
     case 'list_status_reports': return listReports(inst, a.project_id, { limit: a.limit ?? 20 });
+    case 'add_invoice_item': return invoices.addItem(inst, a);
+    case 'update_invoice_item': return invoices.updateItem(inst, a.id, a.values || {});
+    case 'delete_invoice_item': return invoices.deleteItem(inst, a.id);
+    case 'preview_invoice': { const p = await invoices.preview(inst, a.id); return { subject: p.subject, to: p.to, text: p.text }; }
     case 'pipeline_overview': return overview(inst);
     case 'list_team': {
       const { sql } = db();
@@ -322,7 +361,7 @@ async function handle(msg, auth) {
         protocolVersion: PROTOCOL_VERSIONS.includes(asked) ? asked : PROTOCOL_VERSIONS[0],
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER,
-        instructions: `Loogo Labs CRM manages only the CRM data of the "${auth.instance_name}" workspace: companies, contacts, leads, opportunities, projects (with status reports), their activities, and the team list. It cannot change the Loogo Labs website, blog, the website's own lead forms and proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Record types: companies, contacts, leads, opportunities, projects, each with an activity timeline (notes, calls, emails, meetings, tasks). Use search_records to find an id before reading or changing a record; call describe_crm for the full field list. This is data only: nothing here sends emails or runs automations.`,
+        instructions: `Loogo Labs CRM manages only the CRM data of the "${auth.instance_name}" workspace: companies, contacts, leads, opportunities, projects (with status reports), invoices (with line items), their activities, and the team list. It cannot change the Loogo Labs website, blog, the website's own lead forms and proposals, analytics or email, nor create workspaces, users or passwords; tell the user those are done in the Loogo Labs admin panel. Record types: companies, contacts, leads, opportunities, projects, invoices, each with an activity timeline (notes, calls, emails, meetings, tasks). Use search_records to find an id before reading or changing a record; call describe_crm for the full field list. This is data only: nothing here sends emails or runs automations (invoices are sent from the CRM app).`,
       });
     }
     case 'ping':
