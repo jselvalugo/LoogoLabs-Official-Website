@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `year-end-customer-thank-you-notes`,
+    title: `Write Your Year-End Thank-You Notes Yourself. Let AI Do the Lookup.`,
+    excerpt: `An AI can dig up the one detail that makes a year-end thank-you feel personal, but the note only lands if the sentence about it comes from you.`,
+    tags: `Follow-Up and Email, Customer Retention, Repeat-Customer Businesses`,
+    content: `Every December a pile of thank-you emails goes out from businesses that clearly don't remember the person they're thanking. The first name is right. The line after it, something like "we've loved being part of your journey this year," could have gone to anyone, and the customer can tell. More of those lines are now written by an AI that was handed a spreadsheet of first names and told to make each one sound personal. It can't, because the spreadsheet doesn't hold the thing that would make it personal.
+
+That's the trap I want you to step around this month. A short note to your best customers has a better chance of being read than most of what you'll send in December, because it isn't asking for anything. Fill it with warm, generic sentences and you've spent that attention telling them they're a row in a list.
+
+## Why the AI version falls flat
+
+An AI writing a "personalized" note has two things to work with: the fields you give it and its sense of what a thank-you usually says. So it reaches for the usual words. Grateful. Valued. The year ahead. Each line is fine on its own. Together they read like a card from a bank.
+
+What makes a note feel personal is one specific memory. The dog that barked at the ladder all afternoon. The kitchen they finished just in time for their daughter's visit. The client who moved to quarterly bookkeeping in the spring and stopped dreading April. You know these things. Your records might hold half of them. The model knows none of them unless someone puts them in front of it, and once you've dug them up, the sentence you'd write from them is already better than the one it would.
+
+## Decide who gets one
+
+Not everyone. If you try to write to three hundred people, you'll be back to a template by the fortieth.
+
+Pick the customers whose loss would actually hurt next year. For most service businesses that's some mix of the people who came back more than once, the people who sent you someone, and the people who spent the most. Twenty to thirty names is plenty.
+
+This is the first place AI earns its keep. Export this year's customers with visit count, total spent and lead source, and ask it to rank them and flag anyone who shows up as the reason someone else booked. Then check the list yourself. It will miss the neighbor who sent you two jobs by word of mouth that nobody ever recorded.
+
+## Use it to search, not to write
+
+For each name, you need one true detail. That's the second job AI does well. Give it one customer's notes, job history and message threads, and ask for anything specific worth remembering, with the date each detail came from. Tell it plainly not to write the note and not to fill gaps. The dates let you check each detail against the original record before you use it.
+
+Then read what it found and write the note yourself. Three sentences will do:
+
+> Hi Marcy, I was thinking about your back porch this week, and how much better it looked once the old boards were out before the spring rain. Thanks for trusting us with it, and for sending your brother our way in August. Hope it holds up well this winter.
+
+That takes a couple of minutes and no tool. Notice what's missing: no discount, no "book your next visit," no link. The moment you add an offer, it turns into a promotion with a nice opening line, and the customer reads it that way.
+
+Send it as a plain email from your own name, or as a text if that's how you already talk with them. Aim for the week after Thanksgiving or the first days of December, before the sale emails bury everything.
+
+## What to expect back
+
+I'm not going to promise you bookings from this. It isn't a campaign, and if you treat it like one you'll write it like one. What I see when owners do it is replies, often longer than the note, and now and then a mention of a job they'd been meaning to call about after the holidays.
+
+Read those replies closely. They tell you what your best customers remember about working with you, in their own words, and that's the raw material for next year's ads and service pages. No AI could have invented it for you.
+
+If a note comes back with a complaint instead, that's useful too. Better to hear it in December from someone who still likes you than to find out in March when they don't rebook.
+
+## Fill in the empty column before Thanksgiving
+
+Today, export this year's customers to a spreadsheet, sort them by how many times each one came back, and delete everything below the top twenty. Add one empty column. Before Thanksgiving, write one specific thing you remember about each person in it, from memory first and your records second. Any name you can't fill a line for is a customer you're further from than you thought.`,
+  },
+  {
     slug: `customer-questions-not-ai-content-ideas`,
     title: `Your Best Post Ideas Are Questions Customers Already Asked`,
     excerpt: `An AI asked for content ideas hands you what every business like yours posts, so collect the questions your own customers ask and let it tidy your answers instead.`,
