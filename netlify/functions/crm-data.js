@@ -6,6 +6,7 @@ import {
 import * as clients from '../lib/crm-clients.js';
 import * as records from '../lib/crm-records.js';
 import * as mail from '../lib/crm-marketing.js';
+import * as invoices from '../lib/crm-invoices.js';
 
 // Everything a signed-in CRM user reads or writes, as POST { action, ... }.
 // Every call is scoped to the user's own instance (see netlify/lib/crm-records.js).
@@ -45,6 +46,14 @@ export default async (req) => {
       case 'get_source': return json(await records.getSource(inst, body.id, body));
       case 'update_source': return json(await records.updateSource(inst, body.id, body.values || {}));
       case 'delete_source': return json(await records.deleteSource(inst, body.id));
+      // Invoices: line items, coded templates, preview and send (netlify/lib/crm-invoices.js).
+      case 'invoice_templates': return json(await invoices.listTemplates(inst));
+      case 'next_invoice_number': return json({ number: await invoices.nextNumber(inst) });
+      case 'add_invoice_item': return json(await invoices.addItem(inst, body.values || {}), 201);
+      case 'update_invoice_item': return json(await invoices.updateItem(inst, body.id, body.values || {}));
+      case 'delete_invoice_item': return json(await invoices.deleteItem(inst, body.id));
+      case 'invoice_preview': return json(await invoices.preview(inst, body.id, { forPrint: !!body.print }));
+      case 'send_invoice': return json(await invoices.send(inst, body.id, body.values || {}, me));
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
       case 'clients': return json(await clients.listClients(inst));
       case 'dashboard': return json(await clients.getDashboard(inst, body.company_id));
