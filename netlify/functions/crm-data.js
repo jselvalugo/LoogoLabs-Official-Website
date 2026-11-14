@@ -52,7 +52,7 @@ export default async (req) => {
       case 'add_invoice_item': return json(await invoices.addItem(inst, body.values || {}), 201);
       case 'update_invoice_item': return json(await invoices.updateItem(inst, body.id, body.values || {}));
       case 'delete_invoice_item': return json(await invoices.deleteItem(inst, body.id));
-      case 'invoice_preview': return json(await invoices.preview(inst, body.id, { forPrint: !!body.print }));
+      case 'invoice_preview': return json(await invoices.preview(inst, body.id, { forPrint: !!body.print }, me));
       case 'send_invoice': return json(await invoices.send(inst, body.id, body.values || {}, me));
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).
       case 'clients': return json(await clients.listClients(inst));

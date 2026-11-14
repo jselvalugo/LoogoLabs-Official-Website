@@ -45,8 +45,8 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   ].join('');
   const from = [
     `<div style="font:18px/1.3 ${SERIF};color:${C.ink};margin-bottom:2px;">${esc(B.business.name)}</div>`,
-    ...B.business.address.map((l) => small(esc(l))),
-    small(esc(B.business.email)),
+    ...(B.business.address || []).map((l) => small(esc(l))),
+    B.business.email ? small(esc(B.business.email)) : '',
     B.business.phone ? small(esc(B.business.phone)) : '',
   ].join('');
   const fact = (k, v) => `<tr>
@@ -149,7 +149,9 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
         <!-- Logo and title -->
         <tr><td class="px" style="padding:36px 48px 0;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td class="col" valign="middle"><img class="logo" src="${B.logo}" width="340" alt="${esc(B.logoAlt)}" style="display:block;width:340px;max-width:100%;height:auto;border:0;"></td>
+            <td class="col" valign="middle">${B.logo
+              ? `<img class="logo" src="${B.logo}" width="340" alt="${esc(B.logoAlt || B.business.name)}" style="display:block;width:340px;max-width:100%;height:auto;border:0;">`
+              : `<div style="font:28px/1.15 ${SERIF};color:${C.ink};">${esc(B.business.name)}</div>`}</td>
             <td class="col title-cell" valign="middle" align="right" style="padding-left:20px;">
               <div class="title" style="font:34px/1 ${SERIF};color:${C.ink};letter-spacing:.02em;">Invoice</div>
               <div style="margin-top:8px;font:600 11px/1.4 ${SANS};letter-spacing:.14em;color:${C.amber};text-transform:uppercase;">${esc(inv.name)}${status ? ` &middot; ${status}` : ''}</div>
@@ -200,12 +202,14 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
         <!-- Contact -->
         <tr><td class="px" style="padding:28px 48px 36px;">
-          <p style="margin:0;font:13px/1.65 ${SANS};color:${C.ink};">Questions about this invoice? ${forPrint ? 'Reach' : 'Reply to this email or reach'} ${esc(B.business.contact)} at <a href="mailto:${esc(B.business.email)}" style="color:${C.ink};">${esc(B.business.email)}</a>${B.business.phone ? ` or ${esc(B.business.phone)}` : ''}. Thank you for your business.</p>
+          <p style="margin:0;font:13px/1.65 ${SANS};color:${C.ink};">Questions about this invoice? ${B.business.email
+            ? `${forPrint ? 'Reach' : 'Reply to this email or reach'} ${esc(B.business.contact || 'us')} at <a href="mailto:${esc(B.business.email)}" style="color:${C.ink};">${esc(B.business.email)}</a>${B.business.phone ? ` or ${esc(B.business.phone)}` : ''}.`
+            : (forPrint ? 'Please get in touch with us.' : 'Just reply to this email.')} Thank you for your business.</p>
         </td></tr>
 
         <!-- Footer -->
         <tr><td style="padding:18px 48px;background:${C.cream};border-top:1px solid ${C.line};" align="center">
-          <p style="margin:0;font:500 10px/1.6 ${SANS};letter-spacing:.14em;text-transform:uppercase;color:${C.muted};">${esc(B.business.name)} &middot; <a href="${B.business.website}" style="color:${C.muted};">${esc(host(B.business.website))}</a></p>
+          <p style="margin:0;font:500 10px/1.6 ${SANS};letter-spacing:.14em;text-transform:uppercase;color:${C.muted};">${esc(B.business.name)}${B.business.website ? ` &middot; <a href="${B.business.website}" style="color:${C.muted};">${esc(host(B.business.website))}</a>` : ''}</p>
         </td></tr>
       </table>
     </td></tr>
@@ -216,7 +220,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
     `${B.business.name}`,
     `${paid ? 'INVOICE (PAID)' : 'INVOICE'} ${inv.name}`, '',
     `Bill to: ${[inv.bill_to_name, inv.bill_to_title, inv.bill_to_company].filter(Boolean).join(', ')}`,
-    `From: ${B.business.name}, ${B.business.address.join(', ')}`,
+    `From: ${[B.business.name, ...(B.business.address || [])].join(', ')}`,
     `Issued: ${issued}   Due: ${dueText}`, '',
     ...items.map((it, i) => `${i + 1}. ${it.description}: ${qty(it.quantity)} x ${usd(it.unit_price)}${it.unit_label ? `/${it.unit_label}` : ''} = ${usd(it.amount)}${it.note ? ` (${it.note})` : ''}${lines(it.details).map((d) => `\n   - ${d}`).join('')}`),
     '', `Subtotal: ${usd(t.subtotal)}`,
@@ -227,8 +231,8 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
     !paid && inv.payment_link ? `Pay online: ${inv.payment_link}` : '',
     notes.length ? `\nNotes:\n${notes.join('\n')}` : '',
     terms.length ? `\nTerms & scope:\n${terms.join('\n')}` : '',
-    `\nQuestions? ${B.business.email}${B.business.phone ? ` · ${B.business.phone}` : ''}`,
-    `${B.business.name} · ${B.business.website}`,
+    B.business.email ? `\nQuestions? ${B.business.email}${B.business.phone ? ` · ${B.business.phone}` : ''}` : '',
+    [B.business.name, B.business.website].filter(Boolean).join(' · '),
   ].filter((l) => l !== '').join('\n');
 
   return { subject, preheader, html, text };
