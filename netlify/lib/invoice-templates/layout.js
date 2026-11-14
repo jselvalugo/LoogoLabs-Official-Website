@@ -68,12 +68,11 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
     return `<tr>
       <td style="${cell}">
         <div style="font:16px/1.35 ${SERIF};color:${C.ink};">${esc(it.description)}</div>
+        <div style="margin-top:2px;font:12px/1.5 ${SANS};color:${C.muted};">${qty(it.quantity)} &times; ${usd(it.unit_price)}${unit}</div>
         ${details.length ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:6px;">${details.map((d) => `<tr>
           <td style="padding:1px 8px 1px 0;vertical-align:top;font:12px/1.55 ${SANS};color:${C.amber};">&#8226;</td>
           <td style="padding:1px 0;font:12px/1.55 ${SANS};color:${C.muted};">${esc(d)}</td></tr>`).join('')}</table>` : ''}
       </td>
-      <td align="right" class="hide-sm" style="${cell}padding-left:12px;font:13px/1.4 ${SANS};color:${C.ink};white-space:nowrap;">${qty(it.quantity)}</td>
-      <td align="right" class="hide-sm" style="${cell}padding-left:12px;font:13px/1.4 ${SANS};color:${C.ink};white-space:nowrap;">${usd(it.unit_price)}${unit}</td>
       <td align="right" style="${cell}padding-left:12px;white-space:nowrap;">
         <div style="font:600 14px/1.4 ${SANS};color:${C.ink};">${usd(it.amount)}</div>
         ${it.note ? `<div style="display:inline-block;margin-top:6px;padding:3px 8px;background:${C.cream};border:1px solid ${C.line};border-radius:999px;font:600 9px/1.3 ${SANS};letter-spacing:.12em;text-transform:uppercase;color:${C.amber};">${esc(it.note)}</div>` : ''}
@@ -107,10 +106,10 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   const textCol = (title, ls) => `${label(title)}${ls.map((l) => `<p style="margin:0 0 6px;font:12px/1.6 ${SANS};color:${C.ink};">${esc(l)}</p>`).join('')}`;
   const notesBlock = notes.length || terms.length ? `
         <tr><td class="px" style="padding:28px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream};border-radius:6px;"><tr>
-            ${notes.length ? `<td class="ncol" valign="top" width="${terms.length ? '40%' : '100%'}" style="padding:20px 22px;">${textCol('Notes', notes)}</td>` : ''}
-            ${terms.length ? `<td class="ncol" valign="top" style="padding:20px 22px;${notes.length ? `border-left:1px solid ${C.line};` : ''}">${textCol('Terms &amp; scope', terms)}</td>` : ''}
-          </tr></table>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream};border-radius:6px;">
+            ${notes.length ? `<tr><td valign="top" style="padding:20px 22px ${terms.length ? '14px' : '20px'};">${textCol('Notes', notes)}</td></tr>` : ''}
+            ${terms.length ? `<tr><td valign="top" style="padding:${notes.length ? '16px' : '20px'} 22px 20px;${notes.length ? `border-top:1px solid ${C.line};` : ''}">${textCol('Terms &amp; scope', terms)}</td></tr>` : ''}
+          </table>
         </td></tr>` : '';
 
   const status = paid ? 'Paid' : voided ? 'Void' : '';
@@ -121,14 +120,12 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Work+Sans:wght@400;500;600&display=swap');
   @media only screen and (max-width: 620px) {
     .px { padding-left: 22px !important; padding-right: 22px !important; }
-    .col { display: block !important; width: 100% !important; border-left: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }
-    .col + .col { padding-top: 18px !important; }
-    .logo { width: 260px !important; }
-    .hide-sm { display: none !important; }
-    .title { font-size: 26px !important; }
-    .title-cell { text-align: left !important; padding-top: 18px !important; }
-    .ncol { display: block !important; width: auto !important; border-left: 0 !important; }
-    .ncol + .ncol { border-top: 1px solid ${C.line} !important; }
+    .fl { max-width: none !important; padding-right: 0 !important; }
+    .fl-logo { max-width: 280px !important; }
+    .logo { width: 280px !important; }
+    .fl-title { max-width: none !important; text-align: left !important; padding-top: 16px !important; }
+    .title { font-size: 28px !important; }
+    .amt { font-size: 26px !important; }
   }
   @media print {
     body, .page { background: #fff !important; }
@@ -136,7 +133,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
     .card { border: 0 !important; max-width: none !important; }
     .no-print { display: none !important; }
     .px { padding-left: 0 !important; padding-right: 0 !important; }
-    .card { zoom: .78; }
+    .card { zoom: .72; }
   }
   @page { size: letter; margin: 0.55in; }
 </style></head>
@@ -148,25 +145,25 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
         <!-- Logo and title -->
         <tr><td class="px" style="padding:36px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td class="col" valign="middle">${B.logo
-              ? `<img class="logo" src="${B.logo}" width="340" alt="${esc(B.logoAlt || B.business.name)}" style="display:block;width:340px;max-width:100%;height:auto;border:0;">`
-              : `<div style="font:28px/1.15 ${SERIF};color:${C.ink};">${esc(B.business.name)}</div>`}</td>
-            <td class="col title-cell" valign="middle" align="right" style="padding-left:20px;">
+          <div style="font-size:0;">
+            <div class="fl-logo" style="display:inline-block;vertical-align:middle;width:100%;max-width:330px;">${B.logo
+              ? `<img class="logo" src="${B.logo}" width="330" alt="${esc(B.logoAlt || B.business.name)}" style="display:block;width:330px;max-width:100%;height:auto;border:0;">`
+              : `<div style="font:28px/1.15 ${SERIF};color:${C.ink};">${esc(B.business.name)}</div>`}</div>
+            <div class="fl-title" style="display:inline-block;vertical-align:middle;width:100%;max-width:260px;text-align:right;padding-top:12px;">
               <div class="title" style="font:34px/1 ${SERIF};color:${C.ink};letter-spacing:.02em;">Invoice</div>
               <div style="margin-top:8px;font:600 11px/1.4 ${SANS};letter-spacing:.14em;color:${C.amber};text-transform:uppercase;">${esc(inv.name)}${status ? ` &middot; ${status}` : ''}</div>
-            </td>
-          </tr></table>
+            </div>
+          </div>
         </td></tr>
         <tr><td class="px" style="padding:28px 48px 0;"><div style="height:2px;background:${C.amber};line-height:2px;font-size:0;">&nbsp;</div></td></tr>
 
         <!-- Parties and facts -->
         <tr><td class="px" style="padding:26px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td class="col" valign="top" width="34%" style="padding-right:16px;">${label('Bill to')}${billTo}</td>
-            <td class="col" valign="top" width="33%" style="padding-right:16px;">${label('From')}${from}</td>
-            <td class="col" valign="top" width="33%">${label('Details')}${facts}</td>
-          </tr></table>
+          <div style="font-size:0;">
+            <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:190px;padding:0 12px 18px 0;box-sizing:border-box;">${label('Bill to')}${billTo}</div>
+            <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:190px;padding:0 12px 18px 0;box-sizing:border-box;">${label('From')}${from}</div>
+            <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:220px;padding:0 0 18px;box-sizing:border-box;">${label('Details')}${facts}</div>
+          </div>
         </td></tr>
 
         <!-- Amount due banner -->
@@ -176,7 +173,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
               <div style="font:600 10px/1.4 ${SANS};letter-spacing:.16em;text-transform:uppercase;color:${C.sage};">${paid ? 'Paid in full' : voided ? 'Void' : 'Amount due'}</div>
               <div style="margin-top:4px;font:13px/1.4 ${SANS};color:${C.cream};">${paid ? `Thank you${inv.paid_at ? ` · ${esc(longDay(inv.paid_at))}` : ''}` : voided ? 'Nothing is due on this invoice' : esc(dueText === 'Due on receipt' ? dueText : `Due ${dueText}`)}</div>
             </td>
-            <td align="right" style="padding:18px 22px;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(paid ? t.total : t.amount_due)}</td>
+            <td align="right" class="amt" style="padding:18px 22px;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(paid ? t.total : t.amount_due)}</td>
           </tr></table>
         </td></tr>
 
@@ -185,17 +182,14 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
         <!-- Line items -->
         <tr><td class="px" style="padding:26px 48px 0;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>${th('Description')}${th('Qty', 'right', '50', 'hide-sm')}${th('Rate', 'right', '100', 'hide-sm')}${th('Amount', 'right', '120')}</tr>
-            ${itemRows || `<tr><td colspan="4" style="padding:16px 0;font:13px ${SANS};color:${C.muted};">No line items yet.</td></tr>`}
+            <tr>${th('Description')}${th('Amount', 'right', '120')}</tr>
+            ${itemRows || `<tr><td colspan="2" style="padding:16px 0;font:13px ${SANS};color:${C.muted};">No line items yet.</td></tr>`}
           </table>
         </td></tr>
 
         <!-- Totals -->
         <tr><td class="px" style="padding:18px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td class="hide-sm" width="50%"></td>
-            <td><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${totals}</table></td>
-          </tr></table>
+          <table role="presentation" align="right" width="100%" cellpadding="0" cellspacing="0" style="max-width:320px;">${totals}</table>
         </td></tr>
         ${payButton}
         ${notesBlock}

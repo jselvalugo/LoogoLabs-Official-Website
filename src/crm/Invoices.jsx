@@ -61,7 +61,19 @@ export function InvoicesPage() {
             <button className="btn btn-primary" onClick={() => open('invoices')}>Create the first invoice</button>
           </div>
         ) : rows.length === 0 ? <div className="card"><p className="muted" style={{ padding: 16 }}>No invoices match.</p></div> : (
-          <div className="card" style={{ overflowX: 'auto' }}>
+          <>
+          <ul className="inv-cards">
+            {rows.map((r) => (
+              <li key={r.id}>
+                <button onClick={() => open('invoices', r.id)}>
+                  <span className="inv-card-top"><strong>{r.name}</strong><InvoiceStatus record={r} /></span>
+                  <span>{r.bill_to_name || r.bill_to_company || r.company_id_name || '—'}</span>
+                  <span className={`muted ${isOverdue(r) ? 'overdue' : ''}`}>Issued {day(r.issue_date)} · {r.due_date ? `Due ${day(r.due_date)}` : 'Due on receipt'}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="card inv-table" style={{ overflowX: 'auto' }}>
             <table>
               <thead><tr><th>Invoice</th><th>Bill to</th><th className="hide-sm">Issued</th><th className="hide-sm">Due</th><th>Status</th></tr></thead>
               <tbody>
@@ -77,6 +89,7 @@ export function InvoicesPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
     </>
   );
@@ -175,27 +188,30 @@ function InvoicePage({ id }) {
         <div className="rec-title">
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="kicker">Invoice · <InvoiceStatus record={record} overdue={t.overdue} /></div>
-            <h1>{record.name}{record.bill_to_name ? <span className="muted" style={{ fontWeight: 400 }}> · {record.bill_to_name}</span> : null}</h1>
+            <h1 className="inv-h1">{record.name}{record.bill_to_name ? <span className="muted inv-h1-sub"><span className="inv-dot"> · </span>{record.bill_to_name}</span> : null}</h1>
           </div>
           <div className="rec-actions inv-actions">
-            {record.status !== 'void' && <button className="btn btn-primary" onClick={() => setPanel('send')}>{record.sent_at ? 'Resend' : 'Send invoice'}</button>}
+            {record.status !== 'void' && <button className="btn btn-primary inv-send" onClick={() => setPanel('send')}>{record.sent_at ? 'Resend' : 'Send invoice'}</button>}
             <button className="btn" onClick={() => setPanel('billto')}>Edit bill-to</button>
             <button className="btn" onClick={() => setPanel('preview')}>Preview</button>
             <button className="btn" onClick={print}>Print / PDF</button>
-            {record.status === 'sent' && <button className="btn" disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
-            {record.status === 'paid' && <button className="btn" disabled={busy} onClick={() => setStatus('sent')}>Mark unpaid</button>}
-            {record.status !== 'void' && record.status !== 'paid' && <button className="btn" disabled={busy} onClick={() => window.confirm('Void this invoice? It stays on file with nothing due.') && setStatus('void')}>Void</button>}
-            {record.status === 'void' && <button className="btn" disabled={busy} onClick={() => setStatus('draft')}>Restore as draft</button>}
-            <button className="btn btn-danger" onClick={remove}>Delete</button>
+            <MoreMenu>
+              {record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
+              {record.status === 'paid' && <button disabled={busy} onClick={() => setStatus('sent')}>Mark unpaid</button>}
+              {record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('draft')}>Back to draft</button>}
+              {record.status !== 'void' && record.status !== 'paid' && <button disabled={busy} onClick={() => window.confirm('Void this invoice? It stays on file with nothing due.') && setStatus('void')}>Void</button>}
+              {record.status === 'void' && <button disabled={busy} onClick={() => setStatus('draft')}>Restore as draft</button>}
+              <button className="danger-text" onClick={remove}>Delete invoice</button>
+            </MoreMenu>
           </div>
         </div>
-        <dl className="highlights">
-          <div><dt>Bill to</dt><dd>{record.bill_to_name || record.bill_to_company || <span className="muted">—</span>}</dd></div>
+        <dl className="highlights inv-highlights">
+          <div className="hide-sm"><dt>Bill to</dt><dd>{record.bill_to_name || record.bill_to_company || <span className="muted">—</span>}</dd></div>
           <div><dt>Total</dt><dd>{money2(t.total)}</dd></div>
           <div><dt>Amount due</dt><dd className={t.overdue ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>
           <div><dt>Issued</dt><dd>{day(record.issue_date) || '—'}</dd></div>
           <div><dt>Due</dt><dd className={t.overdue ? 'overdue' : ''}>{record.due_date ? day(record.due_date) : 'On receipt'}</dd></div>
-          <div><dt>Sent</dt><dd>{record.sent_at ? when(record.sent_at) : <span className="muted">Not yet</span>}</dd></div>
+          <div className="hide-sm"><dt>Sent</dt><dd>{record.sent_at ? when(record.sent_at) : <span className="muted">Not yet</span>}</dd></div>
         </dl>
       </section>
 
@@ -224,7 +240,7 @@ function InvoicePage({ id }) {
           </div>
         </div>
         <aside className="rec-side">
-          <div className="card side-card">
+          <div className="card side-card hide-sm">
             <div className="side-head inv-side-head">Bill to <button className="link" onClick={() => setPanel('billto')}>Edit</button></div>
             <dl className="kv">
               <dt>Name</dt><dd>{record.bill_to_name || '—'}</dd>
@@ -253,6 +269,23 @@ function InvoicePage({ id }) {
       {panel === 'preview' && <PreviewDrawer record={record} onClose={() => setPanel(null)} />}
       {panel === 'billto' && <BillToDrawer record={record} onClose={() => setPanel(null)} onSaved={() => { setPanel(null); refresh(); }} />}
       {panel === 'send' && <SendDrawer record={record} onClose={() => setPanel(null)} onSent={() => { setPanel(null); refresh(); }} />}
+    </div>
+  );
+}
+
+function MoreMenu({ children }) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const close = (e) => { if (!ref.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+  return (
+    <div className="inv-more" ref={ref}>
+      <button className="btn" aria-expanded={open} onClick={() => setOpen((o) => !o)}>More ▾</button>
+      {open && <div className="inv-more-list" role="menu" onClick={() => setOpen(false)}>{children}</div>}
     </div>
   );
 }

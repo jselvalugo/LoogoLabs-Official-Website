@@ -508,3 +508,29 @@ a.btn { color: inherit; text-decoration: none; display: inline-block; }
   .inv-frame { height: 75vh; border-radius: 8px; }
   .inv-item-actions .btn { flex: 1 1 auto; }
 }
+
+/* Invoices: More menu, list cards, compact header on phones */
+.inv-more { position: relative; }
+.inv-more-list { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 190px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.12); padding: 6px; display: flex; flex-direction: column; }
+.inv-more-list button { border: none; background: none; text-align: left; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; color: var(--ink); }
+.inv-more-list button:hover { background: #FAF9F6; }
+.inv-h1-sub { font-weight: 400; }
+.inv-cards { display: none; list-style: none; margin: 0; padding: 0; }
+.inv-cards li { margin-bottom: 10px; }
+.inv-cards button { width: 100%; display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; cursor: pointer; font-size: 14px; color: var(--ink); }
+.inv-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 15px; }
+@media (max-width: 760px) {
+  .inv-cards { display: block; }
+  .inv-table { display: none; }
+  .inv-h1 { font-size: 22px; line-height: 1.25; }
+  .inv-h1-sub { display: block; font-size: 16px; }
+  .inv-dot { display: none; }
+  .inv-actions { grid-template-columns: repeat(2, 1fr); }
+  .inv-more, .inv-more .btn { width: 100%; }
+  .inv-more-list { left: 0; right: 0; }
+  .inv-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inv-highlights > div.hide-sm { display: none; }
+  .inv-highlights > div { border-right: 1px solid var(--line) !important; border-bottom: 1px solid var(--line) !important; padding: 10px 16px; }
+  .inv-highlights > div:nth-child(3), .inv-highlights > div:nth-child(5) { border-right: none !important; }
+  .inv-highlights > div:nth-child(4), .inv-highlights > div:nth-child(5) { border-bottom: none !important; }
+}
