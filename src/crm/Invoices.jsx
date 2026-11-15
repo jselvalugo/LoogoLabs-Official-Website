@@ -1,54 +1,99 @@
 import React from 'react';
 import { data } from './api';
 import { useCrm } from './ctx';
-import { ENTITIES, INVOICE_STATUSES, optionLabel } from './entities';
+import { ENTITIES, INVOICE_STATUSES, QUOTE_STATUSES, optionLabel } from './entities';
 import { Activities, FieldInput, today } from './records';
 import { Drawer, day, money2, when } from './report';
 
-// Invoices: bill a prospect or client, add line items, preview the branded
-// invoice from the workspace's coded template, and send it by email.
-// /invoices lists them; /invoices/<id> and /invoices/new open a full page.
+// Quotes and invoices share one set of screens. A quote is prepared for a
+// prospect and, once accepted, turns into an invoice with one tap. Both get
+// line items, a branded email from the workspace's coded template, preview,
+// print / PDF and send. /quotes and /invoices list them; /<kind>/<id> and
+// /<kind>/new open a full page.
 
-const E = ENTITIES.invoices;
-const F = Object.fromEntries(E.fields.map((f) => [f.key, f]));
-const statusOf = (r, overdue) => (overdue ? 'overdue' : r.status);
-const isOverdue = (r) => r.status === 'sent' && r.due_date && r.due_date < today();
+const fieldsOf = (entity) => Object.fromEntries(ENTITIES[entity].fields.map((f) => [f.key, f]));
+const past = (r) => !!r.due_date && String(r.due_date).slice(0, 10) < today();
 
-export function InvoiceStatus({ record, overdue }) {
-  const s = statusOf(record, overdue ?? isOverdue(record));
-  const cls = { draft: '', sent: 'pending', paid: 'on_track', void: 'lost', overdue: 'off_track' }[s];
-  return <span className={`pill ${cls}`}>{s === 'overdue' ? 'Overdue' : optionLabel(F.status, s)}</span>;
+export const KINDS = {
+  invoices: {
+    entity: 'invoices', Doc: 'Invoice', doc: 'invoice', Docs: 'Invoices', statuses: INVOICE_STATUSES, F: fieldsOf('invoices'),
+    party: 'Bill to', dueLabel: 'Due', dueBlank: 'On receipt', dueHint: 'blank = on receipt',
+    flagged: (r) => r.status === 'sent' && past(r), flag: { id: 'overdue', label: 'Overdue', cls: 'off_track' },
+    pill: { draft: '', sent: 'pending', paid: 'on_track', void: 'lost' },
+    locked: (r) => ['paid', 'void'].includes(r.status),
+    empty: 'Create an invoice for a client, add line items, preview it in your branded template, and send it by email.',
+    sections: [
+      { title: 'Bill to', keys: ['bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'bill_to_address'] },
+      { title: 'Invoice', keys: ['name', 'status', 'issue_date', 'due_date', 'template', 'owner_id'] },
+      { title: 'Linked records', keys: ['company_id', 'contact_id', 'project_id', 'quote_id'] },
+      { title: 'Amounts & payment', keys: ['discount', 'tax_rate', 'payment_link', 'paid_at', 'payment_method'] },
+      { title: 'Notes to the client', keys: ['notes'] },
+      { title: 'Terms & scope', keys: ['terms'] },
+    ],
+    billKeys: ['bill_to_name', 'bill_to_email', 'bill_to_title', 'bill_to_company', 'bill_to_phone', 'bill_to_address', 'issue_date', 'due_date', 'payment_link'],
+    newKeys: ['contact_id', 'company_id', 'project_id', 'bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'issue_date', 'due_date'],
+    related: [['Company', 'company_id', 'companies'], ['Contact', 'contact_id', 'contacts'], ['Project', 'project_id', 'projects'], ['From quote', 'quote_id', 'quotes']],
+  },
+  quotes: {
+    entity: 'quotes', Doc: 'Quote', doc: 'quote', Docs: 'Quotes', statuses: QUOTE_STATUSES, F: fieldsOf('quotes'),
+    party: 'Prepared for', dueLabel: 'Valid until', dueBlank: 'No end date', dueHint: 'optional',
+    flagged: (r) => ['draft', 'sent'].includes(r.status) && past(r), flag: { id: 'expired', label: 'Expired', cls: 'off_track' },
+    pill: { draft: '', sent: 'pending', accepted: 'on_track', declined: 'lost', void: 'lost' },
+    locked: (r) => ['accepted', 'declined', 'void'].includes(r.status),
+    empty: 'Create a quote for a prospect, add line items, preview it in your branded template, and send it by email. When they accept, turn it into an invoice with one tap.',
+    sections: [
+      { title: 'Prepared for', keys: ['bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'bill_to_address'] },
+      { title: 'Quote', keys: ['name', 'status', 'issue_date', 'due_date', 'template', 'owner_id'] },
+      { title: 'Linked records', keys: ['company_id', 'contact_id', 'opportunity_id', 'project_id', 'invoice_id'] },
+      { title: 'Amounts', keys: ['discount', 'tax_rate', 'accepted_at'] },
+      { title: 'Notes to the client', keys: ['notes'] },
+      { title: 'Terms & scope', keys: ['terms'] },
+    ],
+    billKeys: ['bill_to_name', 'bill_to_email', 'bill_to_title', 'bill_to_company', 'bill_to_phone', 'bill_to_address', 'issue_date', 'due_date'],
+    newKeys: ['contact_id', 'company_id', 'opportunity_id', 'bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'issue_date', 'due_date'],
+    related: [['Company', 'company_id', 'companies'], ['Contact', 'contact_id', 'contacts'], ['Opportunity', 'opportunity_id', 'opportunities'], ['Invoice', 'invoice_id', 'invoices']],
+  },
+};
+
+export function DocStatus({ K, record }) {
+  const flagged = K.flagged(record);
+  const s = flagged ? K.flag.id : record.status;
+  return <span className={`pill ${flagged ? K.flag.cls : K.pill[s] ?? ''}`}>{flagged ? K.flag.label : optionLabel(K.F.status, s)}</span>;
 }
 
 // ── List ────────────────────────────────────────────────────────────────────
 
-export function InvoicesPage() {
+export const InvoicesPage = () => <DocsPage K={KINDS.invoices} />;
+export const QuotesPage = () => <DocsPage K={KINDS.quotes} />;
+
+function DocsPage({ K }) {
   const { open, version } = useCrm();
   const [rows, setRows] = React.useState(null);
   const [query, setQuery] = React.useState('');
   const [status, setStatus] = React.useState('');
 
   React.useEffect(() => {
-    const filters = status && status !== 'overdue' ? { status } : status === 'overdue' ? { status: 'sent' } : {};
+    const filters = status === K.flag.id ? {} : status ? { status } : {};
     const t = setTimeout(() => {
-      data('list', { entity: 'invoices', query, filters, limit: 500, sort: 'issue_date:desc' })
-        .then((r) => setRows(status === 'overdue' ? r.records.filter(isOverdue) : r.records)).catch(() => setRows([]));
+      data('list', { entity: K.entity, query, filters, limit: 500, sort: 'issue_date:desc' })
+        .then((r) => setRows(status === K.flag.id ? r.records.filter(K.flagged) : r.records)).catch(() => setRows([]));
     }, query ? 250 : 0);
     return () => clearTimeout(t);
-  }, [query, status, version]);
+  }, [query, status, version, K]);
 
+  const due = (r) => (r.due_date ? `${K.dueLabel} ${day(r.due_date)}` : K.dueBlank);
   return (
     <>
       <div className="head">
-        <h1>Invoices</h1>
-        <input className="field" style={{ width: 240, maxWidth: '100%' }} placeholder="Search invoices" aria-label="Search invoices"
+        <h1>{K.Docs}</h1>
+        <input className="field" style={{ width: 240, maxWidth: '100%' }} placeholder={`Search ${K.doc}s`} aria-label={`Search ${K.doc}s`}
           value={query} onChange={(e) => setQuery(e.target.value)} />
-        <button className="btn btn-primary" onClick={() => open('invoices')}>New invoice</button>
+        <button className="btn btn-primary" onClick={() => open(K.entity)}>New {K.doc}</button>
       </div>
       <div className="toolbar">
         <div className="seg" role="group" aria-label="Status">
           <button className={status === '' ? 'on' : ''} onClick={() => setStatus('')}>All</button>
-          {[...INVOICE_STATUSES, { id: 'overdue', label: 'Overdue' }].map((s) => (
+          {[...K.statuses, K.flag].map((s) => (
             <button key={s.id} className={status === s.id ? 'on' : ''} onClick={() => setStatus(s.id)}>{s.label}</button>
           ))}
         </div>
@@ -56,39 +101,39 @@ export function InvoicesPage() {
       {!rows ? <p className="muted">Loading…</p>
         : rows.length === 0 && !query && !status ? (
           <div className="card pad empty">
-            <strong>No invoices yet</strong>
-            <p className="muted">Create an invoice for a prospect or client, add line items, preview it in your branded template, and send it by email.</p>
-            <button className="btn btn-primary" onClick={() => open('invoices')}>Create the first invoice</button>
+            <strong>No {K.doc}s yet</strong>
+            <p className="muted">{K.empty}</p>
+            <button className="btn btn-primary" onClick={() => open(K.entity)}>Create the first {K.doc}</button>
           </div>
-        ) : rows.length === 0 ? <div className="card"><p className="muted" style={{ padding: 16 }}>No invoices match.</p></div> : (
+        ) : rows.length === 0 ? <div className="card"><p className="muted" style={{ padding: 16 }}>No {K.doc}s match.</p></div> : (
           <>
-          <ul className="inv-cards">
-            {rows.map((r) => (
-              <li key={r.id}>
-                <button onClick={() => open('invoices', r.id)}>
-                  <span className="inv-card-top"><strong>{r.name}</strong><InvoiceStatus record={r} /></span>
-                  <span>{r.bill_to_name || r.bill_to_company || r.company_id_name || '—'}</span>
-                  <span className={`muted ${isOverdue(r) ? 'overdue' : ''}`}>Issued {day(r.issue_date)} · {r.due_date ? `Due ${day(r.due_date)}` : 'Due on receipt'}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div className="card inv-table" style={{ overflowX: 'auto' }}>
-            <table>
-              <thead><tr><th>Invoice</th><th>Bill to</th><th className="hide-sm">Issued</th><th className="hide-sm">Due</th><th>Status</th></tr></thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.id} onClick={() => open('invoices', r.id)}>
-                    <td><strong>{r.name}</strong></td>
-                    <td>{r.bill_to_name || r.bill_to_company || r.company_id_name || <span className="muted">—</span>}{r.bill_to_company && r.bill_to_name ? <span className="muted"> · {r.bill_to_company}</span> : null}</td>
-                    <td className="hide-sm">{day(r.issue_date)}</td>
-                    <td className={`hide-sm ${isOverdue(r) ? 'overdue' : ''}`}>{r.due_date ? day(r.due_date) : <span className="muted">On receipt</span>}</td>
-                    <td><InvoiceStatus record={r} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <ul className="inv-cards">
+              {rows.map((r) => (
+                <li key={r.id}>
+                  <button onClick={() => open(K.entity, r.id)}>
+                    <span className="inv-card-top"><strong>{r.name}</strong><DocStatus K={K} record={r} /></span>
+                    <span>{r.bill_to_name || r.bill_to_company || r.company_id_name || '—'}</span>
+                    <span className={`muted ${K.flagged(r) ? 'overdue' : ''}`}>{day(r.issue_date)} · {due(r)}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="card inv-table" style={{ overflowX: 'auto' }}>
+              <table>
+                <thead><tr><th>{K.Doc}</th><th>{K.party}</th><th className="hide-sm">Date</th><th className="hide-sm">{K.dueLabel}</th><th>Status</th></tr></thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr key={r.id} onClick={() => open(K.entity, r.id)}>
+                      <td><strong>{r.name}</strong></td>
+                      <td>{r.bill_to_name || r.bill_to_company || r.company_id_name || <span className="muted">—</span>}{r.bill_to_company && r.bill_to_name ? <span className="muted"> · {r.bill_to_company}</span> : null}</td>
+                      <td className="hide-sm">{day(r.issue_date)}</td>
+                      <td className={`hide-sm ${K.flagged(r) ? 'overdue' : ''}`}>{r.due_date ? day(r.due_date) : <span className="muted">{K.dueBlank}</span>}</td>
+                      <td><DocStatus K={K} record={r} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </>
         )}
     </>
@@ -97,38 +142,32 @@ export function InvoicesPage() {
 
 // ── Record page ─────────────────────────────────────────────────────────────
 
-export function InvoiceRecord({ id, preset }) {
-  return id ? <InvoicePage id={id} /> : <NewInvoice preset={preset} />;
+export const InvoiceRecord = ({ id, preset }) => <DocRecord K={KINDS.invoices} id={id} preset={preset} />;
+export const QuoteRecord = ({ id, preset }) => <DocRecord K={KINDS.quotes} id={id} preset={preset} />;
+
+function DocRecord({ K, id, preset }) {
+  return id ? <DocPage K={K} id={id} /> : <NewDoc K={K} preset={preset} />;
 }
 
-function Crumbs({ go, name }) {
+function Crumbs({ K, go, name }) {
   return (
     <nav className="crumbs" aria-label="Breadcrumb">
-      <button className="link" onClick={() => go('invoices')}>Invoices</button>
+      <button className="link" onClick={() => go(K.entity)}>{K.Docs}</button>
       <span aria-hidden="true">/</span>
       <span>{name}</span>
     </nav>
   );
 }
 
-const SECTIONS = [
-  { title: 'Bill to', keys: ['bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'bill_to_address'] },
-  { title: 'Invoice', keys: ['name', 'status', 'issue_date', 'due_date', 'template', 'owner_id'] },
-  { title: 'Linked records', keys: ['company_id', 'contact_id', 'project_id'] },
-  { title: 'Amounts & payment', keys: ['discount', 'tax_rate', 'payment_link', 'paid_at', 'payment_method'] },
-  { title: 'Notes to the client', keys: ['notes'] },
-  { title: 'Terms & scope', keys: ['terms'] },
-];
-
-function valueOf(record, key, open) {
-  const f = F[key];
+function valueOf(K, record, key, open) {
+  const f = K.F[key];
   const v = record[key];
   if (key === 'template') return record.template_info?.name || (v ? v : <span className="muted">—</span>);
-  if (v === null || v === undefined || v === '') return key === 'due_date' ? <span className="muted">Due on receipt</span> : <span className="muted">—</span>;
+  if (v === null || v === undefined || v === '') return key === 'due_date' ? <span className="muted">{K.dueBlank}</span> : <span className="muted">—</span>;
   switch (f.type) {
     case 'ref': return <button className="link" onClick={() => open(f.to, v)}>{record[`${key}_name`] || 'Open'}</button>;
     case 'user': return record[`${key}_name`];
-    case 'select': return key === 'status' ? <InvoiceStatus record={record} /> : optionLabel(f, v);
+    case 'select': return key === 'status' ? <DocStatus K={K} record={record} /> : optionLabel(f, v);
     case 'money': return money2(Number(v));
     case 'percent': return `${v}%`;
     case 'date': return day(v);
@@ -137,42 +176,49 @@ function valueOf(record, key, open) {
   }
 }
 
-function InvoicePage({ id }) {
+function DocPage({ K, id }) {
   const { open, go, changed } = useCrm();
   const [record, setRecord] = React.useState(null);
   const [error, setError] = React.useState('');
   const [tab, setTab] = React.useState('items');
   const [panel, setPanel] = React.useState(null); // 'preview' | 'send' | 'billto'
   const [busy, setBusy] = React.useState(false);
+  const isQuote = K.entity === 'quotes';
 
-  const load = React.useCallback(() => data('get', { entity: 'invoices', id }).then(setRecord).catch((err) => setError(err.message)), [id]);
+  const load = React.useCallback(() => data('get', { entity: K.entity, id }).then(setRecord).catch((err) => setError(err.message)), [K, id]);
   React.useEffect(() => { load(); }, [load]);
-  React.useEffect(() => { if (record) document.title = `${record.name} | Invoice | Loogo CRM`; return () => { document.title = 'Loogo CRM'; }; }, [record?.name]);
+  React.useEffect(() => { if (record) document.title = `${record.name} | ${K.Doc} | Loogo CRM`; return () => { document.title = 'Loogo CRM'; }; }, [record?.name, K]);
   const refresh = () => { load(); changed(); };
 
   async function setStatus(status) {
     setBusy(true); setError('');
-    try { await data('update', { entity: 'invoices', id, values: { status, ...(status !== 'paid' ? { paid_at: '' } : {}) } }); refresh(); } catch (err) { setError(err.message); }
+    const extra = isQuote ? (status !== 'accepted' ? { accepted_at: '' } : {}) : (status !== 'paid' ? { paid_at: '' } : {});
+    try { await data('update', { entity: K.entity, id, values: { status, ...extra } }); refresh(); } catch (err) { setError(err.message); }
     setBusy(false);
   }
   async function remove() {
-    if (!window.confirm(`Delete invoice ${record.name}? Its line items are deleted too. This cannot be undone.`)) return;
-    try { await data('delete', { entity: 'invoices', id }); changed(); go('invoices'); } catch (err) { setError(err.message); }
+    if (!window.confirm(`Delete ${K.doc} ${record.name}? Its line items are deleted too. This cannot be undone.`)) return;
+    try { await data('delete', { entity: K.entity, id }); changed(); go(K.entity); } catch (err) { setError(err.message); }
   }
   async function print() {
     setError('');
     const w = window.open('', '_blank');
     try {
-      const p = await data('invoice_preview', { id, print: true });
+      const p = await data('invoice_preview', { entity: K.entity, id, print: true });
       w.document.open(); w.document.write(p.html); w.document.close();
       w.onload = () => setTimeout(() => w.print(), 300);
     } catch (err) { w?.close(); setError(err.message); }
+  }
+  async function convert() {
+    if (!window.confirm(`Mark ${record.name} accepted and create an invoice from it? The invoice starts as a draft you can review before sending.`)) return;
+    setBusy(true); setError('');
+    try { const inv = await data('convert_quote', { id }); changed(); open('invoices', inv.id); } catch (err) { setError(err.message); setBusy(false); }
   }
 
   if (!record) {
     return (
       <div className="rec">
-        <Crumbs go={go} name={error ? 'Not found' : 'Loading…'} />
+        <Crumbs K={K} go={go} name={error ? 'Not found' : 'Loading…'} />
         {error ? <div className="card pad"><div className="error" style={{ marginTop: 0 }}>{error}</div></div> : <p className="muted">Loading…</p>}
       </div>
     );
@@ -180,45 +226,54 @@ function InvoicePage({ id }) {
 
   const t = record.totals || {};
   const items = record.items || [];
+  const canConvert = isQuote && !record.invoice_id && !['declined', 'void'].includes(record.status) && items.length > 0;
+  const flagged = K.flagged(record);
   return (
     <div className="rec">
-      <Crumbs go={go} name={record.name} />
+      <Crumbs K={K} go={go} name={record.name} />
 
       <section className="card rec-head">
         <div className="rec-title">
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="kicker">Invoice · <InvoiceStatus record={record} overdue={t.overdue} /></div>
+            <div className="kicker">{K.Doc} · <DocStatus K={K} record={record} /></div>
             <h1 className="inv-h1">{record.name}{record.bill_to_name ? <span className="muted inv-h1-sub"><span className="inv-dot"> · </span>{record.bill_to_name}</span> : null}</h1>
           </div>
           <div className="rec-actions inv-actions">
-            {record.status !== 'void' && <button className="btn btn-primary inv-send" onClick={() => setPanel('send')}>{record.sent_at ? 'Resend' : 'Send invoice'}</button>}
-            <button className="btn" onClick={() => setPanel('billto')}>Edit bill-to</button>
+            {record.status !== 'void' && <button className="btn btn-primary inv-send" onClick={() => setPanel('send')}>{record.sent_at ? 'Resend' : `Send ${K.doc}`}</button>}
+            {canConvert && <button className="btn inv-convert" disabled={busy} onClick={convert}>Accepted → create invoice</button>}
+            {isQuote && record.invoice_id && <button className="btn inv-convert" onClick={() => open('invoices', record.invoice_id)}>Open invoice {record.invoice_id_name}</button>}
+            <button className="btn" onClick={() => setPanel('billto')}>Edit details</button>
             <button className="btn" onClick={() => setPanel('preview')}>Preview</button>
             <button className="btn" onClick={print}>Print / PDF</button>
             <MoreMenu>
-              {record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
-              {record.status === 'paid' && <button disabled={busy} onClick={() => setStatus('sent')}>Mark unpaid</button>}
+              {!isQuote && record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
+              {!isQuote && record.status === 'paid' && <button disabled={busy} onClick={() => setStatus('sent')}>Mark unpaid</button>}
+              {isQuote && ['draft', 'sent'].includes(record.status) && <button disabled={busy} onClick={() => setStatus('accepted')}>Mark accepted (no invoice)</button>}
+              {isQuote && ['draft', 'sent'].includes(record.status) && <button disabled={busy} onClick={() => setStatus('declined')}>Mark declined</button>}
+              {isQuote && ['accepted', 'declined'].includes(record.status) && !record.invoice_id && <button disabled={busy} onClick={() => setStatus('sent')}>Reopen</button>}
               {record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('draft')}>Back to draft</button>}
-              {record.status !== 'void' && record.status !== 'paid' && <button disabled={busy} onClick={() => window.confirm('Void this invoice? It stays on file with nothing due.') && setStatus('void')}>Void</button>}
+              {!['void', 'paid', 'accepted'].includes(record.status) && <button disabled={busy} onClick={() => window.confirm(`Void this ${K.doc}? It stays on file.`) && setStatus('void')}>Void</button>}
               {record.status === 'void' && <button disabled={busy} onClick={() => setStatus('draft')}>Restore as draft</button>}
-              <button className="danger-text" onClick={remove}>Delete invoice</button>
+              <button className="danger-text" onClick={remove}>Delete {K.doc}</button>
             </MoreMenu>
           </div>
         </div>
         <dl className="highlights inv-highlights">
-          <div className="hide-sm"><dt>Bill to</dt><dd>{record.bill_to_name || record.bill_to_company || <span className="muted">—</span>}</dd></div>
+          <div className="hide-sm"><dt>{K.party}</dt><dd>{record.bill_to_name || record.bill_to_company || <span className="muted">—</span>}</dd></div>
           <div><dt>Total</dt><dd>{money2(t.total)}</dd></div>
-          <div><dt>Amount due</dt><dd className={t.overdue ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>
-          <div><dt>Issued</dt><dd>{day(record.issue_date) || '—'}</dd></div>
-          <div><dt>Due</dt><dd className={t.overdue ? 'overdue' : ''}>{record.due_date ? day(record.due_date) : 'On receipt'}</dd></div>
+          {isQuote
+            ? <div><dt>Status</dt><dd><DocStatus K={K} record={record} /></dd></div>
+            : <div><dt>Amount due</dt><dd className={flagged ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>}
+          <div><dt>{isQuote ? 'Date' : 'Issued'}</dt><dd>{day(record.issue_date) || '—'}</dd></div>
+          <div><dt>{K.dueLabel}</dt><dd className={flagged ? 'overdue' : ''}>{record.due_date ? day(record.due_date) : K.dueBlank}</dd></div>
           <div className="hide-sm"><dt>Sent</dt><dd>{record.sent_at ? when(record.sent_at) : <span className="muted">Not yet</span>}</dd></div>
         </dl>
       </section>
 
-      {!record.template && <div className="notice warn-notice" style={{ marginBottom: 12 }}>No invoice template is set up for this workspace yet. Loogo Labs adds templates in code; ask us for one.</div>}
+      {!record.template && <div className="notice warn-notice" style={{ marginBottom: 12 }}>No template is set up for this workspace yet. Loogo Labs adds templates in code; ask us for one.</div>}
       {!record.bill_to_email && record.status !== 'void' && (
         <div className="notice warn-notice inv-banner">
-          <span>No email on this invoice yet. Add one to send it.</span>
+          <span>No email on this {K.doc} yet. Add one to send it.</span>
           <button className="btn btn-small btn-primary" onClick={() => setPanel('billto')}>Add email</button>
         </div>
       )}
@@ -233,15 +288,15 @@ function InvoicePage({ id }) {
               ))}
             </div>
             <div className="rec-body">
-              {tab === 'items' && <ItemsTab record={record} onChanged={refresh} />}
-              {tab === 'details' && <DetailsView record={record} onSaved={refresh} />}
-              {tab === 'activity' && <Activities key={record.updated_at} entityKey="invoices" id={record.id} initial={record.activities} />}
+              {tab === 'items' && <ItemsTab K={K} record={record} onChanged={refresh} />}
+              {tab === 'details' && <DetailsView K={K} record={record} onSaved={refresh} />}
+              {tab === 'activity' && <Activities key={record.updated_at} entityKey={K.entity} id={record.id} initial={record.activities} />}
             </div>
           </div>
         </div>
         <aside className="rec-side">
           <div className="card side-card hide-sm">
-            <div className="side-head inv-side-head">Bill to <button className="link" onClick={() => setPanel('billto')}>Edit</button></div>
+            <div className="side-head inv-side-head">{K.party} <button className="link" onClick={() => setPanel('billto')}>Edit</button></div>
             <dl className="kv">
               <dt>Name</dt><dd>{record.bill_to_name || '—'}</dd>
               {record.bill_to_title && <><dt>Title</dt><dd>{record.bill_to_title}</dd></>}
@@ -252,7 +307,7 @@ function InvoicePage({ id }) {
           </div>
           <div className="card side-card">
             <div className="side-head">Related</div>
-            {[['Company', 'company_id', 'companies'], ['Contact', 'contact_id', 'contacts'], ['Project', 'project_id', 'projects']].map(([label, key, ent]) => (
+            {K.related.map(([label, key, ent]) => (
               <div key={key} className="rel-row">
                 <div className="kicker">{label}</div>
                 {record[key] ? <button className="link" onClick={() => open(ent, record[key])}>{record[`${key}_name`]}</button> : <span className="muted">None linked</span>}
@@ -266,9 +321,9 @@ function InvoicePage({ id }) {
         </aside>
       </div>
 
-      {panel === 'preview' && <PreviewDrawer record={record} onClose={() => setPanel(null)} />}
-      {panel === 'billto' && <BillToDrawer record={record} onClose={() => setPanel(null)} onSaved={() => { setPanel(null); refresh(); }} />}
-      {panel === 'send' && <SendDrawer record={record} onClose={() => setPanel(null)} onSent={() => { setPanel(null); refresh(); }} />}
+      {panel === 'preview' && <PreviewDrawer K={K} record={record} onClose={() => setPanel(null)} />}
+      {panel === 'billto' && <DetailsDrawer K={K} record={record} onClose={() => setPanel(null)} onSaved={() => { setPanel(null); refresh(); }} />}
+      {panel === 'send' && <SendDrawer K={K} record={record} onClose={() => setPanel(null)} onSent={() => { setPanel(null); refresh(); }} />}
     </div>
   );
 }
@@ -294,24 +349,25 @@ function MoreMenu({ children }) {
 
 const blankItem = { description: '', details: '', quantity: '1', unit_price: '', unit_label: '', note: '' };
 
-function ItemsTab({ record, onChanged }) {
+function ItemsTab({ K, record, onChanged }) {
   const items = record.items || [];
   const t = record.totals || {};
   const [editing, setEditing] = React.useState(null); // item id or 'new'
   const [error, setError] = React.useState('');
-  const locked = record.status === 'paid' || record.status === 'void';
+  const locked = K.locked(record);
+  const isQuote = K.entity === 'quotes';
 
   async function remove(it) {
     if (!window.confirm(`Remove "${it.description}"?`)) return;
-    try { await data('delete_invoice_item', { id: it.id }); onChanged(); } catch (err) { setError(err.message); }
+    try { await data('delete_invoice_item', { entity: K.entity, id: it.id }); onChanged(); } catch (err) { setError(err.message); }
   }
   async function move(it, dir) {
     const i = items.findIndex((x) => x.id === it.id);
     const other = items[i + dir];
     if (!other) return;
     try {
-      await data('update_invoice_item', { id: it.id, values: { position: other.position } });
-      await data('update_invoice_item', { id: other.id, values: { position: it.position === other.position ? it.position + dir : it.position } });
+      await data('update_invoice_item', { entity: K.entity, id: it.id, values: { position: other.position } });
+      await data('update_invoice_item', { entity: K.entity, id: other.id, values: { position: it.position === other.position ? it.position + dir : it.position } });
       onChanged();
     } catch (err) { setError(err.message); }
   }
@@ -321,7 +377,7 @@ function ItemsTab({ record, onChanged }) {
       {error && <div className="error">{error}</div>}
       <ul className="inv-items">
         {items.map((it, i) => (editing === it.id
-          ? <li key={it.id} className="inv-item editing"><ItemForm invoiceId={record.id} item={it} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} /></li>
+          ? <li key={it.id} className="inv-item editing"><ItemForm K={K} parentId={record.id} item={it} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} /></li>
           : (
             <li key={it.id} className="inv-item">
               <div className="inv-item-top">
@@ -346,21 +402,25 @@ function ItemsTab({ record, onChanged }) {
         {items.length === 0 && editing !== 'new' && <li className="inv-item muted">No line items yet. Add the first one below.</li>}
       </ul>
       {editing === 'new'
-        ? <ItemForm invoiceId={record.id} item={blankItem} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} />
+        ? <ItemForm K={K} parentId={record.id} item={blankItem} onDone={() => { setEditing(null); onChanged(); }} onCancel={() => setEditing(null)} />
         : !locked && <button className="btn inv-add" onClick={() => setEditing('new')}>+ Add line item</button>}
       <dl className="inv-totals">
         <div><dt>Subtotal</dt><dd>{money2(t.subtotal)}</dd></div>
         {t.discount ? <div><dt>Discount</dt><dd>−{money2(t.discount)}</dd></div> : null}
         {t.tax ? <div><dt>Tax ({t.tax_rate}%)</dt><dd>{money2(t.tax)}</dd></div> : null}
-        <div><dt>Total</dt><dd>{money2(t.total)}</dd></div>
-        <div className="due"><dt>Amount due</dt><dd className={t.overdue ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>
+        {isQuote
+          ? <div className="due"><dt>Total</dt><dd>{money2(t.total)}</dd></div>
+          : <>
+              <div><dt>Total</dt><dd>{money2(t.total)}</dd></div>
+              <div className="due"><dt>Amount due</dt><dd className={t.overdue ? 'overdue' : ''}>{money2(t.amount_due)}</dd></div>
+            </>}
       </dl>
-      {locked && <p className="muted hint">This invoice is {record.status}; restore it to change line items.</p>}
+      {locked && <p className="muted hint">This {K.doc} is {record.status}; reopen or restore it to change line items.</p>}
     </>
   );
 }
 
-function ItemForm({ invoiceId, item, onDone, onCancel }) {
+function ItemForm({ K, parentId, item, onDone, onCancel }) {
   const [f, setF] = React.useState({
     ...blankItem, ...Object.fromEntries(Object.entries(item).filter(([k]) => k in blankItem).map(([k, v]) => [k, v ?? ''])),
   });
@@ -368,13 +428,14 @@ function ItemForm({ invoiceId, item, onDone, onCancel }) {
   const [busy, setBusy] = React.useState(false);
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
   const amount = (Number(f.quantity) || 0) * (Number(f.unit_price) || 0);
+  const parentKey = K.entity === 'quotes' ? 'quote_id' : 'invoice_id';
 
   async function submit(e) {
     e.preventDefault();
     setBusy(true); setError('');
     try {
-      if (item.id) await data('update_invoice_item', { id: item.id, values: f });
-      else await data('add_invoice_item', { values: { ...f, invoice_id: invoiceId } });
+      if (item.id) await data('update_invoice_item', { entity: K.entity, id: item.id, values: f });
+      else await data('add_invoice_item', { entity: K.entity, values: { ...f, [parentKey]: parentId } });
       onDone();
     } catch (err) { setError(err.message); setBusy(false); }
   }
@@ -400,23 +461,23 @@ function ItemForm({ invoiceId, item, onDone, onCancel }) {
   );
 }
 
-// ── Details (per-field editing, like project pages) ─────────────────────────
+// ── Details (tap a field to edit it) ────────────────────────────────────────
 
-function DetailsView({ record, onSaved }) {
+function DetailsView({ K, record, onSaved }) {
   const { open } = useCrm();
   const [editing, setEditing] = React.useState(null);
   return (
     <>
-      {SECTIONS.map((sec) => (
+      {K.sections.map((sec) => (
         <div key={sec.title} className="det-sec">
           <div className="det-title">{sec.title}</div>
           <dl className={`det-grid ${sec.keys.length === 1 ? 'one' : ''}`}>
             {sec.keys.map((k) => (editing === k
-              ? <InlineEdit key={k} record={record} field={F[k]} onCancel={() => setEditing(null)} onSaved={() => { setEditing(null); onSaved(); }} />
+              ? <InlineEdit key={k} K={K} record={record} field={K.F[k]} onCancel={() => setEditing(null)} onSaved={() => { setEditing(null); onSaved(); }} />
               : (
                 <div key={k} className="det-item tap-edit" role="button" tabIndex={0} onClick={(e) => { if (!e.target.closest('a, .link')) setEditing(k); }} onKeyDown={(e) => { if (e.key === 'Enter') setEditing(k); }} title="Tap to edit">
-                  <dt>{F[k].label}</dt>
-                  <dd><span className="dv">{valueOf(record, k, open)}</span><span className="pencil" aria-hidden="true">✎</span></dd>
+                  <dt>{K.F[k].label}</dt>
+                  <dd><span className="dv">{valueOf(K, record, k, open)}</span><span className="pencil" aria-hidden="true">✎</span></dd>
                 </div>
               )))}
           </dl>
@@ -436,7 +497,7 @@ function TemplateSelect({ record, value, onChange, id }) {
   );
 }
 
-function InlineEdit({ record, field, onCancel, onSaved }) {
+function InlineEdit({ K, record, field, onCancel, onSaved }) {
   const [value, setValue] = React.useState(record[field.key] ?? '');
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
@@ -445,7 +506,7 @@ function InlineEdit({ record, field, onCancel, onSaved }) {
   async function save(e) {
     e?.preventDefault();
     setBusy(true); setError('');
-    try { await data('update', { entity: 'invoices', id: record.id, values: { [field.key]: value } }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
+    try { await data('update', { entity: K.entity, id: record.id, values: { [field.key]: value } }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
   }
   function keys(e) {
     if (e.key === 'Escape') { e.preventDefault(); onCancel(); }
@@ -464,7 +525,7 @@ function InlineEdit({ record, field, onCancel, onSaved }) {
         <button className="ie-btn ok" disabled={busy} aria-label="Save">✓</button>
         <button type="button" className="ie-btn" onClick={onCancel} aria-label="Cancel">✕</button>
       </dd>
-      {field.key === 'name' && <div className="hint">Invoice numbers must be unique in this workspace.</div>}
+      {field.key === 'name' && <div className="hint">{K.Doc} numbers must be unique in this workspace.</div>}
       {error && <div className="error" style={{ marginTop: 6 }}>{error}</div>}
     </form>
   );
@@ -472,28 +533,28 @@ function InlineEdit({ record, field, onCancel, onSaved }) {
 
 // ── Preview and send ────────────────────────────────────────────────────────
 
-function PreviewDrawer({ record, onClose }) {
+function PreviewDrawer({ K, record, onClose }) {
   const [p, setP] = React.useState(null);
   const [error, setError] = React.useState('');
-  React.useEffect(() => { data('invoice_preview', { id: record.id }).then(setP).catch((err) => setError(err.message)); }, [record.id, record.updated_at]);
+  React.useEffect(() => { data('invoice_preview', { entity: K.entity, id: record.id }).then(setP).catch((err) => setError(err.message)); }, [K, record.id, record.updated_at]);
   return (
-    <Drawer title="Invoice email preview" kicker={record.name} onClose={onClose}>
+    <Drawer title={`${K.Doc} email preview`} kicker={record.name} onClose={onClose}>
       {error && <div className="error">{error}</div>}
       {!p && !error && <p className="muted">Loading…</p>}
       {p && (
         <>
           <dl className="kv" style={{ marginBottom: 12 }}>
             <dt>Subject</dt><dd>{p.subject}</dd>
-            <dt>To</dt><dd>{p.to || <span className="overdue">No bill-to email yet</span>}</dd>
+            <dt>To</dt><dd>{p.to || <span className="overdue">No email yet</span>}</dd>
           </dl>
-          <iframe title="Invoice preview" className="inv-frame" srcDoc={p.html} sandbox="allow-popups" />
+          <iframe title={`${K.Doc} preview`} className="inv-frame" srcDoc={p.html} sandbox="allow-popups" />
         </>
       )}
     </Drawer>
   );
 }
 
-function SendDrawer({ record, onClose, onSent }) {
+function SendDrawer({ K, record, onClose, onSent }) {
   const [to, setTo] = React.useState(record.bill_to_email || '');
   const [cc, setCc] = React.useState('');
   const [save, setSave] = React.useState(true);
@@ -503,24 +564,25 @@ function SendDrawer({ record, onClose, onSent }) {
   async function send(e) {
     e.preventDefault();
     setBusy(true); setError('');
-    try { await data('send_invoice', { id: record.id, values: { to, cc, save_email: save } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
+    try { await data('send_invoice', { entity: K.entity, id: record.id, values: { to, cc, save_email: save } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
   }
   return (
-    <Drawer title={record.sent_at ? 'Resend invoice' : 'Send invoice'} kicker={record.name} onClose={onClose}>
+    <Drawer title={record.sent_at ? `Resend ${K.doc}` : `Send ${K.doc}`} kicker={record.name} onClose={onClose}>
       <form onSubmit={send}>
         <p className="muted" style={{ marginTop: 0 }}>
-          Sends {record.template_info?.name || 'the invoice'} for <strong>{money2(t.amount_due)}</strong> from your workspace&rsquo;s coded template.
-          {record.status === 'draft' ? ' The invoice is marked Sent.' : ''} It is logged on this invoice{record.contact_id ? ' and the contact' : ''}.
+          Sends the {K.doc} for <strong>{money2(K.entity === 'quotes' ? t.total : t.amount_due)}</strong> as a branded email.
+          {record.status === 'draft' ? ` The ${K.doc} is marked Sent.` : ''} It is logged here{record.contact_id ? ' and on the contact' : ''}.
+          {' '}Tip: send it to yourself first to check it.
         </p>
         <label className="label" htmlFor="si-to">To</label>
-        <input id="si-to" className="field" value={to} onChange={(e) => setTo(e.target.value)} placeholder="client@example.com" required />
+        <input id="si-to" className="field" type="email" inputMode="email" autoComplete="email" value={to} onChange={(e) => setTo(e.target.value)} placeholder="client@example.com" required />
         {!record.bill_to_email && (
           <label className="check" style={{ marginTop: 10 }}>
-            <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} /> Save this as the bill-to email{record.contact_id ? ' (and on the contact)' : ''}
+            <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} /> Save this as the client&rsquo;s email{record.contact_id ? ' (and on the contact)' : ''}
           </label>
         )}
         <label className="label" htmlFor="si-cc">Cc <span className="muted">· optional, comma separated</span></label>
-        <input id="si-cc" className="field" value={cc} onChange={(e) => setCc(e.target.value)} />
+        <input id="si-cc" className="field" inputMode="email" value={cc} onChange={(e) => setCc(e.target.value)} />
         {!(record.items || []).length && <div className="notice warn-notice" style={{ marginTop: 12 }}>Add at least one line item first.</div>}
         {error && <div className="error">{error}</div>}
         <div className="actions">
@@ -532,28 +594,26 @@ function SendDrawer({ record, onClose, onSent }) {
   );
 }
 
-// ── Edit bill-to and dates in one form (works on phones) ───────────────────
+// ── Edit client details and dates in one form (works on phones) ────────────
 
-const BILL_KEYS = ['bill_to_name', 'bill_to_email', 'bill_to_title', 'bill_to_company', 'bill_to_phone', 'bill_to_address', 'issue_date', 'due_date', 'payment_link'];
-
-function BillToDrawer({ record, onClose, onSaved }) {
-  const [v, setV] = React.useState(Object.fromEntries(BILL_KEYS.map((k) => [k, record[k] ?? ''])));
+function DetailsDrawer({ K, record, onClose, onSaved }) {
+  const [v, setV] = React.useState(Object.fromEntries(K.billKeys.map((k) => [k, record[k] ?? ''])));
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const set = (k) => (val) => setV((p) => ({ ...p, [k]: val }));
   async function save(e) {
     e.preventDefault();
     setBusy(true); setError('');
-    const changed = Object.fromEntries(BILL_KEYS.filter((k) => String(v[k] ?? '') !== String(record[k] ?? '')).map((k) => [k, v[k]]));
-    try { if (Object.keys(changed).length) await data('update', { entity: 'invoices', id: record.id, values: changed }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
+    const changed = Object.fromEntries(K.billKeys.filter((k) => String(v[k] ?? '') !== String(record[k] ?? '')).map((k) => [k, v[k]]));
+    try { if (Object.keys(changed).length) await data('update', { entity: K.entity, id: record.id, values: changed }); onSaved(); } catch (err) { setError(err.message); setBusy(false); }
   }
   return (
-    <Drawer title="Edit bill-to & dates" kicker={record.name} onClose={onClose}>
+    <Drawer title={`Edit ${K.doc} details`} kicker={record.name} onClose={onClose}>
       <form onSubmit={save}>
-        {BILL_KEYS.map((k) => (
+        {K.billKeys.map((k) => (
           <div key={k}>
-            <label className="label" htmlFor={`bt-${k}`}>{F[k].label}{k === 'due_date' ? <span className="muted"> · blank = on receipt</span> : null}</label>
-            <FieldInput id={`bt-${k}`} field={F[k]} value={v[k]} onChange={set(k)} />
+            <label className="label" htmlFor={`bt-${k}`}>{K.F[k].label}{k === 'due_date' ? <span className="muted"> · {K.dueHint}</span> : null}</label>
+            <FieldInput id={`bt-${k}`} field={K.F[k]} value={v[k]} onChange={set(k)} />
           </div>
         ))}
         {error && <div className="error">{error}</div>}
@@ -566,47 +626,46 @@ function BillToDrawer({ record, onClose, onSaved }) {
   );
 }
 
-// ── New invoice ─────────────────────────────────────────────────────────────
+// ── New quote / invoice ─────────────────────────────────────────────────────
 
-function NewInvoice({ preset }) {
+function NewDoc({ K, preset }) {
   const { go, open, changed } = useCrm();
   const [v, setV] = React.useState({ issue_date: today(), ...(preset || {}) });
   const [number, setNumber] = React.useState('');
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
-  React.useEffect(() => { data('next_invoice_number').then((r) => setNumber(r.number)).catch(() => {}); }, []);
+  React.useEffect(() => { data('next_invoice_number', { entity: K.entity }).then((r) => setNumber(r.number)).catch(() => {}); }, [K]);
   const set = (k) => (val) => setV((p) => ({ ...p, [k]: val }));
-  const keys = ['contact_id', 'company_id', 'project_id', 'bill_to_name', 'bill_to_title', 'bill_to_company', 'bill_to_email', 'bill_to_phone', 'issue_date', 'due_date'];
 
   async function create(e) {
     e.preventDefault();
     setBusy(true); setError('');
     try {
-      const rec = await data('create', { entity: 'invoices', values: { ...v, name: v.name || number } });
+      const rec = await data('create', { entity: K.entity, values: { ...v, name: v.name || number } });
       changed();
-      open('invoices', rec.id);
+      open(K.entity, rec.id);
     } catch (err) { setError(err.message); setBusy(false); }
   }
   return (
     <div className="rec">
-      <Crumbs go={go} name="New invoice" />
+      <Crumbs K={K} go={go} name={`New ${K.doc}`} />
       <form className="card pad" onSubmit={create} style={{ maxWidth: 760 }}>
-        <h1 style={{ marginTop: 0 }}>New invoice</h1>
-        <p className="muted">Pick a contact to fill in the bill-to details, or type them for a prospect who isn&rsquo;t in the CRM yet. You add line items on the next page.</p>
-        <label className="label" htmlFor="ni-name">Invoice number</label>
+        <h1 style={{ marginTop: 0 }}>New {K.doc}</h1>
+        <p className="muted">Pick a contact to fill in the client details, or type them for a prospect who isn&rsquo;t in the CRM yet. You add line items on the next page.</p>
+        <label className="label" htmlFor="ni-name">{K.Doc} number</label>
         <input id="ni-name" className="field" value={v.name ?? number} onChange={(e) => set('name')(e.target.value)} />
         <div className="grid2">
-          {keys.map((k) => (
+          {K.newKeys.map((k) => (
             <div key={k}>
-              <label className="label" htmlFor={`ni-${k}`}>{F[k].label}{k === 'due_date' ? <span className="muted"> · blank = on receipt</span> : null}</label>
-              <FieldInput id={`ni-${k}`} field={F[k]} value={v[k]} onChange={set(k)} />
+              <label className="label" htmlFor={`ni-${k}`}>{K.F[k].label}{k === 'due_date' ? <span className="muted"> · {K.dueHint}</span> : null}</label>
+              <FieldInput id={`ni-${k}`} field={K.F[k]} value={v[k]} onChange={set(k)} />
             </div>
           ))}
         </div>
         {error && <div className="error">{error}</div>}
         <div className="actions">
-          <button className="btn btn-primary" disabled={busy}>Create invoice</button>
-          <button type="button" className="btn" onClick={() => go('invoices')}>Cancel</button>
+          <button className="btn btn-primary" disabled={busy}>Create {K.doc}</button>
+          <button type="button" className="btn" onClick={() => go(K.entity)}>Cancel</button>
         </div>
       </form>
     </div>

@@ -8,8 +8,8 @@ const COLORS = { ink: '#1F2A2E', cream: '#F4F4F2', amber: '#6B6F76', muted: '#5F
 
 export default {
   id: 'standard-invoice',
-  name: 'Standard invoice',
-  description: 'Clean, neutral invoice that uses your workspace name. Ask Loogo Labs for a branded version.',
+  name: 'Standard',
+  description: 'Clean, neutral quote or invoice that uses your workspace name. Ask Loogo Labs for a branded version.',
   instances: '*',
   render: (invoice, { forPrint, workspace = {} } = {}) => renderInvoice({
     logo: null,

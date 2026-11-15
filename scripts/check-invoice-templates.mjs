@@ -18,6 +18,8 @@ const CASES = [
   { label: 'sent with due date and pay link', inv: { ...base, status: 'sent', due_date: '2026-12-01', payment_link: 'https://pay.example.com/x', items, totals: totals(items) } },
   { label: 'paid', inv: { ...base, status: 'paid', paid_at: '2026-11-20', items, totals: totals(items, { amount_due: 0 }) } },
   { label: 'void', inv: { ...base, status: 'void', items, totals: totals(items, { amount_due: 0 }) } },
+  { label: 'quote, draft with valid-until', inv: { ...base, kind: 'quote', name: 'LL-2026-050', status: 'draft', due_date: '2026-12-13', items, totals: totals(items) } },
+  { label: 'quote, accepted', inv: { ...base, kind: 'quote', name: 'LL-2026-051', status: 'accepted', accepted_at: '2026-11-20', items, totals: totals(items) } },
   { label: 'no items, minimal bill-to', inv: { name: 'INV-2026-124', status: 'draft', bill_to_name: 'Solo', items: [], totals: totals([]) } },
 ];
 const workspace = { name: 'Sample Workspace', email: 'owner@example.com', contact: 'Sam' };
@@ -41,8 +43,10 @@ for (const t of TEMPLATES) {
     for (const it of c.inv.items) if (!out.html.includes(it.description)) fail(`${where}: line "${it.description}" missing`);
     if (c.inv.items.length && !out.html.includes('$575.00')) fail(`${where}: total $575.00 missing`);
     if (c.inv.payment_link && !forPrint && !out.html.includes(c.inv.payment_link)) fail(`${where}: pay link missing`);
+    if (c.inv.kind === 'quote' && !/>Quote</.test(out.html)) fail(`${where}: quote not titled Quote`);
+    if (c.inv.kind === 'quote' && /Amount due|Pay \$/.test(out.html)) fail(`${where}: quote shows invoice wording`);
     if (!/<meta name="viewport"/.test(out.html)) fail(`${where}: no mobile viewport`);
   }
 }
 if (failed) { console.error(`\n${failed} problem(s) found.`); process.exit(1); }
-console.log(`\nAll ${TEMPLATES.length} invoice templates passed ${CASES.length * 2} cases each.`);
+console.log(`\nAll ${TEMPLATES.length} quote/invoice templates passed ${CASES.length * 2} cases each.`);

@@ -116,6 +116,13 @@ export const INVOICE_STATUSES = [
   { id: 'paid', label: 'Paid' },
   { id: 'void', label: 'Void' },
 ];
+export const QUOTE_STATUSES = [
+  { id: 'draft', label: 'Draft' },
+  { id: 'sent', label: 'Sent' },
+  { id: 'accepted', label: 'Accepted' },
+  { id: 'declined', label: 'Declined' },
+  { id: 'void', label: 'Void' },
+];
 export const INVOICE_ITEM_FIELDS = [
   { key: 'description', label: 'Item', type: 'text', required: true },
   { key: 'details', label: 'Details (one per line)', type: 'textarea' },
@@ -300,6 +307,42 @@ export const ENTITIES = {
       { key: 'terms', label: 'Terms & scope', type: 'textarea' },
       { key: 'paid_at', label: 'Paid on', type: 'date' },
       { key: 'payment_method', label: 'Paid by', type: 'text' },
+      { key: 'quote_id', label: 'From quote', type: 'ref', to: 'quotes' },
+      { key: 'owner_id', label: 'Owner', type: 'user' },
+    ],
+    readonly: ['sent_at', 'sent_to'],
+  },
+  // Quotes: same shape as invoices; due_date is "Valid until". An accepted
+  // quote turns into an invoice (invoice_id).
+  quotes: {
+    table: 'crm_quotes',
+    label: 'Quote', plural: 'Quotes',
+    title: (r) => r.name,
+    search: ['name', 'bill_to_name', 'bill_to_company', 'bill_to_email'],
+    columns: ['name', 'bill_to_name', 'issue_date', 'due_date', 'status'],
+    fields: [
+      // Left blank, the server numbers it LL-<year>-<nnn>.
+      { key: 'name', label: 'Quote number', type: 'text' },
+      { key: 'status', label: 'Status', type: 'select', options: QUOTE_STATUSES, default: 'draft' },
+      { key: 'template', label: 'Template', type: 'text' },
+      { key: 'company_id', label: 'Company', type: 'ref', to: 'companies' },
+      { key: 'contact_id', label: 'Contact', type: 'ref', to: 'contacts' },
+      { key: 'opportunity_id', label: 'Opportunity', type: 'ref', to: 'opportunities' },
+      { key: 'project_id', label: 'Project', type: 'ref', to: 'projects' },
+      { key: 'bill_to_name', label: 'Prepared for', type: 'text' },
+      { key: 'bill_to_title', label: 'Title', type: 'text' },
+      { key: 'bill_to_company', label: 'Business', type: 'text' },
+      { key: 'bill_to_email', label: 'Email', type: 'email' },
+      { key: 'bill_to_phone', label: 'Phone', type: 'phone' },
+      { key: 'bill_to_address', label: 'Address', type: 'textarea' },
+      { key: 'issue_date', label: 'Quote date', type: 'date' },
+      { key: 'due_date', label: 'Valid until', type: 'date' },
+      { key: 'tax_rate', label: 'Tax rate', type: 'percent' },
+      { key: 'discount', label: 'Discount', type: 'money' },
+      { key: 'notes', label: 'Notes to the client', type: 'textarea' },
+      { key: 'terms', label: 'Terms & scope', type: 'textarea' },
+      { key: 'accepted_at', label: 'Accepted on', type: 'date' },
+      { key: 'invoice_id', label: 'Invoice', type: 'ref', to: 'invoices' },
       { key: 'owner_id', label: 'Owner', type: 'user' },
     ],
     readonly: ['sent_at', 'sent_to'],

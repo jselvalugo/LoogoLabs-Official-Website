@@ -19,15 +19,24 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   const C = B.colors;
   const items = inv.items || [];
   const t = inv.totals;
-  const paid = inv.status === 'paid';
+  const isQuote = inv.kind === 'quote';
+  const Doc = isQuote ? 'Quote' : 'Invoice';
+  const doc = Doc.toLowerCase();
+  const paid = !isQuote && inv.status === 'paid';
+  const accepted = isQuote && inv.status === 'accepted';
+  const declined = isQuote && inv.status === 'declined';
   const voided = inv.status === 'void';
-  const dueText = inv.due_date ? longDay(inv.due_date) : 'Due on receipt';
+  const dueText = inv.due_date ? longDay(inv.due_date) : (isQuote ? '' : 'Due on receipt');
   const issued = longDay(inv.issue_date) || longDay(new Date().toISOString());
   const first = String(inv.bill_to_name || '').split(/\s+/)[0] || 'there';
-  const subject = paid
-    ? `Paid: invoice ${inv.name} from ${B.business.name}`
-    : `Invoice ${inv.name} from ${B.business.name} · ${usd(t.amount_due)} ${inv.due_date ? `due ${longDay(inv.due_date)}` : 'due on receipt'}`;
-  const preheader = paid ? `Thank you. Invoice ${inv.name} is paid in full.` : `Invoice ${inv.name} for ${usd(t.total)}. ${inv.due_date ? `Due ${longDay(inv.due_date)}.` : 'Due on receipt.'}`;
+  const subject = isQuote
+    ? `Quote ${inv.name} from ${B.business.name} · ${usd(t.total)}`
+    : paid
+      ? `Paid: invoice ${inv.name} from ${B.business.name}`
+      : `Invoice ${inv.name} from ${B.business.name} · ${usd(t.amount_due)} ${inv.due_date ? `due ${longDay(inv.due_date)}` : 'due on receipt'}`;
+  const preheader = isQuote
+    ? `Quote ${inv.name} for ${usd(t.total)}.${inv.due_date ? ` Valid until ${longDay(inv.due_date)}.` : ''} Reply to accept.`
+    : paid ? `Thank you. Invoice ${inv.name} is paid in full.` : `Invoice ${inv.name} for ${usd(t.total)}. ${inv.due_date ? `Due ${longDay(inv.due_date)}.` : 'Due on receipt.'}`;
 
   const SERIF = "Marcellus,Georgia,'Times New Roman',serif";
   const SANS = "'Work Sans','Helvetica Neue',Helvetica,Arial,sans-serif";
@@ -53,9 +62,9 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
       <td style="padding:0 0 6px;font:13px/1.5 ${SANS};color:${C.muted};white-space:nowrap;">${k}</td>
       <td align="right" style="padding:0 0 6px 12px;font:600 13px/1.5 ${SANS};color:${C.ink};white-space:nowrap;">${v}</td></tr>`;
   const facts = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-      ${fact('Invoice no.', esc(inv.name))}
-      ${fact('Issued', esc(issued))}
-      ${fact('Due', esc(dueText))}
+      ${fact(`${Doc} no.`, esc(inv.name))}
+      ${fact(isQuote ? 'Date' : 'Issued', esc(issued))}
+      ${isQuote ? (dueText ? fact('Valid until', esc(dueText)) : '') : fact('Due', esc(dueText))}
       ${inv.project_id_name ? fact('Project', esc(inv.project_id_name)) : ''}
     </table>`;
 
@@ -87,14 +96,14 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
       ${sumRow('Subtotal', usd(t.subtotal))}
       ${t.discount ? sumRow('Discount', `&minus;${usd(t.discount)}`) : ''}
       ${t.tax ? sumRow(`Tax (${t.tax_rate}%)`, usd(t.tax)) : ''}
-      ${sumRow('Total', usd(t.total))}
+      ${isQuote ? '' : sumRow('Total', usd(t.total))}
       ${paid ? sumRow(`Paid${inv.paid_at ? ` ${esc(longDay(inv.paid_at))}` : ''}`, `&minus;${usd(t.total)}`) : ''}
       <tr>
-        <td style="padding:12px 0 0;border-top:1px solid ${C.ink};font:600 13px/1.4 ${SANS};color:${C.ink};">Amount due</td>
-        <td align="right" style="padding:12px 0 0;border-top:1px solid ${C.ink};font:24px/1.1 ${SERIF};color:${C.ink};white-space:nowrap;">${usd(t.amount_due)}</td>
+        <td style="padding:12px 0 0;border-top:1px solid ${C.ink};font:600 13px/1.4 ${SANS};color:${C.ink};">${isQuote ? 'Total' : 'Amount due'}</td>
+        <td align="right" style="padding:12px 0 0;border-top:1px solid ${C.ink};font:24px/1.1 ${SERIF};color:${C.ink};white-space:nowrap;">${usd(isQuote ? t.total : t.amount_due)}</td>
       </tr>`;
 
-  const payButton = !paid && !voided && inv.payment_link && t.amount_due > 0 ? `
+  const payButton = !isQuote && !paid && !voided && inv.payment_link && t.amount_due > 0 ? `
         <tr><td class="px" style="padding:24px 48px 0;" align="right">
           <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="background:${C.ink};border-radius:999px;">
             <a href="${esc(inv.payment_link)}" style="display:inline-block;padding:14px 30px;font:600 14px/1 ${SANS};color:${C.cream};text-decoration:none;letter-spacing:.02em;">Pay ${usd(t.amount_due)} &rarr;</a>
@@ -112,10 +121,10 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
           </table>
         </td></tr>` : '';
 
-  const status = paid ? 'Paid' : voided ? 'Void' : '';
+  const status = paid ? 'Paid' : accepted ? 'Accepted' : declined ? 'Declined' : voided ? 'Void' : '';
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
-<title>${esc(`Invoice ${inv.name} · ${B.business.name}`)}</title>
+<title>${esc(`${Doc} ${inv.name} · ${B.business.name}`)}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Work+Sans:wght@400;500;600&display=swap');
   @media only screen and (max-width: 620px) {
@@ -150,7 +159,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
               ? `<img class="logo" src="${B.logo}" width="330" alt="${esc(B.logoAlt || B.business.name)}" style="display:block;width:330px;max-width:100%;height:auto;border:0;">`
               : `<div style="font:28px/1.15 ${SERIF};color:${C.ink};">${esc(B.business.name)}</div>`}</div>
             <div class="fl-title" style="display:inline-block;vertical-align:middle;width:100%;max-width:260px;text-align:right;padding-top:12px;">
-              <div class="title" style="font:34px/1 ${SERIF};color:${C.ink};letter-spacing:.02em;">Invoice</div>
+              <div class="title" style="font:34px/1 ${SERIF};color:${C.ink};letter-spacing:.02em;">${Doc}</div>
               <div style="margin-top:8px;font:600 11px/1.4 ${SANS};letter-spacing:.14em;color:${C.amber};text-transform:uppercase;">${esc(inv.name)}${status ? ` &middot; ${status}` : ''}</div>
             </div>
           </div>
@@ -160,24 +169,26 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
         <!-- Parties and facts -->
         <tr><td class="px" style="padding:26px 48px 0;">
           <div style="font-size:0;">
-            <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:190px;padding:0 12px 18px 0;box-sizing:border-box;">${label('Bill to')}${billTo}</div>
+            <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:190px;padding:0 12px 18px 0;box-sizing:border-box;">${label(isQuote ? 'Prepared for' : 'Bill to')}${billTo}</div>
             <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:190px;padding:0 12px 18px 0;box-sizing:border-box;">${label('From')}${from}</div>
             <div class="fl" style="display:inline-block;vertical-align:top;width:100%;max-width:220px;padding:0 0 18px;box-sizing:border-box;">${label('Details')}${facts}</div>
           </div>
         </td></tr>
 
-        <!-- Amount due banner -->
+        <!-- Total banner -->
         <tr><td class="px" style="padding:28px 48px 0;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.ink};border-radius:6px;"><tr>
             <td style="padding:18px 22px;">
-              <div style="font:600 10px/1.4 ${SANS};letter-spacing:.16em;text-transform:uppercase;color:${C.sage};">${paid ? 'Paid in full' : voided ? 'Void' : 'Amount due'}</div>
-              <div style="margin-top:4px;font:13px/1.4 ${SANS};color:${C.cream};">${paid ? `Thank you${inv.paid_at ? ` · ${esc(longDay(inv.paid_at))}` : ''}` : voided ? 'Nothing is due on this invoice' : esc(dueText === 'Due on receipt' ? dueText : `Due ${dueText}`)}</div>
+              <div style="font:600 10px/1.4 ${SANS};letter-spacing:.16em;text-transform:uppercase;color:${C.sage};">${isQuote ? (accepted ? 'Accepted' : declined ? 'Declined' : voided ? 'Void' : 'Quote total') : paid ? 'Paid in full' : voided ? 'Void' : 'Amount due'}</div>
+              <div style="margin-top:4px;font:13px/1.4 ${SANS};color:${C.cream};">${isQuote
+                ? (accepted ? `Thank you${inv.accepted_at ? ` · ${esc(longDay(inv.accepted_at))}` : ''}` : dueText ? `Valid until ${esc(dueText)}` : `Prepared ${esc(issued)}`)
+                : paid ? `Thank you${inv.paid_at ? ` · ${esc(longDay(inv.paid_at))}` : ''}` : voided ? 'Nothing is due on this invoice' : esc(dueText === 'Due on receipt' ? dueText : `Due ${dueText}`)}</div>
             </td>
-            <td align="right" class="amt" style="padding:18px 22px;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(paid ? t.total : t.amount_due)}</td>
+            <td align="right" class="amt" style="padding:18px 22px;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(isQuote || paid ? t.total : t.amount_due)}</td>
           </tr></table>
         </td></tr>
 
-        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.`}</td></tr>`}
+        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${isQuote ? `here is your quote from ${esc(B.business.name)}. Everything included is listed below. To accept, just reply to this email and we&rsquo;ll get started.` : paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.`}</td></tr>`}
 
         <!-- Line items -->
         <tr><td class="px" style="padding:26px 48px 0;">
@@ -196,7 +207,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
         <!-- Contact -->
         <tr><td class="px" style="padding:28px 48px 36px;">
-          <p style="margin:0;font:13px/1.65 ${SANS};color:${C.ink};">Questions about this invoice? ${B.business.email
+          <p style="margin:0;font:13px/1.65 ${SANS};color:${C.ink};">Questions about this ${doc}? ${B.business.email
             ? `${forPrint ? 'Reach' : 'Reply to this email or reach'} ${esc(B.business.contact || 'us')} at <a href="mailto:${esc(B.business.email)}" style="color:${C.ink};">${esc(B.business.email)}</a>${B.business.phone ? ` or ${esc(B.business.phone)}` : ''}.`
             : (forPrint ? 'Please get in touch with us.' : 'Just reply to this email.')} Thank you for your business.</p>
         </td></tr>
@@ -212,17 +223,17 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
   const text = [
     `${B.business.name}`,
-    `${paid ? 'INVOICE (PAID)' : 'INVOICE'} ${inv.name}`, '',
-    `Bill to: ${[inv.bill_to_name, inv.bill_to_title, inv.bill_to_company].filter(Boolean).join(', ')}`,
+    `${Doc.toUpperCase()}${status ? ` (${status.toUpperCase()})` : ''} ${inv.name}`, '',
+    `${isQuote ? 'Prepared for' : 'Bill to'}: ${[inv.bill_to_name, inv.bill_to_title, inv.bill_to_company].filter(Boolean).join(', ')}`,
     `From: ${[B.business.name, ...(B.business.address || [])].join(', ')}`,
-    `Issued: ${issued}   Due: ${dueText}`, '',
+    isQuote ? `Date: ${issued}${dueText ? `   Valid until: ${dueText}` : ''}` : `Issued: ${issued}   Due: ${dueText}`, '',
     ...items.map((it, i) => `${i + 1}. ${it.description}: ${qty(it.quantity)} x ${usd(it.unit_price)}${it.unit_label ? `/${it.unit_label}` : ''} = ${usd(it.amount)}${it.note ? ` (${it.note})` : ''}${lines(it.details).map((d) => `\n   - ${d}`).join('')}`),
     '', `Subtotal: ${usd(t.subtotal)}`,
     t.discount ? `Discount: -${usd(t.discount)}` : '',
     t.tax ? `Tax (${t.tax_rate}%): ${usd(t.tax)}` : '',
     `Total: ${usd(t.total)}`,
-    `Amount due: ${usd(t.amount_due)}`,
-    !paid && inv.payment_link ? `Pay online: ${inv.payment_link}` : '',
+    isQuote ? 'To accept this quote, reply to this email.' : `Amount due: ${usd(t.amount_due)}`,
+    !isQuote && !paid && inv.payment_link ? `Pay online: ${inv.payment_link}` : '',
     notes.length ? `\nNotes:\n${notes.join('\n')}` : '',
     terms.length ? `\nTerms & scope:\n${terms.join('\n')}` : '',
     B.business.email ? `\nQuestions? ${B.business.email}${B.business.phone ? ` · ${B.business.phone}` : ''}` : '',

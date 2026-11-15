@@ -8,7 +8,7 @@ import { Crm, useCrm } from './ctx';
 import { Activities, FieldInput, HALF, fieldsFor, withLifecycle } from './records';
 import { HealthPill, LifecyclePill, ProjectsOverview, ProjectsPage } from './Projects';
 import { ProjectRecord } from './ProjectRecord';
-import { InvoiceRecord, InvoicesPage } from './Invoices';
+import { InvoiceRecord, InvoicesPage, QuoteRecord, QuotesPage } from './Invoices';
 
 const PAGES = [
   { id: 'overview', label: 'Overview', path: '' },
@@ -17,6 +17,7 @@ const PAGES = [
   { id: 'companies', label: 'Companies', path: '/companies', entity: 'companies' },
   { id: 'opportunities', label: 'Opportunities', path: '/opportunities', entity: 'opportunities' },
   { id: 'projects', label: 'Projects', path: '/projects' },
+  { id: 'quotes', label: 'Quotes', path: '/quotes' },
   { id: 'invoices', label: 'Invoices', path: '/invoices' },
   { id: 'tasks', label: 'Tasks', path: '/tasks' },
   { id: 'dashboards', label: 'Dashboards', path: '/dashboards' },
@@ -33,6 +34,7 @@ const PAGES = [
 const NAV = [
   'overview',
   'projects',
+  'quotes',
   'invoices',
   { id: 'crm', label: 'CRM', items: ['leads', 'contacts', 'companies', 'opportunities', 'tasks'] },
   'dashboards', 'approvals', 'recaps',
@@ -50,8 +52,8 @@ const today = () => new Date().toISOString().slice(0, 10);
 // (for local dev and before DNS is set up).
 const BASE = window.location.pathname.startsWith('/crm') ? '/crm' : '';
 // Record pages: /projects/<id>, /invoices/<id> (and /new) open a full page, not the drawer.
-const RECORD_PATH = /^\/(projects|invoices)\/(new|[0-9a-f-]{36})$/i;
-const RECORD_PAGE = { projects: 'project', invoices: 'invoice' };
+const RECORD_PATH = /^\/(projects|invoices|quotes)\/(new|[0-9a-f-]{36})$/i;
+const RECORD_PAGE = { projects: 'project', invoices: 'invoice', quotes: 'quote' };
 const routeFromPath = () => {
   const rest = window.location.pathname.slice(BASE.length).replace(/\/$/, '');
   const rec = rest.match(RECORD_PATH);
@@ -113,7 +115,7 @@ export default function App() {
   if (checking) return null;
   if (!me) return <SignIn onSignedIn={setMe} />;
   const current = PAGES.find((p) => p.id === page) || {};
-  const navPage = page === 'project' ? 'projects' : page === 'invoice' ? 'invoices' : page;
+  const navPage = page === 'project' ? 'projects' : page === 'invoice' ? 'invoices' : page === 'quote' ? 'quotes' : page;
 
   return (
     <Crm.Provider value={ctx}>
@@ -127,13 +129,15 @@ export default function App() {
         <div className="who hide-sm">{me.instance_name}<br />{me.name || me.email}</div>
         <button className="btn" onClick={signOut}>Sign out</button>
       </header>
-      <main className={`page ${page === 'project' || page === 'invoice' ? 'page-wide' : ''}`}>
+      <main className={`page ${['project', 'invoice', 'quote'].includes(page) ? 'page-wide' : ''}`}>
         {page === 'overview' && <Overview />}
         {current.entity && <RecordList key={current.entity} entityKey={current.entity} />}
         {page === 'projects' && <ProjectsPage />}
         {page === 'project' && <ProjectRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
         {page === 'invoices' && <InvoicesPage />}
         {page === 'invoice' && <InvoiceRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
+        {page === 'quotes' && <QuotesPage />}
+        {page === 'quote' && <QuoteRecord key={route.id || 'new'} id={route.id} preset={preset.current} />}
         {page === 'tasks' && <Tasks />}
         {page === 'dashboards' && <Dashboards version={version} />}
         {page === 'approvals' && <Approvals version={version} />}
