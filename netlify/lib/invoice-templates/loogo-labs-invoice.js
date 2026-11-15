@@ -23,8 +23,8 @@ const BRAND = {
 
 export default {
   id: 'loogo-labs-invoice',
-  name: 'Loogo Labs LLC invoice',
-  description: 'Cream-branded Loogo Labs LLC invoice with line items, totals and an optional Pay button.',
+  name: 'Loogo Labs LLC',
+  description: 'Cream-branded Loogo Labs LLC quote or invoice with the full logo, line items and totals.',
   // The Loogo Labs workspace. Its slug is shown in the CRM under Settings.
   instances: ['loogo-labs-instance', 'loogo-labs', 'loogolabs'],
   reply_to: 'david@loogolabs.com',
