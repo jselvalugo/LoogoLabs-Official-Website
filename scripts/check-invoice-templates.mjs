@@ -48,5 +48,17 @@ for (const t of TEMPLATES) {
     if (!/<meta name="viewport"/.test(out.html)) fail(`${where}: no mobile viewport`);
   }
 }
+// PDF copies (the logo fetch may fail offline; the PDF then shows the business name).
+for (const t of TEMPLATES) {
+  if (!t.pdf) { fail(`${t.id}: no pdf()`); continue; }
+  for (const c of CASES) {
+    try {
+      const buf = await t.pdf(c.inv, { workspace });
+      if (!buf || String(buf.subarray(0, 4)) !== '%PDF') fail(`${t.id} ${c.label}: PDF not produced`);
+      const name = t.pdfName(c.inv, { workspace });
+      if (!/\.pdf$/.test(name) || /_/.test(name)) fail(`${t.id} ${c.label}: bad PDF file name "${name}"`);
+    } catch (err) { fail(`${t.id} ${c.label}: pdf threw ${err.message}`); }
+  }
+}
 if (failed) { console.error(`\n${failed} problem(s) found.`); process.exit(1); }
 console.log(`\nAll ${TEMPLATES.length} quote/invoice templates passed ${CASES.length * 2} cases each.`);

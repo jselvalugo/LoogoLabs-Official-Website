@@ -233,7 +233,7 @@ const TOOLS = [
   {
     name: 'add_invoice_item',
     title: 'CRM: Add invoice line item',
-    description: 'Add a line to an invoice: description (required), details (one bullet per line), quantity (default 1), unit_price, unit_label (e.g. hr), note (shown under the amount, e.g. Complimentary), position. Amount = quantity × unit_price. Confirm amounts with the user before writing.',
+    description: 'Add a line to an invoice (or a quote: pass the quote id as invoice_id): description (required), details (one bullet per line), quantity (default 1), unit_price, unit_label (e.g. hr), note (shown under the amount, e.g. Complimentary), position. Amount = quantity × unit_price. Confirm amounts with the user before writing.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -334,6 +334,18 @@ function describe() {
   };
 }
 
+const UUID = /^[0-9a-f-]{36}$/i;
+async function isQuote(inst, id) {
+  if (!UUID.test(String(id || ''))) return false;
+  const [row] = await db().sql.unsafe('SELECT 1 FROM crm_quotes WHERE id = $1 AND instance_id = $2', [id, inst]);
+  return !!row;
+}
+async function isQuoteItem(inst, id) {
+  if (!UUID.test(String(id || ''))) return false;
+  const [row] = await db().sql.unsafe('SELECT 1 FROM crm_quote_items WHERE id = $1 AND instance_id = $2', [id, inst]);
+  return !!row;
+}
+
 async function runTool(name, a, auth) {
   const inst = auth.instance_id;
   const audit = { label: auth.name ? `Claude (${auth.name})` : 'Claude' };
@@ -358,10 +370,11 @@ async function runTool(name, a, auth) {
     case 'add_research_source': return records.addSource(inst, a, audit);
     case 'add_project_charge': return records.addCharge(inst, a);
     case 'list_status_reports': return listReports(inst, a.project_id, { limit: a.limit ?? 20 });
-    case 'add_invoice_item': return invoices.addItem(inst, a);
-    case 'update_invoice_item': return invoices.updateItem(inst, a.id, a.values || {});
-    case 'delete_invoice_item': return invoices.deleteItem(inst, a.id);
-    case 'preview_invoice': { const p = await invoices.preview(inst, a.id); return { subject: p.subject, to: p.to, text: p.text }; }
+    // The invoice item tools also accept a quote's id, for connections that only list the invoice tools.
+    case 'add_invoice_item': return (await isQuote(inst, a.invoice_id)) ? quotes.addItem(inst, { ...a, quote_id: a.invoice_id }) : invoices.addItem(inst, a);
+    case 'update_invoice_item': return (await isQuoteItem(inst, a.id)) ? quotes.updateItem(inst, a.id, a.values || {}) : invoices.updateItem(inst, a.id, a.values || {});
+    case 'delete_invoice_item': return (await isQuoteItem(inst, a.id)) ? quotes.deleteItem(inst, a.id) : invoices.deleteItem(inst, a.id);
+    case 'preview_invoice': { const p = await ((await isQuote(inst, a.id)) ? quotes : invoices).preview(inst, a.id); return { subject: p.subject, to: p.to, text: p.text }; }
     case 'add_quote_item': return quotes.addItem(inst, a);
     case 'update_quote_item': return quotes.updateItem(inst, a.id, a.values || {});
     case 'delete_quote_item': return quotes.deleteItem(inst, a.id);

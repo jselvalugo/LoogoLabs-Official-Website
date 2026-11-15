@@ -97,14 +97,14 @@ export function approvalEmail({ clientName, title, kind, version, dueDate, note,
   return { subject, html, text };
 }
 
-export async function sendEmail({ to, cc, subject, html, text, replyTo }) {
+export async function sendEmail({ to, cc, subject, html, text, replyTo, attachments }) {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM;
   if (!key || !from) throw new CrmError('Email is not set up yet: add RESEND_API_KEY and RESEND_FROM in Netlify', 503);
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from, to, ...(cc?.length ? { cc } : {}), ...(replyTo ? { reply_to: replyTo } : {}), subject, html, text }),
+    body: JSON.stringify({ from, to, ...(cc?.length ? { cc } : {}), ...(replyTo ? { reply_to: replyTo } : {}), subject, html, text, ...(attachments?.length ? { attachments } : {}) }),
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new CrmError(`Resend: ${body.message || `error ${res.status}`}`, 502);

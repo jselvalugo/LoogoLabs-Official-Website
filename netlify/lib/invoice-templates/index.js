@@ -19,7 +19,8 @@ import standardInvoice from './standard-invoice.js';
 //
 // Template shape:
 //   { id, name, description, instances: [slug, …] | '*', reply_to?,
-//     render(invoice, { forPrint, workspace: { name, email, contact } }) → { subject, preheader, html, text } }
+//     render(invoice, { forPrint, attached, workspace: { name, email, contact } }) → { subject, preheader, html, text },
+//     pdf(invoice, { workspace }) → Buffer (the attached PDF copy), pdfName(invoice, { workspace }) → file name }
 export const TEMPLATES = [loogoLabsInvoice, standardInvoice];
 
 export const summary = ({ id, name, description }) => ({ id, name, description });

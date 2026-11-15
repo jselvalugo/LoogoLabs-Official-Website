@@ -14,7 +14,7 @@ const longDay = (d) => (d ? new Date(`${String(d).slice(0, 10)}T12:00:00Z`).toLo
 const qty = (n) => (Number.isInteger(Number(n)) ? String(Number(n)) : Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 }));
 const host = (url) => String(url).replace(/^https?:\/\//, '').replace(/\/$/, '');
 
-export function renderInvoice(brand, inv, { forPrint = false } = {}) {
+export function renderInvoice(brand, inv, { forPrint = false, attached = false } = {}) {
   const B = brand;
   const C = B.colors;
   const items = inv.items || [];
@@ -84,7 +84,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
       </td>
       <td align="right" style="${cell}padding-left:12px;white-space:nowrap;">
         <div style="font:600 14px/1.4 ${SANS};color:${C.ink};">${usd(it.amount)}</div>
-        ${it.note ? `<div style="display:inline-block;margin-top:6px;padding:3px 8px;background:${C.cream};border:1px solid ${C.line};border-radius:999px;font:600 9px/1.3 ${SANS};letter-spacing:.12em;text-transform:uppercase;color:${C.amber};">${esc(it.note)}</div>` : ''}
+        ${it.note ? `<div style="display:inline-block;margin-top:6px;padding:3px 8px;background-color:${C.cream};border:1px solid ${C.line};border-radius:999px;font:600 9px/1.3 ${SANS};letter-spacing:.12em;text-transform:uppercase;color:${C.amber};">${esc(it.note)}</div>` : ''}
       </td></tr>`;
   }).join('');
 
@@ -105,7 +105,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
   const payButton = !isQuote && !paid && !voided && inv.payment_link && t.amount_due > 0 ? `
         <tr><td class="px" style="padding:24px 48px 0;" align="right">
-          <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="background:${C.ink};border-radius:999px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr><td bgcolor="${C.ink}" style="background-color:${C.ink};border-radius:999px;">
             <a href="${esc(inv.payment_link)}" style="display:inline-block;padding:14px 30px;font:600 14px/1 ${SANS};color:${C.cream};text-decoration:none;letter-spacing:.02em;">Pay ${usd(t.amount_due)} &rarr;</a>
           </td></tr></table>
         </td></tr>` : '';
@@ -115,9 +115,9 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   const textCol = (title, ls) => `${label(title)}${ls.map((l) => `<p style="margin:0 0 6px;font:12px/1.6 ${SANS};color:${C.ink};">${esc(l)}</p>`).join('')}`;
   const notesBlock = notes.length || terms.length ? `
         <tr><td class="px" style="padding:28px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream};border-radius:6px;">
-            ${notes.length ? `<tr><td valign="top" style="padding:20px 22px ${terms.length ? '14px' : '20px'};">${textCol('Notes', notes)}</td></tr>` : ''}
-            ${terms.length ? `<tr><td valign="top" style="padding:${notes.length ? '16px' : '20px'} 22px 20px;${notes.length ? `border-top:1px solid ${C.line};` : ''}">${textCol('Terms &amp; scope', terms)}</td></tr>` : ''}
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.cream}" style="background-color:${C.cream};border-radius:6px;">
+            ${notes.length ? `<tr><td valign="top" bgcolor="${C.cream}" style="background-color:${C.cream};padding:20px 22px ${terms.length ? '14px' : '20px'};">${textCol('Notes', notes)}</td></tr>` : ''}
+            ${terms.length ? `<tr><td valign="top" bgcolor="${C.cream}" style="background-color:${C.cream};padding:${notes.length ? '16px' : '20px'} 22px 20px;${notes.length ? `border-top:1px solid ${C.line};` : ''}">${textCol('Terms &amp; scope', terms)}</td></tr>` : ''}
           </table>
         </td></tr>` : '';
 
@@ -146,11 +146,11 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
   }
   @page { size: letter; margin: 0.55in; }
 </style></head>
-<body style="margin:0;padding:0;background:${C.cream};-webkit-text-size-adjust:100%;">
+<body bgcolor="${C.cream}" style="margin:0;padding:0;background-color:${C.cream};-webkit-text-size-adjust:100%;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</div>
-  <table role="presentation" class="page" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream};">
+  <table role="presentation" class="page" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.cream}" style="background-color:${C.cream};">
     <tr><td align="center" class="page-pad" style="padding:32px 12px;">
-      <table role="presentation" class="card" width="100%" cellpadding="0" cellspacing="0" style="max-width:700px;background:#FFFFFF;border:1px solid ${C.line};border-top:4px solid ${C.ink};">
+      <table role="presentation" class="card" width="100%" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" style="max-width:700px;background-color:#FFFFFF;border:1px solid ${C.line};border-top:4px solid ${C.ink};">
 
         <!-- Logo and title -->
         <tr><td class="px" style="padding:36px 48px 0;">
@@ -164,7 +164,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
             </div>
           </div>
         </td></tr>
-        <tr><td class="px" style="padding:28px 48px 0;"><div style="height:2px;background:${C.amber};line-height:2px;font-size:0;">&nbsp;</div></td></tr>
+        <tr><td class="px" style="padding:28px 48px 0;"><div style="height:2px;background-color:${C.amber};line-height:2px;font-size:0;">&nbsp;</div></td></tr>
 
         <!-- Parties and facts -->
         <tr><td class="px" style="padding:26px 48px 0;">
@@ -177,18 +177,18 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
 
         <!-- Total banner -->
         <tr><td class="px" style="padding:28px 48px 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.ink};border-radius:6px;"><tr>
-            <td style="padding:18px 22px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.ink}" style="background-color:${C.ink};border-radius:6px;"><tr>
+            <td bgcolor="${C.ink}" style="padding:18px 22px;background-color:${C.ink};border-radius:6px 0 0 6px;">
               <div style="font:600 10px/1.4 ${SANS};letter-spacing:.16em;text-transform:uppercase;color:${C.sage};">${isQuote ? (accepted ? 'Accepted' : declined ? 'Declined' : voided ? 'Void' : 'Quote total') : paid ? 'Paid in full' : voided ? 'Void' : 'Amount due'}</div>
               <div style="margin-top:4px;font:13px/1.4 ${SANS};color:${C.cream};">${isQuote
                 ? (accepted ? `Thank you${inv.accepted_at ? ` · ${esc(longDay(inv.accepted_at))}` : ''}` : dueText ? `Valid until ${esc(dueText)}` : `Prepared ${esc(issued)}`)
                 : paid ? `Thank you${inv.paid_at ? ` · ${esc(longDay(inv.paid_at))}` : ''}` : voided ? 'Nothing is due on this invoice' : esc(dueText === 'Due on receipt' ? dueText : `Due ${dueText}`)}</div>
             </td>
-            <td align="right" class="amt" style="padding:18px 22px;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(isQuote || paid ? t.total : t.amount_due)}</td>
+            <td align="right" class="amt" bgcolor="${C.ink}" style="padding:18px 22px;background-color:${C.ink};border-radius:0 6px 6px 0;font:30px/1 ${SERIF};color:${C.cream};white-space:nowrap;">${usd(isQuote || paid ? t.total : t.amount_due)}</td>
           </tr></table>
         </td></tr>
 
-        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${isQuote ? `here is your quote from ${esc(B.business.name)}. Everything included is listed below. To accept, just reply to this email and we&rsquo;ll get started.` : paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.`}</td></tr>`}
+        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${isQuote ? `here is your quote from ${esc(B.business.name)}. Everything included is listed below. To accept, just reply to this email and we&rsquo;ll get started.${attached ? ' A PDF copy is attached for your records.' : ''}` : paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.${attached ? ' A PDF copy is attached.' : ''}`}</td></tr>`}
 
         <!-- Line items -->
         <tr><td class="px" style="padding:26px 48px 0;">
@@ -213,7 +213,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
         </td></tr>
 
         <!-- Footer -->
-        <tr><td style="padding:18px 48px;background:${C.cream};border-top:1px solid ${C.line};" align="center">
+        <tr><td bgcolor="${C.cream}" style="padding:18px 48px;background-color:${C.cream};border-top:1px solid ${C.line};" align="center">
           <p style="margin:0;font:500 10px/1.6 ${SANS};letter-spacing:.14em;text-transform:uppercase;color:${C.muted};">${esc(B.business.name)}${B.business.website ? ` &middot; <a href="${B.business.website}" style="color:${C.muted};">${esc(host(B.business.website))}</a>` : ''}</p>
         </td></tr>
       </table>

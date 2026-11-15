@@ -238,13 +238,15 @@ export async function createRecord(inst, key, input, audit = {}) {
     `INSERT INTO ${e.table} (instance_id${cols.map((c) => `, ${c}`).join('')}) VALUES ($1${cols.map((_, i) => `, $${i + 2}`).join('')}) RETURNING id`,
     params,
   );
-  return getRecord(inst, key, row.id, { related: false });
+  const created = await getRecord(inst, key, row.id, { related: false });
+  if (billing[key]) { await billing[key].afterSave(inst, created); return getRecord(inst, key, row.id, { related: false }); }
+  return created;
 }
 
 export async function updateRecord(inst, key, id, input, audit = {}) {
   const e = entity(key);
   const before = await getRecord(inst, key, id, { related: false });
-  if (billing[key]) input = await billing[key].beforeUpdate(inst, input);
+  if (billing[key]) input = await billing[key].beforeUpdate(inst, input, before);
   const values = await clean(inst, e.fields, input, { partial: true });
   if (key === 'opportunities') opportunityDefaults(values, before);
   const moved = key === 'projects' && Object.keys(values).length ? projectDefaults(values, before) : null;
@@ -256,6 +258,7 @@ export async function updateRecord(inst, key, id, input, audit = {}) {
   );
   // Stage moves go on the project's timeline, so the lifecycle has a history.
   if (moved) await addActivity(inst, { entity_type: key, entity_id: id, type: 'note', subject: `Stage: ${moved.from} → ${moved.to}` }, audit);
+  if (billing[key]) await billing[key].afterSave(inst, await getRecord(inst, key, id, { related: false }));
   return getRecord(inst, key, id, { related: false });
 }
 
