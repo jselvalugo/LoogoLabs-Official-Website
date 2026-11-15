@@ -11,6 +11,51 @@
 
 export const posts = [
   {
+    slug: `holiday-email-holdout-group`,
+    title: `Hold Back a Tenth of Your List Before the Holiday Emails Go Out`,
+    excerpt: `The only way to know what your holiday emails sold is to compare the customers who got them with a few hundred who never did.`,
+    tags: `Measurement & Tracking, Email Campaigns, Small Business Owners`,
+    content: `Ninety orders came from customers who got your holiday emails last December. That's the number the email report showed in January, and it's probably the one you used to decide the emails worked and you should send more of them this year. It doesn't say that. It says ninety people who received an email also bought something, and a good share of them were going to buy from you in December no matter what landed in their inbox.
+
+I see this every January when owners walk me through their year. The email report credits the campaign with sales from people who received or opened it. The ad report claims some of the same sales. Add up what each channel says it earned and you'll often find you sold more than the bank account shows. Nobody is lying. Each report counts what it can see.
+
+## The question the report can't answer
+
+What you actually want to know is how many of those orders wouldn't have happened without the email. The only way I know to answer that for a small business is to keep some customers out of the campaign on purpose and watch what they do.
+
+Before the first holiday send, set aside a random slice of your list. They don't get the holiday promotions. Everything else stays the same for them: they can still see your website and your social posts. In January, you compare how often each group bought.
+
+## How the arithmetic works
+
+Say your list has 2,000 customers. You hold back 200 and send the holiday emails to the other 1,800.
+
+By the end of December, 90 of the 1,800 have bought. That's 5 in every 100. Of the 200 who heard nothing from you by email, 6 have bought, which is 3 in every 100.
+
+At 3 in 100, you'd expect about 54 of the 1,800 to have bought with no emails at all. So the campaign added something like 36 orders, not 90. That's still worth having. But it's a very different number to plan next year around, and it changes how deep a discount or how many sends you can justify.
+
+## Doing the split properly
+
+The slice has to be random. Not the regulars you think will buy anyway, and not the people who never open. Any of those choices bakes your guess into the answer before the test starts.
+
+In a spreadsheet, add a column, fill it with a random number for every row, sort by that column and take the first tenth. Tag those contacts in your email tool and exclude the tag from every holiday promotion until the last one has gone out. Write down the date and the rule somewhere the whole team can see, so nobody quietly adds people back in mid-December.
+
+If a held-back regular asks why they didn't hear about the sale, give them the sale price. One person won't spoil the comparison, and losing a good customer over a test would be a poor trade.
+
+## Where AI fits, and where it doesn't
+
+AI is useful at both ends. Once you've split the list, give it a short summary of each group: how many are first-time buyers, how many bought in the last six months, what they usually spend. Ask whether anything looks lopsided. If the held-back group happens to be heavy with recent buyers, redo the random split before anything is sent.
+
+In January, hand it both groups' counts and ask it to work out the difference, then check the division yourself. It's three lines of arithmetic, and it's your budget riding on them.
+
+What it can't do is answer the question without the held-back group. Paste in the email report alone, ask whether the campaign worked, and it will read the credited sales back to you and call it a success, because that's everything it was given.
+
+It also can't rescue a test that's too small. If your held-back group is 40 people, the gap between 1 buyer and 3 buyers is luck, and no amount of analysis turns it into a finding. I want a few hundred people in the slice before I read much into it. With a smaller list, keep the same people held back across every promotion for a year and read the total next November.
+
+## Make the split before the first send
+
+Thanksgiving falls on November 26 this year, and for a lot of shops the holiday emails start that week. Before your first one goes out, export your list, add the random column, tag the first tenth as held back, and exclude that tag from every promotion through December 31. Then put a reminder in the second week of January to count the buyers in each group.`,
+  },
+  {
     slug: `year-end-customer-thank-you-notes`,
     title: `Write Your Year-End Thank-You Notes Yourself. Let AI Do the Lookup.`,
     excerpt: `An AI can dig up the one detail that makes a year-end thank-you feel personal, but the note only lands if the sentence about it comes from you.`,
