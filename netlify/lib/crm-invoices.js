@@ -98,18 +98,43 @@ function bind(cfg) {
   };
   const touch = (id) => q(`UPDATE ${cfg.table} SET updated_at = now() WHERE id = $1`, [id]);
 
+  // Numbers only go up: the next number is one past the highest ever used in
+  // this workspace for the prefix and year (crm_doc_counters), even if that
+  // quote or invoice was later deleted.
+  const parse = (name) => {
+    const m = String(name || '').trim().match(new RegExp(`^${cfg.prefix}-(\\d{4})-(\\d+)$`));
+    return m ? { year: Number(m[1]), n: Number(m[2]) } : null;
+  };
+  async function lastUsed(inst, year) {
+    const [c] = await q('SELECT last FROM crm_doc_counters WHERE instance_id = $1 AND prefix = $2 AND year = $3', [inst, cfg.prefix, year]);
+    const rows = await q(`SELECT name FROM ${cfg.table} WHERE instance_id = $1 AND name LIKE $2`, [inst, `${cfg.prefix}-${year}-%`]);
+    return rows.reduce((m, r) => Math.max(m, parse(r.name)?.n || 0), c?.last || 0);
+  }
+  async function bump(inst, name) {
+    const p = parse(name);
+    if (!p) return;
+    await q(`INSERT INTO crm_doc_counters (instance_id, prefix, year, last) VALUES ($1, $2, $3, $4)
+      ON CONFLICT (instance_id, prefix, year) DO UPDATE SET last = GREATEST(crm_doc_counters.last, EXCLUDED.last), updated_at = now()`,
+    [inst, cfg.prefix, p.year, p.n]);
+  }
+  async function checkNumber(inst, name) {
+    const p = parse(name);
+    if (!p) return;
+    const last = await lastUsed(inst, p.year);
+    if (p.n <= last) throw new CrmError(`${cfg.label} numbers only go up: use ${cfg.prefix}-${p.year}-${String(last + 1).padStart(3, '0')} or higher`);
+  }
   async function nextNumber(inst) {
     const year = Number(todayYmd().slice(0, 4));
-    const rows = await q(`SELECT name FROM ${cfg.table} WHERE instance_id = $1 AND name LIKE $2`, [inst, `${cfg.prefix}-${year}-%`]);
-    const max = rows.reduce((m, r) => Math.max(m, parseInt(String(r.name).split('-')[2], 10) || 0), 0);
-    return `${cfg.prefix}-${year}-${String(max + 1).padStart(3, '0')}`;
+    return `${cfg.prefix}-${year}-${String((await lastUsed(inst, year)) + 1).padStart(3, '0')}`;
   }
 
   async function beforeCreate(inst, input) {
     const v = { ...input };
     if (!v.name || !String(v.name).trim()) v.name = await nextNumber(inst);
-    const [dupe] = await q(`SELECT 1 FROM ${cfg.table} WHERE instance_id = $1 AND name = $2`, [inst, String(v.name).trim()]);
+    v.name = String(v.name).trim();
+    const [dupe] = await q(`SELECT 1 FROM ${cfg.table} WHERE instance_id = $1 AND name = $2`, [inst, v.name]);
     if (dupe) throw new CrmError(`${cfg.label} number ${v.name} is already used`);
+    await checkNumber(inst, v.name);
     if (!v.issue_date) v.issue_date = todayYmd();
     if (!v.template) {
       const [first] = await listTemplates(inst);
@@ -120,7 +145,13 @@ function bind(cfg) {
     return v;
   }
 
-  async function beforeUpdate(inst, input) {
+  async function beforeUpdate(inst, input, before) {
+    if (input.name !== undefined && String(input.name).trim() !== String(before?.name || '')) {
+      if (!String(input.name).trim()) throw new CrmError(`${cfg.label} number can't be blank`);
+      const [dupe] = await q(`SELECT 1 FROM ${cfg.table} WHERE instance_id = $1 AND name = $2`, [inst, String(input.name).trim()]);
+      if (dupe) throw new CrmError(`${cfg.label} number ${input.name} is already used`);
+      await checkNumber(inst, input.name);
+    }
     if (input.template && !getTemplate(input.template)) throw new CrmError(`Unknown template "${input.template}"`);
     if (cfg.kind === 'invoice' && input.status === 'paid' && !input.paid_at) return { ...input, paid_at: todayYmd() };
     if (cfg.kind === 'quote' && input.status === 'accepted' && !input.accepted_at) return { ...input, accepted_at: todayYmd() };
@@ -233,7 +264,16 @@ function bind(cfg) {
     return { filename: t.pdfName(doc, { workspace: ws }), base64: (await t.pdf(doc, { workspace: ws })).toString('base64') };
   }
 
-  return { cfg, pdf, nextNumber, beforeCreate, beforeUpdate, listItems, addItem, updateItem, deleteItem, extras, full, preview, send };
+  // After a save: record the number as used, and stamp the sent date when a
+  // record is marked Sent by hand (e.g. it was emailed outside the CRM).
+  async function afterSave(inst, record) {
+    await bump(inst, record.name);
+    if (record.status === 'sent' && !record.sent_at) {
+      await q(`UPDATE ${cfg.table} SET sent_at = now(), sent_to = COALESCE(sent_to, bill_to_email) WHERE id = $1 AND instance_id = $2`, [record.id, inst]);
+    }
+  }
+
+  return { cfg, pdf, nextNumber, afterSave, beforeCreate, beforeUpdate, listItems, addItem, updateItem, deleteItem, extras, full, preview, send };
 }
 
 export const invoices = bind(KINDS.invoices);
