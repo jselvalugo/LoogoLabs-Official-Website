@@ -200,14 +200,17 @@ function DocPage({ K, id }) {
     if (!window.confirm(`Delete ${K.doc} ${record.name}? Its line items are deleted too. This cannot be undone.`)) return;
     try { await data('delete', { entity: K.entity, id }); changed(); go(K.entity); } catch (err) { setError(err.message); }
   }
-  async function print() {
-    setError('');
-    const w = window.open('', '_blank');
+  async function downloadPdf() {
+    setBusy(true); setError('');
     try {
-      const p = await data('invoice_preview', { entity: K.entity, id, print: true });
-      w.document.open(); w.document.write(p.html); w.document.close();
-      w.onload = () => setTimeout(() => w.print(), 300);
-    } catch (err) { w?.close(); setError(err.message); }
+      const p = await data('invoice_pdf', { entity: K.entity, id });
+      const bytes = Uint8Array.from(atob(p.base64), (c) => c.charCodeAt(0));
+      const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = p.filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (err) { setError(err.message); }
+    setBusy(false);
   }
   async function convert() {
     if (!window.confirm(`Mark ${record.name} accepted and create an invoice from it? The invoice starts as a draft you can review before sending.`)) return;
@@ -244,7 +247,7 @@ function DocPage({ K, id }) {
             {isQuote && record.invoice_id && <button className="btn inv-convert" onClick={() => open('invoices', record.invoice_id)}>Open invoice {record.invoice_id_name}</button>}
             <button className="btn" onClick={() => setPanel('billto')}>Edit details</button>
             <button className="btn" onClick={() => setPanel('preview')}>Preview</button>
-            <button className="btn" onClick={print}>Print / PDF</button>
+            <button className="btn" disabled={busy} onClick={downloadPdf}>Download PDF</button>
             <MoreMenu>
               {!isQuote && record.status === 'sent' && <button disabled={busy} onClick={() => setStatus('paid')}>Mark paid</button>}
               {!isQuote && record.status === 'paid' && <button disabled={busy} onClick={() => setStatus('sent')}>Mark unpaid</button>}
@@ -558,13 +561,14 @@ function SendDrawer({ K, record, onClose, onSent }) {
   const [to, setTo] = React.useState(record.bill_to_email || '');
   const [cc, setCc] = React.useState('');
   const [save, setSave] = React.useState(true);
+  const [attach, setAttach] = React.useState(true);
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const t = record.totals || {};
   async function send(e) {
     e.preventDefault();
     setBusy(true); setError('');
-    try { await data('send_invoice', { entity: K.entity, id: record.id, values: { to, cc, save_email: save } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
+    try { await data('send_invoice', { entity: K.entity, id: record.id, values: { to, cc, save_email: save, attach_pdf: attach } }); onSent(); } catch (err) { setError(err.message); setBusy(false); }
   }
   return (
     <Drawer title={record.sent_at ? `Resend ${K.doc}` : `Send ${K.doc}`} kicker={record.name} onClose={onClose}>
@@ -581,6 +585,9 @@ function SendDrawer({ K, record, onClose, onSent }) {
             <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} /> Save this as the client&rsquo;s email{record.contact_id ? ' (and on the contact)' : ''}
           </label>
         )}
+        <label className="check" style={{ marginTop: 10 }}>
+          <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} /> Attach a PDF copy of the {K.doc}
+        </label>
         <label className="label" htmlFor="si-cc">Cc <span className="muted">· optional, comma separated</span></label>
         <input id="si-cc" className="field" inputMode="email" value={cc} onChange={(e) => setCc(e.target.value)} />
         {!(record.items || []).length && <div className="notice warn-notice" style={{ marginTop: 12 }}>Add at least one line item first.</div>}

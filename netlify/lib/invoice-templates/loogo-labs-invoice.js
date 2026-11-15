@@ -1,4 +1,5 @@
 import { renderInvoice } from './layout.js';
+import { pdfFileName, renderInvoicePdf } from './pdf.js';
 
 // Loogo Labs LLC's own invoice, in the cream document standard used by the
 // quotes and the Google Ads Proposal Template: forest ink on cream, amber
@@ -29,4 +30,6 @@ export default {
   instances: ['loogo-labs-instance', 'loogo-labs', 'loogolabs'],
   reply_to: 'david@loogolabs.com',
   render: (invoice, opts) => renderInvoice(BRAND, invoice, opts),
+  pdf: (invoice) => renderInvoicePdf(BRAND, invoice),
+  pdfName: (invoice) => pdfFileName(BRAND, invoice),
 };

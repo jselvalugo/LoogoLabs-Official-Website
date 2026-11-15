@@ -198,7 +198,7 @@ function bind(cfg) {
   }
 
   // Emails the document, marks a draft as sent, and logs it on the record (and its contact).
-  async function send(inst, id, { to, cc, save_email = true } = {}, me = {}) {
+  async function send(inst, id, { to, cc, save_email = true, attach_pdf = true } = {}, me = {}) {
     const doc = await full(inst, needId(id));
     if (doc.status === 'void') throw new CrmError(`This ${cfg.kind} is void`);
     if (!doc.items.length) throw new CrmError('Add at least one line item before sending');
@@ -206,8 +206,11 @@ function bind(cfg) {
     if (!recipients.length) throw new CrmError('Add the bill-to email, or who to send it to');
     const copies = cc ? emailList(cc) : [];
     const t = templateFor(doc);
-    const { subject, html, text } = t.render(doc, { workspace: await workspace(inst, me) });
-    const messageId = await sendEmail({ to: recipients, cc: copies, subject, html, text, replyTo: t.reply_to || me.email });
+    const ws = await workspace(inst, me);
+    const attachments = [];
+    if (attach_pdf && t.pdf) attachments.push({ filename: t.pdfName(doc, { workspace: ws }), content: (await t.pdf(doc, { workspace: ws })).toString('base64') });
+    const { subject, html, text } = t.render(doc, { workspace: ws, attached: attachments.length > 0 });
+    const messageId = await sendEmail({ to: recipients, cc: copies, subject, html, text, replyTo: t.reply_to || me.email, attachments });
     const audit = { userId: me.id };
     await updateRecord(inst, cfg.entity, doc.id, doc.status === 'draft' ? { status: 'sent' } : {}, audit);
     await q(`UPDATE ${cfg.table} SET sent_at = now(), sent_to = $3 WHERE id = $1 AND instance_id = $2`, [doc.id, inst, recipients.join(', ')]);
@@ -215,13 +218,22 @@ function bind(cfg) {
       await q(`UPDATE ${cfg.table} SET bill_to_email = $3 WHERE id = $1 AND instance_id = $2`, [doc.id, inst, recipients[0]]);
       if (doc.contact_id) await q(`UPDATE crm_contacts SET email = $3, updated_at = now() WHERE id = $1 AND instance_id = $2 AND (email IS NULL OR email = '')`, [doc.contact_id, inst, recipients[0]]);
     }
-    const note = { type: 'email', subject: `${cfg.label} ${doc.name} sent`, body: `${subject}\nTo: ${recipients.join(', ')}${copies.length ? `\nCc: ${copies.join(', ')}` : ''}\nTotal: $${doc.totals.total.toFixed(2)}` };
+    const note = { type: 'email', subject: `${cfg.label} ${doc.name} sent`, body: `${subject}${attachments.length ? `\nAttached: ${attachments[0].filename}` : ''}\nTo: ${recipients.join(', ')}${copies.length ? `\nCc: ${copies.join(', ')}` : ''}\nTotal: $${doc.totals.total.toFixed(2)}` };
     await addActivity(inst, { ...note, entity_type: cfg.entity, entity_id: doc.id }, audit);
     if (doc.contact_id) await addActivity(inst, { ...note, entity_type: 'contacts', entity_id: doc.contact_id }, audit).catch(() => {});
     return { sent: true, id: messageId, to: recipients, cc: copies };
   }
 
-  return { cfg, nextNumber, beforeCreate, beforeUpdate, listItems, addItem, updateItem, deleteItem, extras, full, preview, send };
+  // The PDF copy on its own, for the CRM's Download PDF button.
+  async function pdf(inst, id, me = {}) {
+    const doc = await full(inst, needId(id));
+    const t = templateFor(doc);
+    if (!t.pdf) throw new CrmError('This template has no PDF version yet');
+    const ws = await workspace(inst, me);
+    return { filename: t.pdfName(doc, { workspace: ws }), base64: (await t.pdf(doc, { workspace: ws })).toString('base64') };
+  }
+
+  return { cfg, pdf, nextNumber, beforeCreate, beforeUpdate, listItems, addItem, updateItem, deleteItem, extras, full, preview, send };
 }
 
 export const invoices = bind(KINDS.invoices);

@@ -56,6 +56,7 @@ export default async (req) => {
       case 'update_invoice_item': return json(await doc(body).updateItem(inst, body.id, body.values || {}));
       case 'delete_invoice_item': return json(await doc(body).deleteItem(inst, body.id));
       case 'invoice_preview': return json(await doc(body).preview(inst, body.id, { forPrint: !!body.print }, me));
+      case 'invoice_pdf': return json(await doc(body).pdf(inst, body.id, me));
       case 'send_invoice': return json(await doc(body).send(inst, body.id, body.values || {}, me));
       case 'convert_quote': return json(await billing.convertQuote(inst, body.id, me), 201);
       // Client reporting: dashboards, approvals, recaps (netlify/lib/crm-clients.js).

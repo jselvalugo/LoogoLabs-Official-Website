@@ -14,7 +14,7 @@ const longDay = (d) => (d ? new Date(`${String(d).slice(0, 10)}T12:00:00Z`).toLo
 const qty = (n) => (Number.isInteger(Number(n)) ? String(Number(n)) : Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 }));
 const host = (url) => String(url).replace(/^https?:\/\//, '').replace(/\/$/, '');
 
-export function renderInvoice(brand, inv, { forPrint = false } = {}) {
+export function renderInvoice(brand, inv, { forPrint = false, attached = false } = {}) {
   const B = brand;
   const C = B.colors;
   const items = inv.items || [];
@@ -188,7 +188,7 @@ export function renderInvoice(brand, inv, { forPrint = false } = {}) {
           </tr></table>
         </td></tr>
 
-        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${isQuote ? `here is your quote from ${esc(B.business.name)}. Everything included is listed below. To accept, just reply to this email and we&rsquo;ll get started.` : paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.`}</td></tr>`}
+        ${forPrint ? '' : `<tr><td class="px no-print" style="padding:26px 48px 0;font:14px/1.65 ${SANS};color:${C.ink};">Hi ${esc(first)},<br>${isQuote ? `here is your quote from ${esc(B.business.name)}. Everything included is listed below. To accept, just reply to this email and we&rsquo;ll get started.${attached ? ' A PDF copy is attached for your records.' : ''}` : paid ? 'thank you. This invoice is paid in full; a copy is below for your records.' : `here is your invoice from ${esc(B.business.name)}. Everything we&rsquo;re billing for is listed below${inv.payment_link ? ', and you can pay online with the button under the totals' : ''}.${attached ? ' A PDF copy is attached.' : ''}`}</td></tr>`}
 
         <!-- Line items -->
         <tr><td class="px" style="padding:26px 48px 0;">
