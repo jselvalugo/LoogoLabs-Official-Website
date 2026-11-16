@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `ai-photos-kitchen-you-never-built`,
+    title: `Don't Show Customers a Kitchen You Never Built`,
+    excerpt: `A generated picture of a kitchen you never built proves nothing to a buyer, so use AI to fix how your real job photos were taken and leave what they show alone.`,
+    tags: `AI Content Workflow, Project Photos, Remodelers`,
+    content: `The pictures that would make a remodeler's ads look best are now one prompt away, and none of them show your work. Describe a white kitchen with brass pulls and a walnut island, and a few seconds later you have a photo better than anything you've shot on a job site. Warm light, no sawdust, no extension cord across the floor.
+
+I understand the pull. Your own photos were taken at 4:30 on a Friday with a phone, while the homeowner was asking about the warranty. I still tell every remodeler I work with the same thing: don't post it.
+
+## What a buyer is checking
+
+Someone about to spend serious money on a kitchen isn't scrolling your feed for decoration. They're trying to answer one question: can these people do this, in a house like mine? Every photo you show is evidence for or against. A generated kitchen is evidence of nothing. It's a room nobody built, sitting next to your name.
+
+The cost shows up later, and in the worst place. The homeowner who booked a consultation because of that walnut island asks which job it was, or whether they could see it in person. Now you're explaining, across their own table, why the photo that got you invited isn't yours. Some of them will still hire you. I wouldn't bet the job on which ones.
+
+There's a quieter problem too. Generated rooms can get small things wrong for anyone who knows how rooms are built: a cabinet door that couldn't open past the range, a sink with nowhere for the drain to go. Your next customer may not notice. Their brother-in-law who installs cabinets will.
+
+## Your real photos are fixable
+
+The generated picture usually looks better because of the light, the angle and the mess, not the kitchen. You can fix all of that on the next job, and AI can help with some of it afterward without inventing anything.
+
+On the last day, before the homeowner moves back in, give it ten minutes:
+
+- Clear the counters completely, your own coffee cup included.
+- Turn on every light in the room and open the blinds. If you can schedule the final walkthrough for late morning, do.
+- Stand in the doorway and hold the phone at chest height, level, not tilted down. Then take the corner shot, wide enough to show the island and the run of cabinets together.
+- Get a few close-ups of the work you're proudest of: the scribe against a wall that wasn't straight, a clean mitered edge, the outlet you hid inside a drawer.
+
+The close-ups do more selling than the wide shots. A homeowner can't judge your craft from across the room. They can from six inches away.
+
+## Where AI belongs in the photo work
+
+The rule I give clients for editing is short: **AI can change how the photo was taken, never what was built.**
+
+Fine: straightening a tilted shot, brightening a dark corner, correcting the yellow cast from old bulbs, removing a stray ladder or a drop cloth from the frame. A better camera or a tidier crew would have done the same.
+
+Not fine: changing the countertop, swapping the hardware, adding a window, stretching the room, staging it with furniture the homeowner doesn't own. Once an edit touches the materials or the layout, the photo stops being proof of your work and turns back into the generated kitchen, only harder to spot.
+
+AI also earns its keep on the words next to the photo. Paste in your notes from the job, such as what the homeowner wanted fixed and what you found behind the old cabinets, and ask for a short, plain caption. Then rewrite the line about the problem yourself, because that's the part a future customer recognizes from their own house.
+
+The one place a generated image can belong is a design conversation, labeled as a concept: here's roughly how darker lower cabinets would look. Shown that way, it's a sketch. Shown in an ad, it's a claim.
+
+## Give every image a street name
+
+Before your next ad goes out, scroll back through the last three months of posts and every ad still running. Next to each image, write the street of the job it came from. Any picture that can't get a street name comes down this week, and its slot goes to the best real photo you have, even if you took it at 4:30 on a Friday.`,
+  },
+  {
     slug: `ad-account-counting-junk-leads`,
     title: `Your Ad Account Is Learning From Your Worst Leads`,
     excerpt: `Your ad account scores a spam form fill and a booked customer as the same win, and its automated bidding will go find you more of whichever is cheaper.`,
