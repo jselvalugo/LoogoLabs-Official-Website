@@ -11,6 +11,63 @@
 
 export const posts = [
   {
+    slug: `ad-account-counting-junk-leads`,
+    title: `Your Ad Account Is Learning From Your Worst Leads`,
+    excerpt: `Your ad account scores a spam form fill and a booked customer as the same win, and its automated bidding will go find you more of whichever is cheaper.`,
+    tags: `AI for Paid Ads, Conversion Tracking, Service Business Owners`,
+    content: `Every form fill on your website counts as a win inside your ad account. That includes the agency offering to fix your search rankings and the homeowner three towns past the edge of your service area. The account can't tell them apart from a customer. It only knows they filled in the form, and its automated bidding is now out looking for more people like them.
+
+## The machine is doing exactly what you asked
+
+Most ad platforms will set your bids for you. You pick a goal, usually some version of "get me as many conversions as possible," and the system learns who tends to produce one. That learning is real AI, and it's good at the job it's given.
+
+The trouble is the job. In a lot of the accounts I open, a conversion means nothing more than "the thank-you page loaded." To the bidding, a junk form fill and a customer about to book a four-thousand-dollar job look identical. If junk happens to be cheaper to find, the account will lean toward it, because cheaper is what you asked for.
+
+Nothing on the dashboard looks wrong while this happens. Conversions go up. Cost per conversion goes down. The phone just doesn't get any busier.
+
+## Why I'd fix it this month
+
+This is when a lot of owners sit down with the year's numbers and set next year's ad budget. The figure most of them plan from is cost per lead. If a big share of those leads were never going to buy, that figure is flattering you, and every plan built on it is off in the same direction.
+
+And when you change what the account counts, its bidding has to relearn, which can make the first few weeks uneven. Making the change now means the rough patch is behind you before the month you're counting on next year.
+
+## Grade sixty days of leads by hand
+
+Export every form lead from the last sixty days: the date, what they wrote, and what happened next. Before you read a single one, write down the questions that decide whether a lead was real. Mine for most service businesses run in this order, and a lead stops at the first no:
+
+- Did they ask for something we actually sell?
+- Are they inside the area we serve?
+- Did we reach a person who wanted a price or a visit?
+
+Don't grade on whether they hired you. A real lead you failed to close is a sales problem, not an ad problem, and mixing the two hides both.
+
+Then do the arithmetic. Say the account spent $1,800 over those sixty days and logged 60 conversions. The dashboard calls that $30 a lead. If 24 of the 60 pass your questions, you paid $75 for each lead worth having. That second number is the one to plan next year from.
+
+## Change what the account counts
+
+Once you know your real rate, change the signal the bidding learns from. Your options, from strongest to simplest:
+
+- If your system can tell the ad account when a lead turns into a booked estimate or a paid job, count that instead of the form.
+- If it can't, count a step junk rarely takes, such as a call that lasts more than a couple of minutes or a booking on your calendar.
+- At the very least, make the service and the town required fields on the form, so fewer off-target fills get through to be counted at all.
+
+Then leave it alone for a few weeks. Changing the goal every time the numbers wobble restarts the learning and tells you nothing.
+
+## The part a chat AI does well
+
+A chat AI can do a first pass of the grading in minutes if you give it your questions, your service list and your service area, and ask it to mark each lead and say which question it failed. Strip names, phone numbers and email addresses out of the export first. The tool doesn't need them to read a message, and your customers didn't hand them over for that.
+
+Check every lead it marks as junk, because that's where its mistakes cost you. A two-line message like "how much for what you did at my neighbor's" can read as noise to a tool and turn out to be the best lead of the month.
+
+## The call I keep for myself
+
+The AI can apply your grade. It can't write it. Whether a job two towns over is worth the drive, or whether a small repair is a foot in the door or a wasted van trip, is a judgment about your business. It shifts with the season and your calendar. Neither the chat tool nor the bidding knows any of that, and the bidding only hears what you choose to count.
+
+## Grade last month before Friday
+
+Export last month's form leads, write your grading questions at the top of the sheet, and mark each lead real or junk. Divide last month's ad spend by the number marked real. If the result is more than double the cost per conversion on your dashboard, change what the account counts this week, before you put a single figure into next year's budget.`,
+  },
+  {
     slug: `holiday-email-holdout-group`,
     title: `Hold Back a Tenth of Your List Before the Holiday Emails Go Out`,
     excerpt: `The only way to know what your holiday emails sold is to compare the customers who got them with a few hundred who never did.`,
