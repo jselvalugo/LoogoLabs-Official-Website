@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `ai-blog-tool-invented-claims`,
+    title: `The AI Blog Tool Is Making Promises in Your Name`,
+    excerpt: `A tool that writes and posts articles to your website will state things about your business as fact, so find out what it gets wrong before it publishes anything.`,
+    tags: `Evaluating AI Tools, AI Blog Writers, Local Service Owners`,
+    content: `A page on your website says you offer 24-hour emergency service. You don't, and you never have. Nobody on your team wrote that page. A tool did, one of the ones that promise a steady stream of blog posts to help you get found, and it published the page on a Tuesday night without asking anyone.
+
+I run into this more often now that these tools are cheap and the pitch is easy to say yes to. Connect your website once and fresh articles go live every week. What the pitch leaves out is that every article makes claims about your business, and the tool fills the gaps in what it knows with whatever sounds normal for a business like yours.
+
+## What it invents, and why
+
+An AI writing about an electrician in your town knows what electricians usually say. So it writes that you serve the towns around you, that estimates are free, that your work is guaranteed. Some of that is true for you. Some of it isn't. The tool can't tell the difference unless you gave it the answer, and many setups ask for little more than a business name, a web address and a few keywords.
+
+The wrong claims aren't wild, and that's what makes them expensive. A customer reads "free estimates" and is annoyed when you mention a trip fee. Someone two counties over books you because a post said you cover their area. A warranty you never offered turns up in a dispute, quoted from your own website.
+
+Customers aren't the only readers, either. The assistants people now ask for recommendations can read your website too, and they often repeat what they find there. A made-up service area on a blog page can end up in an answer about who to call.
+
+## Make the demo write about you
+
+The sales demo will show you a nicely written article on a general topic. That tells you nothing. What you need to see is what it writes about you, with only the information it would really have after setup.
+
+Before you pay, ask three things:
+
+- **Can I see three posts about my business?** Not a template. Three articles written from whatever the tool actually knows about you.
+- **What goes live without a person approving it?** If the answer is "everything, that's the point," the tool is writing in your name with nobody checking.
+- **Where do the facts about my business come from?** If the answer is your homepage and some keywords, expect it to fill in the rest.
+
+Then take the samples and a pen. Underline every sentence that states a fact about you: a service, a town, a price, a guarantee, a credential, how long you've been in business, how fast you show up. Mark each one true, false or *not quite*. If one false claim turns up in three short posts, picture what a year of weekly ones holds.
+
+## Where the tool earns its place
+
+I'm not against using AI for this. Drafting is the slow part of writing for your website, and a tool can turn your notes on a job into a readable article faster than you can. It's good at structure and plain wording, and at turning a rambling voice memo into something a homeowner will read to the end.
+
+What it can't do is know your business. That has to come from you, and someone who knows the business has to read the result before it goes live.
+
+The setup I'm comfortable with is simple. You keep a one-page fact sheet with your services, the towns you cover, your prices or price ranges and the guarantees you really give. The tool drafts from that sheet. Every draft sits unpublished until you or someone on your team has read it, which for a short post is about ten minutes.
+
+If those ten minutes feel like too much, the honest answer is fewer posts. Two accurate articles a month do more for you than eight that each carry one small lie.
+
+## If it's already switched on
+
+Plenty of owners reading this already have one of these running. Don't delete everything. Turn on approval mode if the tool has one, or pause publishing if it doesn't. Then go through what's live, oldest first, looking for the same kinds of claims. Fix or remove each false one.
+
+It's usually quicker than it sounds. A tool working from the same thin information tends to make the same wrong claim again and again, so once you've found it in one post you'll spot it fast in the rest.
+
+## Underline five posts before the next one goes out
+
+This week, open the five most recent articles on your website that you didn't write yourself. Underline every sentence that says something about your business as fact and check it against what's true. If even one is wrong, switch the tool to drafts-only before its next post publishes.`,
+  },
+  {
     slug: `january-price-increase-notice-regulars`,
     title: `Tell Your Regulars About January's Price Increase in December`,
     excerpt: `Regulars rarely walk away over a few extra dollars; they walk away when the first they hear of it is a bigger January bill.`,
