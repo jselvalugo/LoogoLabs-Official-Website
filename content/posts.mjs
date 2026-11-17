@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `january-price-increase-notice-regulars`,
+    title: `Tell Your Regulars About January's Price Increase in December`,
+    excerpt: `Regulars rarely walk away over a few extra dollars; they walk away when the first they hear of it is a bigger January bill.`,
+    tags: `Positioning and Offers, Price Increases, Repeat-Customer Businesses`,
+    content: `The customers who leave over a price increase rarely leave because of the number. They leave because they found out from an invoice. The January bill comes in a few dollars higher than December's, nobody mentioned it, and a regular who has never once compared you with anyone else goes looking that afternoon.
+
+Most of the service businesses I work with change their rates on January 1, and a lot of them settle the new number in the last week of December. By then there's no time to tell anyone properly, so the notice goes out on New Year's Eve squeezed between holiday emails, or it doesn't go out at all. If your prices are going up next year, the next two weeks are when that message needs to be written.
+
+## Settle the number before you open any tool
+
+An AI can't tell you what to charge. It doesn't know what your costs did this year, or which customers would follow you anywhere and which are one price change away from leaving. Set the new price and the date it starts on your own, and write down your reason in one sentence you'd be comfortable saying across the counter.
+
+That sentence has to be true and plain. "My insurance and supplies cost more than they did a year ago" is a reason. "To keep delivering the exceptional service you deserve" is not. It asks the customer to pay for a compliment.
+
+Then decide what isn't changing. Maybe weekly customers keep their usual slot. Maybe anything already booked for January stays at this year's price. Whatever it is, put it in the notice, because that's the line a regular reads twice.
+
+## Five sentences, written by you
+
+Here's an invented example from a dog groomer charging $70 a visit:
+
+> Hi Dana. From January 1, a full groom will be $76, up from $70. My product and insurance costs went up this year and I held prices through all of it. Any appointment you've already booked for January stays at $70. If you'd like to talk it over, reply here or ask me at your next visit.
+
+What changes, from when, why, what stays put, and how to reach a person. There's no apology and no paragraph about how hard the decision was. Customers don't need to hear that you feel bad. They need the number early enough to plan around it.
+
+Work out what it means for your best customers before you send it. A dog groomed every six weeks comes in eight or nine times a year, so six dollars a visit is roughly fifty dollars a year. Having that figure in your head makes it much easier to answer calmly when someone asks what it adds up to.
+
+## Where an AI chat is worth opening
+
+Once the draft is yours, paste it into an AI chat and ask it to flag every word that apologizes, hedges or pads. Owners writing about money nearly always slip in an "unfortunately", a "we hate to do this" or a line about how much they value you. Cut whatever it flags unless you'd say it to the customer's face.
+
+Ask it for a text-message version under 300 characters that keeps the date, the new price and the line about what stays the same. Then check that all of those survived, because shortening is exactly where facts quietly drop out.
+
+The most useful request is the last one: have it read the notice as a customer of several years and list the questions it leaves open. Usually one of them is real. Does this apply to the nail trim add-on, the package I prepaid, my second dog? Answer it in the notice so you're not answering it on the phone forty times in January.
+
+What I wouldn't hand over is the reason. Ask an AI why your prices are going up and you'll get something about rising costs and a commitment to quality that reads like every other notice in your customer's inbox. Your one true sentence does more work than that.
+
+## Regulars hear it from you first
+
+Send the notice to your regulars before anyone else, as a personal text or email from you, not a broadcast with a banner on it. Someone who has booked with you for three years should hear it from you before they spot it on your website.
+
+On the same day, update the website, the booking page, any printed price list and the answer sheet behind your website chat assistant if you have one. Otherwise somebody books at a price you're no longer charging, or the assistant quotes them last year's rate, and you either honor it or start the year with an argument.
+
+After that, leave it alone. One short reminder in the last week of December is plenty for people who book often. Everyone else will see the new price where they book.
+
+## Pick your send date by Friday
+
+Write down three things this week: the new prices, the date they start, and your one-sentence reason. Then put a send date on your calendar no later than December 1, with an hour blocked that morning to finish the notice and send it to your regulars. If you can't get the reason into one honest sentence by Friday, work out why before you raise anything.`,
+  },
+  {
     slug: `ai-photos-kitchen-you-never-built`,
     title: `Don't Show Customers a Kitchen You Never Built`,
     excerpt: `A generated picture of a kitchen you never built proves nothing to a buyer, so use AI to fix how your real job photos were taken and leave what they show alone.`,
