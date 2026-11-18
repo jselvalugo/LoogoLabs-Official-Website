@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `service-page-price-range-ai-answers`,
+    title: `Your Website Won't Say What a Job Costs, So Someone Else Will`,
+    excerpt: `When a shopper asks an AI assistant what a job costs in your town, it can only repeat numbers somebody published, and a page that says call for a quote gives it nothing.`,
+    tags: `AI Search Visibility, Price Ranges, Home Service Owners`,
+    content: `A lot of home service websites refuse to say what anything costs. Every service page ends the same way: every job is different, call for a free quote. The shopper still wants a ballpark before they let a stranger walk their yard for half an hour, so they go and get one somewhere else.
+
+Some of them now get it by asking an AI assistant. Something like: roughly what does a cedar fence cost around here? The assistant can't call you. It answers from what has been written down, and a page with no number on it is a page it can only describe in general terms. The fence company down the road that wrote "most of our backyard fences run between this and that" has given it a sentence to repeat.
+
+## Why the ballpark matters more than the quote
+
+I understand why owners keep prices off the site. Every job really is different, and nobody wants to be shopped on price by a competitor. Both worries are fair. Neither one stops the shopper from finding a number.
+
+What changes is whose number it is. If you don't publish a range, the customer arrives at your site visit holding a figure from a forum thread or a part of the country where labor costs something else entirely. That figure becomes the yardstick, and your quote gets measured against it. You end up arguing with a number you never chose.
+
+## Get the range from your own invoices
+
+Don't guess the range, and don't ask an AI for it. Ask a tool what a fence costs and it will hand you an average drawn from other people's markets, which is exactly the number you're trying to replace.
+
+Pull last year's finished jobs for one service instead. Say you built forty fences. Sort them by final price, set aside the five cheapest and the five most expensive, and look at the thirty in the middle. If those run from $4,200 to $7,800, that's your honest "most jobs" range. It comes from your own crews and your own prices, not somebody else's. I'd rather publish a range that's a little wide than one I'd have to walk back at the customer's gate.
+
+This part is where an AI is genuinely useful. Paste the export, with job type, length, material and final price, and ask it to sort the jobs by type, give the middle spread for each group, and list what the expensive jobs had in common. It will often spot the pattern you half knew already: slopes, removing an old fence, a second gate. Check two of its groups against the spreadsheet by hand before you use any of it. Tools still slip when they add up a column, and a wrong number on your website is worse than no number.
+
+## What to put on the page
+
+Under each main service, a short section in plain words. Four things:
+
+- the range most jobs land in, and what a typical job in that range looks like
+- the two or three things that push a job above it
+- what isn't included
+- how the customer gets their exact number, and how soon
+
+For the fence company above, it might read:
+
+> Most backyard cedar fences we build come in between $4,200 and $7,800. That covers roughly 100 to 150 feet on level ground. Slopes, taking out an old fence and double gates add to it. Permits are extra where the town requires one. We'll come out, measure, and give you a fixed price within two working days.
+
+An AI can tidy that wording once the facts are yours. Read what comes back with a pen in hand. Drafting tools like to add things you never said: a "starting at" figure below anything you'd charge, a free removal you don't offer, a phrase about competitive pricing that means nothing. Cut every one of them. The section works because each sentence in it is true.
+
+## What it won't do
+
+I can't promise an assistant will mention you once the range is up. Nobody controls what those tools say, and I'd be wary of a vendor who claims to. What you control is whether your page holds a plain answer worth repeating.
+
+The section pays for itself with people anyway. A homeowner who reads $4,200 to $7,800 and still calls has already accepted the ballpark, so the visit becomes a conversation about their yard instead of a negotiation. The ones who would have balked at that range would have balked at your quote too, after you'd spent an afternoon driving out to give it.
+
+As for competitors: any of them could already get your prices by asking for a quote. The range tells them very little they couldn't find out in a phone call.
+
+## One page, this week
+
+Pick the one service that brings in the most quote requests. Pull last year's finished jobs for it, work out the middle range the way I described above, and add the four-part cost section to that page. Then, for the next month, note in each new lead's record whether they mention the range when they call.`,
+  },
+  {
     slug: `ads-running-while-closed-holidays`,
     title: `Your Ads Don't Know You're Closed for the Holidays`,
     excerpt: `Nothing in an ad account knows you've shut the doors for Christmas week, so tell every campaign what to do with those days before you lock up.`,
