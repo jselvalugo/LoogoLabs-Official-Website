@@ -100,6 +100,20 @@
   to = "/"
   status = 302
 
+# The Packaged Services page was taken down (Nov 2026). Send old links home.
+# Exact paths only, so /packages/press-release and other package pages stay live.
+[[redirects]]
+  from = "/packages"
+  to = "/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/es/packages"
+  to = "/es"
+  status = 302
+  force = true
+
 # Posts are written in English only. /es/news/<slug> serves the same post with
 # the Spanish site chrome; its canonical points at the English URL.
 [[redirects]]

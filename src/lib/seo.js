@@ -306,15 +306,6 @@ export const ROUTES = [
     changefreq: 'monthly',
   })),
   {
-    page: 'Packages',
-    path: '/packages',
-    title: `Marketing Software Plans & Services | ${SITE.name}`,
-    description:
-      'Launch, Growth and Scale software plans (SaaS) for marketing automation, plus services done by our team: content and social media, ads management, local SEO, websites, reviews and press releases.',
-    priority: '0.7',
-    changefreq: 'monthly',
-  },
-  {
     page: 'PressRelease',
     path: '/packages/press-release',
     title: `Press Release Writing & Distribution | ${SITE.name}`,

@@ -235,7 +235,6 @@ function Carousel({ es, items }) {
 
 // Pinned scroll scene: the viewport locks while the four services advance.
 function Scene({ es, items, onNavigate }) {
-  const pkHref = useHref()(pathForPage('Packages'));
   const ref = React.useRef(null);
   const [active, setActive] = React.useState(0);
   const [built, setBuilt] = React.useState(0);
@@ -274,7 +273,6 @@ function Scene({ es, items, onNavigate }) {
               ))}
             </ol>
             <div className="hm-scene__bar" aria-hidden="true"><motion.span style={{ width: bar }} /></div>
-            <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
             <Buddy pose="explain" className="hm-buddy--scene" />
           </div>
           <div className="hm-scene__right">
@@ -297,7 +295,6 @@ function Scene({ es, items, onNavigate }) {
 }
 
 function Explorer({ es, onNavigate }) {
-  const pkHref = useHref()(pathForPage('Packages'));
   const items = es ? SERVICES_ES : SERVICES;
   const reduce = useReducedMotion();
   const wide = useMedia('(min-width: 961px)');
@@ -313,7 +310,6 @@ function Explorer({ es, onNavigate }) {
             description={es ? 'Lo que incluye cada servicio. Desliza para ver cada uno.' : 'What each service includes. Swipe to see each one.'} />
         </div>
         <Carousel es={es} items={items} />
-        <a className="hm-btn-outline" href={pkHref} onClick={e => { e.preventDefault(); onNavigate('Packages'); window.scrollTo(0, 0); }}>{es ? 'Ver todos los precios' : 'See full pricing'} <span aria-hidden="true">→</span></a>
       </div>
     </Wrap>
   );

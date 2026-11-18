@@ -29,7 +29,6 @@ import Privacy from './pages/Privacy';
 import Accessibility from './pages/Accessibility';
 import Terms from './pages/Terms';
 import Quizzes from './pages/Quizzes';
-import Packages from './pages/Packages';
 import PressRelease from './pages/PressRelease';
 import BrandPartners from './pages/BrandPartners';
 import ServicePackage from './pages/ServicePackage';
@@ -179,7 +178,6 @@ function AppRoutes({ initialPath }) {
   else if (page === 'Quizzes') body = <Quizzes onNavigate={navigate} />;
   else if (page === 'Tools') body = <React.Suspense fallback={null}><ToolsHub /></React.Suspense>;
   else if (TOOL_PAGES[page]) { const Tool = TOOL_PAGES[page]; body = <React.Suspense fallback={null}><Tool /></React.Suspense>; }
-  else if (page === 'Packages') body = <Packages onNavigate={navigate} />;
   else if (page === 'PressRelease') body = <PressRelease />;
   else if (page === 'BrandPartners') body = <BrandPartners />;
   else if (SERVICE_PACKAGE_BY_PAGE[page]) body = <ServicePackage key={page} page={page} />;
@@ -214,7 +212,7 @@ function AppRoutes({ initialPath }) {
       <Footer
         columns={[
           { title: es ? 'Empresa' : 'Company', links: ['Mission', 'Who we serve', 'About', 'Industry LoogoBlog', 'Book a Call'] },
-          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Packaged Services', 'Free Tools'] },
+          { title: es ? 'Negocios locales' : 'Local businesses', links: ['AI Voice', 'Central Florida', 'Free Tools'] },
           { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Accessibility', 'Cookie Preferences'] },
           { title: es ? 'Síguenos' : 'Follow', links: ['Facebook', 'Instagram', 'LinkedIn'] },
         ]}

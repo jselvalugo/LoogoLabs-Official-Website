@@ -89,7 +89,7 @@ function SidebarBody({ posts, category, onCategory, onNavigate, onPick }) {
       </Section>
       <Section label={es ? 'Explorar' : 'Explore'}>
         <ul className="ln-side__list">
-          {(es ? [['Tools', 'Herramientas gratis'], ['GrowCFL', 'Crece en el centro de Florida'], ['Quizzes', 'Quizzes de marketing gratis'], ['Packages', 'Servicios en paquete']] : [['Tools', 'Free marketing tools'], ['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes'], ['Packages', 'Packaged services']]).map(([page, text]) => (
+          {(es ? [['Tools', 'Herramientas gratis'], ['GrowCFL', 'Crece en el centro de Florida'], ['Quizzes', 'Quizzes de marketing gratis']] : [['Tools', 'Free marketing tools'], ['GrowCFL', 'Grow in Central Florida'], ['Quizzes', 'Free marketing quizzes']]).map(([page, text]) => (
             <li key={page}>
               <button type="button" className="ln-side__link" onClick={() => { onPick?.(); onNavigate(page); }}>
                 <span className="ln-side__title ln-side__title--go">{text} <ArrowRight size={13} weight="bold" aria-hidden="true" /></span>
