@@ -1,99 +1,292 @@
 import React from 'react';
-import { Compass, Megaphone, ChartLineUp, Target, ArrowDown } from '@phosphor-icons/react';
-import { FounderVideo, SignupForm, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
+import {
+  MagnifyingGlass, Wrench, RocketLaunch, TrendUp, ArrowDown, ArrowRight, ArrowLeft, Check, X, ShieldCheck, Quotes, ThumbsUp, EnvelopeSimple,
+  Storefront, Briefcase, UsersThree, ArrowsDownUp, CaretDown, CaretRight,
+} from '@phosphor-icons/react';
+import { FounderVideo, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
+import Button from '../components/core/Button';
+import Input from '../components/forms/Input';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
-import { REFERENCES, CLIENT_LOGOS, CLIENT_WORDMARKS } from '../lib/references';
+import { REFERENCES, CLIENT_LOGOS } from '../lib/references';
+import { getSessionId } from '../lib/sessionTracker';
+import { trackLead, leadMeta } from '../lib/metaEvents';
+import { getAttribution, gaLead } from '../lib/attribution';
 import '../styles/pages/landing.css';
 import '../styles/pages/brand-design.css';
 import '../styles/pages/consulting.css';
 
-const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
-const wordmarks = [...CLIENT_WORDMARKS];
-// The client row under the nav: the same transparent, one-colour logos as the homepage
-// ticker, so every mark sits straight on the cream with no tiles or boxes behind it.
-const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name].ticker }));
-// The mobile collage under the video: logos, then the script name.
-const proofItems = [
-  ...beltItems,
-  ...wordmarks.map((name) => ({ name, wordmark: name.split(' - ')[0], caption: name.split(' - ')[1] })),
-];
+// Growth Engine: the high-ticket, application-only ads program (90 days, 3 clients a quarter).
+// Price stays off this page; it is quoted on the strategy session. No AI receptionist here.
+const SOURCE = 'consulting';
+const SPOTS = 3;
 
-const content = {
-  source: 'consulting',
-  // Founder intro video: a YouTube/Vimeo link, or an .mp4 path in /public.
-  // Empty shows a "Video coming soon" placeholder until the new video is ready.
-  videoUrl: '/consulting/consulting-video.mp4',
-  videoPoster: '/consulting/consulting-video-poster.jpg',
-  h1: <>We plan your marketing. <em>Then we build it.</em></>,
-  lede: 'A marketing partner for SaaS brands and creators. We find where your next users, subscribers and buyers come from, write the plan, then build the campaigns, tracking and automations that get them.',
-  // Ad-matched headlines: tag the ad's utm_content with one of these keys.
-  heroVariants: {
-    saas: { h1: <>Turn trials into <em>paying customers.</em></>, lede: 'Positioning, acquisition channels and a 90-day growth plan built for SaaS.' },
-    creator: { h1: <>Turn your audience <em>into a business.</em></>, lede: 'A content, launch and monetization strategy that grows revenue, not just followers.' },
-    ads: { h1: <>Ads that pay for themselves, <em>not just your ad platform.</em></>, lede: 'Paid ads strategy for SaaS and creators: targeting, creative, budgets and tracking tied to real revenue.' },
-    strategy: { h1: <>Know which marketing <em>actually drives growth.</em></>, lede: 'An audit, a channel plan with budget and targets, and a 90-day roadmap you can run.' },
-  },
-  // Meta ads only. Describes what we do, not guaranteed results (no promised ROAS or CAC).
-  services: [
-    ['Offer & Audience', 'We sharpen your offer and pick the audiences most likely to buy, before a dollar is spent.', Compass],
-    ['Creative Testing', 'Scroll-stopping video and image ads, tested in batches so the winners are clear fast.', Megaphone],
-    ['Lower CAC Campaigns', 'Meta campaigns structured to bring your cost per customer down, with budgets set from your numbers.', Target],
-    ['Tracking & Scaling', 'Pixel and Conversions API set up so you see your real CAC, then we scale only what pays back.', ChartLineUp],
-  ],
-  signup: {
-    title: "Let's map your growth strategy.",
-    lede: 'Free 20-minute strategy call. Only 2 new clients a month.',
-    button: 'See If We’re a Fit',
-    doneTitle: "You're in. Pick a time.",
-    doneLede: "Choose a 20-minute slot and we'll come prepared with first ideas for your brand.",
-    bookLabel: 'Book My Free Strategy Call',
-    companyPlaceholder: 'Your SaaS or brand',
-    // Sign-ups here join the newsletter (NEWSLETTER_SOURCES in create-lead.js).
-    fine: 'You’ll also get our newsletter. Unsubscribe anytime.',
-  },
+const logos = REFERENCES.filter((n) => CLIENT_LOGOS[n]);
+// The client row under the nav: transparent, one-colour logos straight on the cream.
+const beltItems = logos.map((name) => ({ name, ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name].ticker }));
+const tickerLogo = (name) => ({ ...CLIENT_LOGOS[name], ...CLIENT_LOGOS[name].ticker });
+
+const hero = {
+  h1: <>How many customers did your ads <em>lose you this month?</em></>,
+  lede: 'The Loogo Labs Growth Engine is a 90-day program where we build, launch and scale your Meta and Google Ads system, from tracking to follow-up, so every dollar you spend is working and every lead gets worked.',
+};
+// Ad-matched headlines: tag the ad's utm_content with one of these keys.
+const heroVariants = {
+  ads: { h1: <>Are your ads making money, <em>or just spending it?</em></>, lede: hero.lede },
+  leads: { h1: <>What happens to a lead <em>after it clicks your ad?</em></>, lede: hero.lede },
+  scale: { h1: <>Ready to spend more on ads, <em>but not sure what's working?</em></>, lede: hero.lede },
 };
 
-const Link = () => <div className="cs-link" aria-hidden="true"><span /></div>;
-
-// Illustrative 30-day Meta Ads funnel for a SaaS or creator offer. Each figure follows
-// from the one before: $3,000 / 250,000 impressions = $12 CPM, 1.5% CTR = 3,750 clicks
-// ($0.80 each), 8% landing-page conversion = 300 leads ($10 each), 15% book a call = 45,
-// about 27% of calls close = 12 customers ($250 each).
-const results = [
-  ['Ad spend', '$3,000', 'Meta Ads · 30 days'],
-  ['Impressions', '250,000', '$12 CPM'],
-  ['Link clicks', '3,750', '1.5% CTR · $0.80 per click'],
-  ['Leads', '300', '8% page conversion · $10 per lead'],
-  ['Calls booked', '45', '15% of leads'],
-  ['New customers', '12', '$250 per customer'],
+const problems = [
+  ['You can’t see what’s working.', 'Without the pixel, Conversions API and Google conversions set up right, you’re guessing which ads bring customers and which just burn budget.'],
+  ['Leads go cold.', 'Someone fills out your form, and nobody follows up for hours. By then they’ve already called your competitor.'],
+  ['Every month starts over.', 'New campaigns, new agencies, new guesses. The platforms never get the data they need to find your buyers.'],
 ];
 
-const reviews = [
-  { src: '/testimonial-kristin-pitts.png', w: 1390, h: 458, alt: '5-star Facebook recommendation from Kristin Pitts for Loogo Labs' },
-  { src: '/testimonial-sally-butler.png', w: 1388, h: 576, alt: '5-star Facebook recommendation from Sally Butler for Loogo Labs' },
+// What we actually did for each client. No invented numbers: add a result line when the client signs off on one.
+const references = [
+  { name: 'Feche Consulting', work: 'Business automation consulting across healthcare projects: intake, follow-up and back-office workflows.', tag: 'Healthcare automation' },
+  { name: 'Reef Ntwrks', work: 'Mapped and automated core business processes so the team spends less time on manual hand-offs.', tag: 'Process automation' },
+  { name: 'Lugo’s Craft Distillery', work: 'Led the promotion for the Cards and Cocktails event: brand, story ads and launch campaign.', tag: 'Event launch' },
+  { name: 'Engentfy', work: 'Ongoing marketing consulting: positioning, content and paid campaigns for a growing AI product.', tag: 'Marketing partner' },
 ];
 
-export default function Consulting() {
-  const c = content;
-  // Great Vibes for the script client name. Added here, not in the CSS, so the build keeps it.
+const phases = [
+  { name: 'Diagnose', weeks: 'Weeks 1–2', Icon: MagnifyingGlass, items: ['Audit of your ads, site and funnel', 'Offer and positioning', 'Competitor check', 'Tracking setup: pixel, Conversions API, Google conversions', '90-day targets'] },
+  { name: 'Build', weeks: 'Weeks 3–6', Icon: Wrench, items: ['Landing page', 'Google Business Profile makeover', 'CRM pipeline', 'Lead follow-up automations', 'Review engine', 'First set of Meta and Google ads'] },
+  { name: 'Launch', weeks: 'Weeks 7–9', Icon: RocketLaunch, items: ['Ads live', 'Speed-to-lead tested', 'Weekly 45-minute strategy calls', 'First round of fixes'] },
+  { name: 'Scale', weeks: 'Weeks 10–12', Icon: TrendUp, items: ['Cut the losing ads', 'Scale the winners in steady 20% steps', 'Past Customer Review Drive', 'Final results report'] },
+];
+
+const included = [
+  'Full audit and 90-day growth plan',
+  'Meta and Google Ads built and managed',
+  'Pixel, Conversions API and Google conversion tracking',
+  'Landing page built for your offer',
+  'CRM pipeline and lead follow-up automations',
+  'Google Business Profile makeover',
+  'Review engine and Past Customer Review Drive',
+  'Weekly 45-minute strategy calls',
+  'Day 0 vs Day 90 results report',
+];
+
+// Before/after of what we measure. Describes the change, not promised numbers.
+const dayCompare = [
+  ['Cost per lead', 'Unknown or guessed', 'Tracked to the cent'],
+  ['Lead response time', 'Hours, sometimes days', 'Minutes, automated'],
+  ['Booked calls', 'Counted by memory', 'Reported every week'],
+  ['Ad decisions', 'Gut feeling', 'Made from real conversion data'],
+  ['Reviews', 'Whenever someone remembers', 'Asked for automatically'],
+];
+
+const testimonials = [
+  { name: 'Kristin Pitts', quote: 'Loogo Labs rebuilt our lead flow from the ground up. More qualified leads, better conversions, and for the first time our growth actually feels predictable instead of guesswork. The systems they set up work!!' },
+  { name: 'Sally Butler', quote: 'Loogo Labs made running my business a lot simpler. Setup was straightforward, the automations actually work, and I’m not paying for a pile of separate subscriptions anymore. Support has been responsive too. Highly recommend.' },
+];
+
+const fitYes = [
+  'You already sell a proven offer and have steady revenue',
+  'You can invest at least $1,000 a month in ad spend',
+  'You want a system that runs, not another one-off campaign',
+  'You can answer and close the leads we send',
+  'You’re ready to start in the next 30 days',
+];
+const fitNo = [
+  'You’re still figuring out what you sell',
+  'You want results without spending on ads',
+  'You’re looking for the cheapest option',
+  'You want to change everything every week',
+  'You’re just exploring for later',
+];
+
+const faqs = [
+  ['How long does it take?', 'The program runs 90 days. Tracking is set up in the first two weeks, the system is built by week six, and ads are live from week seven.'],
+  ['Is ad spend included?', 'No. You pay Meta and Google directly for ad spend, so you always own your accounts and data. Our fee covers the strategy, build and management.'],
+  ['What does the guarantee cover?', 'If you’re not happy within the first 30 days, we refund the fees you paid us. Ad spend paid to Meta or Google can’t be refunded.'],
+  ['What do you need from me?', 'Access to your ad accounts, website and Google Business Profile, about an hour a week for our call, and someone ready to answer the leads.'],
+  ['What happens after day 90?', 'You keep everything we built. You can run it yourself, or stay on with us as your Fractional CMO or on a Growth retainer.'],
+  ['Why only 3 clients a quarter?', 'Every system is built by hand and David is on every account. Limiting spots keeps the work at the level we promise.'],
+];
+
+// Ads Manager-style example results. Illustrative numbers, not client results (labelled on the page).
+// ROAS is worked out from spend and value so the three columns always agree.
+const adResults = [
+  { label: 'Med spa · consult offer', spent: 1240, value: 6820 },
+  { label: 'Home services · seasonal tune-up', spent: 485.5, value: 2184.75 },
+  { label: 'E-commerce · bundle launch', spent: 2150, value: 8385 },
+  { label: 'Fitness studio · intro package', spent: 760, value: 3268 },
+  { label: 'Product brand · evergreen offer', spent: 3400, value: 10880 },
+  { label: 'Retargeting · past site visitors', spent: 320, value: 1920 },
+];
+const usd = (n) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+const roas = (r) => (r.value / r.spent).toFixed(2);
+const totals = adResults.reduce((t, r) => ({ spent: t.spent + r.spent, value: t.value + r.value }), { spent: 0, value: 0 });
+
+// Multi-step application. One question per step; tapping an answer moves on.
+const steps = [
+  { key: 'role', q: 'Which best describes you?', options: [
+    { v: 'Owner', title: 'I own the business', desc: 'I sell my own product or service.', Icon: Storefront },
+    { v: 'Team', title: 'I lead marketing for the business', desc: 'I work in-house and own the ads budget.', Icon: Briefcase },
+    { v: 'Agency', title: 'I’m an agency or freelancer', desc: 'I’m looking for help for a client.', Icon: UsersThree },
+  ] },
+  { key: 'industry', q: 'What kind of business is it?', grid: true, options: ['Home services', 'Health, wellness or med spa', 'Professional services', 'Real estate', 'E-commerce or product brand', 'SaaS or tech', 'Creator or coach', 'Other'].map((v) => ({ v, title: v })) },
+  { key: 'revenue', q: 'What’s your monthly revenue?', options: [
+    { v: 'Under $10K', title: 'Under $10K a month' }, { v: '$10K–$30K', title: '$10K–$30K a month' },
+    { v: '$30K–$100K', title: '$30K–$100K a month' }, { v: '$100K+', title: '$100K+ a month' },
+  ] },
+  { key: 'budget', q: 'How much can you invest in ad spend each month?', options: [
+    { v: 'Not running ads yet', title: 'Not running ads yet' }, { v: 'Under $1K', title: 'Under $1K a month' },
+    { v: '$1K–$3K', title: '$1K–$3K a month' }, { v: '$3K+', title: '$3K+ a month' },
+  ] },
+  { key: 'timeline', q: 'When do you want to start?', options: [
+    { v: 'Right away', title: 'Right away' }, { v: 'Within 30 days', title: 'Within 30 days' }, { v: 'Just exploring', title: 'Just exploring for now' },
+  ] },
+  { key: 'contact', q: 'Where should we send your next steps?' },
+];
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const utmNotes = () => {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    return ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+      .filter((k) => params.get(k)).map((k) => `${k}=${params.get(k)}`).join('\n');
+  } catch { return ''; }
+};
+
+function ApplicationForm({ onBook, toHref }) {
+  const [step, setStep] = React.useState(0);
+  const [a, setA] = React.useState({});
+  const [c, setC] = React.useState({ fullName: '', email: '', phone: '', company: '', website: '', problem: '' });
+  const [error, setError] = React.useState('');
+  const [result, setResult] = React.useState(null);
+  const headRef = React.useRef(null);
+  const first = React.useRef(true);
   React.useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
-    document.head.appendChild(link);
-    return () => link.remove();
-  }, []);
+    if (first.current) { first.current = false; return; }
+    headRef.current?.focus({ preventScroll: true });
+  }, [step, result]);
+
+  const s = steps[step];
+  const total = steps.length;
+  const pick = (v) => {
+    setA((x) => ({ ...x, [s.key]: v }));
+    fireCustom('ApplicationStep', { funnel: SOURCE, step: step + 1 });
+    setTimeout(() => setStep((n) => Math.min(n + 1, total - 1)), 180);
+  };
+  const setField = (k) => (e) => setC((x) => ({ ...x, [k]: e.target.value }));
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!c.fullName.trim() || !EMAIL_RE.test(c.email.trim()) || !c.phone.trim()) {
+      setError('Enter your name, a valid email and your phone number.');
+      return;
+    }
+    setError('');
+    const qualified = a.role !== 'Agency' && a.revenue !== 'Under $10K' && a.timeline !== 'Just exploring';
+    const notes = [
+      'Growth Engine application',
+      `Qualified: ${qualified ? 'yes' : 'no'}`,
+      `Role: ${a.role}`, `Industry: ${a.industry}`, `Monthly revenue: ${a.revenue}`,
+      `Monthly ad budget: ${a.budget}`, `Start: ${a.timeline}`,
+      c.website.trim() && `Website: ${c.website.trim()}`,
+      c.problem.trim() && `Biggest problem: ${c.problem.trim()}`,
+      utmNotes(),
+    ].filter(Boolean).join('\n');
+    const metaId = trackLead({ content_name: SOURCE });
+    gaLead(SOURCE);
+    fetch('/.netlify/functions/create-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: c.fullName.trim(), email: c.email.trim(), phone: c.phone.trim(), company: c.company.trim(),
+        business_type: a.industry, pain_point: c.problem.trim().slice(0, 500) || null,
+        source: SOURCE, session_id: getSessionId(), notes, attribution: getAttribution(), ...leadMeta(metaId),
+      }),
+    }).catch(() => {});
+    setResult(qualified ? 'fit' : 'early');
+  };
+
+  if (result) {
+    const fit = result === 'fit';
+    return (
+      <div className="cs-step cs-step--done" role="status">
+        <div className="cs-step__icon">{fit ? <ThumbsUp size={28} weight="duotone" aria-hidden="true" /> : <EnvelopeSimple size={28} weight="duotone" aria-hidden="true" />}</div>
+        <h2 ref={headRef} tabIndex={-1}>{fit ? 'Looks like a fit. Ready to pick a time?' : 'Thanks. Can we start you with a plan first?'}</h2>
+        <p>{fit
+          ? 'Book your Growth Engine strategy session. We’ll review your ads and funnel before the call and come with a first plan.'
+          : 'The Growth Engine works best once revenue and timing are in place. You’re on our monthly newsletter, and our 90-Day Marketing Game Plan is the best next step for now.'}</p>
+        <button type="button" className="cs-btn cs-btn--block" onClick={fit ? onBook : () => { window.location.href = toHref('/game-plan'); }}>
+          {fit ? 'Book My Strategy Session' : 'Get the 90-Day Game Plan'} <ArrowRight size={16} weight="bold" aria-hidden="true" />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="cs-step">
+      <div className="cs-step__meta">
+        <span>Step {String(step + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        <span>About 2 min · 1-on-1 with David</span>
+      </div>
+      <div className="cs-step__bar" role="progressbar" aria-label="Application progress" aria-valuemin={1} aria-valuemax={total} aria-valuenow={step + 1}>
+        <span style={{ width: `${((step + 1) / total) * 100}%` }} />
+      </div>
+      <h2 ref={headRef} tabIndex={-1} id="cs-step-q">{s.q}</h2>
+
+      {s.options ? (
+        <div className={`cs-options${s.grid ? ' cs-options--grid' : ''}`} role="radiogroup" aria-labelledby="cs-step-q">
+          {s.options.map(({ v, title, desc, Icon }) => {
+            const on = a[s.key] === v;
+            return (
+              <button key={v} type="button" role="radio" aria-checked={on} className={`cs-option${on ? ' is-on' : ''}${Icon ? ' cs-option--rich' : ''}`} onClick={() => pick(v)}>
+                {Icon && <span className="cs-option__icon"><Icon size={24} weight="duotone" aria-hidden="true" /></span>}
+                <span className="cs-option__text"><strong>{title}</strong>{desc && <span>{desc}</span>}</span>
+                <span className="cs-option__check" aria-hidden="true">{on ? <Check size={16} weight="bold" /> : <CaretRight size={16} weight="bold" />}</span>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <form className="cs-contact" onSubmit={submit} noValidate>
+          <div className="cs-contact__grid">
+            <Input label="Full name" value={c.fullName} onChange={setField('fullName')} placeholder="Jane Smith" autoComplete="name" />
+            <Input label="Email" type="email" value={c.email} onChange={setField('email')} placeholder="jane@yourbusiness.com" autoComplete="email" />
+            <Input label="Phone" type="tel" value={c.phone} onChange={setField('phone')} placeholder="(407) 555-0123" autoComplete="tel" />
+            <Input label="Business name" value={c.company} onChange={setField('company')} placeholder="Smith Plumbing" autoComplete="organization" />
+            <Input label="Website (optional)" value={c.website} onChange={setField('website')} placeholder="yourbusiness.com" autoComplete="url" />
+            <Input label="Biggest marketing problem (optional)" value={c.problem} onChange={setField('problem')} placeholder="Ads run but leads don’t buy" />
+          </div>
+          {error && <p className="cs-apply__error" role="alert">{error}</p>}
+          <button type="submit" className="cs-btn cs-btn--block">Send My Application <ArrowRight size={16} weight="bold" aria-hidden="true" /></button>
+          <p className="cs-step__fine">You’ll also get our monthly newsletter. Unsubscribe anytime.</p>
+        </form>
+      )}
+
+      <div className="cs-step__nav">
+        {step > 0
+          ? <button type="button" className="cs-step__back" onClick={() => setStep((n) => n - 1)}><ArrowLeft size={16} weight="bold" aria-hidden="true" /> Back</button>
+          : <span />}
+        {s.options && a[s.key] && (
+          <button type="button" className="cs-step__next" onClick={() => setStep((n) => n + 1)}>Next <ArrowRight size={16} weight="bold" aria-hidden="true" /></button>
+        )}
+      </div>
+    </div>
+  );
+}
+export default function Consulting() {
   const toHref = useHref();
   // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
   const [variant, setVariant] = React.useState(null);
-  React.useEffect(() => { setVariant(pickVariant(c.heroVariants)); }, [c.heroVariants]);
-  const hero = { h1: c.h1, lede: c.lede, ...variant };
+  React.useEffect(() => { setVariant(pickVariant(heroVariants)); }, []);
+  const h = { ...hero, ...variant };
   const toForm = () => {
-    fireCustom('FunnelScrollToForm', { funnel: c.source });
+    fireCustom('FunnelScrollToForm', { funnel: SOURCE });
     document.getElementById('get-started')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  const onBook = () => openBooking({ content_name: c.source });
+  const onBook = () => openBooking({ content_name: SOURCE });
+  const ApplyButton = ({ label = 'Apply for a Spot' }) => (
+    <button type="button" className="cs-btn" onClick={toForm}>{label} <ArrowDown size={16} weight="bold" aria-hidden="true" /></button>
+  );
 
   return (
     <main className="cs">
@@ -115,76 +308,190 @@ export default function Consulting() {
       </section>
 
       <section className="cs-hero">
-        <h1>{hero.h1}</h1>
-        <p className="cs-lede">{hero.lede}</p>
+        <h1>{h.h1}</h1>
+        <p className="cs-lede">{h.lede}</p>
         <div className="cs-video">
-          {c.videoUrl
-            ? <FounderVideo url={c.videoUrl} poster={c.videoPoster} funnel={c.source} />
-            : <div className="bd-video cs-video-soon" role="img" aria-label="Video coming soon"><span className="cs-video-soon__label">Video coming soon</span></div>}
+          <FounderVideo url="/consulting/consulting-video.mp4" poster="/consulting/consulting-video-poster.jpg" funnel={SOURCE} />
         </div>
-        <div className="cs-proof" aria-label="Selected clients">
-          <p className="cs-proof__eyebrow">In good company</p>
-          <div className="cs-proof__cols">
-            {[0, 1].map((col) => (
-              <div key={col} className={`cs-proof__col${col ? ' cs-proof__col--down' : ''}`}>
-                {proofItems.filter((item, i) => (item.wordmark ? 1 : i % 2) === col).map((item) => (
-                  <div key={item.name} className={`cs-proof__tile${item.dark || item.wordmark ? ' cs-proof__tile--dark' : ''}${item.chip ? ' cs-proof__tile--chip' : ''}${item.fill ? ' cs-proof__tile--fill' : ''}`}>
-                    {item.wordmark
-                      ? <span className="cs-script cs-proof__script">{item.wordmark}</span>
-                      : <img src={item.src} width={item.w} height={item.h} alt={item.name} />}
-                    {item.caption && <span className="cs-proof__caption">{item.caption}</span>}
-                  </div>
-                ))}
-              </div>
-            ))}
+        <div className="cs-hero__cta">
+          <div className="cs-hero__btns">
+            <ApplyButton />
+            <a className="cs-btn cs-btn--ghost" href="#cs-program-title">See how it works</a>
           </div>
+          <p className="cs-spots"><span className="cs-spots__dot" aria-hidden="true" />Only {SPOTS} new clients a quarter, by application</p>
         </div>
-        <button type="button" className="cs-textcta" onClick={toForm}>See if you qualify <ArrowDown size={18} weight="bold" /></button>
       </section>
 
-      <section className="cs-light">
-        <h2>We help <em>SaaS brands and creators</em></h2>
-        <Link />
-        <h2>grow with <em>a real marketing and ads strategy,</em></h2>
-        <div className="cs-cards">
-          {c.services.map(([title, desc, Icon], i) => (
-            <div key={title} className="cs-card">
-              <span className="cs-card__num" aria-hidden="true">0{i + 1}</span>
-              <Icon size={30} weight="duotone" aria-hidden="true" />
-              <h3>{title}</h3>
-              <p>{desc}</p>
-            </div>
+      <section className="cs-light cs-problem" aria-labelledby="cs-problem-title">
+        <div className="cs-split">
+          <img src="/character/explain.webp" alt="" className="cs-character" width="320" height="320" loading="lazy" />
+          <div>
+            <h2 id="cs-problem-title">Spending on ads <em>but not sure they work?</em></h2>
+            <ul className="cs-problems">
+              {problems.map(([title, desc]) => (
+                <li key={title}><h3>{title}</h3><p>{desc}</p></li>
+              ))}
+            </ul>
+            <p className="cs-problem__close">Sound familiar? That’s not an ads problem. It’s a <strong>system</strong> problem.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-ads" aria-labelledby="cs-ads-title">
+        <h2 id="cs-ads-title">What does it look like <em>when the system works?</em></h2>
+        <p className="cs-section-lede">This is the view we build toward in Meta Ads Manager: every dollar in, every dollar back, tracked to the cent.</p>
+        <div className="cs-ads__total" aria-label="Combined example totals">
+          <div><span>Total spent</span><strong>{usd(totals.spent)}</strong></div>
+          <div><span>Conversion value</span><strong>{usd(totals.value)}</strong></div>
+          <div><span>Blended ROAS</span><strong>{(totals.value / totals.spent).toFixed(2)}x</strong></div>
+        </div>
+        <ul className="cs-ads__track" aria-label="Example campaign results">
+          {adResults.map((r) => (
+            <li key={r.label} className="cs-adcard">
+              <p className="cs-adcard__label">{r.label}</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Amount spent <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                    <th scope="col">Purchases conversion value <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                    <th scope="col">Purchase ROAS <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>{usd(r.spent)}</td><td>{usd(r.value)}</td><td>{roas(r)}</td></tr>
+                </tbody>
+              </table>
+            </li>
           ))}
-        </div>
-        <p className="cs-roas"><span className="cs-roas__tag">ROAS</span><span>We measure your return on ad spend <strong>to the last cent.</strong></span></p>
-        {/* Reviews block: hidden on phones (see consulting.css). */}
-        <div className="cs-reviews-block">
-          <Link />
-          <h2>and <em>clients who say it best.</em></h2>
-          <div className="cs-reviews" aria-label="Client reviews">
-            <div className="cs-reviews__deck" aria-hidden="true"><span /><span /></div>
-            {reviews.map((r) => <img key={r.src} src={r.src} alt={r.alt} width={r.w} height={r.h} onError={(e) => { e.currentTarget.style.display = 'none'; }} />)}
-          </div>
-        </div>
+        </ul>
+        <p className="cs-ads__swipe" aria-hidden="true">Swipe to see more <ArrowRight size={14} weight="bold" /></p>
+        <p className="cs-ads__fine">Example results shown in the Meta Ads Manager format to illustrate the goal, not results from a specific client. Your numbers depend on your offer, price and market.</p>
       </section>
 
-      <section className="cs-results" aria-labelledby="cs-results-title">
-        <p className="cs-results__eyebrow">Example campaign</p>
-        <h2 id="cs-results-title">Where every ad dollar <em>goes.</em></h2>
-        <ol className="cs-results__grid">
-          {results.map(([label, value, note], i) => (
-            <li key={label} className="cs-result">
-              <div className="cs-result__top"><span>{label}</span><span>0{i + 1}</span></div>
-              <div className="cs-result__value">{value}</div>
-              <div className="cs-result__note">{note}</div>
+      <section className="cs-program" aria-labelledby="cs-program-title">
+        <h2 id="cs-program-title">What happens <em>in your 90 days?</em></h2>
+        <p className="cs-section-lede">One program, four phases. Every phase has a job, and you see the progress every week.</p>
+        <ol className="cs-phases">
+          {phases.map(({ name, weeks, Icon, items }, i) => (
+            <li key={name} className="cs-phase">
+              <div className="cs-phase__head">
+                <span className="cs-phase__num" aria-hidden="true">0{i + 1}</span>
+                <Icon size={24} weight="duotone" aria-hidden="true" />
+              </div>
+              <h3>{name}</h3>
+              <p className="cs-phase__weeks">{weeks}</p>
+              <ul>{items.map((it) => <li key={it}>{it}</li>)}</ul>
             </li>
           ))}
         </ol>
-        <p className="cs-results__fine">Illustrative numbers for a SaaS or creator offer, not a client result. Your numbers depend on your offer, price and audience.</p>
+        <p className="cs-day90"><strong>Day 90:</strong> keep the system and run it yourself, or stay on with us as your Fractional CMO or on a Growth retainer.</p>
       </section>
 
-      <section className="cs-form bd" id="get-started">
-        <SignupForm c={c} onBook={onBook} />
+      <section className="cs-light cs-included" aria-labelledby="cs-included-title">
+        <h2 id="cs-included-title">What do you <em>get?</em></h2>
+        <ul className="cs-checklist">
+          {included.map((it) => <li key={it}><Check size={18} weight="bold" aria-hidden="true" />{it}</li>)}
+        </ul>
+        <p className="cs-fine">Ad spend and software usage are billed at cost and paid directly by you.</p>
+      </section>
+
+      <section className="cs-results" aria-labelledby="cs-results-title">
+        <h2 id="cs-results-title">What changes <em>from Day 0 to Day 90?</em></h2>
+        <div className="cs-compare" role="table" aria-label="Day 0 compared with Day 90">
+          <div className="cs-compare__row cs-compare__row--head" role="row">
+            <span role="columnheader">What we measure</span><span role="columnheader">Day 0</span><span role="columnheader">Day 90</span>
+          </div>
+          {dayCompare.map(([m, before, after]) => (
+            <div key={m} className="cs-compare__row" role="row">
+              <span role="rowheader">{m}</span><span role="cell" className="cs-compare__before">{before}</span><span role="cell" className="cs-compare__after">{after}</span>
+            </div>
+          ))}
+        </div>
+        <p className="cs-results__fine">You get this report with your real numbers at the end of the program. Results depend on your offer, price and market.</p>
+      </section>
+
+      <section className="cs-light cs-testimonials" aria-labelledby="cs-testi-title">
+        <h2 id="cs-testi-title">What do <em>clients say?</em></h2>
+        <div className="cs-quotes">
+          {testimonials.map((t) => (
+            <figure key={t.name} className="cs-quote">
+              <Quotes size={28} weight="fill" aria-hidden="true" />
+              <div className="cs-quote__stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+              <blockquote><p>{t.quote}</p></blockquote>
+              <figcaption>{t.name} <span>· Facebook recommendation</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section className="cs-fit" aria-labelledby="cs-fit-title">
+        <h2 id="cs-fit-title">Is this <em>right for you?</em></h2>
+        <div className="cs-fit__cols">
+          <div className="cs-fit__col cs-fit__col--yes">
+            <h3>This is for you if</h3>
+            <ul>{fitYes.map((it) => <li key={it}><Check size={18} weight="bold" aria-hidden="true" />{it}</li>)}</ul>
+          </div>
+          <div className="cs-fit__col cs-fit__col--no">
+            <h3>This is not for you if</h3>
+            <ul>{fitNo.map((it) => <li key={it}><X size={18} weight="bold" aria-hidden="true" />{it}</li>)}</ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-light cs-founder" aria-labelledby="cs-founder-title">
+        <div className="cs-split cs-split--founder">
+          <img src="/founder-david-selva.jpg" alt="David Selva, founder of Loogo Labs" className="cs-founder__photo" loading="lazy" />
+          <div>
+            <h2 id="cs-founder-title">Who will be <em>building your system?</em></h2>
+            <p>I’m David Selva, founder of Loogo Labs. I come from IT, project management and automation consulting, with a marketing degree from the University of Puerto Rico. That mix is the point: I don’t just run your ads, I build the tracking and follow-up behind them so you can see exactly what each dollar brings back.</p>
+            <p>I work on every Growth Engine account myself, in English or Spanish.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-guarantee" aria-labelledby="cs-guarantee-title">
+        <ShieldCheck size={40} weight="duotone" aria-hidden="true" />
+        <div>
+          <h2 id="cs-guarantee-title">30-day money-back guarantee</h2>
+          <p>If you’re not happy within the first 30 days, we refund the fees you paid us. Ad spend paid to Meta or Google is not refundable.</p>
+        </div>
+      </section>
+
+      <section className="cs-faq" aria-labelledby="cs-faq-title">
+        <h2 id="cs-faq-title">Questions <em>before you apply?</em></h2>
+        <div className="cs-faq__list">
+          {faqs.map(([q, a]) => (
+            <details key={q} className="cs-faq__item">
+              <summary>{q}</summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="cs-refs" aria-labelledby="cs-refs-title">
+        <h2 id="cs-refs-title">Who have we built <em>systems for?</em></h2>
+        <p className="cs-section-lede">Healthcare, B2B, spirits and AI. Different industries, the same promise: a system that runs.</p>
+        <ol className="cs-refs__grid">
+          {references.map((r, i) => {
+            const logo = tickerLogo(r.name);
+            return (
+              <li key={r.name} className="cs-ref">
+                <div className="cs-ref__top">
+                  <span className="cs-ref__num" aria-hidden="true">0{i + 1}</span>
+                  <span className="cs-ref__tag">{r.tag}</span>
+                </div>
+                <div className="cs-ref__logo"><img src={logo.src} width={logo.w} height={logo.h} alt={r.name} loading="lazy" /></div>
+                <p>{r.work}</p>
+              </li>
+            );
+          })}
+        </ol>
+        <div className="cs-refs__cta"><ApplyButton label="Be our next system" /></div>
+      </section>
+
+      <section className="cs-form" id="get-started" aria-label="Application">
+        <ApplicationForm onBook={onBook} toHref={toHref} />
       </section>
 
       <footer className="cs-footer">

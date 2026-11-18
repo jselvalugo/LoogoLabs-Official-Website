@@ -226,9 +226,9 @@ export const ROUTES = [
     // Unlisted ad landing page, like /brand-design.
     page: 'Consulting',
     path: '/consulting',
-    title: `Marketing & Ads Strategy for SaaS Brands & Creators | ${SITE.name}`,
+    title: `Growth Engine: 90-Day Meta and Google Ads Program | ${SITE.name}`,
     description:
-      'Marketing and ads strategy for SaaS brands and creators: positioning, go-to-market, paid ads and a 90-day growth plan. Book a free strategy call.',
+      'The Loogo Labs Growth Engine: a 90-day program that builds, launches and scales your Meta and Google Ads system, from tracking to follow-up. 3 clients a quarter, by application.',
     priority: '0.1',
     changefreq: 'monthly',
     unlisted: true,
