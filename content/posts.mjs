@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `ads-running-while-closed-holidays`,
+    title: `Your Ads Don't Know You're Closed for the Holidays`,
+    excerpt: `Nothing in an ad account knows you've shut the doors for Christmas week, so tell every campaign what to do with those days before you lock up.`,
+    tags: `AI for Paid Ads, Holiday Closures, Service Business Owners`,
+    content: `Plenty of service businesses close from Christmas Eve until the first Monday of January, and most of them never tell their ads. This year that Monday is January 4, so the shop is dark for eleven days. The phones go to voicemail, the inbox sits unread, and the campaigns keep buying clicks at the same rate they did in October.
+
+The leads still come in. Nobody reads them until the 4th, and by then most of those people have hired whoever picked up.
+
+I see the evidence every time I open an account in early January. A run of form fills dated the 26th, 27th and 28th, each one answered a week or more later. A couple turned into jobs. The rest never replied.
+
+## The money is the smaller leak
+
+Run the sum with your own figures. If your ads spend $40 a day, eleven closed days is $440. Say that buys a dozen leads. Answered within the hour, some of them book. Answered ten days later, you get the patient few, and they were the ones who would have waited for you anyway.
+
+What bothers me more is what the account learns from that stretch. Its automated bidding sees clicks arriving and forms being filled, which looks like a perfectly good week. It has no way of knowing that none of those people heard back, and unless you tell it otherwise, it treats Christmas week like any other.
+
+## Give every campaign its own answer
+
+Switching everything off is the reflex, and it isn't always right. Some late-December searches are worth having: the homeowner planning a spring remodel over the break, or the person whose garage door has been sticking for a month and who would rather book you for the 4th than call someone new. Other campaigns sell nothing but same-day help you can't give, and every click on them that week is money gone.
+
+So go through the account one campaign at a time and put each in one of two piles.
+
+- **Off for the closed days.** Anything that promises same-day, emergency or "call now" service. Give it an end date of the 23rd now, and put a reminder on your calendar for reopening morning with the names of the campaigns to restart. Skip the reminder and a campaign stopped for Christmas has a habit of still being stopped in February.
+- **On, with a different promise.** Anything that sells planned work. Lower the daily budget and change what the ad says: you're booking January now, and here is the first date you can come out.
+
+## Make the form say when you're back
+
+Someone who fills in your form on the 27th deserves to know the call is coming on the 4th. Change the confirmation message on the form, and the first automatic text or email after it, so they name the day you reopen and the morning you'll call. If you take bookings online, put the link there so they can grab a January slot without waiting for you.
+
+A plain date keeps more of those people than silence does. They can plan around "Monday the 4th." They can't plan around nothing, so they keep searching.
+
+Then block the first morning back for those calls, oldest lead first, before anyone opens the regular inbox.
+
+## Hand the AI the writing, not the decision
+
+Drafting is where it saves you an evening. Paste in your current ads with your closure dates and ask for versions that sell January appointments instead of speed. Give it your form confirmation and ask for two sentences that say when you're back and what happens next. It turns that around in minutes, and the drafts are usually close.
+
+If you kept last December's leads, paste the list in too and have it sort them by the day they arrived and how long each one waited. That's the number that tends to change an owner's mind about the closed week.
+
+What it can't decide is which campaigns stay on. That rests on how much January work you actually want and whether the crew is back on the 4th or the 11th. Ask an AI whether to pause ads over the holidays and you'll get a list of considerations that fits every business and settles nothing for yours. And read every date it writes back to you. An automatic reply that promises a call on the wrong day does more damage than no reply.
+
+## Tape the reopening date to your screen
+
+This week, open your ad account with your closing and reopening dates written on a sticky note beside the screen. Mark each campaign "off" or "on, selling January," then make the changes and rewrite the form confirmation that same afternoon. You'll have a month to catch anything that didn't save, instead of finding out on the 4th.`,
+  },
+  {
     slug: `ai-blog-tool-invented-claims`,
     title: `The AI Blog Tool Is Making Promises in Your Name`,
     excerpt: `A tool that writes and posts articles to your website will state things about your business as fact, so find out what it gets wrong before it publishes anything.`,
