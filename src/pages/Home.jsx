@@ -460,7 +460,6 @@ function Home({ onNavigate }) {
                 <Words text={es ? 'Tú manejas el negocio.' : 'You run the business.'} delay={0.1} step={0.07} />{' '}
                 <Words as="em" text={es ? 'Nosotros traemos los clientes.' : 'We bring the customers.'} delay={0.5} step={0.07} />
               </h1>
-              <Reveal delay={0.9} y={10}><span className="hm-hero__sub ll-label">{es ? 'Estrategia · Contenido · Anuncios · Sitios web · Automatización' : 'Strategy · Content · Ads · Websites · Automation'}</span></Reveal>
               <Reveal delay={1.0} y={16}>
               <p className="hm-hero__lede">
                 {es
