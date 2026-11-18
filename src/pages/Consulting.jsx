@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  MagnifyingGlass, Wrench, RocketLaunch, TrendUp, ArrowDown, ArrowRight, Check, X, ShieldCheck, Quotes, ThumbsUp, EnvelopeSimple,
+  MagnifyingGlass, Wrench, RocketLaunch, TrendUp, ArrowDown, ArrowRight, ArrowLeft, Check, X, ShieldCheck, Quotes, ThumbsUp, EnvelopeSimple,
+  Storefront, Briefcase, UsersThree, ArrowsDownUp, CaretDown, CaretRight,
 } from '@phosphor-icons/react';
 import { FounderVideo, fireCustom, pickVariant } from '../components/funnel/ScrollFunnel';
 import Button from '../components/core/Button';
 import Input from '../components/forms/Input';
-import Select from '../components/forms/Select';
 import { openBooking } from '../lib/booking';
 import { useHref } from '../lib/i18n';
 import { REFERENCES, CLIENT_LOGOS } from '../lib/references';
@@ -67,7 +67,6 @@ const included = [
   'Google Business Profile makeover',
   'Review engine and Past Customer Review Drive',
   'Weekly 45-minute strategy calls',
-  'Text access, replies within one business day',
   'Day 0 vs Day 90 results report',
 ];
 
@@ -109,10 +108,41 @@ const faqs = [
   ['Why only 3 clients a quarter?', 'Every system is built by hand and David is on every account. Limiting spots keeps the work at the level we promise.'],
 ];
 
-const industries = ['Choose one', 'Home services', 'Health, wellness or med spa', 'Professional services', 'Real estate', 'E-commerce or product brand', 'SaaS or tech', 'Creator or coach', 'Other'];
-const revenues = ['Choose one', 'Under $10K a month', '$10K–$30K a month', '$30K–$100K a month', '$100K+ a month'];
-const budgets = ['Choose one', 'Not running ads yet', 'Under $1K a month', '$1K–$3K a month', '$3K+ a month'];
-const timelines = ['Choose one', 'Right away', 'Within 30 days', 'Just exploring'];
+// Ads Manager-style example results. Illustrative numbers, not client results (labelled on the page).
+// ROAS is worked out from spend and value so the three columns always agree.
+const adResults = [
+  { label: 'Med spa · consult offer', spent: 1240, value: 6820 },
+  { label: 'Home services · seasonal tune-up', spent: 485.5, value: 2184.75 },
+  { label: 'E-commerce · bundle launch', spent: 2150, value: 8385 },
+  { label: 'Fitness studio · intro package', spent: 760, value: 3268 },
+  { label: 'Product brand · evergreen offer', spent: 3400, value: 10880 },
+  { label: 'Retargeting · past site visitors', spent: 320, value: 1920 },
+];
+const usd = (n) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+const roas = (r) => (r.value / r.spent).toFixed(2);
+const totals = adResults.reduce((t, r) => ({ spent: t.spent + r.spent, value: t.value + r.value }), { spent: 0, value: 0 });
+
+// Multi-step application. One question per step; tapping an answer moves on.
+const steps = [
+  { key: 'role', q: 'Which best describes you?', options: [
+    { v: 'Owner', title: 'I own the business', desc: 'I sell my own product or service.', Icon: Storefront },
+    { v: 'Team', title: 'I lead marketing for the business', desc: 'I work in-house and own the ads budget.', Icon: Briefcase },
+    { v: 'Agency', title: 'I’m an agency or freelancer', desc: 'I’m looking for help for a client.', Icon: UsersThree },
+  ] },
+  { key: 'industry', q: 'What kind of business is it?', grid: true, options: ['Home services', 'Health, wellness or med spa', 'Professional services', 'Real estate', 'E-commerce or product brand', 'SaaS or tech', 'Creator or coach', 'Other'].map((v) => ({ v, title: v })) },
+  { key: 'revenue', q: 'What’s your monthly revenue?', options: [
+    { v: 'Under $10K', title: 'Under $10K a month' }, { v: '$10K–$30K', title: '$10K–$30K a month' },
+    { v: '$30K–$100K', title: '$30K–$100K a month' }, { v: '$100K+', title: '$100K+ a month' },
+  ] },
+  { key: 'budget', q: 'How much can you invest in ad spend each month?', options: [
+    { v: 'Not running ads yet', title: 'Not running ads yet' }, { v: 'Under $1K', title: 'Under $1K a month' },
+    { v: '$1K–$3K', title: '$1K–$3K a month' }, { v: '$3K+', title: '$3K+ a month' },
+  ] },
+  { key: 'timeline', q: 'When do you want to start?', options: [
+    { v: 'Right away', title: 'Right away' }, { v: 'Within 30 days', title: 'Within 30 days' }, { v: 'Just exploring', title: 'Just exploring for now' },
+  ] },
+  { key: 'contact', q: 'Where should we send your next steps?' },
+];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const utmNotes = () => {
@@ -123,34 +153,43 @@ const utmNotes = () => {
   } catch { return ''; }
 };
 
-// Application form: qualified applicants unlock booking; early-stage applicants get the newsletter path.
 function ApplicationForm({ onBook, toHref }) {
-  const [f, setF] = React.useState({ fullName: '', email: '', phone: '', company: '', website: '', industry: industries[0], revenue: revenues[0], budget: budgets[0], timeline: timelines[0], problem: '' });
+  const [step, setStep] = React.useState(0);
+  const [a, setA] = React.useState({});
+  const [c, setC] = React.useState({ fullName: '', email: '', phone: '', company: '', website: '', problem: '' });
   const [error, setError] = React.useState('');
   const [result, setResult] = React.useState(null);
-  const set = (k) => (e) => setF((s) => ({ ...s, [k]: e.target.value }));
+  const headRef = React.useRef(null);
+  const first = React.useRef(true);
+  React.useEffect(() => {
+    if (first.current) { first.current = false; return; }
+    headRef.current?.focus({ preventScroll: true });
+  }, [step, result]);
+
+  const s = steps[step];
+  const total = steps.length;
+  const pick = (v) => {
+    setA((x) => ({ ...x, [s.key]: v }));
+    fireCustom('ApplicationStep', { funnel: SOURCE, step: step + 1 });
+    setTimeout(() => setStep((n) => Math.min(n + 1, total - 1)), 180);
+  };
+  const setField = (k) => (e) => setC((x) => ({ ...x, [k]: e.target.value }));
 
   const submit = (e) => {
     e.preventDefault();
-    if (!f.fullName.trim() || !EMAIL_RE.test(f.email.trim()) || !f.phone.trim()) {
+    if (!c.fullName.trim() || !EMAIL_RE.test(c.email.trim()) || !c.phone.trim()) {
       setError('Enter your name, a valid email and your phone number.');
       return;
     }
-    if ([f.industry, f.revenue, f.budget, f.timeline].includes('Choose one')) {
-      setError('Answer the four questions about your business so we can check the fit.');
-      return;
-    }
     setError('');
-    const qualified = f.revenue !== revenues[1] && f.timeline !== 'Just exploring';
+    const qualified = a.role !== 'Agency' && a.revenue !== 'Under $10K' && a.timeline !== 'Just exploring';
     const notes = [
       'Growth Engine application',
       `Qualified: ${qualified ? 'yes' : 'no'}`,
-      f.website.trim() && `Website: ${f.website.trim()}`,
-      `Industry: ${f.industry}`,
-      `Monthly revenue: ${f.revenue}`,
-      `Monthly ad budget: ${f.budget}`,
-      `Start: ${f.timeline}`,
-      f.problem.trim() && `Biggest problem: ${f.problem.trim()}`,
+      `Role: ${a.role}`, `Industry: ${a.industry}`, `Monthly revenue: ${a.revenue}`,
+      `Monthly ad budget: ${a.budget}`, `Start: ${a.timeline}`,
+      c.website.trim() && `Website: ${c.website.trim()}`,
+      c.problem.trim() && `Biggest problem: ${c.problem.trim()}`,
       utmNotes(),
     ].filter(Boolean).join('\n');
     const metaId = trackLead({ content_name: SOURCE });
@@ -159,64 +198,81 @@ function ApplicationForm({ onBook, toHref }) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        full_name: f.fullName.trim(), email: f.email.trim(), phone: f.phone.trim(), company: f.company.trim(),
-        business_type: f.industry, pain_point: f.problem.trim().slice(0, 500) || null,
+        full_name: c.fullName.trim(), email: c.email.trim(), phone: c.phone.trim(), company: c.company.trim(),
+        business_type: a.industry, pain_point: c.problem.trim().slice(0, 500) || null,
         source: SOURCE, session_id: getSessionId(), notes, attribution: getAttribution(), ...leadMeta(metaId),
       }),
     }).catch(() => {});
     setResult(qualified ? 'fit' : 'early');
   };
 
-  if (result === 'fit') {
+  if (result) {
+    const fit = result === 'fit';
     return (
-      <div className="lp-card lp-card--forest lp-card--wide cs-apply__done" role="status">
-        <div className="lp-result-icon"><ThumbsUp size={26} weight="duotone" aria-hidden="true" /></div>
-        <h2 className="lp-h2">Looks like a fit. Ready to pick a time?</h2>
-        <p className="lp-lede">Book your Growth Engine strategy session. We’ll review your ads and funnel before the call and come with a first plan.</p>
-        <div className="bd-cta">
-          <Button variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={onBook} fullWidth>Book My Strategy Session</Button>
-        </div>
-      </div>
-    );
-  }
-  if (result === 'early') {
-    return (
-      <div className="lp-card lp-card--forest lp-card--wide cs-apply__done" role="status">
-        <div className="lp-result-icon"><EnvelopeSimple size={26} weight="duotone" aria-hidden="true" /></div>
-        <h2 className="lp-h2">Thanks. Can we start you with a plan first?</h2>
-        <p className="lp-lede">The Growth Engine works best once revenue and timing are in place. You’re on our monthly newsletter, and our 90-Day Marketing Game Plan is the best next step for now.</p>
-        <div className="bd-cta">
-          <Button variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} onClick={() => { window.location.href = toHref('/game-plan'); }} fullWidth>Get the 90-Day Game Plan</Button>
-        </div>
+      <div className="cs-step cs-step--done" role="status">
+        <div className="cs-step__icon">{fit ? <ThumbsUp size={28} weight="duotone" aria-hidden="true" /> : <EnvelopeSimple size={28} weight="duotone" aria-hidden="true" />}</div>
+        <h2 ref={headRef} tabIndex={-1}>{fit ? 'Looks like a fit. Ready to pick a time?' : 'Thanks. Can we start you with a plan first?'}</h2>
+        <p>{fit
+          ? 'Book your Growth Engine strategy session. We’ll review your ads and funnel before the call and come with a first plan.'
+          : 'The Growth Engine works best once revenue and timing are in place. You’re on our monthly newsletter, and our 90-Day Marketing Game Plan is the best next step for now.'}</p>
+        <button type="button" className="cs-btn cs-btn--block" onClick={fit ? onBook : () => { window.location.href = toHref('/game-plan'); }}>
+          {fit ? 'Book My Strategy Session' : 'Get the 90-Day Game Plan'} <ArrowRight size={16} weight="bold" aria-hidden="true" />
+        </button>
       </div>
     );
   }
 
   return (
-    <form className="lp-card lp-card--forest lp-card--wide cs-apply" onSubmit={submit} noValidate aria-labelledby="cs-apply-title">
-      <h2 className="lp-h2" id="cs-apply-title">Is your business ready for the Growth Engine?</h2>
-      <p className="lp-lede">Takes about 2 minutes. We review every application and only take {SPOTS} businesses a quarter.</p>
-      <div className="cs-apply__grid">
-        <Input label="Full name" value={f.fullName} onChange={set('fullName')} placeholder="Jane Smith" autoComplete="name" />
-        <Input label="Email" type="email" value={f.email} onChange={set('email')} placeholder="jane@yourbusiness.com" autoComplete="email" />
-        <Input label="Phone" type="tel" value={f.phone} onChange={set('phone')} placeholder="(407) 555-0123" autoComplete="tel" />
-        <Input label="Business name" value={f.company} onChange={set('company')} placeholder="Smith Plumbing" autoComplete="organization" />
-        <Input label="Website (optional)" value={f.website} onChange={set('website')} placeholder="yourbusiness.com" autoComplete="url" />
-        <Select label="Industry" options={industries} value={f.industry} onChange={set('industry')} />
-        <Select label="Monthly revenue" options={revenues} value={f.revenue} onChange={set('revenue')} />
-        <Select label="Monthly ad budget" options={budgets} value={f.budget} onChange={set('budget')} />
-        <Select label="When do you want to start?" options={timelines} value={f.timeline} onChange={set('timeline')} />
-        <Input label="Biggest marketing problem right now (optional)" value={f.problem} onChange={set('problem')} placeholder="Ads run but leads don’t turn into customers" />
+    <div className="cs-step">
+      <div className="cs-step__meta">
+        <span>Step {String(step + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        <span>About 2 min · 1-on-1 with David</span>
       </div>
-      {error && <p className="cs-apply__error" role="alert">{error}</p>}
-      <div className="bd-cta">
-        <Button type="submit" variant="primary" size="lg" iconRight={<ArrowRight size={16} weight="bold" />} fullWidth>Apply for a Spot</Button>
+      <div className="cs-step__bar" role="progressbar" aria-label="Application progress" aria-valuemin={1} aria-valuemax={total} aria-valuenow={step + 1}>
+        <span style={{ width: `${((step + 1) / total) * 100}%` }} />
       </div>
-      <p className="lp-fine">You’ll also get our monthly newsletter. Unsubscribe anytime.</p>
-    </form>
+      <h2 ref={headRef} tabIndex={-1} id="cs-step-q">{s.q}</h2>
+
+      {s.options ? (
+        <div className={`cs-options${s.grid ? ' cs-options--grid' : ''}`} role="radiogroup" aria-labelledby="cs-step-q">
+          {s.options.map(({ v, title, desc, Icon }) => {
+            const on = a[s.key] === v;
+            return (
+              <button key={v} type="button" role="radio" aria-checked={on} className={`cs-option${on ? ' is-on' : ''}${Icon ? ' cs-option--rich' : ''}`} onClick={() => pick(v)}>
+                {Icon && <span className="cs-option__icon"><Icon size={24} weight="duotone" aria-hidden="true" /></span>}
+                <span className="cs-option__text"><strong>{title}</strong>{desc && <span>{desc}</span>}</span>
+                <span className="cs-option__check" aria-hidden="true">{on ? <Check size={16} weight="bold" /> : <CaretRight size={16} weight="bold" />}</span>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <form className="cs-contact" onSubmit={submit} noValidate>
+          <div className="cs-contact__grid">
+            <Input label="Full name" value={c.fullName} onChange={setField('fullName')} placeholder="Jane Smith" autoComplete="name" />
+            <Input label="Email" type="email" value={c.email} onChange={setField('email')} placeholder="jane@yourbusiness.com" autoComplete="email" />
+            <Input label="Phone" type="tel" value={c.phone} onChange={setField('phone')} placeholder="(407) 555-0123" autoComplete="tel" />
+            <Input label="Business name" value={c.company} onChange={setField('company')} placeholder="Smith Plumbing" autoComplete="organization" />
+            <Input label="Website (optional)" value={c.website} onChange={setField('website')} placeholder="yourbusiness.com" autoComplete="url" />
+            <Input label="Biggest marketing problem (optional)" value={c.problem} onChange={setField('problem')} placeholder="Ads run but leads don’t buy" />
+          </div>
+          {error && <p className="cs-apply__error" role="alert">{error}</p>}
+          <button type="submit" className="cs-btn cs-btn--block">Send My Application <ArrowRight size={16} weight="bold" aria-hidden="true" /></button>
+          <p className="cs-step__fine">You’ll also get our monthly newsletter. Unsubscribe anytime.</p>
+        </form>
+      )}
+
+      <div className="cs-step__nav">
+        {step > 0
+          ? <button type="button" className="cs-step__back" onClick={() => setStep((n) => n - 1)}><ArrowLeft size={16} weight="bold" aria-hidden="true" /> Back</button>
+          : <span />}
+        {s.options && a[s.key] && (
+          <button type="button" className="cs-step__next" onClick={() => setStep((n) => n + 1)}>Next <ArrowRight size={16} weight="bold" aria-hidden="true" /></button>
+        )}
+      </div>
+    </div>
   );
 }
-
 export default function Consulting() {
   const toHref = useHref();
   // Swapped in after mount so the pre-rendered HTML always hydrates cleanly.
@@ -258,7 +314,10 @@ export default function Consulting() {
           <FounderVideo url="/consulting/consulting-video.mp4" poster="/consulting/consulting-video-poster.jpg" funnel={SOURCE} />
         </div>
         <div className="cs-hero__cta">
-          <ApplyButton />
+          <div className="cs-hero__btns">
+            <ApplyButton />
+            <a className="cs-btn cs-btn--ghost" href="#cs-program-title">See how it works</a>
+          </div>
           <p className="cs-spots"><span className="cs-spots__dot" aria-hidden="true" />Only {SPOTS} new clients a quarter, by application</p>
         </div>
       </section>
@@ -278,20 +337,35 @@ export default function Consulting() {
         </div>
       </section>
 
-      <section className="cs-refs" aria-labelledby="cs-refs-title">
-        <h2 id="cs-refs-title">Who have we built <em>systems for?</em></h2>
-        <ul className="cs-refs__grid">
-          {references.map((r) => {
-            const logo = tickerLogo(r.name);
-            return (
-              <li key={r.name} className="cs-ref">
-                <div className="cs-ref__logo"><img src={logo.src} width={logo.w} height={logo.h} alt={r.name} loading="lazy" /></div>
-                <span className="cs-ref__tag">{r.tag}</span>
-                <p>{r.work}</p>
-              </li>
-            );
-          })}
+      <section className="cs-ads" aria-labelledby="cs-ads-title">
+        <h2 id="cs-ads-title">What does it look like <em>when the system works?</em></h2>
+        <p className="cs-section-lede">This is the view we build toward in Meta Ads Manager: every dollar in, every dollar back, tracked to the cent.</p>
+        <div className="cs-ads__total" aria-label="Combined example totals">
+          <div><span>Total spent</span><strong>{usd(totals.spent)}</strong></div>
+          <div><span>Conversion value</span><strong>{usd(totals.value)}</strong></div>
+          <div><span>Blended ROAS</span><strong>{(totals.value / totals.spent).toFixed(2)}x</strong></div>
+        </div>
+        <ul className="cs-ads__track" aria-label="Example campaign results">
+          {adResults.map((r) => (
+            <li key={r.label} className="cs-adcard">
+              <p className="cs-adcard__label">{r.label}</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Amount spent <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                    <th scope="col">Purchases conversion value <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                    <th scope="col">Purchase ROAS <span aria-hidden="true"><ArrowsDownUp size={13} /><CaretDown size={11} weight="fill" /></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>{usd(r.spent)}</td><td>{usd(r.value)}</td><td>{roas(r)}</td></tr>
+                </tbody>
+              </table>
+            </li>
+          ))}
         </ul>
+        <p className="cs-ads__swipe" aria-hidden="true">Swipe to see more <ArrowRight size={14} weight="bold" /></p>
+        <p className="cs-ads__fine">Example results shown in the Meta Ads Manager format to illustrate the goal, not results from a specific client. Your numbers depend on your offer, price and market.</p>
       </section>
 
       <section className="cs-program" aria-labelledby="cs-program-title">
@@ -395,7 +469,28 @@ export default function Consulting() {
         </div>
       </section>
 
-      <section className="cs-form bd" id="get-started">
+      <section className="cs-refs" aria-labelledby="cs-refs-title">
+        <h2 id="cs-refs-title">Who have we built <em>systems for?</em></h2>
+        <p className="cs-section-lede">Healthcare, B2B, spirits and AI. Different industries, the same promise: a system that runs.</p>
+        <ol className="cs-refs__grid">
+          {references.map((r, i) => {
+            const logo = tickerLogo(r.name);
+            return (
+              <li key={r.name} className="cs-ref">
+                <div className="cs-ref__top">
+                  <span className="cs-ref__num" aria-hidden="true">0{i + 1}</span>
+                  <span className="cs-ref__tag">{r.tag}</span>
+                </div>
+                <div className="cs-ref__logo"><img src={logo.src} width={logo.w} height={logo.h} alt={r.name} loading="lazy" /></div>
+                <p>{r.work}</p>
+              </li>
+            );
+          })}
+        </ol>
+        <div className="cs-refs__cta"><ApplyButton label="Be our next system" /></div>
+      </section>
+
+      <section className="cs-form" id="get-started" aria-label="Application">
         <ApplicationForm onBook={onBook} toHref={toHref} />
       </section>
 
