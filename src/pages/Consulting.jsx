@@ -311,7 +311,7 @@ export default function Consulting() {
         <h1>{h.h1}</h1>
         <p className="cs-lede">{h.lede}</p>
         <div className="cs-video">
-          <FounderVideo url="/consulting/consulting-video.mp4" poster="/consulting/consulting-video-poster.jpg" funnel={SOURCE} />
+          <FounderVideo url="/consulting/growth-engine-video.mp4" poster="/consulting/growth-engine-video-poster.jpg" funnel={SOURCE} />
         </div>
         <div className="cs-hero__cta">
           <div className="cs-hero__btns">
