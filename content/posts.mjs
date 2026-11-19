@@ -11,6 +11,56 @@
 
 export const posts = [
   {
+    slug: `ai-customer-persona-never-bought-anything`,
+    title: `The Customer Persona Your AI Wrote Has Never Bought Anything`,
+    excerpt: `An AI-written customer persona is a confident average of every business like yours, so check it against the people who actually paid you before it steers another ad.`,
+    tags: `Marketing Myths, Customer Personas, Small Business Owners`,
+    content: `Her name is Dana. She's 38, works full time, has two kids and a comfortable household income, and she values quality, convenience and trust. She scrolls social media after dinner and wants a provider who respects her time.
+
+If you asked an AI tool to describe your ideal customer at some point this year, you probably got someone like Dana. Maybe yours was a 52-year-old homeowner called Mark instead. Either way, the description came back in seconds, it read well, and plenty of owners I work with have pasted it into every ad brief and website rewrite since.
+
+The trouble is that Dana is made up. Not loosely based on your customers. Made up. Unless you handed it your records, the tool had never seen one of your invoices when it wrote her.
+
+## Why the persona sounds right
+
+Ask for the ideal customer of a dog groomer or a roofing company and the tool gives you the most typical answer for that kind of business. That's what it's built to do. The result feels like insight because it's plausible, and it's plausible because it describes the middle of everybody's market.
+
+Your business doesn't live in the middle. Maybe your best roofing jobs come from landlords with six rental units, not from a family in one house. Maybe your groomer's most loyal clients are retirees with one elderly dog who book every three weeks without fail. A persona built from the average of the trade will never tell you that, and it will tell you the opposite with total confidence.
+
+## What it costs when nobody checks
+
+The damage is quiet. Ad copy aimed at Dana talks about saving busy parents time, while your real buyers care about a tenant with water coming through the ceiling on a Sunday. A website rewrite leads with family photos when the people who actually call you are property managers. Targeting gets narrowed to an age band and a set of interests your paying customers don't fit.
+
+None of that shows up as an error. The ads still run. They just pull in people who look like the persona, and if those aren't the people who buy from you, the cost of each real customer creeps up. Nobody connects it back to a paragraph written in thirty seconds last spring.
+
+## Build the sheet from people who paid you
+
+Here's what I do instead with clients. Pull your last twenty paying customers. Not your favorite twenty, just the most recent ones. For each, write down four things:
+
+- What they bought and roughly what it was worth.
+- What made them get in touch that particular week, if you know.
+- How they found you.
+- Anything they said that stuck: a worry, a phrase, the reason they picked you.
+
+If you don't know an answer, leave it blank. The blanks tell you something too. Twenty rows fit on one page and take an evening, most of it spent scrolling old texts, emails and job notes.
+
+## Where AI earns its place
+
+Once that page exists, the tool gets genuinely useful. Paste the sheet in, along with any reviews and inquiry emails you have, and ask it to group the customers by why they called and to pull out the exact words that come up more than once. It's quick at that kind of sorting, and it will often notice that four different people used the word "finally" when you'd have read straight past it.
+
+Then ask it one more thing: put the old persona beside the sheet and list every place they disagree. That list is the real output. It shows you which assumptions have been steering your ads with nothing behind them.
+
+What I wouldn't do is ask it to turn the sheet back into a new persona with a name and a stock-photo life story. You'd end up where you started, with a character standing between you and the people you actually serve. Keep the rows. Keep their words. Write the next ad to a customer who exists.
+
+## If you don't have twenty customers yet
+
+A new business can't run this, and that's fine. The honest version of a persona at that stage is a short list of guesses, written down as guesses, each with a note on how you'll find out if it's wrong. Treat whatever the AI gave you the same way: a hypothesis to test, not a portrait to frame.
+
+## Put the persona next to the invoices
+
+This week, open the customer description your ads and website have been built on, lay it beside your last twenty invoices, and count how many of those twenty people it actually describes. If the answer is a handful, take the ad that spends the most and rewrite its first line in words your real customers used.`,
+  },
+  {
     slug: `chat-assistant-transcripts-website-gaps`,
     title: `Your Chat Assistant Already Knows What Your Website Is Missing`,
     excerpt: `Your chat assistant has been collecting the questions your website can't answer all year, and they belong in next year's marketing plan before anything else does.`,
