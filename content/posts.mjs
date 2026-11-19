@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `chat-assistant-transcripts-website-gaps`,
+    title: `Your Chat Assistant Already Knows What Your Website Is Missing`,
+    excerpt: `Your chat assistant has been collecting the questions your website can't answer all year, and they belong in next year's marketing plan before anything else does.`,
+    tags: `AI Assistants, Chat Transcripts, Service Business Owners`,
+    content: `Your website chat assistant has spent the year talking to more of your prospects than you have, and in most businesses I work with, nobody reads what was said. The owner checks that it's switched on and that leads land in the inbox. The conversations themselves, the questions people typed when they thought nobody important was listening, sit in a history nobody opens.
+
+That's a waste, because a visitor won't phone you to ask whether you work Saturdays or whether the estimate is free. They'll type it into a little box at eleven at night. If the assistant fumbles the answer, they close the tab, and you never find out the question existed.
+
+## Why it belongs in next year's plan
+
+Late November is when most owners I talk to sketch next year's marketing and write the first January ads. That planning usually starts from what the owner believes customers care about. The chat history is what they actually asked this fall, in their own words. I'd rather plan from that.
+
+It also catches something a dashboard hides. An assistant can report a healthy number of conversations while a good share of them end the moment someone asks about price. The count looks fine. Only the transcripts tell you why nobody booked.
+
+## Pull ninety days, then three piles
+
+Export the last ninety days of conversations. If your assistant won't let you download its own history, that's worth knowing before you renew it.
+
+You don't need to read everything. Pull three kinds of conversation:
+
+- The assistant said some version of "I'm not sure" or passed the visitor to a person.
+- The chat stopped within a message or two of an answer, with no booking and no contact details left.
+- The visitor asked about a job you don't do or a town you don't serve.
+
+## Let the AI sort, then read it yourself
+
+Sorting is a good job for an AI. Strip out names, phone numbers and email addresses first, then paste the piles into a chat tool and ask it to group the visitors' questions by what was being asked, keep every question in the visitor's own words, and count each group. Tell it not to summarize and not to suggest fixes. You want the raw questions, sorted and counted.
+
+Then read the groups yourself, top to bottom. The AI is good at noticing that "do you charge to come out," "is the estimate free" and "what's the trip fee" are one question. It has no idea which question is costing you jobs. You know that a trip-fee question from a homeowner three streets away was a booking you nearly had. The tool sees one more line in a group.
+
+## Where each fix goes
+
+**Questions your website never answers.** If people keep asking whether you take commercial work or come out on weekends, put the answer on the page they were reading when they asked, in plain words, near the top. Add the same answer to the assistant's answer sheet so it stops guessing.
+
+**Answers that end the conversation.** If chats keep dying right after the assistant states a price or a wait time, the assistant may be doing its job and the offer may be the problem. That isn't a chat fix. It's a question for your plan: is the minimum charge explained anywhere, or is there a smaller first job you could sell instead? An AI can't settle that. It doesn't know your margins or your calendar.
+
+**People you never wanted.** Questions about a service you dropped or a town you stopped driving to usually mean an ad, a listing or an old page is still promising it. Find the source and change it before January's budget goes on top of it.
+
+**Answers that were simply wrong.** If the assistant told someone you could be there tomorrow when you're booked three weeks out, that was a promise made in your name. Correct the answer sheet the same day you find it.
+
+## What stays with you
+
+Don't give the transcripts to an AI and ask it for next year's marketing strategy. It will write one, it will read well, and unless you've done the counting first it will treat a question asked twice as seriously as one asked forty times. The counting and the deciding stay with you.
+
+And don't expect the assistant to correct itself. It answers from what you gave it. If the answer sheet is thin, the transcripts will show the same gaps every month until someone edits it.
+
+## One evening before the plan is final
+
+Block one evening this week and find the single question your assistant fumbled most often in the last ninety days. Write its answer onto the page it was asked from and into the assistant's answer sheet before you write another line of next year's plan.`,
+  },
+  {
     slug: `service-page-price-range-ai-answers`,
     title: `Your Website Won't Say What a Job Costs, So Someone Else Will`,
     excerpt: `When a shopper asks an AI assistant what a job costs in your town, it can only repeat numbers somebody published, and a page that says call for a quote gives it nothing.`,
