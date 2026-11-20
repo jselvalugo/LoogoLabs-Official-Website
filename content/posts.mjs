@@ -11,6 +11,47 @@
 
 export const posts = [
   {
+    slug: `ai-video-clips-cut-the-caveat`,
+    title: `The AI Clip Tool Cuts the Sentence That Made Your Advice True`,
+    excerpt: `AI clipping tools pick the liveliest thirty seconds of your video, and that is often the half of an answer that's wrong without the other half.`,
+    tags: `AI Content Workflow, Video Clips, Service Business Owners`,
+    content: `The clip that did best from your last monthly video probably opens in the middle of a thought, on a word like "because" or "so." Whoever watches it never hears what came before, and the sentence that finished the point got trimmed off the end. It may still have picked up more views than anything else you posted that month. Views aren't calls, though, and a clip that makes half a point can leave people believing something you'd never tell them face to face.
+
+That's what happens when an AI clipping tool picks the clips. I see it with owners who record something long once a month, usually a live Q&A or a webinar, and then feed the file to a tool that hands back twenty short vertical clips with captions. It feels like a month of content for free. Most of those clips are the wrong thirty seconds.
+
+## What the tool is listening for
+
+A clipping tool has no idea which of your answers is the good one. From what I've seen, it favors the stretches that sound like a clip: a raised voice, a laugh, a short punchy sentence, a change of pace. Then it cuts around them so the clip lands somewhere near a natural length.
+
+Your best answers rarely sound like that. They're the slow, careful ones where you explain why, and they usually end with a condition. Picture an HVAC owner answering a viewer: "Closing the vent in a spare room is fine. Close more than two or three, though, and you can make the system work harder than it should." The first sentence is short and confident. The second one is the advice. A tool chasing energy keeps the first and drops the second, and now there's a clip with your face on it telling people something you'd correct on a service call.
+
+The other thing it drops is the setup. If someone asked the question out loud, the question is the most useful part of the clip, because it's the line a stranger recognizes as their own problem. The tool tends to start after it, at the moment your answer gets going.
+
+## Pick the answers yourself, then let the tool cut
+
+The fix is to split the job the other way round. You choose the clips. The AI does the fiddly parts.
+
+Start from the transcript. If your tool makes one, use it; if not, any transcription tool will. Skimming text is much faster than rewatching forty minutes. Go through it with one question in mind: where does a complete answer start and stop? A complete answer has the question, your answer, and any "unless" or "but" that keeps it true. Write down the start and end times. In a forty-minute recording I'd expect to find six or seven, not twenty.
+
+Then hand the tool those time ranges and ask it to cut exactly those. Some tools take timestamps directly. If yours only picks its own moments, use it for transcription and captions and cut the clips in any basic editor. That takes longer for the first month and goes quicker once you know what you're looking for.
+
+## Where AI earns its place here
+
+It's good at the mechanical work. It can find where a sentence actually starts, so the clip doesn't open on half a word. It writes captions far faster than you can type them. Check names and trade terms first, because that's where caption mistakes tend to hide. Ask it for an on-screen line for the first two seconds that restates the question in plain words, and it'll give you a few to choose from.
+
+It's no help with the part that decides whether a clip is worth posting: whether the answer is right, and complete enough for a stranger to act on without ever talking to you. That's your call. When the tool suggests trimming an answer to make it shorter, check what it removed. Very often it's the caveat, because the caveat is the part that sounds least like a clip.
+
+## Watch it as someone who's never met you
+
+Before a clip goes up, watch it with the sound off, from the very first frame, and pretend you've never heard of your business. The opening words or the on-screen line should tell you what the clip is about, and it should end with the whole answer, condition included. A viewer should also be able to tell who's talking and what you do, which a short caption line with your trade and your town takes care of.
+
+If a clip fails any of those, either re-cut it with a wider range or drop it. Six clips that are complete beat twenty that are lively.
+
+## Go back through last month's clips
+
+This week, open the last five clips you posted from a longer video and watch each one that way. Next to every one, write down whether it starts with the question and whether it keeps the condition that makes the advice true. Any clip that cut a caveat should come down or be replaced with a properly trimmed version before someone follows it.`,
+  },
+  {
     slug: `year-end-client-budget-one-offer`,
     title: `Give Clients With Year-End Budget One Thing to Say Yes To`,
     excerpt: `Clients with money left to spend by December 31 rarely invent a project themselves, so hand the budget holder one priced piece of work they already asked you for.`,
