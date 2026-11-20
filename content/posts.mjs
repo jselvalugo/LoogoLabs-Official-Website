@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `year-end-client-budget-one-offer`,
+    title: `Give Clients With Year-End Budget One Thing to Say Yes To`,
+    excerpt: `Clients with money left to spend by December 31 rarely invent a project themselves, so hand the budget holder one priced piece of work they already asked you for.`,
+    tags: `Positioning and Offers, Year-End Budgets, Freelancers and Agencies`,
+    content: `Some of the businesses you work for will have money they must spend before December 31, and a good share of it will go to whichever supplier hands the budget holder something specific to approve. If you freelance or run a small agency, that supplier could be you. Usually it isn't, because the note that goes out in December says something like "happy holidays, we have a little room in January if you need anything." I've sent that note myself. Nobody can approve "anything."
+
+Not every client works this way. A five-person company where the owner signs every check has no year-end deadline; the money is just the owner's money. But a client with a marketing manager, a department and an annual budget often does. Whatever is unspent in December may be gone in January, or it may shrink next year's number. The manager would rather spend it on something useful than give it back. They just don't have time to invent the project.
+
+## Why the vague note goes nowhere
+
+The person holding the leftover budget has to explain the spend to someone above them. "We prepaid our web designer for some January hours" is hard to defend. "We paid for the three new service pages we've been putting off since the summer, delivered by January 22" is easy.
+
+So the job isn't asking whether they have money left. It's showing up with the second sentence already written.
+
+## Build the offer from what they already asked for
+
+Go back through the year with each client and find the work they mentioned and then parked. The landing page for the product line that launched late. The email sequence for new customers they kept saying they'd get to. The ad account cleanup nobody had time for in the summer. These aren't ideas you're pitching. They're requests the client already made, which is why they're easy to say yes to.
+
+Turn one of them into a package with four parts:
+
+- **The deliverable**, in a sentence the manager could paste into an approval email.
+- **A fixed price**, invoiced in December.
+- **Dates**: a kickoff call in the first week of January and a delivery date.
+- **A reply-by date**, early enough for their approval process and before people disappear for the holidays. I use December 10.
+
+One package per client, not a menu. A menu sends the decision back to someone who has no time to make it.
+
+## Let the assistant dig, not decide
+
+The digging is where an AI assistant saves real hours. Paste in a client's email threads, call notes or meeting transcripts from the year, and ask it to list every piece of work the client mentioned wanting but never booked, with the date and the line where each came up. For a client you've had since March, that's a stack of reading you'd never do by hand in a week. If your contract limits where a client's material can go, respect it: strip the names out first, or do that client by hand.
+
+Check every item against the original message. An assistant reading months of notes will sometimes "find" a request that was really your suggestion, or merge two half-conversations into one. Nothing kills this offer faster than a line saying "you mentioned wanting X" when they didn't.
+
+It can also turn your four parts into a short, plain note. What it can't do is decide which client probably has budget, set the price, or tell you whether you can deliver all of this in January alongside your normal load. Those calls are yours.
+
+## Cap it before you send it
+
+Prepaid January work still has to get done in January. If you have eight active clients and send all eight an offer, you need to be ready for four of them to say yes.
+
+Decide your ceiling first. Say you can fit three extra projects into January without stretching anything already promised. Then send only to the clients most likely to have budget, and say it plainly in the note: you're holding three January slots for current clients. Because it's true, it's also a fair reason for the manager to answer this week rather than next.
+
+One more thing you shouldn't promise: how the client books a December payment for January work. That's between them and their accountant. Your job is a clear invoice with the deliverable and the dates on it.
+
+## Pick one client before Thanksgiving
+
+Before Thanksgiving week ends, open this year's sent mail and pick the one client most likely to have a December budget. Find the one thing they asked about this year and never booked. Write its four parts on a single page. If it reads like something their manager could approve in one reply, you have your first note for December 1.`,
+  },
+  {
     slug: `ai-customer-persona-never-bought-anything`,
     title: `The Customer Persona Your AI Wrote Has Never Bought Anything`,
     excerpt: `An AI-written customer persona is a confident average of every business like yours, so check it against the people who actually paid you before it steers another ad.`,
