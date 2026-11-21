@@ -11,6 +11,59 @@
 
 export const posts = [
   {
+    slug: `product-pages-for-gift-buyers`,
+    title: `Your Product Pages Are Written for the Wrong Shopper in December`,
+    excerpt: `A December product page has to convince someone who will never use the product, and a description built from your spec sheet gives that person nothing to decide with.`,
+    tags: `AI Content Workflow, Product Pages, Online Shop Owners`,
+    content: `From now until the middle of December, a lot of the people reading your product pages won't be the ones who use what they buy. They're shopping for a sister, a boss, a neighbor they draw for the office swap. Your pages were written for the person who will use the thing, and if an AI tool drafted them from your spec sheet, they read like a spec sheet: materials, dimensions, features, care. All true, and almost none of it settles what a gift buyer is trying to settle.
+
+## What the gift buyer is checking
+
+Someone buying for themselves already knows whether a thing suits them. Someone buying for another person is guessing, and your page is where they try to make the guess safer. When I read through a small shop's December order notes and customer emails, the same worries keep coming up:
+
+- Will this suit the person I have in mind, or is it too particular?
+- What will they open? Does it arrive looking like a present, and is there a price on the slip?
+- If the size or color is wrong, can they swap it after the holidays without involving me?
+- Will it get there in time?
+
+A description that answers none of those isn't wrong. It just leaves the buyer to decide alone, and a buyer who isn't sure tends to close the tab and pick something safer somewhere else.
+
+## Why the AI draft missed it
+
+The tool wrote about what you gave it. Hand it measurements and materials and you get a polished paragraph about measurements and materials. Nothing in your brief said that many of December's readers are buying for someone they'll be watching unwrap it, so the draft never speaks to them.
+
+A cleverer prompt won't fix that. Better facts will, and the facts about your gift buyers are already sitting in your order history.
+
+## Find out who last December was buying for
+
+Export last November and December's orders with any gift message, order note or gift box ticked. Then read them. You're after two things: which products went out as gifts most often, and who they were for. "For my dad, who claims he needs nothing." "First apartment." "Office swap, twenty-five dollar limit." That's your buyers telling you, in their own words, why that product made the cut.
+
+This is a fair job for an AI chat. Strip out names, addresses and emails, paste the notes in, and ask it to group them by product and by who the gift was for, quoting each note exactly as written. It will sort a few hundred lines far faster than you. Then check a handful of its groups against the originals, because it sometimes smooths a note into something the customer never said.
+
+If you're new and have no last December, use the questions people sent you this year by email or message, and treat what you write as a first guess to correct in January.
+
+## Put a gift block above the specs
+
+Take the five products that sold most often as gifts. On each page, before the measurements, add four short lines you write yourself:
+
+- **Who it suits.** One sentence drawn from the notes, such as "Most often bought for people who cook a lot and already own the basics."
+- **What they'll open.** How it arrives: the box, whether the packing slip shows a price, whether you'll add a handwritten card.
+- **If it's not quite right.** Exactly how the recipient swaps it, and by what date. If your exchange window closes before most people unwrap, stretch it for December orders and say so on the page.
+- **Order by.** The last order date for arrival before the holiday, per shipping option, matching what your checkout page already says.
+
+Leave the specs underneath. The person who needs the dimensions will scroll for them; the gift buyer gets their answer on the first screen.
+
+## The writing it can take off your hands
+
+Once those four lines exist, an AI tool is useful for the rest. It can shorten them so they fit on a phone screen, turn them into the version for that product's email or social post, and keep the voice even across five pages. Ask it to point out anything a buyer could read two ways, like "easy returns" with no date attached.
+
+What I'd keep away from it is the first line. "Who it suits" has to come from what your buyers wrote, not from what a tool imagines a typical gift buyer wants. Left alone, it will tell everyone your candle is perfect for anyone on their list, which helps nobody choose. It also can't know your exchange terms or shipping cutoffs, and if you don't supply them it may fill the gap with reasonable-sounding ones you never agreed to.
+
+## Before Black Friday
+
+Black Friday is November 27. Between now and then, open last December's orders, find the product that went out with the most gift notes, and add the four lines to its page. Then read it on your phone as someone buying for a person they don't know all that well. If the first screen doesn't tell you whether it would suit them and what happens if it doesn't, your buyer won't find out either.`,
+  },
+  {
     slug: `ai-video-clips-cut-the-caveat`,
     title: `The AI Clip Tool Cuts the Sentence That Made Your Advice True`,
     excerpt: `AI clipping tools pick the liveliest thirty seconds of your video, and that is often the half of an answer that's wrong without the other half.`,
