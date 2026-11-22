@@ -11,6 +11,47 @@
 
 export const posts = [
   {
+    slug: `black-friday-first-time-buyers`,
+    title: `What Your Black Friday First-Timers Should Hear From You Next`,
+    excerpt: `A customer whose first order came with a discount, and whose every email since offers another one, has learned one thing about your shop: wait for the sale.`,
+    tags: `Follow-Up and Email, First-Time Buyers, Online Shop Owners`,
+    content: `In most of the small shops I look at, a customer who finds you through the Black Friday sale hears from you twice more before Christmas, and both messages are discounts. One is the Cyber Monday email, the other is the "last chance" email in December. Neither mentions what they bought. By January, the only thing your emails have told them is that your prices drop if they hold off, so they stop opening anything until the next sale.
+
+## A sale-weekend buyer isn't a regular yet
+
+Someone who bought for the first time at 30 percent off is not the same customer as a regular who bought at 30 percent off. The regular already knows what you're like at full price. The newcomer only knows the sale. Put both on the same list, send them the same emails, and the newcomer never gets the part that makes a second order likely: a sign the product was worth it, and a reason to come back that isn't a coupon.
+
+I won't hand you a repeat rate, because it swings too much with what you sell. Find your own instead. Take the people whose first order came on last year's sale weekend and count how many ordered again by the end of March. Whatever that number is, it's the one this post is about moving.
+
+## Tag them before the first order lands
+
+Do this before Thanksgiving. Set your shop or email system so anyone whose first order arrives between Thanksgiving and the end of Cyber Monday gets a plain tag, something like \`bf first order\`. Many shop and email systems can tag a first purchase by date. If yours can't, export the weekend's orders on Tuesday and remove anyone who had ordered before.
+
+That tag decides what they get next. For three weeks after their order, keep them out of your promotional sends. They already bought. If that makes you nervous, let the last-shipping-day email through and hold back the rest.
+
+## The note that arrives after the parcel
+
+The first message goes out two or three days after delivery, not after the order. No discount. It tells them how to get the most from the specific thing they bought: how long the first burn on the candle should be, or why the glaze looks darker in lamplight than in the photos. One or two tips in your own words, and a line saying they can reply and a person will answer.
+
+It stands a better chance of being opened than anything else you'll send them, because it's about something already sitting on their table. It's also where the second order starts. A customer who got the thing working well is a customer who comes back.
+
+## In January, point at the next thing
+
+Around the middle of January, send one more. This one names the product that tends to follow the one they bought. Not your bestseller, and not whatever you're overstocked on. The next thing for this buyer.
+
+Your own orders tell you what that is. Pull every customer from the last two years who ordered at least twice and line up first order against second. Whoever packs the boxes usually half knows the answer already: people who start with the travel size come back for the full one, and people who buy one mug come back for a second to give away. So the January note to a travel-size buyer names the full size, says what's different about it, and stops.
+
+## Let AI count the pairs, not write the tips
+
+Building that first-to-second table is a job AI does well. Give a chat assistant the export with names, emails and addresses removed, leaving order number, date and product, and ask it to list what customers bought next after each of your top first products, and how many customers did it. Check three or four of its pairs against the raw orders before trusting the rest. It can miscount, and it will report a pattern built on two customers with the same confidence as one built on two hundred.
+
+It can also tidy your delivery tips into a short email once you've written them. It shouldn't write the tips. It doesn't know your candle tunnels if the first burn is cut short, and an invented care instruction on something a customer just paid for is a quick route to a return. The same goes for January: the AI can find the pair, but whether it's what you'd actually recommend to a friend is your decision.
+
+## Write one tip before Thursday
+
+Before Thanksgiving, pick the product you expect to sell most over the sale weekend. Write the two tips that make it work best, in the words you'd use across a counter, and set up the tag. If the tag exists before the first sale order arrives, the rest can be built next week.`,
+  },
+  {
     slug: `product-pages-for-gift-buyers`,
     title: `Your Product Pages Are Written for the Wrong Shopper in December`,
     excerpt: `A December product page has to convince someone who will never use the product, and a description built from your spec sheet gives that person nothing to decide with.`,
