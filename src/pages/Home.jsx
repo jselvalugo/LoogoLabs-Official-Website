@@ -485,8 +485,8 @@ function Home({ onNavigate }) {
         <Reveal>
           <p className="hm-intro__text">
             {es
-              ? <>Somos una compañía de marketing y automatización en Orlando. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en todo Estados Unidos, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
-              : <>We are a marketing and automation company in Orlando. We work with <em>local businesses and growing brands</em> across the United States, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
+              ? <>Somos una compañía de marketing y automatización en Orlando y Puerto Rico. Trabajamos con <em>negocios locales y marcas en crecimiento</em> en todo Estados Unidos, en inglés y en español: planeamos el marketing, hacemos el contenido, manejamos los anuncios y construimos los sistemas detrás.</>
+              : <>We are a marketing and automation company in Orlando and Puerto Rico. We work with <em>local businesses and growing brands</em> across the United States, in English and Spanish: we plan the marketing, make the content, run the ads and build the systems behind it.</>}
           </p>
         </Reveal>
         <Stagger as="dl" className="hm-facts" gap={0.08}>
