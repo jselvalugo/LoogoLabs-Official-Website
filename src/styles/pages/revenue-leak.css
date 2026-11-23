@@ -1,0 +1,62 @@
+/* /revenue-leak: "Where are you losing revenue?" qualifying funnel.
+   Builds on the consulting landing (.cs): cream page, forest ink, hairlines. */
+.rl { display: flex; flex-direction: column; }
+.rl > footer { margin-top: auto; }
+.rl-anchor { scroll-margin-top: 64px; }
+
+.rl-back { display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 10px 4px; font: 500 15px var(--font-body); color: var(--ink-900); cursor: pointer; }
+.rl-back:hover { text-decoration: underline; }
+
+.rl-hero { padding-bottom: 72px; }
+.rl-hero .cs-lede { margin-bottom: 32px; }
+
+.rl-options { display: grid; gap: 10px; max-width: 560px; margin: 28px auto 0; text-align: left; }
+.rl-options--hero { margin-top: 0; }
+.rl-option { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 56px; padding: 16px 20px;
+  background: var(--paper-000); color: var(--ink-900); border: 1px solid var(--border-hair); border-radius: var(--radius-2);
+  font: 500 17px/1.35 var(--font-body); cursor: pointer; text-align: left;
+  transition: border-color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
+.rl-option svg { flex: none; color: var(--ink-400); transition: transform var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); }
+.rl-option:hover { border-color: var(--ink-900); }
+.rl-option:hover svg { color: var(--ink-900); transform: translateX(3px); }
+.rl-option:focus-visible { outline: 2px solid var(--amber-500); outline-offset: 2px; }
+.rl-option.is-picked { border-color: var(--ink-900); background: var(--paper-200); }
+
+.rl-progress { height: 4px; background: var(--paper-200); }
+.rl-progress span { display: block; height: 100%; background: var(--ink-900); transition: width 0.35s var(--ease-standard); }
+
+.rl-step { width: 100%; max-width: 640px; margin: 0 auto; padding: 64px 24px 88px; text-align: center; }
+.rl-step h2 { margin: 0 auto; max-width: 18em; font: 500 var(--fs-display-3)/var(--lh-display-3) var(--font-display); letter-spacing: var(--ls-display-3); color: var(--ink-900); }
+.rl-step h2:focus { outline: none; }
+.rl-count { margin: 0 0 12px; font: 500 14px/1.4 var(--font-body); color: var(--ink-400); }
+.rl-sub { max-width: 32em; margin: 16px auto 0; font-size: 17px; line-height: 1.55; color: var(--ink-500); }
+.rl-sub strong { color: var(--ink-900); font-weight: 500; }
+
+.rl-form { display: grid; gap: 16px; margin: 32px auto 0; max-width: 480px; text-align: left; }
+.rl-form .lp-fine { margin: 0; text-align: center; }
+.rl-form .lp-fine a { color: inherit; }
+.rl-error { margin: 0; font-size: 14px; color: var(--status-danger); }
+
+.rl-badge { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ink-900); color: var(--paper-000); margin-bottom: 16px; }
+.rl-result h3 { margin: 0 0 14px; font: 500 20px/1.3 var(--font-display); color: var(--ink-900); }
+.rl-audit, .rl-fixes, .rl-next { margin: 32px auto 0; padding: 28px 24px; text-align: left; background: var(--paper-000); border: 1px solid var(--border-hair); border-radius: var(--radius-3, 12px); }
+.rl-audit { background: var(--ink-900); border-color: var(--ink-900); color: var(--paper-100); }
+.rl-audit h3 { color: var(--paper-000); }
+.rl-audit ol { margin: 0 0 24px; padding-left: 20px; display: grid; gap: 10px; font-size: 16px; line-height: 1.5; color: var(--ink-100); }
+.rl-audit .lp-fine { margin: 12px 0 0; text-align: center; color: var(--ink-200); }
+.rl-fixes ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.rl-fixes li { display: flex; gap: 10px; font-size: 16px; line-height: 1.5; color: var(--ink-900); }
+.rl-fixes li svg { flex: none; margin-top: 4px; }
+.rl-next p { margin: 0 0 20px; font-size: 16px; line-height: 1.55; color: var(--ink-500); }
+.rl-next .cs-textcta { display: flex; justify-content: center; width: 100%; }
+
+@media (max-width: 720px) {
+  .rl-hero { padding-bottom: 48px; }
+  .rl-step { padding: 40px 20px 64px; }
+  .rl-step h2 { font-size: 28px; }
+  .rl-option { font-size: 16px; padding: 14px 16px; }
+  .rl-audit, .rl-fixes, .rl-next { padding: 22px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rl-option, .rl-option svg, .rl-progress span { transition: none; }
+}

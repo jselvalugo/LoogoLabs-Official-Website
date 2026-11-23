@@ -258,6 +258,18 @@ export const ROUTES = [
     unlisted: true,
   },
   {
+    // "Where are you losing revenue?" sales qualified lead funnel. Ad landing
+    // page, unlisted like /november-offer (no nav).
+    page: 'RevenueLeak',
+    path: '/revenue-leak',
+    title: `Where Are You Losing Revenue? 60-Second Revenue Leak Check | ${SITE.name}`,
+    description:
+      'Find where your business is losing revenue in 60 seconds: leads, follow-up, conversion, repeat customers or ad spend. Get your leak report and the fix.',
+    priority: '0.3',
+    changefreq: 'monthly',
+    unlisted: true,
+  },
+  {
     // The Loogo Labs Letter: monthly newsletter sign-up. Linked from social
     // bios, the email signature and outreach emails.
     page: 'Newsletter',
