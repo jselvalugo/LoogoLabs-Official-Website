@@ -11,6 +11,57 @@
 
 export const posts = [
   {
+    slug: `sale-copy-after-cyber-monday`,
+    title: `Your Black Friday Sale Ends Monday. The Sale Copy Doesn't.`,
+    excerpt: `The discount switches off at midnight, but any headline your ad account wrote from your sale page keeps promising it until someone reads it and takes it down.`,
+    tags: `AI for Paid Ads, Sale Cleanup, Online Shop Owners`,
+    content: `Black Friday sales end on a clock. The words that announced them don't. On Tuesday morning, December 1, the discount is gone at checkout, but "30% off everything" can still be sitting in an ad headline, a banner on your home page, the answer sheet your chat assistant reads from and the second email of your welcome series. Someone reads it, clicks, and finds full price. You paid for that click, and the shopper now thinks you pulled a trick on them.
+
+In the shops I help, the stale line rarely comes from an ad the owner wrote. Those get paused, because the owner remembers making them. The leftovers come from places nobody remembers touching.
+
+## Where sale copy hides
+
+The worst hiding place is the ad account itself. If yours is allowed to write extra headlines and descriptions from your landing pages, it may have read your site while the sale banner was up and built lines around the discount. You never typed those lines, so editing the text you did type doesn't remove them, and they can keep turning up in any campaign that is allowed to write for itself.
+
+The rest is ordinary, which is why it gets missed:
+
+- the banner or pop-up on the site, and any sale price typed into a product description instead of set in the price field
+- a pinned social post, and the post on your business listing
+- the discount code in an automated email a new subscriber gets three days after signing up
+- your chat assistant's answer sheet, if you told it about the sale so it could answer questions
+- the "use code" line on a thank-you page or order confirmation
+
+None of these need a clever fix. They need someone to know they exist.
+
+## Write the end list before the sale starts
+
+The time to plan the end of a sale is before the first sale order, while you still remember every place you're putting the offer. Each time you add the discount somewhere this week, write one line in a note: where it is, and what it should say after Monday. "Home banner: swap for gift shipping dates." "Welcome email two: remove the code, keep the product picks."
+
+That note is the whole system. On Tuesday morning you work down it, and anything you add in a hurry over the weekend goes on it the moment you add it.
+
+Give everything that takes an end date an end date. Many ad tools and site banners let you schedule one, and an offer that switches itself off at midnight is one less thing to remember at midnight. Set the codes to expire on the same minute, so a stale code fails politely at checkout instead of quietly working in March.
+
+## Where AI helps, and where it can't
+
+An AI tool is good at the search part. Paste in the text of your main pages, your automated emails and the assistant's answer sheet, and ask it to list every sentence that mentions a discount, a code, a percentage, free shipping or a deadline. It doesn't skim past a line because it has seen it fifty times. Check its list against the pages anyway; it can miss things too, and it only reads what you gave it.
+
+What it can't do is tell you what the ad account wrote on its own. For that you open the account and find the report that lists every headline and description it has been showing, including the ones it made up from your pages. Read each line out loud and ask whether it's still true on Tuesday. Remove the ones that aren't.
+
+If you can't spare the time to read those lines every time your site changes, turn off the setting that lets the account write them. It will keep writing from whatever your pages say, and it has no idea your calendar moved on.
+
+AI assistants that recommend shops may repeat your old pages for a while. You can't control when they catch up, but the page they read can say plainly that the sale is over.
+
+## What the space should say on Tuesday
+
+Don't leave a blank where the sale was. December shoppers are still coming, and the banner that said "30% off" is the best spot on your site. Put something true in it: your last order date for delivery before the 25th, a gift wrap option, the product that sold out and is back.
+
+And decide now what you'll do when someone arrives on an old sale line anyway. I'd honor the price for anyone who writes in with the ad in hand during the first week. A few orders at the old price cost less than a review that opens with the words "bait and switch."
+
+## Read the account's own headlines before Friday
+
+Before Black Friday, open your ad account and find the list of headlines and descriptions it is allowed to write for itself. Read every one. If any already mention an offer you announced on your site, you know exactly what to check on Tuesday morning, and you have until Friday to decide whether the account should keep writing for you at all.`,
+  },
+  {
     slug: `black-friday-first-time-buyers`,
     title: `What Your Black Friday First-Timers Should Hear From You Next`,
     excerpt: `A customer whose first order came with a discount, and whose every email since offers another one, has learned one thing about your shop: wait for the sale.`,
