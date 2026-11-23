@@ -11,6 +11,50 @@
 
 export const posts = [
   {
+    slug: `ad-location-setting-outside-service-area`,
+    title: `The Service Area Your Ad Account Thinks You Have`,
+    excerpt: `Your ads may be showing to anyone who has searched for your town, not just people in it, and the location report shows what those clicks cost you.`,
+    tags: `AI for Paid Ads, Location Targeting, Home Service Owners`,
+    content: `The caller wants a quote for a house two counties over. You don't work there, you tell them so politely, and you hang up having paid for the click that made the phone ring. Once a month, that's a nuisance. Every few days, it means part of your ad budget is buying a service area you don't have.
+
+I see this most with home service owners who set up their own search ads. They typed in their town, maybe drew a circle around it on the map, and assumed that settled who would see the ads. Often it didn't.
+
+## What the location setting really covers
+
+Many ad accounts, left as they come, show your ads to two groups: people who are physically in the area you picked, and people somewhere else who have searched for that area or shown interest in it. The second group exists for a reason. A family buying a house in your town from three states away is a real lead for a roofer. Someone on vacation who typed your town's name while looking for something else is not, and the account can treat them the same way.
+
+The circle has its own problem. A radius doesn't follow roads, and it doesn't care that the only bridge has a toll. Twenty-five miles on the map can take in a town that's an hour away in traffic, which is a town you'd turn down.
+
+Broad automated campaigns make all of this harder to notice. The summary reports results as one tidy number, and the detail about where the clicks came from sits a few screens further down.
+
+## The report nobody opens
+
+Somewhere in your account is a report of where the people who saw and clicked your ads were, broken down by city, county or postal code. Most owners never open it, because the campaign summary looks fine. If your account offers two views, one for where people were and one for the area they were interested in, pick where they were. Look at the last 60 days.
+
+The math is short. If you spend $1,500 a month and the report shows $200 of it in towns you never serve, that's $2,400 a year buying calls you'll decline, before you count the time spent on the phone declining them.
+
+## Where AI helps here and where it doesn't
+
+Sorting that report is a job AI does well. Export it, paste it in with a plain list of the towns and postal codes you serve, and ask it to put every row in one of three piles: inside, on the edge, outside. Have it total the spend in each pile. It's quick at matching a town name spelled three different ways and at flagging a postal code that straddles your line. Spot-check a handful of rows yourself before you trust the totals.
+
+What it can't do is draw your line. It doesn't know you'll drive forty minutes for a full replacement but not for a small repair, or that one town on the edge sends your best customers while the next one over sends hagglers. That's your decision, and it's the one that sets the exclusions.
+
+If you ask it what to do next, it may suggest expanding into nearby areas for more volume. That's advice for a business that wants more leads. You want more jobs you'll actually take.
+
+## Fixing it, in order
+
+- Change the setting so the ads show to people who are in your area or there often, rather than anyone who has shown interest in it. If you do win work from people moving in, give that its own small campaign with its own budget, so you can see what it costs.
+- Replace a loose circle with the towns or postal codes you serve, taken from the inside and edge piles you just sorted.
+- Exclude the outside pile by name, so the account can't drift back into it.
+- Name your area plainly in the ad text and at the top of the landing page. A line that lists your six towns stops some wrong clicks before they happen.
+
+Then give it two or three weeks before judging. Cost per lead may rise a little, because you've stopped paying for cheap clicks that were never going to become jobs. Watch booked jobs, not lead count.
+
+## Your number for this week
+
+Open the location report for the last 60 days, set to where people actually were, and add up the spend in places you wouldn't send a truck. Write that figure next to last month's total spend. If it's more than a rounding error, change the setting the same afternoon you find it.`,
+  },
+  {
     slug: `sale-copy-after-cyber-monday`,
     title: `Your Black Friday Sale Ends Monday. The Sale Copy Doesn't.`,
     excerpt: `The discount switches off at midnight, but any headline your ad account wrote from your sale page keeps promising it until someone reads it and takes it down.`,
