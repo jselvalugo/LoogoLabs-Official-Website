@@ -11,6 +11,53 @@
 
 export const posts = [
   {
+    slug: `compare-sale-weekend-by-day-not-date`,
+    title: `Compare This Sale Weekend to Last Year's by Day, Not by Date`,
+    excerpt: `Cyber Monday lands in November this year and landed in December last year, so a report that lines the two years up by month or by date is comparing different days.`,
+    tags: `Measurement & Tracking, Year-Over-Year Reports, Online Shops`,
+    content: `Cyber Monday is November 30 this year. Last year it was December 1. That one-day slip is enough to make next week's year-over-year numbers wrong, and most small shops will read them anyway, decide whether the sale worked, and set December's ad budget on the answer.
+
+Here is what happens. Your November report now contains a Cyber Monday that last November's report never had, and your December report is missing one. Say last year's Cyber Monday took in $4,000 and an ordinary early-December day takes in $600. December starts about $3,400 behind last year before you've done anything differently, and November gets a lift it didn't earn. Nothing about your shop changed. The edge of the month moved.
+
+## Matching dates is worse
+
+The obvious fix is to compare the same dates instead of whole months, and that's where it gets worse. Put November 27 to December 1 from both years side by side. Last year, that stretch ran from Thanksgiving through Cyber Monday. This year it runs from Black Friday through the Tuesday after. You're comparing a holiday with a sale day, and last year's biggest Monday with an ordinary Tuesday.
+
+Some reporting screens line last year up by weekday, and some line it up by date. It's easy to end up with one of each, in two different tools, giving two different answers. Before you trust any compare-to-last-year view, check which kind it is. Neither kind knows where Thanksgiving falls.
+
+Christmas has moved too. It was a Thursday last year and is a Friday this year, so the last shipping days before it fall on different weekdays, and your own ship-by date may not be where it was. If December's final week looks soft or strong next to last year's, look at the ship-by date before you look at the ads.
+
+## Line the years up by the holiday
+
+What I do instead is give every day in both years a number counting from Thanksgiving. Thanksgiving is day 0. Black Friday is day 1, the weekend is days 2 and 3, and Cyber Monday is day 4. The Monday before Thanksgiving is day minus 3. Then I compare day 1 with day 1, not November 27 with November 27.
+
+For December, I switch to counting back from my own last ship-by date for Christmas, because that's the date the gift orders are racing. The week before it lines up with the week before it, whatever the calendar says.
+
+You need daily numbers for this, not monthly totals. Export orders and revenue per day from November 1 to December 31 for last year, and the same for this year as the days come in. If you run ads or send promotions, add daily ad spend and a column marking the days an email went out.
+
+## The column only you can fill
+
+Lining up the days fixes the calendar. It doesn't fix everything else that was different. So next to last year's numbers I add one more column, written by the owner, with a few words wherever something unusual happened.
+
+- The day the sale started, and how deep the discount was
+- Days a best seller was out of stock
+- The last ship-by date you promised customers
+- Days you were closed, or not answering messages
+- Big sends: the email to the whole list, a post that got shared around
+
+If last year's sale started on the Wednesday before Thanksgiving and this year's starts on Friday, day minus 1 will look like a collapse, and it isn't one. The notes column is what stops you from reading it as one.
+
+## Let the assistant do the lining up
+
+This is a good job for an AI assistant. Give it both daily exports, tell it that Thanksgiving was November 27 last year and November 26 this year, and ask it to add the day-number column and put matching days side by side. It will do in a minute what takes most people an hour of copying cells. Before you rely on it, check three rows by hand, including Cyber Monday in both years.
+
+What it can't do is fill the notes column, and if you ask it why a day went up or down without one, it will usually offer a reason that sounds sensible and may have nothing to do with your shop. It doesn't know your best seller ran out on day 2 last year. Your sent emails and order history do, and this year's notes are easiest to write the same evening, not in January.
+
+## Number last year's days this week
+
+Before Thanksgiving, export last year's daily orders and revenue from November 1 to December 31, number the days from Thanksgiving, and fill in the notes column from last year's sent emails and order history. Then add this year's rows as they arrive. When someone asks on Tuesday whether the sale beat last year, you'll be comparing the same days.`,
+  },
+  {
     slug: `ad-location-setting-outside-service-area`,
     title: `The Service Area Your Ad Account Thinks You Have`,
     excerpt: `Your ads may be showing to anyone who has searched for your town, not just people in it, and the location report shows what those clicks cost you.`,
