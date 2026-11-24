@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `pause-silent-subscribers-before-december-emails`,
+    title: `Pause the Silent Part of Your List Before December's Emails`,
+    excerpt: `Mailing gift card offers to people who stopped reading years ago can cost you a place in the inbox of the regulars who would actually buy them.`,
+    tags: `Follow-Up and Email, List Cleanup, Service Business Owners`,
+    content: `Your customer email list has probably grown every year you've been open, and a good share of it belongs to people who booked once, a long time ago, and haven't read anything you've sent since. In December you're about to mail all of them three or four times about gift cards. That's the month you most need your email to reach the inbox, and it's the month the silent part of the list does the most harm.
+
+I see the same thing in nearly every list I open, a groomer's as much as a salon's. Every booking adds an address and nothing ever takes one away. Nobody decided to keep emailing the client who moved across the country three years ago. It just never stopped.
+
+## What the silent addresses cost you
+
+Mailbox providers decide where your email lands partly by watching what the people receiving it do with it. When a big share of a send is ignored, deleted unread or marked as spam, more of your mail tends to get filed away from the main inbox, and that includes the copies going to your regulars. I can't tell you where that line sits for your list. Nobody outside those providers can. What I can tell you is what I've seen when I trim a list this way: the bookings that come from the email haven't dropped, which tells me the people we stopped mailing weren't buying from it anyway.
+
+The second cost is easier to see. If 3,000 addresses get your gift card email and 2,000 of them haven't looked at anything you've sent in years, your report averages your real audience with a crowd that left. A weak subject line and a dead list produce the same disappointing number, and you can't tell which one you're looking at.
+
+## Sort everyone into three groups
+
+Export your list with three dates for each address: the last time they booked or paid, the last time they clicked anything in one of your emails, and the day they joined. Then sort.
+
+- **Recent customers.** Booked or paid in the last eighteen months. They get every December email, whether or not they ever click. Plenty of regulars never touch a link and still come in every six weeks.
+- **Readers.** No booking in eighteen months, but they clicked something in the last year. They're paying attention. Keep them.
+- **Silent.** No booking in eighteen months and no click in a year. This is the group to pause.
+
+Use clicks, not opens, for that line. Some mail apps open every message on arrival to load its images, so an open can mean a phone did something rather than a person. A click means a person did.
+
+Eighteen months and a year are where I start for a business people visit a few times a year. If yours is a once-a-year service, stretch the booking window to two years, or you'll pause last December's gift buyers.
+
+## Where AI helps with this, and where it doesn't
+
+The sorting is a good job to hand an AI tool. A raw export is usually a mess of mixed date formats, duplicate rows and couples sharing one address, and AI is quick at tidying that, adding a group column from the rules above and counting each pile. Check ten rows by hand before you trust the counts, and take at least two of them from the silent pile.
+
+It can also give you a first draft of the note below, as long as you rewrite it until it sounds like you.
+
+What it can't know is who your customers are away from the screen. The man who books by phone, whose visits sit on a record with no email attached, looks silent in the export. So does the client whose daughter makes her appointments under her own name. Before you pause anyone, read the names in the silent group yourself and move back anyone you recognize.
+
+## Send the silent group one plain note
+
+In the first days of December, before the gift card emails start, send the silent group one short message. No offer, no images, nothing to buy. Something like:
+
+> It's been a while since you've been in, and I'd rather not fill your inbox with mail you don't want. If you'd like to keep hearing from us, just reply YES. If not, there's nothing to do, and we'll stop sending.
+
+Anyone who replies goes back into the Readers group. Everyone else gets a \`paused\` tag and comes off December's sends. Paused, not deleted: set a rule that removes the tag the moment someone books, so a client who walks back in next spring is on the list again that same day.
+
+Then send the gift card emails to your recent customers and readers only.
+
+## Count your silent pile this week
+
+Before your first December email is scheduled, export the list with those three dates and count how many addresses land in the silent group. Write that number next to the size of the whole list. If it's more than a quarter, schedule the check-in note for the start of December and hold the first gift card email until a few days after it goes out.`,
+  },
+  {
     slug: `compare-sale-weekend-by-day-not-date`,
     title: `Compare This Sale Weekend to Last Year's by Day, Not by Date`,
     excerpt: `Cyber Monday lands in November this year and landed in December last year, so a report that lines the two years up by month or by date is comparing different days.`,
