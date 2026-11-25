@@ -35,7 +35,7 @@ const LOGOS = REFERENCES.filter((n) => CLIENT_LOGOS[n]).map((name) => ({ name, .
 
 const QUESTIONS = [
   { key: 'platforms', label: 'Where do you want to advertise?', options: ['Meta and Google', 'Meta only', 'Google only', 'Not sure yet'] },
-  { key: 'budget', label: 'Monthly ad budget you plan to spend', options: ['Under $500', '$500 to $1,000', '$1,000 to $2,000', 'Over $2,000'] },
+  { key: 'budget', label: 'How much do you plan to invest in ads each month?', hint: 'Paid directly to Meta and Google, separate from the $299 management fee.', options: ['Under $500', '$500 to $1,000', '$1,000 to $2,000', 'Over $2,000'] },
   { key: 'timing', label: 'When do you want to start?', options: ['This month', 'January', 'Exploring'] },
 ];
 
@@ -135,6 +135,7 @@ function QualifyForm({ onBook }) {
       {step === 1 && QUESTIONS.map((q) => (
         <fieldset key={q.key} className="do-q">
           <legend>{q.label}</legend>
+          {q.hint && <p className="do-q__hint">{q.hint}</p>}
           <div className={`do-opts do-opts--${q.options.length}`}>
             {q.options.map((o) => (
               <button key={o} type="button" aria-pressed={answers[q.key] === o} className={answers[q.key] === o ? 'is-on' : ''} onClick={() => pick(q.key, o)}>{o}</button>
@@ -160,7 +161,7 @@ function QualifyForm({ onBook }) {
 
       {step === 2
         ? <button type="button" className="do-back" onClick={() => { setError(''); setStep(1); }}>Back</button>
-        : <p className="do-fine">No obligation. Ad spend is paid directly to Meta and Google.</p>}
+        : <p className="do-fine">No obligation. Management fee only. Ad spend is paid directly to Meta and Google.</p>}
     </form>
   );
 }
@@ -198,9 +199,10 @@ export default function DecemberOffer() {
           <p className="do-lede">We set up, run and improve your Meta and Google Ads for one flat monthly rate, so every dollar has a job and a number you can check.</p>
           <div className="do-price">
             <span className="do-price__now">{OFFER.price}</span>
-            <span className="do-price__per">/ month</span>
+            <span className="do-price__per">/ month management fee</span>
             <span className="do-price__was">{OFFER.standard}/mo standard</span>
           </div>
+          <p className="do-feenote"><strong>This is our fee to manage your ads.</strong> Your ad budget is separate: you decide how much to invest, and Meta and Google bill you for it directly.</p>
           <ul className="do-checks">
             <li><Check size={18} weight="bold" aria-hidden="true" />Setup and conversion tracking included</li>
             <li><Check size={18} weight="bold" aria-hidden="true" />Month-to-month. Cancel anytime</li>
@@ -247,8 +249,9 @@ export default function DecemberOffer() {
               </div>
             ))}
             <div className="do-stack__total">
-              <span>Standard management <s>{OFFER.standard}/mo</s></span>
-              <strong>December: {OFFER.price}/mo</strong>
+              <span>Standard management fee <s>{OFFER.standard}/mo</s></span>
+              <strong>December fee: {OFFER.price}/mo</strong>
+              <span className="do-stack__note">Plus the ad budget you choose, paid directly to Meta and Google.</span>
             </div>
           </div>
         </div>
@@ -276,7 +279,7 @@ export default function DecemberOffer() {
 
       <section className="do-final">
         <h2>Start January with ads <em>that already work.</em></h2>
-        <p>Answer 3 questions. Lock in {OFFER.price} a month before {OFFER.deadline}.</p>
+        <p>Answer 3 questions. Lock in a {OFFER.price} monthly management fee before {OFFER.deadline}. You set the ad budget.</p>
         <button type="button" className="do-btn do-btn--inline" onClick={toForm}>Check if I qualify <ArrowRight size={18} weight="bold" /></button>
       </section>
 
@@ -286,10 +289,11 @@ export default function DecemberOffer() {
         <a href={toHref('/privacy')}>Privacy</a>
         <a href={toHref('/terms')}>Terms</a>
         <a href={toHref('/accessibility')}>Accessibility</a>
+        <span className="do-tm">Meta, Facebook, Instagram and Google Ads are trademarks of their respective owners. Loogo Labs is an independent agency, not affiliated with or endorsed by Meta or Google.</span>
       </footer>
 
       <div className={`do-sticky${formInView ? '' : ' is-shown'}`} aria-hidden={formInView}>
-        <div><strong>{OFFER.price}/mo</strong><span>Ends {OFFER.deadline.replace(', 2026', '')}</span></div>
+        <div><strong>{OFFER.price}/mo</strong><span>Mgmt fee · ends Dec 31</span></div>
         <button type="button" className="do-btn" onClick={toForm} tabIndex={formInView ? -1 : 0}>Check if I qualify</button>
       </div>
     </main>
