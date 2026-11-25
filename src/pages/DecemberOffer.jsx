@@ -209,6 +209,10 @@ export default function DecemberOffer() {
             <li><Check size={18} weight="bold" aria-hidden="true" />Month-to-month. Cancel anytime</li>
             <li><Check size={18} weight="bold" aria-hidden="true" />You own your ad accounts and data</li>
           </ul>
+          <div className="do-host">
+            <span className="do-host__pic"><img src="/character/closeup-cool.webp" alt="" width="290" height="300" /></span>
+            <p><strong>Hi, I’m David.</strong> I run your campaigns myself, and you can text or call me anytime. No account managers, no ticket queues.</p>
+          </div>
           <p className="do-urgency"><Clock size={18} weight="bold" aria-hidden="true" /><span>Rate locks for businesses approved by <strong>{OFFER.deadline}</strong>. We take on only a few new clients each month.</span></p>
         </div>
         <div className="do-hero__form" id="qualify" ref={formRef}>
@@ -279,9 +283,15 @@ export default function DecemberOffer() {
       </section>
 
       <section className="do-final">
-        <h2>Start January with ads <em>that already work.</em></h2>
-        <p>Answer 3 questions. Lock in a {OFFER.price} monthly management fee before {OFFER.deadline}. You set the ad budget.</p>
-        <button type="button" className="do-btn do-btn--inline" onClick={toForm}>Check if I qualify <ArrowRight size={18} weight="bold" /></button>
+        <div className="do-final__copy">
+          <h2>Start January with ads <em>that already work.</em></h2>
+          <p>Answer 3 questions. Lock in a {OFFER.price} monthly management fee before {OFFER.deadline}. You set the ad budget.</p>
+          <button type="button" className="do-btn do-btn--inline" onClick={toForm}>Check if I qualify <ArrowRight size={18} weight="bold" /></button>
+        </div>
+        <div className="do-final__art" aria-hidden="true">
+          <span className="do-final__sun" />
+          <img src="/character/point.webp" alt="" width="368" height="743" loading="lazy" />
+        </div>
       </section>
 
       <footer className="cs-footer do-footer">
