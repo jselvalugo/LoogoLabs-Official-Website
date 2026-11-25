@@ -11,6 +11,44 @@
 
 export const posts = [
   {
+    slug: `ai-review-replies-all-sound-the-same`,
+    title: `Your AI Review Replies All Say the Same Thing`,
+    excerpt: `The replies under your reviews are read by strangers deciding whether to call you, and fifteen copies of one polite thank-you tell them nothing.`,
+    tags: `AI Content Workflow, Review Replies, Local Service Businesses`,
+    content: `On a lot of the business listings I look at, the owner's replies under their reviews have started to read like one reply pasted fifteen times. "Thank you so much for your kind words, Maria! We're thrilled you had a great experience and look forward to serving you again." Then the same sentence for Tom, then for Priya, with only the name changed.
+
+There's usually an AI tool behind it, either one built into the review dashboard or a chat window the owner pastes each review into. Someone told the owner to reply to every review, the tool made that painless, and it got done. That part is fine. The trouble is who actually reads those replies.
+
+## The reply isn't for the reviewer
+
+The customer who left five stars already likes you. Most of them never come back to see what you wrote. The person reading your replies is a stranger comparing you with two other businesses, scrolling down your reviews before deciding who gets the call.
+
+That stranger reads the replies to learn what you're like when you're not selling. A column of identical thank-yous gives a poor answer: the owner is busy, and something answers on their behalf. It won't lose you the job on its own. It just wastes the space sitting right under the most persuasive thing on your listing, which is a real customer talking about you.
+
+A useful reply adds one fact the review left out. Say a customer writes "Great job, very professional." The reply can name the job: "Glad the furnace is quiet again. That blower motor had been on its way out for a while, so you caught it before the first cold week." Now the next reader knows you fix furnaces and that someone at the business actually remembers the visit.
+
+## Why the draft can't get there on its own
+
+The tool only sees the review. If the review says "great job," the best it can do is say thanks for the great job in more words. It can't add a fact nobody gave it, and if you push it to be "more specific," it may simply make one up. That's worse than generic. A public reply thanking someone for a service you never did is hard to explain to the customer who reads it.
+
+It also tends to be warm about everything, which is why it reaches for "thrilled" and "delighted" under a review that said "fine, on time." Read fifteen in a row and the enthusiasm stops meaning anything.
+
+## Hand it the one thing it can't know
+
+I don't tell owners to stop using AI here. It saves the blank-page minutes, and for a business getting several reviews a week those add up. What changes is the input.
+
+- Before asking for a draft, type one line the tool can't know: the job, and one detail you remember. "Kitchen faucet swap, she wanted the old one hauled off."
+- Ask for two or three sentences, no exclamation marks, and nothing you can't stand behind, such as "see you next time" to someone who needed a one-off repair.
+- Read the draft out loud. If it could sit under any business in your trade, it isn't finished.
+- Switch off any setting that posts replies without your approval. Approving takes seconds. A wrong reply can sit there for years.
+
+Reviews of three stars or fewer, write yourself. That's where a careful shopper learns the most, because they're watching how you take a complaint. AI drafts of complaint replies tend to apologize for everything and commit to nothing. A better reply is short: say what you're going to do about it and give a direct number or name to reach. If you're angry, write it, wait a day, then post it.
+
+## An evening with your last fifteen replies
+
+This week, open your listing and read your last fifteen replies one after another, as a stranger deciding whether to call you would. Count how many start the same way. For each one that could belong to any business in your trade, pull up the job it was about, find the single detail that makes it yours, and edit the reply to include it. After that, the one-line note you type before each new draft is the whole new habit.`,
+  },
+  {
     slug: `holiday-email-replies-reply-to-address`,
     title: `Your Holiday Emails Will Get Replies. Make Sure Someone Reads Them`,
     excerpt: `A customer who hits reply on your gift card email is about as close to a sale as your list gets all month, and too many of those replies land where nobody looks.`,
