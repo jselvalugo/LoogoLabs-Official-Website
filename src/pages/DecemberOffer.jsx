@@ -250,7 +250,7 @@ export default function DecemberOffer() {
               </div>
             ))}
             <div className="do-stack__total">
-              <span>Standard management fee: <s>{OFFER.standard}</s></span>
+              <span>Normally: {OFFER.standard}</span>
               <strong>December fee: {OFFER.price}/mo</strong>
               <span className="do-stack__note">Plus the ad budget you choose, paid directly to Meta and Google.</span>
             </div>
