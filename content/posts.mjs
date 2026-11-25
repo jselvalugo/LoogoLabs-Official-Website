@@ -11,6 +11,54 @@
 
 export const posts = [
   {
+    slug: `holiday-email-replies-reply-to-address`,
+    title: `Your Holiday Emails Will Get Replies. Make Sure Someone Reads Them`,
+    excerpt: `A customer who hits reply on your gift card email is about as close to a sale as your list gets all month, and too many of those replies land where nobody looks.`,
+    tags: `Follow-Up and Email, Reply Handling, Small Business Owners`,
+    content: `
+Every December, some of the best leads a small business gets arrive as replies to its own marketing emails, and a lot of them go nowhere. The campaign went out from an address set up years ago by whoever built the account. Sometimes that's a no-reply address that throws the message away. Sometimes it's an old inbox only a former employee ever opened, or a folder inside the email tool that nobody thinks to visit. The customer asked a real question, heard nothing, and bought the gift somewhere else.
+
+You'll probably send more email in the next five weeks than in any other stretch of the year: the Cyber Monday note on November 30, the gift card reminders, the last-booking-before-Christmas message. Each one invites replies whether you meant it to or not. Before the first of them goes out, spend ten minutes finding out where those replies actually go.
+
+## Why a reply beats a click
+
+A click tells you someone was curious. A reply tells you someone is close enough to buying that one answer from you would settle it. "Can I put a gift card toward a service that costs more?" "Do you have anything the Saturday before Christmas?" "My mom already has a package with you, can I add to it?"
+
+Those people have done the hard part. They read your email, wanted something and took the trouble to ask. All that's left is an answer, and in December an answer has a shelf life. Someone shopping for a gift on the 18th won't wait until the 27th to hear back.
+
+I also treat replies as the most honest feedback an offer gets. If six people write back asking whether the gift card expires, the email didn't say, and the next one should.
+
+## Reply to yourself first
+
+This is the test I run with every business before their holiday sends. Send yourself a test of the real campaign, from the exact address the real one will use. Open it on your phone, hit reply, write "test, who sees this?" and send it.
+
+Then go and find it. You'll land on one of four outcomes:
+
+- It bounces or disappears, because the sender is a no-reply address.
+- It arrives in an inbox nobody checks.
+- It arrives somewhere real, but only shows up when someone logs into the email tool.
+- It arrives in an inbox a named person reads every day.
+
+Only the last one is good enough for December. If you send texts as well, do the same with the number they come from: reply to one and see where the answer shows up, and whether anybody gets told it's there.
+
+## Give replies one home and one owner
+
+Fixing the address is usually a setting, not a project. Change the reply-to address on the campaign, or on the whole account, to an inbox that's actually watched. The harder part is deciding who watches it. If three people could check it, the week before Christmas none of them will. Name one person and pick two times a day when they clear it, say mid-morning and late afternoon.
+
+Then write down answers to the questions your offer is bound to raise. For a gift card email that's usually the expiry date, whether it covers every service, how it gets delivered, and the last day to buy one that arrives by the 25th. Four short answers saved on your phone turn a reply that would have sat for a day into one handled in a minute.
+
+## Where AI helps with the pile, and where it shouldn't touch it
+
+If a good email brings in more replies than one person can read in a sitting, an AI assistant earns its keep on the first pass. Paste in the morning's replies with names, emails and phone numbers stripped out, and ask it to sort them into buying questions, booking requests, complaints and people who want off the list. It does that well, and it'll show you which ones need you first. It can also draft answers from your saved sheet, which spares you typing the same expiry date forty times.
+
+What I wouldn't let it do is send anything that names a date, a price or an exception by itself. "Yes, we can fit you in on the 23rd" is a promise, and an assistant that can't see your calendar will make it cheerfully. Drafts are fine. A person reads and sends anything that commits you.
+
+## Test the reply path before Cyber Monday
+
+Before the November 30 email is scheduled, send yourself a test from the real sending address, reply to it from your phone, and write down two things: where the reply landed, and the name of the person who will read it on the morning of December 1. If you can't fill in the name, change the reply-to address before another campaign goes out.
+`,
+  },
+  {
     slug: `pause-silent-subscribers-before-december-emails`,
     title: `Pause the Silent Part of Your List Before December's Emails`,
     excerpt: `Mailing gift card offers to people who stopped reading years ago can cost you a place in the inbox of the regulars who would actually buy them.`,
