@@ -22,7 +22,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const OFFER = {
   price: '$299',
-  standard: '$500',
+  // Normal pricing: a percentage of the client's total ad investment, set by industry.
+  standard: 'a % of your ad investment, by industry',
   deadline: 'December 31, 2026',
   spendCap: '$2,000',
   // Risk reversal. Confirm before publishing.
@@ -200,7 +201,7 @@ export default function DecemberOffer() {
           <div className="do-price">
             <span className="do-price__now">{OFFER.price}</span>
             <span className="do-price__per">/ month management fee</span>
-            <span className="do-price__was">{OFFER.standard}/mo standard</span>
+            <span className="do-price__was">Normally {OFFER.standard}</span>
           </div>
           <p className="do-feenote"><strong>This is our fee to manage your ads.</strong> Your ad budget is separate: you decide how much to invest, and Meta and Google bill you for it directly.</p>
           <ul className="do-checks">
@@ -249,7 +250,7 @@ export default function DecemberOffer() {
               </div>
             ))}
             <div className="do-stack__total">
-              <span>Standard management fee <s>{OFFER.standard}/mo</s></span>
+              <span>Standard management fee: <s>{OFFER.standard}</s></span>
               <strong>December fee: {OFFER.price}/mo</strong>
               <span className="do-stack__note">Plus the ad budget you choose, paid directly to Meta and Google.</span>
             </div>
