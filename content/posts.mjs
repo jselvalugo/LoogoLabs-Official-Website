@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `homepage-reads-like-every-competitor`,
+    title: `Your Homepage Could Belong to Any Competitor in Town`,
+    excerpt: `If the top of your homepage would still ring true under a rival's logo, it isn't giving a single visitor a reason to call you instead of them.`,
+    tags: `Positioning & Messaging, Homepage Copy, Home Service Owners`,
+    content: `The top of most service business homepages I review says some version of the same thing: quality work and a team that cares. Put the logo of the company across town on it and every word would still read as true, or at least as believable. A visitor who opened four tabs to compare you ends up with nothing to compare, so they go by star rating, or by whoever answers the phone first.
+
+AI has made this more common, not less. Ask a writing tool for homepage copy for a garage door company and it gives you the most typical garage door homepage it can come up with, because typical is what it's good at. That's fine for a first draft of the services list. It's the wrong thing for the first screen, the part a visitor reads before deciding whether to scroll at all.
+
+## Read yours next to theirs
+
+Here's the check I run, and it takes about twenty minutes. Open your homepage and the homepages of three competitors a customer would actually find when searching for you. Copy everything a visitor sees at the top of each, before scrolling, into one document. Delete the business names, logos and phone numbers, then shuffle the order.
+
+Come back an hour later and try to pick out yours.
+
+If you can't, a stranger certainly can't. If you can, but only because you remember a town name or a phrase you wrote, that doesn't count either. The real question is whether any line gives someone a reason to choose you that the other three pages don't.
+
+## Where AI earns its keep
+
+A chat tool is handy for the sorting, provided you keep it to sorting. Paste in all four sections, still without names, and have it pull out each phrase or promise that turns up on two or more of them. Then ask it to mark each sentence in yours that makes a claim a visitor has no way to check, like "best service in the area" or "fast response."
+
+It's quick and blunt about this, more than most of us are about our own copy. Where it falls short is the replacement. Ask it what makes you different and it will offer something plausible, and plausible is how the page got this way. It doesn't know that you're the one shop that replaces broken springs on Saturdays, or that your techs lay a drop cloth before touching anything inside a garage. You know that.
+
+## What belongs in the first screen
+
+When I rewrite a top section, I build it from facts a competitor couldn't copy without lying. Usually four fit:
+
+- **What you do and where**, phrased the way a customer searches for it. "Garage door repair in (your town) and the towns around it" tells someone more than "complete door solutions."
+- **One difference you can back up.** Something you actually do that the other three pages never said: Saturday appointments, prices posted on the site, the same technician on every visit, a written quote before any work starts.
+- **The proof, right beside it.** A photo of that drop cloth on a customer's floor, the posted prices, a review that mentions the Saturday visit. A claim with its evidence next to it gets believed. A claim on its own gets skimmed.
+- **What happens when they get in touch**: who picks up, and how soon, if you can honestly commit to a time.
+
+Notice what's gone. "Quality," "trusted," years in business with nothing attached to them. None of it is false. It's just the vocabulary every page in that document shared, so it does no work.
+
+## When you can't name a difference
+
+That's worth knowing, and it isn't a copywriting problem. Read your last twenty reviews and note what customers bring up that your site never mentions. Most of the time the difference is sitting right there, in somebody else's words. Now and then it isn't, and the honest fix is to start doing something worth saying, not to have a tool make one up for you.
+
+## What an assistant can repeat
+
+When a homeowner with a stuck garage door asks an AI assistant for a recommendation, a page that only promises quality gives it nothing to pass along about you. A page that says you do Saturday spring repairs at posted prices hands it something concrete to say. Whether any assistant chooses to repeat it is out of your hands, but a vague page doesn't even give it the chance.
+
+## Before Monday
+
+Put the top of your homepage next to three competitors' with the names stripped out and see if you can find yourself. If you can't, replace your headline with the one difference you can prove, and put the proof directly under it.`,
+  },
+  {
     slug: `email-discount-code-leaks-sale-weekend`,
     title: `Your Email Discount Code Won't Stay in Your Email`,
     excerpt: `A sale code written for your subscribers can be on a coupon site by Saturday, and next week's report will credit your email with every stranger who typed it.`,
