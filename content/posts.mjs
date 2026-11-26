@@ -11,6 +11,52 @@
 
 export const posts = [
   {
+    slug: `email-discount-code-leaks-sale-weekend`,
+    title: `Your Email Discount Code Won't Stay in Your Email`,
+    excerpt: `A sale code written for your subscribers can be on a coupon site by Saturday, and next week's report will credit your email with every stranger who typed it.`,
+    tags: `Measurement & Tracking, Discount Codes, Online Shop Owners`,
+    content: `The code you put in this weekend's sale email for your subscribers will be typed by people who never got the email. One subscriber pastes it into a group chat, a deal forum picks it up, and by Saturday it's listed on a coupon site, where browser add-ons that try every known code at checkout will apply it for anyone who reaches your cart. The discount goes out either way. The trouble shows up next week, when you read the results.
+
+## What the report will tell you
+
+Most shop dashboards credit a code by counting the orders that used it. So on Tuesday you'll see something like "212 orders with SUBSCRIBER25", and it will feel like proof that your list carried the weekend. Ask an AI tool to summarize the sale and it will likely say the same thing with more confidence, because the code report is the clearest signal in the data and nothing in that data says who actually received the email.
+
+Some of those 212 orders came from subscribers. Some came from strangers who were already in your cart, ready to pay full price, until an add-on found the code for them. The report can't tell the two groups apart, and they mean opposite things. One says your list deserves more emails in December. The other says you gave away margin to people who didn't need persuading.
+
+I won't guess what share leaks for a typical shop. It depends on how often people search for your brand by name and how generous the code is, and you can find your own split in about an hour.
+
+## The hour on Tuesday
+
+Export two files: every sale order that used the code, with the customer's email address, and your subscriber list. Then put each order in one of two piles.
+
+- **On the list before the sale.** The email plausibly did its job.
+- **Not on the list, or signed up at checkout.** Count these as leaked, whatever the report says.
+
+Here's the part an AI assistant is good for. Give it the column names from both files, ask for the lookup formula that marks each order as on the list or not, and ask it to explain that formula in one sentence so you can check it does what you think. The spreadsheet does the matching. You don't need to paste customer files into a chat window to get a working formula, so don't, unless you've read that tool's privacy terms.
+
+What the assistant can't tell you is what the leaked buyers would have done without the code. A few found you through the coupon site and are genuinely new. Most were probably on their way to checkout already. That's your call, made from your own order history: if the strangers mostly bought your best-known product in the size people usually order, they were coming anyway.
+
+## Put a price on the leak
+
+Add up the discount the leaked pile received. If the code took 25 percent off and the leaked orders came to $4,000 before the discount, you handed $1,000 to buyers your email never reached. Write that next to the weekend's ad spend. It's a marketing cost too. It just never arrives as an invoice.
+
+Then rewrite the sentence you'd otherwise tell yourself. Not "the email drove 212 orders", but "the email drove the orders in the list pile, and the leak cost us this much." The first version gets you the same plan next November. The second tells you what to change.
+
+## Codes for the rest of December
+
+For the emails still to come this month, use codes that are harder to pass around. Most shop systems I've set up can do at least one of these:
+
+- issue a unique code per subscriber, so a pasted code works once
+- restrict a code to email addresses already on your list
+- end the code when the email's offer ends, not at the end of the month
+
+None of this stops a determined bargain hunter, and it isn't worth a week of your time to try. The aim is a code report you can believe, so the decision about how many more emails to send in December rests on orders the email actually caused.
+
+## Save tonight's list
+
+Tonight, before the weekend's orders start adding checkout signups to it, export your subscriber list and save the file with today's date in its name. It's the only clean record of who was on the list before the code went public, and on Tuesday it's the one thing you can't rebuild.`,
+  },
+  {
     slug: `ai-review-replies-all-sound-the-same`,
     title: `Your AI Review Replies All Say the Same Thing`,
     excerpt: `The replies under your reviews are read by strangers deciding whether to call you, and fifteen copies of one polite thank-you tell them nothing.`,
