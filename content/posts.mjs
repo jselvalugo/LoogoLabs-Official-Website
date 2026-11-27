@@ -11,6 +11,46 @@
 
 export const posts = [
   {
+    slug: `ad-promise-missing-from-landing-page`,
+    title: `The Promise in Your Ad Is Missing From the Page It Opens`,
+    excerpt: `A search ad buys the click with one specific promise, and when the page it opens doesn't repeat that promise on the first screen, the visitor goes back and taps a competitor.`,
+    tags: `Paid Ads, Landing Pages, Home Services`,
+    content: `The ads in most small accounts I open are more specific than the pages they send people to. The headline says "Same-Day Water Heater Replacement." The click opens the homepage, where the first screen says the company has served the valley since 2009 and shows a photo of a van. The words "water heater" don't appear until the visitor scrolls past three other services, and plenty of visitors don't scroll that far. They go back and tap the next ad.
+
+This has become more common since the writing got easy. An AI tool, or the ad account's own suggestions, will produce fifteen sharp, specific headlines in a minute. Nobody asks it to rewrite the page, so the ads keep getting sharper and the page stays where it was. The gap between the two is where the budget leaks.
+
+## Why the gap costs more than it looks
+
+Someone who searched "water heater leaking" and tapped an ad promising same-day replacement has a problem right now and one question: can you fix it today? If the page answers that in the first few seconds, they call. If it makes them hunt, they don't owe you the hunt. The other ads on that results page are one tap away.
+
+You won't see this in the ad report. The click counts, the cost counts, and the report says the ad did its job because someone clicked. The loss shows up a step later, as a page with plenty of visits and few calls. Owners usually blame the ad wording or the bid, when the page is the part that let them down.
+
+## Read every ad next to the page it opens
+
+This is a desk job, not a technical one. Open the ad account and, for each ad group, note two things: the main promise in its headlines and the address the ads send people to. Then open each address on your phone, not your laptop, because that's where a lot of these clicks happen, and read only what shows before you scroll.
+
+For each pair, check:
+
+- Does the first screen name the same service the ad named?
+- Does it repeat the promise in plain words, whether that's same-day, a price range, a free estimate or the town?
+- Can you see the phone number or the booking button without scrolling?
+
+Wherever the answer is no, there are two honest fixes. Change the top of the page so it says what the ad says, or change the ad so it only promises what the page backs up. If you advertise four services and every ad points to the homepage, the better fix is usually one short page per advertised service, each opening with the same promise its ads make.
+
+## What the AI can check, and what only you can
+
+AI is good at the comparison. Paste in an ad group's headlines and the text from the top of the page it links to, and ask it to list every promise the ads make and whether the page states each one, where, and in what words. It's patient with that kind of line-by-line check, and it won't skip the ninth headline the way I would at the end of a long day. Still read its answer against the page yourself, because it can mark a promise as covered when the page only hints at it.
+
+It's also handy for drafting the new top of a service page once you know what it needs to say. Give it the service, the promise, the towns you cover and the price range you actually quote, and ask for a few versions of a headline with two sentences under it. Then edit them until they sound like you.
+
+What it can't tell you is whether the promise is true. If an AI-written headline says "same-day" and your crew is booked four days out every January, the fix isn't a page that repeats it louder. It's an ad that stops saying it. Only you know what your schedule, your prices and your team can deliver this month, so every promise on that list needs your yes before it goes on a page.
+
+## One ad group, one sticky note
+
+Pick the ad group that spent the most last month. Write the main promise from its ads on a sticky note, then open the page those ads send people to on your phone. If that promise isn't on the first screen, rewrite the top of the page, or the ad, before it spends another dollar.
+`,
+  },
+  {
     slug: `ai-assistant-lead-source-option`,
     title: `Your Lead Form Has No Answer for "An AI Told Me About You"`,
     excerpt: `If a customer can't tell your form they found you through an AI assistant, next year's budget gets set without the one channel you can't see any other way.`,
