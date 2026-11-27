@@ -11,6 +11,49 @@
 
 export const posts = [
   {
+    slug: `ai-assistant-lead-source-option`,
+    title: `Your Lead Form Has No Answer for "An AI Told Me About You"`,
+    excerpt: `If a customer can't tell your form they found you through an AI assistant, next year's budget gets set without the one channel you can't see any other way.`,
+    tags: `AI Search Visibility, Lead Source Tracking, Service Business Owners`,
+    content: `Sometime in the next few weeks you'll sit down with a list of this year's new customers, sort it by where each one came from, and decide where next year's marketing money goes. Some of the people on that list found you by asking an AI assistant who to call, and the list has no way of saying so. They're filed under the search engine, under "Other," or under nothing at all.
+
+## Why this channel hides
+
+Most of the sources you pay for leave a trail. An ad click carries a tag, a call from your listing can come through its own tracking number, a referral comes with a name. A recommendation from an assistant often leaves none of that. Sometimes the visit shows up as a referral from the assistant's site and your analytics can see it. Just as often, the person reads your name in an answer and then searches for it, types your web address, or calls the number they were shown. Your tracking records only the last step it can see, and that step looks like someone who already knew your name.
+
+That last step takes the credit. Searches for your own name look stronger than they are, "direct" traffic grows for no reason anyone can point to, and the year-end report tells a tidy story that's partly wrong.
+
+The real answer lives in one place: the customer's memory. So the "how did you hear about us" question is doing more work than it used to. On most forms I set up or inherit, it was written years ago with five fixed choices: search engine, social media, a friend, saw the truck, other.
+
+## What a missing option does to the answers
+
+When someone found you through an assistant and the dropdown doesn't offer it, they pick the closest thing. Some choose the search engine, because asking felt like searching. Some choose "Other" and leave the box empty. Some skip the question. None of those answers is a lie, and none of them helps you.
+
+The cost shows up when you plan. You can't decide whether a channel deserves effort if you can't see it. You might pull time away from reviews or from rewriting your service pages, which are among the things an assistant is likely to draw on when it decides who to name, because the report says they don't bring in customers. Or you might credit an ad campaign on your own business name with jobs it only caught on their way to you.
+
+I won't hand you an estimate of how big this channel is for your business. Nobody can give you one without seeing your customers. For some trades it might be a handful of jobs a year; for others it may already be a real share of first calls. The point of the fix is that by this time next year you'll know, from your own records.
+
+## Change the form before January 1
+
+Three changes, made now, mean every lead from the first week of January is counted properly.
+
+- **Add the option in plain words.** "Asked an AI assistant or chatbot" goes right next to the search engine choice, so nobody has to guess which one you mean.
+- **Add one follow-up when they pick it.** A short text field: "What did you ask it?" The question someone typed tells you which job and which worry brought them to you, and that's worth more than the tally.
+- **Ask it out loud too.** Whoever answers the phone adds the same choice to the question they already ask, and types the answer on the customer record, not on a sticky note.
+
+Then go back over this year. Pull every new customer whose source is "Other," blank, or a search for your own name, and read the notes and first messages on those records. You won't recover most of them. You might find a line like "my phone said you were good with older houses," which tells you the channel is real and hints at which page earned the mention.
+
+## Let AI read the notes, not fill the gaps
+
+Reading those notes is a good job for an AI tool. Give it an export of the free-text answers and first messages, and ask it to pull out every one that mentions an assistant, a chatbot or "it recommended you," along with the row each came from. It's quick, and it doesn't get careless on row four hundred the way I do.
+
+Don't let it fill in blanks. A record with no source stays a record with no source. Ask a model which of your unlabeled customers "probably" came from an assistant and it will give you a confident list and a number for your report, and both will be made up. The new option only means something if every count in that column came from a person who said so.
+
+## Ten seconds on your own form
+
+This week, open your lead form on your phone and fill it in as a new customer who found you by asking an assistant. If you can't answer the source question truthfully in under ten seconds, add the option and the follow-up field today, so the first lead of January has an honest place to land.`,
+  },
+  {
     slug: `homepage-reads-like-every-competitor`,
     title: `Your Homepage Could Belong to Any Competitor in Town`,
     excerpt: `If the top of your homepage would still ring true under a rival's logo, it isn't giving a single visitor a reason to call you instead of them.`,
