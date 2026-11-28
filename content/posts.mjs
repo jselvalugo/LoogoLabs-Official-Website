@@ -11,6 +11,55 @@
 
 export const posts = [
   {
+    slug: `holiday-hours-ai-assistants-repeat`,
+    title: `The Holiday Hours on Your Door Never Reach an AI Answer`,
+    excerpt: `A sign taped to your door only reaches people who have already made the trip, while the customer asking an assistant from their couch gets whatever your listing still says.`,
+    tags: `AI Search Visibility, Holiday Hours, Local Businesses`,
+    content: `On December 26, someone will ask an AI assistant whether you're open, get your normal Saturday hours back, and drive over to a dark storefront. The real hours were on a sheet of printer paper taped inside the glass and in a social post from the 19th. Neither is where the assistant looked.
+
+People in that spot rarely blame the assistant. They blame you, and some of them say so in a review that will sit under your name long after January.
+
+## Where the answer actually comes from
+
+When someone asks an assistant or a map app "is the bike shop on Elm open tomorrow," the answer is pieced together from whatever the business has published in places those tools can read: mostly your map and directory listings and your own website, plus anything else online that names you and lists hours. A sign on the door isn't one of them, and you can't count on a post that scrolled away a week ago.
+
+So the job isn't to tell the internet once. It's to make every place that states your hours say the same thing, with dates attached, early enough that the tools have picked it up before people start asking.
+
+I can't promise you how fast any particular assistant refreshes what it knows. Nobody outside those companies can. What I can tell you is that a listing with correct special hours entered two weeks ahead gives it a fair chance, and a listing that still shows your normal week gives it none.
+
+## Write the list once, with dates
+
+Before you touch any listing, write the holiday schedule as a plain list with full dates, not day names. "Closed Christmas Eve" is less clear than it looks. "Thursday, December 24: open 9 to 1" can't be misread.
+
+Cover every day from the first change to the first normal day back:
+
+- Each date where your hours differ, with the exact open and close times
+- Each date you're fully closed
+- The date normal hours start again, written out
+
+That last line is the one people forget, and it's the one that stops a listing from showing "closed" into the second week of January.
+
+This is a good place to let an AI tool help. Paste in your normal weekly hours and the changes you've decided on, and ask it to write out every date from December 20 to January 4 with the hours for each. Then check it against a calendar yourself, because a tool that gets the weekday wrong for one date will do it with total confidence, and you're the only one who knows that the 31st is a half day.
+
+## Put it everywhere hours appear
+
+Now take that one list and enter it in each place a customer or a tool might read it. The main map listings, and plenty of directories, have a separate field for holiday or special hours that overrides your regular week for specific dates. Use that field. Don't change your regular hours to "closed" and plan to change them back. When I look over clients' listings in January, that's the mistake I find most often: one listing nobody changed back, still telling people the shop is shut.
+
+On your own website, add the dated list as plain text on the page that already shows your hours, and a one-line mention near the top of your homepage. Text, not a graphic. A festive image with the hours written into it reads fine to a person and may say nothing at all to a tool reading the page's text.
+
+Then go through the places you've stopped thinking about: the booking page, the footer, your chat assistant's answer sheet, the auto-reply on your email and your voicemail greeting. If any of them states hours, it needs the same dates.
+
+## What AI won't fix here
+
+An assistant can only repeat what it finds. It can't know you decided at the last minute to close early on the 31st unless that decision made it onto a listing. If plans change after you've posted, change every place again, not just the door.
+
+And if one listing you never claimed still shows hours from three years ago, no amount of care elsewhere guarantees which version gets repeated. Finding and correcting the old one is your work, not the tool's.
+
+## Ask it the question your customers will
+
+Once the special hours are in, wait a few days, then open two or three different AI assistants and type what a customer would: "Is *your business name* in *your town* open on December 26?" Write down what each one says. If any answer is wrong, find the listing or page it seems to be drawing on and fix that first. Do it this week, while there's still time for the correction to land before the 24th.`,
+  },
+  {
     slug: `ad-promise-missing-from-landing-page`,
     title: `The Promise in Your Ad Is Missing From the Page It Opens`,
     excerpt: `A search ad buys the click with one specific promise, and when the page it opens doesn't repeat that promise on the first screen, the visitor goes back and taps a competitor.`,
